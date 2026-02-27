@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"image/png"
 	"io"
 	"os"
 	"path/filepath"
@@ -31,6 +33,35 @@ func TestRunRendersSVGFile(t *testing.T) {
 	}
 	if !strings.Contains(string(out), "<svg") {
 		t.Fatalf("expected SVG output")
+	}
+}
+
+func TestRunRendersPNGFile(t *testing.T) {
+	tmp := t.TempDir()
+	inputPath := filepath.Join(tmp, "diagram.mmd")
+	outputPath := filepath.Join(tmp, "diagram.png")
+	input := "flowchart LR\nA --> B --> C\n"
+	if err := os.WriteFile(inputPath, []byte(input), 0o644); err != nil {
+		t.Fatalf("write input: %v", err)
+	}
+
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"mmdg", "-i", inputPath, "-o", outputPath, "-e", "png"}
+
+	if err := run(); err != nil {
+		t.Fatalf("run() error = %v", err)
+	}
+
+	out, err := os.ReadFile(outputPath)
+	if err != nil {
+		t.Fatalf("read output: %v", err)
+	}
+	if len(out) == 0 {
+		t.Fatalf("expected PNG bytes")
+	}
+	if _, err := png.Decode(bytes.NewReader(out)); err != nil {
+		t.Fatalf("invalid PNG output: %v", err)
 	}
 }
 
@@ -113,7 +144,7 @@ func TestRunHelp(t *testing.T) {
 	if !strings.Contains(output, "Usage: mmdg [flags]") {
 		t.Fatalf("expected usage header in help output, got: %q", output)
 	}
-	if !strings.Contains(output, "Render Mermaid diagrams to SVG without browser/chromium.") {
+	if !strings.Contains(output, "Render Mermaid diagrams to SVG or PNG without browser/chromium.") {
 		t.Fatalf("expected help description, got: %q", output)
 	}
 }

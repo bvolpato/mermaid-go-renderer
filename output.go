@@ -56,7 +56,7 @@ type svgViewBox struct {
 }
 
 func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error) {
-	icon, err := oksvg.ReadIconStream(bytes.NewReader([]byte(svg)))
+	icon, err := parseIconRobust(svg)
 	if err != nil {
 		return nil, fmt.Errorf("parse svg: %w", err)
 	}
@@ -70,6 +70,163 @@ func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error
 	icon.Draw(dasher, 1.0)
 	overlaySVGText(img, svg, width, height, viewBox, hasViewBox)
 	return img, nil
+}
+
+func parseIconRobust(svg string) (*oksvg.SvgIcon, error) {
+	icon, err := oksvg.ReadIconStream(bytes.NewReader([]byte(svg)))
+	if err == nil {
+		return icon, nil
+	}
+	normalized := normalizeSVGForRasterizer(svg)
+	if normalized != svg {
+		icon, normalizedErr := oksvg.ReadIconStream(bytes.NewReader([]byte(normalized)))
+		if normalizedErr == nil {
+			return icon, nil
+		}
+	}
+	withoutForeignObjects := stripSVGForeignObjects(normalized)
+	if withoutForeignObjects == normalized {
+		return nil, err
+	}
+	icon, foreignObjectErr := oksvg.ReadIconStream(bytes.NewReader([]byte(withoutForeignObjects)))
+	if foreignObjectErr == nil {
+		return icon, nil
+	}
+	return nil, err
+}
+
+var svgPathDataAttrPattern = regexp.MustCompile(`\bd\s*=\s*"([^"]*)"`)
+var svgLineTagPattern = regexp.MustCompile(`<line\b[^>]*>`)
+var svgMarkerElementPattern = regexp.MustCompile(`(?s)<marker\b[^>]*>.*?</marker>`)
+var svgForeignObjectPatternForRaster = regexp.MustCompile(`(?s)<foreignObject\b[^>]*>.*?</foreignObject>`)
+var svgRGBDecimalPattern = regexp.MustCompile(`rgb\(\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*\)`)
+
+func normalizeSVGForRasterizer(svg string) string {
+	normalized := normalizeSVGPathData(svg)
+	normalized = normalizeSVGLineAttrs(normalized)
+	normalized = normalizeSVGCurrentColor(normalized)
+	normalized = normalizeSVGTransparentColor(normalized)
+	normalized = normalizeSVGRGBColors(normalized)
+	normalized = stripSVGMarkerDefs(normalized)
+	return normalized
+}
+
+func normalizeSVGPathData(svg string) string {
+	return svgPathDataAttrPattern.ReplaceAllStringFunc(svg, func(attr string) string {
+		match := svgPathDataAttrPattern.FindStringSubmatch(attr)
+		if len(match) < 2 {
+			return attr
+		}
+		normalized := normalizePathData(match[1])
+		if normalized == match[1] {
+			return attr
+		}
+		return `d="` + normalized + `"`
+	})
+}
+
+func normalizeSVGLineAttrs(svg string) string {
+	return svgLineTagPattern.ReplaceAllStringFunc(svg, func(tag string) string {
+		trimmed := strings.TrimSpace(tag)
+		selfClosing := strings.HasSuffix(trimmed, "/>")
+		body := strings.TrimPrefix(strings.TrimSuffix(strings.TrimSuffix(trimmed, "/>"), ">"), "<line")
+		body = ensureSVGAttr(body, "x1", "0")
+		body = ensureSVGAttr(body, "y1", "0")
+		body = ensureSVGAttr(body, "x2", "0")
+		body = ensureSVGAttr(body, "y2", "0")
+		if selfClosing {
+			return "<line" + body + "/>"
+		}
+		return "<line" + body + ">"
+	})
+}
+
+func stripSVGMarkerDefs(svg string) string {
+	return svgMarkerElementPattern.ReplaceAllString(svg, "")
+}
+
+func stripSVGForeignObjects(svg string) string {
+	return svgForeignObjectPatternForRaster.ReplaceAllString(svg, "")
+}
+
+func normalizeSVGCurrentColor(svg string) string {
+	normalized := strings.ReplaceAll(svg, `"currentColor"`, `"#000000"`)
+	normalized = strings.ReplaceAll(normalized, `"currentcolor"`, `"#000000"`)
+	return normalized
+}
+
+func normalizeSVGTransparentColor(svg string) string {
+	normalized := strings.ReplaceAll(svg, `"transparent"`, `"none"`)
+	normalized = strings.ReplaceAll(normalized, `"Transparent"`, `"none"`)
+	return normalized
+}
+
+func normalizeSVGRGBColors(svg string) string {
+	return svgRGBDecimalPattern.ReplaceAllStringFunc(svg, func(raw string) string {
+		match := svgRGBDecimalPattern.FindStringSubmatch(raw)
+		if len(match) != 4 {
+			return raw
+		}
+		r, okR := parseAnyFloat(match[1])
+		g, okG := parseAnyFloat(match[2])
+		b, okB := parseAnyFloat(match[3])
+		if !okR || !okG || !okB {
+			return raw
+		}
+		return fmt.Sprintf("rgb(%d, %d, %d)", clampInt(int(math.Round(r)), 0, 255), clampInt(int(math.Round(g)), 0, 255), clampInt(int(math.Round(b)), 0, 255))
+	})
+}
+
+func ensureSVGAttr(attrs string, name string, value string) string {
+	pattern := regexp.MustCompile(`\b` + regexp.QuoteMeta(name) + `\s*=`)
+	if pattern.MatchString(attrs) {
+		return attrs
+	}
+	return attrs + ` ` + name + `="` + value + `"`
+}
+
+func normalizePathData(path string) string {
+	buf := make([]byte, 0, len(path)+16)
+	lastByte := func() byte {
+		if len(buf) == 0 {
+			return 0
+		}
+		return buf[len(buf)-1]
+	}
+	for i := 0; i < len(path); i++ {
+		ch := path[i]
+		switch {
+		case ch == ',':
+			buf = append(buf, ' ')
+		case (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'):
+			if len(buf) > 0 {
+				last := lastByte()
+				if last != ' ' {
+					buf = append(buf, ' ')
+				}
+			}
+			buf = append(buf, ch, ' ')
+		case ch == '-':
+			if len(buf) > 0 {
+				last := lastByte()
+				if (last >= '0' && last <= '9' || last == '.') && last != 'e' && last != 'E' {
+					buf = append(buf, ' ')
+				}
+			}
+			buf = append(buf, ch)
+		case ch == '+':
+			if len(buf) > 0 {
+				last := lastByte()
+				if (last >= '0' && last <= '9' || last == '.') && last != 'e' && last != 'E' {
+					buf = append(buf, ' ')
+				}
+			}
+			buf = append(buf, ch)
+		default:
+			buf = append(buf, ch)
+		}
+	}
+	return strings.Join(strings.Fields(string(buf)), " ")
 }
 
 func detectSVGSize(svg string) (int, int) {

@@ -120,7 +120,7 @@ func run() error {
 func printUsage(fs *flag.FlagSet) {
 	fmt.Fprintln(os.Stdout, "Usage: mmdg [flags]")
 	fmt.Fprintln(os.Stdout)
-	fmt.Fprintln(os.Stdout, "Render Mermaid diagrams to SVG without browser/chromium.")
+	fmt.Fprintln(os.Stdout, "Render Mermaid diagrams to SVG or PNG without browser/chromium.")
 	fmt.Fprintln(os.Stdout)
 	fmt.Fprintln(os.Stdout, "Flags:")
 	fs.SetOutput(os.Stdout)

@@ -13,9 +13,10 @@
 
 ## Why this project
 
-`mmdg` is a pure Go Mermaid renderer for SVG output.
+`mmdg` is a pure Go Mermaid renderer for SVG and PNG output.
 
 - Native execution (no browser process)
+- Native SVG and PNG output (PNG rasterized in pure Go)
 - Usable both as a library and CLI
 - Supports Mermaid diagram families through native parsing and rendering
 - Focused on low startup latency for local workflows and CI pipelines
@@ -150,6 +151,12 @@ Render a Mermaid file to SVG:
 
 ```bash
 mmdg -i diagram.mmd -o out.svg -e svg
+```
+
+Render a Mermaid file to PNG:
+
+```bash
+mmdg -i diagram.mmd -o out.png -e png
 ```
 
 Render from stdin:
