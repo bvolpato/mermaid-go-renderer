@@ -1,32 +1,72 @@
-# mermaid-go-renderer
+<div align="center">
 
-`mermaid-go-renderer` is a native Mermaid renderer written in Go.
+# mmdg (`mermaid-go-renderer`)
 
-- No browser / Chromium dependency
-- Works as both a Go library and CLI
-- Supports all Mermaid diagram families by native parsing + SVG rendering
+**Fast native Mermaid rendering in Go. No browser, no Chromium.**
+
+[![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
+[![Release](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml)
+
+[Installation](#installation) | [Quick Start](#quick-start) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
+
+</div>
+
+## Why this project
+
+`mmdg` is a pure Go Mermaid renderer for SVG output.
+
+- Native execution (no browser process)
+- Usable both as a library and CLI
+- Supports Mermaid diagram families through native parsing and rendering
+- Focused on low startup latency for local workflows and CI pipelines
 
 ## Inspiration
 
-This project is directly inspired by [`1jehuang/mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer), with a Go-first implementation and API for `github.com/bvolpato/mermaid-go-renderer`.
+This project is inspired by the Rust implementation [`1jehuang/mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer).
+
+- **Original Mermaid CLI**: `mmdc` (`@mermaid-js/mermaid-cli`)
+- **Rust renderer**: `mmdr` (`mermaid-rs-renderer`)
+- **Go renderer**: `mmdg` (this repository)
 
 ## Performance
 
-Yes, we compared against Mermaid CLI (`mmdc`).
+Yes - this README now includes a direct comparison against Mermaid CLI (`mmdc`) and the Rust renderer (`mmdr`).
 
-Measured on: Apple M4 Max, Go 1.26.0, macOS darwin 25.1.0.
-Method: warm-up + repeated CLI runs (`mmdg`: 20 runs, `mmdc`: 3 runs).
+Benchmark host:
 
-### CLI benchmark (`mmdg` vs `mmdc`)
+- Apple M4 Max
+- macOS darwin 25.1.0
+- Go 1.26.0
 
-| Diagram | `mmdg` avg | `mmdc` avg | Speedup |
-|:--|--:|--:|--:|
-| Flowchart | 12.04 ms | 2085.64 ms | 173.25x |
-| Sequence | 11.59 ms | 1957.36 ms | 168.87x |
-| Class | 13.67 ms | 1996.32 ms | 146.06x |
-| State | 10.69 ms | 2054.83 ms | 192.17x |
+Method:
 
-Geometric mean speedup: **169.28x**.
+- warm-up pass for each tool and fixture
+- repeated CLI runs (`mmdg`: 20, `mmdr`: 20, `mmdc`: 5)
+- measured wall-clock render command time
+
+### Renderer stack comparison
+
+| Tool | Role | Implementation | Runtime stack |
+|:--|:--|:--|:--|
+| `mmdc` | Original Mermaid CLI | JavaScript | Node.js + Puppeteer + headless Chromium |
+| `mmdr` | Rust version | Rust | Native binary |
+| `mmdg` | Our version | Go | Native binary |
+
+### CLI render benchmark (`mmdc` vs `mmdr` vs `mmdg`)
+
+| Diagram | `mmdc` avg | `mmdr` avg | `mmdg` avg | `mmdr` vs `mmdc` | `mmdg` vs `mmdc` |
+|:--|--:|--:|--:|--:|--:|
+| Flowchart | 2190.54 ms | 12.88 ms | 11.22 ms | 170.09x | 195.16x |
+| Sequence | 3180.24 ms | 11.42 ms | 11.56 ms | 278.58x | 275.10x |
+| Class | 2144.91 ms | 11.01 ms | 11.43 ms | 194.76x | 187.61x |
+| State | 2173.91 ms | 10.99 ms | 11.84 ms | 197.72x | 183.66x |
+
+Geometric mean speedup vs `mmdc`:
+
+- `mmdr` (Rust): **206.68x**
+- `mmdg` (Go): **207.39x**
+
+On this run, `mmdg` and `mmdr` are effectively near parity overall.
 
 ### Library microbenchmarks (`go test -bench`)
 
@@ -39,15 +79,15 @@ Geometric mean speedup: **169.28x**.
 | Pie | 27,593 ns/op | 10,626 B/op | 156 |
 | XY Chart | 28,910 ns/op | 13,957 B/op | 242 |
 
-Reproduce:
+Reproduce library benchmarks:
 
 ```bash
 go test -run ^$ -bench BenchmarkRender -benchmem ./...
 ```
 
-## Install
+## Installation
 
-### From source
+### Build locally
 
 ```bash
 git clone https://github.com/bvolpato/mermaid-go-renderer
@@ -55,32 +95,21 @@ cd mermaid-go-renderer
 go build ./cmd/mmdg
 ```
 
-### Homebrew (via GoReleaser)
-
-This repository includes:
-
-- `.goreleaser.yaml`
-- `.github/workflows/release.yml`
-
-On every pushed tag (`v*`), GitHub Actions runs GoReleaser to:
-
-- build release binaries
-- publish archives + checksums
-- update Homebrew formula in `bvolpato/homebrew-tap`
-
-Required GitHub secret:
-
-- `HOMEBREW_TAP_GITHUB_TOKEN` (PAT with permission to push to the tap repository)
-
-## CLI Usage
-
-Render Mermaid from a file:
+### Install with `go install`
 
 ```bash
-mmdg -i diagram.mmd -o diagram.svg -e svg
+go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
 ```
 
-Render Mermaid from stdin:
+## Quick Start
+
+Render a Mermaid file to SVG:
+
+```bash
+mmdg -i diagram.mmd -o out.svg -e svg
+```
+
+Render from stdin:
 
 ```bash
 echo 'flowchart LR; A-->B-->C' | mmdg -e svg
@@ -100,7 +129,18 @@ Useful flags:
 - `--fastText`
 - `--timing`
 
+## Diagram support
+
+Current parser and renderer paths detect and handle Mermaid families including:
+
+- Flowchart, Sequence, Class, State, ER, Pie
+- Mindmap, Journey, Timeline, Gantt, Git Graph
+- XY Chart, Quadrant
+- Requirement, C4, Sankey, ZenUML, Block, Packet, Kanban, Architecture, Radar, Treemap
+
 ## Library Usage
+
+Simple API:
 
 ```go
 package main
@@ -120,13 +160,23 @@ func main() {
 }
 ```
 
-Or use the staged pipeline:
+Pipeline API:
 
 ```go
 parsed, _ := mermaid.ParseMermaid("flowchart LR\nA-->B")
 layout := mermaid.ComputeLayout(&parsed.Graph, mermaid.ModernTheme(), mermaid.DefaultLayoutConfig())
 svg := mermaid.RenderSVG(layout, mermaid.ModernTheme(), mermaid.DefaultLayoutConfig())
 ```
+
+## Architecture
+
+Native rendering pipeline:
+
+```
+.mmd -> parser -> IR graph -> layout -> SVG renderer
+```
+
+No browser process is spawned.
 
 ## Testing
 
@@ -137,12 +187,21 @@ go vet ./...
 go build ./...
 ```
 
-## Architecture
+## Release and Homebrew
 
-Native pipeline:
+GoReleaser and CI are configured:
 
-```
-.mmd -> parser -> IR graph -> layout -> SVG renderer
-```
+- `.goreleaser.yaml` (schema version 2)
+- `.github/workflows/ci.yml`
+- `.github/workflows/release.yml`
 
-No browser process is spawned at any point.
+Release workflow on tag (`v*`) does:
+
+- cross-platform binary builds
+- archives + checksums
+- GitHub Release publishing
+- Homebrew formula updates in `bvolpato/homebrew-tap`
+
+Required GitHub secret:
+
+- `HOMEBREW_TAP_GITHUB_TOKEN` (token with write access to the tap repository)
