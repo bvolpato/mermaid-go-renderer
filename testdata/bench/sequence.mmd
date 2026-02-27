@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant User
+  participant App
+  participant API
+  participant DB
+  User->>App: Open dashboard
+  App->>API: GET /stats
+  API->>DB: Query metrics
+  DB-->>API: rows
+  API-->>App: JSON
+  App-->>User: Render charts

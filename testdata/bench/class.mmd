@@ -1,0 +1,16 @@
+classDiagram
+  class Service {
+    +Start()
+    +Stop()
+    +Health() bool
+  }
+  class Worker {
+    +Run()
+    +Shutdown()
+  }
+  class Queue {
+    +Push()
+    +Pop()
+  }
+  Service o-- Worker
+  Worker --> Queue
