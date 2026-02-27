@@ -185,4 +185,3 @@ func isArchitectureSide(token string) bool {
 		return false
 	}
 }
-

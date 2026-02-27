@@ -166,10 +166,10 @@ func parseAnyFloat(raw string) (float64, bool) {
 }
 
 var (
-	svgTextElementPattern = regexp.MustCompile(`(?s)<text\b([^>]*)>(.*?)</text>`)
+	svgTextElementPattern   = regexp.MustCompile(`(?s)<text\b([^>]*)>(.*?)</text>`)
 	svgForeignObjectPattern = regexp.MustCompile(`(?s)<foreignObject\b([^>]*)>(.*?)</foreignObject>`)
-	svgTagPattern         = regexp.MustCompile(`(?s)<[^>]+>`)
-	svgFontFaceCache      sync.Map
+	svgTagPattern           = regexp.MustCompile(`(?s)<[^>]+>`)
+	svgFontFaceCache        sync.Map
 )
 
 func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox svgViewBox, hasViewBox bool) {
