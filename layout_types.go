@@ -172,6 +172,45 @@ type ArchitectureServiceLayout struct {
 	H       float64
 }
 
+type SankeyNodeLayout struct {
+	ID    string
+	Value float64
+	X0    float64
+	Y0    float64
+	X1    float64
+	Y1    float64
+	Color string
+}
+
+type SankeyLinkLayout struct {
+	SourceID    string
+	TargetID    string
+	Value       float64
+	Width       float64
+	X0          float64
+	Y0          float64
+	X1          float64
+	Y1          float64
+	Path        string
+	SourceColor string
+	TargetColor string
+}
+
+type RadarAxisLayout struct {
+	Label string
+	LineX float64
+	LineY float64
+	TextX float64
+	TextY float64
+}
+
+type RadarCurveLayout struct {
+	Label   string
+	Class   string
+	Path    string
+	Polygon bool
+}
+
 type Layout struct {
 	Kind   DiagramKind
 	Width  float64
@@ -198,8 +237,23 @@ type Layout struct {
 	ArchitectureGroups   []ArchitectureGroupLayout
 	ArchitectureServices []ArchitectureServiceLayout
 
+	SankeyNodes []SankeyNodeLayout
+	SankeyLinks []SankeyLinkLayout
+
 	MindmapRootID string
 	MindmapNodes  []MindmapNode
+
+	RadarTitle            string
+	RadarAxes             []RadarAxisLayout
+	RadarCurves           []RadarCurveLayout
+	RadarLegend           []string
+	RadarShowLegend       bool
+	RadarTicks            int
+	RadarGraticule        string
+	RadarGraticuleRadii   []float64
+	RadarLegendX          float64
+	RadarLegendY          float64
+	RadarLegendLineHeight float64
 
 	Nodes []NodeLayout
 	Edges []EdgeLayout

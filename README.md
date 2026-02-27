@@ -7,7 +7,7 @@
 [![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
 [![Release](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml)
 
-[Installation](#installation) | [Quick Start](#quick-start) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
+[Installation](#installation) | [Quick Start](#quick-start) | [Fidelity](#fidelity-mmdc-first) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
 
 </div>
 
@@ -30,13 +30,56 @@ This project is inspired by the Rust implementation [`1jehuang/mermaid-rs-render
 
 ## Performance
 
-Yes - this README now includes a direct comparison against Mermaid CLI (`mmdc`) and the Rust renderer (`mmdr`).
+This README includes direct performance and fidelity benchmarking against Mermaid CLI (`mmdc`).
 
 Benchmark host:
 
 - Apple M4 Max
 - macOS darwin 25.1.0
 - Go 1.26.0
+- Date: 2026-02-26
+
+## Fidelity (mmdc-first)
+
+`mmdg` fidelity is measured against **`mmdc` output as ground truth**.
+
+Approach:
+
+1. Render paired outputs for the same fixtures:
+   - `mmdc` -> `/tmp/{name}_mmdc.svg`
+   - `mmdg` -> `/tmp/{name}_mmdg.svg`
+2. Compute XML deltas (not only visual deltas) with:
+   - `python3 scripts/svg_xml_delta.py`
+3. Track three parity gates per fixture:
+   - `tag_delta`
+   - `attr_presence_delta`
+   - `text_delta`
+4. Prioritize fixtures with largest structural deltas first.
+
+Reproduce the full fidelity sweep:
+
+```bash
+./scripts/render_all_components_to_tmp.sh
+python3 scripts/svg_xml_delta.py
+```
+
+Latest XML fidelity snapshot (`/tmp/svg_xml_delta_report.csv`):
+
+- Fixtures compared: **23**
+- Exact parity (`tag_delta=0`, `attr_presence_delta=0`, `text_delta=0`): **8 / 23**
+- Structural parity (`tag_delta=0`, `attr_presence_delta=0`): **8 / 23**
+
+Exact-parity fixtures:
+
+- `architecture_complex`, `block_complex`, `gantt_complex`, `mindmap_complex`
+- `radar_complex`, `sankey_complex`, `sequence_complex`, `treemap_complex`
+
+Current highest-delta fixtures (XML-first backlog):
+
+- `flowchart_complex` (`tag=55`, `attr=272`, `text=5`)
+- `gitgraph_complex` (`tag=24`, `attr=268`, `text=2`)
+- `c4_context_complex` (`tag=47`, `attr=181`, `text=23`)
+- `requirement_complex` (`tag=73`, `attr=149`, `text=18`)
 
 Method:
 
@@ -56,28 +99,28 @@ Method:
 
 | Diagram | `mmdc` avg | `mmdr` avg | `mmdg` avg | `mmdr` vs `mmdc` | `mmdg` vs `mmdc` |
 |:--|--:|--:|--:|--:|--:|
-| Flowchart | 2190.54 ms | 12.88 ms | 11.22 ms | 170.09x | 195.16x |
-| Sequence | 3180.24 ms | 11.42 ms | 11.56 ms | 278.58x | 275.10x |
-| Class | 2144.91 ms | 11.01 ms | 11.43 ms | 194.76x | 187.61x |
-| State | 2173.91 ms | 10.99 ms | 11.84 ms | 197.72x | 183.66x |
+| Flowchart | 2450.55 ms | 18.85 ms | 13.94 ms | 129.99x | 175.78x |
+| Sequence | 2356.64 ms | 32.60 ms | 15.56 ms | 72.30x | 151.46x |
+| Class | 2594.45 ms | 18.47 ms | 15.76 ms | 140.47x | 164.61x |
+| State | 2623.20 ms | 20.41 ms | 18.18 ms | 128.51x | 144.27x |
 
 Geometric mean speedup vs `mmdc`:
 
-- `mmdr` (Rust): **206.68x**
-- `mmdg` (Go): **207.39x**
+- `mmdr` (Rust): **114.13x**
+- `mmdg` (Go): **158.58x**
 
-On this run, `mmdg` and `mmdr` are effectively near parity overall.
+On this run, `mmdg` is faster than `mmdr` on these representative fixtures.
 
 ### Library microbenchmarks (`go test -bench`)
 
 | Benchmark | Time | Memory | Allocs |
 |:--|--:|--:|--:|
-| Flowchart | 52,149 ns/op | 21,794 B/op | 336 |
-| Sequence | 41,225 ns/op | 26,373 B/op | 394 |
-| State | 80,679 ns/op | 20,968 B/op | 306 |
-| Class | 61,899 ns/op | 15,494 B/op | 250 |
-| Pie | 27,593 ns/op | 10,626 B/op | 156 |
-| XY Chart | 28,910 ns/op | 13,957 B/op | 242 |
+| Flowchart | 121,343 ns/op | 44,314 B/op | 418 |
+| Sequence | 54,838 ns/op | 46,253 B/op | 206 |
+| State | 158,538 ns/op | 62,489 B/op | 302 |
+| Class | 70,093 ns/op | 59,870 B/op | 249 |
+| Pie | 96,986 ns/op | 50,901 B/op | 390 |
+| XY Chart | 104,718 ns/op | 67,371 B/op | 535 |
 
 Reproduce library benchmarks:
 

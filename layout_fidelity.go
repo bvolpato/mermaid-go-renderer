@@ -2296,12 +2296,23 @@ func layoutGanttFidelityV2(graph *Graph, theme Theme, config LayoutConfig) Layou
 	minDay := int(math.Round(minTime))
 	maxDay := int(math.Round(maxTime))
 	tickEnd := maxDay - 1
+	lastTickDay := minDay - 2
 	for day := minDay; day <= tickEnd; day += 2 {
 		layout.Texts = append(layout.Texts, LayoutText{
 			Class: "gantt-tick-label",
 			X:     scale(float64(day)),
 			Y:     3,
 			Value: formatGanttDate(day),
+			Size:  10,
+		})
+		lastTickDay = day
+	}
+	if tickEnd >= minDay && lastTickDay != tickEnd {
+		layout.Texts = append(layout.Texts, LayoutText{
+			Class: "gantt-tick-label",
+			X:     scale(float64(tickEnd)),
+			Y:     3,
+			Value: formatGanttDate(tickEnd),
 			Size:  10,
 		})
 	}

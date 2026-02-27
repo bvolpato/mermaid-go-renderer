@@ -49,10 +49,16 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	svgClass, ariaRoleDesc := diagramDOMClass(layout.Kind)
 	if mermaidRoot {
-		widthAttr = "100%"
-		includeHeight = false
-		if styleAttr == "" {
-			styleAttr = fmt.Sprintf("max-width: %spx; background-color: %s;", formatFloat(viewBoxWidth), background)
+		if layout.Kind == DiagramRadar {
+			if styleAttr == "" {
+				styleAttr = fmt.Sprintf("background-color: %s;", background)
+			}
+		} else {
+			widthAttr = "100%"
+			includeHeight = false
+			if styleAttr == "" {
+				styleAttr = fmt.Sprintf("max-width: %spx; background-color: %s;", formatFloat(viewBoxWidth), background)
+			}
 		}
 	}
 
@@ -97,6 +103,18 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	if mermaidRoot {
 		if layout.Kind == DiagramPacket {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg p{margin:0;}#my-svg .packetByte{font-size:10px;}#my-svg .packetByte.start{fill:black;}#my-svg .packetByte.end{fill:black;}#my-svg .packetLabel{fill:black;font-size:12px;}#my-svg .packetTitle{fill:black;font-size:14px;}#my-svg .packetBlock{stroke:black;stroke-width:1;fill:#efefef;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
+		} else if layout.Kind == DiagramClass {
+			b.WriteString(`<style>` + classStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramState {
+			b.WriteString(`<style>` + stateStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramGantt {
+			b.WriteString(`<style>` + ganttStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramZenUML {
+			b.WriteString(`<style>` + zenumlStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramSankey {
+			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
+		} else if layout.Kind == DiagramRadar {
+			b.WriteString(`<style>` + radarStyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramArchitecture {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .edge{stroke-width:3;stroke:#333333;fill:none;}#my-svg .arrow{fill:#333333;}#my-svg .node-bkg{fill:none;stroke:hsl(240, 60%, 86.2745098039%);stroke-width:2px;stroke-dasharray:8;}#my-svg .node-icon-text{display:flex;align-items:center;}#my-svg .node-icon-text>div{color:#fff;margin:1px;height:fit-content;text-align:center;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
 		} else if layout.Kind == DiagramMindmap {
@@ -142,6 +160,21 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	if layout.Kind == DiagramTreemap {
 		b.WriteString(renderTreemapMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramGantt {
+		b.WriteString(renderGanttMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramSankey && len(layout.SankeyNodes) > 0 {
+		b.WriteString(renderSankeyMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramRadar && len(layout.RadarAxes) > 0 {
+		b.WriteString(renderRadarMermaid(layout))
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
@@ -216,17 +249,6 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 
 	if layout.Kind == DiagramState {
 		b.WriteString(renderStateMermaid(layout, theme))
-		if mermaidRoot {
-			b.WriteString("</g>\n")
-		}
-		if mermaidRoot && mermaidLike {
-			b.WriteString("</g>\n")
-		}
-		b.WriteString("</svg>\n")
-		return b.String()
-	}
-	if layout.Kind == DiagramGantt {
-		b.WriteString(renderGanttMermaid(layout))
 		if mermaidRoot {
 			b.WriteString("</g>\n")
 		}
@@ -1051,6 +1073,7 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 func renderGanttMermaid(layout Layout) string {
 	var b strings.Builder
 	b.Grow(8192)
+	b.WriteString("<g/>\n")
 
 	tickTexts := make([]LayoutText, 0)
 	taskTexts := make([]LayoutText, 0)
@@ -1101,31 +1124,35 @@ func renderGanttMermaid(layout Layout) string {
 		}
 	}
 
-	b.WriteString(`<g font-family="sans-serif" font-size="10" fill="none" text-anchor="middle">`)
+	b.WriteString(`<g class="grid" transform="translate(75, 194)" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle">`)
 	b.WriteString("\n")
-	b.WriteString(`<g class="grid" transform="translate(75, 194)">`)
-	b.WriteString("\n")
+	if strings.TrimSpace(domainPath) != "" {
+		b.WriteString(`<path class="domain" stroke="currentColor" d="` + html.EscapeString(domainPath) + `"></path>`)
+		b.WriteString("\n")
+	}
 	for _, tick := range tickTexts {
-		b.WriteString(`<g class="tick" opacity="1" transform="translate(` + formatFloat(tick.X) + `,0)">`)
+		tickX := math.Round(tick.X) + 0.5
+		b.WriteString(`<g class="tick" opacity="1" transform="translate(` + formatFloat(tickX) + `,0)">`)
 		b.WriteString(`<line stroke="currentColor" y2="-159"></line>`)
 		b.WriteString(`<text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">`)
 		b.WriteString(html.EscapeString(tick.Value))
 		b.WriteString(`</text></g>`)
 		b.WriteString("\n")
 	}
-	if strings.TrimSpace(domainPath) != "" {
-		b.WriteString(`<path class="domain" stroke="currentColor" d="` + html.EscapeString(domainPath) + `"></path>`)
-		b.WriteString("\n")
-	}
-	b.WriteString(`</g>`)
-	b.WriteString("\n")
 	b.WriteString(`</g>`)
 	b.WriteString("\n")
 
+	b.WriteString(`<g>`)
+	b.WriteString("\n")
 	for _, rect := range sectionRects {
 		b.WriteString(`<rect x="` + formatFloat(rect.X) + `" y="` + formatFloat(rect.Y) + `" width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" class="` + html.EscapeString(rect.Class) + `"></rect>`)
 		b.WriteString("\n")
 	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
+
+	b.WriteString(`<g>`)
+	b.WriteString("\n")
 	for _, rect := range taskRects {
 		b.WriteString(`<rect`)
 		if strings.TrimSpace(rect.ID) != "" {
@@ -1157,14 +1184,20 @@ func renderGanttMermaid(layout Layout) string {
 		b.WriteString(`</text>`)
 		b.WriteString("\n")
 	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
 
+	b.WriteString(`<g>`)
+	b.WriteString("\n")
 	for _, text := range sectionTexts {
-		b.WriteString(`<text dy="0em" x="10" y="` + formatFloat(text.Y) + `" font-size="11" class="` + html.EscapeString(text.Class) + `">`)
-		b.WriteString(`<tspan alignment-baseline="central" x="10">`)
+		b.WriteString(`<text dy="0em" x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" font-size="11" class="` + html.EscapeString(text.Class) + `">`)
+		b.WriteString(`<tspan alignment-baseline="central" x="` + formatFloat(text.X) + `">`)
 		b.WriteString(html.EscapeString(text.Value))
 		b.WriteString(`</tspan></text>`)
 		b.WriteString("\n")
 	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
 
 	if hasToday {
 		b.WriteString(`<g class="today">`)
@@ -2079,6 +2112,136 @@ func mermaidStyle(
 		parts = append(parts, "opacity: "+formatFloat(opacity))
 	}
 	return strings.Join(parts, "; ") + ";"
+}
+
+func renderSankeyMermaid(layout Layout) string {
+	var b strings.Builder
+	b.WriteString("<g/>\n")
+
+	if len(layout.SankeyNodes) == 0 {
+		return b.String()
+	}
+
+	b.WriteString(`<g class="nodes">`)
+	for i, node := range layout.SankeyNodes {
+		b.WriteString(`<g class="node" id="node-` + intString(i+1) + `" transform="translate(` + formatFloat(node.X0) + `,` + formatFloat(node.Y0) + `)" x="` + formatFloat(node.X0) + `" y="` + formatFloat(node.Y0) + `">`)
+		b.WriteString(`<rect height="` + formatFloat(node.Y1-node.Y0) + `" width="` + formatFloat(node.X1-node.X0) + `" fill="` + html.EscapeString(node.Color) + `"/>`)
+		b.WriteString(`</g>`)
+	}
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="node-labels" font-size="14">`)
+	width := max(1.0, layout.ViewBoxWidth)
+	for _, node := range layout.SankeyNodes {
+		x := node.X1 + 6
+		anchor := "start"
+		if node.X0 >= width*0.5 {
+			x = node.X0 - 6
+			anchor = "end"
+		}
+		y := (node.Y0 + node.Y1) * 0.5
+		b.WriteString(`<text x="` + formatFloat(x) + `" y="` + formatFloat(y) + `" dy="0em" text-anchor="` + anchor + `">`)
+		b.WriteString(html.EscapeString(node.ID))
+		b.WriteString("\n")
+		b.WriteString(html.EscapeString(formatSankeyValue(node.Value)))
+		b.WriteString(`</text>`)
+	}
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="links" fill="none" stroke-opacity="0.5">`)
+	for i, link := range layout.SankeyLinks {
+		gradientID := "linearGradient-" + intString(len(layout.SankeyNodes)+i+1)
+		b.WriteString(`<g class="link" style="mix-blend-mode: multiply;">`)
+		b.WriteString(`<linearGradient id="` + gradientID + `" gradientUnits="userSpaceOnUse" x1="` + formatFloat(link.X0) + `" x2="` + formatFloat(link.X1) + `">`)
+		b.WriteString(`<stop offset="0%" stop-color="` + html.EscapeString(link.SourceColor) + `"/>`)
+		b.WriteString(`<stop offset="100%" stop-color="` + html.EscapeString(link.TargetColor) + `"/>`)
+		b.WriteString(`</linearGradient>`)
+		b.WriteString(`<path d="` + link.Path + `" stroke="url(#` + gradientID + `)" stroke-width="` + formatFloat(max(1, link.Width)) + `"/>`)
+		b.WriteString(`</g>`)
+	}
+	b.WriteString(`</g>`)
+
+	return b.String()
+}
+
+func formatSankeyValue(value float64) string {
+	if math.Abs(value-math.Round(value)) < 1e-9 {
+		return strconv.FormatInt(int64(math.Round(value)), 10)
+	}
+	return strconv.FormatFloat(value, 'f', -1, 64)
+}
+
+func renderRadarMermaid(layout Layout) string {
+	var b strings.Builder
+	b.WriteString("<g/>\n")
+	b.WriteString(`<g transform="translate(` + formatFloat(layout.Width*0.5) + `, ` + formatFloat(layout.Height*0.5) + `)">`)
+
+	if layout.RadarGraticule == "polygon" && len(layout.RadarAxes) > 0 {
+		for _, r := range layout.RadarGraticuleRadii {
+			points := make([]string, 0, len(layout.RadarAxes))
+			for i := range layout.RadarAxes {
+				angle := 2*math.Pi*float64(i)/float64(len(layout.RadarAxes)) - math.Pi*0.5
+				points = append(points, formatFloat(r*math.Cos(angle))+","+formatFloat(r*math.Sin(angle)))
+			}
+			b.WriteString(`<polygon points="` + strings.Join(points, " ") + `" class="radarGraticule"/>`)
+		}
+	} else {
+		for _, r := range layout.RadarGraticuleRadii {
+			b.WriteString(`<circle r="` + formatFloat(r) + `" class="radarGraticule"/>`)
+		}
+	}
+
+	for _, axis := range layout.RadarAxes {
+		b.WriteString(`<line x1="0" y1="0" x2="` + formatFloat(axis.LineX) + `" y2="` + formatFloat(axis.LineY) + `" class="radarAxisLine"/>`)
+		b.WriteString(`<text x="` + formatFloat(axis.TextX) + `" y="` + formatFloat(axis.TextY) + `" class="radarAxisLabel">` + html.EscapeString(axis.Label) + `</text>`)
+	}
+
+	for _, curve := range layout.RadarCurves {
+		if curve.Polygon {
+			b.WriteString(`<polygon points="` + curve.Path + `" class="` + curve.Class + `"/>`)
+		} else {
+			b.WriteString(`<path d="` + curve.Path + `" class="` + curve.Class + `"/>`)
+		}
+	}
+
+	if layout.RadarShowLegend {
+		for i, label := range layout.RadarLegend {
+			y := layout.RadarLegendY + float64(i)*layout.RadarLegendLineHeight
+			b.WriteString(`<g transform="translate(` + formatFloat(layout.RadarLegendX) + `, ` + formatFloat(y) + `)">`)
+			b.WriteString(`<rect width="12" height="12" class="radarLegendBox-` + intString(i) + `"/>`)
+			b.WriteString(`<text x="16" y="0" class="radarLegendText">` + html.EscapeString(label) + `</text>`)
+			b.WriteString(`</g>`)
+		}
+	}
+
+	b.WriteString(`<text class="radarTitle" x="0" y="-350">` + html.EscapeString(layout.RadarTitle) + `</text>`)
+	b.WriteString(`</g>`)
+	return b.String()
+}
+
+func radarStyleCSS() string {
+	var b strings.Builder
+	b.WriteString(`#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .radarTitle{font-size:16px;color:#333;dominant-baseline:hanging;text-anchor:middle;}#my-svg .radarAxisLine{stroke:#333333;stroke-width:2;}#my-svg .radarAxisLabel{dominant-baseline:middle;text-anchor:middle;font-size:12px;color:#333333;}#my-svg .radarGraticule{fill:#DEDEDE;fill-opacity:0.3;stroke:#DEDEDE;stroke-width:1;}#my-svg .radarLegendText{text-anchor:start;font-size:12px;dominant-baseline:hanging;}`)
+	palette := []string{
+		"hsl(240, 100%, 76.2745098039%)",
+		"hsl(60, 100%, 73.5294117647%)",
+		"hsl(80, 100%, 76.2745098039%)",
+		"hsl(270, 100%, 76.2745098039%)",
+		"hsl(300, 100%, 76.2745098039%)",
+		"hsl(330, 100%, 76.2745098039%)",
+		"hsl(0, 100%, 76.2745098039%)",
+		"hsl(30, 100%, 76.2745098039%)",
+		"hsl(90, 100%, 76.2745098039%)",
+		"hsl(150, 100%, 76.2745098039%)",
+		"hsl(180, 100%, 76.2745098039%)",
+		"hsl(210, 100%, 76.2745098039%)",
+	}
+	for i, color := range palette {
+		b.WriteString(`#my-svg .radarCurve-` + intString(i) + `{color:` + color + `;fill:` + color + `;fill-opacity:0.5;stroke:` + color + `;stroke-width:2;}`)
+		b.WriteString(`#my-svg .radarLegendBox-` + intString(i) + `{fill:` + color + `;fill-opacity:0.5;stroke:` + color + `;}`)
+	}
+	b.WriteString(`#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`)
+	return b.String()
 }
 
 func useMermaidLikeDOM(kind DiagramKind) bool {

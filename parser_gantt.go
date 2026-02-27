@@ -49,15 +49,15 @@ func parseGantt(input string) (ParseOutput, error) {
 		if !ok {
 			continue
 		}
-		taskLabel = strings.TrimSpace(taskLabel)
-		if taskLabel == "" {
+		taskLabel = preserveGanttTaskLabel(taskLabel)
+		if strings.TrimSpace(taskLabel) == "" {
 			continue
 		}
 		id, details, after, status := parseGanttTaskMeta(meta)
 		taskSeq++
 		task := GanttTask{
 			ID:      id,
-			Label:   stripQuotes(taskLabel),
+			Label:   taskLabel,
 			Section: currentSection,
 			Status:  status,
 			After:   after,
@@ -163,4 +163,16 @@ func parseGanttStatus(token string) string {
 	default:
 		return ""
 	}
+}
+
+func preserveGanttTaskLabel(raw string) string {
+	trimmed := strings.TrimSpace(raw)
+	if trimmed == "" {
+		return ""
+	}
+	if (strings.HasPrefix(trimmed, "\"") && strings.HasSuffix(trimmed, "\"")) ||
+		(strings.HasPrefix(trimmed, "'") && strings.HasSuffix(trimmed, "'")) {
+		return stripQuotes(trimmed)
+	}
+	return strings.TrimLeft(raw, " \t")
 }

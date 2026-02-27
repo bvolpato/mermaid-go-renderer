@@ -40,7 +40,7 @@ func ParseMermaid(input string) (ParseOutput, error) {
 	case DiagramC4:
 		return parseClassLike(input, DiagramC4)
 	case DiagramSankey:
-		return parseClassLike(input, DiagramSankey)
+		return parseSankey(input)
 	case DiagramQuadrant:
 		return parseQuadrant(input)
 	case DiagramZenUML:
@@ -54,7 +54,7 @@ func ParseMermaid(input string) (ParseOutput, error) {
 	case DiagramArchitecture:
 		return parseArchitecture(input)
 	case DiagramRadar:
-		return parseClassLike(input, DiagramRadar)
+		return parseRadar(input)
 	case DiagramTreemap:
 		return parseTreemap(input)
 	case DiagramXYChart:

@@ -160,6 +160,23 @@ type JourneyStep struct {
 	Section  string
 }
 
+type SankeyLink struct {
+	Source string
+	Target string
+	Value  float64
+}
+
+type RadarAxis struct {
+	Name  string
+	Label string
+}
+
+type RadarCurve struct {
+	Name    string
+	Label   string
+	Entries []float64
+}
+
 type PacketField struct {
 	Start int
 	End   int
@@ -304,6 +321,17 @@ type Graph struct {
 	JourneyTitle string
 	JourneySteps []JourneyStep
 
+	SankeyLinks []SankeyLink
+
+	RadarTitle      string
+	RadarAxes       []RadarAxis
+	RadarCurves     []RadarCurve
+	RadarShowLegend bool
+	RadarTicks      int
+	RadarMax        *float64
+	RadarMin        *float64
+	RadarGraticule  string
+
 	PacketTitle  string
 	PacketFields []PacketField
 
@@ -352,6 +380,9 @@ func newGraph(kind DiagramKind) Graph {
 		Kind:                      kind,
 		Direction:                 DirectionTopDown,
 		Nodes:                     map[string]Node{},
+		RadarShowLegend:           true,
+		RadarTicks:                5,
+		RadarGraticule:            "circle",
 		SequenceParticipantLabels: map[string]string{},
 		ClassMembers:              map[string][]string{},
 		ClassMethods:              map[string][]string{},

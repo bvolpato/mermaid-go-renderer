@@ -10,9 +10,12 @@ import (
 func ComputeLayout(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	switch graph.Kind {
 	case DiagramFlowchart, DiagramState, DiagramRequirement,
-		DiagramC4, DiagramSankey,
-		DiagramRadar:
+		DiagramC4:
 		return layoutGraphLike(graph, theme, config)
+	case DiagramSankey:
+		return layoutSankeyFidelity(graph, theme, config)
+	case DiagramRadar:
+		return layoutRadarFidelity(graph, theme, config)
 	case DiagramER:
 		return layoutERDiagram(graph, theme, config)
 	case DiagramClass:
@@ -196,9 +199,13 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	}
 
 	for edgeIdx, edge := range layout.Edges {
+		lineClass := "relation"
+		if edge.Style == EdgeDotted {
+			lineClass += " dotted-line"
+		}
 		line := LayoutLine{
 			ID:          "id_" + edge.From + "_" + edge.To + "_" + intString(edgeIdx+1),
-			Class:       "relation",
+			Class:       lineClass,
 			X1:          edge.X1,
 			Y1:          edge.Y1,
 			X2:          edge.X2,
@@ -210,9 +217,6 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			ArrowEnd:    edge.ArrowEnd,
 			MarkerStart: edge.MarkerStart,
 			MarkerEnd:   edge.MarkerEnd,
-		}
-		if strings.TrimSpace(line.MarkerStart) == "" && strings.TrimSpace(line.MarkerEnd) == "" {
-			line.MarkerStart = "my-svg_class-extensionStart"
 		}
 		if strings.TrimSpace(line.MarkerStart) != "" || strings.TrimSpace(line.MarkerEnd) != "" {
 			line.ArrowStart = false

@@ -54,6 +54,9 @@ func parseClassDiagram(input string) (ParseOutput, error) {
 		if shouldSkipClassLikeLine(DiagramClass, line) {
 			continue
 		}
+		if addClassRelationLine(&graph, line) {
+			continue
+		}
 
 		if statements := splitEdgeChain(line); len(statements) > 0 {
 			addedAny := false
@@ -139,4 +142,127 @@ func appendClassMemberLine(graph *Graph, classID string, line string) {
 		return
 	}
 	graph.ClassMembers[classID] = append(graph.ClassMembers[classID], member)
+}
+
+var classRelationTokens = []string{
+	"<|==", "==|>",
+	"<|--", "--|>",
+	"<|..", "..|>",
+	"()==", "==()",
+	"()--", "--()",
+	"()..", "..()",
+	"*==", "==*",
+	"*--", "--*",
+	"*..", "..*",
+	"o==", "==o",
+	"o--", "--o",
+	"o..", "..o",
+	"<==", "==>",
+	"<--", "-->",
+	"<..", "..>",
+	"==", "--", "..",
+}
+
+func addClassRelationLine(graph *Graph, line string) bool {
+	body, label := splitClassRelationBodyAndLabel(line)
+	start, end, token, ok := findClassRelationToken(body)
+	if !ok {
+		return false
+	}
+	leftRaw := strings.TrimSpace(body[:start])
+	rightRaw := strings.TrimSpace(body[end:])
+	if leftRaw == "" || rightRaw == "" {
+		return false
+	}
+
+	fromID, fromLabel, fromShape, _ := parseNodeToken(leftRaw)
+	toID, toLabel, toShape, _ := parseNodeToken(rightRaw)
+	if fromID == "" || toID == "" {
+		return false
+	}
+
+	graph.ensureNode(fromID, fromLabel, fromShape)
+	graph.ensureNode(toID, toLabel, toShape)
+
+	markerStart, markerEnd := classRelationMarkers(token)
+	edge := Edge{
+		From:        fromID,
+		To:          toID,
+		Label:       label,
+		Style:       EdgeSolid,
+		ArrowStart:  strings.HasPrefix(token, "<"),
+		ArrowEnd:    strings.HasSuffix(token, ">"),
+		MarkerStart: markerStart,
+		MarkerEnd:   markerEnd,
+	}
+	if strings.Contains(token, "..") {
+		edge.Style = EdgeDotted
+	} else if strings.Contains(token, "==") {
+		edge.Style = EdgeThick
+	}
+	if edge.MarkerStart == "" && edge.ArrowStart {
+		edge.MarkerStart = "my-svg_class-dependencyStart"
+	}
+	if edge.MarkerEnd == "" && edge.ArrowEnd {
+		edge.MarkerEnd = "my-svg_class-dependencyEnd"
+	}
+	edge.Directed = edge.ArrowStart || edge.ArrowEnd || edge.MarkerStart != "" || edge.MarkerEnd != ""
+
+	graph.addEdge(edge)
+	return true
+}
+
+func splitClassRelationBodyAndLabel(line string) (body string, label string) {
+	masked := maskBracketContent(line)
+	colon := strings.Index(masked, ":")
+	if colon < 0 {
+		return strings.TrimSpace(line), ""
+	}
+	return strings.TrimSpace(line[:colon]), strings.TrimSpace(line[colon+1:])
+}
+
+func findClassRelationToken(body string) (start, end int, token string, ok bool) {
+	masked := maskBracketContent(body)
+	bestStart := len(masked) + 1
+	bestLen := -1
+	bestToken := ""
+	for _, candidate := range classRelationTokens {
+		idx := strings.Index(masked, candidate)
+		if idx < 0 {
+			continue
+		}
+		if idx < bestStart || (idx == bestStart && len(candidate) > bestLen) {
+			bestStart = idx
+			bestLen = len(candidate)
+			bestToken = candidate
+		}
+	}
+	if bestLen <= 0 {
+		return 0, 0, "", false
+	}
+	return bestStart, bestStart + bestLen, bestToken, true
+}
+
+func classRelationMarkers(token string) (start string, end string) {
+	switch {
+	case strings.HasPrefix(token, "<|"):
+		start = "my-svg_class-extensionStart"
+	case strings.HasPrefix(token, "*"):
+		start = "my-svg_class-compositionStart"
+	case strings.HasPrefix(token, "o"):
+		start = "my-svg_class-aggregationStart"
+	case strings.HasPrefix(token, "()"):
+		start = "my-svg_class-lollipopStart"
+	}
+	switch {
+	case strings.HasSuffix(token, "|>"):
+		end = "my-svg_class-extensionEnd"
+	case strings.HasSuffix(token, "*"):
+		end = "my-svg_class-compositionEnd"
+	case strings.HasSuffix(token, "o"):
+		end = "my-svg_class-aggregationEnd"
+	case strings.HasSuffix(token, "()"):
+		end = "my-svg_class-lollipopEnd"
+	}
+	return start, end
 }
