@@ -1,6 +1,9 @@
 package mermaid
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Direction string
 
@@ -86,20 +89,45 @@ type Node struct {
 }
 
 type Edge struct {
-	From       string
-	To         string
-	Label      string
-	Directed   bool
-	ArrowStart bool
-	ArrowEnd   bool
-	Style      EdgeStyle
+	From        string
+	To          string
+	Label       string
+	Directed    bool
+	ArrowStart  bool
+	ArrowEnd    bool
+	MarkerStart string
+	MarkerEnd   string
+	Style       EdgeStyle
 }
 
 type SequenceMessage struct {
-	From  string
-	To    string
-	Label string
-	Arrow string
+	From     string
+	To       string
+	Label    string
+	Arrow    string
+	Index    string
+	IsReturn bool
+}
+
+type SequenceEventKind string
+
+const (
+	SequenceEventMessage       SequenceEventKind = "message"
+	SequenceEventAltStart      SequenceEventKind = "alt_start"
+	SequenceEventAltElse       SequenceEventKind = "alt_else"
+	SequenceEventAltEnd        SequenceEventKind = "alt_end"
+	SequenceEventParStart      SequenceEventKind = "par_start"
+	SequenceEventParAnd        SequenceEventKind = "par_and"
+	SequenceEventParEnd        SequenceEventKind = "par_end"
+	SequenceEventActivateStart SequenceEventKind = "activate_start"
+	SequenceEventActivateEnd   SequenceEventKind = "activate_end"
+)
+
+type SequenceEvent struct {
+	Kind         SequenceEventKind
+	MessageIndex int
+	Label        string
+	Actor        string
 }
 
 type PieSlice struct {
@@ -114,6 +142,7 @@ type GanttTask struct {
 	Start    string
 	Duration string
 	Status   string
+	After    string
 }
 
 type TimelineEvent struct {
@@ -123,10 +152,38 @@ type TimelineEvent struct {
 }
 
 type JourneyStep struct {
-	Label   string
-	Score   float64
-	Actors  []string
-	Section string
+	ID       string
+	Label    string
+	Score    float64
+	HasScore bool
+	Actors   []string
+	Section  string
+}
+
+type PacketField struct {
+	Start int
+	End   int
+	Label string
+}
+
+type TreemapItem struct {
+	Depth    int
+	Label    string
+	Value    float64
+	HasValue bool
+}
+
+type KanbanCard struct {
+	ID       string
+	Title    string
+	Ticket   string
+	Assigned string
+	Priority string
+}
+
+type KanbanColumn struct {
+	Title string
+	Cards []KanbanCard
 }
 
 type MindmapNode struct {
@@ -134,13 +191,38 @@ type MindmapNode struct {
 	Label  string
 	Level  int
 	Parent string
+	Shape  NodeShape
 }
 
 type GitCommit struct {
-	ID     string
-	Branch string
-	Label  string
+	ID            string
+	Branch        string
+	Label         string
+	Message       string
+	Seq           int
+	CommitType    GitGraphCommitType
+	CustomType    GitGraphCommitType
+	HasCustomType bool
+	Tags          []string
+	Parents       []string
+	CustomID      bool
 }
+
+type GitBranch struct {
+	Name           string
+	Order          *float64
+	InsertionIndex int
+}
+
+type GitGraphCommitType string
+
+const (
+	GitGraphCommitTypeNormal     GitGraphCommitType = "NORMAL"
+	GitGraphCommitTypeMerge      GitGraphCommitType = "MERGE"
+	GitGraphCommitTypeReverse    GitGraphCommitType = "REVERSE"
+	GitGraphCommitTypeHighlight  GitGraphCommitType = "HIGHLIGHT"
+	GitGraphCommitTypeCherryPick GitGraphCommitType = "CHERRY-PICK"
+)
 
 type XYSeriesKind string
 
@@ -161,6 +243,36 @@ type QuadrantPoint struct {
 	Y     float64
 }
 
+type ArchitectureGroup struct {
+	ID    string
+	Label string
+	Icon  string
+}
+
+type ArchitectureService struct {
+	ID      string
+	Label   string
+	Icon    string
+	GroupID string
+}
+
+type ArchitectureEndpoint struct {
+	ID   string
+	Side string
+}
+
+type ArchitectureLink struct {
+	From ArchitectureEndpoint
+	To   ArchitectureEndpoint
+}
+
+type ZenUMLAltBlock struct {
+	Condition string
+	Start     int
+	ElseStart int
+	End       int
+}
+
 type Graph struct {
 	Kind      DiagramKind
 	Direction Direction
@@ -170,8 +282,12 @@ type Graph struct {
 	NodeOrder []string
 	Edges     []Edge
 
-	SequenceParticipants []string
-	SequenceMessages     []SequenceMessage
+	SequenceParticipants      []string
+	SequenceMessages          []SequenceMessage
+	SequenceEvents            []SequenceEvent
+	SequenceParticipantLabels map[string]string
+	ZenUMLTitle               string
+	ZenUMLAltBlocks           []ZenUMLAltBlock
 
 	PieTitle    string
 	PieShowData bool
@@ -188,11 +304,20 @@ type Graph struct {
 	JourneyTitle string
 	JourneySteps []JourneyStep
 
+	PacketTitle  string
+	PacketFields []PacketField
+
+	TreemapItems []TreemapItem
+	KanbanBoard  []KanbanColumn
+	BlockColumns int
+	BlockRows    [][]string
+
 	MindmapRootID string
 	MindmapNodes  []MindmapNode
 
 	GitMainBranch string
 	GitBranches   []string
+	GitBranchDefs []GitBranch
 	GitCommits    []GitCommit
 
 	XYTitle       string
@@ -211,20 +336,44 @@ type Graph struct {
 	QuadrantLabels      [4]string
 	QuadrantPoints      []QuadrantPoint
 
+	ClassMembers map[string][]string
+	ClassMethods map[string][]string
+	ERAttributes map[string][]string
+
+	ArchitectureGroups   []ArchitectureGroup
+	ArchitectureServices []ArchitectureService
+	ArchitectureLinks    []ArchitectureLink
+
 	GenericLines []string
 }
 
 func newGraph(kind DiagramKind) Graph {
 	return Graph{
-		Kind:      kind,
-		Direction: DirectionTopDown,
-		Nodes:     map[string]Node{},
+		Kind:                      kind,
+		Direction:                 DirectionTopDown,
+		Nodes:                     map[string]Node{},
+		SequenceParticipantLabels: map[string]string{},
+		ClassMembers:              map[string][]string{},
+		ClassMethods:              map[string][]string{},
+		ERAttributes:              map[string][]string{},
 	}
 }
 
 func (g *Graph) ensureNode(id, label string, shape NodeShape) {
 	if id == "" {
 		return
+	}
+	if existing, ok := g.Nodes[id]; ok {
+		if strings.TrimSpace(label) == "" || strings.TrimSpace(label) == id {
+			if strings.TrimSpace(existing.Label) != "" {
+				label = existing.Label
+			}
+		}
+		if shape == "" || shape == ShapeRectangle {
+			if existing.Shape != "" {
+				shape = existing.Shape
+			}
+		}
 	}
 	if shape == "" {
 		shape = ShapeRectangle

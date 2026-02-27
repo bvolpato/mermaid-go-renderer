@@ -10,45 +10,65 @@ func parseTimeline(input string) (ParseOutput, error) {
 
 	graph := newGraph(DiagramTimeline)
 	graph.Source = input
+	graph.Direction = DirectionLeftRight
 	currentSection := ""
+	var pendingTime string
+	var pendingEvents []string
 
-	for i, raw := range lines {
+	flushPending := func() {
+		if strings.TrimSpace(pendingTime) == "" {
+			pendingEvents = nil
+			return
+		}
+		graph.TimelineEvents = append(graph.TimelineEvents, TimelineEvent{
+			Time:    pendingTime,
+			Events:  append([]string(nil), pendingEvents...),
+			Section: currentSection,
+		})
+		pendingTime = ""
+		pendingEvents = nil
+	}
+
+	for _, raw := range lines {
 		line := strings.TrimSpace(raw)
+		if line == "" {
+			continue
+		}
 		low := lower(line)
-
-		if i == 0 && strings.HasPrefix(low, "timeline") {
+		if strings.HasPrefix(low, "timeline") {
 			continue
 		}
-		if strings.HasPrefix(low, "title ") {
-			graph.TimelineTitle = stripQuotes(strings.TrimSpace(line[len("title "):]))
+		if strings.HasPrefix(low, "title") {
+			graph.TimelineTitle = stripQuotes(strings.TrimSpace(line[len("title"):]))
 			continue
 		}
-		if strings.HasPrefix(low, "section ") {
-			currentSection = stripQuotes(strings.TrimSpace(line[len("section "):]))
+		if strings.HasPrefix(low, "section") {
+			flushPending()
+			currentSection = stripQuotes(strings.TrimSpace(line[len("section"):]))
 			if currentSection != "" {
 				graph.TimelineSections = append(graph.TimelineSections, currentSection)
 			}
 			continue
 		}
-
-		event, ok := parseTimelineEventLine(line, currentSection)
-		if !ok {
+		colonIdx := strings.Index(line, ":")
+		if colonIdx < 0 {
 			continue
 		}
-		graph.TimelineEvents = append(graph.TimelineEvents, event)
-		id := "timeline_" + intString(len(graph.TimelineEvents))
-		graph.ensureNode(id, event.Time, ShapeRoundRect)
+		timePart := strings.TrimSpace(line[:colonIdx])
+		eventsPart := strings.TrimSpace(line[colonIdx+1:])
+		if timePart == "" {
+			continue
+		}
+		flushPending()
+		pendingTime = stripQuotes(timePart)
+		for _, event := range strings.Split(eventsPart, ":") {
+			ev := stripQuotes(strings.TrimSpace(event))
+			if ev != "" {
+				pendingEvents = append(pendingEvents, ev)
+			}
+		}
 	}
-
-	for i := 1; i < len(graph.TimelineEvents); i++ {
-		graph.addEdge(Edge{
-			From:     "timeline_" + intString(i),
-			To:       "timeline_" + intString(i+1),
-			Directed: true,
-			ArrowEnd: true,
-			Style:    EdgeSolid,
-		})
-	}
+	flushPending()
 
 	return ParseOutput{Graph: graph}, nil
 }

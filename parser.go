@@ -18,11 +18,11 @@ func ParseMermaid(input string) (ParseOutput, error) {
 	case DiagramSequence:
 		return parseSequence(input)
 	case DiagramClass:
-		return parseClassLike(input, DiagramClass)
+		return parseClassDiagram(input)
 	case DiagramState:
-		return parseClassLike(input, DiagramState)
+		return parseStateDiagram(input)
 	case DiagramER:
-		return parseClassLike(input, DiagramER)
+		return parseERDiagram(input)
 	case DiagramPie:
 		return parsePie(input)
 	case DiagramMindmap:
@@ -44,19 +44,19 @@ func ParseMermaid(input string) (ParseOutput, error) {
 	case DiagramQuadrant:
 		return parseQuadrant(input)
 	case DiagramZenUML:
-		return parseClassLike(input, DiagramZenUML)
+		return parseZenUML(input)
 	case DiagramBlock:
-		return parseClassLike(input, DiagramBlock)
+		return parseBlock(input)
 	case DiagramPacket:
-		return parseClassLike(input, DiagramPacket)
+		return parsePacket(input)
 	case DiagramKanban:
-		return parseClassLike(input, DiagramKanban)
+		return parseKanban(input)
 	case DiagramArchitecture:
-		return parseClassLike(input, DiagramArchitecture)
+		return parseArchitecture(input)
 	case DiagramRadar:
 		return parseClassLike(input, DiagramRadar)
 	case DiagramTreemap:
-		return parseClassLike(input, DiagramTreemap)
+		return parseTreemap(input)
 	case DiagramXYChart:
 		return parseXYChart(input)
 	default:
@@ -65,8 +65,12 @@ func ParseMermaid(input string) (ParseOutput, error) {
 }
 
 func detectDiagramKind(input string) DiagramKind {
-	for _, rawLine := range strings.Split(input, "\n") {
-		line := stripTrailingComment(strings.TrimSpace(rawLine))
+	lines, err := preprocessRawLines(input, false)
+	if err != nil {
+		return DiagramFlowchart
+	}
+	for _, rawLine := range lines {
+		line := strings.TrimSpace(rawLine)
 		if line == "" {
 			continue
 		}
@@ -124,43 +128,73 @@ func detectDiagramKind(input string) DiagramKind {
 }
 
 func preprocessInput(input string) ([]string, error) {
+	return preprocessRawLines(input, false)
+}
+
+func preprocessInputKeepIndent(input string) ([]string, error) {
+	return preprocessRawLines(input, true)
+}
+
+func preprocessRawLines(input string, keepIndent bool) ([]string, error) {
 	lines := make([]string, 0, 64)
+	inDirectiveBlock := false
+	inFrontMatter := false
+	canStartFrontMatter := true
+
 	for _, raw := range strings.Split(input, "\n") {
 		trimmed := strings.TrimSpace(raw)
+
+		if inFrontMatter {
+			if trimmed == "---" || trimmed == "..." {
+				inFrontMatter = false
+			}
+			continue
+		}
+
+		if inDirectiveBlock {
+			if strings.Contains(trimmed, "}%%") {
+				inDirectiveBlock = false
+			}
+			continue
+		}
+
 		if trimmed == "" {
 			continue
 		}
-		if strings.HasPrefix(trimmed, "%%{") || strings.HasPrefix(trimmed, "%%") {
+
+		if canStartFrontMatter && trimmed == "---" {
+			inFrontMatter = true
+			canStartFrontMatter = false
 			continue
 		}
+		canStartFrontMatter = false
+
+		if strings.HasPrefix(trimmed, "%%{") {
+			if !strings.Contains(trimmed, "}%%") {
+				inDirectiveBlock = true
+			}
+			continue
+		}
+		if strings.HasPrefix(trimmed, "%%") {
+			continue
+		}
+
+		if keepIndent {
+			withoutComment := stripTrailingCommentKeepIndent(raw)
+			if strings.TrimSpace(withoutComment) == "" {
+				continue
+			}
+			lines = append(lines, withoutComment)
+			continue
+		}
+
 		trimmed = stripTrailingComment(trimmed)
 		if trimmed == "" {
 			continue
 		}
 		lines = append(lines, trimmed)
 	}
-	if len(lines) == 0 {
-		return nil, errors.New("no mermaid content found")
-	}
-	return lines, nil
-}
 
-func preprocessInputKeepIndent(input string) ([]string, error) {
-	lines := make([]string, 0, 64)
-	for _, raw := range strings.Split(input, "\n") {
-		trimmed := strings.TrimSpace(raw)
-		if trimmed == "" {
-			continue
-		}
-		if strings.HasPrefix(trimmed, "%%{") || strings.HasPrefix(trimmed, "%%") {
-			continue
-		}
-		withoutComment := stripTrailingCommentKeepIndent(raw)
-		if strings.TrimSpace(withoutComment) == "" {
-			continue
-		}
-		lines = append(lines, withoutComment)
-	}
 	if len(lines) == 0 {
 		return nil, errors.New("no mermaid content found")
 	}
@@ -181,6 +215,12 @@ func parseClassLike(input string, kind DiagramKind) (ParseOutput, error) {
 			continue
 		}
 		if line == "" {
+			continue
+		}
+		if handled := parseClassLikeDeclarationLine(kind, line, &graph); handled {
+			continue
+		}
+		if shouldSkipClassLikeLine(kind, line) {
 			continue
 		}
 
@@ -224,6 +264,114 @@ func parseClassLike(input string, kind DiagramKind) (ParseOutput, error) {
 	}
 
 	return ParseOutput{Graph: graph}, nil
+}
+
+func parseClassLikeDeclarationLine(kind DiagramKind, line string, graph *Graph) bool {
+	l := lower(strings.TrimSpace(line))
+	switch kind {
+	case DiagramClass:
+		if !strings.HasPrefix(l, "class ") {
+			return false
+		}
+		raw := strings.TrimSpace(line[len("class "):])
+		raw = strings.TrimSpace(strings.TrimSuffix(raw, "{"))
+		if raw == "" {
+			return true
+		}
+		if id, label, shape, _ := parseNodeToken(raw); id != "" {
+			graph.ensureNode(id, label, shape)
+			return true
+		}
+		fields := strings.Fields(raw)
+		if len(fields) > 0 {
+			id := stripQuotes(fields[0])
+			graph.ensureNode(id, id, ShapeRectangle)
+		}
+		return true
+	case DiagramER:
+		if !strings.HasSuffix(line, "{") {
+			return false
+		}
+		raw := strings.TrimSpace(strings.TrimSuffix(line, "{"))
+		if raw == "" {
+			return true
+		}
+		if id, label, shape, _ := parseNodeToken(raw); id != "" {
+			graph.ensureNode(id, label, shape)
+			return true
+		}
+		id := stripQuotes(strings.Fields(raw)[0])
+		graph.ensureNode(id, id, ShapeRectangle)
+		return true
+	case DiagramRequirement:
+		if !strings.HasSuffix(line, "{") {
+			return false
+		}
+		parts := strings.Fields(strings.TrimSuffix(strings.TrimSpace(line), "{"))
+		if len(parts) >= 2 {
+			id := sanitizeID(parts[1], parts[1])
+			label := stripQuotes(parts[1])
+			graph.ensureNode(id, label, ShapeRectangle)
+			return true
+		}
+		return true
+	default:
+		return false
+	}
+}
+
+func shouldSkipClassLikeLine(kind DiagramKind, line string) bool {
+	l := lower(strings.TrimSpace(line))
+	if l == "" {
+		return true
+	}
+	if l == "{" || l == "}" {
+		return true
+	}
+	switch kind {
+	case DiagramClass:
+		trimmed := strings.TrimSpace(line)
+		if trimmed != "" {
+			switch trimmed[0] {
+			case '+', '-', '#', '~':
+				if !arrowTokenRe.MatchString(trimmed) {
+					return true
+				}
+			}
+		}
+		if strings.HasPrefix(l, "direction ") ||
+			strings.HasPrefix(l, "note ") ||
+			strings.HasPrefix(l, "style ") ||
+			strings.HasPrefix(l, "classdef ") ||
+			strings.HasPrefix(l, "cssclass ") ||
+			strings.HasPrefix(l, "class ") ||
+			strings.HasPrefix(l, "click ") ||
+			strings.HasPrefix(l, "callback ") ||
+			strings.HasPrefix(l, "link ") {
+			return true
+		}
+		if strings.Contains(line, ":") && !arrowTokenRe.MatchString(line) {
+			return true
+		}
+		if strings.Contains(line, "()") && !arrowTokenRe.MatchString(line) {
+			return true
+		}
+	case DiagramER:
+		if strings.HasPrefix(l, "direction ") ||
+			strings.HasPrefix(l, "style ") ||
+			strings.HasPrefix(l, "classdef ") ||
+			strings.HasPrefix(l, "class ") {
+			return true
+		}
+		if strings.Contains(line, ":") && !arrowTokenRe.MatchString(line) {
+			return true
+		}
+	case DiagramRequirement:
+		if strings.Contains(line, ":") && !arrowTokenRe.MatchString(line) {
+			return true
+		}
+	}
+	return false
 }
 
 func isHeaderLineForKind(line string, kind DiagramKind) bool {

@@ -33,7 +33,7 @@ func BenchmarkRenderXYChart(b *testing.B) {
 }
 
 func benchmarkRender(b *testing.B, diagram string) {
-	options := DefaultRenderOptions()
+	options := DefaultRenderOptions().WithAllowApproximate(true)
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

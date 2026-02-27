@@ -11,6 +11,8 @@ var (
 	pipeLabelRe   = regexp.MustCompile(`^(.+?)\s*(` + arrowPattern + `)\|(.+?)\|\s*(.+)$`)
 	labelArrowRe  = regexp.MustCompile(`^(.+?)\s*(<)?([-.=ox]*[-=]+[-.=ox]*)\s+([^<>=|]+?)\s+([-.=ox]*[-=]+[-.=ox]*)(>)?\s*(.+)$`)
 	simpleArrowRe = regexp.MustCompile(`^(.+?)\s*(` + arrowPattern + `)\s*(.+)$`)
+	nodeMetaShape = regexp.MustCompile(`(?i)\bshape\s*:\s*([a-z0-9_-]+)`)
+	nodeMetaLabel = regexp.MustCompile(`(?i)\blabel\s*:\s*("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|[^,}]+)`)
 )
 
 func parseDirectionLine(line string) (Direction, bool) {
@@ -451,6 +453,9 @@ func parseNodeToken(token string) (id, label string, shape NodeShape, classes []
 	if trimmed == "" {
 		return "", "", "", classes
 	}
+	if metadataID, metadataLabel, metadataShape, ok := parseNodeMetadataToken(trimmed); ok {
+		return metadataID, metadataLabel, metadataShape, classes
+	}
 	if asymmetricID, asymmetricLabel, ok := splitAsymmetricLabel(trimmed); ok {
 		return asymmetricID, asymmetricLabel, ShapeAsymmetric, classes
 	}
@@ -476,6 +481,72 @@ func splitInlineClasses(token string) (string, []string) {
 		}
 	}
 	return base, classes
+}
+
+func parseNodeMetadataToken(token string) (id, label string, shape NodeShape, ok bool) {
+	idx := strings.Index(token, "@{")
+	if idx <= 0 || !strings.HasSuffix(strings.TrimSpace(token), "}") {
+		return "", "", "", false
+	}
+	id = stripQuotes(strings.TrimSpace(token[:idx]))
+	if id == "" {
+		return "", "", "", false
+	}
+	body := strings.TrimSpace(token[idx+2:])
+	if !strings.HasSuffix(body, "}") {
+		return "", "", "", false
+	}
+	body = strings.TrimSpace(body[:len(body)-1])
+	if body == "" {
+		return id, id, ShapeRectangle, true
+	}
+
+	label = id
+	shape = ShapeRectangle
+
+	if matches := nodeMetaLabel.FindStringSubmatch(body); len(matches) >= 2 {
+		raw := strings.TrimSpace(matches[1])
+		label = stripQuotes(raw)
+		if label == "" {
+			label = id
+		}
+	}
+
+	if matches := nodeMetaShape.FindStringSubmatch(body); len(matches) >= 2 {
+		shape = shapeFromMermaidToken(matches[1])
+	}
+
+	return id, label, shape, true
+}
+
+func shapeFromMermaidToken(raw string) NodeShape {
+	token := lower(strings.TrimSpace(raw))
+	switch token {
+	case "round-rect", "rounded", "event":
+		return ShapeRoundRect
+	case "stadium", "pill", "terminal":
+		return ShapeStadium
+	case "subproc", "subprocess", "subroutine", "fr-rect":
+		return ShapeSubroutine
+	case "cyl", "cylinder", "db", "database", "h-cyl", "lin-cyl":
+		return ShapeCylinder
+	case "circle", "circ", "sm-circ", "start", "f-circ", "junction":
+		return ShapeCircle
+	case "dbl-circ", "double-circle", "fr-circ", "stop", "cross-circ":
+		return ShapeDoubleCircle
+	case "diamond", "decision", "question", "diam":
+		return ShapeDiamond
+	case "hex", "hexagon", "prepare":
+		return ShapeHexagon
+	case "parallelogram", "lean-r", "lean-l", "in-out", "out-in":
+		return ShapeParallelogram
+	case "trapezoid", "trap-t", "trap-b", "priority", "manual":
+		return ShapeTrapezoid
+	case "asymmetric", "odd":
+		return ShapeAsymmetric
+	default:
+		return ShapeRectangle
+	}
 }
 
 func splitAsymmetricLabel(token string) (id, label string, ok bool) {

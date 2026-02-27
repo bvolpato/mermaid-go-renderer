@@ -10,87 +10,144 @@ func parseGantt(input string) (ParseOutput, error) {
 
 	graph := newGraph(DiagramGantt)
 	graph.Source = input
+	graph.Direction = DirectionLeftRight
 	currentSection := ""
+	lastTaskID := ""
+	taskSeq := 0
 
-	for i, raw := range lines {
+	for _, raw := range lines {
 		line := strings.TrimSpace(raw)
+		if line == "" {
+			continue
+		}
 		low := lower(line)
-
-		if i == 0 && strings.HasPrefix(low, "gantt") {
+		if strings.HasPrefix(low, "gantt") {
 			continue
 		}
-		if strings.HasPrefix(low, "title ") {
-			graph.GanttTitle = stripQuotes(strings.TrimSpace(line[len("title "):]))
+		if strings.HasPrefix(low, "title") {
+			graph.GanttTitle = stripQuotes(strings.TrimSpace(line[len("title"):]))
 			continue
 		}
-		if strings.HasPrefix(low, "section ") {
-			currentSection = stripQuotes(strings.TrimSpace(line[len("section "):]))
+		if strings.HasPrefix(low, "section") {
+			currentSection = stripQuotes(strings.TrimSpace(line[len("section"):]))
 			if currentSection != "" {
 				graph.GanttSections = append(graph.GanttSections, currentSection)
 			}
+			lastTaskID = ""
 			continue
 		}
 		if strings.HasPrefix(low, "dateformat ") ||
 			strings.HasPrefix(low, "axisformat ") ||
+			strings.HasPrefix(low, "todaymarker ") ||
+			strings.HasPrefix(low, "includes ") ||
 			strings.HasPrefix(low, "excludes ") ||
 			strings.HasPrefix(low, "tickinterval ") {
 			continue
 		}
 
-		task, ok := parseGanttTaskLine(line, currentSection, len(graph.GanttTasks)+1)
+		taskLabel, meta, ok := strings.Cut(line, ":")
 		if !ok {
 			continue
 		}
+		taskLabel = strings.TrimSpace(taskLabel)
+		if taskLabel == "" {
+			continue
+		}
+		id, details, after, status := parseGanttTaskMeta(meta)
+		taskSeq++
+		task := GanttTask{
+			ID:      id,
+			Label:   stripQuotes(taskLabel),
+			Section: currentSection,
+			Status:  status,
+			After:   after,
+		}
+		if task.ID == "" {
+			task.ID = "gantt_" + intString(taskSeq)
+		}
+		task.Start, task.Duration = extractGanttTiming(details)
 		graph.GanttTasks = append(graph.GanttTasks, task)
 		graph.ensureNode(task.ID, task.Label, ShapeRectangle)
-	}
-
-	for i := 1; i < len(graph.GanttTasks); i++ {
-		graph.addEdge(Edge{
-			From:     graph.GanttTasks[i-1].ID,
-			To:       graph.GanttTasks[i].ID,
-			Directed: true,
-			ArrowEnd: true,
-			Style:    EdgeDotted,
-		})
+		if task.After != "" {
+			graph.addEdge(Edge{
+				From:     task.After,
+				To:       task.ID,
+				Directed: true,
+				ArrowEnd: true,
+				Style:    EdgeSolid,
+			})
+		} else if lastTaskID != "" {
+			graph.addEdge(Edge{
+				From:     lastTaskID,
+				To:       task.ID,
+				Directed: false,
+				ArrowEnd: false,
+				Style:    EdgeSolid,
+			})
+		}
+		lastTaskID = task.ID
 	}
 
 	return ParseOutput{Graph: graph}, nil
 }
 
-func parseGanttTaskLine(line, section string, seq int) (GanttTask, bool) {
-	parts := strings.SplitN(line, ":", 2)
-	if len(parts) != 2 {
-		return GanttTask{}, false
+func parseGanttTaskMeta(meta string) (id string, details []string, after string, status string) {
+	for _, rawToken := range strings.Split(meta, ",") {
+		token := strings.TrimSpace(rawToken)
+		if token == "" {
+			continue
+		}
+		low := lower(token)
+		if strings.HasPrefix(low, "after ") {
+			after = strings.TrimSpace(token[len("after "):])
+			continue
+		}
+		if parsed := parseGanttStatus(low); parsed != "" {
+			status = parsed
+			details = append(details, token)
+			continue
+		}
+		if looksLikeDate(token) || looksLikeDuration(token) {
+			details = append(details, token)
+			continue
+		}
+		if id == "" {
+			id = sanitizeID(token, "")
+		} else {
+			details = append(details, token)
+		}
 	}
+	return id, details, after, status
+}
 
-	label := strings.TrimSpace(parts[0])
-	if label == "" {
-		return GanttTask{}, false
+func extractGanttTiming(details []string) (start string, duration string) {
+	for _, detail := range details {
+		if start == "" && looksLikeDate(detail) {
+			start = detail
+		} else if duration == "" && looksLikeDuration(detail) {
+			duration = detail
+		}
 	}
+	return start, duration
+}
 
-	metaParts := strings.Split(parts[1], ",")
-	for i := range metaParts {
-		metaParts[i] = strings.TrimSpace(metaParts[i])
-	}
+func looksLikeDate(token string) bool {
+	t := strings.TrimSpace(token)
+	return strings.Contains(t, "-") || strings.Contains(t, "/") || strings.Contains(t, ".")
+}
 
-	task := GanttTask{
-		ID:      "gantt_" + intString(seq),
-		Label:   stripQuotes(label),
-		Section: section,
+func looksLikeDuration(token string) bool {
+	t := lower(strings.TrimSpace(token))
+	if t == "" {
+		return false
 	}
-
-	if len(metaParts) > 0 {
-		task.Status = parseGanttStatus(metaParts[0])
+	last := t[len(t)-1]
+	switch last {
+	case 'd', 'h', 'w', 'm', 'y':
+		return true
+	default:
+		return false
 	}
-	if len(metaParts) > 1 {
-		task.Start = metaParts[len(metaParts)-2]
-		task.Duration = metaParts[len(metaParts)-1]
-	}
-	if len(metaParts) >= 3 && !looksLikeDateOrDuration(metaParts[0]) {
-		task.ID = sanitizeID(metaParts[0], task.ID)
-	}
-	return task, true
 }
 
 func parseGanttStatus(token string) string {

@@ -90,7 +90,12 @@ func TestPreferredAspectRatio(t *testing.T) {
 	width, okW := parseSVGAttr(svg, "width")
 	height, okH := parseSVGAttr(svg, "height")
 	if !okW || !okH || height == 0 {
-		t.Fatalf("missing width/height in SVG")
+		vw, vh, okV := parseSVGViewBoxSizeForTest(svg)
+		if !okV || vh == 0 {
+			t.Fatalf("missing width/height in SVG")
+		}
+		width = vw
+		height = vh
 	}
 	ratio := width / height
 	if ratio < 1.7 || ratio > 1.85 {
@@ -118,6 +123,32 @@ func TestExtractMermaidBlocks(t *testing.T) {
 	}
 }
 
+func TestRenderPieByDefault(t *testing.T) {
+	svg, err := RenderWithOptions(
+		"pie showData\ntitle Pets\nDogs: 10\nCats: 5",
+		DefaultRenderOptions(),
+	)
+	if err != nil {
+		t.Fatalf("expected default rendering to succeed, got: %v", err)
+	}
+	if !strings.Contains(svg, "<svg") {
+		t.Fatalf("expected SVG output")
+	}
+}
+
+func TestRenderAllowsApproximateWhenEnabled(t *testing.T) {
+	svg, err := RenderWithOptions(
+		"pie showData\ntitle Pets\nDogs: 10\nCats: 5",
+		DefaultRenderOptions().WithAllowApproximate(true),
+	)
+	if err != nil {
+		t.Fatalf("expected approximate rendering to succeed, got: %v", err)
+	}
+	if !strings.Contains(svg, "<svg") {
+		t.Fatalf("expected SVG output")
+	}
+}
+
 func parseSVGAttr(svg, attr string) (float64, bool) {
 	marker := attr + "=\""
 	start := strings.Index(svg, marker)
@@ -130,4 +161,27 @@ func parseSVGAttr(svg, attr string) (float64, bool) {
 		return 0, false
 	}
 	return parseFloat(svg[start : start+end])
+}
+
+func parseSVGViewBoxSizeForTest(svg string) (float64, float64, bool) {
+	marker := `viewBox="`
+	start := strings.Index(svg, marker)
+	if start < 0 {
+		return 0, 0, false
+	}
+	start += len(marker)
+	end := strings.Index(svg[start:], `"`)
+	if end < 0 {
+		return 0, 0, false
+	}
+	parts := strings.Fields(svg[start : start+end])
+	if len(parts) != 4 {
+		return 0, 0, false
+	}
+	w, okW := parseFloat(parts[2])
+	h, okH := parseFloat(parts[3])
+	if !okW || !okH {
+		return 0, 0, false
+	}
+	return w, h, true
 }

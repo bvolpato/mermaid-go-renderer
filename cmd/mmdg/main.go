@@ -34,6 +34,7 @@ func run() error {
 		rankSpacing          float64
 		timing               bool
 		fastText             bool
+		allowApproximate     bool
 	)
 
 	fs := flag.NewFlagSet("mmdg", flag.ContinueOnError)
@@ -48,7 +49,12 @@ func run() error {
 	fs.Float64Var(&rankSpacing, "rankSpacing", 0, "rank spacing")
 	fs.BoolVar(&timing, "timing", false, "print timing as JSON to stderr")
 	fs.BoolVar(&fastText, "fastText", false, "use fast text width approximation")
+	fs.BoolVar(&allowApproximate, "allowApproximate", false, "allow rendering for experimental low-fidelity diagram families")
 	if err := fs.Parse(os.Args[1:]); err != nil {
+		if errors.Is(err, flag.ErrHelp) {
+			printUsage(fs)
+			return nil
+		}
 		return err
 	}
 
@@ -75,6 +81,7 @@ func run() error {
 		options = options.WithPreferredAspectRatio(ratio)
 	}
 	options.Layout.FastTextMetrics = fastText
+	options.Layout.AllowApproximate = allowApproximate
 
 	switch lower(outputFormat) {
 	case "svg", "png":
@@ -108,6 +115,17 @@ func run() error {
 		}
 	}
 	return nil
+}
+
+func printUsage(fs *flag.FlagSet) {
+	fmt.Fprintln(os.Stdout, "Usage: mmdg [flags]")
+	fmt.Fprintln(os.Stdout)
+	fmt.Fprintln(os.Stdout, "Render Mermaid diagrams to SVG without browser/chromium.")
+	fmt.Fprintln(os.Stdout)
+	fmt.Fprintln(os.Stdout, "Flags:")
+	fs.SetOutput(os.Stdout)
+	fs.PrintDefaults()
+	fs.SetOutput(io.Discard)
 }
 
 func renderOne(diagram, outputPath, outputFormat string, options mermaid.RenderOptions, timing bool) error {

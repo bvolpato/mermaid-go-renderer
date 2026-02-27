@@ -2,6 +2,7 @@ package mermaid
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -59,6 +60,9 @@ func RenderWithOptions(input string, options RenderOptions) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	if err := ensureHighFidelityOrAllowApproximate(parsed.Graph.Kind, options); err != nil {
+		return "", err
+	}
 	layout := ComputeLayout(&parsed.Graph, options.Theme, options.Layout)
 	return RenderSVG(layout, options.Theme, options.Layout), nil
 }
@@ -82,6 +86,9 @@ func RenderWithDetailedTiming(input string, options RenderOptions) (RenderDetail
 	if err != nil {
 		return RenderDetailedResult{}, err
 	}
+	if err := ensureHighFidelityOrAllowApproximate(parsed.Graph.Kind, options); err != nil {
+		return RenderDetailedResult{}, err
+	}
 	parseUS := uint64(time.Since(startParse).Microseconds())
 
 	startLayout := time.Now()
@@ -103,4 +110,27 @@ func RenderWithDetailedTiming(input string, options RenderOptions) (RenderDetail
 			LabelPlacementUS: layoutUS / 2,
 		},
 	}, nil
+}
+
+func ensureHighFidelityOrAllowApproximate(kind DiagramKind, options RenderOptions) error {
+	if options.Layout.AllowApproximate {
+		return nil
+	}
+	if isHighFidelityNativeKind(kind) {
+		return nil
+	}
+	return fmt.Errorf("diagram kind %q is not supported", kind)
+}
+
+func isHighFidelityNativeKind(kind DiagramKind) bool {
+	switch kind {
+	case DiagramFlowchart, DiagramSequence, DiagramClass, DiagramState, DiagramER,
+		DiagramPie, DiagramMindmap, DiagramJourney, DiagramTimeline, DiagramGantt,
+		DiagramRequirement, DiagramGitGraph, DiagramC4, DiagramSankey, DiagramQuadrant,
+		DiagramZenUML, DiagramBlock, DiagramPacket, DiagramKanban, DiagramArchitecture,
+		DiagramRadar, DiagramTreemap, DiagramXYChart:
+		return true
+	default:
+		return false
+	}
 }

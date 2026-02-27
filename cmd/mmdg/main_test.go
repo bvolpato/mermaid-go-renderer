@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -84,5 +85,35 @@ func TestParseAspectRatioValue(t *testing.T) {
 		if got < tc.want-0.0001 || got > tc.want+0.0001 {
 			t.Fatalf("ratio mismatch for %q: got %f want %f", tc.input, got, tc.want)
 		}
+	}
+}
+
+func TestRunHelp(t *testing.T) {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"mmdg", "--help"}
+
+	oldStdout := os.Stdout
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatalf("os.Pipe() error = %v", err)
+	}
+	os.Stdout = w
+	defer func() { os.Stdout = oldStdout }()
+
+	runErr := run()
+	_ = w.Close()
+	out, _ := io.ReadAll(r)
+	_ = r.Close()
+
+	if runErr != nil {
+		t.Fatalf("run() with --help error = %v", runErr)
+	}
+	output := string(out)
+	if !strings.Contains(output, "Usage: mmdg [flags]") {
+		t.Fatalf("expected usage header in help output, got: %q", output)
+	}
+	if !strings.Contains(output, "Render Mermaid diagrams to SVG without browser/chromium.") {
+		t.Fatalf("expected help description, got: %q", output)
 	}
 }

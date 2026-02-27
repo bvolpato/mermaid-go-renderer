@@ -9,38 +9,47 @@ func parseJourney(input string) (ParseOutput, error) {
 	}
 	graph := newGraph(DiagramJourney)
 	graph.Source = input
+	graph.Direction = DirectionLeftRight
 	currentSection := ""
+	lastStepID := ""
+	stepSeq := 0
 
-	for i, raw := range lines {
+	for _, raw := range lines {
 		line := strings.TrimSpace(raw)
+		if line == "" {
+			continue
+		}
 		low := lower(line)
-		if i == 0 && strings.HasPrefix(low, "journey") {
+		if strings.HasPrefix(low, "journey") {
 			continue
 		}
-		if strings.HasPrefix(low, "title ") {
-			graph.JourneyTitle = stripQuotes(strings.TrimSpace(line[len("title "):]))
+		if strings.HasPrefix(low, "title") {
+			graph.JourneyTitle = stripQuotes(strings.TrimSpace(line[len("title"):]))
 			continue
 		}
-		if strings.HasPrefix(low, "section ") {
-			currentSection = stripQuotes(strings.TrimSpace(line[len("section "):]))
+		if strings.HasPrefix(low, "section") {
+			currentSection = stripQuotes(strings.TrimSpace(line[len("section"):]))
+			lastStepID = ""
 			continue
 		}
 		step, ok := parseJourneyTaskLine(line, currentSection)
 		if !ok {
 			continue
 		}
+		stepSeq++
+		step.ID = "journey_" + intString(stepSeq)
 		graph.JourneySteps = append(graph.JourneySteps, step)
-		id := "journey_" + intString(len(graph.JourneySteps))
-		graph.ensureNode(id, step.Label, ShapeRoundRect)
-		if len(graph.JourneySteps) > 1 {
+		graph.ensureNode(step.ID, step.Label, ShapeRectangle)
+		if lastStepID != "" {
 			graph.addEdge(Edge{
-				From:     "journey_" + intString(len(graph.JourneySteps)-1),
-				To:       id,
-				Directed: true,
-				ArrowEnd: true,
+				From:     lastStepID,
+				To:       step.ID,
+				Directed: false,
+				ArrowEnd: false,
 				Style:    EdgeSolid,
 			})
 		}
+		lastStepID = step.ID
 	}
 
 	return ParseOutput{Graph: graph}, nil
@@ -57,12 +66,12 @@ func parseJourneyTaskLine(line, section string) (JourneyStep, bool) {
 	}
 	step := JourneyStep{
 		Label:   label,
-		Score:   0,
 		Section: section,
 	}
 	score, ok := parseFloat(strings.TrimSpace(parts[1]))
 	if ok {
 		step.Score = score
+		step.HasScore = true
 	}
 	if len(parts) >= 3 {
 		for _, actorRaw := range strings.Split(parts[2], ",") {

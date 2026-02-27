@@ -28,7 +28,10 @@ func parseMindmap(input string) (ParseOutput, error) {
 			continue
 		}
 
-		label := parseMindmapLabel(trimmed)
+		label, shape := parseMindmapNode(trimmed)
+		if shape == "" {
+			shape = ShapeRoundRect
+		}
 		id := sanitizeID(label, "mindmap_"+intString(len(graph.MindmapNodes)+1))
 		level := 0
 		for len(stack) > 0 && stack[len(stack)-1].indent >= indent {
@@ -51,8 +54,9 @@ func parseMindmap(input string) (ParseOutput, error) {
 			Label:  label,
 			Level:  level,
 			Parent: parentID,
+			Shape:  shape,
 		})
-		graph.ensureNode(id, label, ShapeRoundRect)
+		graph.ensureNode(id, label, shape)
 		if parentID != "" {
 			graph.addEdge(Edge{
 				From:     parentID,
@@ -67,12 +71,14 @@ func parseMindmap(input string) (ParseOutput, error) {
 	return ParseOutput{Graph: graph}, nil
 }
 
-func parseMindmapLabel(line string) string {
+func parseMindmapNode(line string) (label string, shape NodeShape) {
 	trimmed := strings.TrimSpace(line)
 	if strings.HasPrefix(trimmed, "::") {
 		trimmed = strings.TrimPrefix(trimmed, "::")
 	}
-	_, label, _, _ := parseNodeToken(trimmed)
+	_, parsedLabel, parsedShape, _ := parseNodeToken(trimmed)
+	label = strings.TrimSpace(parsedLabel)
+	shape = parsedShape
 	label = strings.TrimSpace(label)
 	if label == "" {
 		label = stripQuotes(trimmed)
@@ -80,5 +86,5 @@ func parseMindmapLabel(line string) string {
 	if label == "" {
 		label = "node"
 	}
-	return label
+	return label, shape
 }

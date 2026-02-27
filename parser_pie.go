@@ -10,15 +10,18 @@ func parsePie(input string) (ParseOutput, error) {
 	graph := newGraph(DiagramPie)
 	graph.Source = input
 
-	for i, raw := range lines {
+	for _, raw := range lines {
 		line := strings.TrimSpace(raw)
+		if line == "" {
+			continue
+		}
 		low := lower(line)
-		if i == 0 && strings.HasPrefix(low, "pie") {
+		if strings.HasPrefix(low, "pie") {
 			if strings.Contains(low, "showdata") {
 				graph.PieShowData = true
 			}
-			if idx := strings.Index(low, "title "); idx >= 0 {
-				title := strings.TrimSpace(line[idx+len("title "):])
+			if idx := strings.Index(low, "title"); idx >= 0 {
+				title := strings.TrimSpace(line[idx+len("title"):])
 				graph.PieTitle = stripQuotes(title)
 			}
 			continue
@@ -38,11 +41,6 @@ func parsePie(input string) (ParseOutput, error) {
 		graph.PieSlices = append(graph.PieSlices, PieSlice{Label: label, Value: value})
 	}
 
-	for i, slice := range graph.PieSlices {
-		id := "slice_" + intString(i+1)
-		graph.ensureNode(id, slice.Label, ShapeRectangle)
-	}
-
 	return ParseOutput{Graph: graph}, nil
 }
 
@@ -52,7 +50,11 @@ func parsePieSliceLine(line string) (string, float64, bool) {
 		return "", 0, false
 	}
 	label := stripQuotes(strings.TrimSpace(parts[0]))
-	value, ok := parseFloat(parts[1])
+	valueRaw := strings.TrimSpace(parts[1])
+	if valueRaw == "" || label == "" {
+		return "", 0, false
+	}
+	value, ok := parseFloat(valueRaw)
 	if !ok || label == "" {
 		return "", 0, false
 	}
