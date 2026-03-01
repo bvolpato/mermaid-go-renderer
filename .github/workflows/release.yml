@@ -31,3 +31,46 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+
+  linux-artifacts:
+    needs: goreleaser
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+          cache: true
+
+      - name: Install arm64 cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+
+      - name: Build linux amd64/arm64 archives
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          mkdir -p dist/mmdg_linux_amd64 dist/mmdg_linux_arm64
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/mmdg_linux_amd64/mmdg ./cmd/mmdg
+          CC=aarch64-linux-gnu-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/mmdg_linux_arm64/mmdg ./cmd/mmdg
+          tar -C dist/mmdg_linux_amd64 -czf "dist/mermaid-go-renderer_${VERSION}_linux_amd64.tar.gz" mmdg
+          tar -C dist/mmdg_linux_arm64 -czf "dist/mermaid-go-renderer_${VERSION}_linux_arm64.tar.gz" mmdg
+          sha256sum "dist/mermaid-go-renderer_${VERSION}_linux_amd64.tar.gz" "dist/mermaid-go-renderer_${VERSION}_linux_arm64.tar.gz" > dist/checksums-linux.txt
+
+      - name: Upload linux archives to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          gh release upload "${GITHUB_REF_NAME}" \
+            "dist/mermaid-go-renderer_${VERSION}_linux_amd64.tar.gz" \
+            "dist/mermaid-go-renderer_${VERSION}_linux_arm64.tar.gz" \
+            dist/checksums-linux.txt \
+            --clobber
