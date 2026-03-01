@@ -76,12 +76,21 @@ func parseMindmapNode(line string) (label string, shape NodeShape) {
 	if strings.HasPrefix(trimmed, "::") {
 		trimmed = strings.TrimPrefix(trimmed, "::")
 	}
-	_, parsedLabel, parsedShape, _ := parseNodeToken(trimmed)
-	label = strings.TrimSpace(parsedLabel)
-	shape = parsedShape
-	label = strings.TrimSpace(label)
-	if label == "" {
-		label = stripQuotes(trimmed)
+
+	// Plain mindmap text nodes can contain spaces ("Branch A", "Leaf B1").
+	// parseNodeToken treats the first token as ID, which truncates labels,
+	// so preserve the full text when no explicit shape syntax is present.
+	hasExplicitShape := strings.ContainsAny(trimmed, "[](){}")
+	if !hasExplicitShape {
+		label = strings.TrimSpace(stripQuotes(trimmed))
+		shape = ShapeRoundRect
+	} else {
+		_, parsedLabel, parsedShape, _ := parseNodeToken(trimmed)
+		label = strings.TrimSpace(parsedLabel)
+		shape = parsedShape
+		if label == "" {
+			label = stripQuotes(trimmed)
+		}
 	}
 	if label == "" {
 		label = "node"

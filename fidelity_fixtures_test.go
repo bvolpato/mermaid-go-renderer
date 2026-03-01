@@ -8,13 +8,18 @@ import (
 )
 
 func TestFidelityFixturesRenderByDefault(t *testing.T) {
+	const minimumFixtureCount = 25
 	pattern := filepath.Join("testdata", "fidelity", "*.mmd")
 	paths, err := filepath.Glob(pattern)
 	if err != nil {
 		t.Fatalf("glob %q failed: %v", pattern, err)
 	}
-	if len(paths) == 0 {
-		t.Fatalf("no fidelity fixtures found at %q", pattern)
+	if len(paths) < minimumFixtureCount {
+		t.Fatalf("expected at least %d fidelity fixtures at %q, found %d", minimumFixtureCount, pattern, len(paths))
+	}
+	const minFixtureCount = 25
+	if len(paths) < minFixtureCount {
+		t.Fatalf("expected at least %d fidelity fixtures, found %d", minFixtureCount, len(paths))
 	}
 	for _, path := range paths {
 		path := path

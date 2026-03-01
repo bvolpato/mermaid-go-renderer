@@ -80,7 +80,7 @@ func MermaidDefaultTheme() Theme {
 	primaryColor := "#ECECFF"
 	secondaryColor := "#FFFFDE"
 	tertiaryColor := "#ECECFF"
-	pieColors := defaultPieColors(primaryColor, secondaryColor, tertiaryColor)
+	pieColors := []string{"#F2F2FF", "#FFFFE8", "#CBFF63"}
 	return Theme{
 		Background:               "#FFFFFF",
 		PrimaryColor:             primaryColor,
@@ -113,7 +113,7 @@ func MermaidDefaultTheme() Theme {
 		PieStrokeWidth:           2.0,
 		PieOuterStrokeWidth:      2.0,
 		PieOuterStrokeColor:      "#000000",
-		PieOpacity:               0.7,
+		PieOpacity:               1.0,
 	}
 }
 

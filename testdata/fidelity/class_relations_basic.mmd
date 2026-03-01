@@ -1,0 +1,9 @@
+classDiagram
+  class Base
+  class Impl
+  class Aggregate
+  class Part
+  Base <|-- Impl
+  Aggregate *-- Part
+  Aggregate o-- Impl
+  Impl ..> Base

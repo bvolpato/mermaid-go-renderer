@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html"
 	"math"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -37,6 +38,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	mermaidRoot := useMermaidLikeRoot(layout.Kind)
 	groupPrimitives := mermaidLike || useMermaidGroupWrappers(layout.Kind)
 	includeArrowMarkers := useArrowMarkers(layout.Kind)
+	preserveAspectRatio := ""
 	styleOnlyPrimitives := layout.Kind == DiagramArchitecture
 	classDrivenPrimitives := layout.Kind == DiagramPacket
 	fontFamily := theme.FontFamily
@@ -56,6 +58,11 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		} else {
 			widthAttr = "100%"
 			includeHeight = false
+			if layout.Kind == DiagramJourney {
+				includeHeight = true
+				heightAttr = formatFloat(max(1.0, viewBoxHeight-viewBoxY))
+				preserveAspectRatio = "xMinYMin meet"
+			}
 			if styleAttr == "" {
 				styleAttr = fmt.Sprintf("max-width: %spx; background-color: %s;", formatFloat(viewBoxWidth), background)
 			}
@@ -89,6 +96,9 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			formatFloat(viewBoxHeight),
 		),
 	)
+	if preserveAspectRatio != "" {
+		b.WriteString(` preserveAspectRatio="` + html.EscapeString(preserveAspectRatio) + `"`)
+	}
 	if styleAttr != "" {
 		b.WriteString(` style="` + html.EscapeString(styleAttr) + `"`)
 	}
@@ -107,6 +117,8 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(`<style>` + classStyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramState {
 			b.WriteString(`<style>` + stateStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramFlowchart {
+			b.WriteString(`<style>` + flowchartStyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramGantt {
 			b.WriteString(`<style>` + ganttStyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramZenUML {
@@ -124,7 +136,19 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		} else if layout.Kind == DiagramBlock {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .cluster-label text{fill:#333;}#my-svg .cluster-label span,#my-svg p{color:#333;}#my-svg .label text,#my-svg span,#my-svg p{fill:#333;color:#333;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .flowchart-label text{text-anchor:middle;}#my-svg .node .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .arrowheadPath{fill:#333333;}#my-svg .edgePath .path{stroke:#333333;stroke-width:2.0px;}#my-svg .flowchart-link{stroke:#333333;fill:none;}#my-svg .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#my-svg .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#my-svg .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#my-svg .node .cluster{fill:rgba(255, 255, 222, 0.5);stroke:rgba(170, 170, 51, 0.2);box-shadow:rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;stroke-width:1px;}#my-svg .cluster text{fill:#333;}#my-svg .cluster span,#my-svg p{color:#333;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
 		} else if layout.Kind == DiagramKanban {
-			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg p{margin:0;}#my-svg .kanban-column{fill:hsl(240, 100%, 86.2745098039%);stroke:hsl(240, 100%, 76.2745098039%);stroke-width:2;}#my-svg .kanban-card{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-column-title{fill:black;font-size:16px;}#my-svg .kanban-card-text{fill:black;font-size:14px;}#my-svg .kanban-card-meta{fill:black;font-size:12px;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
+			b.WriteString(`<style>` + kanbanStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramRequirement {
+			b.WriteString(`<style>` + requirementStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramJourney {
+			b.WriteString(`<style>` + journeyStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramGitGraph {
+			b.WriteString(`<style>` + gitGraphStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramTimeline {
+			b.WriteString(`<style>` + timelineStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramQuadrant {
+			b.WriteString(`<style>` + quadrantStyleCSS() + `</style>`)
+		} else if layout.Kind == DiagramC4 {
+			b.WriteString(`<style>` + c4StyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramTreemap {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .treemapNode.section{stroke:black;stroke-width:1;fill:#efefef;}#my-svg .treemapNode.leaf{stroke:black;stroke-width:1;fill:#efefef;}#my-svg .treemapLabel{fill:black;font-size:12px;}#my-svg .treemapValue{fill:black;font-size:10px;}#my-svg .treemapTitle{fill:black;font-size:14px;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
 		} else {
@@ -178,6 +202,11 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
+	if layout.Kind == DiagramGitGraph {
+		b.WriteString(renderGitGraphMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
 	if mermaidRoot {
 		if mermaidLike {
 			b.WriteString("<g>\n")
@@ -186,49 +215,100 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		}
 	}
 	if includeArrowMarkers {
-		b.WriteString("<defs>\n")
-		if layout.Kind == DiagramER {
-			writeERMarkerDefs(&b)
-		} else if layout.Kind == DiagramState {
-			b.WriteString(`<marker id="my-svg_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">`)
-			b.WriteString(`<path d="M 19,7 L9,13 L14,7 L9,1 Z"/>`)
-			b.WriteString(`</marker>`)
+		if layout.Kind == DiagramFlowchart {
+			b.WriteString(`<marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString("\n")
+			b.WriteString(`<marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString("\n")
+			b.WriteString(`<marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString("\n")
+			b.WriteString(`<marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString("\n")
+			b.WriteString(`<marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString("\n")
+			b.WriteString(`<marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker>`)
 			b.WriteString("\n")
 		} else if layout.Kind == DiagramClass {
-			writeClassMarkerDefs(&b)
-		} else if layout.Kind == DiagramTimeline || layout.Kind == DiagramJourney {
-			b.WriteString(`<marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto">`)
-			b.WriteString(`<path d="M 0,0 V 4 L6,2 Z"/>`)
-			b.WriteString(`</marker>`)
+			writeClassMarkerDefsSeparate(&b)
+		} else if layout.Kind == DiagramRequirement {
+			b.WriteString(`<defs><marker id="my-svg_requirement-requirement_containsStart" refX="0" refY="10" markerWidth="20" markerHeight="20" orient="auto"><g><circle cx="10" cy="10" r="9" fill="none"/><line x1="1" x2="19" y1="10" y2="10"/><line y1="1" y2="19" x1="10" x2="10"/></g></marker></defs>`)
+			b.WriteString("\n")
+			b.WriteString(`<defs><marker id="my-svg_requirement-requirement_arrowEnd" refX="20" refY="10" markerWidth="20" markerHeight="20" orient="auto"><path d="M0,0 L20,10 M20,10 L0,20"/></marker></defs>`)
 			b.WriteString("\n")
 		} else {
-			b.WriteString(`<marker id="arrow-end" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
-			b.WriteString(`<path d="M0,0 L10,3.5 L0,7 z" fill="`)
-			b.WriteString(theme.LineColor)
-			b.WriteString(`"/></marker>`)
-			b.WriteString("\n")
-			b.WriteString(`<marker id="arrow-start" markerWidth="10" markerHeight="7" refX="2" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
-			b.WriteString(`<path d="M10,0 L0,3.5 L10,7 z" fill="`)
-			b.WriteString(theme.LineColor)
-			b.WriteString(`"/></marker>`)
-			b.WriteString("\n")
+			if layout.Kind == DiagramC4 {
+				writeC4Defs(&b)
+			} else {
+				b.WriteString("<defs>\n")
+				if layout.Kind == DiagramER {
+					writeERMarkerDefs(&b)
+				} else if layout.Kind == DiagramState {
+					b.WriteString(`<marker id="my-svg_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">`)
+					b.WriteString(`<path d="M 19,7 L9,13 L14,7 L9,1 Z"/>`)
+					b.WriteString(`</marker>`)
+					b.WriteString("\n")
+				} else if layout.Kind == DiagramTimeline || layout.Kind == DiagramJourney {
+					b.WriteString(`<marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto">`)
+					b.WriteString(`<path d="M 0,0 V 4 L6,2 Z"/>`)
+					b.WriteString(`</marker>`)
+					b.WriteString("\n")
+				} else {
+					b.WriteString(`<marker id="arrow-end" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
+					b.WriteString(`<path d="M0,0 L10,3.5 L0,7 z" fill="`)
+					b.WriteString(theme.LineColor)
+					b.WriteString(`"/></marker>`)
+					b.WriteString("\n")
+					b.WriteString(`<marker id="arrow-start" markerWidth="10" markerHeight="7" refX="2" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
+					b.WriteString(`<path d="M10,0 L0,3.5 L10,7 z" fill="`)
+					b.WriteString(theme.LineColor)
+					b.WriteString(`"/></marker>`)
+					b.WriteString("\n")
+				}
+				b.WriteString("</defs>\n")
+			}
 		}
-		b.WriteString("</defs>\n")
 	}
 
-	if mermaidRoot {
+	if mermaidRoot && layout.Kind != DiagramC4 && layout.Kind != DiagramQuadrant && layout.Kind != DiagramKanban {
 		if mermaidLike {
 			b.WriteString(`<g class="root">`)
 		} else {
 			b.WriteString(`<g>`)
 		}
 		b.WriteString("\n")
-		if mermaidLike && layout.Kind != DiagramState {
+		if mermaidLike && layout.Kind != DiagramState && layout.Kind != DiagramClass {
 			b.WriteString(`<g class="clusters"></g>`)
 			b.WriteString("\n")
 			b.WriteString(`<g class="edgePaths"></g>`)
 			b.WriteString("\n")
-			b.WriteString(`<g class="edgeLabels"></g>`)
+			b.WriteString(`<g class="edgeLabels">`)
+			if layout.Kind == DiagramFlowchart {
+				for idx, edge := range layout.Edges {
+					edgeID := "L_" + sanitizeID(edge.From, edge.From) + "_" + sanitizeID(edge.To, edge.To) + "_" + intString(idx)
+					label := strings.TrimSpace(edge.Label)
+					textW := 0.0
+					textH := 0.0
+					outerTransform := ""
+					innerX := 0.0
+					innerY := 0.0
+					if label != "" {
+						textW = max(1.0, measureTextWidth(label, false)+8)
+						textH = 24.0
+						labelX := (edge.X1 + edge.X2) / 2
+						labelY := (edge.Y1+edge.Y2)/2 - 6
+						outerTransform = ` transform="translate(` + formatFloat(labelX) + `,` + formatFloat(labelY) + `)"`
+						innerX = -textW / 2
+						innerY = -textH / 2
+					}
+					b.WriteString(`<g class="edgeLabel"` + outerTransform + `><g class="label" data-id="` + edgeID + `" transform="translate(` + formatFloat(innerX) + `, ` + formatFloat(innerY) + `)">`)
+					b.WriteString(`<foreignObject width="` + formatFloat(textW) + `" height="` + formatFloat(textH) + `"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel">`)
+					if label != "" {
+						b.WriteString(`<p>` + html.EscapeString(label) + `</p>`)
+					}
+					b.WriteString(`</span></div></foreignObject></g></g>`)
+				}
+			}
+			b.WriteString(`</g>`)
 			b.WriteString("\n")
 			b.WriteString(`<g class="nodes">`)
 			b.WriteString("\n")
@@ -258,12 +338,38 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
+	if layout.Kind == DiagramClass {
+		b.WriteString(renderClassMermaid(layout))
+		if mermaidRoot {
+			b.WriteString("</g>\n")
+		}
+		if mermaidRoot && mermaidLike {
+			b.WriteString("</g>\n")
+		}
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramC4 {
+		b.WriteString(renderC4Mermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramQuadrant {
+		b.WriteString(renderQuadrantMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
+	if layout.Kind == DiagramKanban {
+		b.WriteString(renderKanbanMermaid(layout))
+		b.WriteString("</svg>\n")
+		return b.String()
+	}
 
 	for _, rect := range layout.Rects {
 		if groupPrimitives {
 			b.WriteString(`<g class="node default" transform="translate(0,0)">`)
 		}
-		rectAsPath := mermaidLike || layout.Kind == DiagramTimeline
+		rectAsPath := (mermaidLike && layout.Kind != DiagramFlowchart) || layout.Kind == DiagramTimeline
 		rectID := strings.TrimSpace(rect.ID)
 		rectClass := strings.TrimSpace(rect.Class)
 		if rectAsPath {
@@ -338,7 +444,12 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		b.WriteString("\n")
 	}
 
+	journeyMouthPaths := make([]LayoutPath, 0, 4)
 	for _, path := range layout.Paths {
+		if layout.Kind == DiagramJourney && strings.TrimSpace(path.Class) == "mouth" {
+			journeyMouthPaths = append(journeyMouthPaths, path)
+			continue
+		}
 		if groupPrimitives {
 			b.WriteString(`<g class="edgePath" transform="translate(0,0)">`)
 		}
@@ -351,12 +462,17 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		if pathClass != "" {
 			b.WriteString(` class="` + html.EscapeString(pathClass) + `"`)
 		}
+		if layout.Kind == DiagramFlowchart && pathID != "" {
+			b.WriteString(` data-id="` + html.EscapeString(pathID) + `"`)
+			b.WriteString(` data-et="edge"`)
+			b.WriteString(` data-edge="true"`)
+			b.WriteString(` data-points="W10="`)
+		}
 		fill := defaultColor(path.Fill, "none")
 		stroke := defaultColor(path.Stroke, "none")
 		strokeWidth := defaultFloat(path.StrokeWidth, 1)
 		dash := strings.TrimSpace(path.DashArray)
-		journeyMouth := layout.Kind == DiagramJourney && strings.TrimSpace(pathClass) == "mouth"
-		if !styleOnlyPrimitives && !journeyMouth {
+		if !styleOnlyPrimitives {
 			b.WriteString(` fill="` + html.EscapeString(fill) + `"`)
 			b.WriteString(` stroke="` + html.EscapeString(stroke) + `"`)
 			b.WriteString(fmt.Sprintf(` stroke-width="%s"`, formatFloat(strokeWidth)))
@@ -373,7 +489,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		if strings.TrimSpace(path.Transform) != "" {
 			b.WriteString(` transform="` + html.EscapeString(path.Transform) + `"`)
 		}
-		if (styleOnlyPrimitives || mermaidLike) && !journeyMouth {
+		if styleOnlyPrimitives || mermaidLike {
 			b.WriteString(` style="` + html.EscapeString(mermaidStyle(
 				fill,
 				stroke,
@@ -386,14 +502,20 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				path.Opacity,
 			)) + `"`)
 		}
-		if !styleOnlyPrimitives && strings.TrimSpace(path.DashArray) != "" && !journeyMouth {
+		if !styleOnlyPrimitives && strings.TrimSpace(path.DashArray) != "" {
 			b.WriteString(` stroke-dasharray="` + html.EscapeString(path.DashArray) + `"`)
 		}
-		if !styleOnlyPrimitives && strings.TrimSpace(path.LineCap) != "" && !journeyMouth {
+		if !styleOnlyPrimitives && strings.TrimSpace(path.LineCap) != "" {
 			b.WriteString(` stroke-linecap="` + html.EscapeString(path.LineCap) + `"`)
 		}
-		if !styleOnlyPrimitives && strings.TrimSpace(path.LineJoin) != "" && !journeyMouth {
+		if !styleOnlyPrimitives && strings.TrimSpace(path.LineJoin) != "" {
 			b.WriteString(` stroke-linejoin="` + html.EscapeString(path.LineJoin) + `"`)
+		}
+		if strings.TrimSpace(path.MarkerStart) != "" {
+			b.WriteString(` marker-start="url(#` + html.EscapeString(path.MarkerStart) + `)"`)
+		}
+		if strings.TrimSpace(path.MarkerEnd) != "" {
+			b.WriteString(` marker-end="url(#` + html.EscapeString(path.MarkerEnd) + `)"`)
 		}
 		b.WriteString("/>")
 		if groupPrimitives {
@@ -411,6 +533,9 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			parts = append(parts, formatFloat(point.X)+","+formatFloat(point.Y))
 		}
 		b.WriteString(`<polygon points="` + strings.Join(parts, " ") + `"`)
+		if strings.TrimSpace(poly.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(poly.Class) + `"`)
+		}
 		fill := defaultColor(poly.Fill, "none")
 		stroke := defaultColor(poly.Stroke, "none")
 		strokeWidth := defaultFloat(poly.StrokeWidth, 1)
@@ -602,9 +727,42 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				circle.Opacity,
 			)) + `"`)
 		}
-		b.WriteString("/>")
+		if strings.TrimSpace(circle.Title) != "" {
+			b.WriteString(">")
+			b.WriteString(`<title>`)
+			b.WriteString(html.EscapeString(circle.Title))
+			b.WriteString(`</title></circle>`)
+		} else {
+			b.WriteString("/>")
+		}
 		if groupPrimitives {
 			b.WriteString("</g>")
+		}
+		b.WriteString("\n")
+	}
+	for _, path := range journeyMouthPaths {
+		if groupPrimitives {
+			b.WriteString(`<g class="edgePath" transform="translate(0,0)">`)
+		}
+		b.WriteString(`<path d="` + html.EscapeString(path.D) + `"`)
+		if strings.TrimSpace(path.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(path.Class) + `"`)
+		}
+		b.WriteString(` fill="` + html.EscapeString(defaultColor(path.Fill, "none")) + `"`)
+		b.WriteString(` stroke="` + html.EscapeString(defaultColor(path.Stroke, "#666")) + `"`)
+		b.WriteString(fmt.Sprintf(` stroke-width="%s"`, formatFloat(defaultFloat(path.StrokeWidth, 1))))
+		if strings.TrimSpace(path.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(path.Transform) + `"`)
+		}
+		if strings.TrimSpace(path.LineCap) != "" {
+			b.WriteString(` stroke-linecap="` + html.EscapeString(path.LineCap) + `"`)
+		}
+		if strings.TrimSpace(path.LineJoin) != "" {
+			b.WriteString(` stroke-linejoin="` + html.EscapeString(path.LineJoin) + `"`)
+		}
+		b.WriteString("/>")
+		if groupPrimitives {
+			b.WriteString(`</g>`)
 		}
 		b.WriteString("\n")
 	}
@@ -661,10 +819,31 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		}
 		b.WriteString("\n")
 	}
+	if layout.Kind == DiagramC4 {
+		iconHref := "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='4' r='3' fill='none' stroke='%230B4884' stroke-width='1.2'/%3E%3Cpath d='M3 15c0-2.8 2.2-5 5-5s5 2.2 5 5' fill='none' stroke='%230B4884' stroke-width='1.2'/%3E%3C/svg%3E"
+		for _, node := range layout.Nodes {
+			if node.Shape != ShapePerson {
+				continue
+			}
+			if groupPrimitives {
+				b.WriteString(`<g class="node default" transform="translate(0,0)">`)
+			}
+			x := node.X + 14
+			y := node.Y + node.H/2 - 9
+			b.WriteString(`<image x="` + formatFloat(x) + `" y="` + formatFloat(y) + `" width="18" height="18" xlink:href="` + iconHref + `"/>`)
+			if groupPrimitives {
+				b.WriteString("</g>")
+			}
+			b.WriteString("\n")
+		}
+	}
 
 	for _, text := range layout.Texts {
 		textID := strings.TrimSpace(text.ID)
 		textClass := strings.TrimSpace(text.Class)
+		if layout.Kind == DiagramFlowchart && textClass == "edgeLabel" {
+			continue
+		}
 		anchor := text.Anchor
 		if anchor == "" {
 			anchor = "start"
@@ -705,7 +884,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			}
 			y := text.Y - textH*0.8
 			groupTransform := `translate(0,0)`
-			labelWithTransform := layout.Kind == DiagramER || layout.Kind == DiagramClass
+			labelWithTransform := layout.Kind == DiagramER || layout.Kind == DiagramClass || layout.Kind == DiagramFlowchart
 			if labelWithTransform {
 				groupTransform = `translate(` + formatFloat(x) + `,` + formatFloat(y) + `)`
 			}
@@ -746,6 +925,9 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				b.WriteString(html.EscapeString(text.Value))
 				b.WriteString(`</p></span></div></foreignObject></g>`)
 			} else {
+				if layout.Kind == DiagramFlowchart && outerClass != "edgeLabel" {
+					b.WriteString(`<rect/>`)
+				}
 				b.WriteString(`<foreignObject`)
 				if labelWithTransform {
 					b.WriteString(fmt.Sprintf(` width="%s" height="%s"`, formatFloat(textW), formatFloat(textH)))
@@ -759,18 +941,30 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				if strings.TrimSpace(text.Transform) != "" {
 					b.WriteString(` transform="` + html.EscapeString(text.Transform) + `"`)
 				}
-				b.WriteString(`><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">`)
-				b.WriteString(`<span class="nodeLabel" style="font-size: `)
-				b.WriteString(formatFloat(size))
-				b.WriteString(`px; font-family: `)
-				b.WriteString(html.EscapeString(family))
-				b.WriteString(`; font-weight: `)
-				b.WriteString(html.EscapeString(weight))
-				b.WriteString(`; color: `)
-				b.WriteString(html.EscapeString(defaultColor(color, "#1b263b")))
-				b.WriteString(`;">`)
-				b.WriteString(html.EscapeString(text.Value))
-				b.WriteString(`</span></div></foreignObject>`)
+				if layout.Kind == DiagramFlowchart || layout.Kind == DiagramRequirement {
+					align := "center"
+					if anchor == "start" {
+						align = "left"
+					} else if anchor == "end" {
+						align = "right"
+					}
+					b.WriteString(`><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: ` + align + `;"><span class="nodeLabel"><p>`)
+					b.WriteString(html.EscapeString(text.Value))
+					b.WriteString(`</p></span></div></foreignObject>`)
+				} else {
+					b.WriteString(`><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">`)
+					b.WriteString(`<span class="nodeLabel" style="font-size: `)
+					b.WriteString(formatFloat(size))
+					b.WriteString(`px; font-family: `)
+					b.WriteString(html.EscapeString(family))
+					b.WriteString(`; font-weight: `)
+					b.WriteString(html.EscapeString(weight))
+					b.WriteString(`; color: `)
+					b.WriteString(html.EscapeString(defaultColor(color, "#1b263b")))
+					b.WriteString(`;">`)
+					b.WriteString(html.EscapeString(text.Value))
+					b.WriteString(`</span></div></foreignObject>`)
+				}
 			}
 			if layout.Kind == DiagramER {
 				b.WriteString(`</g>`)
@@ -778,7 +972,8 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(`</g>`)
 			b.WriteString("\n")
 		} else {
-			if groupPrimitives {
+			wrapTextGroup := groupPrimitives && layout.Kind != DiagramKanban
+			if wrapTextGroup {
 				b.WriteString(`<g class="nodeLabel" transform="translate(0,0)">`)
 			}
 			if layout.Kind == DiagramKanban {
@@ -815,7 +1010,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				b.WriteString(html.EscapeString(text.Value))
 				b.WriteString(`</p></span></div></foreignObject></g>`)
 				b.WriteString("\n")
-				if groupPrimitives {
+				if wrapTextGroup {
 					b.WriteString("</g>\n")
 				}
 				continue
@@ -825,31 +1020,23 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				b.WriteString(html.EscapeString(text.Value))
 				b.WriteString(`</text>`)
 				b.WriteString("\n")
-				if groupPrimitives {
+				if wrapTextGroup {
 					b.WriteString("</g>\n")
 				}
 				continue
 			}
 			if layout.Kind == DiagramJourney && text.BoxW > 0 && text.BoxH > 0 {
-				b.WriteString(`<g>`)
-				b.WriteString(`<switch>`)
-				b.WriteString(`<foreignObject x="` + formatFloat(text.BoxX) + `" y="` + formatFloat(text.BoxY) + `" width="` + formatFloat(text.BoxW) + `" height="` + formatFloat(text.BoxH) + `">`)
-				b.WriteString(`<div class="` + html.EscapeString(text.Class) + `" style="display: table; height: 100%; width: 100%;" xmlns="http://www.w3.org/1999/xhtml">`)
-				b.WriteString(`<div class="label" style="display: table-cell; text-align: center; vertical-align: middle;">`)
-				b.WriteString(html.EscapeString(text.Value))
-				b.WriteString(`</div></div></foreignObject>`)
-				b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" dominant-baseline="central" alignment-baseline="central" class="` + html.EscapeString(text.Class) + `" style="text-anchor: middle; font-size: 14px; font-family: &quot;Open Sans&quot;, sans-serif;">`)
+				b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" dominant-baseline="central" alignment-baseline="central" text-anchor="middle" class="` + html.EscapeString(text.Class) + `" fill="` + html.EscapeString(defaultColor(text.Color, "#333")) + `" font-size="` + formatFloat(max(12.0, text.Size)) + `" font-family="` + html.EscapeString(family) + `" style="font-weight: 400;">`)
 				b.WriteString(`<tspan x="` + formatFloat(text.X) + `" dy="0">`)
 				b.WriteString(html.EscapeString(text.Value))
 				b.WriteString(`</tspan></text>`)
-				b.WriteString(`</switch></g>`)
 				b.WriteString("\n")
-				if groupPrimitives {
+				if wrapTextGroup {
 					b.WriteString("</g>\n")
 				}
 				continue
 			}
-			preferTransformPos := layout.Kind == DiagramTimeline || layout.Kind == DiagramArchitecture
+			preferTransformPos := layout.Kind == DiagramArchitecture
 			isTitleLike := anchor == "start" && size > theme.FontSize+1
 			useTransformPos := preferTransformPos && !isTitleLike
 			positionTransform := ""
@@ -868,6 +1055,10 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(` text-anchor="` + html.EscapeString(anchor) + `"`)
 			omitInline := layout.Kind == DiagramTimeline || layout.Kind == DiagramArchitecture || layout.Kind == DiagramPacket || layout.Kind == DiagramJourney
 			keepInline := size > theme.FontSize+1 || weight != "400"
+			if layout.Kind == DiagramTimeline {
+				// Timeline labels need explicit colors for PNG parity.
+				keepInline = true
+			}
 			if !omitInline || keepInline {
 				b.WriteString(` fill="` + html.EscapeString(defaultColor(color, "#1b263b")) + `"`)
 				b.WriteString(` font-family="` + html.EscapeString(family) + `"`)
@@ -891,22 +1082,34 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			if strings.TrimSpace(text.DominantBaseline) != "" {
 				b.WriteString(` dominant-baseline="` + html.EscapeString(text.DominantBaseline) + `"`)
 			}
-			if useTspanText(layout.Kind) {
+			lines := splitLinesPreserve(text.Value)
+			if len(lines) == 0 {
+				lines = []string{""}
+			}
+			if useTspanText(layout.Kind) || len(lines) > 1 {
 				b.WriteString(` alignment-baseline="middle" dominant-baseline="middle" dy="0">`)
 				tspanX := formatFloat(text.X)
 				if useTransformPos {
 					tspanX = "0"
 				}
-				b.WriteString(`<tspan x="` + tspanX + `" dy="0">`)
-				b.WriteString(html.EscapeString(text.Value))
-				b.WriteString(`</tspan></text>`)
+				lineStep := max(14, size*1.2)
+				for idx, line := range lines {
+					dy := "0"
+					if idx > 0 {
+						dy = formatFloat(lineStep)
+					}
+					b.WriteString(`<tspan x="` + tspanX + `" dy="` + dy + `">`)
+					b.WriteString(html.EscapeString(line))
+					b.WriteString(`</tspan>`)
+				}
+				b.WriteString(`</text>`)
 				b.WriteString("\n")
 			} else {
 				b.WriteString(`>`)
-				b.WriteString(html.EscapeString(text.Value))
+				b.WriteString(html.EscapeString(lines[0]))
 				b.WriteString("</text>\n")
 			}
-			if groupPrimitives {
+			if wrapTextGroup {
 				b.WriteString("</g>\n")
 			}
 		}
@@ -925,6 +1128,582 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	return b.String()
 }
 
+func renderClassMermaid(layout Layout) string {
+	var b strings.Builder
+	b.Grow(8192)
+
+	b.WriteString(`<g class="clusters"></g>`)
+	b.WriteString("\n")
+	b.WriteString(`<g class="edgePaths">`)
+	for _, line := range layout.Lines {
+		lineClass := strings.TrimSpace(line.Class)
+		if !strings.Contains(lineClass, "relation") {
+			continue
+		}
+		lineID := strings.TrimSpace(line.ID)
+		b.WriteString(`<path d="M` + formatFloat(line.X1) + `,` + formatFloat(line.Y1) + `L` + formatFloat(line.X2) + `,` + formatFloat(line.Y2) + `"`)
+		if lineID != "" {
+			b.WriteString(` id="` + html.EscapeString(lineID) + `"`)
+			b.WriteString(` data-edge="true" data-et="edge" data-id="` + html.EscapeString(lineID) + `" data-points="W10="`)
+		}
+		if lineClass == "" {
+			lineClass = "relation"
+		}
+		b.WriteString(` class="edge-thickness-normal edge-pattern-solid ` + html.EscapeString(lineClass) + `"`)
+		b.WriteString(` style=";;;"`)
+		if strings.TrimSpace(line.MarkerStart) != "" {
+			b.WriteString(` marker-start="url(#` + html.EscapeString(line.MarkerStart) + `)"`)
+		}
+		if strings.TrimSpace(line.MarkerEnd) != "" {
+			b.WriteString(` marker-end="url(#` + html.EscapeString(line.MarkerEnd) + `)"`)
+		}
+		b.WriteString(`/>`)
+	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
+
+	b.WriteString(`<g class="edgeLabels">`)
+	for _, text := range layout.Texts {
+		if strings.TrimSpace(text.Class) != "class-edge-label" {
+			continue
+		}
+		id := strings.TrimSpace(text.ID)
+		b.WriteString(`<g class="edgeLabel"><g class="label"`)
+		if id != "" {
+			b.WriteString(` data-id="` + html.EscapeString(id) + `"`)
+		}
+		b.WriteString(` transform="translate(0, 0)">`)
+		b.WriteString(`<foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g>`)
+	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
+
+	b.WriteString(`<g class="nodes">`)
+	for idx, rect := range layout.Rects {
+		if rect.W <= 0 || rect.H <= 0 {
+			continue
+		}
+		cx := rect.X + rect.W/2
+		cy := rect.Y + rect.H/2
+		w2 := rect.W / 2
+		h2 := rect.H / 2
+		title := ""
+		bestY := math.MaxFloat64
+		for _, text := range layout.Texts {
+			if strings.TrimSpace(text.Class) == "class-edge-label" {
+				continue
+			}
+			if text.X < rect.X-1 || text.X > rect.X+rect.W+1 {
+				continue
+			}
+			if text.Y < rect.Y-5 || text.Y > rect.Y+rect.H+5 {
+				continue
+			}
+			if text.Y < bestY {
+				bestY = text.Y
+				title = strings.TrimSpace(text.Value)
+			}
+		}
+		nodeID := "classId-node-" + intString(idx)
+		if title != "" {
+			nodeID = "classId-" + sanitizeID(title, "") + "-" + intString(idx)
+		}
+		d := rectToPath(LayoutRect{
+			X: -w2,
+			Y: -h2,
+			W: rect.W,
+			H: rect.H,
+		})
+		b.WriteString(`<g class="node default" id="` + html.EscapeString(nodeID) + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
+		b.WriteString(`<g class="basic label-container">`)
+		b.WriteString(`<path d="` + html.EscapeString(d) + `" stroke="none" stroke-width="0" fill="#ECECFF" style=""/>`)
+		b.WriteString(`<path d="` + html.EscapeString(d) + `" stroke="#9370DB" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style=""/>`)
+		b.WriteString(`</g>`)
+		b.WriteString(`<g class="annotation-group text" transform="translate(0, -18)"/>`)
+
+		titleW := max(1.0, measureTextWidth(title, false)+2)
+		labelX := -titleW / 2
+		maxLabelW := max(1.0, rect.W-20)
+		b.WriteString(`<g class="label-group text" transform="translate(` + formatFloat(labelX) + `, -18)">`)
+		b.WriteString(`<g class="label" style="font-weight: bolder" transform="translate(0,-12)">`)
+		b.WriteString(`<foreignObject width="` + formatFloat(titleW) + `" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: ` + formatFloat(maxLabelW) + `px; text-align: center;"><span class="nodeLabel markdown-node-label" style=""><p>`)
+		b.WriteString(html.EscapeString(title))
+		b.WriteString(`</p></span></div></foreignObject></g></g>`)
+		b.WriteString(`<g class="members-group text" transform="translate(` + formatFloat(labelX) + `, 30)"/>`)
+		b.WriteString(`<g class="methods-group text" transform="translate(` + formatFloat(labelX) + `, 60)"/>`)
+		b.WriteString(`<g class="divider" style=""><path d="M` + formatFloat(-w2) + ` 6 L` + formatFloat(w2) + ` 6" stroke="#9370DB" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style=""/></g>`)
+		b.WriteString(`<g class="divider" style=""><path d="M` + formatFloat(-w2) + ` 24 L` + formatFloat(w2) + ` 24" stroke="#9370DB" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style=""/></g>`)
+		b.WriteString(`</g>`)
+	}
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
+	return b.String()
+}
+
+func renderC4Mermaid(layout Layout) string {
+	var b strings.Builder
+	b.Grow(8192)
+
+	type c4NodeRender struct {
+		NodeLayout
+		X           float64
+		Y           float64
+		W           float64
+		H           float64
+		Fill        string
+		Stroke      string
+		Stereotype  string
+		Name        string
+		Description []string
+	}
+
+	nodes := make([]c4NodeRender, 0, len(layout.Nodes))
+	for _, node := range layout.Nodes {
+		lines := splitLinesPreserve(node.Label)
+		cleaned := make([]string, 0, len(lines))
+		for _, line := range lines {
+			s := strings.TrimSpace(line)
+			if s == "" {
+				continue
+			}
+			cleaned = append(cleaned, s)
+		}
+		stereotype := ""
+		if len(cleaned) > 0 && strings.HasPrefix(cleaned[0], "<<") {
+			stereotype = cleaned[0]
+			cleaned = cleaned[1:]
+		}
+		name := strings.TrimSpace(node.ID)
+		if len(cleaned) > 0 {
+			name = cleaned[0]
+		}
+		description := []string{}
+		if len(cleaned) > 1 {
+			description = append(description, cleaned[1:]...)
+		}
+		fill := defaultColor(node.Fill, "#1168BD")
+		stroke := defaultColor(node.Stroke, "#3C7FC0")
+		lowerStereo := lower(stereotype)
+		switch {
+		case strings.Contains(lowerStereo, "external"):
+			fill = "#999999"
+			stroke = "#8A8A8A"
+		case strings.Contains(lowerStereo, "person"):
+			fill = "#08427B"
+			stroke = "#073B6F"
+		case strings.Contains(lowerStereo, "system"), strings.Contains(lowerStereo, "container"):
+			fill = "#1168BD"
+			stroke = "#3C7FC0"
+		}
+		w := max(216.0, node.W)
+		h := max(60.0, node.H)
+		if node.Shape == ShapePerson || len(description) > 0 {
+			h = max(h, 105)
+		}
+		x := node.X - (w-node.W)/2
+		y := node.Y
+		nodes = append(nodes, c4NodeRender{
+			NodeLayout:  node,
+			X:           x,
+			Y:           y,
+			W:           w,
+			H:           h,
+			Fill:        fill,
+			Stroke:      stroke,
+			Stereotype:  stereotype,
+			Name:        name,
+			Description: description,
+		})
+	}
+
+	nodeByID := map[string]c4NodeRender{}
+	for _, node := range nodes {
+		nodeByID[node.ID] = node
+		b.WriteString(`<g class="person-man">`)
+		b.WriteString(`<rect x="` + formatFloat(node.X) + `" y="` + formatFloat(node.Y) + `" fill="` + html.EscapeString(node.Fill) + `" stroke="` + html.EscapeString(node.Stroke) + `" width="` + formatFloat(node.W) + `" height="` + formatFloat(node.H) + `" rx="2.5" ry="2.5" stroke-width="0.5"/>`)
+		if strings.TrimSpace(node.Stereotype) != "" {
+			textLen := max(1.0, measureTextWidth(node.Stereotype, false))
+			b.WriteString(`<text fill="#FFFFFF" font-family="&quot;Open Sans&quot;, sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="` + formatFloat(textLen) + `" x="` + formatFloat(node.X+node.W/2-textLen/2) + `" y="` + formatFloat(node.Y+20) + `">` + html.EscapeString(node.Stereotype) + `</text>`)
+		}
+		if node.Shape == ShapePerson {
+			iconHref := "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='4' r='3' fill='none' stroke='%23FFFFFF' stroke-width='1.2'/%3E%3Cpath d='M3 15c0-2.8 2.2-5 5-5s5 2.2 5 5' fill='none' stroke='%23FFFFFF' stroke-width='1.2'/%3E%3C/svg%3E"
+			b.WriteString(`<image width="48" height="48" x="` + formatFloat(node.X+node.W/2-24) + `" y="` + formatFloat(node.Y+30) + `" xlink:href="` + iconHref + `"/>`)
+		}
+		nameY := node.Y + node.H - 22
+		if node.Shape == ShapePerson || len(node.Description) > 0 {
+			nameY = node.Y + node.H - 19
+		}
+		b.WriteString(`<text x="` + formatFloat(node.X+node.W/2) + `" y="` + formatFloat(nameY) + `" dominant-baseline="middle" fill="#FFFFFF" style="text-anchor: middle; font-size: 16px; font-weight: bold; font-family: &quot;Open Sans&quot;, sans-serif;"><tspan dy="0" alignment-baseline="mathematical">` + html.EscapeString(node.Name) + `</tspan></text>`)
+		b.WriteString(`</g>`)
+	}
+
+	b.WriteString(`<g>`)
+	for idx, edge := range layout.Edges {
+		x1 := edge.X1
+		y1 := edge.Y1
+		x2 := edge.X2
+		y2 := edge.Y2
+		if fromNode, ok := nodeByID[edge.From]; ok {
+			x1 = fromNode.X + fromNode.W
+			y1 = fromNode.Y + fromNode.H*0.57
+		}
+		if toNode, ok := nodeByID[edge.To]; ok {
+			x2 = toNode.X
+			y2 = toNode.Y + toNode.H*0.48
+		}
+		labelX := (x1 + x2) / 2
+		labelY := (y1 + y2) / 2
+		if idx == len(layout.Edges)-1 && len(layout.Edges) > 1 {
+			cx := x1 + (x2-x1)*0.35
+			cy := y1 + (y2-y1)*0.7 + 5
+			b.WriteString(`<path fill="none" stroke-width="1" stroke="#444444" d="M` + formatFloat(x1) + `,` + formatFloat(y1) + ` Q` + formatFloat(cx) + `,` + formatFloat(cy) + ` ` + formatFloat(x2) + `,` + formatFloat(y2) + `" marker-end="url(#arrowhead)"/>`)
+			labelY = cy
+		} else {
+			b.WriteString(`<line x1="` + formatFloat(x1) + `" y1="` + formatFloat(y1) + `" x2="` + formatFloat(x2) + `" y2="` + formatFloat(y2) + `" stroke-width="1" stroke="#444444" marker-end="url(#arrowhead)" style="fill: none;"/>`)
+		}
+		label := strings.TrimSpace(edge.Label)
+		if label == "" {
+			continue
+		}
+		b.WriteString(`<text x="` + formatFloat(labelX) + `" y="` + formatFloat(labelY) + `" dominant-baseline="middle" fill="#444444" style="text-anchor: middle; font-size: 12px; font-weight: normal; font-family: &quot;Open Sans&quot;, sans-serif;"><tspan dy="0" alignment-baseline="mathematical">` + html.EscapeString(label) + `</tspan></text>`)
+	}
+	b.WriteString(`</g>`)
+
+	titleValue := ""
+	titleX := 0.0
+	titleY := 0.0
+	for _, text := range layout.Texts {
+		if strings.TrimSpace(text.Value) == "" {
+			continue
+		}
+		if text.Size >= 24 || text.Weight == "700" {
+			titleValue = text.Value
+			titleX = text.X
+			titleY = text.Y
+			break
+		}
+	}
+	if strings.TrimSpace(titleValue) != "" {
+		b.WriteString(`<text x="` + formatFloat(titleX) + `" y="` + formatFloat(titleY) + `">` + html.EscapeString(titleValue) + `</text>`)
+	}
+	return b.String()
+}
+
+func renderQuadrantMermaid(layout Layout) string {
+	var b strings.Builder
+	b.Grow(4096)
+
+	border := LayoutRect{X: 31, Y: 45, W: 464, H: 464}
+	for _, rect := range layout.Rects {
+		if rect.W >= 400 && rect.H >= 400 {
+			border = rect
+			break
+		}
+	}
+
+	oldMidX := border.X + border.W/2
+	oldMidY := border.Y + border.H/2
+	for _, line := range layout.Lines {
+		if math.Abs(line.X1-line.X2) < 0.01 {
+			oldMidX = line.X1
+		}
+		if math.Abs(line.Y1-line.Y2) < 0.01 {
+			oldMidY = line.Y1
+		}
+	}
+
+	top := border.Y
+	left := border.X
+	width := border.W
+	if width <= 0 {
+		width = 464
+	}
+	height := border.H
+	if height <= 0 {
+		height = 464
+	}
+	newHeight := 424.0
+	bottom := top + newHeight
+	right := left + width
+	midX := oldMidX
+	midY := top + newHeight/2
+	if midX == 0 {
+		midX = left + width/2
+	}
+	if oldMidY == 0 {
+		oldMidY = top + height/2
+	}
+
+	mapY := func(y float64) float64 {
+		return top + (y-top)*(newHeight/height)
+	}
+
+	fillTR := "#ECECFF"
+	fillTL := "#f1f1ff"
+	fillBL := "#f6f6ff"
+	fillBR := "#fbfbff"
+	for _, rect := range layout.Rects {
+		if rect.W >= 400 && rect.H >= 400 {
+			continue
+		}
+		cx := rect.X + rect.W/2
+		cy := rect.Y + rect.H/2
+		switch {
+		case cx >= oldMidX && cy < oldMidY:
+			fillTR = defaultColor(rect.Fill, fillTR)
+		case cx < oldMidX && cy < oldMidY:
+			fillTL = defaultColor(rect.Fill, fillTL)
+		case cx < oldMidX && cy >= oldMidY:
+			fillBL = defaultColor(rect.Fill, fillBL)
+		case cx >= oldMidX && cy >= oldMidY:
+			fillBR = defaultColor(rect.Fill, fillBR)
+		}
+	}
+
+	title := "Quadrant"
+	xLow := "Low"
+	xHigh := "High"
+	yLow := "Low"
+	yHigh := "High"
+	yLowPos := mapY(393)
+	yHighPos := mapY(161)
+	xLowPos := left + width*0.25
+	xHighPos := left + width*0.75
+	titleX := left + width/2
+
+	type pointLabel struct {
+		X     float64
+		Y     float64
+		Value string
+	}
+	labels := make([]pointLabel, 0, 4)
+	for _, text := range layout.Texts {
+		value := strings.TrimSpace(text.Value)
+		if strings.TrimSpace(value) == "" {
+			continue
+		}
+		if text.Size >= 19 {
+			title = value
+			titleX = text.X
+			continue
+		}
+		if text.Size >= 15 {
+			if text.X < 20 {
+				if text.Y > 250 {
+					yLow = value
+					yLowPos = mapY(text.Y)
+				} else {
+					yHigh = value
+					yHighPos = mapY(text.Y)
+				}
+			} else {
+				if text.X < left+width/2 {
+					xLow = value
+					xLowPos = text.X
+				} else {
+					xHigh = value
+					xHighPos = text.X
+				}
+			}
+			continue
+		}
+		if text.Size <= 13 {
+			labels = append(labels, pointLabel{X: text.X, Y: text.Y, Value: value})
+		}
+	}
+
+	circles := make([]LayoutCircle, 0, len(layout.Circles))
+	for _, circle := range layout.Circles {
+		if circle.R > 0 {
+			circles = append(circles, circle)
+		}
+	}
+	if len(circles) == 2 && circles[0].CX > circles[1].CX {
+		circles[0], circles[1] = circles[1], circles[0]
+	}
+	if len(labels) == 2 && labels[0].X > labels[1].X {
+		labels[0], labels[1] = labels[1], labels[0]
+	}
+
+	b.WriteString(`<g class="main">`)
+	b.WriteString(`<g class="quadrants">`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(top) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTR) + `"/><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(top+5) + `) rotate(0)"/></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(top) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTL) + `"/><text x="0" y="0" fill="#0e0e00" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(top+5) + `) rotate(0)"/></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBL) + `"/><text x="0" y="0" fill="#090900" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(midY+5) + `) rotate(0)"/></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBR) + `"/><text x="0" y="0" fill="#040400" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(midY+5) + `) rotate(0)"/></g>`)
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="border">`)
+	b.WriteString(`<line x1="` + formatFloat(left-1) + `" y1="` + formatFloat(top) + `" x2="` + formatFloat(right+1) + `" y2="` + formatFloat(top) + `" style="stroke: rgb(199, 199, 241); stroke-width: 2;"/>`)
+	b.WriteString(`<line x1="` + formatFloat(right) + `" y1="` + formatFloat(top+1) + `" x2="` + formatFloat(right) + `" y2="` + formatFloat(bottom-1) + `" style="stroke: rgb(199, 199, 241); stroke-width: 2;"/>`)
+	b.WriteString(`<line x1="` + formatFloat(left-1) + `" y1="` + formatFloat(bottom) + `" x2="` + formatFloat(right+1) + `" y2="` + formatFloat(bottom) + `" style="stroke: rgb(199, 199, 241); stroke-width: 2;"/>`)
+	b.WriteString(`<line x1="` + formatFloat(left) + `" y1="` + formatFloat(top+1) + `" x2="` + formatFloat(left) + `" y2="` + formatFloat(bottom-1) + `" style="stroke: rgb(199, 199, 241); stroke-width: 2;"/>`)
+	b.WriteString(`<line x1="` + formatFloat(midX) + `" y1="` + formatFloat(top+1) + `" x2="` + formatFloat(midX) + `" y2="` + formatFloat(bottom-1) + `" style="stroke: rgb(199, 199, 241); stroke-width: 1;"/>`)
+	b.WriteString(`<line x1="` + formatFloat(left+1) + `" y1="` + formatFloat(midY) + `" x2="` + formatFloat(right-1) + `" y2="` + formatFloat(midY) + `" style="stroke: rgb(199, 199, 241); stroke-width: 1;"/>`)
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="data-points">`)
+	for idx, circle := range circles {
+		label := ""
+		labelY := mapY(circle.CY + 5)
+		if idx < len(labels) {
+			label = labels[idx].Value
+			labelY = mapY(labels[idx].Y)
+		}
+		cx := circle.CX
+		cy := mapY(circle.CY)
+		b.WriteString(`<g class="data-point">`)
+		b.WriteString(`<circle cx="` + formatFloat(cx) + `" cy="` + formatFloat(cy) + `" r="` + formatFloat(circle.R) + `" fill="` + html.EscapeString(defaultColor(circle.Fill, "hsl(240, 100%, NaN%)")) + `" stroke="` + html.EscapeString(defaultColor(circle.Stroke, "hsl(240, 100%, NaN%)")) + `" stroke-width="0px"/>`)
+		b.WriteString(`<text x="0" y="0" fill="#131300" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(labelY) + `) rotate(0)">` + html.EscapeString(label) + `</text>`)
+		b.WriteString(`</g>`)
+	}
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="labels">`)
+	b.WriteString(`<g class="label"><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(xLowPos) + `, 479) rotate(0)">` + html.EscapeString(xLow) + `</text></g>`)
+	b.WriteString(`<g class="label"><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(xHighPos) + `, 479) rotate(0)">` + html.EscapeString(xHigh) + `</text></g>`)
+	b.WriteString(`<g class="label"><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(5, ` + formatFloat(yLowPos) + `) rotate(-90)">` + html.EscapeString(yLow) + `</text></g>`)
+	b.WriteString(`<g class="label"><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(5, ` + formatFloat(yHighPos) + `) rotate(-90)">` + html.EscapeString(yHigh) + `</text></g>`)
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="title"><text x="0" y="0" fill="#131300" font-size="20" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(titleX) + `, 10) rotate(0)">` + html.EscapeString(title) + `</text></g>`)
+	b.WriteString(`</g>`)
+	return b.String()
+}
+
+func renderKanbanMermaid(layout Layout) string {
+	var b strings.Builder
+	b.Grow(8192)
+
+	type columnRender struct {
+		Rect  LayoutRect
+		Title string
+	}
+	type cardRender struct {
+		Rect     LayoutRect
+		ID       string
+		Title    string
+		Ticket   string
+		Assigned string
+	}
+
+	columns := make([]columnRender, 0, 8)
+	for _, rect := range layout.Rects {
+		if strings.TrimSpace(rect.Class) != "kanban-column" {
+			continue
+		}
+		col := columnRender{Rect: rect}
+		for _, text := range layout.Texts {
+			if strings.TrimSpace(text.Class) != "kanban-column-title" {
+				continue
+			}
+			if math.Abs(text.X-(rect.X+rect.W/2)) <= rect.W {
+				col.Title = strings.TrimSpace(text.Value)
+				break
+			}
+		}
+		columns = append(columns, col)
+	}
+	sort.Slice(columns, func(i, j int) bool {
+		return columns[i].Rect.X < columns[j].Rect.X
+	})
+
+	cards := make([]cardRender, 0, 16)
+	for _, rect := range layout.Rects {
+		if strings.TrimSpace(rect.Class) != "kanban-card" {
+			continue
+		}
+		card := cardRender{
+			Rect: rect,
+			ID:   strings.TrimSpace(rect.ID),
+		}
+		for _, text := range layout.Texts {
+			textClass := strings.TrimSpace(text.Class)
+			if !strings.Contains(textClass, "kanban-card-") {
+				continue
+			}
+			if text.X < rect.X-1 || text.X > rect.X+rect.W+1 || text.Y < rect.Y-1 || text.Y > rect.Y+rect.H+1 {
+				continue
+			}
+			if strings.Contains(textClass, "kanban-card-text") {
+				if card.Title == "" {
+					card.Title = strings.TrimSpace(text.Value)
+				}
+				continue
+			}
+			if strings.Contains(textClass, "kanban-card-meta") {
+				if text.Anchor == "end" || text.X > rect.X+rect.W*0.55 {
+					card.Assigned = strings.TrimSpace(text.Value)
+				} else {
+					card.Ticket = strings.TrimSpace(text.Value)
+				}
+			}
+		}
+		if card.ID == "" {
+			card.ID = "card-" + intString(len(cards)+1)
+		}
+		cards = append(cards, card)
+	}
+	sort.Slice(cards, func(i, j int) bool {
+		if math.Abs(cards[i].Rect.X-cards[j].Rect.X) > 0.01 {
+			return cards[i].Rect.X < cards[j].Rect.X
+		}
+		return cards[i].Rect.Y < cards[j].Rect.Y
+	})
+
+	b.WriteString(`<g class="sections">`)
+	for idx, col := range columns {
+		sectionClass := "cluster undefined section-" + intString(idx+1)
+		colID := strings.TrimSpace(col.Rect.ID)
+		if colID == "" {
+			colID = sanitizeID(col.Title, "column-"+intString(idx+1))
+		}
+		title := col.Title
+		if title == "" {
+			title = colID
+		}
+		titleW := max(0.0, measureTextWidth(title, false)+8)
+		titleX := col.Rect.X + col.Rect.W/2 - titleW/2
+		b.WriteString(`<g class="` + html.EscapeString(sectionClass) + `" id="` + html.EscapeString(colID) + `" data-look="classic">`)
+		b.WriteString(`<rect style="" rx="` + formatFloat(col.Rect.RX) + `" ry="` + formatFloat(col.Rect.RY) + `" x="` + formatFloat(col.Rect.X) + `" y="` + formatFloat(col.Rect.Y) + `" width="` + formatFloat(col.Rect.W) + `" height="` + formatFloat(col.Rect.H) + `"/>`)
+		b.WriteString(`<g class="cluster-label" transform="translate(` + formatFloat(titleX) + `, ` + formatFloat(col.Rect.Y) + `)">`)
+		b.WriteString(`<foreignObject width="` + formatFloat(titleW) + `" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>` + html.EscapeString(title) + `</p></span></div></foreignObject>`)
+		b.WriteString(`</g></g>`)
+	}
+	b.WriteString(`</g>`)
+
+	writeItemLabel := func(x float64, y float64, value string) {
+		labelW := max(0.0, measureTextWidth(value, false)+8)
+		labelH := 24.0
+		if strings.TrimSpace(value) == "" {
+			labelW = 0
+			labelH = 0
+		}
+		b.WriteString(`<g class="label" style="text-align:left !important" transform="translate(` + formatFloat(x) + `, ` + formatFloat(y) + `)">`)
+		b.WriteString(`<rect/><foreignObject width="` + formatFloat(labelW) + `" height="` + formatFloat(labelH) + `">`)
+		b.WriteString(`<div style="text-align: center; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 175px;" xmlns="http://www.w3.org/1999/xhtml"><span style="text-align:left !important" class="nodeLabel"><p>`)
+		b.WriteString(html.EscapeString(value))
+		b.WriteString(`</p></span></div></foreignObject></g>`)
+	}
+
+	b.WriteString(`<g class="items">`)
+	for _, card := range cards {
+		cx := card.Rect.X + card.Rect.W/2
+		cy := card.Rect.Y + card.Rect.H/2
+		x0 := -card.Rect.W / 2
+		y0 := -card.Rect.H / 2
+		b.WriteString(`<g class="node undefined" id="` + html.EscapeString(card.ID) + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
+		b.WriteString(`<rect class="basic label-container __APA__" style="" rx="` + formatFloat(card.Rect.RX) + `" ry="` + formatFloat(card.Rect.RY) + `" x="` + formatFloat(x0) + `" y="` + formatFloat(y0) + `" width="` + formatFloat(card.Rect.W) + `" height="` + formatFloat(card.Rect.H) + `"/>`)
+		writeItemLabel(x0+10, y0+10, card.Title)
+		metaY := card.Rect.H/2 - 10
+		writeItemLabel(x0+10, metaY, card.Ticket)
+		writeItemLabel(card.Rect.W/2-10, metaY, card.Assigned)
+		b.WriteString(`</g>`)
+	}
+	b.WriteString(`</g>`)
+	return b.String()
+}
+
 func renderStateMermaid(layout Layout, theme Theme) string {
 	var b strings.Builder
 	b.Grow(8192)
@@ -932,8 +1711,42 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 	nodeFill := defaultColor(theme.PrimaryColor, "#ECECFF")
 	nodeStroke := defaultColor(theme.PrimaryBorderColor, "#9370DB")
 	edgeStroke := defaultColor(theme.LineColor, "#333333")
+	stateOuterEndPath := stateCirclePath(7)
+	stateInnerEndPath := stateCirclePath(2.5)
 
-	b.WriteString(`<g class="clusters"></g>`)
+	b.WriteString(`<g class="clusters">`)
+	b.WriteString("\n")
+	for _, rect := range layout.Rects {
+		if strings.TrimSpace(rect.Class) != "cluster" {
+			continue
+		}
+		clusterFill := defaultColor(rect.Fill, nodeFill)
+		clusterStroke := defaultColor(rect.Stroke, nodeStroke)
+		clusterStrokeWidth := rect.StrokeWidth
+		if clusterStrokeWidth <= 0 {
+			clusterStrokeWidth = 1
+		}
+		b.WriteString(`<g class="cluster statediagram-cluster">`)
+		b.WriteString(`<rect class="outer" x="` + formatFloat(rect.X) + `" y="` + formatFloat(rect.Y) + `" width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" rx="` + formatFloat(max(4, rect.RX)) + `" ry="` + formatFloat(max(4, rect.RY)) + `" fill="` + html.EscapeString(clusterFill) + `" stroke="` + html.EscapeString(clusterStroke) + `" stroke-width="` + formatFloat(clusterStrokeWidth) + `"/>`)
+		b.WriteString(`</g>`)
+		b.WriteString("\n")
+	}
+	for _, text := range layout.Texts {
+		if strings.TrimSpace(text.Class) != "cluster-label" || strings.TrimSpace(text.Value) == "" {
+			continue
+		}
+		textW := max(1.0, measureTextWidth(text.Value, false)+8)
+		textH := 22.5
+		x := text.X - textW/2
+		y := text.Y - textH/2
+		b.WriteString(`<g class="cluster-label" transform="translate(0,0)">`)
+		b.WriteString(`<foreignObject x="` + formatFloat(x) + `" y="` + formatFloat(y) + `" width="` + formatFloat(textW) + `" height="` + formatFloat(textH) + `">`)
+		b.WriteString(`<div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel" style="font-size: 15px; font-family: 'trebuchet ms', verdana, arial, sans-serif; font-weight: 400; color: #333333;">`)
+		b.WriteString(html.EscapeString(text.Value))
+		b.WriteString(`</span></div></foreignObject></g>`)
+		b.WriteString("\n")
+	}
+	b.WriteString(`</g>`)
 	b.WriteString("\n")
 	b.WriteString(`<g class="edgePaths">`)
 	b.WriteString("\n")
@@ -1016,14 +1829,18 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 		switch node.Shape {
 		case ShapeCircle:
 			b.WriteString(`<g class="node default" id="` + nodeID + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
-			b.WriteString(`<circle class="state-start" r="7" width="14" height="14" fill="` + html.EscapeString(edgeStroke) + `" stroke="` + html.EscapeString(edgeStroke) + `" stroke-width="1.5"/>`)
+			b.WriteString(`<circle class="state-start" r="7" width="14" height="14"/>`)
 			b.WriteString(`</g>`)
 			b.WriteString("\n")
 		case ShapeDoubleCircle:
 			b.WriteString(`<g class="node default" id="` + nodeID + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
 			b.WriteString(`<g>`)
-			b.WriteString(`<circle class="state-end" r="7" width="14" height="14" fill="` + html.EscapeString(nodeStroke) + `" stroke="white" stroke-width="1.5"/>`)
-			b.WriteString(`<circle class="end-state-inner" r="5" width="10" height="10" fill="white" stroke-width="1.5"/>`)
+			b.WriteString(`<path d="` + stateOuterEndPath + `" stroke="none" stroke-width="0" fill="` + html.EscapeString(nodeFill) + `" style=""/>`)
+			b.WriteString(`<path d="` + stateOuterEndPath + `" stroke="` + html.EscapeString(edgeStroke) + `" stroke-width="2" fill="none" stroke-dasharray="0 0" style=""/>`)
+			b.WriteString(`<g>`)
+			b.WriteString(`<path d="` + stateInnerEndPath + `" stroke="none" stroke-width="0" fill="` + html.EscapeString(nodeStroke) + `" style=""/>`)
+			b.WriteString(`<path d="` + stateInnerEndPath + `" stroke="` + html.EscapeString(nodeStroke) + `" stroke-width="2" fill="none" stroke-dasharray="0 0" style=""/>`)
+			b.WriteString(`</g>`)
 			b.WriteString(`</g></g>`)
 			b.WriteString("\n")
 		case ShapeDiamond:
@@ -1035,6 +1852,8 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 			b.WriteString(`/>`)
 			b.WriteString(`</g></g>`)
 			b.WriteString("\n")
+		case ShapeHidden:
+			continue
 		default:
 			b.WriteString(`<g class="node  statediagram-state" id="` + nodeID + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
 			b.WriteString(`<g class="basic label-container outer-path">`)
@@ -1048,9 +1867,19 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 		}
 	}
 
+	hasCompositeCluster := false
+	for _, rect := range layout.Rects {
+		if strings.TrimSpace(rect.Class) == "cluster" {
+			hasCompositeCluster = true
+			break
+		}
+	}
 	for _, node := range layout.Nodes {
 		label := strings.TrimSpace(node.Label)
 		if label == "" {
+			continue
+		}
+		if hasCompositeCluster && node.Shape == ShapeDiamond {
 			continue
 		}
 		textW := max(1.0, measureTextWidth(label, false)+8)
@@ -1068,6 +1897,12 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 	b.WriteString(`</g>`)
 	b.WriteString("\n")
 	return b.String()
+}
+
+func stateCirclePath(radius float64) string {
+	r := formatFloat(radius)
+	neg := formatFloat(-radius)
+	return "M" + r + " 0 A " + r + " " + r + " 0 1 0 " + neg + " 0 A " + r + " " + r + " 0 1 0 " + r + " 0"
 }
 
 func renderGanttMermaid(layout Layout) string {
@@ -1267,7 +2102,7 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 		w := plan.ParticipantWidth[participant]
 		center := plan.ParticipantCenter[participant]
 		b.WriteString(`<g>`)
-		b.WriteString(`<line id="actor` + intString(i) + `" x1="` + formatFloat(center) + `" y1="65" x2="` + formatFloat(center) + `" y2="` + formatFloat(plan.LifelineEndY) + `" class="actor-line 200" stroke-width="0.5px" stroke="#999" name="` + html.EscapeString(participant) + `"/>`)
+		b.WriteString(`<line id="actor` + intString(i) + `" x1="` + formatFloat(center) + `" y1="65" x2="` + formatFloat(center) + `" y2="` + formatFloat(plan.LifelineEndY) + `" class="actor-line 200" stroke-width="0.5px" stroke="#999" style="stroke:#999;stroke-width:1px;stroke-dasharray:2,2;fill:none;" name="` + html.EscapeString(participant) + `"/>`)
 		b.WriteString(`<g id="root-` + intString(i) + `">`)
 		b.WriteString(`<rect x="` + formatFloat(x) + `" y="0" fill="#eaeaea" stroke="#666" width="` + formatFloat(w) + `" height="65" name="` + html.EscapeString(participant) + `" rx="3" ry="3" class="actor actor-top"/>`)
 		b.WriteString(`<text x="` + formatFloat(center) + `" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor actor-box" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="` + formatFloat(center) + `" dy="0">` + html.EscapeString(label) + `</tspan></text>`)
@@ -1315,6 +2150,13 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 	}
 
 	for _, msg := range plan.MessageLayouts {
+		if msg.Note {
+			b.WriteString(`<rect x="` + formatFloat(msg.StartX) + `" y="` + formatFloat(msg.LineY) + `" fill="#EDF2AE" stroke="#666" width="` + formatFloat(msg.StopX-msg.StartX) + `" height="39" class="note"/>`)
+			b.WriteString(`<text x="` + formatFloat((msg.StartX+msg.StopX)/2) + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="noteText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
+			b.WriteString(html.EscapeString(msg.Message.Label))
+			b.WriteString(`</text>`)
+			continue
+		}
 		b.WriteString(`<text x="` + formatFloat((msg.StartX+msg.StopX)/2) + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
 		b.WriteString(html.EscapeString(msg.Message.Label))
 		b.WriteString(`</text>`)
@@ -1498,7 +2340,7 @@ func renderMindmapMermaid(layout Layout) string {
 		}
 		cx := nodeLayout.X + nodeLayout.W/2
 		cy := nodeLayout.Y + nodeLayout.H/2
-		labelW := max(1.0, measureTextWidth(node.Label, true))
+		labelW := max(1.0, measureTextWidth(node.Label, true)+18)
 		if strings.TrimSpace(node.ID) == rootID {
 			r := min(nodeLayout.W, nodeLayout.H) / 2
 			b.WriteString(`<g class="node mindmap-node section-root section--1" id="node_` + intString(i) + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
@@ -2064,6 +2906,43 @@ func writeClassMarkerDefs(b *strings.Builder) {
 	b.WriteString("\n")
 }
 
+func writeClassMarkerDefsSeparate(b *strings.Builder) {
+	markers := []string{
+		`<marker id="my-svg_class-aggregationStart" class="marker aggregation class" refX="18" refY="7" markerWidth="190" markerHeight="240" orient="auto"><path d="M 18,7 L9,13 L1,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-aggregationEnd" class="marker aggregation class" refX="1" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L1,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-extensionStart" class="marker extension class" refX="18" refY="7" markerWidth="190" markerHeight="240" orient="auto"><path d="M 1,7 L18,13 V 1 Z"/></marker>`,
+		`<marker id="my-svg_class-extensionEnd" class="marker extension class" refX="1" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 1,1 V 13 L18,7 Z"/></marker>`,
+		`<marker id="my-svg_class-compositionStart" class="marker composition class" refX="18" refY="7" markerWidth="190" markerHeight="240" orient="auto"><path d="M 18,7 L9,13 L1,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-compositionEnd" class="marker composition class" refX="1" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L1,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-dependencyStart" class="marker dependency class" refX="6" refY="7" markerWidth="190" markerHeight="240" orient="auto"><path d="M 5,7 L9,13 L1,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-dependencyEnd" class="marker dependency class" refX="13" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"/></marker>`,
+		`<marker id="my-svg_class-lollipopStart" class="marker lollipop class" refX="13" refY="7" markerWidth="190" markerHeight="240" orient="auto"><circle stroke="black" fill="transparent" cx="7" cy="7" r="6"/></marker>`,
+		`<marker id="my-svg_class-lollipopEnd" class="marker lollipop class" refX="1" refY="7" markerWidth="190" markerHeight="240" orient="auto"><circle stroke="black" fill="transparent" cx="7" cy="7" r="6"/></marker>`,
+	}
+	for _, marker := range markers {
+		b.WriteString("<defs>")
+		b.WriteString(marker)
+		b.WriteString("</defs>\n")
+	}
+}
+
+func writeC4Defs(b *strings.Builder) {
+	b.WriteString(`<defs><symbol id="computer" width="24" height="24"><path transform="scale(.5)" d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z"/></symbol></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><symbol id="database" fill-rule="evenodd" clip-rule="evenodd"><path transform="scale(.5)" d="M12 1C6 1 1 3.2 1 6v12c0 2.8 5 5 11 5s11-2.2 11-5V6c0-2.8-5-5-11-5zm0 2c5 0 9 1.6 9 3s-4 3-9 3-9-1.6-9-3s4-3 9-3zm0 18c-5 0-9-1.6-9-3v-2c2 1.5 5.7 2.4 9 2.4s7-0.9 9-2.4v2c0 1.4-4 3-9 3zm0-6c-5 0-9-1.6-9-3V10c2 1.5 5.7 2.4 9 2.4s7-0.9 9-2.4v2c0 1.4-4 3-9 3z"/></symbol></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><symbol id="clock" width="24" height="24"><path transform="scale(.5)" d="M12 2c5.5 0 10 4.5 10 10S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2zm0-2C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.8 12.5c.2 0 .2.3 0 .4-1.9.3-6 .9-6.5.9-.7 0-1.3-.6-1.3-1.3 0-.5.8-5.4 1.1-7.4l1 6.2 5.7 1.2z"/></symbol></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="arrowhead" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="arrowend" refX="1" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 10 0 L 0 5 L 10 10 z"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0, 0;"/><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0, 0;"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="filled-head" refX="18" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"/></marker></defs>`)
+	b.WriteString("\n")
+}
+
 func defaultColor(value, fallback string) string {
 	if strings.TrimSpace(value) == "" {
 		return fallback
@@ -2112,6 +2991,243 @@ func mermaidStyle(
 		parts = append(parts, "opacity: "+formatFloat(opacity))
 	}
 	return strings.Join(parts, "; ") + ";"
+}
+
+func renderGitGraphMermaid(layout Layout) string {
+	var b strings.Builder
+	b.Grow(8192)
+	b.WriteString("<g/>\n")
+	b.WriteString(`<g class="commit-bullets"/>`)
+	b.WriteString("\n")
+	b.WriteString(`<g class="commit-labels"/>`)
+	b.WriteString("\n")
+
+	branchLines := make([]LayoutLine, 0, 8)
+	commitLines := make([]LayoutLine, 0, 8)
+	branchRects := make([]LayoutRect, 0, 8)
+	commitRects := make([]LayoutRect, 0, 16)
+	commitLabelRects := make([]LayoutRect, 0, 16)
+	arrowPaths := make([]LayoutPath, 0, 16)
+	commitPaths := make([]LayoutPath, 0, 8)
+	branchTexts := make([]LayoutText, 0, 8)
+	commitLabelTexts := make([]LayoutText, 0, 16)
+	tagTexts := make([]LayoutText, 0, 8)
+	otherTexts := make([]LayoutText, 0, 4)
+	commitCircles := make([]LayoutCircle, 0, 16)
+	tagHoles := make([]LayoutCircle, 0, 4)
+	tagPolys := make([]LayoutPolygon, 0, 4)
+
+	for _, line := range layout.Lines {
+		class := strings.TrimSpace(line.Class)
+		switch {
+		case strings.HasPrefix(class, "branch "):
+			branchLines = append(branchLines, line)
+		case strings.Contains(class, "commit"):
+			commitLines = append(commitLines, line)
+		}
+	}
+	for _, rect := range layout.Rects {
+		class := strings.TrimSpace(rect.Class)
+		switch {
+		case strings.HasPrefix(class, "branchLabelBkg"):
+			branchRects = append(branchRects, rect)
+		case class == "commit-label-bkg":
+			commitLabelRects = append(commitLabelRects, rect)
+		case strings.Contains(class, "commit"):
+			commitRects = append(commitRects, rect)
+		}
+	}
+	for _, path := range layout.Paths {
+		class := strings.TrimSpace(path.Class)
+		switch {
+		case strings.HasPrefix(class, "arrow "):
+			arrowPaths = append(arrowPaths, path)
+		case strings.Contains(class, "commit"):
+			commitPaths = append(commitPaths, path)
+		}
+	}
+	for _, text := range layout.Texts {
+		class := strings.TrimSpace(text.Class)
+		switch {
+		case strings.HasPrefix(class, "branch-label"):
+			branchTexts = append(branchTexts, text)
+		case class == "commit-label":
+			commitLabelTexts = append(commitLabelTexts, text)
+		case class == "tag-label":
+			tagTexts = append(tagTexts, text)
+		default:
+			otherTexts = append(otherTexts, text)
+		}
+	}
+	for _, circle := range layout.Circles {
+		class := strings.TrimSpace(circle.Class)
+		if class == "tag-hole" {
+			tagHoles = append(tagHoles, circle)
+		} else if strings.Contains(class, "commit") {
+			commitCircles = append(commitCircles, circle)
+		}
+	}
+	for _, poly := range layout.Polygons {
+		if strings.TrimSpace(poly.Class) == "tag-label-bkg" {
+			tagPolys = append(tagPolys, poly)
+		}
+	}
+
+	writeRect := func(rect LayoutRect, includeTransform bool) {
+		b.WriteString(`<rect x="` + formatFloat(rect.X) + `" y="` + formatFloat(rect.Y) + `" width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `"`)
+		if rect.RX > 0 {
+			b.WriteString(` rx="` + formatFloat(rect.RX) + `"`)
+		}
+		if rect.RY > 0 {
+			b.WriteString(` ry="` + formatFloat(rect.RY) + `"`)
+		}
+		if strings.TrimSpace(rect.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(rect.Class) + `"`)
+		}
+		if includeTransform && strings.TrimSpace(rect.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(rect.Transform) + `"`)
+		}
+		b.WriteString(`/>`)
+	}
+	writeLine := func(line LayoutLine) {
+		b.WriteString(`<line x1="` + formatFloat(line.X1) + `" y1="` + formatFloat(line.Y1) + `" x2="` + formatFloat(line.X2) + `" y2="` + formatFloat(line.Y2) + `"`)
+		if strings.TrimSpace(line.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(line.Class) + `"`)
+		}
+		if strings.TrimSpace(line.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(line.Transform) + `"`)
+		}
+		b.WriteString(`/>`)
+	}
+	writePath := func(path LayoutPath) {
+		b.WriteString(`<path d="` + html.EscapeString(path.D) + `"`)
+		if strings.TrimSpace(path.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(path.Class) + `"`)
+		}
+		if strings.TrimSpace(path.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(path.Transform) + `"`)
+		}
+		b.WriteString(`/>`)
+	}
+	writeCircle := func(circle LayoutCircle) {
+		b.WriteString(`<circle cx="` + formatFloat(circle.CX) + `" cy="` + formatFloat(circle.CY) + `" r="` + formatFloat(circle.R) + `"`)
+		if strings.TrimSpace(circle.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(circle.Class) + `"`)
+		}
+		if strings.TrimSpace(circle.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(circle.Transform) + `"`)
+		}
+		b.WriteString(`/>`)
+	}
+	writePolygon := func(poly LayoutPolygon) {
+		points := make([]string, 0, len(poly.Points))
+		for _, pt := range poly.Points {
+			points = append(points, formatFloat(pt.X)+","+formatFloat(pt.Y))
+		}
+		b.WriteString(`<polygon points="` + strings.Join(points, " ") + `"`)
+		if strings.TrimSpace(poly.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(poly.Class) + `"`)
+		}
+		if strings.TrimSpace(poly.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(poly.Transform) + `"`)
+		}
+		b.WriteString(`/>`)
+	}
+	writeSimpleText := func(text LayoutText, includeTransform bool) {
+		b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `"`)
+		if strings.TrimSpace(text.Class) != "" {
+			b.WriteString(` class="` + html.EscapeString(text.Class) + `"`)
+		}
+		if includeTransform && strings.TrimSpace(text.Transform) != "" {
+			b.WriteString(` transform="` + html.EscapeString(text.Transform) + `"`)
+		}
+		b.WriteString(`>`)
+		b.WriteString(html.EscapeString(text.Value))
+		b.WriteString(`</text>`)
+	}
+
+	b.WriteString("<g>")
+	maxBranches := max(len(branchLines), max(len(branchRects), len(branchTexts)))
+	for idx := 0; idx < maxBranches; idx++ {
+		if idx < len(branchLines) {
+			writeLine(branchLines[idx])
+		}
+		if idx < len(branchRects) {
+			writeRect(branchRects[idx], true)
+		}
+		if idx < len(branchTexts) {
+			text := branchTexts[idx]
+			class := strings.TrimSpace(text.Class)
+			if class == "" {
+				class = "branch-label"
+			}
+			b.WriteString(`<g class="branchLabel"><g class="label ` + html.EscapeString(class) + `" transform="translate(` + formatFloat(text.X-10) + `, ` + formatFloat(text.Y-13) + `)"><text><tspan xml:space="preserve" dy="1em" x="0" class="row">` + html.EscapeString(text.Value) + `</tspan></text></g></g>`)
+		}
+	}
+
+	b.WriteString(`<g class="commit-arrows">`)
+	for _, path := range arrowPaths {
+		writePath(path)
+	}
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="commit-bullets">`)
+	for _, rect := range commitRects {
+		writeRect(rect, true)
+	}
+	for _, circle := range commitCircles {
+		writeCircle(circle)
+	}
+	for _, line := range commitLines {
+		writeLine(line)
+	}
+	for _, path := range commitPaths {
+		writePath(path)
+	}
+	b.WriteString(`</g>`)
+
+	b.WriteString(`<g class="commit-labels">`)
+	pairs := min(len(commitLabelRects), len(commitLabelTexts))
+	for idx := 0; idx < pairs; idx++ {
+		rect := commitLabelRects[idx]
+		text := commitLabelTexts[idx]
+		transform := strings.TrimSpace(rect.Transform)
+		if transform == "" {
+			transform = strings.TrimSpace(text.Transform)
+		}
+		b.WriteString("<g")
+		if transform != "" {
+			b.WriteString(` transform="` + html.EscapeString(transform) + `"`)
+		}
+		b.WriteString(">")
+		rect.Transform = ""
+		text.Transform = ""
+		writeRect(rect, false)
+		writeSimpleText(text, false)
+		b.WriteString("</g>")
+	}
+	for idx := pairs; idx < len(commitLabelRects); idx++ {
+		writeRect(commitLabelRects[idx], true)
+	}
+	for idx := pairs; idx < len(commitLabelTexts); idx++ {
+		writeSimpleText(commitLabelTexts[idx], true)
+	}
+	for _, poly := range tagPolys {
+		writePolygon(poly)
+	}
+	for _, hole := range tagHoles {
+		writeCircle(hole)
+	}
+	for _, text := range tagTexts {
+		writeSimpleText(text, true)
+	}
+	for _, text := range otherTexts {
+		writeSimpleText(text, true)
+	}
+	b.WriteString(`</g>`)
+	b.WriteString(`</g>`)
+	b.WriteString("\n")
+	return b.String()
 }
 
 func renderSankeyMermaid(layout Layout) string {
@@ -2244,6 +3360,42 @@ func radarStyleCSS() string {
 	return b.String()
 }
 
+func requirementStyleCSS() string {
+	return `#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg marker{fill:#333333;stroke:#333333;}#my-svg marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg .reqBox{fill:#ECECFF;fill-opacity:1.0;stroke:hsl(240, 60%, 86.2745098039%);stroke-width:1;}#my-svg .reqTitle,#my-svg .reqLabel{fill:#131300;}#my-svg .reqLabelBox{fill:rgba(232,232,232, 0.8);fill-opacity:1.0;}#my-svg .req-title-line{stroke:hsl(240, 60%, 86.2745098039%);stroke-width:1;}#my-svg .relationshipLine{stroke:#333333;stroke-width:1;}#my-svg .relationshipLabel{fill:black;}#my-svg .divider{stroke:#9370DB;stroke-width:1;}#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .label text,#my-svg span{fill:#333;color:#333;}#my-svg .labelBkg{background-color:rgba(232,232,232, 0.8);}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func genericMermaidBaseCSS() string {
+	return `#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}`
+}
+
+func flowchartStyleCSS() string {
+	return genericMermaidBaseCSS() + `#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .cluster-label text{fill:#333;}#my-svg .cluster-label span{color:#333;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#333;color:#333;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#my-svg .arrowheadPath{fill:#333333;}#my-svg .edgePath .path{stroke:#333333;stroke-width:2.0px;}#my-svg .flowchart-link{stroke:#333333;fill:none;}#my-svg .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#my-svg .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#my-svg .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#my-svg .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#my-svg .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#my-svg .cluster text{fill:#333;}#my-svg .cluster span{color:#333;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#my-svg .icon-shape rect,#my-svg .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func kanbanStyleCSS() string {
+	return `#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .edge{stroke-width:3;}#my-svg .section--1 rect,#my-svg .section--1 path,#my-svg .section--1 circle,#my-svg .section--1 polygon,#my-svg .section--1 path{fill:hsl(240, 100%, 86.2745098039%);stroke:hsl(240, 100%, 86.2745098039%);}#my-svg .section--1 text{fill:#ffffff;}#my-svg .node-icon--1{font-size:40px;color:#ffffff;}#my-svg .section-edge--1{stroke:hsl(240, 100%, 76.2745098039%);}#my-svg .edge-depth--1{stroke-width:17;}#my-svg .section--1 line{stroke:hsl(60, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-0 rect,#my-svg .section-0 path,#my-svg .section-0 circle,#my-svg .section-0 polygon,#my-svg .section-0 path{fill:hsl(60, 100%, 83.5294117647%);stroke:hsl(60, 100%, 83.5294117647%);}#my-svg .section-0 text{fill:black;}#my-svg .node-icon-0{font-size:40px;color:black;}#my-svg .section-edge-0{stroke:hsl(60, 100%, 73.5294117647%);}#my-svg .edge-depth-0{stroke-width:14;}#my-svg .section-0 line{stroke:hsl(240, 100%, 83.5294117647%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-1 rect,#my-svg .section-1 path,#my-svg .section-1 circle,#my-svg .section-1 polygon,#my-svg .section-1 path{fill:hsl(80, 100%, 86.2745098039%);stroke:hsl(80, 100%, 86.2745098039%);}#my-svg .section-1 text{fill:black;}#my-svg .node-icon-1{font-size:40px;color:black;}#my-svg .section-edge-1{stroke:hsl(80, 100%, 76.2745098039%);}#my-svg .edge-depth-1{stroke-width:11;}#my-svg .section-1 line{stroke:hsl(260, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-2 rect,#my-svg .section-2 path,#my-svg .section-2 circle,#my-svg .section-2 polygon,#my-svg .section-2 path{fill:hsl(270, 100%, 86.2745098039%);stroke:hsl(270, 100%, 86.2745098039%);}#my-svg .section-2 text{fill:#ffffff;}#my-svg .node-icon-2{font-size:40px;color:#ffffff;}#my-svg .section-edge-2{stroke:hsl(270, 100%, 76.2745098039%);}#my-svg .edge-depth-2{stroke-width:8;}#my-svg .section-2 line{stroke:hsl(90, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-3 rect,#my-svg .section-3 path,#my-svg .section-3 circle,#my-svg .section-3 polygon,#my-svg .section-3 path{fill:hsl(300, 100%, 86.2745098039%);stroke:hsl(300, 100%, 86.2745098039%);}#my-svg .section-3 text{fill:black;}#my-svg .node-icon-3{font-size:40px;color:black;}#my-svg .section-edge-3{stroke:hsl(300, 100%, 76.2745098039%);}#my-svg .edge-depth-3{stroke-width:5;}#my-svg .section-3 line{stroke:hsl(120, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-4 rect,#my-svg .section-4 path,#my-svg .section-4 circle,#my-svg .section-4 polygon,#my-svg .section-4 path{fill:hsl(330, 100%, 86.2745098039%);stroke:hsl(330, 100%, 86.2745098039%);}#my-svg .section-4 text{fill:black;}#my-svg .node-icon-4{font-size:40px;color:black;}#my-svg .section-edge-4{stroke:hsl(330, 100%, 76.2745098039%);}#my-svg .edge-depth-4{stroke-width:2;}#my-svg .section-4 line{stroke:hsl(150, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-5 rect,#my-svg .section-5 path,#my-svg .section-5 circle,#my-svg .section-5 polygon,#my-svg .section-5 path{fill:hsl(0, 100%, 86.2745098039%);stroke:hsl(0, 100%, 86.2745098039%);}#my-svg .section-5 text{fill:black;}#my-svg .node-icon-5{font-size:40px;color:black;}#my-svg .section-edge-5{stroke:hsl(0, 100%, 76.2745098039%);}#my-svg .edge-depth-5{stroke-width:-1;}#my-svg .section-5 line{stroke:hsl(180, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-6 rect,#my-svg .section-6 path,#my-svg .section-6 circle,#my-svg .section-6 polygon,#my-svg .section-6 path{fill:hsl(30, 100%, 86.2745098039%);stroke:hsl(30, 100%, 86.2745098039%);}#my-svg .section-6 text{fill:black;}#my-svg .node-icon-6{font-size:40px;color:black;}#my-svg .section-edge-6{stroke:hsl(30, 100%, 76.2745098039%);}#my-svg .edge-depth-6{stroke-width:-4;}#my-svg .section-6 line{stroke:hsl(210, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-7 rect,#my-svg .section-7 path,#my-svg .section-7 circle,#my-svg .section-7 polygon,#my-svg .section-7 path{fill:hsl(90, 100%, 86.2745098039%);stroke:hsl(90, 100%, 86.2745098039%);}#my-svg .section-7 text{fill:black;}#my-svg .node-icon-7{font-size:40px;color:black;}#my-svg .section-edge-7{stroke:hsl(90, 100%, 76.2745098039%);}#my-svg .edge-depth-7{stroke-width:-7;}#my-svg .section-7 line{stroke:hsl(270, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-8 rect,#my-svg .section-8 path,#my-svg .section-8 circle,#my-svg .section-8 polygon,#my-svg .section-8 path{fill:hsl(150, 100%, 86.2745098039%);stroke:hsl(150, 100%, 86.2745098039%);}#my-svg .section-8 text{fill:black;}#my-svg .node-icon-8{font-size:40px;color:black;}#my-svg .section-edge-8{stroke:hsl(150, 100%, 76.2745098039%);}#my-svg .edge-depth-8{stroke-width:-10;}#my-svg .section-8 line{stroke:hsl(330, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-9 rect,#my-svg .section-9 path,#my-svg .section-9 circle,#my-svg .section-9 polygon,#my-svg .section-9 path{fill:hsl(180, 100%, 86.2745098039%);stroke:hsl(180, 100%, 86.2745098039%);}#my-svg .section-9 text{fill:black;}#my-svg .node-icon-9{font-size:40px;color:black;}#my-svg .section-edge-9{stroke:hsl(180, 100%, 76.2745098039%);}#my-svg .edge-depth-9{stroke-width:-13;}#my-svg .section-9 line{stroke:hsl(0, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-10 rect,#my-svg .section-10 path,#my-svg .section-10 circle,#my-svg .section-10 polygon,#my-svg .section-10 path{fill:hsl(210, 100%, 86.2745098039%);stroke:hsl(210, 100%, 86.2745098039%);}#my-svg .section-10 text{fill:black;}#my-svg .node-icon-10{font-size:40px;color:black;}#my-svg .section-edge-10{stroke:hsl(210, 100%, 76.2745098039%);}#my-svg .edge-depth-10{stroke-width:-16;}#my-svg .section-10 line{stroke:hsl(30, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:white;stroke:#9370DB;stroke-width:1px;}#my-svg .kanban-ticket-link{fill:white;stroke:#9370DB;text-decoration:underline;}#my-svg .section-root rect,#my-svg .section-root path,#my-svg .section-root circle,#my-svg .section-root polygon{fill:hsl(240, 100%, 46.2745098039%);}#my-svg .section-root text{fill:#ffffff;}#my-svg .icon-container{height:100%;display:flex;justify-content:center;align-items:center;}#my-svg .edge{fill:none;}#my-svg .cluster-label,#my-svg .label{color:#333;fill:#333;}#my-svg .kanban-label{dy:1em;alignment-baseline:middle;text-anchor:middle;dominant-baseline:middle;text-align:center;}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func journeyStyleCSS() string {
+	return genericMermaidBaseCSS() + `#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .mouth{stroke:#666;}#my-svg line{stroke:#333;}#my-svg .legend{fill:#333;font-family:"trebuchet ms",verdana,arial,sans-serif;}#my-svg .label text{fill:#333;}#my-svg .label{color:#333;}#my-svg .face{fill:#FFF8DC;stroke:#999;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .node .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .arrowheadPath{fill:#333333;}#my-svg .edgePath .path{stroke:#333333;stroke-width:1.5px;}#my-svg .flowchart-link{stroke:#333333;fill:none;}#my-svg .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#my-svg .edgeLabel rect{opacity:0.5;}#my-svg .cluster text{fill:#333;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#my-svg .task-type-0,#my-svg .section-type-0{fill:#ECECFF;}#my-svg .task-type-1,#my-svg .section-type-1{fill:#ffffde;}#my-svg .task-type-2,#my-svg .section-type-2{fill:hsl(304, 100%, 96.2745098039%);}#my-svg .task-type-3,#my-svg .section-type-3{fill:hsl(124, 100%, 93.5294117647%);}#my-svg .task-type-4,#my-svg .section-type-4{fill:hsl(176, 100%, 96.2745098039%);}#my-svg .task-type-5,#my-svg .section-type-5{fill:hsl(-4, 100%, 93.5294117647%);}#my-svg .task-type-6,#my-svg .section-type-6{fill:hsl(8, 100%, 96.2745098039%);}#my-svg .task-type-7,#my-svg .section-type-7{fill:hsl(188, 100%, 93.5294117647%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func gitGraphStyleCSS() string {
+	return `#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .commit-id,#my-svg .commit-msg,#my-svg .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#my-svg .branch-label0{fill:#ffffff;}#my-svg .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#my-svg .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#my-svg .label0{fill:hsl(240, 100%, 46.2745098039%);}#my-svg .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#my-svg .branch-label1{fill:black;}#my-svg .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#my-svg .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#my-svg .label1{fill:hsl(60, 100%, 43.5294117647%);}#my-svg .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#my-svg .branch-label2{fill:black;}#my-svg .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#my-svg .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#my-svg .label2{fill:hsl(80, 100%, 46.2745098039%);}#my-svg .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#my-svg .branch-label3{fill:#ffffff;}#my-svg .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#my-svg .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#my-svg .label3{fill:hsl(210, 100%, 46.2745098039%);}#my-svg .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#my-svg .branch-label4{fill:black;}#my-svg .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#my-svg .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#my-svg .label4{fill:hsl(180, 100%, 46.2745098039%);}#my-svg .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#my-svg .branch-label5{fill:black;}#my-svg .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#my-svg .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#my-svg .label5{fill:hsl(150, 100%, 46.2745098039%);}#my-svg .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#my-svg .branch-label6{fill:black;}#my-svg .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#my-svg .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#my-svg .label6{fill:hsl(300, 100%, 46.2745098039%);}#my-svg .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#my-svg .branch-label7{fill:black;}#my-svg .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#my-svg .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#my-svg .label7{fill:hsl(0, 100%, 46.2745098039%);}#my-svg .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#my-svg .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#my-svg .commit-label{font-size:10px;fill:#000021;}#my-svg .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#my-svg .tag-label{font-size:10px;fill:#131300;}#my-svg .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#my-svg .tag-hole{fill:#333;}#my-svg .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#my-svg .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#my-svg .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#my-svg .arrow{stroke-width:8;stroke-linecap:round;fill:none;}#my-svg .gitTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func timelineStyleCSS() string {
+	return `#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .edge{stroke-width:3;}#my-svg .section--1 rect,#my-svg .section--1 path,#my-svg .section--1 circle,#my-svg .section--1 path{fill:hsl(240, 100%, 76.2745098039%);}#my-svg .section--1 text{fill:#ffffff;}#my-svg .node-icon--1{font-size:40px;color:#ffffff;}#my-svg .section-edge--1{stroke:hsl(240, 100%, 76.2745098039%);}#my-svg .edge-depth--1{stroke-width:17;}#my-svg .section--1 line{stroke:hsl(60, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:#ffffff;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-0 rect,#my-svg .section-0 path,#my-svg .section-0 circle,#my-svg .section-0 path{fill:hsl(60, 100%, 73.5294117647%);}#my-svg .section-0 text{fill:black;}#my-svg .node-icon-0{font-size:40px;color:black;}#my-svg .section-edge-0{stroke:hsl(60, 100%, 73.5294117647%);}#my-svg .edge-depth-0{stroke-width:14;}#my-svg .section-0 line{stroke:hsl(240, 100%, 83.5294117647%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-1 rect,#my-svg .section-1 path,#my-svg .section-1 circle,#my-svg .section-1 path{fill:hsl(80, 100%, 76.2745098039%);}#my-svg .section-1 text{fill:black;}#my-svg .node-icon-1{font-size:40px;color:black;}#my-svg .section-edge-1{stroke:hsl(80, 100%, 76.2745098039%);}#my-svg .edge-depth-1{stroke-width:11;}#my-svg .section-1 line{stroke:hsl(260, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-2 rect,#my-svg .section-2 path,#my-svg .section-2 circle,#my-svg .section-2 path{fill:hsl(270, 100%, 76.2745098039%);}#my-svg .section-2 text{fill:#ffffff;}#my-svg .node-icon-2{font-size:40px;color:#ffffff;}#my-svg .section-edge-2{stroke:hsl(270, 100%, 76.2745098039%);}#my-svg .edge-depth-2{stroke-width:8;}#my-svg .section-2 line{stroke:hsl(90, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:#ffffff;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-3 rect,#my-svg .section-3 path,#my-svg .section-3 circle,#my-svg .section-3 path{fill:hsl(300, 100%, 76.2745098039%);}#my-svg .section-3 text{fill:black;}#my-svg .node-icon-3{font-size:40px;color:black;}#my-svg .section-edge-3{stroke:hsl(300, 100%, 76.2745098039%);}#my-svg .edge-depth-3{stroke-width:5;}#my-svg .section-3 line{stroke:hsl(120, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-4 rect,#my-svg .section-4 path,#my-svg .section-4 circle,#my-svg .section-4 path{fill:hsl(330, 100%, 76.2745098039%);}#my-svg .section-4 text{fill:black;}#my-svg .node-icon-4{font-size:40px;color:black;}#my-svg .section-edge-4{stroke:hsl(330, 100%, 76.2745098039%);}#my-svg .edge-depth-4{stroke-width:2;}#my-svg .section-4 line{stroke:hsl(150, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-5 rect,#my-svg .section-5 path,#my-svg .section-5 circle,#my-svg .section-5 path{fill:hsl(0, 100%, 76.2745098039%);}#my-svg .section-5 text{fill:black;}#my-svg .node-icon-5{font-size:40px;color:black;}#my-svg .section-edge-5{stroke:hsl(0, 100%, 76.2745098039%);}#my-svg .edge-depth-5{stroke-width:-1;}#my-svg .section-5 line{stroke:hsl(180, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-6 rect,#my-svg .section-6 path,#my-svg .section-6 circle,#my-svg .section-6 path{fill:hsl(30, 100%, 76.2745098039%);}#my-svg .section-6 text{fill:black;}#my-svg .node-icon-6{font-size:40px;color:black;}#my-svg .section-edge-6{stroke:hsl(30, 100%, 76.2745098039%);}#my-svg .edge-depth-6{stroke-width:-4;}#my-svg .section-6 line{stroke:hsl(210, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-7 rect,#my-svg .section-7 path,#my-svg .section-7 circle,#my-svg .section-7 path{fill:hsl(90, 100%, 76.2745098039%);}#my-svg .section-7 text{fill:black;}#my-svg .node-icon-7{font-size:40px;color:black;}#my-svg .section-edge-7{stroke:hsl(90, 100%, 76.2745098039%);}#my-svg .edge-depth-7{stroke-width:-7;}#my-svg .section-7 line{stroke:hsl(270, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-8 rect,#my-svg .section-8 path,#my-svg .section-8 circle,#my-svg .section-8 path{fill:hsl(150, 100%, 76.2745098039%);}#my-svg .section-8 text{fill:black;}#my-svg .node-icon-8{font-size:40px;color:black;}#my-svg .section-edge-8{stroke:hsl(150, 100%, 76.2745098039%);}#my-svg .edge-depth-8{stroke-width:-10;}#my-svg .section-8 line{stroke:hsl(330, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-9 rect,#my-svg .section-9 path,#my-svg .section-9 circle,#my-svg .section-9 path{fill:hsl(180, 100%, 76.2745098039%);}#my-svg .section-9 text{fill:black;}#my-svg .node-icon-9{font-size:40px;color:black;}#my-svg .section-edge-9{stroke:hsl(180, 100%, 76.2745098039%);}#my-svg .edge-depth-9{stroke-width:-13;}#my-svg .section-9 line{stroke:hsl(0, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-10 rect,#my-svg .section-10 path,#my-svg .section-10 circle,#my-svg .section-10 path{fill:hsl(210, 100%, 76.2745098039%);}#my-svg .section-10 text{fill:black;}#my-svg .node-icon-10{font-size:40px;color:black;}#my-svg .section-edge-10{stroke:hsl(210, 100%, 76.2745098039%);}#my-svg .edge-depth-10{stroke-width:-16;}#my-svg .section-10 line{stroke:hsl(30, 100%, 86.2745098039%);stroke-width:3;}#my-svg .lineWrapper line{stroke:black;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg .section-root rect,#my-svg .section-root path,#my-svg .section-root circle{fill:hsl(240, 100%, 46.2745098039%);}#my-svg .section-root text{fill:#ffffff;}#my-svg .icon-container{height:100%;display:flex;justify-content:center;align-items:center;}#my-svg .edge{fill:none;}#my-svg .eventWrapper{filter:brightness(120%);}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func quadrantStyleCSS() string {
+	return genericMermaidBaseCSS() + `#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
+func c4StyleCSS() string {
+	return genericMermaidBaseCSS() + `#my-svg .person{stroke:hsl(240, 60%, 86.2745098039%);fill:#ECECFF;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+}
+
 func useMermaidLikeDOM(kind DiagramKind) bool {
 	switch kind {
 	case DiagramClass, DiagramER, DiagramState, DiagramFlowchart, DiagramMindmap, DiagramRequirement:
@@ -2259,7 +3411,7 @@ func useMermaidLikeRoot(_ DiagramKind) bool {
 
 func useMermaidGroupWrappers(kind DiagramKind) bool {
 	switch kind {
-	case DiagramTimeline:
+	case DiagramTimeline, DiagramKanban, DiagramQuadrant:
 		return true
 	default:
 		return false
@@ -2268,7 +3420,7 @@ func useMermaidGroupWrappers(kind DiagramKind) bool {
 
 func useTspanText(kind DiagramKind) bool {
 	switch kind {
-	case DiagramTimeline, DiagramArchitecture, DiagramSequence:
+	case DiagramTimeline, DiagramArchitecture, DiagramSequence, DiagramJourney:
 		return true
 	default:
 		return false
@@ -2278,7 +3430,7 @@ func useTspanText(kind DiagramKind) bool {
 func useArrowMarkers(kind DiagramKind) bool {
 	switch kind {
 	case DiagramArchitecture, DiagramKanban, DiagramPacket, DiagramRadar, DiagramZenUML, DiagramMindmap,
-		DiagramGantt, DiagramTreemap:
+		DiagramGantt, DiagramTreemap, DiagramQuadrant, DiagramGitGraph:
 		return false
 	default:
 		return true

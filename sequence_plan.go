@@ -28,6 +28,7 @@ type sequenceMessageLayout struct {
 	TextY   float64
 	Self    bool
 	Dashed  bool
+	Note    bool
 }
 
 type sequenceLoopSectionLayout struct {
@@ -216,6 +217,31 @@ func buildSequencePlan(
 				continue
 			}
 			msg := messages[event.MessageIndex]
+			if msg.IsNote {
+				center, ok := participantCenter[msg.From]
+				if !ok {
+					continue
+				}
+				noteWidth := max(
+					sequenceActorWidth,
+					math.Ceil(measureTextWidthWithFontSize(msg.Label, sequenceMessageFontSize, true, theme.FontFamily)+2*sequenceWrapPadding),
+				)
+				noteHeight := 39.0
+				verticalPos += sequenceBoxMargin
+				noteTop := verticalPos
+				noteBottom := noteTop + noteHeight
+				updateOpenLoopBounds(openLoops, center-noteWidth/2, noteTop, center+noteWidth/2, noteBottom)
+				messageLayouts = append(messageLayouts, sequenceMessageLayout{
+					Message: msg,
+					StartX:  center - noteWidth/2,
+					StopX:   center + noteWidth/2,
+					LineY:   noteTop,
+					TextY:   noteTop + 5,
+					Note:    true,
+				})
+				verticalPos = noteBottom
+				continue
+			}
 
 			fromLeft, fromRight, okFrom := activationBounds(msg.From, openActivations)
 			toLeft, toRight, okTo := activationBounds(msg.To, openActivations)

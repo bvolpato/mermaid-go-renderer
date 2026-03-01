@@ -293,9 +293,9 @@ func layoutPieFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout {
 
 	height := max(1.0, pieCfg.Height)
 	pieWidth := height
-	radius := max(1.0, min(pieWidth, height)/2.0-pieCfg.Margin)
-	centerX := pieWidth / 2.0
-	centerY := height / 2.0
+	radius := max(1.0, min(pieWidth, height)/2.0-pieCfg.Margin+22.0)
+	centerX := pieWidth/2.0 + 21.0
+	centerY := height/2.0 + 19.0
 	legendX := centerX + radius + pieCfg.Margin*0.6
 
 	for idx, item := range legendItems {
@@ -309,7 +309,7 @@ func layoutPieFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	layout.Width = max(200.0, width)
 	layout.Height = max(1.0, height)
 
-	sliceStroke := theme.Background
+	sliceStroke := defaultColor(theme.PieStrokeColor, "#000000")
 	sliceStrokeWidth := max(theme.PieStrokeWidth, 1.2)
 	for _, slice := range slices {
 		span := math.Abs(slice.EndAngle - slice.StartAngle)
@@ -657,7 +657,7 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 	)
 	actorColours := []string{"#8FBC8F", "#7CFC00", "#00FFFF", "#20B2AA", "#B0E0E6", "#FFFFE0"}
 	sectionFills := []string{"#191970", "#8B008B", "#4B0082", "#2F4F4F", "#800000", "#8B4513", "#00008B"}
-	sectionColours := []string{"#fff"}
+	sectionColours := []string{"#333"}
 
 	actorPos := map[string]int{}
 	actorNames := make([]string, 0)
@@ -749,7 +749,7 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 				StrokeWidth: 1,
 			})
 			layout.Texts = append(layout.Texts, LayoutText{
-				Class:  sectionClass,
+				Class:  "section-label",
 				X:      sectionX + sectionW/2.0,
 				Y:      75,
 				Value:  sectionName,
@@ -816,25 +816,35 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		)
 		if score > 3 {
 			layout.Paths = append(layout.Paths, LayoutPath{
-				Class:     "mouth",
-				D:         "M7.5,0A7.5,7.5,0,1,1,-7.5,0L-6.818,0A6.818,6.818,0,1,0,6.818,0Z",
-				Transform: "translate(" + formatFloat(center) + "," + formatFloat(faceY+2) + ")",
+				Class:       "mouth",
+				D:           "M -5 2 Q 0 8 5 2",
+				Transform:   "translate(" + formatFloat(center) + "," + formatFloat(faceY+2) + ")",
+				Fill:        "none",
+				Stroke:      "#666",
+				StrokeWidth: 1.2,
+				LineCap:     "round",
+				LineJoin:    "round",
 			})
 		} else if score < 3 {
 			layout.Paths = append(layout.Paths, LayoutPath{
-				Class:     "mouth",
-				D:         "M-7.5,0A7.5,7.5,0,1,1,7.5,0L6.818,0A6.818,6.818,0,1,0,-6.818,0Z",
-				Transform: "translate(" + formatFloat(center) + "," + formatFloat(faceY+7) + ")",
+				Class:       "mouth",
+				D:           "M -5 7 Q 0 1 5 7",
+				Transform:   "translate(" + formatFloat(center) + "," + formatFloat(faceY+1) + ")",
+				Fill:        "none",
+				Stroke:      "#666",
+				StrokeWidth: 1.2,
+				LineCap:     "round",
+				LineJoin:    "round",
 			})
 		} else {
-			layout.Lines = append(layout.Lines, LayoutLine{
+			layout.Paths = append(layout.Paths, LayoutPath{
 				Class:       "mouth",
-				X1:          center - 5,
-				Y1:          faceY + 7,
-				X2:          center + 5,
-				Y2:          faceY + 7,
+				D:           "M -5 6 L 5 6",
+				Transform:   "translate(" + formatFloat(center) + "," + formatFloat(faceY) + ")",
+				Fill:        "none",
 				Stroke:      "#666",
-				StrokeWidth: 1,
+				StrokeWidth: 1.4,
+				LineCap:     "round",
 			})
 		}
 
@@ -860,6 +870,7 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 			}
 			layout.Circles = append(layout.Circles, LayoutCircle{
 				Class:       "actor-" + intString(pos),
+				Title:       name,
 				CX:          actorX,
 				CY:          taskPos,
 				R:           7,
@@ -914,8 +925,8 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		extraVertForTitle = 70
 	}
 
-	layout.ViewBoxX = 0
-	layout.ViewBoxY = -25
+	layout.ViewBoxX = 17
+	layout.ViewBoxY = -17
 	layout.ViewBoxWidth = width
 	layout.ViewBoxHeight = height + extraVertForTitle
 	layout.Width = width
@@ -928,28 +939,14 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	if len(graph.TimelineEvents) == 0 {
 		return layoutGeneric(graph, theme)
 	}
-	paddingX := 46.0
-	paddingTop := 48.0
-	timeBoxH := 62.0
-	eventBoxH := 44.0
-	colGap := 18.0
+	timeBoxH := 62.3078125
+	eventBoxH := 45.0
+	colGap := 10.0
 	textPadX := 14.0
 
-	titleY := paddingTop
-	if strings.TrimSpace(graph.TimelineTitle) != "" {
-		layout.Texts = append(layout.Texts, LayoutText{
-			X:      paddingX,
-			Y:      titleY + theme.FontSize*1.5,
-			Value:  graph.TimelineTitle,
-			Anchor: "start",
-			Size:   theme.FontSize * 1.9,
-			Weight: "700",
-			Color:  theme.PrimaryTextColor,
-		})
-		titleY += theme.FontSize*1.9 + 12.0
-	}
+	title := strings.TrimSpace(graph.TimelineTitle)
 
-	maxBoxW := 186.0
+	maxBoxW := 190.0
 	for _, event := range graph.TimelineEvents {
 		w := measureTextWidthWithFontSize(event.Time, theme.FontSize*0.95, config.FastTextMetrics, theme.FontFamily)
 		maxBoxW = max(maxBoxW, w+textPadX*2.0)
@@ -959,13 +956,25 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		}
 	}
 
-	startX := paddingX + 138.0
-	topBoxY := titleY + 6.0
-	axisY := topBoxY + timeBoxH + 120.0
-	eventTopY := axisY + 82.0
+	startX := 190.0
+	topBoxY := 41.0
+	axisY := 158.3078125
+	eventTopY := 241.0
+	if title != "" {
+		layout.Texts = append(layout.Texts, LayoutText{
+			X:      35.1,
+			Y:      8,
+			Value:  title,
+			Anchor: "start",
+			Size:   theme.FontSize * 1.9,
+			Weight: "700",
+			Color:  theme.PrimaryTextColor,
+		})
+	}
 
-	topColors := []string{"#7e81ea", "#eceb66"}
-	textColors := []string{"#ffffff", "#222222"}
+	topColors := []string{"#8686ff", "#ffff78"}
+	lineColors := []string{"#ffffb8", "#ababff"}
+	textColors := []string{"#ffffff", "#000000"}
 	sectionClassToken := func(section string) string {
 		section = strings.TrimSpace(section)
 		if section == "" {
@@ -1033,6 +1042,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		x := startX + float64(i)*(maxBoxW+colGap)
 		cx := x + maxBoxW/2.0
 		color := topColors[i%len(topColors)]
+		lineColor := lineColors[i%len(lineColors)]
 		textColor := textColors[i%len(textColors)]
 
 		layout.Rects = append(layout.Rects, LayoutRect{
@@ -1045,8 +1055,8 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			RX:          2,
 			RY:          2,
 			Fill:        color,
-			Stroke:      "#7e81ea",
-			StrokeWidth: 1.0,
+			Stroke:      "none",
+			StrokeWidth: 0,
 		})
 		layout.Lines = append(layout.Lines, LayoutLine{
 			Class:       "node-line-" + sectionClassToken(event.Section),
@@ -1054,12 +1064,12 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			Y1:          topBoxY + timeBoxH + 5,
 			X2:          x + maxBoxW,
 			Y2:          topBoxY + timeBoxH + 5,
-			Stroke:      "#333333",
-			StrokeWidth: 2.2,
+			Stroke:      lineColor,
+			StrokeWidth: 3.0,
 		})
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      cx,
-			Y:      topBoxY + timeBoxH/2.0 + theme.FontSize*0.3,
+			Y:      topBoxY + timeBoxH/2.0 + theme.FontSize*0.3 - 3.0,
 			Value:  event.Time,
 			Anchor: "middle",
 			Size:   theme.FontSize * 0.95,
@@ -1088,29 +1098,29 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				Y1:          ey + eventBoxH + 5,
 				X2:          x + maxBoxW,
 				Y2:          ey + eventBoxH + 5,
-				Stroke:      "#333333",
-				StrokeWidth: 2.2,
+				Stroke:      lineColor,
+				StrokeWidth: 3.0,
 			})
 			layout.Texts = append(layout.Texts, LayoutText{
 				X:      cx,
-				Y:      ey + eventBoxH/2.0 + theme.FontSize*0.3,
-				Value:  strings.ReplaceAll(item, " ", "   "),
+				Y:      ey + eventBoxH/2.0 + theme.FontSize*0.3 - 3.0,
+				Value:  item,
 				Anchor: "middle",
 				Size:   theme.FontSize * 0.95,
 				Color:  textColor,
 			})
 		}
 
-		laneBottom := eventTopY + float64(len(event.Events))*(eventBoxH+8.0) + 18.0
+		laneBottom := eventTopY + float64(maxEvents)*(eventBoxH+15.0) + 58.9234375
 		layout.Lines = append(layout.Lines, LayoutLine{
 			Class:       "lineWrapper",
 			X1:          cx,
 			Y1:          topBoxY + timeBoxH,
 			X2:          cx,
 			Y2:          laneBottom - 7.0,
-			Stroke:      "#333333",
-			StrokeWidth: 1.1,
-			DashArray:   "3,2",
+			Stroke:      "#000000",
+			StrokeWidth: 2.0,
+			DashArray:   "5,5",
 			ArrowEnd:    true,
 		})
 	}
@@ -1118,21 +1128,21 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	lastRight := startX + float64(len(graph.TimelineEvents)-1)*(maxBoxW+colGap) + maxBoxW
 	layout.Lines = append(layout.Lines, LayoutLine{
 		Class:       "lineWrapper",
-		X1:          startX - 26.0,
+		X1:          startX - 50.0,
 		Y1:          axisY,
-		X2:          lastRight + 166.0,
+		X2:          lastRight + 250.0,
 		Y2:          axisY,
-		Stroke:      "#222222",
-		StrokeWidth: 3.0,
+		Stroke:      "#000000",
+		StrokeWidth: 4.0,
 		ArrowEnd:    true,
 	})
 
-	layout.Width = lastRight + 202.0
-	layout.Height = eventTopY + float64(maxEvents)*(eventBoxH+8.0) + 194.0
-	layout.ViewBoxX = 100
+	layout.Width = lastRight + 305.0
+	layout.Height = eventTopY + float64(maxEvents)*(eventBoxH+15.0) + 101.9234375
+	layout.ViewBoxX = -5
 	layout.ViewBoxY = -61.5
-	layout.ViewBoxWidth = max(900, layout.Width+2)
-	layout.ViewBoxHeight = max(620, layout.Height-8)
+	layout.ViewBoxWidth = max(895, layout.Width)
+	layout.ViewBoxHeight = max(533.4234619140625, layout.Height+61.5)
 	return layout
 }
 
@@ -2502,6 +2512,7 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 	)
 
 	type cardLayout struct {
+		id        string
 		colX      float64
 		y         float64
 		h         float64
@@ -2512,11 +2523,31 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 		priorityC string
 	}
 	cardLayouts := make([]cardLayout, 0, 16)
+	columnFillPalette := []string{
+		"hsl(80, 100%, 86.2745098039%)",
+		"hsl(270, 100%, 86.2745098039%)",
+		"hsl(300, 100%, 86.2745098039%)",
+		"hsl(330, 100%, 86.2745098039%)",
+		"hsl(0, 100%, 86.2745098039%)",
+	}
+	columnStrokePalette := []string{
+		"hsl(80, 100%, 76.2745098039%)",
+		"hsl(270, 100%, 76.2745098039%)",
+		"hsl(300, 100%, 76.2745098039%)",
+		"hsl(330, 100%, 76.2745098039%)",
+		"hsl(0, 100%, 76.2745098039%)",
+	}
 
 	maxColumnHeight := 0.0
 	for idx, column := range graph.KanbanBoard {
 		x := columnX0 + float64(idx)*(columnWidth+columnGap)
 		cardY := columnY + cardYTopPad
+		fill := columnFillPalette[idx%len(columnFillPalette)]
+		stroke := columnStrokePalette[idx%len(columnStrokePalette)]
+		titleColor := "#000000"
+		if idx%len(columnFillPalette) == 1 {
+			titleColor = "#ffffff"
+		}
 
 		for _, card := range column.Cards {
 			titleLines := wrapKanbanText(card.Title, cardWidth-20.0, 15.0, config.FastTextMetrics)
@@ -2529,6 +2560,7 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 			}
 
 			cardLayouts = append(cardLayouts, cardLayout{
+				id:        card.ID,
 				colX:      x,
 				y:         cardY,
 				h:         height,
@@ -2553,8 +2585,8 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 			H:           columnHeight,
 			RX:          5,
 			RY:          5,
-			Fill:        "hsl(240, 100%, 86.2745098039%)",
-			Stroke:      "hsl(240, 100%, 76.2745098039%)",
+			Fill:        fill,
+			Stroke:      stroke,
 			StrokeWidth: 2,
 		})
 		layout.Texts = append(layout.Texts, LayoutText{
@@ -2564,7 +2596,7 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 			Value:            column.Title,
 			Anchor:           "middle",
 			Size:             16,
-			Color:            "#000000",
+			Color:            titleColor,
 			DominantBaseline: "middle",
 		})
 	}
@@ -2572,6 +2604,7 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 	for _, card := range cardLayouts {
 		cardX := card.colX + cardXPad
 		layout.Rects = append(layout.Rects, LayoutRect{
+			ID:          card.id,
 			Class:       "kanban-card",
 			X:           cardX,
 			Y:           card.y,
@@ -2600,30 +2633,26 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 		}
 
 		metaY := card.y + card.h - 12
-		if strings.TrimSpace(card.ticket) != "" {
-			layout.Texts = append(layout.Texts, LayoutText{
-				Class:            "kanban-card-meta",
-				X:                cardX + 10,
-				Y:                metaY,
-				Value:            card.ticket,
-				Anchor:           "start",
-				Size:             12,
-				Color:            "#000000",
-				DominantBaseline: "middle",
-			})
-		}
-		if strings.TrimSpace(card.assigned) != "" {
-			layout.Texts = append(layout.Texts, LayoutText{
-				Class:            "kanban-card-meta",
-				X:                cardX + cardWidth - 10,
-				Y:                metaY,
-				Value:            card.assigned,
-				Anchor:           "end",
-				Size:             12,
-				Color:            "#000000",
-				DominantBaseline: "middle",
-			})
-		}
+		layout.Texts = append(layout.Texts, LayoutText{
+			Class:            "kanban-card-meta",
+			X:                cardX + 10,
+			Y:                metaY,
+			Value:            card.ticket,
+			Anchor:           "start",
+			Size:             12,
+			Color:            "#000000",
+			DominantBaseline: "middle",
+		})
+		layout.Texts = append(layout.Texts, LayoutText{
+			Class:            "kanban-card-meta",
+			X:                cardX + cardWidth - 10,
+			Y:                metaY,
+			Value:            card.assigned,
+			Anchor:           "end",
+			Size:             12,
+			Color:            "#000000",
+			DominantBaseline: "middle",
+		})
 		if strings.TrimSpace(card.priorityC) != "" {
 			layout.Lines = append(layout.Lines, LayoutLine{
 				X1:          cardX + 2,
@@ -2756,9 +2785,19 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		"hsl(270, 100%, 61.2745098039%)",
 		"hsl(210, 100%, 61.2745098039%)",
 	}
-	sectionColor := func(depth int) (string, string) {
-		idx := depth % len(sectionPalette)
+	sectionColor := func(classIdx int) (string, string) {
+		idx := 0
+		if classIdx > 0 {
+			idx = (classIdx - 1) % len(sectionPalette)
+		}
 		return sectionPalette[idx], sectionStroke[idx]
+	}
+	sectionTextColor := func(fill string) string {
+		_, _, l, ok := parseColorToHSL(fill)
+		if ok && l < 60 {
+			return "#ffffff"
+		}
+		return "black"
 	}
 
 	type frame struct {
@@ -2769,7 +2808,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 	}
 
 	addLeaf := func(node *treeNode, f frame, classIdx int) {
-		fill, _ := sectionColor(max(0, classIdx))
+		fill, _ := sectionColor(max(1, classIdx))
 		layout.Rects = append(layout.Rects, LayoutRect{
 			Class:         "treemapLeaf",
 			X:             f.x,
@@ -2808,18 +2847,18 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		)
 	}
 
-	var layoutNode func(node *treeNode, depth int, f frame)
-	layoutNode = func(node *treeNode, depth int, f frame) {
+	var layoutNode func(node *treeNode, depth int, classIdx int, f frame)
+	layoutNode = func(node *treeNode, depth int, classIdx int, f frame) {
 		if node == nil || f.w <= 1 || f.h <= 1 {
 			return
 		}
 		if len(node.Children) == 0 {
-			addLeaf(node, f, depth-1)
+			addLeaf(node, f, classIdx)
 			return
 		}
 
-		fill, stroke := sectionColor(max(0, depth-1))
-		rectClass := "treemapSection section" + intString(max(0, depth))
+		fill, stroke := sectionColor(max(0, classIdx))
+		rectClass := "treemapSection section" + intString(max(0, classIdx))
 		if depth == 0 {
 			fill = "transparent"
 			stroke = "transparent"
@@ -2837,6 +2876,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 			StrokeOpacity: 0.4,
 		})
 		if depth > 0 {
+			textColor := sectionTextColor(fill)
 			layout.Texts = append(layout.Texts,
 				LayoutText{
 					Class:            "treemapSectionLabel",
@@ -2846,7 +2886,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 					Anchor:           "start",
 					Size:             12,
 					Weight:           "700",
-					Color:            "#000000",
+					Color:            textColor,
 					DominantBaseline: "middle",
 				},
 				LayoutText{
@@ -2856,7 +2896,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 					Value:            strconv.FormatFloat(node.Value, 'f', 0, 64),
 					Anchor:           "end",
 					Size:             10,
-					Color:            "#000000",
+					Color:            textColor,
 					DominantBaseline: "middle",
 				},
 			)
@@ -2896,7 +2936,15 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 				if idx == len(children)-1 {
 					childW = max(1, content.x+content.w-x)
 				}
-				layoutNode(child, depth+1, frame{x: x, y: content.y, w: childW, h: content.h})
+				childClass := classIdx
+				if depth <= 1 {
+					if classIdx == 0 {
+						childClass = idx + 1
+					} else {
+						childClass = classIdx + idx + 1
+					}
+				}
+				layoutNode(child, depth+1, childClass, frame{x: x, y: content.y, w: childW, h: content.h})
 				x += childW + gap
 				used += childW
 			}
@@ -2912,12 +2960,20 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 			if idx == len(children)-1 {
 				childH = max(1, content.y+content.h-y)
 			}
-			layoutNode(child, depth+1, frame{x: content.x, y: y, w: content.w, h: childH})
+			childClass := classIdx
+			if depth <= 1 {
+				if classIdx == 0 {
+					childClass = idx + 1
+				} else {
+					childClass = classIdx + idx + 1
+				}
+			}
+			layoutNode(child, depth+1, childClass, frame{x: content.x, y: y, w: content.w, h: childH})
 			y += childH + gap
 		}
 	}
 
-	layoutNode(root, 0, frame{x: 0, y: 0, w: 1000, h: 400})
+	layoutNode(root, 0, 0, frame{x: 0, y: 0, w: 1000, h: 400})
 	layout.Width = 996
 	layout.Height = 371
 	layout.ViewBoxX = 2

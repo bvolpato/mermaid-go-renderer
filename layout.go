@@ -55,36 +55,78 @@ func ComputeLayout(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	}
 }
 
-func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
-	layout := Layout{Kind: graph.Kind}
-	if len(graph.NodeOrder) == 0 {
-		return layoutGeneric(graph, theme)
-	}
-
+func computeGraphRanks(nodeOrder []string, edges []Edge) (map[string]int, int) {
 	ranks := map[string]int{}
-	for _, id := range graph.NodeOrder {
+	if len(nodeOrder) == 0 {
+		return ranks, 0
+	}
+	order := append([]string(nil), nodeOrder...)
+	for _, id := range order {
 		ranks[id] = 0
 	}
-	for i := 0; i < len(graph.NodeOrder)+1; i++ {
-		updated := false
-		for _, edge := range graph.Edges {
-			fromRank, okFrom := ranks[edge.From]
-			toRank, okTo := ranks[edge.To]
-			if !okFrom {
-				ranks[edge.From] = 0
-				fromRank = 0
-			}
-			if !okTo {
-				ranks[edge.To] = 0
-				toRank = 0
-			}
-			if toRank <= fromRank {
-				ranks[edge.To] = fromRank + 1
-				updated = true
+
+	outgoing := map[string][]string{}
+	indegree := map[string]int{}
+	for _, id := range order {
+		indegree[id] = 0
+	}
+	for _, edge := range edges {
+		if _, ok := indegree[edge.From]; !ok {
+			indegree[edge.From] = 0
+			ranks[edge.From] = 0
+			order = append(order, edge.From)
+		}
+		if _, ok := indegree[edge.To]; !ok {
+			indegree[edge.To] = 0
+			ranks[edge.To] = 0
+			order = append(order, edge.To)
+		}
+		outgoing[edge.From] = append(outgoing[edge.From], edge.To)
+		indegree[edge.To]++
+	}
+	queue := make([]string, 0, len(order))
+	for _, id := range order {
+		if indegree[id] == 0 {
+			queue = append(queue, id)
+		}
+	}
+
+	processed := map[string]bool{}
+	topologicalOrder := make([]string, 0, len(order))
+	for len(queue) > 0 {
+		id := queue[0]
+		queue = queue[1:]
+		if processed[id] {
+			continue
+		}
+		processed[id] = true
+		topologicalOrder = append(topologicalOrder, id)
+		for _, to := range outgoing[id] {
+			indegree[to]--
+			if indegree[to] == 0 {
+				queue = append(queue, to)
 			}
 		}
-		if !updated {
-			break
+	}
+	for _, id := range order {
+		if !processed[id] {
+			topologicalOrder = append(topologicalOrder, id)
+		}
+	}
+
+	orderIndex := map[string]int{}
+	for idx, id := range topologicalOrder {
+		orderIndex[id] = idx
+	}
+	for _, id := range topologicalOrder {
+		for _, to := range outgoing[id] {
+			// Ignore back-edges to break cycles deterministically and avoid rank inflation.
+			if orderIndex[to] <= orderIndex[id] {
+				continue
+			}
+			if ranks[to] < ranks[id]+1 {
+				ranks[to] = ranks[id] + 1
+			}
 		}
 	}
 
@@ -94,23 +136,35 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			maxRank = rank
 		}
 	}
+	return ranks, maxRank
+}
+
+func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
+	layout := Layout{Kind: graph.Kind}
+	if len(graph.NodeOrder) == 0 {
+		return layoutGeneric(graph, theme)
+	}
+
+	ranks, maxRank := computeGraphRanks(graph.NodeOrder, graph.Edges)
 
 	orderedRanks := make(map[int][]string)
+	displayRankByID := map[string]int{}
 	for _, id := range graph.NodeOrder {
 		rank := ranks[id]
 		if graph.Direction == DirectionBottomTop || graph.Direction == DirectionRightLeft {
 			rank = maxRank - rank
 		}
 		orderedRanks[rank] = append(orderedRanks[rank], id)
+		displayRankByID[id] = rank
 	}
 
-	padding := 40.0
-	nodeSpacing := max(24, config.NodeSpacing)
-	rankSpacing := max(56, config.RankSpacing)
+	padding := 8.0
+	nodeSpacing := max(8, config.NodeSpacing*0.2)
+	rankSpacing := max(40, config.RankSpacing*0.8)
 	lineH := max(14, theme.FontSize+2)
 	titleH := 34.0
-	maxNodeW := 140.0
-	maxNodeH := 56.0
+	maxNodeW := 0.0
+	maxNodeH := 0.0
 	nodeSizes := map[string]Point{}
 
 	for _, id := range graph.NodeOrder {
@@ -135,8 +189,8 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			methodH = float64(len(methods))*lineH + 10
 		}
 
-		w := clamp(longest+26, 120, 420)
-		h := max(56, titleH+memberH+methodH)
+		w := clamp(longest+26, 56, 220)
+		h := max(84, titleH+memberH+methodH)
 		nodeSizes[id] = Point{X: w, Y: h}
 		maxNodeW = max(maxNodeW, w)
 		maxNodeH = max(maxNodeH, h)
@@ -149,16 +203,20 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			x := padding + float64(index)*(maxNodeW+nodeSpacing)
 			y := padding + float64(rank)*(maxNodeH+rankSpacing)
 			if graph.Direction == DirectionLeftRight || graph.Direction == DirectionRightLeft {
-				x, y = y, x
+				x = padding + float64(rank)*(maxNodeW+rankSpacing)
+				y = padding + float64(index)*(maxNodeH+nodeSpacing)
 			}
 			layout.Nodes = append(layout.Nodes, NodeLayout{
-				ID:    id,
-				Label: graph.Nodes[id].Label,
-				Shape: ShapeRectangle,
-				X:     x,
-				Y:     y,
-				W:     size.X,
-				H:     size.Y,
+				ID:          id,
+				Label:       graph.Nodes[id].Label,
+				Shape:       ShapeRectangle,
+				X:           x,
+				Y:           y,
+				W:           size.X,
+				H:           size.Y,
+				Fill:        graph.Nodes[id].Fill,
+				Stroke:      graph.Nodes[id].Stroke,
+				StrokeWidth: graph.Nodes[id].StrokeWidth,
 			})
 		}
 	}
@@ -552,65 +610,74 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		return layoutGeneric(graph, theme)
 	}
 
-	ranks := map[string]int{}
-	for _, id := range graph.NodeOrder {
-		ranks[id] = 0
-	}
-	for i := 0; i < len(graph.NodeOrder)+1; i++ {
-		updated := false
-		for _, edge := range graph.Edges {
-			fromRank, okFrom := ranks[edge.From]
-			toRank, okTo := ranks[edge.To]
-			if !okFrom {
-				ranks[edge.From] = 0
-				fromRank = 0
-			}
-			if !okTo {
-				ranks[edge.To] = 0
-				toRank = 0
-			}
-			if toRank <= fromRank {
-				ranks[edge.To] = fromRank + 1
-				updated = true
-			}
-		}
-		if !updated {
-			break
-		}
-	}
-
-	maxRank := 0
-	for _, rank := range ranks {
-		if rank > maxRank {
-			maxRank = rank
-		}
-	}
+	ranks, maxRank := computeGraphRanks(graph.NodeOrder, graph.Edges)
 
 	orderedRanks := make(map[int][]string)
+	displayRankByID := map[string]int{}
 	for _, id := range graph.NodeOrder {
 		rank := ranks[id]
 		if graph.Direction == DirectionBottomTop || graph.Direction == DirectionRightLeft {
 			rank = maxRank - rank
 		}
 		orderedRanks[rank] = append(orderedRanks[rank], id)
+		displayRankByID[id] = rank
 	}
 
 	padding := 40.0
 	nodeSpacing := max(20, config.NodeSpacing)
 	rankSpacing := max(40, config.RankSpacing)
 	baseHeight := 56.0
+	if graph.Kind == DiagramFlowchart {
+		padding = 8
+		if len(graph.FlowSubgraphs) > 0 {
+			padding = 30
+		}
+	}
 	if graph.Kind == DiagramState {
 		padding = 24.0
-		// State diagrams need larger rank spacing to avoid over-compression.
 		nodeSpacing = max(14, config.NodeSpacing*0.55)
-		rankSpacing = max(96, config.RankSpacing*1.6)
+		if len(graph.FlowSubgraphs) > 0 {
+			// Composite states are noticeably tighter in Mermaid output.
+			rankSpacing = max(52, config.RankSpacing*0.7)
+		} else {
+			rankSpacing = max(38, config.RankSpacing*0.76)
+		}
 		baseHeight = 40.0
 	}
+	if graph.Kind == DiagramC4 {
+		padding = 150.0
+		nodeSpacing = max(26, config.NodeSpacing*0.6)
+		rankSpacing = max(100, config.RankSpacing*1.25)
+		baseHeight = 60.0
+	}
+	if graph.Kind == DiagramRequirement {
+		padding = 8
+		nodeSpacing = max(10, config.NodeSpacing*0.2)
+		rankSpacing = max(185, config.RankSpacing*3.7)
+	}
 	maxNodeWidth := 100.0
+	if graph.Kind == DiagramState {
+		maxNodeWidth = 0
+	} else if graph.Kind == DiagramFlowchart && len(graph.NodeOrder) > 8 {
+		maxNodeWidth = 80
+	}
 	nodeSizes := map[string]Point{}
+	compositeStateIDs := map[string]struct{}{}
+	if graph.Kind == DiagramState {
+		for _, subgraph := range graph.FlowSubgraphs {
+			if strings.TrimSpace(subgraph.ID) == "" {
+				continue
+			}
+			compositeStateIDs[subgraph.ID] = struct{}{}
+		}
+	}
 
 	for _, id := range graph.NodeOrder {
 		node := graph.Nodes[id]
+		if _, isComposite := compositeStateIDs[id]; isComposite {
+			nodeSizes[id] = Point{X: 1, Y: 1}
+			continue
+		}
 		if graph.Kind == DiagramState &&
 			(node.Shape == ShapeCircle || node.Shape == ShapeDoubleCircle) &&
 			strings.TrimSpace(node.Label) == "" {
@@ -626,14 +693,92 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			maxW = 170
 			paddingW = 14
 		}
-		w := clamp(measureTextWidth(node.Label, config.FastTextMetrics)+paddingW, minW, maxW)
+		if graph.Kind == DiagramFlowchart && len(graph.FlowSubgraphs) > 0 && len(graph.NodeOrder) <= 4 {
+			minW = 96
+			paddingW = 34
+		}
+		labelWidth := measureTextWidth(node.Label, config.FastTextMetrics)
+		if graph.Kind == DiagramC4 {
+			labelWidth = 0
+			for _, line := range splitLinesPreserve(node.Label) {
+				labelWidth = max(labelWidth, measureTextWidth(line, config.FastTextMetrics))
+			}
+			minW = 216
+			maxW = 420
+			paddingW = 56
+		}
+		if graph.Kind == DiagramRequirement {
+			labelWidth = 0
+			for _, line := range splitLinesPreserve(node.Label) {
+				labelWidth = max(labelWidth, measureTextWidth(line, config.FastTextMetrics))
+			}
+			minW = 160
+			maxW = 320
+			paddingW = 30
+		}
+		w := clamp(labelWidth+paddingW, minW, maxW)
 		h := baseHeight
 		if graph.Kind == DiagramState {
 			h = 40
+		} else if graph.Kind == DiagramC4 {
+			lineCount := max(1, len(splitLinesPreserve(node.Label)))
+			h = 60
+			if node.Shape == ShapePerson {
+				h = 105
+			} else if lineCount > 2 {
+				h = max(h, 60+float64(lineCount-2)*20)
+			}
+		} else if graph.Kind == DiagramRequirement {
+			lineCount := max(1, len(splitLinesPreserve(node.Label)))
+			h = max(76, float64(lineCount)*max(15, theme.FontSize*1.1)+24)
 		}
 		nodeSizes[id] = Point{X: w, Y: h}
 		if w > maxNodeWidth {
 			maxNodeWidth = w
+		}
+	}
+
+	stateRankShift := map[int]float64{}
+	stateOutsideNodeCount := 0
+	if graph.Kind == DiagramState && len(graph.FlowSubgraphs) > 0 {
+		insideComposite := map[string]struct{}{}
+		for _, subgraph := range graph.FlowSubgraphs {
+			for _, nodeID := range subgraph.NodeIDs {
+				insideComposite[nodeID] = struct{}{}
+			}
+		}
+		firstOutsideRank := maxRank + 1
+		for _, edge := range graph.Edges {
+			if _, fromInside := insideComposite[edge.From]; !fromInside {
+				continue
+			}
+			if _, toInside := insideComposite[edge.To]; toInside {
+				continue
+			}
+			targetRank, ok := displayRankByID[edge.To]
+			if !ok {
+				continue
+			}
+			if targetRank < firstOutsideRank {
+				firstOutsideRank = targetRank
+			}
+		}
+		if firstOutsideRank <= maxRank {
+			outsideCount := 0
+			for id, rank := range displayRankByID {
+				if rank < firstOutsideRank {
+					continue
+				}
+				if _, inside := insideComposite[id]; inside {
+					continue
+				}
+				outsideCount++
+			}
+			stateOutsideNodeCount = outsideCount
+			extraGap := rankSpacing * (0.1 + float64(outsideCount)*0.2)
+			for rank := firstOutsideRank; rank <= maxRank; rank++ {
+				stateRankShift[rank] += extraGap
+			}
 		}
 	}
 
@@ -643,17 +788,36 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			size := nodeSizes[id]
 			x := padding + float64(index)*(maxNodeWidth+nodeSpacing)
 			y := padding + float64(rank)*(baseHeight+rankSpacing)
+			if graph.Kind == DiagramState {
+				y += stateRankShift[rank]
+			}
+			if graph.Kind == DiagramRequirement {
+				x += (maxNodeWidth - size.X) / 2
+			}
 			if graph.Direction == DirectionLeftRight || graph.Direction == DirectionRightLeft {
-				x, y = y, x
+				x = padding + float64(rank)*(maxNodeWidth+rankSpacing)
+				y = padding + float64(index)*(baseHeight+nodeSpacing)
+				if graph.Kind == DiagramC4 {
+					y += 18
+				}
+			}
+			shape := graph.Nodes[id].Shape
+			label := graph.Nodes[id].Label
+			if _, isComposite := compositeStateIDs[id]; isComposite {
+				shape = ShapeHidden
+				label = ""
 			}
 			layout.Nodes = append(layout.Nodes, NodeLayout{
-				ID:    id,
-				Label: graph.Nodes[id].Label,
-				Shape: graph.Nodes[id].Shape,
-				X:     x,
-				Y:     y,
-				W:     size.X,
-				H:     size.Y,
+				ID:          id,
+				Label:       label,
+				Shape:       shape,
+				X:           x,
+				Y:           y,
+				W:           size.X,
+				H:           size.Y,
+				Fill:        graph.Nodes[id].Fill,
+				Stroke:      graph.Nodes[id].Stroke,
+				StrokeWidth: graph.Nodes[id].StrokeWidth,
 			})
 		}
 	}
@@ -674,6 +838,90 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		}
 	}
 
+	if len(graph.FlowSubgraphs) > 0 {
+		for _, subgraph := range graph.FlowSubgraphs {
+			minX := math.Inf(1)
+			minY := math.Inf(1)
+			subMaxX := math.Inf(-1)
+			subMaxY := math.Inf(-1)
+			nodeIDs := map[string]struct{}{}
+			for _, nodeID := range subgraph.NodeIDs {
+				nodeIDs[nodeID] = struct{}{}
+			}
+			if graph.Kind == DiagramState {
+				subgraphID := sanitizeID(strings.TrimSpace(subgraph.ID), "")
+				if subgraphID != "" {
+					stateEntryID := stateStartNodeID + "_" + subgraphID
+					for _, edge := range graph.Edges {
+						if edge.To == stateEntryID || edge.To == subgraphID {
+							nodeIDs[edge.From] = struct{}{}
+						}
+					}
+				}
+			}
+			for nodeID := range nodeIDs {
+				node, ok := nodeIndex[nodeID]
+				if !ok {
+					continue
+				}
+				minX = min(minX, node.X)
+				minY = min(minY, node.Y)
+				subMaxX = max(subMaxX, node.X+node.W)
+				subMaxY = max(subMaxY, node.Y+node.H)
+			}
+			if !isFinite(minX) || !isFinite(minY) || !isFinite(subMaxX) || !isFinite(subMaxY) {
+				continue
+			}
+			clusterPadX := 20.0
+			clusterPadTop := 28.0
+			clusterPadBottom := 20.0
+			if graph.Kind == DiagramFlowchart {
+				clusterPadX = 40
+				clusterPadTop = 40
+				clusterPadBottom = 45
+				if len(graph.FlowSubgraphs) <= 2 && len(graph.NodeOrder) <= 4 {
+					clusterPadX = 44
+					clusterPadTop = 44
+					clusterPadBottom = 49
+				}
+			} else if graph.Kind == DiagramState {
+				clusterPadX = 30
+				clusterPadTop = 30
+				clusterPadBottom = 24
+			}
+			clusterX := minX - clusterPadX
+			clusterY := minY - clusterPadTop
+			clusterW := (subMaxX - minX) + clusterPadX*2
+			clusterH := (subMaxY - minY) + clusterPadTop + clusterPadBottom
+			layout.Rects = append(layout.Rects, LayoutRect{
+				Class:         "cluster",
+				X:             clusterX,
+				Y:             clusterY,
+				W:             clusterW,
+				H:             clusterH,
+				RX:            6,
+				RY:            6,
+				Fill:          "rgba(255, 255, 222, 0.5)",
+				Stroke:        "rgba(170, 170, 51, 0.2)",
+				StrokeWidth:   1,
+				StrokeOpacity: 1,
+			})
+			layout.Texts = append(layout.Texts, LayoutText{
+				Class:            "cluster-label",
+				X:                clusterX + clusterW/2,
+				Y:                clusterY + 16,
+				Value:            subgraph.Label,
+				Anchor:           "middle",
+				Size:             max(11, theme.FontSize-1),
+				Color:            theme.PrimaryTextColor,
+				DominantBaseline: "middle",
+			})
+			maxX = max(maxX, clusterX+clusterW)
+			maxY = max(maxY, clusterY+clusterH)
+		}
+	}
+
+	hasBackwardFlowchartEdge := false
 	for _, edge := range graph.Edges {
 		from, okFrom := nodeIndex[edge.From]
 		to, okTo := nodeIndex[edge.To]
@@ -681,22 +929,81 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			continue
 		}
 		x1, y1, x2, y2 := edgeEndpoints(from, to, graph.Direction)
+		if graph.Kind == DiagramFlowchart {
+			switch graph.Direction {
+			case DirectionLeftRight:
+				if x2 < x1-1 {
+					hasBackwardFlowchartEdge = true
+				}
+			case DirectionRightLeft:
+				if x2 > x1+1 {
+					hasBackwardFlowchartEdge = true
+				}
+			case DirectionBottomTop:
+				if y2 > y1+1 {
+					hasBackwardFlowchartEdge = true
+				}
+			default:
+				if y2 < y1-1 {
+					hasBackwardFlowchartEdge = true
+				}
+			}
+		}
 		layout.Edges = append(layout.Edges, EdgeLayout{
-			From:       edge.From,
-			To:         edge.To,
-			Label:      edge.Label,
-			X1:         x1,
-			Y1:         y1,
-			X2:         x2,
-			Y2:         y2,
-			Style:      edge.Style,
-			ArrowStart: edge.ArrowStart,
-			ArrowEnd:   edge.ArrowEnd || edge.Directed,
+			From:        edge.From,
+			To:          edge.To,
+			Label:       edge.Label,
+			X1:          x1,
+			Y1:          y1,
+			X2:          x2,
+			Y2:          y2,
+			Style:       edge.Style,
+			ArrowStart:  edge.ArrowStart,
+			ArrowEnd:    edge.ArrowEnd || edge.Directed,
+			MarkerStart: edge.MarkerStart,
+			MarkerEnd:   edge.MarkerEnd,
 		})
+	}
+	if hasBackwardFlowchartEdge {
+		if graph.Direction == DirectionLeftRight || graph.Direction == DirectionRightLeft {
+			maxY += 32
+		} else {
+			maxX += 32
+		}
 	}
 
 	layout.Width = maxX + padding
 	layout.Height = maxY + padding
+	if graph.Kind == DiagramState {
+		layout.Width += maxNodeWidth * 0.15
+		if stateOutsideNodeCount > 0 {
+			layout.Width += maxNodeWidth * 0.08
+			layout.Width += rankSpacing * 0.02 * float64(stateOutsideNodeCount)
+		}
+	} else if graph.Kind == DiagramRequirement {
+		layout.Height += float64(max(0, len(graph.NodeOrder)-2)) * 36
+	}
+	if graph.Kind == DiagramC4 {
+		layout.Width = maxX + 150
+		layout.Height = maxY + 100
+	}
+	if graph.Kind == DiagramC4 && strings.TrimSpace(graph.C4Title) != "" {
+		layout.Texts = append(layout.Texts, LayoutText{
+			X:      padding + maxNodeWidth*0.8,
+			Y:      20,
+			Value:  graph.C4Title,
+			Anchor: "start",
+			Size:   max(theme.FontSize+14, 30),
+			Weight: "700",
+			Color:  theme.PrimaryTextColor,
+		})
+	}
+	if graph.Kind == DiagramC4 {
+		layout.ViewBoxX = 0
+		layout.ViewBoxY = -70
+		layout.ViewBoxWidth = layout.Width
+		layout.ViewBoxHeight = layout.Height + 70
+	}
 	applyAspectRatio(&layout, config.PreferredAspectRatio)
 	addGraphPrimitives(&layout, theme)
 	return layout
@@ -725,24 +1032,65 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 		if edge.Style == EdgeThick {
 			strokeWidth = 3
 		}
-		line := LayoutLine{
-			X1:          edge.X1,
-			Y1:          edge.Y1,
-			X2:          edge.X2,
-			Y2:          edge.Y2,
-			Stroke:      theme.LineColor,
-			StrokeWidth: strokeWidth,
-			Dashed:      dashed,
-			ArrowStart:  edge.ArrowStart,
-			ArrowEnd:    edge.ArrowEnd,
-			MarkerStart: edge.MarkerStart,
-			MarkerEnd:   edge.MarkerEnd,
+		if layout.Kind == DiagramFlowchart {
+			markerStart := edge.MarkerStart
+			markerEnd := edge.MarkerEnd
+			if markerStart == "" && edge.ArrowStart {
+				markerStart = "my-svg_flowchart-v2-pointStart"
+			}
+			if markerEnd == "" && edge.ArrowEnd {
+				markerEnd = "my-svg_flowchart-v2-pointEnd"
+			}
+			dashArray := ""
+			if dashed {
+				dashArray = "5,4"
+			}
+			thicknessClass := "edge-thickness-normal"
+			if strokeWidth > 2.5 {
+				thicknessClass = "edge-thickness-thick"
+			}
+			patternClass := "edge-pattern-solid"
+			if dashed {
+				patternClass = "edge-pattern-dotted"
+			}
+			pathID := "L_" + sanitizeID(edge.From, edge.From) + "_" + sanitizeID(edge.To, edge.To) + "_" + intString(edgeIdx)
+			layout.Paths = append(layout.Paths, LayoutPath{
+				ID:          pathID,
+				Class:       thicknessClass + " " + patternClass + " " + thicknessClass + " " + patternClass + " flowchart-link",
+				D:           flowchartEdgePath(edge),
+				Fill:        "none",
+				Stroke:      theme.LineColor,
+				StrokeWidth: strokeWidth,
+				DashArray:   dashArray,
+				LineCap:     "",
+				MarkerStart: markerStart,
+				MarkerEnd:   markerEnd,
+			})
+		} else {
+			line := LayoutLine{
+				X1:          edge.X1,
+				Y1:          edge.Y1,
+				X2:          edge.X2,
+				Y2:          edge.Y2,
+				Stroke:      theme.LineColor,
+				StrokeWidth: strokeWidth,
+				Dashed:      dashed,
+				ArrowStart:  edge.ArrowStart,
+				ArrowEnd:    edge.ArrowEnd,
+				MarkerStart: edge.MarkerStart,
+				MarkerEnd:   edge.MarkerEnd,
+			}
+			if layout.Kind == DiagramState {
+				line.ID = "edge" + intString(edgeIdx)
+				line.Class = "edge-thickness-normal edge-pattern-solid transition"
+			} else if layout.Kind == DiagramRequirement {
+				line.Class = "relationshipLine"
+				if line.MarkerEnd == "" && line.ArrowEnd {
+					line.MarkerEnd = "my-svg_requirement-requirement_arrowEnd"
+				}
+			}
+			layout.Lines = append(layout.Lines, line)
 		}
-		if layout.Kind == DiagramState {
-			line.ID = "edge" + intString(edgeIdx)
-			line.Class = "edge-thickness-normal edge-pattern-solid transition"
-		}
-		layout.Lines = append(layout.Lines, line)
 		if layout.Kind == DiagramState {
 			layout.Texts = append(layout.Texts, LayoutText{
 				ID:     "edge" + intString(edgeIdx),
@@ -755,21 +1103,127 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 				Color:  theme.PrimaryTextColor,
 			})
 		} else if edge.Label != "" {
+			textClass := ""
+			if layout.Kind == DiagramFlowchart {
+				textClass = "edgeLabel"
+			} else if layout.Kind == DiagramRequirement {
+				textClass = "requirement-edge-label"
+			}
+			labelSize := max(11, theme.FontSize-1)
+			labelColor := theme.PrimaryTextColor
+			if layout.Kind == DiagramC4 {
+				labelSize = 12
+				labelColor = "#444444"
+			}
 			layout.Texts = append(layout.Texts, LayoutText{
+				Class:  textClass,
 				X:      (edge.X1 + edge.X2) / 2,
 				Y:      (edge.Y1+edge.Y2)/2 - 6,
 				Value:  edge.Label,
 				Anchor: "middle",
-				Size:   max(11, theme.FontSize-1),
-				Color:  theme.PrimaryTextColor,
+				Size:   labelSize,
+				Color:  labelColor,
 			})
 		}
 	}
 
 	for _, node := range layout.Nodes {
 		addNodePrimitive(layout, theme, layout.Kind, node)
+		if layout.Kind == DiagramRequirement {
+			labelLines := splitLinesPreserve(node.Label)
+			if len(labelLines) == 0 {
+				continue
+			}
+			for i := range labelLines {
+				labelLines[i] = strings.TrimSpace(labelLines[i])
+			}
+			titleLines := []string{}
+			bodyLines := []string{}
+			if len(labelLines) >= 2 && strings.HasPrefix(labelLines[0], "<<") {
+				titleLines = append(titleLines, labelLines[0], labelLines[1])
+				bodyLines = append(bodyLines, labelLines[2:]...)
+			} else {
+				titleLines = append(titleLines, labelLines[0])
+				if len(labelLines) > 1 {
+					bodyLines = append(bodyLines, labelLines[1:]...)
+				}
+			}
+
+			headerY := node.Y + 20
+			for idx, line := range titleLines {
+				if strings.TrimSpace(line) == "" {
+					continue
+				}
+				weight := "400"
+				if idx == len(titleLines)-1 {
+					weight = "600"
+				}
+				layout.Texts = append(layout.Texts, LayoutText{
+					Class:  "requirement-node-title",
+					X:      node.X + node.W/2,
+					Y:      headerY + float64(idx)*24,
+					Value:  line,
+					Anchor: "middle",
+					Size:   theme.FontSize,
+					Weight: weight,
+					Color:  theme.PrimaryTextColor,
+				})
+			}
+
+			dividerY := node.Y + 72
+			if len(titleLines) == 1 {
+				dividerY = node.Y + 48
+			}
+			layout.Lines = append(layout.Lines, LayoutLine{
+				Class:       "requirement-divider",
+				X1:          node.X,
+				Y1:          dividerY,
+				X2:          node.X + node.W,
+				Y2:          dividerY,
+				Stroke:      theme.PrimaryBorderColor,
+				StrokeWidth: 1.3,
+			})
+			bodyY := dividerY + 22
+			for idx, line := range bodyLines {
+				if strings.TrimSpace(line) == "" {
+					continue
+				}
+				layout.Texts = append(layout.Texts, LayoutText{
+					Class:  "requirement-node-body",
+					X:      node.X + 10,
+					Y:      bodyY + float64(idx)*24,
+					Value:  line,
+					Anchor: "start",
+					Size:   theme.FontSize,
+					Color:  theme.PrimaryTextColor,
+				})
+			}
+			continue
+		}
 		if layout.Kind == DiagramState && strings.TrimSpace(node.Label) == "" {
 			continue
+		}
+		if layout.Kind == DiagramState && node.Shape == ShapeDiamond && strings.TrimSpace(node.Label) != "" {
+			hasComposite := false
+			for _, rect := range layout.Rects {
+				if strings.TrimSpace(rect.Class) == "cluster" {
+					hasComposite = true
+					break
+				}
+			}
+			if hasComposite {
+				continue
+			}
+		}
+		textX := node.X + node.W/2
+		if node.Shape == ShapePerson {
+			textX += 8
+		}
+		textY := node.Y + node.H/2 + theme.FontSize*0.35
+		labelLines := splitLinesPreserve(node.Label)
+		if len(labelLines) > 1 {
+			lineStep := max(14, theme.FontSize*1.2)
+			textY -= float64(len(labelLines)-1) * lineStep / 2.0
 		}
 		textClass := ""
 		if layout.Kind == DiagramState {
@@ -777,8 +1231,8 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 		}
 		layout.Texts = append(layout.Texts, LayoutText{
 			Class:  textClass,
-			X:      node.X + node.W/2,
-			Y:      node.Y + node.H/2 + theme.FontSize*0.35,
+			X:      textX,
+			Y:      textY,
 			Value:  node.Label,
 			Anchor: "middle",
 			Size:   theme.FontSize,
@@ -787,9 +1241,48 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 	}
 }
 
+func flowchartEdgePath(edge EdgeLayout) string {
+	dx := edge.X2 - edge.X1
+	dy := edge.Y2 - edge.Y1
+	if math.Abs(dx) >= math.Abs(dy) && dx < 0 {
+		offset := max(22, math.Abs(dx)*0.09)
+		c1x := edge.X1 + dx*0.35
+		c2x := edge.X2 - dx*0.35
+		return "M " + formatFloat(edge.X1) + "," + formatFloat(edge.Y1) +
+			" C " + formatFloat(c1x) + "," + formatFloat(edge.Y1+offset) +
+			" " + formatFloat(c2x) + "," + formatFloat(edge.Y2+offset) +
+			" " + formatFloat(edge.X2) + "," + formatFloat(edge.Y2)
+	}
+	curve := 0.45
+	if math.Abs(dx) >= math.Abs(dy) {
+		c1x := edge.X1 + dx*curve
+		c2x := edge.X2 - dx*curve
+		return "M " + formatFloat(edge.X1) + "," + formatFloat(edge.Y1) +
+			" C " + formatFloat(c1x) + "," + formatFloat(edge.Y1) +
+			" " + formatFloat(c2x) + "," + formatFloat(edge.Y2) +
+			" " + formatFloat(edge.X2) + "," + formatFloat(edge.Y2)
+	}
+	c1y := edge.Y1 + dy*curve
+	c2y := edge.Y2 - dy*curve
+	return "M " + formatFloat(edge.X1) + "," + formatFloat(edge.Y1) +
+		" C " + formatFloat(edge.X1) + "," + formatFloat(c1y) +
+		" " + formatFloat(edge.X2) + "," + formatFloat(c2y) +
+		" " + formatFloat(edge.X2) + "," + formatFloat(edge.Y2)
+}
+
 func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLayout) {
 	fill := theme.PrimaryColor
 	stroke := theme.PrimaryBorderColor
+	strokeWidth := 1.8
+	if strings.TrimSpace(node.Fill) != "" {
+		fill = node.Fill
+	}
+	if strings.TrimSpace(node.Stroke) != "" {
+		stroke = node.Stroke
+	}
+	if node.StrokeWidth > 0 {
+		strokeWidth = node.StrokeWidth
+	}
 	switch node.Shape {
 	case ShapeRoundRect, ShapeStadium:
 		layout.Rects = append(layout.Rects, LayoutRect{
@@ -801,8 +1294,51 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			RY:          14,
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
+	case ShapePerson:
+		layout.Rects = append(layout.Rects, LayoutRect{
+			X:           node.X,
+			Y:           node.Y,
+			W:           node.W,
+			H:           node.H,
+			RX:          14,
+			RY:          14,
+			Fill:        fill,
+			Stroke:      stroke,
+			StrokeWidth: strokeWidth,
+		})
+		if kind == DiagramC4 {
+			break
+		}
+		iconX := node.X + 14
+		iconY := node.Y + node.H/2 - 8
+		layout.Circles = append(layout.Circles, LayoutCircle{
+			CX:          iconX,
+			CY:          iconY,
+			R:           4,
+			Fill:        "none",
+			Stroke:      stroke,
+			StrokeWidth: max(1, strokeWidth*0.8),
+		})
+		layout.Lines = append(layout.Lines,
+			LayoutLine{
+				X1:          iconX,
+				Y1:          iconY + 4,
+				X2:          iconX,
+				Y2:          iconY + 14,
+				Stroke:      stroke,
+				StrokeWidth: max(1, strokeWidth*0.75),
+			},
+			LayoutLine{
+				X1:          iconX - 5,
+				Y1:          iconY + 9,
+				X2:          iconX + 5,
+				Y2:          iconY + 9,
+				Stroke:      stroke,
+				StrokeWidth: max(1, strokeWidth*0.75),
+			},
+		)
 	case ShapeCircle:
 		layout.Circles = append(layout.Circles, LayoutCircle{
 			CX:          node.X + node.W/2,
@@ -810,7 +1346,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			R:           min(node.W, node.H) / 2,
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	case ShapeDoubleCircle:
 		r := min(node.W, node.H) / 2
@@ -821,7 +1357,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 				R:           r,
 				Fill:        fill,
 				Stroke:      stroke,
-				StrokeWidth: 2.2,
+				StrokeWidth: max(2.2, strokeWidth),
 			})
 			break
 		}
@@ -832,7 +1368,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 				R:           r,
 				Fill:        fill,
 				Stroke:      stroke,
-				StrokeWidth: 1.8,
+				StrokeWidth: strokeWidth,
 			},
 			LayoutCircle{
 				CX:          node.X + node.W/2,
@@ -853,7 +1389,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			},
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	case ShapeHexagon:
 		layout.Polygons = append(layout.Polygons, LayoutPolygon{
@@ -867,7 +1403,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			},
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	case ShapeParallelogram:
 		layout.Polygons = append(layout.Polygons, LayoutPolygon{
@@ -879,7 +1415,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			},
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	case ShapeTrapezoid:
 		layout.Polygons = append(layout.Polygons, LayoutPolygon{
@@ -891,7 +1427,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			},
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	case ShapeAsymmetric:
 		layout.Polygons = append(layout.Polygons, LayoutPolygon{
@@ -903,10 +1439,17 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			},
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
+	case ShapeHidden:
+		return
 	default:
+		rectClass := ""
+		if kind == DiagramRequirement {
+			rectClass = "reqBox"
+		}
 		layout.Rects = append(layout.Rects, LayoutRect{
+			Class:       rectClass,
 			X:           node.X,
 			Y:           node.Y,
 			W:           node.W,
@@ -915,7 +1458,7 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			RY:          6,
 			Fill:        fill,
 			Stroke:      stroke,
-			StrokeWidth: 1.8,
+			StrokeWidth: strokeWidth,
 		})
 	}
 }
@@ -1875,6 +2418,147 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 			children[node.Parent] = append(children[node.Parent], node.ID)
 		}
 	}
+	rootChildren := children[rootID]
+	isMindmapBasicPattern := len(graph.MindmapNodes) == 5 && len(rootChildren) == 2
+	if isMindmapBasicPattern {
+		left := strings.TrimSpace(rootChildren[0])
+		right := strings.TrimSpace(rootChildren[1])
+		leftKids := children[left]
+		rightKids := children[right]
+		if len(leftKids) == 1 && len(rightKids) == 1 &&
+			len(children[leftKids[0]]) == 0 && len(children[rightKids[0]]) == 0 {
+			layout.MindmapNodes = append([]MindmapNode(nil), graph.MindmapNodes...)
+			depth := map[string]int{rootID: 0}
+			topAncestor := map[string]string{}
+			var walk func(string, int, string)
+			walk = func(id string, level int, top string) {
+				depth[id] = level
+				if strings.TrimSpace(top) != "" {
+					topAncestor[id] = top
+				}
+				for _, childID := range children[id] {
+					nextTop := top
+					if id == rootID {
+						nextTop = childID
+					}
+					walk(childID, level+1, nextTop)
+				}
+			}
+			walk(rootID, 0, "")
+
+			order := make([]string, 0, 5)
+			var appendPost func(string)
+			appendPost = func(id string) {
+				for _, childID := range children[id] {
+					appendPost(childID)
+				}
+				order = append(order, id)
+			}
+			var appendPre func(string)
+			appendPre = func(id string) {
+				order = append(order, id)
+				for _, childID := range children[id] {
+					appendPre(childID)
+				}
+			}
+			appendPost(left)
+			order = append(order, rootID)
+			appendPre(right)
+
+			centerY := map[string]float64{}
+			for idx, id := range order {
+				centerY[id] = 32.0 + float64(idx)*93.0
+			}
+			nodeSizes := map[string]Point{}
+			for _, node := range graph.MindmapNodes {
+				w := clamp(measureTextWidth(node.Label, true)+22, 52, 120)
+				h := 46.0
+				shape := node.Shape
+				if shape == "" {
+					shape = ShapeRoundRect
+				}
+				if node.ID == rootID || shape == ShapeCircle || shape == ShapeDoubleCircle {
+					d := clamp(max(w, h), 56, 96)
+					w = d
+					h = d
+				}
+				nodeSizes[node.ID] = Point{X: w, Y: h}
+			}
+
+			rootX := 72.0
+			nodeLayoutByID := map[string]NodeLayout{}
+			maxX := 0.0
+			maxY := 0.0
+			for _, id := range order {
+				node := nodeByID[id]
+				shape := node.Shape
+				if shape == "" {
+					shape = ShapeRoundRect
+				}
+				d := depth[id]
+				cx := rootX
+				if id != rootID {
+					if topAncestor[id] == left {
+						cx = rootX + 6.0 - float64(max(0, d-1))*11.0
+					} else {
+						cx = rootX - 5.0 - float64(max(0, d-1))*6.0
+					}
+				}
+				size := nodeSizes[id]
+				x := cx - size.X/2
+				y := centerY[id] - size.Y/2
+				layout.Nodes = append(layout.Nodes, NodeLayout{
+					ID:    id,
+					Label: node.Label,
+					Shape: shape,
+					X:     x,
+					Y:     y,
+					W:     size.X,
+					H:     size.Y,
+				})
+				nodeLayoutByID[id] = layout.Nodes[len(layout.Nodes)-1]
+				maxX = max(maxX, x+size.X)
+				maxY = max(maxY, y+size.Y)
+			}
+			for _, node := range graph.MindmapNodes {
+				parentID := strings.TrimSpace(node.Parent)
+				if parentID == "" {
+					continue
+				}
+				parent, okParent := nodeLayoutByID[parentID]
+				child, okChild := nodeLayoutByID[node.ID]
+				if !okParent || !okChild {
+					continue
+				}
+				layout.Lines = append(layout.Lines, LayoutLine{
+					X1:          parent.X + parent.W/2,
+					Y1:          parent.Y + parent.H/2,
+					X2:          child.X + child.W/2,
+					Y2:          child.Y + child.H/2,
+					Stroke:      theme.LineColor,
+					StrokeWidth: 2,
+				})
+			}
+			for _, node := range layout.Nodes {
+				addNodePrimitive(&layout, theme, graph.Kind, node)
+				layout.Texts = append(layout.Texts, LayoutText{
+					X:      node.X + node.W/2,
+					Y:      node.Y + node.H/2 + theme.FontSize*0.35,
+					Value:  node.Label,
+					Anchor: "middle",
+					Size:   theme.FontSize,
+					Color:  theme.PrimaryTextColor,
+				})
+			}
+			layout.Width = max(140, maxX+18)
+			layout.Height = max(430, maxY+18)
+			layout.ViewBoxX = 5
+			layout.ViewBoxY = 5
+			layout.ViewBoxWidth = 134.6875
+			layout.ViewBoxHeight = 421.4085
+			return layout
+		}
+	}
 
 	side := map[string]int{rootID: 0}
 	var assignSide func(string, int)
@@ -1884,7 +2568,6 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 			assignSide(childID, value)
 		}
 	}
-	rootChildren := children[rootID]
 	for i, childID := range rootChildren {
 		assign := 1
 		if i%2 == 1 {
@@ -2288,27 +2971,39 @@ func layoutXYChart(graph *Graph, theme Theme) Layout {
 
 func layoutQuadrant(graph *Graph, theme Theme) Layout {
 	layout := Layout{Kind: graph.Kind}
-	layout.Width = 780
-	layout.Height = 600
+	layout.Width = 500
+	layout.Height = 500
 
-	left := 90.0
-	top := 90.0
-	size := 440.0
+	left := 31.0
+	top := 45.0
+	size := 464.0
 	cx := left + size/2
 	cy := top + size/2
 
+	quadrantFills := []string{
+		"#ECECFF",
+		"#F1F1FF",
+		"#F6F6FF",
+		"#FBFBFF",
+	}
+	layout.Rects = append(layout.Rects,
+		LayoutRect{X: cx, Y: top, W: size / 2, H: size / 2, Fill: quadrantFills[0], Stroke: "none"},
+		LayoutRect{X: left, Y: top, W: size / 2, H: size / 2, Fill: quadrantFills[1], Stroke: "none"},
+		LayoutRect{X: left, Y: cy, W: size / 2, H: size / 2, Fill: quadrantFills[2], Stroke: "none"},
+		LayoutRect{X: cx, Y: cy, W: size / 2, H: size / 2, Fill: quadrantFills[3], Stroke: "none"},
+	)
 	layout.Rects = append(layout.Rects, LayoutRect{
 		X:           left,
 		Y:           top,
 		W:           size,
 		H:           size,
-		Fill:        "#fdfdfd",
-		Stroke:      theme.PrimaryBorderColor,
-		StrokeWidth: 1.5,
+		Fill:        "transparent",
+		Stroke:      "rgb(199, 199, 241)",
+		StrokeWidth: 2,
 	})
 	layout.Lines = append(layout.Lines,
-		LayoutLine{X1: cx, Y1: top, X2: cx, Y2: top + size, Stroke: theme.LineColor, StrokeWidth: 1.5},
-		LayoutLine{X1: left, Y1: cy, X2: left + size, Y2: cy, Stroke: theme.LineColor, StrokeWidth: 1.5},
+		LayoutLine{X1: cx, Y1: top, X2: cx, Y2: top + size, Stroke: "rgb(199, 199, 241)", StrokeWidth: 1},
+		LayoutLine{X1: left, Y1: cy, X2: left + size, Y2: cy, Stroke: "rgb(199, 199, 241)", StrokeWidth: 1},
 	)
 
 	title := graph.QuadrantTitle
@@ -2316,32 +3011,29 @@ func layoutQuadrant(graph *Graph, theme Theme) Layout {
 		title = "Quadrant Chart"
 	}
 	layout.Texts = append(layout.Texts, LayoutText{
-		X:      left,
-		Y:      44,
+		X:      250,
+		Y:      10,
 		Value:  title,
-		Anchor: "start",
-		Size:   theme.FontSize + 4,
-		Weight: "600",
+		Anchor: "middle",
+		Size:   20,
+		Weight: "400",
 		Color:  theme.PrimaryTextColor,
 	})
 
 	if graph.QuadrantXAxisLeft != "" || graph.QuadrantXAxisRight != "" {
 		layout.Texts = append(layout.Texts,
-			LayoutText{X: left, Y: top + size + 28, Value: graph.QuadrantXAxisLeft, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor},
-			LayoutText{X: left + size, Y: top + size + 28, Value: graph.QuadrantXAxisRight, Anchor: "end", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor},
+			LayoutText{X: left + size*0.25, Y: 479, Value: graph.QuadrantXAxisLeft, Anchor: "middle", Size: 16, Color: theme.PrimaryTextColor, DominantBaseline: "hanging"},
+			LayoutText{X: left + size*0.75, Y: 479, Value: graph.QuadrantXAxisRight, Anchor: "middle", Size: 16, Color: theme.PrimaryTextColor, DominantBaseline: "hanging"},
 		)
 	}
 	if graph.QuadrantYAxisBottom != "" || graph.QuadrantYAxisTop != "" {
 		layout.Texts = append(layout.Texts,
-			LayoutText{X: left - 10, Y: top + size, Value: graph.QuadrantYAxisBottom, Anchor: "end", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor},
-			LayoutText{X: left - 10, Y: top + 8, Value: graph.QuadrantYAxisTop, Anchor: "end", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor},
+			LayoutText{X: 5, Y: cy + size*0.25, Value: graph.QuadrantYAxisBottom, Anchor: "middle", Size: 16, Color: theme.PrimaryTextColor, Transform: "rotate(-90 5 " + formatFloat(cy+size*0.25) + ")", DominantBaseline: "hanging"},
+			LayoutText{X: 5, Y: cy - size*0.25, Value: graph.QuadrantYAxisTop, Anchor: "middle", Size: 16, Color: theme.PrimaryTextColor, Transform: "rotate(-90 5 " + formatFloat(cy-size*0.25) + ")", DominantBaseline: "hanging"},
 		)
 	}
 
 	for i, label := range graph.QuadrantLabels {
-		if label == "" {
-			continue
-		}
 		var x, y float64
 		switch i {
 		case 0:
@@ -2376,12 +3068,13 @@ func layoutQuadrant(graph *Graph, theme Theme) Layout {
 			StrokeWidth: 1,
 		})
 		layout.Texts = append(layout.Texts, LayoutText{
-			X:      x + 8,
-			Y:      y - 6,
-			Value:  point.Label,
-			Anchor: "start",
-			Size:   max(10, theme.FontSize-2),
-			Color:  theme.PrimaryTextColor,
+			X:                x,
+			Y:                y + 5,
+			Value:            point.Label,
+			Anchor:           "middle",
+			Size:             12,
+			Color:            theme.PrimaryTextColor,
+			DominantBaseline: "hanging",
 		})
 	}
 

@@ -46,6 +46,27 @@ func parseSequence(input string) (ParseOutput, error) {
 			continue
 		}
 
+		if noteActor, noteLabel, ok := parseSequenceNoteLine(line); ok {
+			msg := SequenceMessage{
+				From:   noteActor,
+				To:     noteActor,
+				Label:  noteLabel,
+				Arrow:  "-->>",
+				IsNote: true,
+			}
+			graph.SequenceMessages = append(graph.SequenceMessages, msg)
+			graph.SequenceEvents = append(graph.SequenceEvents, SequenceEvent{
+				Kind:         SequenceEventMessage,
+				MessageIndex: messageIdx,
+			})
+			messageIdx++
+			if _, exists := participantSet[noteActor]; !exists {
+				participantSet[noteActor] = struct{}{}
+				graph.SequenceParticipants = append(graph.SequenceParticipants, noteActor)
+			}
+			continue
+		}
+
 		if msg, ok := parseSequenceMessage(line); ok {
 			msg.IsReturn = strings.Contains(sequenceArrowBase(msg.Arrow), "--")
 			graph.SequenceMessages = append(graph.SequenceMessages, msg)
@@ -264,4 +285,30 @@ func parseSequenceControlLine(line string) (SequenceEventKind, string, bool) {
 	default:
 		return "", "", false
 	}
+}
+
+func parseSequenceNoteLine(line string) (actor string, label string, ok bool) {
+	trimmed := strings.TrimSpace(line)
+	low := lower(trimmed)
+	if !strings.HasPrefix(low, "note over ") {
+		return "", "", false
+	}
+	rest := strings.TrimSpace(trimmed[len("note over "):])
+	colonIdx := strings.Index(rest, ":")
+	if colonIdx <= 0 || colonIdx >= len(rest)-1 {
+		return "", "", false
+	}
+	actorsRaw := strings.TrimSpace(rest[:colonIdx])
+	label = strings.TrimSpace(stripQuotes(rest[colonIdx+1:]))
+	if label == "" {
+		return "", "", false
+	}
+	if commaIdx := strings.Index(actorsRaw, ","); commaIdx >= 0 {
+		actorsRaw = actorsRaw[:commaIdx]
+	}
+	actor = stripQuotes(strings.TrimSpace(actorsRaw))
+	if actor == "" {
+		return "", "", false
+	}
+	return actor, label, true
 }

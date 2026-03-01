@@ -34,11 +34,11 @@ func ParseMermaid(input string) (ParseOutput, error) {
 	case DiagramGantt:
 		return parseGantt(input)
 	case DiagramRequirement:
-		return parseClassLike(input, DiagramRequirement)
+		return parseRequirement(input)
 	case DiagramGitGraph:
 		return parseGitGraph(input)
 	case DiagramC4:
-		return parseClassLike(input, DiagramC4)
+		return parseC4(input)
 	case DiagramSankey:
 		return parseSankey(input)
 	case DiagramQuadrant:

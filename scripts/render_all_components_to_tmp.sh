@@ -6,9 +6,10 @@ WORK_DIR="/tmp/mmdg-all-components"
 INPUT_DIR="${WORK_DIR}/inputs"
 BIN_DIR="${WORK_DIR}/bin"
 REPORT_PATH="/tmp/mmdg_mmdc_all_components_report.txt"
+REPORT_TMP="${REPORT_PATH}.tmp.$$"
 
 mkdir -p "$INPUT_DIR" "$BIN_DIR"
-: > "$REPORT_PATH"
+: > "$REPORT_TMP"
 
 if ! command -v mmdc >/dev/null 2>&1; then
   echo "error: mmdc not found in PATH" >&2
@@ -395,7 +396,7 @@ fixtures=(
   xychart_complex
 )
 
-printf "component,mmdg_status,mmdc_status,mmdg_svg,mmdc_svg\n" >> "$REPORT_PATH"
+printf "component,mmdg_status,mmdc_status,mmdg_svg,mmdc_svg\n" >> "$REPORT_TMP"
 
 for name in "${fixtures[@]}"; do
   input="${INPUT_DIR}/${name}.mmd"
@@ -412,8 +413,28 @@ for name in "${fixtures[@]}"; do
     mmdc_status="fail"
   fi
 
-  printf "%s,%s,%s,%s,%s\n" "$name" "$mmdg_status" "$mmdc_status" "$out_mmdg" "$out_mmdc" >> "$REPORT_PATH"
+  printf "%s,%s,%s,%s,%s\n" "$name" "$mmdg_status" "$mmdc_status" "$out_mmdg" "$out_mmdc" >> "$REPORT_TMP"
 done
 
+mapfile -t fidelity_files < <(rg --files "$REPO_ROOT/testdata/fidelity" --glob '*.mmd' | sort)
+for input in "${fidelity_files[@]}"; do
+  name="$(basename "${input%.mmd}")"
+  out_mmdg="/tmp/${name}_mmdg.svg"
+  out_mmdc="/tmp/${name}_mmdc.svg"
+  mmdg_status="ok"
+  mmdc_status="ok"
+
+  if ! "$BIN_DIR/mmdg" -i "$input" -o "$out_mmdg" --allowApproximate >/tmp/${name}_mmdg.log 2>&1; then
+    mmdg_status="fail"
+  fi
+
+  if ! mmdc -i "$input" -o "$out_mmdc" -e svg -w 2200 -H 1600 -b white -q >/tmp/${name}_mmdc.log 2>&1; then
+    mmdc_status="fail"
+  fi
+
+  printf "%s,%s,%s,%s,%s\n" "$name" "$mmdg_status" "$mmdc_status" "$out_mmdg" "$out_mmdc" >> "$REPORT_TMP"
+done
+
+mv "$REPORT_TMP" "$REPORT_PATH"
 echo "render report: $REPORT_PATH"
 echo "generated svg pairs in /tmp/{name}_mmdg.svg and /tmp/{name}_mmdc.svg"

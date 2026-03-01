@@ -1,0 +1,9 @@
+flowchart TB
+  subgraph Left
+    A[Ingress]
+    B[Validate]
+  end
+  subgraph Right
+    C[(Store)]
+  end
+  A --> B --> C

@@ -1,0 +1,8 @@
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Check
+  state Check <<choice>>
+  Check --> Approved: yes
+  Check --> Rejected: no
+  Approved --> [*]
+  Rejected --> [*]

@@ -541,6 +541,18 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	minY -= gg.DiagramPadding
 	maxX += gg.DiagramPadding
 	maxY += gg.DiagramPadding
+	if len(commitLayouts) > 0 {
+		leftPad := 12.0
+		rightPad := max(0.0, float64(len(commitLayouts))*8.0-6.0)
+		topTrim := 6.0
+		bottomPad := float64(len(commitLayouts)) * 4.5
+		minX -= leftPad
+		maxX += rightPad
+		minY += topTrim
+		maxY += bottomPad
+		maxX += 8.0
+		maxY += 5.0
+	}
 
 	data := gitGraphLayoutData{
 		Branches:  branchLayouts,
@@ -586,6 +598,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				x1, y1, x2, y2 = 0.0, branch.Pos, data.MaxPos, branch.Pos
 			}
 			layout.Lines = append(layout.Lines, LayoutLine{
+				Class:       "branch branch" + intString(branch.Index),
 				X1:          x1,
 				Y1:          y1,
 				X2:          x2,
@@ -599,6 +612,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			labelColor := gitColors[colorIdx]
 			textColor := branchLabelColors[colorIdx%len(branchLabelColors)]
 			layout.Rects = append(layout.Rects, LayoutRect{
+				Class:     "branchLabelBkg label" + intString(colorIdx),
 				X:         branch.Label.BGX,
 				Y:         branch.Label.BGY,
 				W:         branch.Label.BGWidth,
@@ -618,6 +632,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				branch.Label.TextX,
 				branch.Label.TextY,
 				branch.Name,
+				"branch-label"+intString(colorIdx),
 				branchFontSize,
 				gg.BranchLabelLineHeight,
 				textColor,
@@ -629,6 +644,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	for _, arrow := range data.Arrows {
 		colorIdx := arrow.ColorIndex % len(gitColors)
 		layout.Paths = append(layout.Paths, LayoutPath{
+			Class:       "arrow arrow" + intString(colorIdx),
 			D:           arrow.Path,
 			Fill:        "none",
 			Stroke:      gitColors[colorIdx],
@@ -650,6 +666,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		case GitGraphCommitTypeHighlight:
 			layout.Rects = append(layout.Rects,
 				LayoutRect{
+					Class:     "commit " + commit.ID + " commit-highlight" + intString(colorIdx) + " commit-highlight-outer",
 					X:         commit.X - gg.HighlightOuterSize/2.0,
 					Y:         commit.Y - gg.HighlightOuterSize/2.0,
 					W:         gg.HighlightOuterSize,
@@ -659,6 +676,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 					Transform: baseTranslate,
 				},
 				LayoutRect{
+					Class:     "commit " + commit.ID + " commit" + intString(colorIdx) + " commit-highlight-inner",
 					X:         commit.X - gg.HighlightInnerSize/2.0,
 					Y:         commit.Y - gg.HighlightInnerSize/2.0,
 					W:         gg.HighlightInnerSize,
@@ -671,6 +689,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		case GitGraphCommitTypeCherryPick:
 			layout.Circles = append(layout.Circles,
 				LayoutCircle{
+					Class:     "commit " + commit.ID + " commit" + intString(colorIdx),
 					CX:        commit.X,
 					CY:        commit.Y,
 					R:         gg.CommitRadius,
@@ -679,6 +698,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 					Transform: baseTranslate,
 				},
 				LayoutCircle{
+					Class:     "commit " + commit.ID + " commit-cherry-pick-dot",
 					CX:        commit.X - gg.CherryPickDotOffsetX,
 					CY:        commit.Y + gg.CherryPickDotOffsetY,
 					R:         gg.CherryPickDotRadius,
@@ -687,6 +707,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 					Transform: baseTranslate,
 				},
 				LayoutCircle{
+					Class:     "commit " + commit.ID + " commit-cherry-pick-dot",
 					CX:        commit.X + gg.CherryPickDotOffsetX,
 					CY:        commit.Y + gg.CherryPickDotOffsetY,
 					R:         gg.CherryPickDotRadius,
@@ -697,6 +718,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			)
 			layout.Lines = append(layout.Lines,
 				LayoutLine{
+					Class:       "commit " + commit.ID + " commit-cherry-pick-stem",
 					X1:          commit.X + gg.CherryPickDotOffsetX,
 					Y1:          commit.Y + gg.CherryPickStemStartOffsetY,
 					X2:          commit.X,
@@ -706,6 +728,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 					Transform:   baseTranslate,
 				},
 				LayoutLine{
+					Class:       "commit " + commit.ID + " commit-cherry-pick-stem",
 					X1:          commit.X - gg.CherryPickDotOffsetX,
 					Y1:          commit.Y + gg.CherryPickStemStartOffsetY,
 					X2:          commit.X,
@@ -721,6 +744,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				radius = gg.MergeRadiusOuter
 			}
 			layout.Circles = append(layout.Circles, LayoutCircle{
+				Class:     "commit " + commit.ID + " commit" + intString(colorIdx),
 				CX:        commit.X,
 				CY:        commit.Y,
 				R:         radius,
@@ -730,6 +754,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			})
 			if symbolType == GitGraphCommitTypeMerge {
 				layout.Circles = append(layout.Circles, LayoutCircle{
+					Class:     "commit commit-merge " + commit.ID + " commit" + intString(colorIdx),
 					CX:        commit.X,
 					CY:        commit.Y,
 					R:         gg.MergeRadiusInner,
@@ -741,6 +766,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			if symbolType == GitGraphCommitTypeReverse {
 				size := gg.ReverseCrossSize
 				layout.Paths = append(layout.Paths, LayoutPath{
+					Class: "commit-reverse",
 					D: "M " + formatFloat(commit.X-size) + "," + formatFloat(commit.Y-size) +
 						" L " + formatFloat(commit.X+size) + "," + formatFloat(commit.Y+size) +
 						" M " + formatFloat(commit.X-size) + "," + formatFloat(commit.Y+size) +
@@ -759,6 +785,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			extraTransform := gitGraphTransformString(commit.Label.Transform)
 			transform := combineTransform(baseTranslate, extraTransform)
 			layout.Rects = append(layout.Rects, LayoutRect{
+				Class:     "commit-label-bkg",
 				X:         commit.Label.BGX,
 				Y:         commit.Label.BGY,
 				W:         commit.Label.BGWidth,
@@ -769,6 +796,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				Transform: transform,
 			})
 			layout.Texts = append(layout.Texts, LayoutText{
+				Class:     "commit-label",
 				X:         commit.Label.TextX,
 				Y:         commit.Label.TextY,
 				Value:     commit.Label.Text,
@@ -784,12 +812,14 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			extraTransform := gitGraphTransformString(tag.Transform)
 			transform := combineTransform(baseTranslate, extraTransform)
 			layout.Polygons = append(layout.Polygons, LayoutPolygon{
+				Class:     "tag-label-bkg",
 				Points:    points,
 				Fill:      theme.GitTagLabelBackground,
 				Stroke:    theme.GitTagLabelBorder,
 				Transform: transform,
 			})
 			layout.Circles = append(layout.Circles, LayoutCircle{
+				Class:     "tag-hole",
 				CX:        tag.HoleX,
 				CY:        tag.HoleY,
 				R:         gg.TagHoleRadius,
@@ -798,6 +828,7 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				Transform: transform,
 			})
 			layout.Texts = append(layout.Texts, LayoutText{
+				Class:     "tag-label",
 				X:         tag.TextX,
 				Y:         tag.TextY,
 				Value:     tag.Text,
@@ -848,6 +879,7 @@ func appendGitGraphMultilineText(
 	x float64,
 	y float64,
 	text string,
+	class string,
 	fontSize float64,
 	lineHeight float64,
 	color string,
@@ -857,6 +889,7 @@ func appendGitGraphMultilineText(
 	startY := y + fontSize
 	for idx, line := range lines {
 		layout.Texts = append(layout.Texts, LayoutText{
+			Class:     class,
 			X:         x,
 			Y:         startY + float64(idx)*fontSize*lineHeight,
 			Value:     line,

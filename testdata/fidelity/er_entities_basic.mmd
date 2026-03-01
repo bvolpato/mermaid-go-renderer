@@ -1,0 +1,10 @@
+erDiagram
+  USER {
+    string id
+    string email
+  }
+  SESSION {
+    string id
+    string user_id
+  }
+  USER ||--o{ SESSION : has

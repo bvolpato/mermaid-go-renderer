@@ -7,7 +7,7 @@
 [![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
 [![Release](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml)
 
-[Installation](#installation) | [Quick Start](#quick-start) | [Fidelity](#fidelity-mmdc-first) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
+[Installation](#installation) | [CLI Usage](#cli-usage) | [Fidelity](#fidelity-mmdc-first) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
 
 </div>
 
@@ -131,6 +131,44 @@ go test -run ^$ -bench BenchmarkRender -benchmem ./...
 
 ## Installation
 
+### Homebrew (recommended)
+
+```bash
+brew tap bvolpato/tap
+brew install bvolpato/tap/mmdg
+mmdg --help
+```
+
+Upgrade later:
+
+```bash
+brew update
+brew upgrade mmdg
+```
+
+### Download prebuilt binary (GitHub Releases)
+
+Pick the archive for your OS/arch from:
+
+- `https://github.com/bvolpato/mermaid-go-renderer/releases/latest`
+
+Example (`darwin_arm64`):
+
+```bash
+VERSION="v0.2.0" # replace with the version you want
+curl -L "https://github.com/bvolpato/mermaid-go-renderer/releases/download/${VERSION}/mermaid-go-renderer_${VERSION#v}_darwin_arm64.tar.gz" -o mmdg.tar.gz
+tar -xzf mmdg.tar.gz
+chmod +x mmdg
+sudo mv mmdg /usr/local/bin/mmdg
+mmdg --help
+```
+
+If you have multiple `mmdg` binaries in `PATH`, check with:
+
+```bash
+which -a mmdg
+```
+
 ### Build locally
 
 ```bash
@@ -145,7 +183,7 @@ go build ./cmd/mmdg
 go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
 ```
 
-## Quick Start
+## CLI Usage
 
 Render a Mermaid file to SVG:
 
@@ -190,6 +228,12 @@ Current parser and renderer paths detect and handle Mermaid families including:
 
 ## Library Usage
 
+Add the dependency:
+
+```bash
+go get github.com/bvolpato/mermaid-go-renderer@latest
+```
+
 Simple API:
 
 ```go
@@ -207,6 +251,26 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(svg)
+}
+```
+
+Write PNG directly from Go:
+
+```go
+package main
+
+import (
+	mermaid "github.com/bvolpato/mermaid-go-renderer"
+)
+
+func main() {
+	svg, err := mermaid.RenderWithOptions("flowchart LR\nA-->B", mermaid.DefaultRenderOptions())
+	if err != nil {
+		panic(err)
+	}
+	if err := mermaid.WriteOutputPNG(svg, "out.png"); err != nil {
+		panic(err)
+	}
 }
 ```
 

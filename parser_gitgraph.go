@@ -85,7 +85,7 @@ func parseGitGraph(input string) (ParseOutput, error) {
 				})
 			}
 		case strings.HasPrefix(low, "merge "):
-			fromBranch := strings.TrimSpace(line[len("merge "):])
+			fromBranch := extractGitGraphMergeBranch(line)
 			if fromBranch == "" {
 				continue
 			}
@@ -226,6 +226,27 @@ func extractGitGraphOrder(line string) *float64 {
 		return &value
 	}
 	return nil
+}
+
+func extractGitGraphMergeBranch(line string) string {
+	rest := strings.TrimSpace(line[len("merge "):])
+	if rest == "" {
+		return ""
+	}
+	if rest[0] == '"' || rest[0] == '\'' {
+		quote := rest[0]
+		for i := 1; i < len(rest); i++ {
+			if rest[i] == quote {
+				return stripQuotes(rest[:i+1])
+			}
+		}
+		return stripQuotes(rest)
+	}
+	fields := strings.Fields(rest)
+	if len(fields) == 0 {
+		return ""
+	}
+	return stripQuotes(fields[0])
 }
 
 func extractGitGraphTags(line string) []string {

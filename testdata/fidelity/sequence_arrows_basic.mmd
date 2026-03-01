@@ -1,0 +1,7 @@
+sequenceDiagram
+  participant A
+  participant B
+  A->>B: Sync
+  B-->>A: Ack
+  A->B: Fire
+  B--xA: Abort

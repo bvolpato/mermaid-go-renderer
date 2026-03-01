@@ -72,6 +72,8 @@ const (
 	ShapeParallelogram NodeShape = "parallelogram"
 	ShapeTrapezoid     NodeShape = "trapezoid"
 	ShapeAsymmetric    NodeShape = "asymmetric"
+	ShapePerson        NodeShape = "person"
+	ShapeHidden        NodeShape = "hidden"
 )
 
 type EdgeStyle string
@@ -83,9 +85,12 @@ const (
 )
 
 type Node struct {
-	ID    string
-	Label string
-	Shape NodeShape
+	ID          string
+	Label       string
+	Shape       NodeShape
+	Fill        string
+	Stroke      string
+	StrokeWidth float64
 }
 
 type Edge struct {
@@ -107,6 +112,7 @@ type SequenceMessage struct {
 	Arrow    string
 	Index    string
 	IsReturn bool
+	IsNote   bool
 }
 
 type SequenceEventKind string
@@ -209,6 +215,12 @@ type MindmapNode struct {
 	Level  int
 	Parent string
 	Shape  NodeShape
+}
+
+type FlowSubgraph struct {
+	ID      string
+	Label   string
+	NodeIDs []string
 }
 
 type GitCommit struct {
@@ -318,6 +330,8 @@ type Graph struct {
 	TimelineSections []string
 	TimelineEvents   []TimelineEvent
 
+	C4Title string
+
 	JourneyTitle string
 	JourneySteps []JourneyStep
 
@@ -342,6 +356,7 @@ type Graph struct {
 
 	MindmapRootID string
 	MindmapNodes  []MindmapNode
+	FlowSubgraphs []FlowSubgraph
 
 	GitMainBranch string
 	GitBranches   []string
@@ -394,17 +409,20 @@ func (g *Graph) ensureNode(id, label string, shape NodeShape) {
 	if id == "" {
 		return
 	}
-	if existing, ok := g.Nodes[id]; ok {
+	node, exists := g.Nodes[id]
+	if exists {
 		if strings.TrimSpace(label) == "" || strings.TrimSpace(label) == id {
-			if strings.TrimSpace(existing.Label) != "" {
-				label = existing.Label
+			if strings.TrimSpace(node.Label) != "" {
+				label = node.Label
 			}
 		}
 		if shape == "" || shape == ShapeRectangle {
-			if existing.Shape != "" {
-				shape = existing.Shape
+			if node.Shape != "" {
+				shape = node.Shape
 			}
 		}
+	} else {
+		node = Node{ID: id}
 	}
 	if shape == "" {
 		shape = ShapeRectangle
@@ -412,14 +430,13 @@ func (g *Graph) ensureNode(id, label string, shape NodeShape) {
 	if label == "" {
 		label = id
 	}
-	if _, ok := g.Nodes[id]; !ok {
+	if !exists {
 		g.NodeOrder = append(g.NodeOrder, id)
 	}
-	g.Nodes[id] = Node{
-		ID:    id,
-		Label: label,
-		Shape: shape,
-	}
+	node.ID = id
+	node.Label = label
+	node.Shape = shape
+	g.Nodes[id] = node
 }
 
 func (g *Graph) addEdge(e Edge) {

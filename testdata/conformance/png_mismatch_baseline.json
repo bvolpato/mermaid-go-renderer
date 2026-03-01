@@ -1,0 +1,62 @@
+{
+  "width": 1600,
+  "height": 1200,
+  "entries": [
+    {
+      "fixture": "class_basic",
+      "mismatch": 0.07646722833071541
+    },
+    {
+      "fixture": "er_basic",
+      "mismatch": 0.16727019035912427
+    },
+    {
+      "fixture": "flowchart_basic",
+      "mismatch": 0.12914239178099354
+    },
+    {
+      "fixture": "flowchart_subgraph",
+      "mismatch": 0.19739962480975023
+    },
+    {
+      "fixture": "gantt_basic",
+      "mismatch": 0.2812045308039414
+    },
+    {
+      "fixture": "gitgraph_basic",
+      "mismatch": 0.28427454387489137
+    },
+    {
+      "fixture": "journey_basic",
+      "mismatch": 0.12929777803955061
+    },
+    {
+      "fixture": "mindmap_basic",
+      "mismatch": 0.2650868352005331
+    },
+    {
+      "fixture": "pie_basic",
+      "mismatch": 0.2504727637854573
+    },
+    {
+      "fixture": "quadrant_basic",
+      "mismatch": 0.038755485429712536
+    },
+    {
+      "fixture": "sequence_basic",
+      "mismatch": 0.03569520757020757
+    },
+    {
+      "fixture": "state_basic",
+      "mismatch": 0.18595303575206262
+    },
+    {
+      "fixture": "timeline_basic",
+      "mismatch": 0.20817104028658345
+    },
+    {
+      "fixture": "xychart_basic",
+      "mismatch": 0.05447245492800062
+    }
+  ]
+}

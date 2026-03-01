@@ -237,6 +237,18 @@ func splitEdgeChain(line string) []string {
 	if len(matches) < 2 {
 		return nil
 	}
+	if len(matches) == 2 {
+		firstArrow := strings.TrimSpace(line[matches[0][0]:matches[0][1]])
+		secondArrow := strings.TrimSpace(line[matches[1][0]:matches[1][1]])
+		between := strings.TrimSpace(line[matches[0][1]:matches[1][0]])
+		// Mermaid supports inline edge labels like `A -. label .-> B`.
+		// Treat this as a single edge and let parseEdgeLine handle it.
+		if between != "" &&
+			!strings.ContainsAny(firstArrow, "<>") &&
+			strings.Contains(secondArrow, ">") {
+			return nil
+		}
+	}
 
 	nodes := make([]string, 0, len(matches)+1)
 	arrows := make([]string, 0, len(matches))
@@ -274,43 +286,86 @@ func splitEdgeChain(line string) []string {
 }
 
 type edgeMeta struct {
-	directed   bool
-	arrowStart bool
-	arrowEnd   bool
-	style      EdgeStyle
+	directed    bool
+	arrowStart  bool
+	arrowEnd    bool
+	style       EdgeStyle
+	startDeco   byte
+	endDeco     byte
+	raw         string
+	startMarker string
+	endMarker   string
 }
 
 func parseEdgeMeta(arrow string) edgeMeta {
 	trimmed := strings.TrimSpace(arrow)
-	startDecoration := false
-	endDecoration := false
+	raw := trimmed
+	var startDecoration byte
+	var endDecoration byte
 
-	if strings.HasPrefix(trimmed, "o") || strings.HasPrefix(trimmed, "x") {
-		startDecoration = true
-		trimmed = strings.TrimPrefix(strings.TrimPrefix(trimmed, "o"), "x")
+	startMarker := ""
+	endMarker := ""
+	if strings.HasPrefix(trimmed, "<|") {
+		startMarker = "extension"
+		trimmed = strings.TrimPrefix(trimmed, "<|")
 	}
-	if strings.HasSuffix(trimmed, "o") || strings.HasSuffix(trimmed, "x") {
-		endDecoration = true
-		trimmed = strings.TrimSuffix(strings.TrimSuffix(trimmed, "o"), "x")
+	if strings.HasSuffix(trimmed, "|>") {
+		endMarker = "extension"
+		trimmed = strings.TrimSuffix(trimmed, "|>")
+	}
+	if strings.HasPrefix(trimmed, "*") {
+		startMarker = "composition"
+		trimmed = trimmed[1:]
+	}
+	if strings.HasSuffix(trimmed, "*") {
+		endMarker = "composition"
+		trimmed = trimmed[:len(trimmed)-1]
+	}
+	if len(trimmed) > 0 && (trimmed[0] == 'o' || trimmed[0] == 'x') {
+		startDecoration = trimmed[0]
+		if startDecoration == 'o' {
+			startMarker = "aggregation"
+		} else if startMarker == "" {
+			startMarker = "dependency"
+		}
+		trimmed = trimmed[1:]
+	}
+	if len(trimmed) > 0 && (trimmed[len(trimmed)-1] == 'o' || trimmed[len(trimmed)-1] == 'x') {
+		endDecoration = trimmed[len(trimmed)-1]
+		if endDecoration == 'o' {
+			endMarker = "aggregation"
+		} else if endMarker == "" {
+			endMarker = "dependency"
+		}
+		trimmed = trimmed[:len(trimmed)-1]
 	}
 
 	meta := edgeMeta{
-		arrowStart: strings.HasPrefix(trimmed, "<"),
-		arrowEnd:   strings.HasSuffix(trimmed, ">"),
-		style:      EdgeSolid,
+		arrowStart:  strings.HasPrefix(trimmed, "<"),
+		arrowEnd:    strings.HasSuffix(trimmed, ">"),
+		style:       EdgeSolid,
+		startDeco:   startDecoration,
+		endDeco:     endDecoration,
+		raw:         raw,
+		startMarker: startMarker,
+		endMarker:   endMarker,
 	}
-	meta.directed = meta.arrowStart || meta.arrowEnd
+	if meta.endMarker == "" && strings.Contains(trimmed, "..") && strings.HasSuffix(trimmed, ">") {
+		meta.endMarker = "dependency"
+		meta.arrowEnd = false
+	}
+	if meta.startMarker == "" && strings.Contains(trimmed, "..") && strings.HasPrefix(trimmed, "<") {
+		meta.startMarker = "dependency"
+		meta.arrowStart = false
+	}
+	meta.directed = meta.arrowStart || meta.arrowEnd ||
+		startDecoration != 0 || endDecoration != 0 ||
+		meta.startMarker != "" || meta.endMarker != ""
 	if strings.Contains(trimmed, ".") {
 		meta.style = EdgeDotted
 	}
 	if strings.Contains(trimmed, "=") {
 		meta.style = EdgeThick
-	}
-	if startDecoration && !meta.arrowStart {
-		meta.arrowStart = false
-	}
-	if endDecoration && !meta.arrowEnd {
-		meta.arrowEnd = false
 	}
 	return meta
 }
@@ -326,6 +381,30 @@ func parseEdgeLine(line string) (left, label, right string, meta edgeMeta, ok bo
 		if left != "" && right != "" {
 			meta = parseEdgeMeta(arrow)
 			return left, label, right, meta, true
+		}
+	}
+
+	arrowMatches := arrowTokenRe.FindAllStringIndex(masked, -1)
+	if len(arrowMatches) == 2 {
+		leftRaw := strings.TrimSpace(line[:arrowMatches[0][0]])
+		arrow1 := strings.TrimSpace(line[arrowMatches[0][0]:arrowMatches[0][1]])
+		inlineLabel := strings.TrimSpace(line[arrowMatches[0][1]:arrowMatches[1][0]])
+		arrow2 := strings.TrimSpace(line[arrowMatches[1][0]:arrowMatches[1][1]])
+		rightRaw := strings.TrimSpace(line[arrowMatches[1][1]:])
+		if strings.HasPrefix(inlineLabel, ".") && (strings.Contains(arrow1, ".") || strings.HasPrefix(arrow2, ".")) {
+			inlineLabel = strings.TrimSpace(strings.TrimPrefix(inlineLabel, "."))
+		}
+		if strings.HasSuffix(inlineLabel, ".") && (strings.Contains(arrow2, ".") || strings.HasSuffix(arrow1, ".")) {
+			inlineLabel = strings.TrimSpace(strings.TrimSuffix(inlineLabel, "."))
+		}
+		// Support Mermaid's compact inline label form: `A -. label .-> B`
+		if leftRaw != "" &&
+			rightRaw != "" &&
+			inlineLabel != "" &&
+			!strings.ContainsAny(arrow1, "<>") &&
+			strings.Contains(arrow2, ">") {
+			meta = parseEdgeMeta(arrow1 + arrow2)
+			return leftRaw, inlineLabel, rightRaw, meta, true
 		}
 	}
 
@@ -413,14 +492,63 @@ func addEdgeFromLine(graph *Graph, line string) bool {
 
 	for _, from := range sourceIDs {
 		for _, to := range targetIDs {
+			markerStart := ""
+			markerEnd := ""
+			if graph.Kind == DiagramFlowchart {
+				switch meta.startDeco {
+				case 'o':
+					markerStart = "my-svg_flowchart-v2-circleStart"
+				case 'x':
+					markerStart = "my-svg_flowchart-v2-crossStart"
+				}
+				switch meta.endDeco {
+				case 'o':
+					markerEnd = "my-svg_flowchart-v2-circleEnd"
+				case 'x':
+					markerEnd = "my-svg_flowchart-v2-crossEnd"
+				}
+			} else if graph.Kind == DiagramClass {
+				switch meta.startMarker {
+				case "aggregation":
+					markerStart = "my-svg_class-aggregationStart"
+				case "extension":
+					markerStart = "my-svg_class-extensionStart"
+				case "composition":
+					markerStart = "my-svg_class-compositionStart"
+				case "dependency":
+					markerStart = "my-svg_class-dependencyStart"
+				}
+				switch meta.endMarker {
+				case "aggregation":
+					markerEnd = "my-svg_class-aggregationEnd"
+				case "extension":
+					markerEnd = "my-svg_class-extensionEnd"
+				case "composition":
+					markerEnd = "my-svg_class-compositionEnd"
+				case "dependency":
+					markerEnd = "my-svg_class-dependencyEnd"
+				}
+			}
+			arrowStart := meta.arrowStart
+			arrowEnd := meta.arrowEnd
+			if graph.Kind == DiagramClass {
+				if markerStart != "" {
+					arrowStart = false
+				}
+				if markerEnd != "" {
+					arrowEnd = false
+				}
+			}
 			graph.addEdge(Edge{
-				From:       from,
-				To:         to,
-				Label:      label,
-				Directed:   meta.directed,
-				ArrowStart: meta.arrowStart,
-				ArrowEnd:   meta.arrowEnd,
-				Style:      meta.style,
+				From:        from,
+				To:          to,
+				Label:       label,
+				Directed:    meta.directed,
+				ArrowStart:  arrowStart,
+				ArrowEnd:    arrowEnd,
+				Style:       meta.style,
+				MarkerStart: markerStart,
+				MarkerEnd:   markerEnd,
 			})
 		}
 	}
@@ -609,6 +737,8 @@ func parseShapeFromBrackets(raw string) (string, NodeShape) {
 func parseShapeFromParens(raw string) (string, NodeShape) {
 	trimmed := strings.TrimSpace(raw)
 	switch {
+	case strings.HasPrefix(trimmed, "([") && strings.HasSuffix(trimmed, "])"):
+		return stripQuotes(trimmed[2 : len(trimmed)-2]), ShapeStadium
 	case strings.HasPrefix(trimmed, "(((") && strings.HasSuffix(trimmed, ")))"):
 		return stripQuotes(trimmed[3 : len(trimmed)-3]), ShapeDoubleCircle
 	case strings.HasPrefix(trimmed, "((") && strings.HasSuffix(trimmed, "))"):

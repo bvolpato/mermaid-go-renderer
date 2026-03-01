@@ -6,13 +6,16 @@ type Point struct {
 }
 
 type NodeLayout struct {
-	ID    string
-	Label string
-	Shape NodeShape
-	X     float64
-	Y     float64
-	W     float64
-	H     float64
+	ID          string
+	Label       string
+	Shape       NodeShape
+	X           float64
+	Y           float64
+	W           float64
+	H           float64
+	Fill        string
+	Stroke      string
+	StrokeWidth float64
 }
 
 type EdgeLayout struct {
@@ -76,6 +79,7 @@ type LayoutLine struct {
 type LayoutCircle struct {
 	ID            string
 	Class         string
+	Title         string
 	CX            float64
 	CY            float64
 	R             float64
@@ -105,6 +109,7 @@ type LayoutEllipse struct {
 }
 
 type LayoutPolygon struct {
+	Class         string
 	Points        []Point
 	Fill          string
 	FillOpacity   float64
@@ -129,6 +134,8 @@ type LayoutPath struct {
 	DashArray     string
 	LineCap       string
 	LineJoin      string
+	MarkerStart   string
+	MarkerEnd     string
 }
 
 type LayoutText struct {

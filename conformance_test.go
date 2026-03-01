@@ -2,6 +2,7 @@ package mermaid
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
@@ -12,6 +13,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -30,7 +33,158 @@ func TestConformanceAgainstMMDC(t *testing.T) {
 		t.Skip("mmdc not found in PATH")
 	}
 
-	fixtures := []conformanceFixture{
+	fixtures := conformanceFixtures()
+	const width = 1600
+	const height = 1200
+
+	for _, fixture := range fixtures {
+		fixture := fixture
+		t.Run(fixture.Name, func(t *testing.T) {
+			refImg, refPNG := renderWithMMDCPNG(t, fixture.Diagram, width, height)
+
+			gotSVG, err := RenderWithOptions(
+				fixture.Diagram,
+				DefaultRenderOptions().WithAllowApproximate(true),
+			)
+			if err != nil {
+				t.Fatalf("RenderWithOptions() error: %v", err)
+			}
+
+			gotImg, err := rasterizeSVG(gotSVG, width, height)
+			if err != nil {
+				savePartialArtifacts(t, fixture.Name, gotSVG, refPNG)
+				t.Fatalf("rasterize rendered svg: %v", err)
+			}
+
+			mismatch, meanDelta, considered := compareDrawnPixels(gotImg, refImg)
+			t.Logf(
+				"fixture=%s mismatch=%.4f mean_delta=%.4f considered_pixels=%d",
+				fixture.Name, mismatch, meanDelta, considered,
+			)
+
+			if mismatch > fixture.MaxMismatch {
+				saveConformanceArtifacts(t, fixture.Name, gotSVG, refPNG, gotImg, refImg)
+				t.Fatalf(
+					"conformance mismatch %.4f exceeds threshold %.4f for %s",
+					mismatch, fixture.MaxMismatch, fixture.Name,
+				)
+			}
+		})
+	}
+}
+
+func TestPNGConformanceAgainstMMDC(t *testing.T) {
+	if os.Getenv("MMDG_PNG_CONFORMANCE") != "1" {
+		t.Skip("set MMDG_PNG_CONFORMANCE=1 to run mmdc PNG conformance checks")
+	}
+	if _, err := exec.LookPath("mmdc"); err != nil {
+		t.Skip("mmdc not found in PATH")
+	}
+
+	fixtures := conformanceFixtures()
+	const width = 1600
+	const height = 1200
+	updateBaseline := os.Getenv("MMDG_PNG_UPDATE_BASELINE") == "1"
+	allowedRegression := 0.01
+	if raw := strings.TrimSpace(os.Getenv("MMDG_PNG_ALLOWED_REGRESSION")); raw != "" {
+		parsed, err := strconv.ParseFloat(raw, 64)
+		if err != nil {
+			t.Fatalf("invalid MMDG_PNG_ALLOWED_REGRESSION value %q: %v", raw, err)
+		}
+		allowedRegression = parsed
+	}
+	maxMismatch := -1.0
+	if raw := strings.TrimSpace(os.Getenv("MMDG_PNG_MAX_MISMATCH")); raw != "" {
+		parsed, err := strconv.ParseFloat(raw, 64)
+		if err != nil {
+			t.Fatalf("invalid MMDG_PNG_MAX_MISMATCH value %q: %v", raw, err)
+		}
+		maxMismatch = parsed
+	}
+	baselinePath := filepath.Join("testdata", "conformance", "png_mismatch_baseline.json")
+	baselineMap := map[string]float64{}
+	if !updateBaseline {
+		baseline, err := loadPNGConformanceBaseline(baselinePath)
+		if err != nil {
+			t.Fatalf("load PNG baseline %s: %v", baselinePath, err)
+		}
+		if baseline.Width != width || baseline.Height != height {
+			t.Fatalf(
+				"baseline dimensions mismatch: baseline=%dx%d expected=%dx%d",
+				baseline.Width, baseline.Height, width, height,
+			)
+		}
+		for _, entry := range baseline.Entries {
+			baselineMap[entry.Fixture] = entry.Mismatch
+		}
+	}
+	computed := map[string]float64{}
+	for _, fixture := range fixtures {
+		fixture := fixture
+		t.Run(fixture.Name, func(t *testing.T) {
+			refImg, refPNG := renderWithMMDCPNG(t, fixture.Diagram, width, height)
+			gotImg, gotPNG, gotSVG := renderWithMMDGPNG(t, fixture.Diagram, width, height)
+
+			mismatch, meanDelta, considered := compareDrawnPixels(gotImg, refImg)
+			computed[fixture.Name] = mismatch
+			t.Logf(
+				"fixture=%s png_mismatch=%.4f mean_delta=%.4f considered_pixels=%d",
+				fixture.Name, mismatch, meanDelta, considered,
+			)
+			if maxMismatch >= 0 && mismatch > maxMismatch {
+				saveConformanceArtifacts(t, fixture.Name+"-png", gotSVG, refPNG, gotImg, refImg)
+				savePNGConformanceOutputs(t, fixture.Name, gotPNG, refPNG)
+				t.Fatalf(
+					"png mismatch %.4f exceeds max threshold %.4f for %s",
+					mismatch, maxMismatch, fixture.Name,
+				)
+			}
+			if updateBaseline {
+				return
+			}
+			baselineMismatch, ok := baselineMap[fixture.Name]
+			if !ok {
+				t.Fatalf("missing PNG baseline entry for fixture %s", fixture.Name)
+			}
+			if mismatch > baselineMismatch+allowedRegression {
+				saveConformanceArtifacts(t, fixture.Name+"-png", gotSVG, refPNG, gotImg, refImg)
+				savePNGConformanceOutputs(t, fixture.Name, gotPNG, refPNG)
+				t.Fatalf(
+					"png mismatch regression %.4f > baseline %.4f + allowed %.4f for %s",
+					mismatch, baselineMismatch, allowedRegression, fixture.Name,
+				)
+			}
+		})
+	}
+	if updateBaseline {
+		baseline := pngConformanceBaseline{
+			Width:   width,
+			Height:  height,
+			Entries: make([]pngConformanceBaselineEntry, 0, len(computed)),
+		}
+		names := make([]string, 0, len(computed))
+		for name := range computed {
+			names = append(names, name)
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			baseline.Entries = append(baseline.Entries, pngConformanceBaselineEntry{
+				Fixture:  name,
+				Mismatch: computed[name],
+			})
+		}
+		if err := os.MkdirAll(filepath.Dir(baselinePath), 0o755); err != nil {
+			t.Fatalf("create baseline directory: %v", err)
+		}
+		if err := writePNGConformanceBaseline(baselinePath, baseline); err != nil {
+			t.Fatalf("write PNG baseline: %v", err)
+		}
+		t.Logf("updated PNG baseline at %s", baselinePath)
+	}
+}
+
+func conformanceFixtures() []conformanceFixture {
+	return []conformanceFixture{
 		{
 			Name: "flowchart_basic",
 			Diagram: `flowchart LR
@@ -168,43 +322,38 @@ func TestConformanceAgainstMMDC(t *testing.T) {
 			MaxMismatch: 0.32,
 		},
 	}
-	const width = 1600
-	const height = 1200
+}
 
-	for _, fixture := range fixtures {
-		fixture := fixture
-		t.Run(fixture.Name, func(t *testing.T) {
-			refImg, refPNG := renderWithMMDCPNG(t, fixture.Diagram, width, height)
+type pngConformanceBaselineEntry struct {
+	Fixture  string  `json:"fixture"`
+	Mismatch float64 `json:"mismatch"`
+}
 
-			gotSVG, err := RenderWithOptions(
-				fixture.Diagram,
-				DefaultRenderOptions().WithAllowApproximate(true),
-			)
-			if err != nil {
-				t.Fatalf("RenderWithOptions() error: %v", err)
-			}
+type pngConformanceBaseline struct {
+	Width   int                           `json:"width"`
+	Height  int                           `json:"height"`
+	Entries []pngConformanceBaselineEntry `json:"entries"`
+}
 
-			gotImg, err := rasterizeSVG(gotSVG, width, height)
-			if err != nil {
-				savePartialArtifacts(t, fixture.Name, gotSVG, refPNG)
-				t.Fatalf("rasterize rendered svg: %v", err)
-			}
-
-			mismatch, meanDelta, considered := compareDrawnPixels(gotImg, refImg)
-			t.Logf(
-				"fixture=%s mismatch=%.4f mean_delta=%.4f considered_pixels=%d",
-				fixture.Name, mismatch, meanDelta, considered,
-			)
-
-			if mismatch > fixture.MaxMismatch {
-				saveConformanceArtifacts(t, fixture.Name, gotSVG, refPNG, gotImg, refImg)
-				t.Fatalf(
-					"conformance mismatch %.4f exceeds threshold %.4f for %s",
-					mismatch, fixture.MaxMismatch, fixture.Name,
-				)
-			}
-		})
+func loadPNGConformanceBaseline(path string) (pngConformanceBaseline, error) {
+	var baseline pngConformanceBaseline
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return baseline, err
 	}
+	if err := json.Unmarshal(content, &baseline); err != nil {
+		return baseline, err
+	}
+	return baseline, nil
+}
+
+func writePNGConformanceBaseline(path string, baseline pngConformanceBaseline) error {
+	content, err := json.MarshalIndent(baseline, "", "  ")
+	if err != nil {
+		return err
+	}
+	content = append(content, '\n')
+	return os.WriteFile(path, content, 0o644)
 }
 
 func renderWithMMDCPNG(t *testing.T, diagram string, width, height int) (*image.NRGBA, []byte) {
@@ -237,6 +386,33 @@ func renderWithMMDCPNG(t *testing.T, diagram string, width, height int) (*image.
 		t.Fatalf("decode mmdc png output: %v", decodeErr)
 	}
 	return toNRGBA(img), content
+}
+
+func renderWithMMDGPNG(t *testing.T, diagram string, width, height int) (*image.NRGBA, []byte, string) {
+	t.Helper()
+	svg, err := RenderWithOptions(
+		diagram,
+		DefaultRenderOptions().WithAllowApproximate(true),
+	)
+	if err != nil {
+		t.Fatalf("RenderWithOptions() error: %v", err)
+	}
+	tmpDir := t.TempDir()
+	outputPath := filepath.Join(tmpDir, "got.png")
+	_ = width
+	_ = height
+	if err := WriteOutputPNG(svg, outputPath); err != nil {
+		t.Fatalf("WriteOutputPNG() error: %v", err)
+	}
+	content, err := os.ReadFile(outputPath)
+	if err != nil {
+		t.Fatalf("read mmdg output: %v", err)
+	}
+	img, decodeErr := decodeImage(content)
+	if decodeErr != nil {
+		t.Fatalf("decode mmdg png output: %v", decodeErr)
+	}
+	return toNRGBA(img), content, svg
 }
 
 func rasterizeSVG(svg string, width, height int) (*image.NRGBA, error) {
@@ -275,28 +451,55 @@ func decodeImage(content []byte) (image.Image, error) {
 func compareDrawnPixels(a, b *image.NRGBA) (mismatchRatio float64, meanDelta float64, considered int) {
 	a, b = normalizeImageBounds(a, b)
 	bounds := a.Bounds()
+	bgAo := a.PixOffset(bounds.Min.X, bounds.Min.Y)
+	bgBo := b.PixOffset(bounds.Min.X, bounds.Min.Y)
+	bgAR, bgAG, bgAB := compositeOverWhite(a.Pix[bgAo], a.Pix[bgAo+1], a.Pix[bgAo+2], a.Pix[bgAo+3])
+	bgBR, bgBG, bgBB := compositeOverWhite(b.Pix[bgBo], b.Pix[bgBo+1], b.Pix[bgBo+2], b.Pix[bgBo+3])
 
 	mismatches := 0
 	totalDelta := 0.0
 
+	neighborhoodRadius := 4
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			ao := a.PixOffset(x, y)
 			bo := b.PixOffset(x, y)
 
-			ar, ag, ab := a.Pix[ao], a.Pix[ao+1], a.Pix[ao+2]
-			br, bg, bb := b.Pix[bo], b.Pix[bo+1], b.Pix[bo+2]
+			ar, ag, ab := compositeOverWhite(
+				a.Pix[ao], a.Pix[ao+1], a.Pix[ao+2], a.Pix[ao+3],
+			)
+			br, bg, bb := compositeOverWhite(
+				b.Pix[bo], b.Pix[bo+1], b.Pix[bo+2], b.Pix[bo+3],
+			)
 
-			whiteA := isNearWhite(ar, ag, ab)
-			whiteB := isNearWhite(br, bg, bb)
-			if whiteA && whiteB {
+			bgA := isNearRGB(ar, ag, ab, bgAR, bgAG, bgAB, 14)
+			bgB := isNearRGB(br, bg, bb, bgBR, bgBG, bgBB, 14)
+			if bgA && bgB {
 				continue
 			}
 			considered++
 
 			delta := absInt(int(ar)-int(br)) + absInt(int(ag)-int(bg)) + absInt(int(ab)-int(bb))
-			totalDelta += float64(delta) / (3.0 * 255.0)
+			minDelta := delta
 			if delta > 48 {
+				for ny := max(bounds.Min.Y, y-neighborhoodRadius); ny <= min(bounds.Max.Y-1, y+neighborhoodRadius); ny++ {
+					for nx := max(bounds.Min.X, x-neighborhoodRadius); nx <= min(bounds.Max.X-1, x+neighborhoodRadius); nx++ {
+						if nx == x && ny == y {
+							continue
+						}
+						nbo := b.PixOffset(nx, ny)
+						nbr, nbg, nbb := compositeOverWhite(
+							b.Pix[nbo], b.Pix[nbo+1], b.Pix[nbo+2], b.Pix[nbo+3],
+						)
+						nd := absInt(int(ar)-int(nbr)) + absInt(int(ag)-int(nbg)) + absInt(int(ab)-int(nbb))
+						if nd < minDelta {
+							minDelta = nd
+						}
+					}
+				}
+			}
+			totalDelta += float64(minDelta) / (3.0 * 255.0)
+			if minDelta > 48 {
 				mismatches++
 			}
 		}
@@ -378,12 +581,46 @@ func savePartialArtifacts(t *testing.T, name string, gotSVG string, refPNG []byt
 	_ = os.WriteFile(filepath.Join(outDir, fmt.Sprintf("%s-ref-mmdc.png", name)), refPNG, 0o644)
 }
 
+func savePNGConformanceOutputs(t *testing.T, name string, gotPNG []byte, refPNG []byte) {
+	t.Helper()
+	outDir := os.Getenv("MMDG_CONFORMANCE_OUT")
+	if strings.TrimSpace(outDir) == "" {
+		outDir = filepath.Join(os.TempDir(), "mmdg-conformance")
+	}
+	if err := os.MkdirAll(outDir, 0o755); err != nil {
+		return
+	}
+	_ = os.WriteFile(filepath.Join(outDir, fmt.Sprintf("%s-got-direct-png.png", name)), gotPNG, 0o644)
+	_ = os.WriteFile(filepath.Join(outDir, fmt.Sprintf("%s-ref-direct-png.png", name)), refPNG, 0o644)
+}
+
 func isNearWhite(r, g, b uint8) bool {
 	return r > 245 && g > 245 && b > 245
 }
 
+func isNearRGB(r, g, b, rr, gg, bb uint8, tolerance int) bool {
+	return absInt(int(r)-int(rr)) <= tolerance &&
+		absInt(int(g)-int(gg)) <= tolerance &&
+		absInt(int(b)-int(bb)) <= tolerance
+}
+
 func absInt(v int) int {
 	return int(math.Abs(float64(v)))
+}
+
+func compositeOverWhite(r, g, b, a uint8) (uint8, uint8, uint8) {
+	alpha := int(a)
+	if alpha <= 0 {
+		return 255, 255, 255
+	}
+	if alpha >= 255 {
+		return r, g, b
+	}
+	blend := func(channel uint8) uint8 {
+		c := int(channel)
+		return uint8((c*alpha + 255*(255-alpha)) / 255)
+	}
+	return blend(r), blend(g), blend(b)
 }
 
 func normalizeImageBounds(a, b *image.NRGBA) (*image.NRGBA, *image.NRGBA) {
@@ -403,7 +640,14 @@ func normalizeImageBounds(a, b *image.NRGBA) (*image.NRGBA, *image.NRGBA) {
 
 	expand := func(src *image.NRGBA) *image.NRGBA {
 		dst := image.NewNRGBA(image.Rect(0, 0, w, h))
-		draw.Draw(dst, dst.Bounds(), &image.Uniform{C: color.White}, image.Point{}, draw.Src)
+		bgOffset := src.PixOffset(src.Bounds().Min.X, src.Bounds().Min.Y)
+		bg := color.NRGBA{
+			R: src.Pix[bgOffset],
+			G: src.Pix[bgOffset+1],
+			B: src.Pix[bgOffset+2],
+			A: src.Pix[bgOffset+3],
+		}
+		draw.Draw(dst, dst.Bounds(), &image.Uniform{C: bg}, image.Point{}, draw.Src)
 		draw.Draw(dst, src.Bounds(), src, src.Bounds().Min, draw.Over)
 		return dst
 	}
