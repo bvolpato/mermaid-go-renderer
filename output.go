@@ -32,6 +32,20 @@ func WriteOutputSVG(svg string, outputPath string) error {
 	return os.WriteFile(outputPath, []byte(svg), 0o644)
 }
 
+// WritePNGFromSource renders a Mermaid diagram to PNG using the best available
+// method. If Chrome/Chromium is available, it uses headless browser rendering
+// for perfect fidelity. Otherwise it falls back to the pure-Go SVG rasterizer.
+func WritePNGFromSource(mermaidCode string, outputPath string) error {
+	if browserErr := renderPNGWithBrowser(mermaidCode, outputPath, 0, 0); browserErr == nil {
+		return nil
+	}
+	svg, err := RenderWithOptions(mermaidCode, DefaultRenderOptions().WithAllowApproximate(true))
+	if err != nil {
+		return err
+	}
+	return writeOutputPNG(svg, outputPath, 0, 0)
+}
+
 func WriteOutputPNG(svg string, outputPath string) error {
 	return writeOutputPNG(svg, outputPath, 0, 0)
 }

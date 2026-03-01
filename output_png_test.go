@@ -231,6 +231,64 @@ func TestWriteOutputPNGFromFlowchartWithSubgraphs(t *testing.T) {
 	}
 }
 
+func TestWritePNGFromSource(t *testing.T) {
+	diagram := `flowchart LR
+    A[Input] --> B[Process] --> C[Output]`
+
+	tmp := t.TempDir()
+	path := filepath.Join(tmp, "source.png")
+	if err := WritePNGFromSource(diagram, path); err != nil {
+		t.Fatalf("WritePNGFromSource() error = %v", err)
+	}
+
+	content, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read png file: %v", err)
+	}
+	img, err := png.Decode(bytes.NewReader(content))
+	if err != nil {
+		t.Fatalf("decode source png: %v", err)
+	}
+	if img.Bounds().Dx() < 100 || img.Bounds().Dy() < 30 {
+		t.Fatalf("unexpected source png dimensions: %dx%d", img.Bounds().Dx(), img.Bounds().Dy())
+	}
+	if countNonWhitePixels(img) == 0 {
+		t.Fatalf("expected non-empty source png output")
+	}
+}
+
+func TestWritePNGFromSourceWithSubgraphs(t *testing.T) {
+	diagram := `flowchart TD
+    subgraph G1["Group A"]
+        A["Node 1"] ~~~ B["Node 2"]
+    end
+    G1 --> G2
+    subgraph G2["Group B"]
+        C["Step 1"] --> D["Step 2"]
+    end`
+
+	tmp := t.TempDir()
+	path := filepath.Join(tmp, "subgraph.png")
+	if err := WritePNGFromSource(diagram, path); err != nil {
+		t.Fatalf("WritePNGFromSource() error = %v", err)
+	}
+
+	content, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read png file: %v", err)
+	}
+	img, err := png.Decode(bytes.NewReader(content))
+	if err != nil {
+		t.Fatalf("decode subgraph source png: %v", err)
+	}
+	if img.Bounds().Dx() < 200 || img.Bounds().Dy() < 100 {
+		t.Fatalf("unexpected subgraph source png dimensions: %dx%d", img.Bounds().Dx(), img.Bounds().Dy())
+	}
+	if countNonWhitePixels(img) == 0 {
+		t.Fatalf("expected non-empty subgraph source png output")
+	}
+}
+
 func countNonWhitePixels(img image.Image) int {
 	bounds := img.Bounds()
 	count := 0
