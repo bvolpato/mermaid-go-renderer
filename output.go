@@ -32,14 +32,26 @@ func WriteOutputSVG(svg string, outputPath string) error {
 	return os.WriteFile(outputPath, []byte(svg), 0o644)
 }
 
-// WritePNGFromSource renders a Mermaid diagram to PNG using the best available
-// method. If Chrome/Chromium is available, it uses headless browser rendering
-// for perfect fidelity. Otherwise it falls back to the pure-Go SVG rasterizer.
+// WritePNGFromSource renders a Mermaid diagram to PNG using Chrome/Chromium
+// headless for pixel-perfect output. Returns an error if no browser is found
+// (use WriteOutputPNG with a pre-rendered SVG for the pure-Go fallback).
 func WritePNGFromSource(mermaidCode string, outputPath string) error {
 	if strings.TrimSpace(mermaidCode) == "" {
 		return fmt.Errorf("mermaid code is empty")
 	}
-	// Validate by parsing first — reject invalid diagrams early.
+	if _, parseErr := ParseMermaid(mermaidCode); parseErr != nil {
+		return parseErr
+	}
+	return renderPNGWithBrowser(mermaidCode, outputPath, 0, 0)
+}
+
+// WritePNGFromSourceWithFallback is like WritePNGFromSource but falls back to
+// the pure-Go SVG rasterizer when no browser is available. The pure-Go output
+// has significantly lower fidelity (no foreignObject support, limited CSS).
+func WritePNGFromSourceWithFallback(mermaidCode string, outputPath string) error {
+	if strings.TrimSpace(mermaidCode) == "" {
+		return fmt.Errorf("mermaid code is empty")
+	}
 	if _, parseErr := ParseMermaid(mermaidCode); parseErr != nil {
 		return parseErr
 	}
@@ -51,6 +63,12 @@ func WritePNGFromSource(mermaidCode string, outputPath string) error {
 		return err
 	}
 	return writeOutputPNG(svg, outputPath, 0, 0)
+}
+
+// HasBrowser returns true if a Chrome/Chromium browser is available for
+// high-fidelity rendering.
+func HasBrowser() bool {
+	return chromePath() != ""
 }
 
 func WriteOutputPNG(svg string, outputPath string) error {
