@@ -66,8 +66,10 @@ type svgViewBox struct {
 	H float64
 }
 
+var rasterizeSVGToImageFunc = rasterizeSVGToImageLegacy
+
 func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error) {
-	return rasterizeSVGToImageResvg(svg, width, height)
+	return rasterizeSVGToImageFunc(svg, width, height)
 }
 
 func rasterizeSVGToImageLegacy(svg string, width int, height int) (*image.NRGBA, error) {
@@ -466,7 +468,7 @@ func overlaySVGForeignObjectText(img *image.NRGBA, svg string, width int, height
 			textWidth := float64(drawer.MeasureString(label.Text)) / 64.0
 			boxWidth := label.W * scaleX
 			px += (boxWidth - textWidth) / 2.0
-			px += 13.0
+			px += 11.0
 		}
 		drawer.Dot = fixed.P(int(math.Round(px)), int(math.Round(py)))
 		drawer.DrawString(label.Text)

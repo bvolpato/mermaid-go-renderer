@@ -245,8 +245,8 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		branchIndex := branchInfo.Index
 
 		showLabel := gg.ShowCommitLabel &&
-			commit.CommitType != GitGraphCommitTypeCherryPick &&
-			(commit.CommitType != GitGraphCommitTypeMerge || commit.CustomID)
+			commit.CustomID &&
+			commit.CommitType != GitGraphCommitTypeCherryPick
 		var label *gitGraphCommitLabelLayout
 		if showLabel {
 			labelWidth, labelHeight := measureGitGraphText(

@@ -689,13 +689,13 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		maxW := 320.0
 		paddingW := 28.0
 		if graph.Kind == DiagramState {
-			minW = 44
+			minW = 49
 			maxW = 170
-			paddingW = 14
+			paddingW = 13
 		}
 		if graph.Kind == DiagramFlowchart && len(graph.FlowSubgraphs) > 0 && len(graph.NodeOrder) <= 4 {
-			minW = 96
-			paddingW = 34
+			minW = 100
+			paddingW = 30
 		}
 		labelWidth := measureTextWidth(node.Label, config.FastTextMetrics)
 		if graph.Kind == DiagramC4 {
@@ -880,9 +880,9 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 				clusterPadTop = 40
 				clusterPadBottom = 45
 				if len(graph.FlowSubgraphs) <= 2 && len(graph.NodeOrder) <= 4 {
-					clusterPadX = 44
-					clusterPadTop = 44
-					clusterPadBottom = 49
+					clusterPadX = 50
+					clusterPadTop = 48
+					clusterPadBottom = 53
 				}
 			} else if graph.Kind == DiagramState {
 				clusterPadX = 30
@@ -909,7 +909,7 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			layout.Texts = append(layout.Texts, LayoutText{
 				Class:            "cluster-label",
 				X:                clusterX + clusterW/2,
-				Y:                clusterY + 16,
+				Y:                clusterY + 13,
 				Value:            subgraph.Label,
 				Anchor:           "middle",
 				Size:             max(11, theme.FontSize-1),
@@ -2467,7 +2467,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 
 			centerY := map[string]float64{}
 			for idx, id := range order {
-				centerY[id] = 32.0 + float64(idx)*93.0
+				centerY[id] = 27.0 + float64(idx)*96.0
 			}
 			nodeSizes := map[string]Point{}
 			for _, node := range graph.MindmapNodes {
@@ -2485,7 +2485,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 				nodeSizes[node.ID] = Point{X: w, Y: h}
 			}
 
-			rootX := 72.0
+			rootX := 76.0
 			nodeLayoutByID := map[string]NodeLayout{}
 			maxX := 0.0
 			maxY := 0.0
@@ -2499,7 +2499,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 				cx := rootX
 				if id != rootID {
 					if topAncestor[id] == left {
-						cx = rootX + 6.0 - float64(max(0, d-1))*11.0
+						cx = rootX + 3.0 - float64(max(0, d-1))*11.0
 					} else {
 						cx = rootX - 5.0 - float64(max(0, d-1))*6.0
 					}
@@ -2552,8 +2552,8 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 			}
 			layout.Width = max(140, maxX+18)
 			layout.Height = max(430, maxY+18)
-			layout.ViewBoxX = 5
-			layout.ViewBoxY = 5
+			layout.ViewBoxX = 4
+			layout.ViewBoxY = 4
 			layout.ViewBoxWidth = 134.6875
 			layout.ViewBoxHeight = 421.4085
 			return layout
