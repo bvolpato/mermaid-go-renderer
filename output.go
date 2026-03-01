@@ -115,12 +115,14 @@ var svgLineTagPattern = regexp.MustCompile(`<line\b[^>]*>`)
 var svgMarkerElementPattern = regexp.MustCompile(`(?s)<marker\b[^>]*>.*?</marker>`)
 var svgForeignObjectPatternForRaster = regexp.MustCompile(`(?s)<foreignObject\b[^>]*>.*?</foreignObject>`)
 var svgRGBDecimalPattern = regexp.MustCompile(`rgb\(\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*\)`)
+var svgRGBAPattern = regexp.MustCompile(`rgba\(\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*[0-9]*\.?[0-9]+\s*\)`)
 
 func normalizeSVGForRasterizer(svg string) string {
 	normalized := normalizeSVGPathData(svg)
 	normalized = normalizeSVGLineAttrs(normalized)
 	normalized = normalizeSVGCurrentColor(normalized)
 	normalized = normalizeSVGTransparentColor(normalized)
+	normalized = normalizeSVGRGBAColors(normalized)
 	normalized = normalizeSVGRGBColors(normalized)
 	normalized = stripSVGMarkerDefs(normalized)
 	return normalized
@@ -174,6 +176,22 @@ func normalizeSVGTransparentColor(svg string) string {
 	normalized := strings.ReplaceAll(svg, `"transparent"`, `"none"`)
 	normalized = strings.ReplaceAll(normalized, `"Transparent"`, `"none"`)
 	return normalized
+}
+
+func normalizeSVGRGBAColors(svg string) string {
+	return svgRGBAPattern.ReplaceAllStringFunc(svg, func(raw string) string {
+		match := svgRGBAPattern.FindStringSubmatch(raw)
+		if len(match) != 4 {
+			return raw
+		}
+		r, okR := parseAnyFloat(match[1])
+		g, okG := parseAnyFloat(match[2])
+		b, okB := parseAnyFloat(match[3])
+		if !okR || !okG || !okB {
+			return raw
+		}
+		return fmt.Sprintf("rgb(%d, %d, %d)", clampInt(int(math.Round(r)), 0, 255), clampInt(int(math.Round(g)), 0, 255), clampInt(int(math.Round(b)), 0, 255))
+	})
 }
 
 func normalizeSVGRGBColors(svg string) string {

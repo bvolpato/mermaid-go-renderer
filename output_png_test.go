@@ -188,6 +188,49 @@ func TestWriteOutputPNGFromSequenceDiagramPreservesViewBoxHeight(t *testing.T) {
 	}
 }
 
+func TestWriteOutputPNGFromFlowchartWithSubgraphs(t *testing.T) {
+	diagram := strings.TrimSpace(`flowchart TD
+    subgraph G1["Group A"]
+        A["Node 1"] ~~~ B["Node 2"] ~~~ C["Node 3"]
+    end
+    G1 -->|"connect"| G2
+    subgraph G2["Group B"]
+        D["Step 1"] --> E["Step 2"]
+        E --> F["Step 3"]
+    end
+    G2 -->|"output"| G3
+    subgraph G3["Group C"]
+        X["Result 1"]
+        Y["Result 2"]
+    end`)
+
+	svg, err := RenderWithOptions(diagram, DefaultRenderOptions())
+	if err != nil {
+		t.Fatalf("RenderWithOptions() error = %v", err)
+	}
+
+	tmp := t.TempDir()
+	path := filepath.Join(tmp, "subgraph.png")
+	if err := WriteOutputPNG(svg, path); err != nil {
+		t.Fatalf("WriteOutputPNG() error = %v", err)
+	}
+
+	content, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read png file: %v", err)
+	}
+	img, err := png.Decode(bytes.NewReader(content))
+	if err != nil {
+		t.Fatalf("decode subgraph png: %v", err)
+	}
+	if img.Bounds().Dx() < 400 || img.Bounds().Dy() < 200 {
+		t.Fatalf("unexpected subgraph png dimensions: %dx%d", img.Bounds().Dx(), img.Bounds().Dy())
+	}
+	if countNonWhitePixels(img) == 0 {
+		t.Fatalf("expected non-empty subgraph png output")
+	}
+}
+
 func countNonWhitePixels(img image.Image) int {
 	bounds := img.Bounds()
 	count := 0
