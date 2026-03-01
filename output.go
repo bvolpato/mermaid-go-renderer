@@ -66,8 +66,10 @@ type svgViewBox struct {
 	H float64
 }
 
+var rasterizeSVGToImageFunc = rasterizeSVGToImageLegacy
+
 func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error) {
-	return rasterizeSVGToImageResvg(svg, width, height)
+	return rasterizeSVGToImageFunc(svg, width, height)
 }
 
 func rasterizeSVGToImageLegacy(svg string, width int, height int) (*image.NRGBA, error) {
