@@ -79,9 +79,10 @@ const (
 type EdgeStyle string
 
 const (
-	EdgeSolid  EdgeStyle = "solid"
-	EdgeDotted EdgeStyle = "dotted"
-	EdgeThick  EdgeStyle = "thick"
+	EdgeSolid     EdgeStyle = "solid"
+	EdgeDotted    EdgeStyle = "dotted"
+	EdgeThick     EdgeStyle = "thick"
+	EdgeInvisible EdgeStyle = "invisible"
 )
 
 type Node struct {

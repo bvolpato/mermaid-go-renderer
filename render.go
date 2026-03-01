@@ -284,6 +284,9 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(`<g class="edgeLabels">`)
 			if layout.Kind == DiagramFlowchart {
 				for idx, edge := range layout.Edges {
+					if edge.Style == EdgeInvisible {
+						continue
+					}
 					edgeID := "L_" + sanitizeID(edge.From, edge.From) + "_" + sanitizeID(edge.To, edge.To) + "_" + intString(idx)
 					label := strings.TrimSpace(edge.Label)
 					textW := 0.0

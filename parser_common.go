@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	arrowPattern  = `<[-.=ox]*[-=]+[-.=ox]*>|<[-.=ox]*[-=]+|[-.=ox]*[-=]+>|[-.=ox]*[-=]+`
+	arrowPattern  = `~~~|<[-.=ox]*[-=]+[-.=ox]*>|<[-.=ox]*[-=]+|[-.=ox]*[-=]+>|[-.=ox]*[-=]+`
 	arrowTokenRe  = regexp.MustCompile(arrowPattern)
 	pipeLabelRe   = regexp.MustCompile(`^(.+?)\s*(` + arrowPattern + `)\|(.+?)\|\s*(.+)$`)
 	labelArrowRe  = regexp.MustCompile(`^(.+?)\s*(<)?([-.=ox]*[-=]+[-.=ox]*)\s+([^<>=|]+?)\s+([-.=ox]*[-=]+[-.=ox]*)(>)?\s*(.+)$`)
@@ -300,6 +300,15 @@ type edgeMeta struct {
 func parseEdgeMeta(arrow string) edgeMeta {
 	trimmed := strings.TrimSpace(arrow)
 	raw := trimmed
+
+	if trimmed == "~~~" {
+		return edgeMeta{
+			style:    EdgeInvisible,
+			raw:      raw,
+			directed: false,
+		}
+	}
+
 	var startDecoration byte
 	var endDecoration byte
 

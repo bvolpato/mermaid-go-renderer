@@ -1031,6 +1031,9 @@ func edgeEndpoints(from, to NodeLayout, direction Direction) (x1, y1, x2, y2 flo
 
 func addGraphPrimitives(layout *Layout, theme Theme) {
 	for edgeIdx, edge := range layout.Edges {
+		if edge.Style == EdgeInvisible {
+			continue
+		}
 		strokeWidth := 2.0
 		dashed := false
 		if edge.Style == EdgeDotted {
