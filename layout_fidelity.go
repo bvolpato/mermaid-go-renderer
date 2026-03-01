@@ -957,9 +957,9 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	}
 
 	startX := 188.0
-	topBoxY := 44.0
+	topBoxY := 46.0
 	axisY := 157.8
-	eventTopY := 241.5
+	eventTopY := 240.5
 	if title != "" {
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      33.1,

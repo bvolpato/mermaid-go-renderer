@@ -389,10 +389,10 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		return layoutGeneric(graph, theme)
 	}
 
-	paddingX := 24.0
-	paddingY := 32.0
-	// Mermaid ER defaults (ranksep/nodesep) produce larger vertical lanes.
-	rowGap := max(164, config.RankSpacing*2.5)
+	paddingX := 20.0
+	paddingY := 26.0
+	// Keep ER lanes compact to match Mermaid card stacking.
+	rowGap := max(150, config.RankSpacing*2.25)
 	lineH := max(12, theme.FontSize+1)
 	titleH := 34.0
 
@@ -404,12 +404,12 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		for _, attr := range graph.ERAttributes[id] {
 			longest = max(longest, measureTextWidth(attr, config.FastTextMetrics))
 		}
-		w := clamp(longest+20, 110, 380)
+		w := clamp(longest+26, 120, 380)
 		attrH := 0.0
 		if len(graph.ERAttributes[id]) > 0 {
 			attrH = float64(len(graph.ERAttributes[id]))*lineH + 10
 		}
-		h := max(56, titleH+attrH)
+		h := max(60, titleH+attrH)
 		nodeSizes[id] = Point{X: w, Y: h}
 		maxNodeW = max(maxNodeW, w)
 	}
@@ -471,7 +471,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			X2:          edge.X2,
 			Y2:          edge.Y2,
 			Stroke:      theme.LineColor,
-			StrokeWidth: 1.4,
+			StrokeWidth: 1.2,
 			Dashed:      edge.Style == EdgeDotted,
 			ArrowStart:  false,
 			ArrowEnd:    false,
@@ -481,7 +481,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		if edge.Label != "" {
 			layout.Texts = append(layout.Texts, LayoutText{
 				X:      (edge.X1 + edge.X2) / 2,
-				Y:      (edge.Y1+edge.Y2)/2 - 6,
+				Y:      (edge.Y1+edge.Y2)/2 - 3,
 				Value:  edge.Label,
 				Anchor: "middle",
 				Size:   max(10, theme.FontSize-1),
@@ -497,15 +497,19 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Y:           node.Y,
 			W:           node.W,
 			H:           node.H,
-			RX:          2,
-			RY:          2,
-			Fill:        "#ffffff",
-			Stroke:      theme.PrimaryBorderColor,
-			StrokeWidth: 1.4,
+			RX:          0,
+			RY:          0,
+			Fill:        "#ECECFF",
+			Stroke:      "hsl(240, 60%, 86.2745098039%)",
+			StrokeWidth: 1.0,
 		})
+		titleY := node.Y + titleH*0.67
+		if len(graph.ERAttributes[node.ID]) == 0 {
+			titleY = node.Y + node.H/2 + theme.FontSize*0.35
+		}
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      node.X + node.W/2,
-			Y:      node.Y + titleH*0.67,
+			Y:      titleY,
 			Value:  node.Label,
 			Anchor: "middle",
 			Size:   theme.FontSize,
@@ -521,7 +525,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 				Y1:          sepY,
 				X2:          node.X + node.W,
 				Y2:          sepY,
-				Stroke:      theme.PrimaryBorderColor,
+				Stroke:      "hsl(240, 60%, 86.2745098039%)",
 				StrokeWidth: 1.0,
 			})
 			yAttr := sepY + lineH*0.85
@@ -688,6 +692,9 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		minW := 80.0
 		maxW := 320.0
 		paddingW := 28.0
+		if graph.Kind == DiagramFlowchart {
+			minW = 92
+		}
 		if graph.Kind == DiagramState {
 			minW = 49
 			maxW = 170
@@ -2467,7 +2474,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 
 			centerY := map[string]float64{}
 			for idx, id := range order {
-				centerY[id] = 27.0 + float64(idx)*96.0
+				centerY[id] = 26.0 + float64(idx)*97.0
 			}
 			nodeSizes := map[string]Point{}
 			for _, node := range graph.MindmapNodes {
@@ -2499,9 +2506,9 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 				cx := rootX
 				if id != rootID {
 					if topAncestor[id] == left {
-						cx = rootX + 3.0 - float64(max(0, d-1))*11.0
+						cx = rootX + 2.0 - float64(max(0, d-1))*10.0
 					} else {
-						cx = rootX - 5.0 - float64(max(0, d-1))*6.0
+						cx = rootX - 6.0 - float64(max(0, d-1))*6.0
 					}
 				}
 				size := nodeSizes[id]

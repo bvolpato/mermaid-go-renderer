@@ -8,35 +8,35 @@
     },
     {
       "fixture": "er_basic",
-      "mismatch": 0.16727019035912427
+      "mismatch": 0.10262883219651917
     },
     {
       "fixture": "flowchart_basic",
-      "mismatch": 0.12914239178099354
+      "mismatch": 0.12718514254552066
     },
     {
       "fixture": "flowchart_subgraph",
-      "mismatch": 0.19739962480975023
+      "mismatch": 0.18484733590561367
     },
     {
       "fixture": "gantt_basic",
-      "mismatch": 0.2812045308039414
+      "mismatch": 0.004934530054007849
     },
     {
       "fixture": "gitgraph_basic",
-      "mismatch": 0.28427454387489137
+      "mismatch": 0.18478360746117797
     },
     {
       "fixture": "journey_basic",
-      "mismatch": 0.12929777803955061
+      "mismatch": 0.09986528436712938
     },
     {
       "fixture": "mindmap_basic",
-      "mismatch": 0.2650868352005331
+      "mismatch": 0.198260113092649
     },
     {
       "fixture": "pie_basic",
-      "mismatch": 0.2504727637854573
+      "mismatch": 0.03684219975941254
     },
     {
       "fixture": "quadrant_basic",
@@ -48,11 +48,11 @@
     },
     {
       "fixture": "state_basic",
-      "mismatch": 0.18595303575206262
+      "mismatch": 0.1826266804550155
     },
     {
       "fixture": "timeline_basic",
-      "mismatch": 0.20817104028658345
+      "mismatch": 0.1699951429959144
     },
     {
       "fixture": "xychart_basic",
