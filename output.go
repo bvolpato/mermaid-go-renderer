@@ -36,6 +36,13 @@ func WriteOutputSVG(svg string, outputPath string) error {
 // method. If Chrome/Chromium is available, it uses headless browser rendering
 // for perfect fidelity. Otherwise it falls back to the pure-Go SVG rasterizer.
 func WritePNGFromSource(mermaidCode string, outputPath string) error {
+	if strings.TrimSpace(mermaidCode) == "" {
+		return fmt.Errorf("mermaid code is empty")
+	}
+	// Validate by parsing first — reject invalid diagrams early.
+	if _, parseErr := ParseMermaid(mermaidCode); parseErr != nil {
+		return parseErr
+	}
 	if browserErr := renderPNGWithBrowser(mermaidCode, outputPath, 0, 0); browserErr == nil {
 		return nil
 	}
