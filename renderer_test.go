@@ -149,6 +149,45 @@ func TestRenderAllowsApproximateWhenEnabled(t *testing.T) {
 	}
 }
 
+func TestC4TitleOnlyRenders(t *testing.T) {
+	input := "C4Container\n    title Model Bank - Container Diagram"
+	svg, err := Render(input)
+	if err != nil {
+		t.Fatalf("Render() error = %v", err)
+	}
+	if !strings.Contains(svg, "Model Bank") {
+		t.Fatalf("expected title in SVG output, got: %s", svg)
+	}
+}
+
+func TestC4TitleCentered(t *testing.T) {
+	input := "C4Context\ntitle System Overview\nPerson(user, \"User\")"
+	parsed, err := ParseMermaid(input)
+	if err != nil {
+		t.Fatalf("ParseMermaid() error = %v", err)
+	}
+	layout := ComputeLayout(&parsed.Graph, ModernTheme(), DefaultLayoutConfig())
+	// Find the title text
+	var titleText *LayoutText
+	for i := range layout.Texts {
+		if layout.Texts[i].Value == "System Overview" {
+			titleText = &layout.Texts[i]
+			break
+		}
+	}
+	if titleText == nil {
+		t.Fatal("title text not found in layout")
+	}
+	if titleText.Anchor != "middle" {
+		t.Fatalf("expected title anchor 'middle', got %q", titleText.Anchor)
+	}
+	// Title X should be at half the layout width
+	expectedX := layout.Width / 2
+	if titleText.X != expectedX {
+		t.Fatalf("expected title X=%f (half of width %f), got %f", expectedX, layout.Width, titleText.X)
+	}
+}
+
 func parseSVGAttr(svg, attr string) (float64, bool) {
 	marker := attr + "=\""
 	start := strings.Index(svg, marker)
