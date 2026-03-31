@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.svg" alt="mmdg logo — Go gopher mermaid" width="200"/>
+<img src="assets/logo.svg" alt="mmdg logo — Go gopher mermaid" width="200"/>
 
 # mmdg (`mermaid-go-renderer`)
 
