@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="logo.svg" alt="mmdg logo — Go gopher mermaid" width="200"/>
+
 # mmdg (`mermaid-go-renderer`)
 
 **Fast native Mermaid rendering in Go. No browser, no Chromium.**
