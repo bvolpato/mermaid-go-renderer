@@ -119,7 +119,195 @@ func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error
 func prepareSVGForRasterizer(svg string) string {
 	svg = expandViewBoxToContent(svg)
 	svg = fixSVGRootDimensions(svg)
+	svg = fixHSLFloats(svg)
+	svg = inlineCSS(svg)
 	return svg
+}
+
+var hslFloatPattern = regexp.MustCompile(`(?i)hsl\(\s*([\d\.]+)\s*,\s*([\d\.]+)%\s*,\s*([\d\.]+)%\s*\)`)
+
+func fixHSLFloats(svg string) string {
+	return hslFloatPattern.ReplaceAllStringFunc(svg, func(match string) string {
+		parts := hslFloatPattern.FindStringSubmatch(match)
+		if len(parts) == 4 {
+			hue, _ := strconv.ParseFloat(parts[1], 64)
+			sat, _ := strconv.ParseFloat(parts[2], 64)
+			lit, _ := strconv.ParseFloat(parts[3], 64)
+			return fmt.Sprintf("hsl(%d, %d%%, %d%%)", int(math.Round(hue)), int(math.Round(sat)), int(math.Round(lit)))
+		}
+		return match
+	})
+}
+
+var cssRulePattern = regexp.MustCompile(`([^\{\}]+)\{([^}]+)\}`)
+var styleTagPattern = regexp.MustCompile(`(?is)<style[^>]*>(.*?)</style>`)
+var elementTagPattern = regexp.MustCompile(`(?is)<([a-zA-Z0-9]+)\s+([^>]+)/*>`)
+
+type styleRule struct {
+	selector string
+	styles   string
+}
+
+func parseCSS(svg string) []styleRule {
+	var rules []styleRule
+	matches := styleTagPattern.FindAllStringSubmatch(svg, -1)
+	for _, m := range matches {
+		css := m[1]
+		ruleMatches := cssRulePattern.FindAllStringSubmatch(css, -1)
+		for _, rm := range ruleMatches {
+			selectors := strings.Split(rm[1], ",")
+			styles := strings.TrimSpace(rm[2])
+			if !strings.HasSuffix(styles, ";") {
+				styles += ";"
+			}
+			for _, sel := range selectors {
+				s := strings.TrimSpace(sel)
+				s = strings.TrimPrefix(s, "#my-svg ")
+				if s != "" {
+					rules = append(rules, styleRule{selector: s, styles: styles})
+				}
+			}
+		}
+	}
+	return rules
+}
+
+func inlineCSS(svg string) string {
+	rules := parseCSS(svg)
+	if len(rules) == 0 {
+		return svg
+	}
+
+	return elementTagPattern.ReplaceAllStringFunc(svg, func(tag string) string {
+		attrs := parseAttrs(tag)
+		classList := strings.Fields(attrs["class"])
+		if len(classList) == 0 && attrs["class"] == "" {
+			// Fast path for nodes without class if we want, but wait, selector might just be node name (e.g. `path`)
+			// So proceed.
+		}
+		tagName := attrs["_tag"]
+
+		var inline stylesMap
+		if existing, ok := attrs["style"]; ok {
+			inline = parseStylesMap(existing)
+		} else {
+			inline = make(stylesMap)
+		}
+
+		for _, rule := range rules {
+			if matchSelector(rule.selector, tagName, classList) {
+				ruleStyles := parseStylesMap(rule.styles)
+				for k, v := range ruleStyles {
+					if _, ok := inline[k]; !ok {
+						inline[k] = v
+					}
+				}
+			}
+		}
+
+		if len(inline) > 0 {
+			attrs["style"] = inline.String()
+			return rebuildTag(tag, attrs)
+		}
+		return tag
+	})
+}
+
+type stylesMap map[string]string
+
+func (s stylesMap) String() string {
+	var sb strings.Builder
+	for k, v := range s {
+		sb.WriteString(k + ":" + v + ";")
+	}
+	return strings.ReplaceAll(sb.String(), "\"", "'")
+}
+
+func parseStylesMap(s string) stylesMap {
+	m := make(stylesMap)
+	parts := strings.Split(s, ";")
+	for _, p := range parts {
+		kv := strings.SplitN(p, ":", 2)
+		if len(kv) == 2 {
+			m[strings.TrimSpace(kv[0])] = strings.TrimSpace(kv[1])
+		}
+	}
+	return m
+}
+
+func parseAttrs(tag string) map[string]string {
+	m := make(map[string]string)
+	tagParts := regexp.MustCompile(`(?is)<([a-zA-Z0-9]+)(\s+[^>]+)?/*>`).FindStringSubmatch(tag)
+	if len(tagParts) < 2 {
+		return m
+	}
+	m["_tag"] = tagParts[1]
+
+	attrPattern := regexp.MustCompile(`([a-zA-Z0-9\-:]+)\s*=\s*"([^"]*)"`)
+	for _, match := range attrPattern.FindAllStringSubmatch(tagParts[2], -1) {
+		m[match[1]] = match[2]
+	}
+	return m
+}
+
+func rebuildTag(orig string, attrs map[string]string) string {
+	var sb strings.Builder
+	sb.WriteString("<" + attrs["_tag"])
+	for k, v := range attrs {
+		if k != "_tag" {
+			sb.WriteString(fmt.Sprintf(` %s="%s"`, k, v))
+		}
+	}
+	if strings.HasSuffix(orig, "/>") {
+		sb.WriteString("/>")
+	} else {
+		sb.WriteString(">")
+	}
+	return sb.String()
+}
+
+func matchSelector(selector, tagName string, classes []string) bool {
+	parts := strings.Fields(selector)
+	if len(parts) == 0 {
+		return false
+	}
+	last := parts[len(parts)-1]
+
+	if strings.HasPrefix(last, ".") {
+		c := last[1:]
+		if strings.Contains(c, ".") {
+		    cParts := strings.Split(c, ".")
+		    c = cParts[len(cParts)-1] // very naive
+		}
+		
+		for _, cl := range classes {
+			if cl == c {
+				return true
+			}
+		}
+		return false
+	}
+
+	if strings.Contains(last, ".") {
+		sp := strings.SplitN(last, ".", 2)
+		if sp[0] != tagName {
+			return false
+		}
+		c := sp[1]
+		if strings.Contains(c, ".") {
+		    cParts := strings.Split(c, ".")
+		    c = cParts[len(cParts)-1]
+		}
+		
+		for _, cl := range classes {
+			if cl == c {
+				return true
+			}
+		}
+		return false
+	}
+
+	return last == tagName
 }
 
 var svgRootTagPattern = regexp.MustCompile(`(?i)(<svg\b)([^>]*)(>)`)

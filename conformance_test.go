@@ -149,10 +149,12 @@ func TestPNGConformanceAgainstMMDC(t *testing.T) {
 			if mismatch > baselineMismatch+allowedRegression {
 				saveConformanceArtifacts(t, fixture.Name+"-png", gotSVG, refPNG, gotImg, refImg)
 				savePNGConformanceOutputs(t, fixture.Name, gotPNG, refPNG)
-				t.Fatalf(
-					"png mismatch regression %.4f > baseline %.4f + allowed %.4f for %s",
-					mismatch, baselineMismatch, allowedRegression, fixture.Name,
-				)
+				if !updateBaseline {
+					t.Fatalf(
+						"png mismatch regression %.4f > baseline %.4f + allowed %.4f for %s",
+						mismatch, baselineMismatch, allowedRegression, fixture.Name,
+					)
+				}
 			}
 		})
 	}

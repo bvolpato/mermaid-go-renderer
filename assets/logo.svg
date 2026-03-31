@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="650px" height="480px" viewBox="0 0 650 480" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="630px" height="450px" viewBox="0 0 630 450" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <clipPath id="cut-gopher">
       <rect x="-100" y="-100" width="500" height="305" />
@@ -94,7 +94,7 @@
            C 25,280 150,380 480,360 
            C 350,380 235,300 235,200 
            C 150,195 100,195 25,200 Z" 
-        fill="url(#tailGrad)" stroke="#000000" stroke-width="3" stroke-linejoin="round"/>
+        fill="url(#tailGrad)" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"/>
 
   <!-- Elegant sharp fins pointing right -->
   <path d="M 480,360 
@@ -102,7 +102,7 @@
            C 560,320 520,350 480,360 
            C 530,370 590,410 620,440 
            C 560,420 510,390 480,360 Z" 
-        fill="url(#finGrad)" stroke="#000000" stroke-width="3" stroke-linejoin="round"/>
+        fill="url(#finGrad)" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"/>
 
   <!-- Scales -->
   <g fill="none" stroke="#231F20" stroke-width="1.5" stroke-linecap="round" opacity="0.3">
@@ -110,23 +110,27 @@
     <path d="M 50,220 Q 70,240 90,215" />
     <path d="M 110,220 Q 130,240 150,215" />
     <path d="M 170,215 Q 190,235 210,210" />
-    <path d="M 70,245 Q 90,265 110,240" />
-    <path d="M 130,245 Q 150,265 170,240" />
-    <path d="M 190,240 Q 210,260 230,235" />
-    <path d="M 60,270 Q 80,290 100,265" />
-    <path d="M 120,270 Q 140,290 160,265" />
-    <path d="M 180,270 Q 200,290 220,265" />
+    <!-- Lower left edge scales -->
+    <path d="M 45,240 Q 65,260 85,235" />
+    <path d="M 35,260 Q 55,280 75,255" />
+    
+    <path d="M 90,250 Q 110,270 130,245" />
+    <path d="M 150,235 Q 170,255 190,230" />
+    
     <!-- Mid swoop -->
-    <path d="M 110,295 Q 130,315 150,290" />
-    <path d="M 170,295 Q 190,315 210,290" />
-    <path d="M 190,320 Q 210,340 230,315" />
-    <path d="M 220,340 Q 240,360 260,335" />
-    <path d="M 240,315 Q 260,335 280,310" />
-    <path d="M 280,340 Q 300,360 320,335" />
+    <path d="M 80,280 Q 100,300 120,275" />
+    <path d="M 125,285 Q 145,305 165,280" />
+    <path d="M 170,275 Q 190,295 210,270" />
+    <path d="M 150,315 Q 170,335 190,310" />
+    <path d="M 195,300 Q 215,320 235,295" />
+    
+    <!-- Near right curve -->
+    <path d="M 230,320 Q 250,340 270,315" />
+    <path d="M 270,340 Q 290,360 310,335" />
    </g>
 
   <!-- Flowchart Paper -->
-  <g transform="translate(195, 100) rotate(8)">
+  <g transform="translate(230, 95) rotate(15)">
     <rect x="-2" y="2" width="60" height="80" rx="3" fill="rgba(0,0,0,0.5)"/>
     <rect x="0" y="0" width="60" height="80" rx="3" fill="#FFFFFF" stroke="#000000" stroke-width="3" />
     <rect x="14" y="8" width="32" height="12" rx="6" fill="#A2D8F0" stroke="#000000" stroke-width="2"/>
