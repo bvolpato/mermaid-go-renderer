@@ -1,0 +1,45 @@
+erDiagram
+  USER {
+    uuid id PK
+    string email UK
+    string name
+    timestamp created_at
+  }
+  ORGANIZATION {
+    uuid id PK
+    string name
+    string plan
+  }
+  MEMBERSHIP {
+    uuid user_id FK
+    uuid org_id FK
+    string role
+  }
+  PROJECT {
+    uuid id PK
+    uuid org_id FK
+    string name
+    string status
+  }
+  TASK {
+    uuid id PK
+    uuid project_id FK
+    uuid assignee_id FK
+    string title
+    string priority
+    timestamp due_date
+  }
+  COMMENT {
+    uuid id PK
+    uuid task_id FK
+    uuid author_id FK
+    text body
+    timestamp created_at
+  }
+  USER ||--o{ MEMBERSHIP : "belongs to"
+  ORGANIZATION ||--o{ MEMBERSHIP : "has"
+  ORGANIZATION ||--o{ PROJECT : "owns"
+  PROJECT ||--o{ TASK : "contains"
+  USER ||--o{ TASK : "assigned"
+  TASK ||--o{ COMMENT : "has"
+  USER ||--o{ COMMENT : "writes"

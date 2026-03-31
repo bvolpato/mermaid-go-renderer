@@ -8,7 +8,7 @@ import (
 )
 
 func TestFidelityFixturesRenderByDefault(t *testing.T) {
-	const minimumFixtureCount = 25
+	const minimumFixtureCount = 45
 	pattern := filepath.Join("testdata", "fidelity", "*.mmd")
 	paths, err := filepath.Glob(pattern)
 	if err != nil {
@@ -17,7 +17,7 @@ func TestFidelityFixturesRenderByDefault(t *testing.T) {
 	if len(paths) < minimumFixtureCount {
 		t.Fatalf("expected at least %d fidelity fixtures at %q, found %d", minimumFixtureCount, pattern, len(paths))
 	}
-	const minFixtureCount = 25
+	const minFixtureCount = 45
 	if len(paths) < minFixtureCount {
 		t.Fatalf("expected at least %d fidelity fixtures, found %d", minFixtureCount, len(paths))
 	}

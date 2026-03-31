@@ -1,0 +1,26 @@
+gitGraph
+  commit id:"init"
+  branch develop
+  checkout develop
+  commit id:"feat-setup"
+  branch feature/auth
+  checkout feature/auth
+  commit id:"login-page"
+  commit id:"jwt-handler"
+  checkout develop
+  merge feature/auth
+  branch feature/api
+  checkout feature/api
+  commit id:"endpoints"
+  commit id:"middleware"
+  checkout develop
+  merge feature/api
+  checkout main
+  merge develop tag:"v1.0.0"
+  branch hotfix/security
+  checkout hotfix/security
+  commit id:"patch-xss"
+  checkout main
+  merge hotfix/security tag:"v1.0.1"
+  checkout develop
+  merge hotfix/security

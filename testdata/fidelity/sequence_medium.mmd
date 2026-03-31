@@ -1,0 +1,29 @@
+sequenceDiagram
+  participant User
+  participant Gateway
+  participant Auth
+  participant API
+  participant DB
+  User->>Gateway: POST /login
+  Gateway->>Auth: validateCredentials()
+  alt valid credentials
+    Auth-->>Gateway: JWT token
+    Gateway-->>User: 200 OK + token
+    User->>Gateway: GET /orders
+    Gateway->>Auth: verifyToken()
+    Auth-->>Gateway: valid
+    Gateway->>API: fetchOrders()
+    API->>DB: SELECT * FROM orders
+    DB-->>API: rows
+    API-->>Gateway: JSON array
+    Gateway-->>User: 200 OK
+  else invalid credentials
+    Auth-->>Gateway: 401
+    Gateway-->>User: 401 Unauthorized
+  end
+  Note over User,Gateway: Session established
+  par Background Tasks
+    API->>DB: UPDATE metrics
+  and Cleanup
+    Auth->>Auth: pruneExpiredTokens()
+  end
