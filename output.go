@@ -276,10 +276,10 @@ func matchSelector(selector, tagName string, classes []string) bool {
 	if strings.HasPrefix(last, ".") {
 		c := last[1:]
 		if strings.Contains(c, ".") {
-		    cParts := strings.Split(c, ".")
-		    c = cParts[len(cParts)-1] // very naive
+			cParts := strings.Split(c, ".")
+			c = cParts[len(cParts)-1] // very naive
 		}
-		
+
 		for _, cl := range classes {
 			if cl == c {
 				return true
@@ -295,10 +295,10 @@ func matchSelector(selector, tagName string, classes []string) bool {
 		}
 		c := sp[1]
 		if strings.Contains(c, ".") {
-		    cParts := strings.Split(c, ".")
-		    c = cParts[len(cParts)-1]
+			cParts := strings.Split(c, ".")
+			c = cParts[len(cParts)-1]
 		}
-		
+
 		for _, cl := range classes {
 			if cl == c {
 				return true
