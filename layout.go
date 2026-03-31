@@ -610,8 +610,28 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 
 func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	layout := Layout{Kind: graph.Kind}
-	if len(graph.NodeOrder) == 0 {
+	if len(graph.NodeOrder) == 0 && !(graph.Kind == DiagramC4 && strings.TrimSpace(graph.C4Title) != "") {
 		return layoutGeneric(graph, theme)
+	}
+	if len(graph.NodeOrder) == 0 {
+		// C4 title-only diagram: render just the title.
+		layout.Texts = append(layout.Texts, LayoutText{
+			X:      200,
+			Y:      20,
+			Value:  graph.C4Title,
+			Anchor: "middle",
+			Size:   max(theme.FontSize+14, 30),
+			Weight: "700",
+			Color:  theme.PrimaryTextColor,
+		})
+		layout.Width = 400
+		layout.Height = 60
+		layout.ViewBoxX = 0
+		layout.ViewBoxY = -10
+		layout.ViewBoxWidth = layout.Width
+		layout.ViewBoxHeight = layout.Height + 10
+		addGraphPrimitives(&layout, theme)
+		return layout
 	}
 
 	ranks, maxRank := computeGraphRanks(graph.NodeOrder, graph.Edges)
@@ -996,10 +1016,10 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	}
 	if graph.Kind == DiagramC4 && strings.TrimSpace(graph.C4Title) != "" {
 		layout.Texts = append(layout.Texts, LayoutText{
-			X:      padding + maxNodeWidth*0.8,
+			X:      layout.Width / 2,
 			Y:      20,
 			Value:  graph.C4Title,
-			Anchor: "start",
+			Anchor: "middle",
 			Size:   max(theme.FontSize+14, 30),
 			Weight: "700",
 			Color:  theme.PrimaryTextColor,
