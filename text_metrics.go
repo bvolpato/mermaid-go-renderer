@@ -44,25 +44,40 @@ func measureNativeTextWidth(text string, fontSize float64, fontFamily string) (f
 	ppem := fixed.Int26_6(math.Round(fontSize * 64.0))
 	fallbackAdvance := fontSize * 0.56
 	width := 0.0
+	var prevGlyph sfnt.GlyphIndex
+
 	for _, r := range text {
 		if r == '\n' || r == '\r' {
+			prevGlyph = 0
 			continue
 		}
 		if r == '\t' {
 			width += fallbackAdvance * 2.0
+			prevGlyph = 0
 			continue
 		}
 		glyphIdx, err := face.GlyphIndex(&buf, r)
 		if err != nil || glyphIdx == 0 {
 			width += fallbackAdvance
+			prevGlyph = 0
 			continue
 		}
+
+		if prevGlyph != 0 {
+			kern, err := face.Kern(&buf, prevGlyph, glyphIdx, ppem, font.HintingNone)
+			if err == nil {
+				width += float64(kern) / 64.0
+			}
+		}
+
 		advance, err := face.GlyphAdvance(&buf, glyphIdx, ppem, font.HintingNone)
 		if err != nil {
 			width += fallbackAdvance
+			prevGlyph = 0
 			continue
 		}
 		width += float64(advance) / 64.0
+		prevGlyph = glyphIdx
 	}
 	return width, true
 }
@@ -110,36 +125,51 @@ func buildFontIndex() {
 		"/System/Library/Fonts/Supplemental",
 		"/System/Library/Fonts",
 		"/Library/Fonts",
+		"/usr/share/fonts",
+		"/usr/local/share/fonts",
+		"~/.fonts",
+		"~/.local/share/fonts",
 	}
 	if home, err := os.UserHomeDir(); err == nil && strings.TrimSpace(home) != "" {
 		dirs = append(dirs, filepath.Join(home, "Library", "Fonts"))
+		dirs = append(dirs, filepath.Join(home, ".fonts"))
+		dirs = append(dirs, filepath.Join(home, ".local", "share", "fonts"))
 	}
 
 	index := make([]indexedFontFile, 0, 256)
 	for _, dir := range dirs {
-		entries, err := os.ReadDir(dir)
-		if err != nil {
-			continue
-		}
-		for _, entry := range entries {
-			if entry.IsDir() {
+		if strings.HasPrefix(dir, "~/") {
+			home, err := os.UserHomeDir()
+			if err != nil {
 				continue
 			}
-			name := entry.Name()
+			dir = filepath.Join(home, dir[2:])
+		}
+		
+		filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
+			if err != nil {
+				return nil
+			}
+			if d.IsDir() {
+				return nil
+			}
+
+			name := d.Name()
 			ext := strings.ToLower(filepath.Ext(name))
 			if ext != ".ttf" && ext != ".otf" && ext != ".ttc" {
-				continue
+				return nil
 			}
 			base := strings.TrimSuffix(name, filepath.Ext(name))
 			norm := normalizeFontToken(base)
 			if norm == "" {
-				continue
+				return nil
 			}
 			index = append(index, indexedFontFile{
 				Name: norm,
-				Path: filepath.Join(dir, name),
+				Path: path,
 			})
-		}
+			return nil
+		})
 	}
 	sort.Slice(index, func(i, j int) bool {
 		if index[i].Name == index[j].Name {
@@ -164,12 +194,12 @@ func parseFontFamilyCandidates(fontFamily string) []string {
 			continue
 		}
 		switch norm {
-		case "sansserif", "uisansserif", "systemui", "applesystem":
-			out = append(out, "arial", "helvetica")
+		case "sansserif", "uisansserif", "systemui", "applesystem", "sans":
+			out = append(out, "arial", "helvetica", "dejavusans", "liberationsans", "notosans", "freesans", "ubuntu")
 		case "serif":
-			out = append(out, "timesnewroman", "times")
-		case "monospace", "uimonospace":
-			out = append(out, "couriernew", "menlo", "monaco")
+			out = append(out, "timesnewroman", "times", "dejavuserif", "liberationserif", "freeserif")
+		case "monospace", "uimonospace", "mono":
+			out = append(out, "couriernew", "menlo", "monaco", "dejavusansmono", "liberationmono", "freemono", "ubuntu mono")
 		default:
 			out = append(out, norm)
 		}

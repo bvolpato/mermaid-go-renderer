@@ -796,13 +796,23 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 			px = math.Round(px)
 			py += float64(metrics.Ascent+metrics.Descent) / 128.0
 		}
-		// Rotated labels are rare and tiny in our fixtures; skip them for now.
-		if strings.Contains(strings.ToLower(parseAttr(attrs, "transform")), "rotate(") {
-			continue
+		
+		transformAttr := strings.TrimSpace(parseAttr(attrs, "transform"))
+		var rotateAngle float64
+		if transformAttr != "" {
+			if matches := regexp.MustCompile(`(?i)rotate\(([-0-9.]+)(?:[,\s]+[-0-9.]+[,\s]+[-0-9.]+)?\)`).FindStringSubmatch(transformAttr); len(matches) > 1 {
+				if a, err := strconv.ParseFloat(matches[1], 64); err == nil {
+					rotateAngle = a
+				}
+			}
 		}
 
-		drawer.Dot = fixed.P(int(math.Round(px)), int(math.Round(py)))
-		drawer.DrawString(content)
+		if rotateAngle != 0 {
+			overlayRotatedText(img, content, face, textColor, px, py, rotateAngle)
+		} else {
+			drawer.Dot = fixed.P(int(math.Round(px)), int(math.Round(py)))
+			drawer.DrawString(content)
+		}
 	}
 
 	overlaySVGForeignObjectText(img, svg, width, height, viewBox, hasViewBox)
@@ -1469,4 +1479,79 @@ func clampInt(v int, lo int, hi int) int {
 		return hi
 	}
 	return v
+}
+
+func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textColor color.Color, px, py, angleDeg float64) {
+	// 1. Measure the text
+	advance := font.MeasureString(face, content)
+	metrics := face.Metrics()
+	width := int(math.Ceil(float64(advance) / 64.0))
+	ascent := int(math.Ceil(float64(metrics.Ascent) / 64.0))
+	descent := int(math.Ceil(float64(metrics.Descent) / 64.0))
+	
+	pad := 2
+	w := width + pad*2
+	h := ascent + descent + pad*2
+
+	// Render into offscreen buffer
+	off := image.NewNRGBA(image.Rect(0, 0, w, h))
+	drawer := &font.Drawer{
+		Dst:  off,
+		Src:  image.NewUniform(textColor),
+		Face: face,
+		Dot:  fixed.P(pad, pad+ascent),
+	}
+	drawer.DrawString(content)
+
+	// Origin point inside the offscreen image corresponds to dot
+	ox := float64(pad)
+	oy := float64(pad + ascent)
+
+	// Rotation (SVG rotations act on origin, we want to rotate around px, py)
+	// Actually SVG rotate(angle) is clockwise for positive angles, but math.Sincos is CCW in standard math plane.
+	// SVG coordinate system: +Y is down. So clockwise rotation means standard positive angle in this metric space.
+	rad := angleDeg * math.Pi / 180.0
+	sin, cos := math.Sincos(rad)
+
+	bounds := img.Bounds()
+	maxX, maxY := bounds.Dx(), bounds.Dy()
+
+	// 2. Map and blend pixels
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			c := off.At(x, y)
+			_, _, _, a := c.RGBA()
+			if a > 0 {
+				// offset from origin
+				tx := float64(x) - ox
+				ty := float64(y) - oy
+
+				// Rotate
+				rx := tx*cos - ty*sin
+				ry := tx*sin + ty*cos
+
+				// Transform back to absolute
+				dx := int(math.Round(px + rx))
+				dy := int(math.Round(py + ry))
+
+				if dx >= 0 && dy >= 0 && dx < maxX && dy < maxY {
+					cr, cg, cb, ca := c.RGBA()
+					bg := img.At(dx, dy)
+					br, bg_, bb, ba := bg.RGBA()
+					
+					alpha := ca
+					if alpha == 0xffff {
+						img.Set(dx, dy, c)
+					} else {
+						// Blend
+						r := (cr*alpha + br*(0xffff-alpha)) / 0xffff
+						g := (cg*alpha + bg_*(0xffff-alpha)) / 0xffff
+						b := (cb*alpha + bb*(0xffff-alpha)) / 0xffff
+						aOut := alpha + ba*(0xffff-alpha)/0xffff
+						img.Set(dx, dy, color.NRGBA64{R: uint16(r), G: uint16(g), B: uint16(b), A: uint16(aOut)})
+					}
+				}
+			}
+		}
+	}
 }
