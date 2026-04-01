@@ -151,6 +151,8 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(`<style>` + c4StyleCSS() + `</style>`)
 		} else if layout.Kind == DiagramTreemap {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .treemapNode.section{stroke:black;stroke-width:1;fill:#efefef;}#my-svg .treemapNode.leaf{stroke:black;stroke-width:1;fill:#efefef;}#my-svg .treemapLabel{fill:black;font-size:12px;}#my-svg .treemapValue{fill:black;font-size:10px;}#my-svg .treemapTitle{fill:black;font-size:14px;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>`)
+		} else if layout.Kind == DiagramER {
+			b.WriteString(`<style>` + erStyleCSS() + `</style>`)
 		} else {
 			b.WriteString(`<style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg p{margin:0;}</style>`)
 		}
@@ -1232,8 +1234,31 @@ func renderClassMermaid(layout Layout) string {
 		b.WriteString(`<foreignObject width="` + formatFloat(titleW) + `" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: ` + formatFloat(maxLabelW) + `px; text-align: center;"><span class="nodeLabel markdown-node-label" style=""><p>`)
 		b.WriteString(html.EscapeString(title))
 		b.WriteString(`</p></span></div></foreignObject></g></g>`)
-		b.WriteString(`<g class="members-group text" transform="translate(` + formatFloat(labelX) + `, 30)"/>`)
-		b.WriteString(`<g class="methods-group text" transform="translate(` + formatFloat(labelX) + `, 60)"/>`)
+		
+		b.WriteString(`<g class="members-group text" transform="translate(` + formatFloat(-w2+10) + `, 30)">`)
+		for _, text := range layout.Texts {
+			if text.Class == "class-member-"+rect.ID {
+				relY := (text.Y - cy) - 10
+				b.WriteString(`<g class="label" transform="translate(0, ` + formatFloat(relY-30) + `)">`)
+				b.WriteString(`<foreignObject width="` + formatFloat(rect.W-20) + `" height="14"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: ` + formatFloat(rect.W-20) + `px; text-align: left;"><span class="nodeLabel markdown-node-label" style="font-size: ` + formatFloat(text.Size) + `px;"><p>`)
+				b.WriteString(html.EscapeString(text.Value))
+				b.WriteString(`</p></span></div></foreignObject></g>`)
+			}
+		}
+		b.WriteString(`</g>`)
+		
+		b.WriteString(`<g class="methods-group text" transform="translate(` + formatFloat(-w2+10) + `, 60)">`)
+		for _, text := range layout.Texts {
+			if text.Class == "class-method-"+rect.ID {
+				relY := (text.Y - cy) - 10
+				b.WriteString(`<g class="label" transform="translate(0, ` + formatFloat(relY-60) + `)">`)
+				b.WriteString(`<foreignObject width="` + formatFloat(rect.W-20) + `" height="14"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: ` + formatFloat(rect.W-20) + `px; text-align: left;"><span class="nodeLabel markdown-node-label" style="font-size: ` + formatFloat(text.Size) + `px;"><p>`)
+				b.WriteString(html.EscapeString(text.Value))
+				b.WriteString(`</p></span></div></foreignObject></g>`)
+			}
+		}
+		b.WriteString(`</g>`)
+		
 		b.WriteString(`<g class="divider" style=""><path d="M` + formatFloat(-w2) + ` 6 L` + formatFloat(w2) + ` 6" stroke="#9370DB" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style=""/></g>`)
 		b.WriteString(`<g class="divider" style=""><path d="M` + formatFloat(-w2) + ` 24 L` + formatFloat(w2) + ` 24" stroke="#9370DB" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style=""/></g>`)
 		b.WriteString(`</g>`)
@@ -2919,35 +2944,35 @@ func renderZenUMLForeignObject(layout Layout) string {
 
 func writeERMarkerDefs(b *strings.Builder) {
 	b.WriteString(`<marker id="my-svg_er-onlyOneStart" class="marker onlyOne er" refX="0" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
-	b.WriteString(`<path d="M9,0 L9,18 M15,0 L15,18"/>`)
+	b.WriteString(`<path fill="none" stroke="#333333" d="M9,0 L9,18 M15,0 L15,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-onlyOneEnd" class="marker onlyOne er" refX="18" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
-	b.WriteString(`<path d="M3,0 L3,18 M9,0 L9,18"/>`)
+	b.WriteString(`<path fill="none" stroke="#333333" d="M3,0 L3,18 M9,0 L9,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-zeroOrOneStart" class="marker zeroOrOne er" refX="0" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
-	b.WriteString(`<circle fill="white" cx="21" cy="9" r="6"/><path d="M9,0 L9,18"/>`)
+	b.WriteString(`<circle fill="white" stroke="#333333" cx="21" cy="9" r="6"/><path fill="none" stroke="#333333" d="M9,0 L9,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-zeroOrOneEnd" class="marker zeroOrOne er" refX="30" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
-	b.WriteString(`<circle fill="white" cx="9" cy="9" r="6"/><path d="M21,0 L21,18"/>`)
+	b.WriteString(`<circle fill="white" stroke="#333333" cx="9" cy="9" r="6"/><path fill="none" stroke="#333333" d="M21,0 L21,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-oneOrMoreStart" class="marker oneOrMore er" refX="18" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
-	b.WriteString(`<path d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27"/>`)
+	b.WriteString(`<path fill="none" stroke="#333333" d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-oneOrMoreEnd" class="marker oneOrMore er" refX="27" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
-	b.WriteString(`<path d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18"/>`)
+	b.WriteString(`<path fill="none" stroke="#333333" d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-zeroOrMoreStart" class="marker zeroOrMore er" refX="18" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
-	b.WriteString(`<circle fill="white" cx="48" cy="18" r="6"/><path d="M0,18 Q18,0 36,18 Q18,36 0,18"/>`)
+	b.WriteString(`<circle fill="white" stroke="#333333" cx="48" cy="18" r="6"/><path fill="none" stroke="#333333" d="M0,18 Q18,0 36,18 Q18,36 0,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 	b.WriteString(`<marker id="my-svg_er-zeroOrMoreEnd" class="marker zeroOrMore er" refX="39" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
-	b.WriteString(`<circle fill="white" cx="9" cy="18" r="6"/><path d="M21,18 Q39,0 57,18 Q39,36 21,18"/>`)
+	b.WriteString(`<circle fill="white" stroke="#333333" cx="9" cy="18" r="6"/><path fill="none" stroke="#333333" d="M21,18 Q39,0 57,18 Q39,36 21,18"/>`)
 	b.WriteString(`</marker>`)
 	b.WriteString("\n")
 }

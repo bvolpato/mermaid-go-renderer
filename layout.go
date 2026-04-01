@@ -1,6 +1,7 @@
 package mermaid
 
 import (
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
@@ -306,6 +307,7 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		}
 
 		layout.Rects = append(layout.Rects, LayoutRect{
+			ID:          node.ID,
 			X:           node.X,
 			Y:           node.Y,
 			W:           node.W,
@@ -347,6 +349,7 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 				Anchor: "middle",
 				Size:   max(10, theme.FontSize-1),
 				Color:  theme.PrimaryTextColor,
+				Class:  "class-member-" + node.ID,
 			})
 			y += lineH
 		}
@@ -370,6 +373,7 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 					Anchor: "middle",
 					Size:   max(10, theme.FontSize-1),
 					Color:  theme.PrimaryTextColor,
+					Class:  "class-method-" + node.ID,
 				})
 				y += lineH
 			}
@@ -395,6 +399,8 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	rowGap := max(150, config.RankSpacing*2.25)
 	lineH := max(12, theme.FontSize+1)
 	titleH := 34.0
+	erStroke := "#9370DB"
+	erFill := "#ececff"
 
 	maxNodeW := 140.0
 	nodeSizes := map[string]Point{}
@@ -459,9 +465,21 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Style:       edge.Style,
 			ArrowStart:  false,
 			ArrowEnd:    false,
-			MarkerStart: edge.MarkerStart,
-			MarkerEnd:   edge.MarkerEnd,
+			MarkerStart: "",
+			MarkerEnd:   "",
 		})
+		
+		angle := math.Atan2(y2-y1, x2-x1) * 180.0 / math.Pi
+		if edge.MarkerStart != "" {
+			paths, circles := getERMarkerPaths(edge.MarkerStart, theme.LineColor, x1, y1, angle)
+			layout.Paths = append(layout.Paths, paths...)
+			layout.Circles = append(layout.Circles, circles...)
+		}
+		if edge.MarkerEnd != "" {
+			paths, circles := getERMarkerPaths(edge.MarkerEnd, theme.LineColor, x2, y2, angle)
+			layout.Paths = append(layout.Paths, paths...)
+			layout.Circles = append(layout.Circles, circles...)
+		}
 	}
 
 	for _, edge := range layout.Edges {
@@ -475,8 +493,8 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Dashed:      edge.Style == EdgeDotted,
 			ArrowStart:  false,
 			ArrowEnd:    false,
-			MarkerStart: edge.MarkerStart,
-			MarkerEnd:   edge.MarkerEnd,
+			MarkerStart: "",
+			MarkerEnd:   "",
 		})
 		if edge.Label != "" {
 			layout.Texts = append(layout.Texts, LayoutText{
@@ -499,8 +517,8 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			H:           node.H,
 			RX:          0,
 			RY:          0,
-			Fill:        "#ECECFF",
-			Stroke:      "hsl(240, 60%, 86.2745098039%)",
+			Fill:        erFill,
+			Stroke:      erStroke,
 			StrokeWidth: 1.0,
 		})
 		titleY := node.Y + titleH*0.67
@@ -3110,6 +3128,104 @@ func layoutQuadrant(graph *Graph, theme Theme) Layout {
 
 	return layout
 }
+
+func getERMarkerPaths(marker, stroke string, x, y, angle float64) ([]LayoutPath, []LayoutCircle) {
+	paths := []LayoutPath{}
+	circles := []LayoutCircle{}
+
+	switch marker {
+	case "my-svg_er-onlyOneStart":
+		paths = append(paths, LayoutPath{
+			D:         "M9,0 L9,18 M15,0 L15,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(0, -9)", x, y, angle),
+			Fill:      "none",
+		})
+	case "my-svg_er-onlyOneEnd":
+		paths = append(paths, LayoutPath{
+			D:         "M3,0 L3,18 M9,0 L9,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-18, -9)", x, y, angle),
+			Fill:      "none",
+		})
+	case "my-svg_er-zeroOrOneStart":
+		paths = append(paths, LayoutPath{
+			D:         "M9,0 L9,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(0, -9)", x, y, angle),
+			Fill:      "none",
+		})
+		circles = append(circles, LayoutCircle{
+			CX:        21,
+			CY:        9,
+			R:         6,
+			Fill:      "white",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(0, -9)", x, y, angle),
+		})
+	case "my-svg_er-zeroOrOneEnd":
+		paths = append(paths, LayoutPath{
+			D:         "M21,0 L21,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-30, -9)", x, y, angle),
+			Fill:      "none",
+		})
+		circles = append(circles, LayoutCircle{
+			CX:        9,
+			CY:        9,
+			R:         6,
+			Fill:      "white",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-30, -9)", x, y, angle),
+		})
+	case "my-svg_er-oneOrMoreStart":
+		paths = append(paths, LayoutPath{
+			D:         "M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-18, -18)", x, y, angle),
+			Fill:      "none",
+		})
+	case "my-svg_er-oneOrMoreEnd":
+		paths = append(paths, LayoutPath{
+			D:         "M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-27, -18)", x, y, angle),
+			Fill:      "none",
+		})
+	case "my-svg_er-zeroOrMoreStart":
+		paths = append(paths, LayoutPath{
+			D:         "M0,18 Q18,0 36,18 Q18,36 0,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-18, -18)", x, y, angle),
+			Fill:      "none",
+		})
+		circles = append(circles, LayoutCircle{
+			CX:        48,
+			CY:        18,
+			R:         6,
+			Fill:      "white",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-18, -18)", x, y, angle),
+		})
+	case "my-svg_er-zeroOrMoreEnd":
+		paths = append(paths, LayoutPath{
+			D:         "M21,18 Q39,0 57,18 Q39,36 21,18",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-39, -18)", x, y, angle),
+			Fill:      "none",
+		})
+		circles = append(circles, LayoutCircle{
+			CX:        9,
+			CY:        18,
+			R:         6,
+			Fill:      "white",
+			Stroke:    stroke,
+			Transform: fmt.Sprintf("translate(%f, %f) rotate(%f) translate(-39, -18)", x, y, angle),
+		})
+	}
+	return paths, circles
+}
+
 
 func layoutGeneric(graph *Graph, theme Theme) Layout {
 	layout := Layout{Kind: graph.Kind}
