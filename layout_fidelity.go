@@ -2,6 +2,7 @@ package mermaid
 
 import (
 	"math"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -62,8 +63,11 @@ func runeWidthScale(r rune) float64 {
 	}
 }
 
+var lineBreakRegex = regexp.MustCompile(`(?i)<br\s*/?>`)
+
 func splitLinesPreserve(text string) []string {
-	lines := strings.Split(strings.ReplaceAll(text, "\r\n", "\n"), "\n")
+	normalized := lineBreakRegex.ReplaceAllString(text, "\n")
+	lines := strings.Split(strings.ReplaceAll(normalized, "\r\n", "\n"), "\n")
 	if len(lines) == 0 {
 		return []string{""}
 	}
