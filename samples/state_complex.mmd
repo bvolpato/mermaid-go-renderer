@@ -1,0 +1,17 @@
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Validate: submit
+  state Validate {
+    [*] --> CheckSchema
+    CheckSchema --> CheckAuth
+    CheckAuth --> [*]
+  }
+  Validate --> Approved: ok
+  Validate --> Rejected: fail
+  state Review <<choice>>
+  Approved --> Review
+  Review --> Fulfilled: auto
+  Review --> Escalated: manual
+  Escalated --> Fulfilled
+  Fulfilled --> [*]
+  Rejected --> [*]

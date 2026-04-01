@@ -1,0 +1,9 @@
+block
+  columns 3
+  A["Ingress"] B{"Validate"} C["Dispatch"]
+  D["Retry Queue"] E[("DB")] F["Workers"]
+  A --> B
+  B --> C
+  B --> D
+  C --> E
+  C --> F

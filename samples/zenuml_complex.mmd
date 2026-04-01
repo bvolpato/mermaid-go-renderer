@@ -1,0 +1,13 @@
+zenuml
+  title Order orchestration
+  Customer->Gateway: createOrder()
+  Gateway->OrderService: create()
+  OrderService->Inventory: reserve()
+  if(reserved) {
+    OrderService->Payment: charge()
+    Payment->OrderService: ok
+    @return
+    OrderService->Customer: confirmed
+  } else {
+    OrderService->Customer: rejected
+  }

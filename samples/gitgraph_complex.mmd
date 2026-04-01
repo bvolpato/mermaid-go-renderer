@@ -1,0 +1,14 @@
+gitGraph
+  commit id:"A0"
+  branch develop
+  checkout develop
+  commit id:"D1"
+  commit id:"D2"
+  branch feature_payments
+  checkout feature_payments
+  commit id:"F1" type:HIGHLIGHT
+  checkout develop
+  merge feature_payments id:"M1" tag:"v1.1.0"
+  checkout main
+  commit id:"A1"
+  merge develop id:"R1"
