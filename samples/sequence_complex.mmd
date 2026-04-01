@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant U as User
+  participant W as Web
+  participant S as Service
+  participant D as DB
+  U->>W: Submit order
+  W->>+S: validateAndCreate()
+  alt valid
+    par write order
+      S->>+D: insert order
+      D-->>-S: order id
+    and publish event
+      S-->>S: enqueue event
+    end
+    S-->>W: 201 Created
+  else invalid
+    S-->>W: 400 Bad Request
+  end
+  W-->>U: response

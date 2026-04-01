@@ -1,0 +1,10 @@
+architecture-beta
+  group edge(cloud)[Edge]
+  group core(cloud)[Core]
+  service api(server)[API] in edge
+  service auth(server)[Auth] in core
+  service db(database)[DB] in core
+  service queue(disk)[Queue] in core
+  api:R -- L:auth
+  auth:B -- T:db
+  auth:R -- L:queue

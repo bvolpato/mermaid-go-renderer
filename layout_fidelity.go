@@ -2827,6 +2827,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		})
 		labelSize := clamp(min(f.w, f.h)*0.25, 20, 38)
 		valueSize := clamp(labelSize*0.6, 14, 23)
+		leafTextColor := sectionTextColor(fill)
 		layout.Texts = append(layout.Texts,
 			LayoutText{
 				Class:            "treemapLabel",
@@ -2835,7 +2836,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 				Value:            node.Label,
 				Anchor:           "middle",
 				Size:             labelSize,
-				Color:            "#000000",
+				Color:            leafTextColor,
 				DominantBaseline: "middle",
 			},
 			LayoutText{
@@ -2845,7 +2846,7 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 				Value:            strconv.FormatFloat(node.Value, 'f', 0, 64),
 				Anchor:           "middle",
 				Size:             valueSize,
-				Color:            "#000000",
+				Color:            leafTextColor,
 				DominantBaseline: "hanging",
 			},
 		)

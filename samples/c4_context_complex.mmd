@@ -1,0 +1,9 @@
+C4Context
+  title Payments Platform Context
+  Person(customer, "Customer")
+  Person_Ext(support, "Support Agent")
+  System(system, "Payments Platform", "Handles checkout and billing")
+  System_Ext(bank, "Bank API", "External processor")
+  Rel(customer, system, "Uses")
+  Rel(system, bank, "Charges card", "HTTPS")
+  Rel(support, system, "Investigates issues")

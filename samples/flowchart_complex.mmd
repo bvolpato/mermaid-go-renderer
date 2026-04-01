@@ -1,0 +1,10 @@
+flowchart LR
+  subgraph API["Public API"]
+    A[Gateway] --> B{Auth?}
+    B -->|yes| C[Route]
+    B -->|no| D[Reject]
+  end
+  C --> E[(Users DB)]
+  C --> F[[Audit Worker]]
+  F -. async .-> G[(Audit Log)]
+  E --> H((Done))
