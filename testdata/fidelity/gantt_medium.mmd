@@ -1,0 +1,18 @@
+gantt
+  title Product Roadmap 2026
+  dateFormat YYYY-MM-DD
+  section Q1 - Foundation
+    Architecture Design    :done, arch, 2026-01-01, 15d
+    Core Engine            :done, core, after arch, 20d
+    Database Schema        :done, db, 2026-01-10, 10d
+  section Q2 - Features
+    User Authentication    :active, auth, 2026-04-01, 14d
+    API Development        :api, after auth, 21d
+    Frontend MVP           :fe, after api, 14d
+  section Q3 - Polish
+    Performance Tuning     :perf, 2026-07-01, 10d
+    Security Audit         :sec, after perf, 7d
+    Documentation          :docs, after sec, 14d
+  section Q4 - Launch
+    Beta Testing           :crit, beta, 2026-10-01, 21d
+    GA Release             :milestone, ga, after beta, 1d

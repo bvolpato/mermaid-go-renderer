@@ -1,0 +1,26 @@
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Processing : submit
+  state Processing {
+    [*] --> Validating
+    Validating --> Enriching : valid
+    Validating --> Failed : invalid
+    Enriching --> Saving
+    Saving --> [*]
+  }
+  Processing --> Review : needs_review
+  Processing --> Complete : auto_approved
+  state Review {
+    [*] --> Pending
+    Pending --> Approved : approve
+    Pending --> Rejected : reject
+  }
+  Review --> Complete : approved
+  Review --> Failed : rejected
+  state check <<choice>>
+  Complete --> check
+  check --> Archived : age > 30d
+  check --> Active : age <= 30d
+  Failed --> Idle : retry
+  Active --> [*]
+  Archived --> [*]

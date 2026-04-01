@@ -16,7 +16,7 @@ func TestFidelityFixturesRenderByDefault(t *testing.T) {
 		t.Skip("mmdc not found in PATH")
 	}
 
-	const minimumFixtureCount = 25
+	const minimumFixtureCount = 45
 	pattern := filepath.Join("testdata", "fidelity", "*.mmd")
 	paths, err := filepath.Glob(pattern)
 	if err != nil {

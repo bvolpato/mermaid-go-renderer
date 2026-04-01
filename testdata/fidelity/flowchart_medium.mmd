@@ -1,0 +1,23 @@
+flowchart TD
+  subgraph Frontend["Frontend Layer"]
+    A[React App] --> B[Redux Store]
+    B --> C[API Client]
+  end
+  subgraph Backend["Backend Services"]
+    D[API Gateway] --> E[Auth Service]
+    D --> F[User Service]
+    D --> G[Order Service]
+    F --> H[(PostgreSQL)]
+    G --> H
+    G --> I[(Redis Cache)]
+  end
+  subgraph Infrastructure
+    J[Load Balancer] --> D
+    K[CDN] --> A
+  end
+  C --> J
+  E -.->|JWT| C
+  style A fill:#61dafb,stroke:#333
+  style D fill:#f96,stroke:#333
+  classDef db fill:#336699,stroke:#fff,color:#fff
+  class H,I db

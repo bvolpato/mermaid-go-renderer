@@ -1,0 +1,41 @@
+classDiagram
+  class Animal {
+    <<abstract>>
+    +String name
+    +int age
+    +eat() void
+    +sleep() void
+    +toString() String
+  }
+  class Dog {
+    +String breed
+    +bark() void
+    +fetch(item) bool
+  }
+  class Cat {
+    +bool indoor
+    +purr() void
+    +scratch(target) void
+  }
+  class Pet {
+    <<interface>>
+    +getName() String
+    +getOwner() Person
+  }
+  class Person {
+    +String name
+    +String email
+    +adopt(pet) void
+  }
+  class Shelter {
+    +List~Animal~ animals
+    +addAnimal(a) void
+    +findByBreed(breed) List
+  }
+  Animal <|-- Dog
+  Animal <|-- Cat
+  Pet <|.. Dog
+  Pet <|.. Cat
+  Person "1" --> "*" Pet : owns
+  Shelter "1" o-- "*" Animal : houses
+  Person ..> Shelter : visits
