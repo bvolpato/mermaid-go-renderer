@@ -375,7 +375,7 @@ func DefaultLayoutConfig() LayoutConfig {
 	return LayoutConfig{
 		NodeSpacing:     50,
 		RankSpacing:     50,
-		LabelLineHeight: 1.5,
+		LabelLineHeight: 1.15,
 		Pie:             DefaultPieConfig(),
 		GitGraph:        DefaultGitGraphConfig(),
 	}

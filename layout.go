@@ -3171,11 +3171,14 @@ func applyAspectRatio(layout *Layout, ratio *float64) {
 }
 
 func measureTextWidth(label string, fast bool) float64 {
-	perChar := 7.2
-	if fast {
-		perChar = 6.4
+	maxWidth := 0.0
+	for _, line := range splitLinesPreserve(label) {
+		w := measureTextWidthWithFontSize(line, 16.0, fast)
+		if w > maxWidth {
+			maxWidth = w
+		}
 	}
-	return float64(len([]rune(label))) * perChar
+	return maxWidth
 }
 
 func seriesColor(index int) string {
