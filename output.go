@@ -796,7 +796,7 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 			px = math.Round(px)
 			py += float64(metrics.Ascent+metrics.Descent) / 128.0
 		}
-		
+
 		transformAttr := strings.TrimSpace(parseAttr(attrs, "transform"))
 		var rotateAngle float64
 		if transformAttr != "" {
@@ -1488,7 +1488,7 @@ func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textCo
 	width := int(math.Ceil(float64(advance) / 64.0))
 	ascent := int(math.Ceil(float64(metrics.Ascent) / 64.0))
 	descent := int(math.Ceil(float64(metrics.Descent) / 64.0))
-	
+
 	pad := 2
 	w := width + pad*2
 	h := ascent + descent + pad*2
@@ -1538,7 +1538,7 @@ func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textCo
 					cr, cg, cb, ca := c.RGBA()
 					bg := img.At(dx, dy)
 					br, bg_, bb, ba := bg.RGBA()
-					
+
 					alpha := ca
 					if alpha == 0xffff {
 						img.Set(dx, dy, c)

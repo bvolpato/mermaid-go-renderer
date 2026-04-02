@@ -78,20 +78,20 @@ func ModernTheme() Theme {
 
 func MermaidDefaultTheme() Theme {
 	primaryColor := "#ECECFF"
-	secondaryColor := "#FFFFDE"
+	secondaryColor := "#ffffde"
 	tertiaryColor := "#ECECFF"
-	pieColors := []string{"#ECECFF", "#FFFFDE", "#B5FF20"}
+	pieColors := mermaidDefaultPieColors()
 	return Theme{
-		Background:               "#FFFFFF",
+		Background:               "white",
 		PrimaryColor:             primaryColor,
-		PrimaryBorderColor:       "#7B88A8",
-		PrimaryTextColor:         "#333333",
-		LineColor:                "#2F3B4D",
+		PrimaryBorderColor:       "#9370DB",
+		PrimaryTextColor:         "#131300",
+		LineColor:                "#333333",
 		SecondaryColor:           secondaryColor,
 		TertiaryColor:            tertiaryColor,
-		EdgeLabelBackground:      "rgba(248,250,252, 0.92)",
-		ClusterBorder:            "#AAAA33",
-		TextColor:                "#333333",
+		EdgeLabelBackground:      "rgba(232,232,232, 0.8)",
+		ClusterBorder:            "#aaaa33",
+		TextColor:                "#333",
 		FontFamily:               "'trebuchet ms', verdana, arial, sans-serif",
 		FontSize:                 16,
 		GitColors:                append([]string(nil), mermaidGitColors...),
@@ -104,16 +104,33 @@ func MermaidDefaultTheme() Theme {
 		GitTagLabelBorder:        mermaidGitTagLabelBorder,
 		PieColors:                pieColors,
 		PieTitleTextSize:         25.0,
-		PieTitleTextColor:        "#333333",
+		PieTitleTextColor:        "black",
 		PieSectionTextSize:       17.0,
-		PieSectionTextColor:      "#333333",
+		PieSectionTextColor:      "#333",
 		PieLegendTextSize:        17.0,
-		PieLegendTextColor:       "#333333",
-		PieStrokeColor:           "#000000",
+		PieLegendTextColor:       "black",
+		PieStrokeColor:           "black",
 		PieStrokeWidth:           2.0,
 		PieOuterStrokeWidth:      2.0,
-		PieOuterStrokeColor:      "#000000",
+		PieOuterStrokeColor:      "black",
 		PieOpacity:               0.7,
+	}
+}
+
+func mermaidDefaultPieColors() []string {
+	return []string{
+		"#ECECFF",
+		"#ffffde",
+		adjustColor("#ECECFF", -160.0, 0.0, -40.0),
+		adjustColor("#ECECFF", 0.0, 0.0, -10.0),
+		adjustColor("#ffffde", 0.0, 0.0, -30.0),
+		adjustColor("#ECECFF", -160.0, 0.0, -20.0),
+		adjustColor("#ECECFF", 60.0, 0.0, -20.0),
+		adjustColor("#ECECFF", -60.0, 0.0, -40.0),
+		adjustColor("#ECECFF", 120.0, 0.0, -40.0),
+		adjustColor("#ECECFF", 60.0, 0.0, -40.0),
+		adjustColor("#ECECFF", -90.0, 0.0, -40.0),
+		adjustColor("#ECECFF", 120.0, 0.0, -30.0),
 	}
 }
 

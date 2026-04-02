@@ -468,7 +468,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			MarkerStart: "",
 			MarkerEnd:   "",
 		})
-		
+
 		angle := math.Atan2(y2-y1, x2-x1) * 180.0 / math.Pi
 		if edge.MarkerStart != "" {
 			paths, circles := getERMarkerPaths(edge.MarkerStart, theme.LineColor, x1, y1, angle)
@@ -3225,7 +3225,6 @@ func getERMarkerPaths(marker, stroke string, x, y, angle float64) ([]LayoutPath,
 	}
 	return paths, circles
 }
-
 
 func layoutGeneric(graph *Graph, theme Theme) Layout {
 	layout := Layout{Kind: graph.Kind}
