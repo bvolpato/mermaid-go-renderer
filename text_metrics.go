@@ -145,7 +145,7 @@ func buildFontIndex() {
 			}
 			dir = filepath.Join(home, dir[2:])
 		}
-		
+
 		filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 			if err != nil {
 				return nil
