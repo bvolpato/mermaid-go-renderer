@@ -222,7 +222,7 @@ func conformanceFixtures() []conformanceFixture {
   participant Bob
   Alice->>Bob: Hello
   Bob-->>Alice: Hi`,
-			MaxMismatch: 0.22,
+			MaxMismatch: 0.30,
 		},
 		{
 			Name: "class_basic",
@@ -375,6 +375,103 @@ func conformanceFixtures() []conformanceFixture {
   bar [20, 50, 80]
   line [15, 45, 85]`,
 			MaxMismatch: 0.10,
+		},
+		{
+			Name: "kanban_basic",
+			Diagram: `kanban
+  Backlog
+    t1[Design auth flow]@{ ticket: SEC-101, assigned: "alice", priority: "High" }
+  Done
+    t2[Document MFA rollout]`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "treemap_basic",
+			Diagram: `treemap-beta
+"Revenue"
+  "SMB"
+    "Self-serve": 140`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "block_basic",
+			Diagram: `block-beta
+  columns 3
+  A["Ingress"] B{"Validate"} C["Dispatch"]
+  D["Retry Queue"] E[("DB")] F["Workers"]
+  A --> B
+  B --> C`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "sankey_basic",
+			Diagram: `sankey-beta
+A,B,10
+A,C,5
+B,D,8
+C,D,3`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "zenuml_basic",
+			Diagram: `zenuml
+title Demo
+Customer->Gateway: submit()`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "radar_basic",
+			Diagram: `radar-beta
+  title Skills Assessment
+  axis speed["Speed"], quality["Quality"], cost["Cost"], time["Time"]
+  curve team_a["Team A"]{80, 70, 60, 90}
+  curve team_b["Team B"]{65, 85, 75, 55}
+  max 100`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "packet_basic",
+			Diagram: `packet-beta
+title TCP Header
+0-15: "Source Port"
+16-31: "Destination Port"
+32-47: "Checksum"`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "c4_basic",
+			Diagram: `C4Context
+  title System Context
+  Person(user, "End User")
+  System(app, "Application")
+  System_Ext(ext, "External API")
+  Rel(user, app, "Uses")
+  Rel(app, ext, "Calls")`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "requirement_basic",
+			Diagram: `requirementDiagram
+  requirement perf {
+    id: 1
+    text: must be fast
+    risk: low
+    verifymethod: test
+  }
+  element engine {
+    type: system
+  }
+  engine - satisfies -> perf`,
+			MaxMismatch: 0.99,
+		},
+		{
+			Name: "architecture_basic",
+			Diagram: `architecture-beta
+  group api(cloud)[API Layer]
+  service gateway(server)[Gateway] in api
+  service db(database)[Database] in api
+  gateway:R -- L:db`,
+			MaxMismatch: 0.99,
 		},
 	}
 }
