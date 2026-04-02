@@ -542,10 +542,10 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	maxX += gg.DiagramPadding
 	maxY += gg.DiagramPadding
 	if len(commitLayouts) > 0 {
-		leftPad := 12.0
+		leftPad := 4.0
 		rightPad := max(0.0, float64(len(commitLayouts))*8.0-6.0)
 		topTrim := 6.0
-		bottomPad := float64(len(commitLayouts)) * 4.5
+		bottomPad := float64(len(commitLayouts)) * 18.0
 		minX -= leftPad
 		maxX += rightPad
 		minY += topTrim
