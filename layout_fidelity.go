@@ -929,8 +929,8 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		extraVertForTitle = 70
 	}
 
-	layout.ViewBoxX = 13
-	layout.ViewBoxY = -21
+	layout.ViewBoxX = 0
+	layout.ViewBoxY = -25
 	layout.ViewBoxWidth = width
 	layout.ViewBoxHeight = height + extraVertForTitle
 	layout.Width = width
@@ -1147,9 +1147,9 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	layout.Width = lastRight + 305.0
 	layout.Height = eventTopY + float64(maxEvents)*(eventBoxH+15.0) + 101.9234375
 	layout.ViewBoxX = -5
-	layout.ViewBoxY = -61.5
+	layout.ViewBoxY = -61
 	layout.ViewBoxWidth = max(895, layout.Width)
-	layout.ViewBoxHeight = max(533.4234619140625, layout.Height+61.5)
+	layout.ViewBoxHeight = max(528.4468994140625, layout.Height+61.0)
 	return layout
 }
 
@@ -2042,7 +2042,7 @@ func layoutGanttFidelityV2(graph *Graph, theme Theme, config LayoutConfig) Layou
 	}
 
 	const (
-		totalWidth           = 1584.0
+		totalWidth           = 784.0
 		totalHeight          = 148.0
 		titleTopMargin       = 25.0
 		barHeight            = 20.0
