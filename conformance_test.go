@@ -243,7 +243,53 @@ func conformanceFixtures() []conformanceFixture {
 			Diagram: `erDiagram
   CUSTOMER ||--o{ ORDER : places
   ORDER ||--|{ LINE_ITEM : contains`,
-			MaxMismatch: 0.32,
+			MaxMismatch: 0.15,
+		},
+		{
+			Name: "er_attributes",
+			Diagram: `erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER {
+    string name
+    string custNumber
+    string sector
+  }
+  ORDER ||--|{ LINE_ITEM : contains
+  ORDER {
+    int orderNumber
+    string deliveryAddress
+  }
+  LINE_ITEM {
+    string productCode
+    int quantity
+    float pricePerUnit
+  }`,
+			MaxMismatch: 0.25,
+		},
+		{
+			Name: "er_keys",
+			Diagram: `erDiagram
+  CAR ||--o{ NAMED-DRIVER : allows
+  CAR {
+    string registrationNumber PK
+    string make
+    string model
+    string[] parts
+  }
+  PERSON ||--o{ NAMED-DRIVER : is
+  PERSON {
+    string driversLicense PK "The license #"
+    string(99) firstName "Only 99 chars"
+    string lastName
+    string phone UK
+    int age
+  }
+  NAMED-DRIVER {
+    string carRegistrationNumber PK, FK
+    string driverLicence PK, FK
+  }
+  MANUFACTURER only one to zero or more CAR : makes`,
+			MaxMismatch: 0.25,
 		},
 		{
 			Name: "pie_basic",

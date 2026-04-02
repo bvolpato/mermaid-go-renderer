@@ -240,11 +240,11 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		} else {
 			if layout.Kind == DiagramC4 {
 				writeC4Defs(&b)
+			} else if layout.Kind == DiagramER {
+				writeERMarkerDefs(&b)
 			} else {
 				b.WriteString("<defs>\n")
-				if layout.Kind == DiagramER {
-					writeERMarkerDefs(&b)
-				} else if layout.Kind == DiagramState {
+				if layout.Kind == DiagramState {
 					b.WriteString(`<marker id="my-svg_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">`)
 					b.WriteString(`<path d="M 19,7 L9,13 L14,7 L9,1 Z"/>`)
 					b.WriteString(`</marker>`)
@@ -905,10 +905,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				}
 			}
 			b.WriteString(`<g class="` + html.EscapeString(outerClass) + `" transform="` + groupTransform + `">`)
-			if layout.Kind == DiagramER {
-				b.WriteString(`<g class="label" style="text-align: center;">`)
-				b.WriteString(`<path d="M0,0 H` + formatFloat(textW) + ` V` + formatFloat(textH) + ` H0 Z" fill="none" stroke="none" stroke-width="0"/>`)
-			}
+
 			if layout.Kind == DiagramClass && textClass == "class-edge-label" {
 				b.WriteString(`<g class="label" data-id="` + html.EscapeString(textID) + `" transform="translate(0, 0)">`)
 				b.WriteString(`<foreignObject width="` + formatFloat(textW) + `" height="` + formatFloat(textH) + `">`)
@@ -946,10 +943,10 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				if strings.TrimSpace(text.Transform) != "" {
 					b.WriteString(` transform="` + html.EscapeString(text.Transform) + `"`)
 				}
-				if layout.Kind == DiagramFlowchart || layout.Kind == DiagramRequirement {
+				if layout.Kind == DiagramFlowchart || layout.Kind == DiagramRequirement || layout.Kind == DiagramER {
 					align := "center"
 					if anchor == "start" {
-						align = "left"
+						align = "start"
 					} else if anchor == "end" {
 						align = "right"
 					}
@@ -971,9 +968,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 					b.WriteString(`</span></div></foreignObject>`)
 				}
 			}
-			if layout.Kind == DiagramER {
-				b.WriteString(`</g>`)
-			}
+
 			b.WriteString(`</g>`)
 			b.WriteString("\n")
 		} else {
@@ -2943,38 +2938,22 @@ func renderZenUMLForeignObject(layout Layout) string {
 }
 
 func writeERMarkerDefs(b *strings.Builder) {
-	b.WriteString(`<marker id="my-svg_er-onlyOneStart" class="marker onlyOne er" refX="0" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
-	b.WriteString(`<path fill="none" stroke="#333333" d="M9,0 L9,18 M15,0 L15,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-onlyOneEnd" class="marker onlyOne er" refX="18" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
-	b.WriteString(`<path fill="none" stroke="#333333" d="M3,0 L3,18 M9,0 L9,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-zeroOrOneStart" class="marker zeroOrOne er" refX="0" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
-	b.WriteString(`<circle fill="white" stroke="#333333" cx="21" cy="9" r="6"/><path fill="none" stroke="#333333" d="M9,0 L9,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-zeroOrOneEnd" class="marker zeroOrOne er" refX="30" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
-	b.WriteString(`<circle fill="white" stroke="#333333" cx="9" cy="9" r="6"/><path fill="none" stroke="#333333" d="M21,0 L21,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-oneOrMoreStart" class="marker oneOrMore er" refX="18" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
-	b.WriteString(`<path fill="none" stroke="#333333" d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-oneOrMoreEnd" class="marker oneOrMore er" refX="27" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
-	b.WriteString(`<path fill="none" stroke="#333333" d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-zeroOrMoreStart" class="marker zeroOrMore er" refX="18" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
-	b.WriteString(`<circle fill="white" stroke="#333333" cx="48" cy="18" r="6"/><path fill="none" stroke="#333333" d="M0,18 Q18,0 36,18 Q18,36 0,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
-	b.WriteString(`<marker id="my-svg_er-zeroOrMoreEnd" class="marker zeroOrMore er" refX="39" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
-	b.WriteString(`<circle fill="white" stroke="#333333" cx="9" cy="18" r="6"/><path fill="none" stroke="#333333" d="M21,18 Q39,0 57,18 Q39,36 21,18"/>`)
-	b.WriteString(`</marker>`)
-	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="my-svg_er-onlyOneStart" class="marker onlyOne er" refX="0" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
+	b.WriteString(`<path d="M9,0 L9,18 M15,0 L15,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-onlyOneEnd" class="marker onlyOne er" refX="18" refY="9" markerWidth="18" markerHeight="18" orient="auto">`)
+	b.WriteString(`<path d="M3,0 L3,18 M9,0 L9,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-zeroOrOneStart" class="marker zeroOrOne er" refX="0" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
+	b.WriteString(`<circle fill="white" cx="21" cy="9" r="6"/><path d="M9,0 L9,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-zeroOrOneEnd" class="marker zeroOrOne er" refX="30" refY="9" markerWidth="30" markerHeight="18" orient="auto">`)
+	b.WriteString(`<circle fill="white" cx="9" cy="9" r="6"/><path d="M21,0 L21,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-oneOrMoreStart" class="marker oneOrMore er" refX="18" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
+	b.WriteString(`<path d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-oneOrMoreEnd" class="marker oneOrMore er" refX="27" refY="18" markerWidth="45" markerHeight="36" orient="auto">`)
+	b.WriteString(`<path d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-zeroOrMoreStart" class="marker zeroOrMore er" refX="18" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
+	b.WriteString(`<circle fill="white" cx="48" cy="18" r="6"/><path d="M0,18 Q18,0 36,18 Q18,36 0,18"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg_er-zeroOrMoreEnd" class="marker zeroOrMore er" refX="39" refY="18" markerWidth="57" markerHeight="36" orient="auto">`)
+	b.WriteString(`<circle fill="white" cx="9" cy="18" r="6"/><path d="M21,18 Q39,0 57,18 Q39,36 21,18"/></marker></defs>`)
 }
 
 func writeClassMarkerDefs(b *strings.Builder) {
@@ -3455,7 +3434,7 @@ func radarStyleCSS() string {
 }
 
 func erStyleCSS() string {
-	return genericMermaidBaseCSS() + `#my-svg .entityBox{fill:#ECECFF;stroke:#9370DB;}#my-svg .attributeBoxEven{fill:#f2f2f2;stroke:#9370DB;}#my-svg .attributeBoxOdd{fill:#ffffff;stroke:#9370DB;}#my-svg .entityLabel{fill:#131300;}#my-svg .er.entityLabel{fill:#131300;}#my-svg .er.attributeText{fill:#131300;}#my-svg .relationshipLabelBox{fill:#ECECFF;opacity:0.7;background-color:#ECECFF;}#my-svg .relationshipLabelBox rect{opacity:0.5;}#my-svg .relationshipLine{stroke:#333333;stroke-width:1px;fill:none;}#my-svg .marker{fill:none!important;stroke:#333333!important;stroke-width:1;}#my-svg .edgeLabel{background-color:rgba(232,232,232, 0.8);}#my-svg .edgeLabel .label rect{fill:rgba(232,232,232, 0.8);}#my-svg .edgeLabel .label text{fill:#333;}#my-svg .edgeLabel .label{fill:#9370DB;font-size:14px;}#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .edge-pattern-dashed{stroke-dasharray:8,8;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
+	return genericMermaidBaseCSS() + `#my-svg .outer-path{fill:#ECECFF;stroke:#9370DB;}#my-svg .row-rect-even{fill:#f2f2f2;}#my-svg .row-rect-odd{fill:#ffffff;}#my-svg .entityLabel{fill:#131300;}#my-svg .er.entityLabel{fill:#131300;}#my-svg .er.attributeText{fill:#131300;}#my-svg .relationshipLabelBox{fill:#ECECFF;opacity:0.7;background-color:#ECECFF;}#my-svg .relationshipLabelBox rect{opacity:0.5;}#my-svg .relationshipLine{stroke:#333333;stroke-width:1px;fill:none;}#my-svg .marker{fill:none!important;stroke:#333333!important;stroke-width:1;}#my-svg .edgeLabel{background-color:rgba(232,232,232, 0.8);}#my-svg .edgeLabel .label rect{fill:rgba(232,232,232, 0.8);}#my-svg .edgeLabel .label text{fill:#333;}#my-svg .edgeLabel .label{fill:#9370DB;font-size:14px;}#my-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#my-svg .edge-pattern-dashed{stroke-dasharray:8,8;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}`
 }
 
 func requirementStyleCSS() string {

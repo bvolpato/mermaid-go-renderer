@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 func ComputeLayout(graph *Graph, theme Theme, config LayoutConfig) Layout {
@@ -387,6 +388,51 @@ func layoutClassDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	return layout
 }
 
+type parsedERAttr struct {
+	t, n, k, c string
+}
+
+func parseERAttribute(attr string) parsedERAttr {
+	var tokens []string
+	var current strings.Builder
+	inQuotes := false
+	for _, r := range attr {
+		if r == '"' {
+			inQuotes = !inQuotes
+			current.WriteRune(r)
+		} else if unicode.IsSpace(r) && !inQuotes {
+			if current.Len() > 0 {
+				tokens = append(tokens, current.String())
+				current.Reset()
+			}
+		} else {
+			current.WriteRune(r)
+		}
+	}
+	if current.Len() > 0 {
+		tokens = append(tokens, current.String())
+	}
+
+	var pt parsedERAttr
+	if len(tokens) > 0 {
+		pt.t = tokens[0]
+	}
+	if len(tokens) > 1 {
+		pt.n = tokens[1]
+	}
+	var keys []string
+	for i := 2; i < len(tokens); i++ {
+		t := tokens[i]
+		if strings.HasPrefix(t, "\"") && strings.HasSuffix(t, "\"") {
+			pt.c = t[1 : len(t)-1]
+		} else {
+			keys = append(keys, t)
+		}
+	}
+	pt.k = strings.Join(keys, ", ")
+	return pt
+}
+
 func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	layout := Layout{Kind: graph.Kind}
 	if len(graph.NodeOrder) == 0 {
@@ -395,8 +441,9 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 
 	paddingX := 20.0
 	paddingY := 26.0
-	// Keep ER lanes compact to match Mermaid card stacking.
+	textPadding := 12.0
 	rowGap := max(150, config.RankSpacing*2.25)
+
 	lineH := max(12, theme.FontSize+1)
 	titleH := 34.0
 	erStroke := "#9370DB"
@@ -404,18 +451,61 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 
 	maxNodeW := 140.0
 	nodeSizes := map[string]Point{}
+
+	parsedAttrsMap := map[string][]parsedERAttr{}
+	colWidthsMap := map[string][]float64{}
+
 	for _, id := range graph.NodeOrder {
 		label := graph.Nodes[id].Label
-		longest := measureTextWidth(label, config.FastTextMetrics)
+		nameW := measureTextWidth(label, config.FastTextMetrics) + paddingX*2
+		maxT, maxN, maxK, maxC := 0.0, 0.0, 0.0, 0.0
+
 		for _, attr := range graph.ERAttributes[id] {
-			longest = max(longest, measureTextWidth(attr, config.FastTextMetrics))
+			pa := parseERAttribute(attr)
+			maxT = max(maxT, measureTextWidth(pa.t, config.FastTextMetrics)+paddingX)
+			maxN = max(maxN, measureTextWidth(pa.n, config.FastTextMetrics)+paddingX)
+			if pa.k != "" {
+				maxK = max(maxK, measureTextWidth(pa.k, config.FastTextMetrics)+paddingX)
+			}
+			if pa.c != "" {
+				maxC = max(maxC, measureTextWidth(pa.c, config.FastTextMetrics)+paddingX)
+			}
+			parsedAttrsMap[id] = append(parsedAttrsMap[id], pa)
 		}
-		w := clamp(longest+26, 120, 380)
+
+		sections := 4.0
+		if maxK == 0 {
+			sections--
+		}
+		if maxC == 0 {
+			sections--
+		}
+		if maxT == 0 && maxN == 0 {
+			sections = 1
+		}
+
+		totalCols := maxT + maxN + maxK + maxC
+		if nameW > totalCols && sections > 0 {
+			diff := (nameW - totalCols) / sections
+			if maxT > 0 || maxN > 0 {
+				maxT += diff
+				maxN += diff
+				if maxK > 0 {
+					maxK += diff
+				}
+				if maxC > 0 {
+					maxC += diff
+				}
+			}
+		}
+		w := max(nameW, maxT+maxN+maxK+maxC)
+		colWidthsMap[id] = []float64{maxT, maxN, maxK, maxC}
+
 		attrH := 0.0
 		if len(graph.ERAttributes[id]) > 0 {
-			attrH = float64(len(graph.ERAttributes[id]))*lineH + 10
+			attrH = float64(len(graph.ERAttributes[id])) * (lineH + textPadding)
 		}
-		h := max(60, titleH+attrH)
+		h := titleH + attrH
 		nodeSizes[id] = Point{X: w, Y: h}
 		maxNodeW = max(maxNodeW, w)
 	}
@@ -465,21 +555,9 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Style:       edge.Style,
 			ArrowStart:  false,
 			ArrowEnd:    false,
-			MarkerStart: "",
-			MarkerEnd:   "",
+			MarkerStart: edge.MarkerStart,
+			MarkerEnd:   edge.MarkerEnd,
 		})
-
-		angle := math.Atan2(y2-y1, x2-x1) * 180.0 / math.Pi
-		if edge.MarkerStart != "" {
-			paths, circles := getERMarkerPaths(edge.MarkerStart, theme.LineColor, x1, y1, angle)
-			layout.Paths = append(layout.Paths, paths...)
-			layout.Circles = append(layout.Circles, circles...)
-		}
-		if edge.MarkerEnd != "" {
-			paths, circles := getERMarkerPaths(edge.MarkerEnd, theme.LineColor, x2, y2, angle)
-			layout.Paths = append(layout.Paths, paths...)
-			layout.Circles = append(layout.Circles, circles...)
-		}
 	}
 
 	for _, edge := range layout.Edges {
@@ -493,8 +571,8 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Dashed:      edge.Style == EdgeDotted,
 			ArrowStart:  false,
 			ArrowEnd:    false,
-			MarkerStart: "",
-			MarkerEnd:   "",
+			MarkerStart: edge.MarkerStart,
+			MarkerEnd:   edge.MarkerEnd,
 		})
 		if edge.Label != "" {
 			layout.Texts = append(layout.Texts, LayoutText{
@@ -520,8 +598,10 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Fill:        erFill,
 			Stroke:      erStroke,
 			StrokeWidth: 1.0,
+			Class:       "outer-path",
 		})
-		titleY := node.Y + titleH*0.67
+
+		titleY := node.Y + titleH/2 + theme.FontSize*0.35 - 2
 		if len(graph.ERAttributes[node.ID]) == 0 {
 			titleY = node.Y + node.H/2 + theme.FontSize*0.35
 		}
@@ -533,88 +613,114 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			Size:   theme.FontSize,
 			Weight: "600",
 			Color:  theme.PrimaryTextColor,
+			Class:  "label name",
 		})
 
-		attrs := graph.ERAttributes[node.ID]
+		attrs := parsedAttrsMap[node.ID]
 		if len(attrs) > 0 {
-			sepY := node.Y + titleH
-			layout.Lines = append(layout.Lines, LayoutLine{
-				X1:          node.X,
-				Y1:          sepY,
-				X2:          node.X + node.W,
-				Y2:          sepY,
-				Stroke:      "hsl(240, 60%, 86.2745098039%)",
-				StrokeWidth: 1.0,
-			})
-			yAttr := sepY + lineH*0.85
-			for _, attr := range attrs {
-				fields := strings.Fields(attr)
-				if len(fields) >= 2 {
-					attrType := fields[0]
-					attrName := strings.Join(fields[1:], " ")
-					layout.Texts = append(layout.Texts,
-						LayoutText{
-							X:      node.X + 8,
-							Y:      yAttr,
-							Value:  attrType,
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-						LayoutText{
-							X:      node.X + node.W*0.42,
-							Y:      yAttr,
-							Value:  attrName,
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-						LayoutText{
-							X:      node.X + node.W + 12,
-							Y:      yAttr,
-							Value:  "",
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-						LayoutText{
-							X:      node.X + node.W + 12,
-							Y:      yAttr,
-							Value:  "",
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-					)
-				} else {
-					layout.Texts = append(layout.Texts,
-						LayoutText{
-							X:      node.X + 8,
-							Y:      yAttr,
-							Value:  attr,
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-						LayoutText{
-							X:      node.X + node.W + 12,
-							Y:      yAttr,
-							Value:  "",
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-						LayoutText{
-							X:      node.X + node.W + 12,
-							Y:      yAttr,
-							Value:  "",
-							Anchor: "start",
-							Size:   max(10, theme.FontSize-1),
-							Color:  theme.PrimaryTextColor,
-						},
-					)
+			cw := colWidthsMap[node.ID]
+			attrY := node.Y + titleH
+
+			for i, pa := range attrs {
+				rowH := lineH + textPadding
+				fillMode := "row-rect-odd"
+				fillColor := "#ffffff"
+				if (i+1)%2 == 0 {
+					fillMode = "row-rect-even"
+					fillColor = "#f2f2f2"
 				}
-				yAttr += lineH
+
+				layout.Rects = append(layout.Rects, LayoutRect{
+					X:           node.X,
+					Y:           attrY,
+					W:           node.W,
+					H:           rowH,
+					Fill:        fillColor,
+					Stroke:      "none",
+					StrokeWidth: 0,
+					Class:       fillMode,
+				})
+
+				// Draw attribute horizontal divider
+				layout.Lines = append(layout.Lines, LayoutLine{
+					X1:          node.X,
+					Y1:          attrY,
+					X2:          node.X + node.W,
+					Y2:          attrY,
+					Stroke:      erStroke,
+					StrokeWidth: 1.0,
+					Class:       "divider",
+				})
+
+				textY := attrY + rowH/2 + theme.FontSize*0.35 - 2
+				curX := node.X + paddingX/2
+
+				if cw[0] > 0 {
+					layout.Texts = append(layout.Texts, LayoutText{
+						X:      curX,
+						Y:      textY,
+						Value:  pa.t,
+						Anchor: "start",
+						Size:   max(10, theme.FontSize-1),
+						Color:  theme.PrimaryTextColor,
+						Class:  "label attribute-type",
+					})
+					curX += cw[0]
+				}
+				if cw[1] > 0 {
+					layout.Texts = append(layout.Texts, LayoutText{
+						X:      curX,
+						Y:      textY,
+						Value:  pa.n,
+						Anchor: "start",
+						Size:   max(10, theme.FontSize-1),
+						Color:  theme.PrimaryTextColor,
+						Class:  "label attribute-name",
+					})
+					curX += cw[1]
+				}
+				if cw[2] > 0 {
+					layout.Texts = append(layout.Texts, LayoutText{
+						X:      curX,
+						Y:      textY,
+						Value:  pa.k,
+						Anchor: "start",
+						Size:   max(10, theme.FontSize-1),
+						Color:  theme.PrimaryTextColor,
+						Class:  "label attribute-keys",
+					})
+					curX += cw[2]
+				}
+				if cw[3] > 0 {
+					layout.Texts = append(layout.Texts, LayoutText{
+						X:      curX,
+						Y:      textY,
+						Value:  pa.c,
+						Anchor: "start",
+						Size:   max(10, theme.FontSize-1),
+						Color:  theme.PrimaryTextColor,
+						Class:  "label attribute-comment",
+					})
+				}
+				attrY += rowH
+			}
+
+			curX := node.X
+			for c := 0; c < 3; c++ {
+				if cw[c] > 0 {
+					curX += cw[c]
+					if curX < node.X+node.W-1 {
+						layout.Lines = append(layout.Lines, LayoutLine{
+							X1:          curX,
+							Y1:          node.Y + titleH,
+							X2:          curX,
+							Y2:          node.Y + node.H,
+							Stroke:      erStroke,
+							StrokeWidth: 1.0,
+							Class:       "divider",
+						})
+					}
+				}
 			}
 		}
 
