@@ -63,10 +63,10 @@ func TestConformanceAgainstMMDC(t *testing.T) {
 			)
 
 			targetMismatch := 0.10
-			
+
 			// Dynamically enforce the 10% limit while preventing regressions.
 			var currentThreshold = fixture.MaxMismatch
-			
+
 			// Always check against the global completion target of 10%
 			if mismatch > currentThreshold {
 				saveConformanceArtifacts(t, fixture.Name, gotSVG, refPNG, gotImg, refImg)
