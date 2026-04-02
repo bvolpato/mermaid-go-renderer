@@ -443,7 +443,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	paddingY := 26.0
 	textPadding := 12.0
 	rowGap := max(150, config.RankSpacing*2.25)
-	
+
 	lineH := max(12, theme.FontSize+1)
 	titleH := 34.0
 	erStroke := "#9370DB"
@@ -451,7 +451,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 
 	maxNodeW := 140.0
 	nodeSizes := map[string]Point{}
-	
+
 	parsedAttrsMap := map[string][]parsedERAttr{}
 	colWidthsMap := map[string][]float64{}
 
@@ -481,7 +481,7 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			sections--
 		}
 		if maxT == 0 && maxN == 0 {
-			sections = 1 
+			sections = 1
 		}
 
 		totalCols := maxT + maxN + maxK + maxC
@@ -600,8 +600,8 @@ func layoutERDiagram(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			StrokeWidth: 1.0,
 			Class:       "outer-path",
 		})
-		
-		titleY := node.Y + titleH/2 + theme.FontSize*0.35 - 2 
+
+		titleY := node.Y + titleH/2 + theme.FontSize*0.35 - 2
 		if len(graph.ERAttributes[node.ID]) == 0 {
 			titleY = node.Y + node.H/2 + theme.FontSize*0.35
 		}
