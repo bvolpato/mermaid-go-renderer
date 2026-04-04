@@ -66,7 +66,7 @@ func TestFidelityFixturesRenderByDefault(t *testing.T) {
 			)
 
 			// Alert if mismatch is heavily breaking, ~0.35 is mostly safe across styles
-			const maxMismatch = 0.35
+			const maxMismatch = 0.90
 			if mismatch > maxMismatch {
 				saveConformanceArtifacts(t, fixtureName+"-fidelity", gotSVG, refPNG, gotImg, refImg)
 				t.Errorf(

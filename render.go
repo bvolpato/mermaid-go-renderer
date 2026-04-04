@@ -2009,7 +2009,7 @@ func renderGanttMermaid(layout Layout) string {
 	for _, tick := range tickTexts {
 		tickX := math.Round(tick.X) + 0.5
 		b.WriteString(`<g class="tick" opacity="1" transform="translate(` + formatFloat(tickX) + `,0)">`)
-		b.WriteString(`<line stroke="currentColor" y2="` + formatFloat(tickLineY2) + `"></line>`)
+		b.WriteString(`<line stroke="currentColor" x1="0" y1="0" x2="0" y2="` + formatFloat(tickLineY2) + `"></line>`)
 		b.WriteString(`<text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">`)
 		b.WriteString(html.EscapeString(tick.Value))
 		b.WriteString(`</text></g>`)
@@ -2128,7 +2128,7 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 		w := plan.ParticipantWidth[participant]
 		center := plan.ParticipantCenter[participant]
 		b.WriteString(`<g>`)
-		b.WriteString(`<rect x="` + formatFloat(x) + `" y="` + formatFloat(plan.BottomY) + `" fill="#eaeaea" stroke="#666" width="` + formatFloat(w) + `" height="65" name="` + html.EscapeString(participant) + `" rx="3" ry="3" class="actor actor-bottom"/>`)
+		b.WriteString(`<rect x="` + formatFloat(x) + `" y="` + formatFloat(plan.BottomY) + `" fill="#ECECFF" stroke="#9370DB" width="` + formatFloat(w) + `" height="65" name="` + html.EscapeString(participant) + `" rx="3" ry="3" class="actor actor-bottom"/>`)
 		b.WriteString(`<text x="` + formatFloat(center) + `" y="` + formatFloat(plan.BottomY+32.5) + `" dominant-baseline="central" alignment-baseline="central" class="actor actor-box" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="` + formatFloat(center) + `" dy="0">` + html.EscapeString(label) + `</tspan></text>`)
 		b.WriteString(`</g>`)
 	}
@@ -2145,7 +2145,7 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 		b.WriteString(`<g>`)
 		b.WriteString(`<line id="actor` + intString(i) + `" x1="` + formatFloat(center) + `" y1="65" x2="` + formatFloat(center) + `" y2="` + formatFloat(plan.LifelineEndY) + `" class="actor-line 200" stroke-width="0.5px" stroke="#999" style="stroke:#999;stroke-width:1px;stroke-dasharray:2,2;fill:none;" name="` + html.EscapeString(participant) + `"/>`)
 		b.WriteString(`<g id="root-` + intString(i) + `">`)
-		b.WriteString(`<rect x="` + formatFloat(x) + `" y="0" fill="#eaeaea" stroke="#666" width="` + formatFloat(w) + `" height="65" name="` + html.EscapeString(participant) + `" rx="3" ry="3" class="actor actor-top"/>`)
+		b.WriteString(`<rect x="` + formatFloat(x) + `" y="0" fill="#ECECFF" stroke="#9370DB" width="` + formatFloat(w) + `" height="65" name="` + html.EscapeString(participant) + `" rx="3" ry="3" class="actor actor-top"/>`)
 		b.WriteString(`<text x="` + formatFloat(center) + `" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor actor-box" style="text-anchor: middle; font-size: 16px; font-weight: 400;"><tspan x="` + formatFloat(center) + `" dy="0">` + html.EscapeString(label) + `</tspan></text>`)
 		b.WriteString(`</g></g>`)
 	}
@@ -2202,20 +2202,20 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 		b.WriteString(html.EscapeString(msg.Message.Label))
 		b.WriteString(`</text>`)
 		lineClass := "messageLine0"
-		lineStyle := "fill: none;"
+		lineStyle := "fill: none; stroke: #333;"
 		if msg.Dashed {
 			lineClass = "messageLine1"
-			lineStyle = "stroke-dasharray: 3, 3; fill: none;"
+			lineStyle = "stroke-dasharray: 3, 3; fill: none; stroke: #333;"
 		}
 		if msg.Self {
 			path := "M " + formatFloat(msg.StartX) + "," + formatFloat(msg.LineY) +
 				" C " + formatFloat(msg.StartX+60) + "," + formatFloat(msg.LineY-10) +
 				" " + formatFloat(msg.StartX+60) + "," + formatFloat(msg.LineY+30) +
 				" " + formatFloat(msg.StartX) + "," + formatFloat(msg.LineY+20)
-			b.WriteString(`<path d="` + path + `" class="` + lineClass + `" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
+			b.WriteString(`<path d="` + path + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
 			continue
 		}
-		b.WriteString(`<line x1="` + formatFloat(msg.StartX) + `" y1="` + formatFloat(msg.LineY) + `" x2="` + formatFloat(msg.StopX) + `" y2="` + formatFloat(msg.LineY) + `" class="` + lineClass + `" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
+		b.WriteString(`<line x1="` + formatFloat(msg.StartX) + `" y1="` + formatFloat(msg.LineY) + `" x2="` + formatFloat(msg.StopX) + `" y2="` + formatFloat(msg.LineY) + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
 	}
 
 	return b.String()

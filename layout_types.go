@@ -22,6 +22,7 @@ type EdgeLayout struct {
 	From        string
 	To          string
 	Label       string
+	D           string
 	X1          float64
 	Y1          float64
 	X2          float64
@@ -57,6 +58,7 @@ type LayoutRect struct {
 type LayoutLine struct {
 	ID            string
 	Class         string
+	D             string
 	X1            float64
 	Y1            float64
 	X2            float64
@@ -196,6 +198,7 @@ type SankeyLinkLayout struct {
 	Width       float64
 	X0          float64
 	Y0          float64
+	D           string
 	X1          float64
 	Y1          float64
 	Path        string

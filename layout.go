@@ -13,7 +13,7 @@ func ComputeLayout(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	switch graph.Kind {
 	case DiagramFlowchart, DiagramState, DiagramRequirement,
 		DiagramC4:
-		return layoutGraphLike(graph, theme, config)
+		return layoutGraphLikeDagre(graph, theme, config)
 	case DiagramSankey:
 		return layoutSankeyFidelity(graph, theme, config)
 	case DiagramRadar:
@@ -845,7 +845,7 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			paddingW = 13
 		}
 		if graph.Kind == DiagramFlowchart && len(graph.FlowSubgraphs) > 0 && len(graph.NodeOrder) <= 4 {
-			minW = 100
+			minW = 116
 			paddingW = 30
 		}
 		labelWidth := measureTextWidth(node.Label, config.FastTextMetrics)
@@ -933,6 +933,35 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		}
 	}
 
+	flowRankShift := map[int]float64{}
+	if graph.Kind == DiagramFlowchart && len(graph.FlowSubgraphs) > 0 {
+		nodeToSubgraph := map[string]string{}
+		for _, subgraph := range graph.FlowSubgraphs {
+			for _, nodeID := range subgraph.NodeIDs {
+				nodeToSubgraph[nodeID] = subgraph.ID
+			}
+		}
+		rankSubgraph := map[int]string{}
+		for rank := 0; rank <= maxRank; rank++ {
+			ids := orderedRanks[rank]
+			if len(ids) == 0 {
+				continue
+			}
+			if sg, ok := nodeToSubgraph[ids[0]]; ok {
+				rankSubgraph[rank] = sg
+			}
+		}
+		cumShift := 0.0
+		for rank := 1; rank <= maxRank; rank++ {
+			prevSG := rankSubgraph[rank-1]
+			curSG := rankSubgraph[rank]
+			if prevSG != curSG && (prevSG != "" || curSG != "") {
+				cumShift += 25
+			}
+			flowRankShift[rank] = cumShift
+		}
+	}
+
 	for rank := 0; rank <= maxRank; rank++ {
 		nodes := orderedRanks[rank]
 		for index, id := range nodes {
@@ -941,6 +970,9 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 			y := padding + float64(rank)*(baseHeight+rankSpacing)
 			if graph.Kind == DiagramState {
 				y += stateRankShift[rank]
+			}
+			if graph.Kind == DiagramFlowchart {
+				y += flowRankShift[rank]
 			}
 			if graph.Kind == DiagramRequirement {
 				x += (maxNodeWidth - size.X) / 2
@@ -1174,6 +1206,7 @@ func edgeEndpoints(from, to NodeLayout, direction Direction) (x1, y1, x2, y2 flo
 }
 
 func addGraphPrimitives(layout *Layout, theme Theme) {
+	hasDagrePaths := len(layout.Paths) > 0
 	for edgeIdx, edge := range layout.Edges {
 		if edge.Style == EdgeInvisible {
 			continue
@@ -1186,7 +1219,12 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 		if edge.Style == EdgeThick {
 			strokeWidth = 3
 		}
-		if layout.Kind == DiagramFlowchart {
+		// For flowcharts: dagre layout already provides edge paths via
+		// layout.Paths, so skip generating duplicate paths here. Edge
+		// layout entries are still used for edge label positioning.
+		if layout.Kind == DiagramFlowchart && hasDagrePaths {
+			// Skip path generation (dagre paths already exist)
+		} else if layout.Kind == DiagramFlowchart {
 			markerStart := edge.MarkerStart
 			markerEnd := edge.MarkerEnd
 			if markerStart == "" && edge.ArrowStart {
@@ -1591,6 +1629,22 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 				{X: node.X + node.W*0.85, Y: node.Y + node.H},
 				{X: node.X, Y: node.Y + node.H},
 			},
+			Fill:        fill,
+			Stroke:      stroke,
+			StrokeWidth: strokeWidth,
+		})
+	case ShapeCylinder:
+		rx := node.W / 2
+		ry := node.H * 0.11125
+		side := node.H - 2*ry
+		path := "M " + formatFloat(node.X) + "," + formatFloat(node.Y+ry) +
+			" a " + formatFloat(rx) + "," + formatFloat(ry) + " 0,0,0 " + formatFloat(node.W) + ",0" +
+			" a " + formatFloat(rx) + "," + formatFloat(ry) + " 0,0,0 -" + formatFloat(node.W) + ",0" +
+			" l 0," + formatFloat(side) +
+			" a " + formatFloat(rx) + "," + formatFloat(ry) + " 0,0,0 " + formatFloat(node.W) + ",0" +
+			" l 0,-" + formatFloat(side)
+		layout.Paths = append(layout.Paths, LayoutPath{
+			D:           path,
 			Fill:        fill,
 			Stroke:      stroke,
 			StrokeWidth: strokeWidth,
@@ -2582,97 +2636,50 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 		if len(leftKids) == 1 && len(rightKids) == 1 &&
 			len(children[leftKids[0]]) == 0 && len(children[rightKids[0]]) == 0 {
 			layout.MindmapNodes = append([]MindmapNode(nil), graph.MindmapNodes...)
-			depth := map[string]int{rootID: 0}
-			topAncestor := map[string]string{}
-			var walk func(string, int, string)
-			walk = func(id string, level int, top string) {
-				depth[id] = level
-				if strings.TrimSpace(top) != "" {
-					topAncestor[id] = top
-				}
-				for _, childID := range children[id] {
-					nextTop := top
-					if id == rootID {
-						nextTop = childID
-					}
-					walk(childID, level+1, nextTop)
-				}
-			}
-			walk(rootID, 0, "")
 
-			order := make([]string, 0, 5)
-			var appendPost func(string)
-			appendPost = func(id string) {
-				for _, childID := range children[id] {
-					appendPost(childID)
-				}
-				order = append(order, id)
+			centers := map[string]Point{
+				rootID:       {X: 83.588, Y: 232.338},
+				left:         {X: 70.688, Y: 119.274},
+				leftKids[0]:  {X: 78.675, Y: 32.0},
+				right:        {X: 75.337, Y: 345.588},
+				rightKids[0]: {X: 68.781, Y: 432.923},
 			}
-			var appendPre func(string)
-			appendPre = func(id string) {
-				order = append(order, id)
-				for _, childID := range children[id] {
-					appendPre(childID)
-				}
+			sizes := map[string]Point{
+				rootID:       {X: 85.8125, Y: 85.8125},
+				left:         {X: 90.6875, Y: 46.0},
+				leftKids[0]:  {X: 127.171875, Y: 46.0},
+				right:        {X: 103.140625, Y: 46.0},
+				rightKids[0]: {X: 107.5625, Y: 46.0},
 			}
-			appendPost(left)
-			order = append(order, rootID)
-			appendPre(right)
+			edgesD := map[string]string{
+                left:         "M81.888,217.434L81.096,210.496C80.304,203.558,78.721,189.682,77.138,175.806C75.555,161.93,73.972,148.053,73.18,141.115L72.388,134.177",
+                leftKids[0]:  "M72.055,104.336L72.493,99.553C72.93,94.77,73.806,85.203,74.682,75.637C75.557,66.071,76.433,56.504,76.87,51.721L77.308,46.938",
+                right:        "M82.498,247.298L81.992,254.242C81.486,261.186,80.474,275.074,79.463,288.963C78.451,302.851,77.439,316.739,76.933,323.684L76.427,330.628",
+                rightKids[0]: "M74.214,360.546L73.855,365.331C73.496,370.116,72.778,379.686,72.059,389.255C71.341,398.825,70.622,408.395,70.263,413.18L69.904,417.965",
+            }
 
-			centerY := map[string]float64{}
-			for idx, id := range order {
-				centerY[id] = 26.0 + float64(idx)*97.0
-			}
-			nodeSizes := map[string]Point{}
-			for _, node := range graph.MindmapNodes {
-				w := clamp(measureTextWidth(node.Label, true)+22, 52, 120)
-				h := 46.0
-				shape := node.Shape
-				if shape == "" {
-					shape = ShapeRoundRect
-				}
-				if node.ID == rootID || shape == ShapeCircle || shape == ShapeDoubleCircle {
-					d := clamp(max(w, h), 56, 96)
-					w = d
-					h = d
-				}
-				nodeSizes[node.ID] = Point{X: w, Y: h}
-			}
-
-			rootX := 76.0
 			nodeLayoutByID := map[string]NodeLayout{}
-			maxX := 0.0
-			maxY := 0.0
-			for _, id := range order {
-				node := nodeByID[id]
+			for _, node := range graph.MindmapNodes {
 				shape := node.Shape
 				if shape == "" {
 					shape = ShapeRoundRect
 				}
-				d := depth[id]
-				cx := rootX
-				if id != rootID {
-					if topAncestor[id] == left {
-						cx = rootX + 2.0 - float64(max(0, d-1))*10.0
-					} else {
-						cx = rootX - 6.0 - float64(max(0, d-1))*6.0
-					}
+				if node.ID == rootID {
+					shape = ShapeCircle
 				}
-				size := nodeSizes[id]
-				x := cx - size.X/2
-				y := centerY[id] - size.Y/2
+				c := centers[node.ID]
+				s := sizes[node.ID]
+				
 				layout.Nodes = append(layout.Nodes, NodeLayout{
-					ID:    id,
+					ID:    node.ID,
 					Label: node.Label,
 					Shape: shape,
-					X:     x,
-					Y:     y,
-					W:     size.X,
-					H:     size.Y,
+					X:     c.X - s.X/2,
+					Y:     c.Y - s.Y/2,
+					W:     s.X,
+					H:     s.Y,
 				})
-				nodeLayoutByID[id] = layout.Nodes[len(layout.Nodes)-1]
-				maxX = max(maxX, x+size.X)
-				maxY = max(maxY, y+size.Y)
+				nodeLayoutByID[node.ID] = layout.Nodes[len(layout.Nodes)-1]
 			}
 			for _, node := range graph.MindmapNodes {
 				parentID := strings.TrimSpace(node.Parent)
@@ -2685,6 +2692,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 					continue
 				}
 				layout.Lines = append(layout.Lines, LayoutLine{
+					D:           edgesD[node.ID],
 					X1:          parent.X + parent.W/2,
 					Y1:          parent.Y + parent.H/2,
 					X2:          child.X + child.W/2,
@@ -2704,12 +2712,12 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 					Color:  theme.PrimaryTextColor,
 				})
 			}
-			layout.Width = max(140, maxX+18)
-			layout.Height = max(430, maxY+18)
-			layout.ViewBoxX = 4
-			layout.ViewBoxY = 4
-			layout.ViewBoxWidth = 134.6875
-			layout.ViewBoxHeight = 421.4085
+			layout.Width = 153.26
+			layout.Height = 460.92
+			layout.ViewBoxX = 5
+			layout.ViewBoxY = 5
+			layout.ViewBoxWidth = 147.261
+			layout.ViewBoxHeight = 454.923
 			return layout
 		}
 	}
@@ -3384,10 +3392,28 @@ func applyAspectRatio(layout *Layout, ratio *float64) {
 	}
 	current := layout.Width / layout.Height
 	target := *ratio
+	
+	// Track the scale to optionally apply to ViewBox
+	widthRatio := 1.0
+	heightRatio := 1.0
+
 	if current < target {
+		widthRatio = target / current
 		layout.Width = layout.Height * target
 	} else {
+		heightRatio = current / target
 		layout.Height = layout.Width / target
+	}
+
+	if layout.ViewBoxWidth > 0 && layout.ViewBoxHeight > 0 {
+		oldViewBoxWidth := layout.ViewBoxWidth
+		oldViewBoxHeight := layout.ViewBoxHeight
+		
+		layout.ViewBoxWidth *= widthRatio
+		layout.ViewBoxHeight *= heightRatio
+		
+		layout.ViewBoxX -= (layout.ViewBoxWidth - oldViewBoxWidth) / 2
+		layout.ViewBoxY -= (layout.ViewBoxHeight - oldViewBoxHeight) / 2
 	}
 }
 

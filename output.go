@@ -116,13 +116,16 @@ func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error
 // prepareSVGForRasterizer transforms SVG to be oksvg-compatible:
 //   - Replaces percentage/missing width/height with absolute pixel values from viewBox
 //   - Expands viewBox to encompass all content (e.g. cluster labels above y=0)
+//   - Inlines marker arrowheads as real SVG paths (oksvg doesn't support <marker>)
 //   - Strips <foreignObject> blocks (text is overlaid separately)
 func prepareSVGForRasterizer(svg string) string {
 	svg = expandViewBoxToContent(svg)
 	svg = fixSVGRootDimensions(svg)
 	svg = convertHSLToHex(svg)
+	svg = inlineMarkers(svg)
 	svg = stripClipPaths(svg)
 	svg = inlineCSS(svg)
+	svg = regexp.MustCompile(`(?i)rotate\(\s*([\d\.-]+)\s*deg\s*\)`).ReplaceAllString(svg, "rotate(${1})")
 	return svg
 }
 

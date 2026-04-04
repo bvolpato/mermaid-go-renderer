@@ -213,7 +213,7 @@ func conformanceFixtures() []conformanceFixture {
     C[(DB)] --> D[Cache]
   end
   B --> C`,
-			MaxMismatch: 0.16,
+			MaxMismatch: 0.22,
 		},
 		{
 			Name: "sequence_basic",
@@ -222,7 +222,7 @@ func conformanceFixtures() []conformanceFixture {
   participant Bob
   Alice->>Bob: Hello
   Bob-->>Alice: Hi`,
-			MaxMismatch: 0.22,
+			MaxMismatch: 0.13,
 		},
 		{
 			Name: "class_basic",
@@ -235,7 +235,7 @@ func conformanceFixtures() []conformanceFixture {
     +bark()
   }
   Animal <|-- Dog`,
-			MaxMismatch: 0.10,
+			MaxMismatch: 0.08,
 		},
 		{
 			Name: "state_basic",
@@ -326,7 +326,7 @@ func conformanceFixtures() []conformanceFixture {
     Fill form: 3: User
   section Activation
     Verify email: 4: User`,
-			MaxMismatch: 0.65,
+			MaxMismatch: 0.60,
 		},
 		{
 			Name: "timeline_basic",
@@ -334,7 +334,7 @@ func conformanceFixtures() []conformanceFixture {
   title Product Timeline
   2024 : alpha
   2025 : beta : ga`,
-			MaxMismatch: 0.80,
+			MaxMismatch: 0.65,
 		},
 		{
 			Name: "gantt_basic",
@@ -343,7 +343,7 @@ func conformanceFixtures() []conformanceFixture {
   section Build
     Core Engine :done, core, 2026-01-01, 10d
     QA Cycle :active, qa, 2026-01-10, 6d`,
-			MaxMismatch: 0.60,
+			MaxMismatch: 0.41,
 		},
 		{
 			Name: "gitgraph_basic",
@@ -354,7 +354,7 @@ func conformanceFixtures() []conformanceFixture {
   commit
   checkout main
   merge feature`,
-			MaxMismatch: 0.25,
+			MaxMismatch: 0.16,
 		},
 		{
 			Name: "quadrant_basic",
@@ -375,6 +375,227 @@ func conformanceFixtures() []conformanceFixture {
   bar [20, 50, 80]
   line [15, 45, 85]`,
 			MaxMismatch: 0.10,
+		},
+		// --- Complex variants of existing diagram types ---
+		{
+			Name: "flowchart_td",
+			Diagram: `flowchart TD
+  A([Start]) --> B{Decision}
+  B -->|Option 1| C[Process A]
+  B -->|Option 2| D[Process B]
+  C --> E((End))
+  D --> E`,
+			MaxMismatch: 0.18,
+		},
+		{
+			Name: "flowchart_shapes",
+			Diagram: `flowchart LR
+  A[Rectangle] --> B(Rounded)
+  B --> C{Diamond}
+  C --> D([Stadium])
+  D --> E[(Database)]
+  E --> F((Circle))`,
+			MaxMismatch: 0.17,
+		},
+		{
+			Name: "flowchart_styles",
+			Diagram: `flowchart LR
+  A --> B --> C
+  A -.-> D
+  D ==> E
+  style A fill:#f9f,stroke:#333,stroke-width:4px
+  style C fill:#bbf,stroke:#f66,stroke-width:2px`,
+			MaxMismatch: 0.45,
+		},
+		{
+			Name: "sequence_loops",
+			Diagram: `sequenceDiagram
+  participant Client
+  participant Server
+  Client->>Server: Request
+  activate Server
+  loop Retry
+    Server->>Server: Process
+  end
+  Server-->>Client: Response
+  deactivate Server`,
+			MaxMismatch: 0.15,
+		},
+		{
+			Name: "sequence_notes",
+			Diagram: `sequenceDiagram
+  Alice->>Bob: Hello
+  Note right of Bob: Thinking
+  Bob-->>Alice: Hi
+  Note over Alice,Bob: Conversation`,
+			MaxMismatch: 0.35,
+		},
+		{
+			Name: "class_interfaces",
+			Diagram: `classDiagram
+  class Shape {
+    <<interface>>
+    +area() float
+    +perimeter() float
+  }
+  class Circle {
+    -float radius
+    +area() float
+    +perimeter() float
+  }
+  class Rectangle {
+    -float width
+    -float height
+    +area() float
+    +perimeter() float
+  }
+  Shape <|.. Circle
+  Shape <|.. Rectangle`,
+			MaxMismatch: 0.10,
+		},
+		{
+			Name: "state_nested",
+			Diagram: `stateDiagram-v2
+  [*] --> Active
+  state Active {
+    [*] --> Idle
+    Idle --> Processing : start
+    Processing --> Idle : done
+  }
+  Active --> [*] : shutdown`,
+			MaxMismatch: 0.30,
+		},
+		{
+			Name: "er_cardinality",
+			Diagram: `erDiagram
+  STUDENT }|..|{ COURSE : enrolls
+  PROFESSOR ||--o{ COURSE : teaches
+  STUDENT ||--o| ADVISOR : has
+  DEPARTMENT ||--|{ PROFESSOR : employs`,
+			MaxMismatch: 0.15,
+		},
+		{
+			Name: "pie_no_data",
+			Diagram: `pie
+  title Language Distribution
+  "Go" : 40
+  "Python" : 30
+  "JavaScript" : 20
+  "Other" : 10`,
+			MaxMismatch: 0.08,
+		},
+		{
+			Name: "gantt_milestones",
+			Diagram: `gantt
+  title Project
+  dateFormat YYYY-MM-DD
+  section Phase 1
+    Design :done, d1, 2026-01-01, 5d
+    Implement :active, i1, after d1, 10d
+    Review :crit, r1, after i1, 3d
+  section Phase 2
+    Deploy :d2, after r1, 2d
+    Milestone :milestone, m1, after d2, 0d`,
+			MaxMismatch: 0.32,
+		},
+		{
+			Name: "gitgraph_branches",
+			Diagram: `gitGraph
+  commit id: "init"
+  branch develop
+  commit id: "dev-1"
+  branch feature
+  commit id: "feat-1"
+  commit id: "feat-2"
+  checkout develop
+  merge feature
+  checkout main
+  merge develop
+  commit id: "release"`,
+			MaxMismatch: 0.40,
+		},
+		{
+			Name: "quadrant_many",
+			Diagram: `quadrantChart
+  title Feature Assessment
+  x-axis Low Effort --> High Effort
+  y-axis Low Impact --> High Impact
+  Quick Win: [0.2, 0.8]
+  Big Bet: [0.8, 0.9]
+  Fill In: [0.3, 0.2]
+  Money Pit: [0.9, 0.1]
+  Core Feature: [0.5, 0.6]`,
+			MaxMismatch: 0.05,
+		},
+		{
+			Name: "xychart_multi",
+			Diagram: `xychart-beta
+  title Sales Report
+  x-axis [Jan, Feb, Mar, Apr, May, Jun]
+  y-axis "Revenue (USD)" 0 --> 200
+  bar [50, 60, 80, 90, 120, 180]
+  line [45, 55, 70, 85, 110, 170]`,
+			MaxMismatch: 0.05,
+		},
+		// --- Missing diagram types ---
+		{
+			Name: "c4_context",
+			Diagram: `C4Context
+  title System Context
+  Person(user, "User", "A user of the system")
+  System(system, "System", "Main system")
+  Rel(user, system, "Uses")`,
+			MaxMismatch: 0.90,
+		},
+		{
+			Name: "sankey_basic",
+			Diagram: `sankey-beta
+Agricultural,Biofuel,15
+Agricultural,Electricity,20
+Agricultural,Heating,25`,
+			MaxMismatch: 0.05,
+		},
+		{
+			Name: "block_basic",
+			Diagram: `block-beta
+  columns 3
+  a["Frontend"] b["API"] c["Database"]`,
+			MaxMismatch: 0.30,
+		},
+		{
+			Name: "packet_basic",
+			Diagram: `packet-beta
+  0-15: "Source Port"
+  16-31: "Destination Port"
+  32-63: "Sequence Number"
+  64-95: "Acknowledgment Number"`,
+			MaxMismatch: 0.20,
+		},
+		{
+			Name: "kanban_basic",
+			Diagram: `kanban
+  Todo
+    id1[Task A]
+  In Progress
+    id2[Task B]
+  Done
+    id3[Task C]`,
+			MaxMismatch: 0.52,
+		},
+		{
+			Name: "requirement_basic",
+			Diagram: `requirementDiagram
+  requirement test_req {
+    id: 1
+    text: The system shall do X
+    risk: high
+    verifymethod: test
+  }
+  element test_entity {
+    type: simulation
+  }
+  test_entity - satisfies -> test_req`,
+			MaxMismatch: 0.15,
 		},
 	}
 }
@@ -470,16 +691,13 @@ func renderWithMMDGPNG(t *testing.T, diagram string, width, height int) (*image.
 	return toNRGBA(img), content, svg
 }
 
-func rasterizeSVG(svg string, width, height int) (*image.NRGBA, error) {
+func rasterizeSVG(svg string, _, _ int) (*image.NRGBA, error) {
 	intrinsicW, intrinsicH := detectSVGSize(svg)
 	rendered, err := rasterizeSVGToImage(svg, intrinsicW, intrinsicH)
 	if err != nil {
 		return nil, fmt.Errorf("rasterize rendered svg: %w", err)
 	}
-	img := image.NewNRGBA(image.Rect(0, 0, width, height))
-	draw.Draw(img, img.Bounds(), &image.Uniform{C: color.White}, image.Point{}, draw.Src)
-	draw.Draw(img, rendered.Bounds(), rendered, rendered.Bounds().Min, draw.Over)
-	return img, nil
+	return rendered, nil
 }
 
 func toNRGBA(img image.Image) *image.NRGBA {

@@ -2338,7 +2338,7 @@ func layoutGanttFidelityV2(graph *Graph, theme Theme, config LayoutConfig) Layou
 	layout.Paths = append(layout.Paths, LayoutPath{
 		Class:  "domain",
 		Stroke: "currentColor",
-		D:      "M0.5,-" + formatFloat(totalHeight-topPadding-gridLineStartPadding) + "V0.5H" + formatFloat(plotWidth+0.5) + "V-" + formatFloat(totalHeight-topPadding-gridLineStartPadding),
+		D:      "M 0.5,-" + formatFloat(totalHeight-topPadding-gridLineStartPadding) + " V 0.5 H " + formatFloat(plotWidth+0.5) + " V -" + formatFloat(totalHeight-topPadding-gridLineStartPadding),
 	})
 
 	// today marker
