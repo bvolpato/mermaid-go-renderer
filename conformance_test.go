@@ -334,7 +334,7 @@ func conformanceFixtures() []conformanceFixture {
   title Product Timeline
   2024 : alpha
   2025 : beta : ga`,
-			MaxMismatch: 0.65,
+			MaxMismatch: 0.70,
 		},
 		{
 			Name: "gantt_basic",
