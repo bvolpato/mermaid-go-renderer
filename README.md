@@ -66,6 +66,15 @@ Reproduce the full fidelity sweep:
 python3 scripts/svg_xml_delta.py
 ```
 
+PNG conformance is tracked separately against `mmdc` PNG output and stored in
+`testdata/conformance/png_mismatch_baseline.json`.
+
+- `go test ./...` now validates that the PNG baseline covers every conformance fixture.
+- `./scripts/update_png_conformance_baseline.sh` refreshes the full PNG baseline with
+  the current `mmdc`/Node toolchain and writes that metadata into the baseline file.
+- `MMDG_PNG_CONFORMANCE=1 go test -run TestPNGConformanceAgainstMMDC -count=1 -v`
+  runs the PNG regression suite without updating the baseline.
+
 Latest XML fidelity snapshot (`/tmp/svg_xml_delta_report.csv`):
 
 - Fixtures compared: **23**

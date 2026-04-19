@@ -472,6 +472,33 @@ func TestParseTimelineStructure(t *testing.T) {
 	}
 }
 
+func TestParseTimelineContinuesEventsForBlankTimeLines(t *testing.T) {
+	input := `timeline
+  title Product Timeline
+  2024 : alpha
+  2025 : beta
+       : ga`
+
+	parsed, err := ParseMermaid(input)
+	if err != nil {
+		t.Fatalf("ParseMermaid() error = %v", err)
+	}
+	g := parsed.Graph
+
+	if len(g.TimelineEvents) != 2 {
+		t.Fatalf("event count = %d, want 2", len(g.TimelineEvents))
+	}
+	if g.TimelineEvents[1].Time != "2025" {
+		t.Fatalf("second event time = %q, want 2025", g.TimelineEvents[1].Time)
+	}
+	if len(g.TimelineEvents[1].Events) != 2 {
+		t.Fatalf("second event item count = %d, want 2", len(g.TimelineEvents[1].Events))
+	}
+	if g.TimelineEvents[1].Events[0] != "beta" || g.TimelineEvents[1].Events[1] != "ga" {
+		t.Fatalf("second event items = %#v, want beta/ga", g.TimelineEvents[1].Events)
+	}
+}
+
 func TestParseQuadrantStructure(t *testing.T) {
 	input := `quadrantChart
   title Feature Priorities

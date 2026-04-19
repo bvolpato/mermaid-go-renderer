@@ -337,26 +337,26 @@ type resolvedEntry struct {
 }
 
 type mappedEntry struct {
-	indegree int
-	in       []*mappedEntry
-	out      []*mappedEntry
-	vs       []string
-	i        int
+	indegree   int
+	in         []*mappedEntry
+	out        []*mappedEntry
+	vs         []string
+	i          int
 	barycenter float64
-	weight   float64
-	hasBC    bool
-	merged   bool
+	weight     float64
+	hasBC      bool
+	merged     bool
 }
 
 func resolveConflicts(entries []barycenterEntry, cg *Graph) []resolvedEntry {
 	mapped := make(map[string]*mappedEntry)
 	for i, entry := range entries {
 		me := &mappedEntry{
-			vs:   []string{entry.v},
-			i:    i,
-			hasBC: entry.hasBC,
+			vs:         []string{entry.v},
+			i:          i,
+			hasBC:      entry.hasBC,
 			barycenter: entry.barycenter,
-			weight: entry.weight,
+			weight:     entry.weight,
 		}
 		mapped[entry.v] = me
 	}

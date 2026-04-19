@@ -9,7 +9,7 @@ import "math"
 // Edge identifies a directed edge between two nodes.
 type Edge struct {
 	V, W string
-	Name  string // for multigraph support
+	Name string // for multigraph support
 }
 
 // edgeKey returns a canonical key for storing/looking-up an edge.
@@ -36,16 +36,16 @@ type NodeLabel struct {
 	HasX     bool
 	HasY     bool
 
-	Dummy      string // "edge","border","edge-label","edge-proxy","selfedge","root"
-	BorderType string // "borderLeft","borderRight"
-	BorderTop  string
-	BorderBot  string
+	Dummy       string // "edge","border","edge-label","edge-proxy","selfedge","root"
+	BorderType  string // "borderLeft","borderRight"
+	BorderTop   string
+	BorderBot   string
 	BorderLeft  []string
 	BorderRight []string
-	MinRank    int
-	MaxRank    int
-	HasMinRank bool
-	HasMaxRank bool
+	MinRank     int
+	MaxRank     int
+	HasMinRank  bool
+	HasMaxRank  bool
 
 	Label    string
 	LabelPos string // "l","c","r"
@@ -97,42 +97,42 @@ type EdgeLabel struct {
 
 // GraphLabel holds graph-level configuration for layout.
 type GraphLabel struct {
-	Width       float64
-	Height      float64
-	Compound    bool
-	RankDir     string // "TB","BT","LR","RL"
-	Align       string // "UL","UR","DL","DR"
-	RankAlign   string // "top","center","bottom"
-	NodeSep     float64
-	EdgeSep     float64
-	RankSep     float64
-	MarginX     float64
-	MarginY     float64
-	Acyclicer   string // "greedy"
-	Ranker      string // "network-simplex","tight-tree","longest-path"
-	NestingRoot string
+	Width          float64
+	Height         float64
+	Compound       bool
+	RankDir        string // "TB","BT","LR","RL"
+	Align          string // "UL","UR","DL","DR"
+	RankAlign      string // "top","center","bottom"
+	NodeSep        float64
+	EdgeSep        float64
+	RankSep        float64
+	MarginX        float64
+	MarginY        float64
+	Acyclicer      string // "greedy"
+	Ranker         string // "network-simplex","tight-tree","longest-path"
+	NestingRoot    string
 	NodeRankFactor int
-	DummyChains []string
-	MaxRank     int
+	DummyChains    []string
+	MaxRank        int
 }
 
 // Graph is a directed multigraph with compound (parent/child) support.
 // This is a Go port of @dagrejs/graphlib's Graph class.
 type Graph struct {
-	isDirected  bool
+	isDirected   bool
 	isMultigraph bool
-	isCompound  bool
+	isCompound   bool
 
 	label GraphLabel
 
-	nodes      map[string]*NodeLabel
-	nodeOrder  []string // insertion order
-	inEdges    map[string]map[string]bool // node -> set of edge keys
-	outEdges   map[string]map[string]bool
-	edges      map[string]*EdgeLabel      // edgeKey -> label
-	edgeObjs   map[string]Edge            // edgeKey -> Edge
+	nodes     map[string]*NodeLabel
+	nodeOrder []string                   // insertion order
+	inEdges   map[string]map[string]bool // node -> set of edge keys
+	outEdges  map[string]map[string]bool
+	edges     map[string]*EdgeLabel // edgeKey -> label
+	edgeObjs  map[string]Edge       // edgeKey -> Edge
 
-	parent   map[string]string   // child -> parent
+	parent   map[string]string          // child -> parent
 	children map[string]map[string]bool // parent -> children (GRAPH_NODE = "\x00")
 }
 
@@ -141,16 +141,16 @@ const graphNode = "\x00" // sentinel for root parent
 // NewGraph creates a new directed multigraph with compound support.
 func NewGraph() *Graph {
 	g := &Graph{
-		isDirected:  true,
+		isDirected:   true,
 		isMultigraph: true,
-		isCompound:  true,
-		nodes:       make(map[string]*NodeLabel),
-		inEdges:     make(map[string]map[string]bool),
-		outEdges:    make(map[string]map[string]bool),
-		edges:       make(map[string]*EdgeLabel),
-		edgeObjs:    make(map[string]Edge),
-		parent:      make(map[string]string),
-		children:    make(map[string]map[string]bool),
+		isCompound:   true,
+		nodes:        make(map[string]*NodeLabel),
+		inEdges:      make(map[string]map[string]bool),
+		outEdges:     make(map[string]map[string]bool),
+		edges:        make(map[string]*EdgeLabel),
+		edgeObjs:     make(map[string]Edge),
+		parent:       make(map[string]string),
+		children:     make(map[string]map[string]bool),
 	}
 	g.children[graphNode] = make(map[string]bool)
 	g.label = GraphLabel{
@@ -181,11 +181,11 @@ func NewUndirectedGraph() *Graph {
 }
 
 func (g *Graph) SetGraph(label GraphLabel) { g.label = label }
-func (g *Graph) GraphLabel() *GraphLabel    { return &g.label }
-func (g *Graph) IsMultigraph() bool         { return g.isMultigraph }
-func (g *Graph) IsCompound() bool           { return g.isCompound }
-func (g *Graph) NodeCount() int             { return len(g.nodes) }
-func (g *Graph) EdgeCount() int             { return len(g.edges) }
+func (g *Graph) GraphLabel() *GraphLabel   { return &g.label }
+func (g *Graph) IsMultigraph() bool        { return g.isMultigraph }
+func (g *Graph) IsCompound() bool          { return g.isCompound }
+func (g *Graph) NodeCount() int            { return len(g.nodes) }
+func (g *Graph) EdgeCount() int            { return len(g.edges) }
 
 func (g *Graph) SetNode(v string, label *NodeLabel) {
 	if _, exists := g.nodes[v]; !exists {

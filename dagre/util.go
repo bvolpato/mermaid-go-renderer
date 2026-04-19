@@ -124,11 +124,11 @@ func AsNonCompoundGraph(g *Graph) *Graph {
 func AddDummyNode(g *Graph, dummyType, edgeLabelObj string, rank int) string {
 	v := UniqueID("_" + dummyType)
 	label := &NodeLabel{
-		Width:    0,
-		Height:   0,
-		Rank:     rank,
-		HasRank:  true,
-		Dummy:    dummyType,
+		Width:   0,
+		Height:  0,
+		Rank:    rank,
+		HasRank: true,
+		Dummy:   dummyType,
 	}
 	g.SetNode(v, label)
 	return v

@@ -48,3 +48,37 @@ API->>DB: query
 		t.Fatalf("expected external alias to take precedence for DB, got %q", out.Graph.SequenceParticipantLabels["DB"])
 	}
 }
+
+func TestSequenceNotePlacements(t *testing.T) {
+	input := `sequenceDiagram
+participant Alice
+participant Bob
+Note right of Bob: Thinking
+Note over Alice,Bob: Conversation
+Note left of Alice: Done
+`
+
+	out, err := ParseMermaid(input)
+	if err != nil {
+		t.Fatalf("ParseMermaid returned error: %v", err)
+	}
+
+	if len(out.Graph.SequenceMessages) != 3 {
+		t.Fatalf("expected 3 sequence note messages, got %d", len(out.Graph.SequenceMessages))
+	}
+
+	right := out.Graph.SequenceMessages[0]
+	if right.NotePlacement != SequenceNoteRightOf || right.From != "Bob" || right.To != "Bob" {
+		t.Fatalf("unexpected right-of note parse: %#v", right)
+	}
+
+	over := out.Graph.SequenceMessages[1]
+	if over.NotePlacement != SequenceNoteOver || over.From != "Alice" || over.To != "Bob" {
+		t.Fatalf("unexpected over note parse: %#v", over)
+	}
+
+	left := out.Graph.SequenceMessages[2]
+	if left.NotePlacement != SequenceNoteLeftOf || left.From != "Alice" || left.To != "Alice" {
+		t.Fatalf("unexpected left-of note parse: %#v", left)
+	}
+}

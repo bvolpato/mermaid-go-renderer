@@ -11,15 +11,16 @@ import (
 
 func ComputeLayout(graph *Graph, theme Theme, config LayoutConfig) Layout {
 	switch graph.Kind {
-	case DiagramFlowchart, DiagramState, DiagramRequirement,
-		DiagramC4:
+	case DiagramFlowchart, DiagramState, DiagramRequirement:
 		return layoutGraphLikeDagre(graph, theme, config)
+	case DiagramC4:
+		return layoutC4(graph, theme, config)
 	case DiagramSankey:
 		return layoutSankeyFidelity(graph, theme, config)
 	case DiagramRadar:
 		return layoutRadarFidelity(graph, theme, config)
 	case DiagramER:
-		return layoutERDiagram(graph, theme, config)
+		return layoutERDiagramFidelity(graph, theme, config)
 	case DiagramClass:
 		return layoutClassDiagram(graph, theme, config)
 	case DiagramArchitecture:
@@ -426,10 +427,13 @@ func parseERAttribute(attr string) parsedERAttr {
 		if strings.HasPrefix(t, "\"") && strings.HasSuffix(t, "\"") {
 			pt.c = t[1 : len(t)-1]
 		} else {
-			keys = append(keys, t)
+			cleaned := strings.Trim(strings.TrimSpace(t), ",")
+			if cleaned != "" {
+				keys = append(keys, cleaned)
+			}
 		}
 	}
-	pt.k = strings.Join(keys, ", ")
+	pt.k = strings.Join(keys, ",")
 	return pt
 }
 
@@ -837,7 +841,12 @@ func layoutGraphLike(graph *Graph, theme Theme, config LayoutConfig) Layout {
 		maxW := 320.0
 		paddingW := 28.0
 		if graph.Kind == DiagramFlowchart {
-			minW = 92
+			w, h := mermaidFlowchartNodeSize(node, config)
+			nodeSizes[id] = Point{X: w, Y: h}
+			if w > maxNodeWidth {
+				maxNodeWidth = w
+			}
+			continue
 		}
 		if graph.Kind == DiagramState {
 			minW = 49
@@ -1462,10 +1471,45 @@ func flowchartEdgePath(edge EdgeLayout) string {
 		" " + formatFloat(edge.X2) + "," + formatFloat(edge.Y2)
 }
 
+func mermaidFlowchartNodeSize(node Node, config LayoutConfig) (float64, float64) {
+	labelWidth := measureTextWidth(node.Label, config.FastTextMetrics)
+	lineCount := max(1, len(splitLinesPreserve(node.Label)))
+	textHeight := float64(lineCount) * 24.0
+
+	minW := 70.0
+	minH := 54.0
+	w := max(70.0, labelWidth+60.0)
+	h := max(54.0, textHeight+30.0)
+
+	switch node.Shape {
+	case ShapeCircle, ShapeDoubleCircle:
+		minW = 54.0
+		minH = 54.0
+		d := max(w, h)
+		w = d
+		h = d
+	case ShapeDiamond:
+		minW = 90.0
+		minH = 60.0
+		w = max(w+20.0, 90.0)
+		h = max(h+6.0, 60.0)
+	case ShapeCylinder:
+		minW = 36.0
+		minH = 56.0
+		w = max(36.0, labelWidth+16.0)
+		h = max(56.0, textHeight+32.0)
+	}
+
+	return clamp(w, minW, 360.0), clamp(h, minH, 240.0)
+}
+
 func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLayout) {
 	fill := theme.PrimaryColor
 	stroke := theme.PrimaryBorderColor
 	strokeWidth := 1.8
+	if kind == DiagramFlowchart {
+		strokeWidth = 1.0
+	}
 	if strings.TrimSpace(node.Fill) != "" {
 		fill = node.Fill
 	}
@@ -1653,6 +1697,12 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 		return
 	default:
 		rectClass := ""
+		rx := 6.0
+		ry := 6.0
+		if kind == DiagramFlowchart && node.Shape == ShapeRectangle {
+			rx = 0
+			ry = 0
+		}
 		if kind == DiagramRequirement {
 			rectClass = "reqBox"
 		}
@@ -1662,8 +1712,8 @@ func addNodePrimitive(layout *Layout, theme Theme, kind DiagramKind, node NodeLa
 			Y:           node.Y,
 			W:           node.W,
 			H:           node.H,
-			RX:          6,
-			RY:          6,
+			RX:          rx,
+			RY:          ry,
 			Fill:        fill,
 			Stroke:      stroke,
 			StrokeWidth: strokeWidth,
@@ -2652,11 +2702,11 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 				rightKids[0]: {X: 107.5625, Y: 46.0},
 			}
 			edgesD := map[string]string{
-                left:         "M81.888,217.434L81.096,210.496C80.304,203.558,78.721,189.682,77.138,175.806C75.555,161.93,73.972,148.053,73.18,141.115L72.388,134.177",
-                leftKids[0]:  "M72.055,104.336L72.493,99.553C72.93,94.77,73.806,85.203,74.682,75.637C75.557,66.071,76.433,56.504,76.87,51.721L77.308,46.938",
-                right:        "M82.498,247.298L81.992,254.242C81.486,261.186,80.474,275.074,79.463,288.963C78.451,302.851,77.439,316.739,76.933,323.684L76.427,330.628",
-                rightKids[0]: "M74.214,360.546L73.855,365.331C73.496,370.116,72.778,379.686,72.059,389.255C71.341,398.825,70.622,408.395,70.263,413.18L69.904,417.965",
-            }
+				left:         "M81.888,217.434L81.096,210.496C80.304,203.558,78.721,189.682,77.138,175.806C75.555,161.93,73.972,148.053,73.18,141.115L72.388,134.177",
+				leftKids[0]:  "M72.055,104.336L72.493,99.553C72.93,94.77,73.806,85.203,74.682,75.637C75.557,66.071,76.433,56.504,76.87,51.721L77.308,46.938",
+				right:        "M82.498,247.298L81.992,254.242C81.486,261.186,80.474,275.074,79.463,288.963C78.451,302.851,77.439,316.739,76.933,323.684L76.427,330.628",
+				rightKids[0]: "M74.214,360.546L73.855,365.331C73.496,370.116,72.778,379.686,72.059,389.255C71.341,398.825,70.622,408.395,70.263,413.18L69.904,417.965",
+			}
 
 			nodeLayoutByID := map[string]NodeLayout{}
 			for _, node := range graph.MindmapNodes {
@@ -2669,7 +2719,7 @@ func layoutMindmap(graph *Graph, theme Theme) Layout {
 				}
 				c := centers[node.ID]
 				s := sizes[node.ID]
-				
+
 				layout.Nodes = append(layout.Nodes, NodeLayout{
 					ID:    node.ID,
 					Label: node.Label,
@@ -3392,7 +3442,7 @@ func applyAspectRatio(layout *Layout, ratio *float64) {
 	}
 	current := layout.Width / layout.Height
 	target := *ratio
-	
+
 	// Track the scale to optionally apply to ViewBox
 	widthRatio := 1.0
 	heightRatio := 1.0
@@ -3408,10 +3458,10 @@ func applyAspectRatio(layout *Layout, ratio *float64) {
 	if layout.ViewBoxWidth > 0 && layout.ViewBoxHeight > 0 {
 		oldViewBoxWidth := layout.ViewBoxWidth
 		oldViewBoxHeight := layout.ViewBoxHeight
-		
+
 		layout.ViewBoxWidth *= widthRatio
 		layout.ViewBoxHeight *= heightRatio
-		
+
 		layout.ViewBoxX -= (layout.ViewBoxWidth - oldViewBoxWidth) / 2
 		layout.ViewBoxY -= (layout.ViewBoxHeight - oldViewBoxHeight) / 2
 	}

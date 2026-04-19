@@ -107,16 +107,25 @@ type Edge struct {
 }
 
 type SequenceMessage struct {
-	From     string
-	To       string
-	Label    string
-	Arrow    string
-	Index    string
-	IsReturn bool
-	IsNote   bool
+	From          string
+	To            string
+	Label         string
+	Arrow         string
+	Index         string
+	NotePlacement SequenceNotePlacement
+	IsReturn      bool
+	IsNote        bool
 }
 
 type SequenceEventKind string
+
+type SequenceNotePlacement string
+
+const (
+	SequenceNoteOver    SequenceNotePlacement = "over"
+	SequenceNoteRightOf SequenceNotePlacement = "right_of"
+	SequenceNoteLeftOf  SequenceNotePlacement = "left_of"
+)
 
 const (
 	SequenceEventMessage       SequenceEventKind = "message"

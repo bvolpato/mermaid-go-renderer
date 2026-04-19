@@ -57,9 +57,16 @@ func run() error {
 		}
 		return err
 	}
-
-	_ = width
-	_ = height
+	explicitWidth := false
+	explicitHeight := false
+	fs.Visit(func(f *flag.Flag) {
+		switch f.Name {
+		case "w":
+			explicitWidth = true
+		case "H":
+			explicitHeight = true
+		}
+	})
 
 	input, markdown, err := readInput(inputPath)
 	if err != nil {
@@ -79,6 +86,9 @@ func run() error {
 			return parseErr
 		}
 		options = options.WithPreferredAspectRatio(ratio)
+	}
+	if explicitWidth || explicitHeight {
+		options = options.WithViewportSize(width, height)
 	}
 	options.Layout.FastTextMetrics = fastText
 	options.Layout.AllowApproximate = allowApproximate

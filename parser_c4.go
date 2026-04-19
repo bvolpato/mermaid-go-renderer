@@ -9,7 +9,7 @@ func parseC4(input string) (ParseOutput, error) {
 	}
 	graph := newGraph(DiagramC4)
 	graph.Source = input
-	graph.Direction = DirectionTopDown
+	graph.Direction = DirectionLeftRight
 
 	for idx, raw := range lines {
 		line := strings.TrimSpace(raw)

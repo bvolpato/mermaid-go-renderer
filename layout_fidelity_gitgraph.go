@@ -543,15 +543,13 @@ func layoutGitGraphFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	maxY += gg.DiagramPadding
 	if len(commitLayouts) > 0 {
 		leftPad := 4.0
-		rightPad := max(0.0, float64(len(commitLayouts))*8.0-6.0)
+		rightPad := 8.0
 		topTrim := 6.0
-		bottomPad := float64(len(commitLayouts)) * 18.0
+		bottomPad := 12.0
 		minX -= leftPad
 		maxX += rightPad
 		minY += topTrim
 		maxY += bottomPad
-		maxX += 8.0
-		maxY += 5.0
 	}
 
 	data := gitGraphLayoutData{

@@ -10,12 +10,12 @@ import (
 
 // markerDef holds a parsed SVG <marker> definition.
 type markerDef struct {
-	ID          string
-	ViewBox     [4]float64 // minX, minY, width, height
-	RefX, RefY  float64
+	ID               string
+	ViewBox          [4]float64 // minX, minY, width, height
+	RefX, RefY       float64
 	MarkerW, MarkerH float64
-	PathD       string // the d= attribute of the <path> child
-	FillColor   string // fill of the arrowhead path
+	PathD            string // the d= attribute of the <path> child
+	FillColor        string // fill of the arrowhead path
 }
 
 var (
@@ -337,6 +337,144 @@ func buildArrowheadPath(x, y, angle float64, marker markerDef) string {
 		tipX, tipY, lx, ly, rx, ry, fill)
 }
 
+func markerLineColor(marker markerDef, strokeColor string) string {
+	if strokeColor != "" && strokeColor != "none" {
+		return strokeColor
+	}
+	if marker.FillColor != "" && marker.FillColor != "none" {
+		return marker.FillColor
+	}
+	return "#333333"
+}
+
+func markerPaint(markerID string, marker markerDef, strokeColor string) (fill string, stroke string, strokeWidth float64) {
+	lineColor := markerLineColor(marker, strokeColor)
+	switch {
+	case markerID == "crosshead" || strings.Contains(markerID, "cross"):
+		return "none", lineColor, 1
+	case strings.Contains(markerID, "aggregation"),
+		strings.Contains(markerID, "extension"),
+		strings.Contains(markerID, "lollipop"),
+		strings.Contains(markerID, "circle"):
+		return "white", lineColor, 1
+	case strings.Contains(markerID, "composition"),
+		strings.Contains(markerID, "dependency"),
+		strings.Contains(markerID, "filled-head"),
+		strings.Contains(markerID, "arrow"),
+		strings.Contains(markerID, "point"),
+		strings.Contains(markerID, "barb"):
+		return lineColor, lineColor, 1
+	default:
+		fill = marker.FillColor
+		if fill == "" || fill == "none" {
+			fill = lineColor
+		}
+		return fill, lineColor, 1
+	}
+}
+
+func buildTransformedMarkerPath(markerID string, marker markerDef, strokeColor string, x, y, angle float64) string {
+	if marker.PathD == "" {
+		return ""
+	}
+	fill, stroke, strokeWidth := markerPaint(markerID, marker, strokeColor)
+	transform := fmt.Sprintf(
+		"translate(%.3f, %.3f) rotate(%.3f) translate(%.3f, %.3f)",
+		x,
+		y,
+		angle*180/math.Pi,
+		-marker.RefX,
+		-marker.RefY,
+	)
+	return fmt.Sprintf(
+		`<path d="%s" fill="%s" stroke="%s" stroke-width="%.2f" transform="%s"/>`,
+		marker.PathD,
+		fill,
+		stroke,
+		strokeWidth,
+		transform,
+	)
+}
+
+func layoutPathToSVG(path LayoutPath) string {
+	fill := path.Fill
+	if fill == "" {
+		fill = "none"
+	}
+	stroke := path.Stroke
+	if stroke == "" {
+		stroke = "none"
+	}
+	strokeWidth := path.StrokeWidth
+	if strokeWidth <= 0 {
+		strokeWidth = 1
+	}
+	transform := ""
+	if strings.TrimSpace(path.Transform) != "" {
+		transform = fmt.Sprintf(` transform="%s"`, path.Transform)
+	}
+	dashArray := ""
+	if strings.TrimSpace(path.DashArray) != "" {
+		dashArray = fmt.Sprintf(` stroke-dasharray="%s"`, path.DashArray)
+	}
+	return fmt.Sprintf(
+		`<path d="%s" fill="%s" stroke="%s" stroke-width="%.2f"%s%s/>`,
+		path.D,
+		fill,
+		stroke,
+		strokeWidth,
+		transform,
+		dashArray,
+	)
+}
+
+func layoutCircleToSVG(circle LayoutCircle) string {
+	fill := circle.Fill
+	if fill == "" {
+		fill = "none"
+	}
+	stroke := circle.Stroke
+	if stroke == "" {
+		stroke = "none"
+	}
+	strokeWidth := circle.StrokeWidth
+	if strokeWidth <= 0 {
+		strokeWidth = 1
+	}
+	transform := ""
+	if strings.TrimSpace(circle.Transform) != "" {
+		transform = fmt.Sprintf(` transform="%s"`, circle.Transform)
+	}
+	return fmt.Sprintf(
+		`<circle cx="%.3f" cy="%.3f" r="%.3f" fill="%s" stroke="%s" stroke-width="%.2f"%s/>`,
+		circle.CX,
+		circle.CY,
+		circle.R,
+		fill,
+		stroke,
+		strokeWidth,
+		transform,
+	)
+}
+
+func buildSpecialMarkerElements(markerID string, strokeColor string, x, y, angle float64) string {
+	if !strings.HasPrefix(markerID, "my-svg_er-") {
+		return ""
+	}
+	paths, circles := getERMarkerPaths(markerID, markerLineColor(markerDef{}, strokeColor), x, y, angle*180/math.Pi)
+	if len(paths) == 0 && len(circles) == 0 {
+		return ""
+	}
+	var out strings.Builder
+	for _, path := range paths {
+		out.WriteString(layoutPathToSVG(path))
+	}
+	for _, circle := range circles {
+		out.WriteString(layoutCircleToSVG(circle))
+	}
+	return out.String()
+}
+
 // inlineMarkers replaces marker-end/marker-start references with inline arrowhead paths.
 // This is necessary because oksvg doesn't support SVG <marker> elements.
 func inlineMarkers(svg string) string {
@@ -373,11 +511,17 @@ func inlineMarkers(svg string) string {
 			if marker, ok := markers[markerID]; ok {
 				x, y, angle, found := pathEndpoint(d, false)
 				if found {
-					m := marker
-					if strokeColor != "" && strokeColor != "none" {
-						m.FillColor = strokeColor
+					if special := buildSpecialMarkerElements(markerID, strokeColor, x, y, angle); special != "" {
+						arrowheads.WriteString(special)
+					} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x, y, angle); transformed != "" {
+						arrowheads.WriteString(transformed)
+					} else {
+						m := marker
+						if strokeColor != "" && strokeColor != "none" {
+							m.FillColor = strokeColor
+						}
+						arrowheads.WriteString(buildArrowheadPath(x, y, angle, m))
 					}
-					arrowheads.WriteString(buildArrowheadPath(x, y, angle, m))
 				}
 			}
 		}
@@ -388,11 +532,18 @@ func inlineMarkers(svg string) string {
 			if marker, ok := markers[markerID]; ok {
 				x, y, angle, found := pathEndpoint(d, true)
 				if found {
-					m := marker
-					if strokeColor != "" && strokeColor != "none" {
-						m.FillColor = strokeColor
+					angle += math.Pi
+					if special := buildSpecialMarkerElements(markerID, strokeColor, x, y, angle); special != "" {
+						arrowheads.WriteString(special)
+					} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x, y, angle); transformed != "" {
+						arrowheads.WriteString(transformed)
+					} else {
+						m := marker
+						if strokeColor != "" && strokeColor != "none" {
+							m.FillColor = strokeColor
+						}
+						arrowheads.WriteString(buildArrowheadPath(x, y, angle, m))
 					}
-					arrowheads.WriteString(buildArrowheadPath(x, y, angle+math.Pi, m))
 				}
 			}
 		}
@@ -420,11 +571,17 @@ func inlineMarkers(svg string) string {
 		if endMatch := reMarkerEnd.FindStringSubmatch(lineTag); len(endMatch) >= 2 {
 			markerID := endMatch[1]
 			if marker, ok := markers[markerID]; ok {
-				m := marker
-				if strokeColor != "" && strokeColor != "none" {
-					m.FillColor = strokeColor
+				if special := buildSpecialMarkerElements(markerID, strokeColor, x2, y2, angle); special != "" {
+					arrowheads.WriteString(special)
+				} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x2, y2, angle); transformed != "" {
+					arrowheads.WriteString(transformed)
+				} else {
+					m := marker
+					if strokeColor != "" && strokeColor != "none" {
+						m.FillColor = strokeColor
+					}
+					arrowheads.WriteString(buildArrowheadPath(x2, y2, angle, m))
 				}
-				arrowheads.WriteString(buildArrowheadPath(x2, y2, angle, m))
 			}
 		}
 
@@ -432,11 +589,18 @@ func inlineMarkers(svg string) string {
 		if startMatch := reMarkerStart.FindStringSubmatch(lineTag); len(startMatch) >= 2 {
 			markerID := startMatch[1]
 			if marker, ok := markers[markerID]; ok {
-				m := marker
-				if strokeColor != "" && strokeColor != "none" {
-					m.FillColor = strokeColor
+				angleStart := angle + math.Pi
+				if special := buildSpecialMarkerElements(markerID, strokeColor, x1, y1, angleStart); special != "" {
+					arrowheads.WriteString(special)
+				} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x1, y1, angleStart); transformed != "" {
+					arrowheads.WriteString(transformed)
+				} else {
+					m := marker
+					if strokeColor != "" && strokeColor != "none" {
+						m.FillColor = strokeColor
+					}
+					arrowheads.WriteString(buildArrowheadPath(x1, y1, angleStart, m))
 				}
-				arrowheads.WriteString(buildArrowheadPath(x1, y1, angle+math.Pi, m))
 			}
 		}
 

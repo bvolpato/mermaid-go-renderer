@@ -70,9 +70,9 @@ func slack(g *Graph, e Edge) int {
 // --- Feasible Tree ---
 
 type treeNodeLabel struct {
-	Low    int
-	Lim    int
-	Parent string
+	Low       int
+	Lim       int
+	Parent    string
 	HasParent bool
 }
 

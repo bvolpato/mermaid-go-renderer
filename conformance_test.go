@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 type conformanceFixture struct {
@@ -44,7 +45,7 @@ func TestConformanceAgainstMMDC(t *testing.T) {
 
 			gotSVG, err := RenderWithOptions(
 				fixture.Diagram,
-				DefaultRenderOptions().WithAllowApproximate(true),
+				DefaultRenderOptions().WithAllowApproximate(true).WithViewportSize(width, height),
 			)
 			if err != nil {
 				t.Fatalf("RenderWithOptions() error: %v", err)
@@ -115,11 +116,8 @@ func TestPNGConformanceAgainstMMDC(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load PNG baseline %s: %v", baselinePath, err)
 		}
-		if baseline.Width != width || baseline.Height != height {
-			t.Fatalf(
-				"baseline dimensions mismatch: baseline=%dx%d expected=%dx%d",
-				baseline.Width, baseline.Height, width, height,
-			)
+		if err := validatePNGConformanceBaseline(baseline, fixtures, width, height); err != nil {
+			t.Fatalf("invalid PNG baseline %s: %v", baselinePath, err)
 		}
 		for _, entry := range baseline.Entries {
 			baselineMap[entry.Fixture] = entry.Mismatch
@@ -167,10 +165,14 @@ func TestPNGConformanceAgainstMMDC(t *testing.T) {
 	}
 	if updateBaseline {
 		baseline := pngConformanceBaseline{
-			Width:   width,
-			Height:  height,
-			Entries: make([]pngConformanceBaselineEntry, 0, len(computed)),
+			Width:             width,
+			Height:            height,
+			GeneratedAt:       time.Now().UTC().Format(time.RFC3339),
+			FixtureCount:      len(computed),
+			Entries:           make([]pngConformanceBaselineEntry, 0, len(computed)),
+			ReferenceRenderer: "mmdc",
 		}
+		baseline.ReferenceVersion, baseline.NodeVersion = detectReferenceVersions()
 		names := make([]string, 0, len(computed))
 		for name := range computed {
 			names = append(names, name)
@@ -189,6 +191,17 @@ func TestPNGConformanceAgainstMMDC(t *testing.T) {
 			t.Fatalf("write PNG baseline: %v", err)
 		}
 		t.Logf("updated PNG baseline at %s", baselinePath)
+	}
+}
+
+func TestPNGConformanceBaselineCompleteness(t *testing.T) {
+	baselinePath := filepath.Join("testdata", "conformance", "png_mismatch_baseline.json")
+	baseline, err := loadPNGConformanceBaseline(baselinePath)
+	if err != nil {
+		t.Fatalf("load PNG baseline %s: %v", baselinePath, err)
+	}
+	if err := validatePNGConformanceBaseline(baseline, conformanceFixtures(), baseline.Width, baseline.Height); err != nil {
+		t.Fatalf("invalid PNG baseline %s: %v", baselinePath, err)
 	}
 }
 
@@ -348,10 +361,10 @@ func conformanceFixtures() []conformanceFixture {
 		{
 			Name: "gitgraph_basic",
 			Diagram: `gitGraph
-  commit
+  commit id: "init"
   branch feature
   checkout feature
-  commit
+  commit id: "feat-1"
   checkout main
   merge feature`,
 			MaxMismatch: 0.16,
@@ -606,9 +619,14 @@ type pngConformanceBaselineEntry struct {
 }
 
 type pngConformanceBaseline struct {
-	Width   int                           `json:"width"`
-	Height  int                           `json:"height"`
-	Entries []pngConformanceBaselineEntry `json:"entries"`
+	Width             int                           `json:"width"`
+	Height            int                           `json:"height"`
+	GeneratedAt       string                        `json:"generated_at,omitempty"`
+	ReferenceRenderer string                        `json:"reference_renderer,omitempty"`
+	ReferenceVersion  string                        `json:"reference_version,omitempty"`
+	NodeVersion       string                        `json:"node_version,omitempty"`
+	FixtureCount      int                           `json:"fixture_count,omitempty"`
+	Entries           []pngConformanceBaselineEntry `json:"entries"`
 }
 
 func loadPNGConformanceBaseline(path string) (pngConformanceBaseline, error) {
@@ -630,6 +648,93 @@ func writePNGConformanceBaseline(path string, baseline pngConformanceBaseline) e
 	}
 	content = append(content, '\n')
 	return os.WriteFile(path, content, 0o644)
+}
+
+func validatePNGConformanceBaseline(
+	baseline pngConformanceBaseline,
+	fixtures []conformanceFixture,
+	expectedWidth int,
+	expectedHeight int,
+) error {
+	if baseline.Width != expectedWidth || baseline.Height != expectedHeight {
+		return fmt.Errorf(
+			"baseline dimensions mismatch: baseline=%dx%d expected=%dx%d",
+			baseline.Width, baseline.Height, expectedWidth, expectedHeight,
+		)
+	}
+	if len(fixtures) == 0 {
+		return fmt.Errorf("no conformance fixtures configured")
+	}
+	if len(baseline.Entries) == 0 {
+		return fmt.Errorf("baseline is empty")
+	}
+
+	expected := make(map[string]struct{}, len(fixtures))
+	for _, fixture := range fixtures {
+		expected[fixture.Name] = struct{}{}
+	}
+	seen := make(map[string]struct{}, len(baseline.Entries))
+	missing := make([]string, 0)
+	extra := make([]string, 0)
+	duplicates := make([]string, 0)
+	for _, entry := range baseline.Entries {
+		if _, ok := seen[entry.Fixture]; ok {
+			duplicates = append(duplicates, entry.Fixture)
+			continue
+		}
+		seen[entry.Fixture] = struct{}{}
+		if _, ok := expected[entry.Fixture]; !ok {
+			extra = append(extra, entry.Fixture)
+		}
+	}
+	for _, fixture := range fixtures {
+		if _, ok := seen[fixture.Name]; !ok {
+			missing = append(missing, fixture.Name)
+		}
+	}
+	sort.Strings(missing)
+	sort.Strings(extra)
+	sort.Strings(duplicates)
+	problems := make([]string, 0, 3)
+	if len(missing) > 0 {
+		problems = append(problems, "missing="+strings.Join(missing, ","))
+	}
+	if len(extra) > 0 {
+		problems = append(problems, "extra="+strings.Join(extra, ","))
+	}
+	if len(duplicates) > 0 {
+		problems = append(problems, "duplicates="+strings.Join(duplicates, ","))
+	}
+	if len(problems) > 0 {
+		return fmt.Errorf("%s", strings.Join(problems, " "))
+	}
+	if baseline.FixtureCount > 0 && baseline.FixtureCount != len(baseline.Entries) {
+		return fmt.Errorf(
+			"fixture_count mismatch: metadata=%d entries=%d",
+			baseline.FixtureCount,
+			len(baseline.Entries),
+		)
+	}
+	return nil
+}
+
+func detectReferenceVersions() (referenceVersion string, nodeVersion string) {
+	referenceVersion = commandVersion("mmdc", "--version")
+	nodeVersion = commandVersion("node", "--version")
+	return referenceVersion, nodeVersion
+}
+
+func commandVersion(name string, args ...string) string {
+	cmd := exec.Command(name, args...)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return ""
+	}
+	lines := strings.Split(strings.TrimSpace(string(out)), "\n")
+	if len(lines) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(lines[0])
 }
 
 func renderWithMMDCPNG(t *testing.T, diagram string, width, height int) (*image.NRGBA, []byte) {
@@ -668,7 +773,7 @@ func renderWithMMDGPNG(t *testing.T, diagram string, width, height int) (*image.
 	t.Helper()
 	svg, err := RenderWithOptions(
 		diagram,
-		DefaultRenderOptions().WithAllowApproximate(true),
+		DefaultRenderOptions().WithAllowApproximate(true).WithViewportSize(float64(width), float64(height)),
 	)
 	if err != nil {
 		t.Fatalf("RenderWithOptions() error: %v", err)

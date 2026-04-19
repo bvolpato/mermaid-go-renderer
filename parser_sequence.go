@@ -46,13 +46,14 @@ func parseSequence(input string) (ParseOutput, error) {
 			continue
 		}
 
-		if noteActor, noteLabel, ok := parseSequenceNoteLine(line); ok {
+		if noteFrom, noteTo, noteLabel, notePlacement, ok := parseSequenceNoteLine(line); ok {
 			msg := SequenceMessage{
-				From:   noteActor,
-				To:     noteActor,
-				Label:  noteLabel,
-				Arrow:  "-->>",
-				IsNote: true,
+				From:          noteFrom,
+				To:            noteTo,
+				Label:         noteLabel,
+				Arrow:         "-->>",
+				NotePlacement: notePlacement,
+				IsNote:        true,
 			}
 			graph.SequenceMessages = append(graph.SequenceMessages, msg)
 			graph.SequenceEvents = append(graph.SequenceEvents, SequenceEvent{
@@ -60,9 +61,14 @@ func parseSequence(input string) (ParseOutput, error) {
 				MessageIndex: messageIdx,
 			})
 			messageIdx++
-			if _, exists := participantSet[noteActor]; !exists {
-				participantSet[noteActor] = struct{}{}
-				graph.SequenceParticipants = append(graph.SequenceParticipants, noteActor)
+			for _, participant := range []string{noteFrom, noteTo} {
+				if participant == "" {
+					continue
+				}
+				if _, exists := participantSet[participant]; !exists {
+					participantSet[participant] = struct{}{}
+					graph.SequenceParticipants = append(graph.SequenceParticipants, participant)
+				}
 			}
 			continue
 		}
@@ -287,28 +293,42 @@ func parseSequenceControlLine(line string) (SequenceEventKind, string, bool) {
 	}
 }
 
-func parseSequenceNoteLine(line string) (actor string, label string, ok bool) {
+func parseSequenceNoteLine(line string) (from string, to string, label string, placement SequenceNotePlacement, ok bool) {
 	trimmed := strings.TrimSpace(line)
 	low := lower(trimmed)
-	if !strings.HasPrefix(low, "note over ") {
-		return "", "", false
+	switch {
+	case strings.HasPrefix(low, "note over "):
+		placement = SequenceNoteOver
+		trimmed = strings.TrimSpace(trimmed[len("note over "):])
+	case strings.HasPrefix(low, "note right of "):
+		placement = SequenceNoteRightOf
+		trimmed = strings.TrimSpace(trimmed[len("note right of "):])
+	case strings.HasPrefix(low, "note left of "):
+		placement = SequenceNoteLeftOf
+		trimmed = strings.TrimSpace(trimmed[len("note left of "):])
+	default:
+		return "", "", "", "", false
 	}
-	rest := strings.TrimSpace(trimmed[len("note over "):])
-	colonIdx := strings.Index(rest, ":")
-	if colonIdx <= 0 || colonIdx >= len(rest)-1 {
-		return "", "", false
+	colonIdx := strings.Index(trimmed, ":")
+	if colonIdx <= 0 || colonIdx >= len(trimmed)-1 {
+		return "", "", "", "", false
 	}
-	actorsRaw := strings.TrimSpace(rest[:colonIdx])
-	label = strings.TrimSpace(stripQuotes(rest[colonIdx+1:]))
+	actorsRaw := strings.TrimSpace(trimmed[:colonIdx])
+	label = strings.TrimSpace(stripQuotes(trimmed[colonIdx+1:]))
 	if label == "" {
-		return "", "", false
+		return "", "", "", "", false
 	}
-	if commaIdx := strings.Index(actorsRaw, ","); commaIdx >= 0 {
-		actorsRaw = actorsRaw[:commaIdx]
+	actors := strings.SplitN(actorsRaw, ",", 2)
+	from = stripQuotes(strings.TrimSpace(actors[0]))
+	if from == "" {
+		return "", "", "", "", false
 	}
-	actor = stripQuotes(strings.TrimSpace(actorsRaw))
-	if actor == "" {
-		return "", "", false
+	to = from
+	if len(actors) == 2 {
+		other := stripQuotes(strings.TrimSpace(actors[1]))
+		if other != "" {
+			to = other
+		}
 	}
-	return actor, label, true
+	return from, to, label, placement, true
 }

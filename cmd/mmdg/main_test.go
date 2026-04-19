@@ -65,6 +65,37 @@ func TestRunRendersPNGFile(t *testing.T) {
 	}
 }
 
+func TestRunUsesViewportWidthForGanttSVGWhenRequested(t *testing.T) {
+	tmp := t.TempDir()
+	inputPath := filepath.Join(tmp, "diagram.mmd")
+	outputPath := filepath.Join(tmp, "diagram.svg")
+	input := strings.TrimSpace(`gantt
+  title Delivery Plan
+  dateFormat YYYY-MM-DD
+  section Build
+    Core Engine :done, core, 2026-01-01, 5d
+    QA Cycle :active, qa, 2026-01-05, 3d`)
+	if err := os.WriteFile(inputPath, []byte(input), 0o644); err != nil {
+		t.Fatalf("write input: %v", err)
+	}
+
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"mmdg", "-i", inputPath, "-o", outputPath, "-e", "svg", "-w", "1600", "-H", "1200"}
+
+	if err := run(); err != nil {
+		t.Fatalf("run() error = %v", err)
+	}
+
+	out, err := os.ReadFile(outputPath)
+	if err != nil {
+		t.Fatalf("read output: %v", err)
+	}
+	if !strings.Contains(string(out), `viewBox="0 0 1584 148"`) {
+		t.Fatalf("expected viewport-aware gantt SVG, got: %s", string(out))
+	}
+}
+
 func TestRunMarkdownMultiOutput(t *testing.T) {
 	tmp := t.TempDir()
 	inputPath := filepath.Join(tmp, "docs.md")

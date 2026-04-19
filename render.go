@@ -870,7 +870,22 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			family = fontFamily
 		}
 		if mermaidLike {
-			textW := max(1.0, measureTextWidth(text.Value, false)+8)
+			outerClass := "nodeLabel"
+			if textClass != "" {
+				outerClass = textClass
+			}
+			if layout.Kind == DiagramClass {
+				if textClass == "class-edge-label" {
+					outerClass = "edgeLabel"
+				} else {
+					outerClass = "label-group text"
+				}
+			}
+			textPad := 8.0
+			if layout.Kind == DiagramER && outerClass == "edgeLabel" {
+				textPad = 4.0
+			}
+			textW := max(1.0, measureTextWidthWithFontSize(text.Value, size, false, family)+textPad)
 			textH := max(16.0, size*1.5)
 			if layout.Kind == DiagramER && strings.TrimSpace(text.Value) == "" {
 				textW = 0
@@ -893,21 +908,24 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			if labelWithTransform {
 				groupTransform = `translate(` + formatFloat(x) + `,` + formatFloat(y) + `)`
 			}
-			outerClass := "nodeLabel"
-			if textClass != "" {
-				outerClass = textClass
-			}
-			if layout.Kind == DiagramClass {
-				if textClass == "class-edge-label" {
-					outerClass = "edgeLabel"
-				} else {
-					outerClass = "label-group text"
-				}
-			}
 			b.WriteString(`<g class="` + html.EscapeString(outerClass) + `" transform="` + groupTransform + `">`)
 
 			if layout.Kind == DiagramClass && textClass == "class-edge-label" {
 				b.WriteString(`<g class="label" data-id="` + html.EscapeString(textID) + `" transform="translate(0, 0)">`)
+				b.WriteString(`<foreignObject width="` + formatFloat(textW) + `" height="` + formatFloat(textH) + `">`)
+				b.WriteString(`<div class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">`)
+				if strings.TrimSpace(text.Value) != "" {
+					b.WriteString(`<p>`)
+					b.WriteString(html.EscapeString(text.Value))
+					b.WriteString(`</p>`)
+				}
+				b.WriteString(`</span></div></foreignObject></g>`)
+			} else if layout.Kind == DiagramER && outerClass == "edgeLabel" {
+				b.WriteString(`<g class="label"`)
+				if textID != "" {
+					b.WriteString(` data-id="` + html.EscapeString(textID) + `"`)
+				}
+				b.WriteString(` transform="translate(0, 0)">`)
 				b.WriteString(`<foreignObject width="` + formatFloat(textW) + `" height="` + formatFloat(textH) + `">`)
 				b.WriteString(`<div class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">`)
 				if strings.TrimSpace(text.Value) != "" {
@@ -1026,10 +1044,34 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				continue
 			}
 			if layout.Kind == DiagramJourney && text.BoxW > 0 && text.BoxH > 0 {
-				b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" dominant-baseline="central" alignment-baseline="central" text-anchor="middle" class="` + html.EscapeString(text.Class) + `" fill="` + html.EscapeString(defaultColor(text.Color, "#333")) + `" font-size="` + formatFloat(max(12.0, text.Size)) + `" font-family="` + html.EscapeString(family) + `" style="font-weight: 400;">`)
+				boxClass := strings.TrimSpace(text.Class)
+				if boxClass == "section-label" {
+					for _, rect := range layout.Rects {
+						if math.Abs(rect.X-text.BoxX) > 0.01 || math.Abs(rect.Y-text.BoxY) > 0.01 {
+							continue
+						}
+						if math.Abs(rect.W-text.BoxW) > 0.01 || math.Abs(rect.H-text.BoxH) > 0.01 {
+							continue
+						}
+						if strings.TrimSpace(rect.Class) != "" {
+							boxClass = rect.Class
+						}
+						break
+					}
+				}
+				if boxClass == "" {
+					boxClass = "task"
+				}
+				textSize := formatFloat(max(12.0, text.Size))
+				b.WriteString(`<g><switch>`)
+				b.WriteString(`<foreignObject x="` + formatFloat(text.BoxX) + `" y="` + formatFloat(text.BoxY) + `" width="` + formatFloat(text.BoxW) + `" height="` + formatFloat(text.BoxH) + `">`)
+				b.WriteString(`<div class="` + html.EscapeString(boxClass) + `" xmlns="http://www.w3.org/1999/xhtml" style="display: table; height: 100%; width: 100%;"><div class="label" style="display: table-cell; text-align: center; vertical-align: middle;">`)
+				b.WriteString(html.EscapeString(text.Value))
+				b.WriteString(`</div></div></foreignObject>`)
+				b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" dominant-baseline="central" alignment-baseline="central" class="` + html.EscapeString(boxClass) + `" style="text-anchor: middle; font-size: ` + textSize + `px; font-family: &quot;Open Sans&quot;, sans-serif;">`)
 				b.WriteString(`<tspan x="` + formatFloat(text.X) + `" dy="0">`)
 				b.WriteString(html.EscapeString(text.Value))
-				b.WriteString(`</tspan></text>`)
+				b.WriteString(`</tspan></text></switch></g>`)
 				b.WriteString("\n")
 				if wrapTextGroup {
 					b.WriteString("</g>\n")
@@ -1267,6 +1309,42 @@ func renderC4Mermaid(layout Layout) string {
 	var b strings.Builder
 	b.Grow(8192)
 
+	writeCenteredText := func(x float64, y float64, lines []string, fill string, fontSize float64, weight string, fontStyle string) {
+		cleaned := make([]string, 0, len(lines))
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if line == "" {
+				continue
+			}
+			cleaned = append(cleaned, line)
+		}
+		if len(cleaned) == 0 {
+			return
+		}
+		b.WriteString(`<text x="` + formatFloat(x) + `" y="` + formatFloat(y) + `" dominant-baseline="middle" fill="` + html.EscapeString(fill) + `" style="text-anchor: middle; font-size: ` + formatFloat(fontSize) + `px;`)
+		if strings.TrimSpace(weight) != "" {
+			b.WriteString(` font-weight: ` + html.EscapeString(weight) + `;`)
+		}
+		b.WriteString(` font-family: &quot;Open Sans&quot;, sans-serif;`)
+		if strings.TrimSpace(fontStyle) != "" {
+			b.WriteString(` font-style: ` + html.EscapeString(fontStyle) + `;`)
+		}
+		b.WriteString(`">`)
+		for idx, line := range cleaned {
+			b.WriteString(`<tspan x="` + formatFloat(x) + `"`)
+			if idx == 0 {
+				b.WriteString(` dy="0"`)
+			} else {
+				b.WriteString(` dy="` + formatFloat(fontSize*1.45) + `"`)
+			}
+			b.WriteString(` alignment-baseline="mathematical"`)
+			b.WriteString(`>`)
+			b.WriteString(html.EscapeString(line))
+			b.WriteString(`</tspan>`)
+		}
+		b.WriteString(`</text>`)
+	}
+
 	type c4NodeRender struct {
 		NodeLayout
 		X           float64
@@ -1282,49 +1360,12 @@ func renderC4Mermaid(layout Layout) string {
 
 	nodes := make([]c4NodeRender, 0, len(layout.Nodes))
 	for _, node := range layout.Nodes {
-		lines := splitLinesPreserve(node.Label)
-		cleaned := make([]string, 0, len(lines))
-		for _, line := range lines {
-			s := strings.TrimSpace(line)
-			if s == "" {
-				continue
-			}
-			cleaned = append(cleaned, s)
-		}
-		stereotype := ""
-		if len(cleaned) > 0 && strings.HasPrefix(cleaned[0], "<<") {
-			stereotype = cleaned[0]
-			cleaned = cleaned[1:]
-		}
-		name := strings.TrimSpace(node.ID)
-		if len(cleaned) > 0 {
-			name = cleaned[0]
-		}
-		description := []string{}
-		if len(cleaned) > 1 {
-			description = append(description, cleaned[1:]...)
-		}
-		fill := defaultColor(node.Fill, "#1168BD")
-		stroke := defaultColor(node.Stroke, "#3C7FC0")
-		lowerStereo := lower(stereotype)
-		switch {
-		case strings.Contains(lowerStereo, "external"):
-			fill = "#999999"
-			stroke = "#8A8A8A"
-		case strings.Contains(lowerStereo, "person"):
-			fill = "#08427B"
-			stroke = "#073B6F"
-		case strings.Contains(lowerStereo, "system"), strings.Contains(lowerStereo, "container"):
-			fill = "#1168BD"
-			stroke = "#3C7FC0"
-		}
-		w := max(216.0, node.W)
-		h := max(60.0, node.H)
-		if node.Shape == ShapePerson || len(description) > 0 {
-			h = max(h, 105)
-		}
-		x := node.X - (w-node.W)/2
+		info := parseC4NodeInfo(node.Label, node.ID, node.Shape)
+		fill, stroke := c4NodeColors(info, node.Fill, node.Stroke)
+		x := node.X
 		y := node.Y
+		w := node.W
+		h := node.H
 		nodes = append(nodes, c4NodeRender{
 			NodeLayout:  node,
 			X:           x,
@@ -1333,30 +1374,31 @@ func renderC4Mermaid(layout Layout) string {
 			H:           h,
 			Fill:        fill,
 			Stroke:      stroke,
-			Stereotype:  stereotype,
-			Name:        name,
-			Description: description,
+			Stereotype:  info.DisplayType,
+			Name:        info.Name,
+			Description: info.Description,
 		})
 	}
 
-	nodeByID := map[string]c4NodeRender{}
 	for _, node := range nodes {
-		nodeByID[node.ID] = node
 		b.WriteString(`<g class="person-man">`)
 		b.WriteString(`<rect x="` + formatFloat(node.X) + `" y="` + formatFloat(node.Y) + `" fill="` + html.EscapeString(node.Fill) + `" stroke="` + html.EscapeString(node.Stroke) + `" width="` + formatFloat(node.W) + `" height="` + formatFloat(node.H) + `" rx="2.5" ry="2.5" stroke-width="0.5"/>`)
+		info := parseC4NodeInfo(node.Label, node.ID, node.Shape)
+		metrics := measureC4Node(info, false)
 		if strings.TrimSpace(node.Stereotype) != "" {
-			textLen := max(1.0, measureTextWidth(node.Stereotype, false))
-			b.WriteString(`<text fill="#FFFFFF" font-family="&quot;Open Sans&quot;, sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="` + formatFloat(textLen) + `" x="` + formatFloat(node.X+node.W/2-textLen/2) + `" y="` + formatFloat(node.Y+20) + `">` + html.EscapeString(node.Stereotype) + `</text>`)
+			textLen := max(1.0, metrics.TypeTextW)
+			b.WriteString(`<text fill="#FFFFFF" font-family="&quot;Open Sans&quot;, sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="` + formatFloat(textLen) + `" x="` + formatFloat(node.X+node.W/2-textLen/2) + `" y="` + formatFloat(node.Y+metrics.TypeY) + `">` + html.EscapeString(node.Stereotype) + `</text>`)
 		}
-		if node.Shape == ShapePerson {
+		if info.IsPerson {
 			iconHref := "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='4' r='3' fill='none' stroke='%23FFFFFF' stroke-width='1.2'/%3E%3Cpath d='M3 15c0-2.8 2.2-5 5-5s5 2.2 5 5' fill='none' stroke='%23FFFFFF' stroke-width='1.2'/%3E%3C/svg%3E"
-			b.WriteString(`<image width="48" height="48" x="` + formatFloat(node.X+node.W/2-24) + `" y="` + formatFloat(node.Y+30) + `" xlink:href="` + iconHref + `"/>`)
+			b.WriteString(`<image width="48" height="48" x="` + formatFloat(node.X+node.W/2-24) + `" y="` + formatFloat(node.Y+metrics.ImageY) + `" xlink:href="` + iconHref + `"/>`)
 		}
-		nameY := node.Y + node.H - 22
-		if node.Shape == ShapePerson || len(node.Description) > 0 {
-			nameY = node.Y + node.H - 19
+		nameY := node.Y + metrics.LabelY
+		descriptionStartY := node.Y + metrics.DescrY
+		writeCenteredText(node.X+node.W/2, nameY, []string{node.Name}, "#FFFFFF", 16, "bold", "")
+		if len(node.Description) > 0 {
+			writeCenteredText(node.X+node.W/2, descriptionStartY, node.Description, "#FFFFFF", 14, "normal", "")
 		}
-		b.WriteString(`<text x="` + formatFloat(node.X+node.W/2) + `" y="` + formatFloat(nameY) + `" dominant-baseline="middle" fill="#FFFFFF" style="text-anchor: middle; font-size: 16px; font-weight: bold; font-family: &quot;Open Sans&quot;, sans-serif;"><tspan dy="0" alignment-baseline="mathematical">` + html.EscapeString(node.Name) + `</tspan></text>`)
 		b.WriteString(`</g>`)
 	}
 
@@ -1366,29 +1408,34 @@ func renderC4Mermaid(layout Layout) string {
 		y1 := edge.Y1
 		x2 := edge.X2
 		y2 := edge.Y2
-		if fromNode, ok := nodeByID[edge.From]; ok {
-			x1 = fromNode.X + fromNode.W
-			y1 = fromNode.Y + fromNode.H*0.57
-		}
-		if toNode, ok := nodeByID[edge.To]; ok {
-			x2 = toNode.X
-			y2 = toNode.Y + toNode.H*0.48
-		}
-		labelX := (x1 + x2) / 2
-		labelY := (y1 + y2) / 2
-		if idx == len(layout.Edges)-1 && len(layout.Edges) > 1 {
-			cx := x1 + (x2-x1)*0.35
-			cy := y1 + (y2-y1)*0.7 + 5
-			b.WriteString(`<path fill="none" stroke-width="1" stroke="#444444" d="M` + formatFloat(x1) + `,` + formatFloat(y1) + ` Q` + formatFloat(cx) + `,` + formatFloat(cy) + ` ` + formatFloat(x2) + `,` + formatFloat(y2) + `" marker-end="url(#arrowhead)"/>`)
-			labelY = cy
-		} else {
+		labelX := math.Min(x1, x2) + math.Abs(x2-x1)/2
+		labelY := math.Min(y1, y2) + math.Abs(y2-y1)/2
+		if idx == 0 {
 			b.WriteString(`<line x1="` + formatFloat(x1) + `" y1="` + formatFloat(y1) + `" x2="` + formatFloat(x2) + `" y2="` + formatFloat(y2) + `" stroke-width="1" stroke="#444444" marker-end="url(#arrowhead)" style="fill: none;"/>`)
+		} else {
+			cx := x1 + (x2-x1)/4
+			cy := y1 + (y2-y1)/2
+			b.WriteString(`<path fill="none" stroke-width="1" stroke="#444444" d="M` + formatFloat(x1) + `,` + formatFloat(y1) + ` Q` + formatFloat(cx) + `,` + formatFloat(cy) + ` ` + formatFloat(x2) + `,` + formatFloat(y2) + `" marker-end="url(#arrowhead)"/>`)
 		}
 		label := strings.TrimSpace(edge.Label)
 		if label == "" {
 			continue
 		}
-		b.WriteString(`<text x="` + formatFloat(labelX) + `" y="` + formatFloat(labelY) + `" dominant-baseline="middle" fill="#444444" style="text-anchor: middle; font-size: 12px; font-weight: normal; font-family: &quot;Open Sans&quot;, sans-serif;"><tspan dy="0" alignment-baseline="mathematical">` + html.EscapeString(label) + `</tspan></text>`)
+		labelLines := splitLinesPreserve(label)
+		if len(labelLines) > 0 {
+			writeCenteredText(labelX, labelY, []string{strings.TrimSpace(labelLines[0])}, "#444444", 12, "normal", "")
+		}
+		for lineIdx := 1; lineIdx < len(labelLines); lineIdx++ {
+			line := strings.TrimSpace(labelLines[lineIdx])
+			if line == "" {
+				continue
+			}
+			fontStyle := ""
+			if strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]") {
+				fontStyle = "italic"
+			}
+			writeCenteredText(labelX, labelY+float64(lineIdx)*17, []string{line}, "#444444", 12, "normal", fontStyle)
+		}
 	}
 	b.WriteString(`</g>`)
 
@@ -1399,7 +1446,7 @@ func renderC4Mermaid(layout Layout) string {
 		if strings.TrimSpace(text.Value) == "" {
 			continue
 		}
-		if text.Size >= 24 || text.Weight == "700" {
+		if text.Class == "c4-title" || text.Size >= 24 || text.Weight == "700" {
 			titleValue = text.Value
 			titleX = text.X
 			titleY = text.Y
@@ -1603,11 +1650,20 @@ func renderKanbanMermaid(layout Layout) string {
 		Title string
 	}
 	type cardRender struct {
-		Rect     LayoutRect
-		ID       string
-		Title    string
-		Ticket   string
-		Assigned string
+		Rect         LayoutRect
+		ID           string
+		Title        string
+		Ticket       string
+		Assigned     string
+		PriorityLine *LayoutLine
+	}
+
+	measureLabelWidth := func(value string) float64 {
+		value = strings.TrimSpace(value)
+		if value == "" {
+			return 0
+		}
+		return measureTextWidthWithFontSize(value, 16, true)
 	}
 
 	columns := make([]columnRender, 0, 8)
@@ -1665,6 +1721,20 @@ func renderKanbanMermaid(layout Layout) string {
 		if card.ID == "" {
 			card.ID = "card-" + intString(len(cards)+1)
 		}
+		for idx := range layout.Lines {
+			line := &layout.Lines[idx]
+			if math.Abs(line.X1-line.X2) > 0.01 {
+				continue
+			}
+			if line.X1 < rect.X-1 || line.X1 > rect.X+10 {
+				continue
+			}
+			if line.Y1 < rect.Y-1 || line.Y2 > rect.Y+rect.H+1 {
+				continue
+			}
+			card.PriorityLine = line
+			break
+		}
 		cards = append(cards, card)
 	}
 	sort.Slice(cards, func(i, j int) bool {
@@ -1685,28 +1755,36 @@ func renderKanbanMermaid(layout Layout) string {
 		if title == "" {
 			title = colID
 		}
-		titleW := max(0.0, measureTextWidth(title, false)+8)
+		titleW := measureLabelWidth(title)
 		titleX := col.Rect.X + col.Rect.W/2 - titleW/2
 		b.WriteString(`<g class="` + html.EscapeString(sectionClass) + `" id="` + html.EscapeString(colID) + `" data-look="classic">`)
-		b.WriteString(`<rect style="" rx="` + formatFloat(col.Rect.RX) + `" ry="` + formatFloat(col.Rect.RY) + `" x="` + formatFloat(col.Rect.X) + `" y="` + formatFloat(col.Rect.Y) + `" width="` + formatFloat(col.Rect.W) + `" height="` + formatFloat(col.Rect.H) + `"/>`)
+		b.WriteString(`<rect style="" rx="` + formatFloat(col.Rect.RX) + `" ry="` + formatFloat(col.Rect.RY) + `" x="` + formatFloat(col.Rect.X) + `" y="` + formatFloat(col.Rect.Y) + `" width="` + formatFloat(col.Rect.W) + `" height="` + formatFloat(col.Rect.H) + `" fill="` + html.EscapeString(defaultColor(col.Rect.Fill, "#ECECFF")) + `" stroke="` + html.EscapeString(defaultColor(col.Rect.Stroke, "#9370DB")) + `" stroke-width="` + formatFloat(max(1, col.Rect.StrokeWidth)) + `"/>`)
 		b.WriteString(`<g class="cluster-label" transform="translate(` + formatFloat(titleX) + `, ` + formatFloat(col.Rect.Y) + `)">`)
 		b.WriteString(`<foreignObject width="` + formatFloat(titleW) + `" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>` + html.EscapeString(title) + `</p></span></div></foreignObject>`)
 		b.WriteString(`</g></g>`)
 	}
 	b.WriteString(`</g>`)
 
-	writeItemLabel := func(x float64, y float64, value string) {
-		labelW := max(0.0, measureTextWidth(value, false)+8)
+	writeItemLabel := func(x float64, y float64, value string, align string) float64 {
+		labelW := measureLabelWidth(value)
 		labelH := 24.0
 		if strings.TrimSpace(value) == "" {
 			labelW = 0
 			labelH = 0
 		}
-		b.WriteString(`<g class="label" style="text-align:left !important" transform="translate(` + formatFloat(x) + `, ` + formatFloat(y) + `)">`)
+		if align == "" {
+			align = "left"
+		}
+		b.WriteString(`<g class="label" style="text-align:` + html.EscapeString(align) + ` !important" transform="translate(` + formatFloat(x) + `, ` + formatFloat(y) + `)">`)
 		b.WriteString(`<rect/><foreignObject width="` + formatFloat(labelW) + `" height="` + formatFloat(labelH) + `">`)
-		b.WriteString(`<div style="text-align: center; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 175px;" xmlns="http://www.w3.org/1999/xhtml"><span style="text-align:left !important" class="nodeLabel"><p>`)
-		b.WriteString(html.EscapeString(value))
-		b.WriteString(`</p></span></div></foreignObject></g>`)
+		b.WriteString(`<div style="text-align: ` + html.EscapeString(align) + `; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 175px;" xmlns="http://www.w3.org/1999/xhtml"><span style="text-align:` + html.EscapeString(align) + ` !important" class="nodeLabel">`)
+		if strings.TrimSpace(value) != "" {
+			b.WriteString(`<p>`)
+			b.WriteString(html.EscapeString(value))
+			b.WriteString(`</p>`)
+		}
+		b.WriteString(`</span></div></foreignObject></g>`)
+		return labelW
 	}
 
 	b.WriteString(`<g class="items">`)
@@ -1716,11 +1794,15 @@ func renderKanbanMermaid(layout Layout) string {
 		x0 := -card.Rect.W / 2
 		y0 := -card.Rect.H / 2
 		b.WriteString(`<g class="node undefined" id="` + html.EscapeString(card.ID) + `" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(cy) + `)">`)
-		b.WriteString(`<rect class="basic label-container __APA__" style="" rx="` + formatFloat(card.Rect.RX) + `" ry="` + formatFloat(card.Rect.RY) + `" x="` + formatFloat(x0) + `" y="` + formatFloat(y0) + `" width="` + formatFloat(card.Rect.W) + `" height="` + formatFloat(card.Rect.H) + `"/>`)
-		writeItemLabel(x0+10, y0+10, card.Title)
+		b.WriteString(`<rect class="basic label-container __APA__" style="" rx="` + formatFloat(card.Rect.RX) + `" ry="` + formatFloat(card.Rect.RY) + `" x="` + formatFloat(x0) + `" y="` + formatFloat(y0) + `" width="` + formatFloat(card.Rect.W) + `" height="` + formatFloat(card.Rect.H) + `" fill="` + html.EscapeString(defaultColor(card.Rect.Fill, "#ffffff")) + `" stroke="` + html.EscapeString(defaultColor(card.Rect.Stroke, "#9370DB")) + `" stroke-width="` + formatFloat(max(1, card.Rect.StrokeWidth)) + `"/>`)
+		if card.PriorityLine != nil {
+			b.WriteString(`<line x1="` + formatFloat(card.PriorityLine.X1-cx) + `" y1="` + formatFloat(card.PriorityLine.Y1-cy) + `" x2="` + formatFloat(card.PriorityLine.X2-cx) + `" y2="` + formatFloat(card.PriorityLine.Y2-cy) + `" stroke-width="` + formatFloat(max(1, card.PriorityLine.StrokeWidth)) + `" stroke="` + html.EscapeString(defaultColor(card.PriorityLine.Stroke, "#9370DB")) + `"/>`)
+		}
+		writeItemLabel(x0+10, y0+10, card.Title, "left")
 		metaY := card.Rect.H/2 - 10
-		writeItemLabel(x0+10, metaY, card.Ticket)
-		writeItemLabel(card.Rect.W/2-10, metaY, card.Assigned)
+		writeItemLabel(x0+10, metaY, card.Ticket, "left")
+		assignedWidth := measureLabelWidth(card.Assigned)
+		writeItemLabel(card.Rect.W/2-10-assignedWidth, metaY, card.Assigned, "right")
 		b.WriteString(`</g>`)
 	}
 	b.WriteString(`</g>`)
@@ -1775,15 +1857,11 @@ func renderStateMermaid(layout Layout, theme Theme) string {
 	b.WriteString("\n")
 	for idx, edge := range layout.Edges {
 		edgeID := "edge" + intString(idx)
-		b.WriteString(`<path d="M`)
-		b.WriteString(formatFloat(edge.X1))
-		b.WriteString(",")
-		b.WriteString(formatFloat(edge.Y1))
-		b.WriteString(" L")
-		b.WriteString(formatFloat(edge.X2))
-		b.WriteString(",")
-		b.WriteString(formatFloat(edge.Y2))
-		b.WriteString(`"`)
+		edgeD := strings.TrimSpace(edge.D)
+		if edgeD == "" {
+			edgeD = "M" + formatFloat(edge.X1) + "," + formatFloat(edge.Y1) + " L" + formatFloat(edge.X2) + "," + formatFloat(edge.Y2)
+		}
+		b.WriteString(`<path d="` + html.EscapeString(edgeD) + `"`)
 		b.WriteString(` class="edge-thickness-normal edge-pattern-solid transition"`)
 		b.WriteString(` id="` + edgeID + `"`)
 		b.WriteString(` data-id="` + edgeID + `"`)
@@ -1961,19 +2039,22 @@ func renderGanttMermaid(layout Layout) string {
 	}
 	gridTranslateY := 194.0
 	tickLineY2 := -159.0
-	if strings.TrimSpace(domainPath) != "" {
-		if parts := strings.Split(domainPath, "V"); len(parts) >= 3 {
+	compactDomainPath := strings.ReplaceAll(domainPath, " ", "")
+	if strings.TrimSpace(compactDomainPath) != "" {
+		if parts := strings.Split(compactDomainPath, "V"); len(parts) >= 3 {
 			rawTop := strings.TrimPrefix(parts[0], "M0.5,-")
 			if v, err := strconv.ParseFloat(rawTop, 64); err == nil {
 				tickLineY2 = -v
+				gridTranslateY = max(0.0, 35.0+v)
 			}
 		}
-		if parts := strings.Split(domainPath, "H"); len(parts) >= 2 {
-			if strings.HasPrefix(parts[0], "M0.5,-") {
-				rawTop := strings.TrimPrefix(parts[0], "M0.5,-")
-				if v, err := strconv.ParseFloat(rawTop, 64); err == nil {
-					gridTranslateY = max(0.0, 35.0+v)
-				}
+	}
+	minTickX := 0.0
+	if len(tickTexts) > 0 {
+		minTickX = tickTexts[0].X
+		for _, tick := range tickTexts[1:] {
+			if tick.X < minTickX {
+				minTickX = tick.X
 			}
 		}
 	}
@@ -2007,7 +2088,7 @@ func renderGanttMermaid(layout Layout) string {
 		b.WriteString("\n")
 	}
 	for _, tick := range tickTexts {
-		tickX := math.Round(tick.X) + 0.5
+		tickX := math.Round(tick.X-minTickX) + 0.5
 		b.WriteString(`<g class="tick" opacity="1" transform="translate(` + formatFloat(tickX) + `,0)">`)
 		b.WriteString(`<line stroke="currentColor" x1="0" y1="0" x2="0" y2="` + formatFloat(tickLineY2) + `"></line>`)
 		b.WriteString(`<text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">`)
@@ -2191,14 +2272,15 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 	}
 
 	for _, msg := range plan.MessageLayouts {
+		textX := formatFloat(math.Round((msg.StartX + msg.StopX) / 2))
 		if msg.Note {
-			b.WriteString(`<rect x="` + formatFloat(msg.StartX) + `" y="` + formatFloat(msg.LineY) + `" fill="#EDF2AE" stroke="#666" width="` + formatFloat(msg.StopX-msg.StartX) + `" height="39" class="note"/>`)
-			b.WriteString(`<text x="` + formatFloat((msg.StartX+msg.StopX)/2) + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="noteText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
+			b.WriteString(`<rect x="` + formatFloat(msg.StartX) + `" y="` + formatFloat(msg.LineY) + `" fill="#EDF2AE" stroke="#666" width="` + formatFloat(msg.StopX-msg.StartX) + `" height="` + formatFloat(msg.Height) + `" class="note"/>`)
+			b.WriteString(`<text x="` + textX + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="noteText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
 			b.WriteString(html.EscapeString(msg.Message.Label))
 			b.WriteString(`</text>`)
 			continue
 		}
-		b.WriteString(`<text x="` + formatFloat((msg.StartX+msg.StopX)/2) + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
+		b.WriteString(`<text x="` + textX + `" y="` + formatFloat(msg.TextY) + `" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-size: 16px; font-weight: 400;">`)
 		b.WriteString(html.EscapeString(msg.Message.Label))
 		b.WriteString(`</text>`)
 		lineClass := "messageLine0"
@@ -2357,8 +2439,11 @@ func renderMindmapMermaid(layout Layout) string {
 		section := sectionByID[child.ID]
 		depthClass := max(1, child.Level*2-1)
 		edgeID := "edge_" + intString(parentIdx) + "_" + intString(childIdx)
-		pathD := "M" + formatFloat(line.X1) + "," + formatFloat(line.Y1) +
-			"L" + formatFloat(line.X2) + "," + formatFloat(line.Y2)
+		pathD := strings.TrimSpace(line.D)
+		if pathD == "" {
+			pathD = "M" + formatFloat(line.X1) + "," + formatFloat(line.Y1) +
+				"L" + formatFloat(line.X2) + "," + formatFloat(line.Y2)
+		}
 		b.WriteString(`<path d="` + pathD + `" id="` + edgeID + `" class="edge-thickness-normal edge-pattern-solid edge section-edge-` + intString(section) + ` edge-depth-` + intString(depthClass) + `" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="` + edgeID + `" data-points="W10="/>`)
 	}
 	b.WriteString(`</g>`)

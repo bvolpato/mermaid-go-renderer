@@ -9,6 +9,7 @@ import (
 	"image/color"
 	"image/draw"
 	"image/png"
+	"io"
 	"math"
 	"os"
 	"regexp"
@@ -95,21 +96,71 @@ type svgViewBox struct {
 	H float64
 }
 
+type svgRasterTransform struct {
+	Scale   float64
+	TargetX float64
+	TargetY float64
+	TargetW float64
+	TargetH float64
+}
+
+func computeSVGRasterTransform(width int, height int, viewBox svgViewBox) svgRasterTransform {
+	if viewBox.W <= 0 || viewBox.H <= 0 {
+		return svgRasterTransform{
+			Scale:   1,
+			TargetX: 0,
+			TargetY: 0,
+			TargetW: float64(width),
+			TargetH: float64(height),
+		}
+	}
+	scale := math.Min(float64(width)/viewBox.W, float64(height)/viewBox.H)
+	if scale <= 0 || math.IsNaN(scale) || math.IsInf(scale, 0) {
+		scale = 1
+	}
+	targetW := viewBox.W * scale
+	targetH := viewBox.H * scale
+	return svgRasterTransform{
+		Scale:   scale,
+		TargetX: (float64(width) - targetW) / 2.0,
+		TargetY: (float64(height) - targetH) / 2.0,
+		TargetW: targetW,
+		TargetH: targetH,
+	}
+}
+
+func (t svgRasterTransform) mapX(x float64, viewBox svgViewBox) float64 {
+	return t.TargetX + (x-viewBox.X)*t.Scale
+}
+
+func (t svgRasterTransform) mapY(y float64, viewBox svgViewBox) float64 {
+	return t.TargetY + (y-viewBox.Y)*t.Scale
+}
+
 func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error) {
 	prepared := prepareSVGForRasterizer(svg)
-	icon, err := parseIconRobust(prepared)
+	textOverlaySource := prepared
+	rasterSVG := prepared
+	if shouldStripSVGTextForRasterizer(prepared) {
+		rasterSVG = stripSVGTextElements(prepared)
+	}
+	icon, err := parseIconRobust(rasterSVG)
 	if err != nil {
 		return nil, fmt.Errorf("parse svg: %w", err)
 	}
 	viewBox, hasViewBox := parseSVGViewBox(prepared)
-	icon.SetTarget(0, 0, float64(width), float64(height))
+	if !hasViewBox || viewBox.W <= 0 || viewBox.H <= 0 {
+		viewBox = svgViewBox{X: 0, Y: 0, W: float64(width), H: float64(height)}
+	}
+	transform := computeSVGRasterTransform(width, height, viewBox)
+	icon.SetTarget(transform.TargetX, transform.TargetY, transform.TargetW, transform.TargetH)
 
 	img := image.NewNRGBA(image.Rect(0, 0, width, height))
 	draw.Draw(img, img.Bounds(), &image.Uniform{C: color.White}, image.Point{}, draw.Src)
 	scanner := rasterx.NewScannerGV(width, height, img, img.Bounds())
 	dasher := rasterx.NewDasher(width, height, scanner)
 	icon.Draw(dasher, 1.0)
-	overlaySVGText(img, svg, width, height, viewBox, hasViewBox)
+	overlaySVGText(img, textOverlaySource, width, height, viewBox, hasViewBox)
 	return img, nil
 }
 
@@ -119,14 +170,32 @@ func rasterizeSVGToImage(svg string, width int, height int) (*image.NRGBA, error
 //   - Inlines marker arrowheads as real SVG paths (oksvg doesn't support <marker>)
 //   - Strips <foreignObject> blocks (text is overlaid separately)
 func prepareSVGForRasterizer(svg string) string {
-	svg = expandViewBoxToContent(svg)
+	if !skipViewBoxExpansion(svg) {
+		svg = expandViewBoxToContent(svg)
+	}
 	svg = fixSVGRootDimensions(svg)
 	svg = convertHSLToHex(svg)
 	svg = inlineMarkers(svg)
+	svg = stripSVGForeignObjectSwitches(svg)
 	svg = stripClipPaths(svg)
 	svg = inlineCSS(svg)
 	svg = regexp.MustCompile(`(?i)rotate\(\s*([\d\.-]+)\s*deg\s*\)`).ReplaceAllString(svg, "rotate(${1})")
 	return svg
+}
+
+func skipViewBoxExpansion(svg string) bool {
+	return strings.Contains(svg, `aria-roledescription="mindmap"`) ||
+		strings.Contains(svg, `class="mindmapDiagram"`) ||
+		strings.Contains(svg, `aria-roledescription="kanban"`) ||
+		strings.Contains(svg, `aria-roledescription="gitGraph"`)
+}
+
+func shouldStripSVGTextForRasterizer(svg string) bool {
+	return strings.Contains(svg, `aria-roledescription="gantt"`)
+}
+
+func stripSVGTextElements(svg string) string {
+	return svgTextElementPattern.ReplaceAllString(svg, "")
 }
 
 var hslFloatPattern = regexp.MustCompile(`(?i)hsl\(\s*([\d\.]+)\s*,\s*([\d\.]+)%\s*,\s*([\d\.]+)%\s*\)`)
@@ -151,7 +220,20 @@ var elementTagPattern = regexp.MustCompile(`(?is)<([a-zA-Z0-9]+)\s+([^>]+)/*>`)
 
 type styleRule struct {
 	selector string
-	styles   string
+	styles   stylesMap
+	parts    []cssSelectorPart
+}
+
+type cssSelectorPart struct {
+	tag     string
+	id      string
+	classes []string
+}
+
+type elementContext struct {
+	tag     string
+	id      string
+	classes []string
 }
 
 func parseCSS(svg string) []styleRule {
@@ -169,8 +251,13 @@ func parseCSS(svg string) []styleRule {
 			for _, sel := range selectors {
 				s := strings.TrimSpace(sel)
 				s = strings.TrimPrefix(s, "#my-svg ")
-				if s != "" {
-					rules = append(rules, styleRule{selector: s, styles: styles})
+				parts, ok := parseSelectorParts(s)
+				if s != "" && ok {
+					rules = append(rules, styleRule{
+						selector: s,
+						styles:   parseStylesMap(styles),
+						parts:    parts,
+					})
 				}
 			}
 		}
@@ -183,47 +270,62 @@ func inlineCSS(svg string) string {
 	if len(rules) == 0 {
 		return svg
 	}
+	decoder := xml.NewDecoder(strings.NewReader(svg))
+	var out bytes.Buffer
+	encoder := xml.NewEncoder(&out)
+	contextStack := make([]elementContext, 0, 32)
 
-	return elementTagPattern.ReplaceAllStringFunc(svg, func(tag string) string {
-		attrs := parseAttrs(tag)
-		classList := strings.Fields(attrs["class"])
-		if len(classList) == 0 && attrs["class"] == "" {
-			// Fast path for nodes without class if we want, but wait, selector might just be node name (e.g. `path`)
-			// So proceed.
+	for {
+		tok, err := decoder.Token()
+		if err == io.EOF {
+			break
 		}
-		tagName := attrs["_tag"]
-
-		var inline stylesMap
-		if existing, ok := attrs["style"]; ok {
-			inline = parseStylesMap(existing)
-		} else {
-			inline = make(stylesMap)
+		if err != nil {
+			return svg
 		}
 
-		for _, rule := range rules {
-			if matchSelector(rule.selector, tagName, classList) {
-				ruleStyles := parseStylesMap(rule.styles)
-				for k, v := range ruleStyles {
-					if _, ok := inline[k]; !ok {
-						inline[k] = v
-					}
-				}
+		switch t := tok.(type) {
+		case xml.StartElement:
+			ctx := elementContext{
+				tag:     t.Name.Local,
+				id:      attrValue(t.Attr, "id"),
+				classes: strings.Fields(attrValue(t.Attr, "class")),
+			}
+			t.Attr = inlineElementStyles(t.Attr, ctx, contextStack, rules)
+			if err := encoder.EncodeToken(t); err != nil {
+				return svg
+			}
+			contextStack = append(contextStack, ctx)
+		case xml.EndElement:
+			if err := encoder.EncodeToken(t); err != nil {
+				return svg
+			}
+			if len(contextStack) > 0 {
+				contextStack = contextStack[:len(contextStack)-1]
+			}
+		default:
+			if err := encoder.EncodeToken(tok); err != nil {
+				return svg
 			}
 		}
-
-		if len(inline) > 0 {
-			attrs["style"] = inline.String()
-			return rebuildTag(tag, attrs)
-		}
-		return tag
-	})
+	}
+	if err := encoder.Flush(); err != nil {
+		return svg
+	}
+	return cleanupInlinedSVG(out.String())
 }
 
 type stylesMap map[string]string
 
 func (s stylesMap) String() string {
 	var sb strings.Builder
-	for k, v := range s {
+	keys := make([]string, 0, len(s))
+	for k := range s {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		v := s[k]
 		sb.WriteString(k + ":" + v + ";")
 	}
 	return strings.ReplaceAll(sb.String(), "\"", "'")
@@ -235,85 +337,229 @@ func parseStylesMap(s string) stylesMap {
 	for _, p := range parts {
 		kv := strings.SplitN(p, ":", 2)
 		if len(kv) == 2 {
-			m[strings.TrimSpace(kv[0])] = strings.TrimSpace(kv[1])
+			value := strings.TrimSpace(strings.ReplaceAll(kv[1], "!important", ""))
+			m[strings.TrimSpace(kv[0])] = strings.TrimSpace(value)
 		}
 	}
 	return m
 }
 
-func parseAttrs(tag string) map[string]string {
-	m := make(map[string]string)
-	tagParts := regexp.MustCompile(`(?is)<([a-zA-Z0-9]+)(\s+[^>]+)?/*>`).FindStringSubmatch(tag)
-	if len(tagParts) < 2 {
-		return m
-	}
-	m["_tag"] = tagParts[1]
-
-	attrPattern := regexp.MustCompile(`([a-zA-Z0-9\-:]+)\s*=\s*"([^"]*)"`)
-	for _, match := range attrPattern.FindAllStringSubmatch(tagParts[2], -1) {
-		m[match[1]] = match[2]
-	}
-	return m
+func cleanupInlinedSVG(svg string) string {
+	svg = strings.ReplaceAll(svg, `xmlns:_xmlns="xmlns" `, "")
+	svg = strings.ReplaceAll(svg, `_xmlns:xlink=`, `xmlns:xlink=`)
+	svg = strings.Replace(svg,
+		`xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"`,
+		`xmlns="http://www.w3.org/2000/svg"`,
+		1,
+	)
+	return svg
 }
 
-func rebuildTag(orig string, attrs map[string]string) string {
-	var sb strings.Builder
-	sb.WriteString("<" + attrs["_tag"])
-	for k, v := range attrs {
-		if k != "_tag" {
-			sb.WriteString(fmt.Sprintf(` %s="%s"`, k, v))
+func inlineElementStyles(attrs []xml.Attr, ctx elementContext, ancestors []elementContext, rules []styleRule) []xml.Attr {
+	inline := parseStylesMap(attrValue(attrs, "style"))
+	computed := cloneStylesMap(inline)
+
+	for _, rule := range rules {
+		if !matchSelector(rule.parts, ctx, ancestors) {
+			continue
+		}
+		for k, v := range rule.styles {
+			if _, ok := inline[k]; ok {
+				continue
+			}
+			computed[k] = v
 		}
 	}
-	if strings.HasSuffix(orig, "/>") {
-		sb.WriteString("/>")
-	} else {
-		sb.WriteString(">")
+
+	if len(computed) > 0 {
+		attrs = setAttrValue(attrs, "style", computed.String())
+		attrs = materializePresentationAttrs(attrs, ctx, computed)
 	}
-	return sb.String()
+	return attrs
 }
 
-func matchSelector(selector, tagName string, classes []string) bool {
+func cloneStylesMap(src stylesMap) stylesMap {
+	dst := make(stylesMap, len(src))
+	for k, v := range src {
+		dst[k] = v
+	}
+	return dst
+}
+
+func attrValue(attrs []xml.Attr, name string) string {
+	for _, attr := range attrs {
+		if strings.EqualFold(attr.Name.Local, name) {
+			return attr.Value
+		}
+	}
+	return ""
+}
+
+func setAttrValue(attrs []xml.Attr, name string, value string) []xml.Attr {
+	for i := range attrs {
+		if strings.EqualFold(attrs[i].Name.Local, name) {
+			attrs[i].Value = value
+			return attrs
+		}
+	}
+	return append(attrs, xml.Attr{Name: xml.Name{Local: name}, Value: value})
+}
+
+var presentationStyleAttrs = map[string]string{
+	"fill":               "fill",
+	"fill-opacity":       "fill-opacity",
+	"opacity":            "opacity",
+	"stroke":             "stroke",
+	"stroke-dasharray":   "stroke-dasharray",
+	"stroke-linecap":     "stroke-linecap",
+	"stroke-linejoin":    "stroke-linejoin",
+	"stroke-miterlimit":  "stroke-miterlimit",
+	"stroke-opacity":     "stroke-opacity",
+	"stroke-width":       "stroke-width",
+	"display":            "display",
+	"visibility":         "visibility",
+	"font-family":        "font-family",
+	"font-size":          "font-size",
+	"font-style":         "font-style",
+	"font-weight":        "font-weight",
+	"text-anchor":        "text-anchor",
+	"dominant-baseline":  "dominant-baseline",
+	"alignment-baseline": "alignment-baseline",
+}
+
+func materializePresentationAttrs(attrs []xml.Attr, ctx elementContext, styles stylesMap) []xml.Attr {
+	for styleName, attrName := range presentationStyleAttrs {
+		value, ok := styles[styleName]
+		if !ok || strings.TrimSpace(value) == "" {
+			continue
+		}
+		attrs = setAttrValue(attrs, attrName, value)
+	}
+	if fill, ok := styles["color"]; ok && strings.EqualFold(ctx.tag, "text") && strings.TrimSpace(fill) != "" {
+		if strings.TrimSpace(attrValue(attrs, "fill")) == "" {
+			attrs = setAttrValue(attrs, "fill", fill)
+		}
+	}
+	return attrs
+}
+
+func parseSelectorParts(selector string) ([]cssSelectorPart, bool) {
+	selector = strings.TrimSpace(html.UnescapeString(selector))
+	if selector == "" {
+		return nil, false
+	}
+	selector = strings.ReplaceAll(selector, ">", " ")
 	parts := strings.Fields(selector)
 	if len(parts) == 0 {
-		return false
+		return nil, false
 	}
-	last := parts[len(parts)-1]
-
-	if strings.HasPrefix(last, ".") {
-		c := last[1:]
-		if strings.Contains(c, ".") {
-			cParts := strings.Split(c, ".")
-			c = cParts[len(cParts)-1] // very naive
+	parsed := make([]cssSelectorPart, 0, len(parts))
+	for _, part := range parts {
+		parsedPart, ok := parseSelectorPart(part)
+		if !ok {
+			return nil, false
 		}
+		parsed = append(parsed, parsedPart)
+	}
+	return parsed, true
+}
 
-		for _, cl := range classes {
-			if cl == c {
-				return true
+func parseSelectorPart(part string) (cssSelectorPart, bool) {
+	part = strings.TrimSpace(part)
+	if part == "" {
+		return cssSelectorPart{}, false
+	}
+	if strings.ContainsAny(part, ">*+~[:") {
+		return cssSelectorPart{}, false
+	}
+	var parsed cssSelectorPart
+	rest := part
+	if rest[0] != '.' && rest[0] != '#' {
+		next := len(rest)
+		if idx := strings.IndexAny(rest, ".#"); idx >= 0 {
+			next = idx
+		}
+		parsed.tag = rest[:next]
+		rest = rest[next:]
+	}
+	for rest != "" {
+		switch rest[0] {
+		case '.':
+			rest = rest[1:]
+			next := len(rest)
+			if idx := strings.IndexAny(rest, ".#"); idx >= 0 {
+				next = idx
 			}
+			if next == 0 {
+				return cssSelectorPart{}, false
+			}
+			parsed.classes = append(parsed.classes, rest[:next])
+			rest = rest[next:]
+		case '#':
+			rest = rest[1:]
+			next := len(rest)
+			if idx := strings.IndexAny(rest, ".#"); idx >= 0 {
+				next = idx
+			}
+			if next == 0 || parsed.id != "" {
+				return cssSelectorPart{}, false
+			}
+			parsed.id = rest[:next]
+			rest = rest[next:]
+		default:
+			return cssSelectorPart{}, false
 		}
+	}
+	if parsed.tag == "" && parsed.id == "" && len(parsed.classes) == 0 {
+		return cssSelectorPart{}, false
+	}
+	return parsed, true
+}
+
+func matchSelector(selector []cssSelectorPart, current elementContext, ancestors []elementContext) bool {
+	if len(selector) == 0 || !selectorPartMatches(selector[len(selector)-1], current) {
 		return false
 	}
-
-	if strings.Contains(last, ".") {
-		sp := strings.SplitN(last, ".", 2)
-		if sp[0] != tagName {
+	ancestorIdx := len(ancestors) - 1
+	for partIdx := len(selector) - 2; partIdx >= 0; partIdx-- {
+		found := false
+		for ancestorIdx >= 0 {
+			if selectorPartMatches(selector[partIdx], ancestors[ancestorIdx]) {
+				found = true
+				ancestorIdx--
+				break
+			}
+			ancestorIdx--
+		}
+		if !found {
 			return false
 		}
-		c := sp[1]
-		if strings.Contains(c, ".") {
-			cParts := strings.Split(c, ".")
-			c = cParts[len(cParts)-1]
-		}
+	}
+	return true
+}
 
-		for _, cl := range classes {
-			if cl == c {
-				return true
-			}
-		}
+func selectorPartMatches(part cssSelectorPart, elem elementContext) bool {
+	if part.tag != "" && !strings.EqualFold(part.tag, elem.tag) {
 		return false
 	}
+	if part.id != "" && part.id != elem.id {
+		return false
+	}
+	for _, className := range part.classes {
+		if !containsClass(elem.classes, className) {
+			return false
+		}
+	}
+	return true
+}
 
-	return last == tagName
+func containsClass(classes []string, target string) bool {
+	for _, className := range classes {
+		if className == target {
+			return true
+		}
+	}
+	return false
 }
 
 var svgRootTagPattern = regexp.MustCompile(`(?i)(<svg\b)([^>]*)(>)`)
@@ -436,6 +682,7 @@ var svgPathDataAttrPattern = regexp.MustCompile(`\bd\s*=\s*"([^"]*)"`)
 var svgLineTagPattern = regexp.MustCompile(`<line\b[^>]*>`)
 var svgMarkerElementPattern = regexp.MustCompile(`(?s)<marker\b[^>]*>.*?</marker>`)
 var svgForeignObjectPatternForRaster = regexp.MustCompile(`(?s)<foreignObject\b[^>]*>.*?</foreignObject>`)
+var svgForeignObjectSwitchPattern = regexp.MustCompile(`(?s)<switch\b[^>]*>.*?<foreignObject\b[^>]*>.*?</foreignObject>.*?</switch>`)
 var svgRGBDecimalPattern = regexp.MustCompile(`rgb\(\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*\)`)
 var svgRGBAPattern = regexp.MustCompile(`rgba\(\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*([0-9]*\.?[0-9]+)\s*,\s*[0-9]*\.?[0-9]+\s*\)`)
 
@@ -486,6 +733,10 @@ func stripSVGMarkerDefs(svg string) string {
 
 func stripSVGForeignObjects(svg string) string {
 	return svgForeignObjectPatternForRaster.ReplaceAllString(svg, "")
+}
+
+func stripSVGForeignObjectSwitches(svg string) string {
+	return svgForeignObjectSwitchPattern.ReplaceAllString(svg, "")
 }
 
 var svgClipPathElementPattern = regexp.MustCompile(`(?s)<clipPath\b[^>]*>.*?</clipPath>`)
@@ -608,10 +859,6 @@ func detectSVGSize(svg string) (int, int) {
 	if height <= 0 && hasViewBox && viewBox.H > 0 {
 		height = int(viewBox.H + 0.5)
 	}
-	if hasViewBox && (viewBox.X < 0 || viewBox.Y < 0) {
-		width += 16
-		height += 16
-	}
 	if width <= 0 {
 		width = defaultWidth
 	}
@@ -701,6 +948,7 @@ func parseAnyFloat(raw string) (float64, bool) {
 
 var (
 	svgTextElementPattern = regexp.MustCompile(`(?s)<text\b([^>]*)>(.*?)</text>`)
+	svgTSpanOpenPattern   = regexp.MustCompile(`(?is)<tspan\b([^>]*)>`)
 	svgTagPattern         = regexp.MustCompile(`(?s)<[^>]+>`)
 	svgFontFaceCache      sync.Map
 	svgTranslatePattern   = regexp.MustCompile(`translate\(\s*([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)\s*(?:[, ]\s*([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?))?\s*\)`)
@@ -720,11 +968,11 @@ var (
 )
 
 func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox svgViewBox, hasViewBox bool) {
+	svg = stripSVGForeignObjectSwitches(svg)
 	if !hasViewBox || viewBox.W <= 0 || viewBox.H <= 0 {
 		viewBox = svgViewBox{X: 0, Y: 0, W: float64(width), H: float64(height)}
 	}
-	scaleX := float64(width) / viewBox.W
-	scaleY := float64(height) / viewBox.H
+	transform := computeSVGRasterTransform(width, height, viewBox)
 
 	matches := svgTextElementPattern.FindAllStringSubmatchIndex(svg, -1)
 	for _, loc := range matches {
@@ -732,22 +980,36 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 			continue
 		}
 		attrs := svg[loc[2]:loc[3]]
-		content := extractTextContent(svg[loc[4]:loc[5]])
+		inner := svg[loc[4]:loc[5]]
+		content := extractTextContent(inner)
 		if strings.TrimSpace(content) == "" {
 			continue
 		}
+		tspanAttrs, hasTSpan := firstTSpanAttrs(inner)
 
 		rawX := firstNumericToken(parseAttr(attrs, "x"))
 		rawY := firstNumericToken(parseAttr(attrs, "y"))
+		if rawX == "" && hasTSpan {
+			rawX = firstNumericToken(parseAttr(tspanAttrs, "x"))
+		}
+		if rawY == "" && hasTSpan {
+			rawY = firstNumericToken(parseAttr(tspanAttrs, "y"))
+		}
 		x, okX := parseAnyFloat(rawX)
 		y, okY := parseAnyFloat(rawY)
+		if rawX == "" && hasTSpan {
+			x = 0
+			okX = true
+		}
+		if rawY == "" && hasTSpan {
+			y = 0
+			okY = true
+		}
 		if !okX || !okY {
 			continue
 		}
 
-		tx, ty := accumulateTransforms(svg[:loc[0]])
-		x += tx
-		y += ty
+		ancestorTransform := accumulateGroupTransform(svg[:loc[0]])
 
 		fontSize := 16.0
 		if rawSize := parseAttr(attrs, "font-size"); rawSize != "" {
@@ -761,25 +1023,40 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 			}
 		}
 		fontFamily := parseAttr(attrs, "font-family")
-		face := resolveRasterFontFace(fontFamily, max(8.0, fontSize*scaleY))
-		textColor := parseTextColor(parseAttr(attrs, "fill"))
-		if textColor == nil {
-			if styleFill := styleValue(parseAttr(attrs, "style"), "fill"); styleFill != "" {
-				textColor = parseTextColor(styleFill)
+		face := resolveRasterFontFace(fontFamily, max(8.0, fontSize*transform.Scale))
+		textColor := color.Color(nil)
+		if hasTSpan {
+			textColor = parseTextColor(parseAttr(tspanAttrs, "fill"))
+			if textColor == nil {
+				if styleFill := styleValue(parseAttr(tspanAttrs, "style"), "fill"); styleFill != "" {
+					textColor = parseTextColor(styleFill)
+				}
 			}
 		}
 		if textColor == nil {
-			textColor = color.NRGBA{R: 0, G: 0, B: 0, A: 255}
+			textColor = parseTextColor(parseAttr(attrs, "fill"))
+			if textColor == nil {
+				if styleFill := styleValue(parseAttr(attrs, "style"), "fill"); styleFill != "" {
+					textColor = parseTextColor(styleFill)
+				}
+			}
 		}
-
-		drawer := &font.Drawer{
-			Dst:  img,
-			Src:  image.NewUniform(textColor),
-			Face: face,
+		rawDX := parseAttr(attrs, "dx")
+		rawDY := parseAttr(attrs, "dy")
+		if hasTSpan {
+			if rawDX == "" {
+				rawDX = parseAttr(tspanAttrs, "dx")
+			}
+			if rawDY == "" {
+				rawDY = parseAttr(tspanAttrs, "dy")
+			}
 		}
-		advance := drawer.MeasureString(content)
-		px := (x - viewBox.X) * scaleX
-		py := (y - viewBox.Y) * scaleY
+		localX := x + parseSVGTextLength(rawDX, fontSize)
+		localY := y + parseSVGTextLength(rawDY, fontSize)
+		pointX, pointY := ancestorTransform.apply(localX, localY)
+		px := transform.mapX(pointX, viewBox)
+		py := transform.mapY(pointY, viewBox)
+		advance := font.MeasureString(face, content)
 		anchor := strings.TrimSpace(parseAttr(attrs, "text-anchor"))
 		if anchor == "" {
 			anchor = styleValue(parseAttr(attrs, "style"), "text-anchor")
@@ -790,24 +1067,36 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 		case "end":
 			px -= float64(advance) / 64.0
 		}
+		if textColor == nil {
+			textWidth := float64(advance) / 64.0
+			sampleX := px + textWidth/2.0
+			sampleY := py - fontSize*transform.Scale*0.35
+			textColor = autoContrastTextColor(img, int(math.Round(sampleX)), int(math.Round(sampleY)))
+		}
+
+		drawer := &font.Drawer{
+			Dst:  img,
+			Src:  image.NewUniform(textColor),
+			Face: face,
+		}
 		dominantBaseline := strings.TrimSpace(parseAttr(attrs, "dominant-baseline"))
 		if dominantBaseline == "" {
 			dominantBaseline = styleValue(parseAttr(attrs, "style"), "dominant-baseline")
 		}
-		if dominantBaseline == "middle" {
-			metrics := face.Metrics()
+		if dominantBaseline == "" {
+			dominantBaseline = strings.TrimSpace(parseAttr(attrs, "alignment-baseline"))
+		}
+		if dominantBaseline == "" {
+			dominantBaseline = styleValue(parseAttr(attrs, "style"), "alignment-baseline")
+		}
+		if baselineOffset := svgTextBaselineOffset(face, dominantBaseline); baselineOffset != 0 {
 			px = math.Round(px)
-			py += float64(metrics.Ascent+metrics.Descent) / 128.0
+			py += baselineOffset
 		}
 
-		transformAttr := strings.TrimSpace(parseAttr(attrs, "transform"))
-		var rotateAngle float64
-		if transformAttr != "" {
-			if matches := regexp.MustCompile(`(?i)rotate\(([-0-9.]+)(?:[,\s]+[-0-9.]+[,\s]+[-0-9.]+)?\)`).FindStringSubmatch(transformAttr); len(matches) > 1 {
-				if a, err := strconv.ParseFloat(matches[1], 64); err == nil {
-					rotateAngle = a
-				}
-			}
+		rotateAngle := ancestorTransform.rotationDegrees()
+		if transformAttr := strings.TrimSpace(parseAttr(attrs, "transform")); transformAttr != "" {
+			rotateAngle += parseSVGTransform(transformAttr).rotationDegrees()
 		}
 
 		if rotateAngle != 0 {
@@ -821,18 +1110,69 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 	overlaySVGForeignObjectText(img, svg, width, height, viewBox, hasViewBox)
 }
 
+func firstTSpanAttrs(inner string) (string, bool) {
+	match := svgTSpanOpenPattern.FindStringSubmatch(inner)
+	if len(match) < 2 {
+		return "", false
+	}
+	return match[1], true
+}
+
+func parseSVGTextLength(raw string, fontSize float64) float64 {
+	value := strings.TrimSpace(raw)
+	if value == "" {
+		return 0
+	}
+	value = firstNumericToken(strings.ReplaceAll(value, ",", " "))
+	switch {
+	case strings.HasSuffix(value, "em"):
+		scale, ok := parseAnyFloat(strings.TrimSuffix(value, "em"))
+		if !ok {
+			return 0
+		}
+		return scale * fontSize
+	case strings.HasSuffix(value, "px"):
+		fallthrough
+	default:
+		parsed, ok := parseAnyFloat(value)
+		if !ok {
+			return 0
+		}
+		return parsed
+	}
+}
+
+func svgTextBaselineOffset(face font.Face, dominantBaseline string) float64 {
+	mode := strings.ToLower(strings.TrimSpace(dominantBaseline))
+	if mode == "" {
+		return 0
+	}
+	metrics := face.Metrics()
+	ascent := float64(metrics.Ascent) / 64.0
+	descent := float64(metrics.Descent) / 64.0
+	switch mode {
+	case "middle", "central":
+		return (ascent - descent) / 2.0
+	case "hanging", "text-before-edge", "before-edge":
+		return ascent
+	case "ideographic", "text-after-edge", "after-edge":
+		return -descent
+	default:
+		return 0
+	}
+}
+
 func overlaySVGForeignObjectText(img *image.NRGBA, svg string, width int, height int, viewBox svgViewBox, hasViewBox bool) {
 	if !hasViewBox || viewBox.W <= 0 || viewBox.H <= 0 {
 		viewBox = svgViewBox{X: 0, Y: 0, W: float64(width), H: float64(height)}
 	}
-	scaleX := float64(width) / viewBox.W
-	scaleY := float64(height) / viewBox.H
+	transform := computeSVGRasterTransform(width, height, viewBox)
 	mindmapCenteredText := strings.Contains(svg, "mindmapDiagram")
 
 	for _, label := range extractForeignObjectLabels(svg, viewBox) {
-		face := resolveRasterFontFace(label.FontFamily, max(8.0, label.FontSize*scaleY))
-		px := (label.X - viewBox.X) * scaleX
-		py := (label.Y + label.H*0.8 - viewBox.Y) * scaleY
+		face := resolveRasterFontFace(label.FontFamily, max(8.0, label.FontSize*transform.Scale))
+		px := transform.mapX(label.X, viewBox)
+		py := transform.mapY(label.Y, viewBox)
 		textColor := parseTextColor(label.Color)
 		if textColor == nil {
 			textColor = autoContrastTextColor(img, int(math.Round(px)), int(math.Round(py)))
@@ -842,11 +1182,26 @@ func overlaySVGForeignObjectText(img *image.NRGBA, svg string, width int, height
 			Src:  image.NewUniform(textColor),
 			Face: face,
 		}
+		metrics := face.Metrics()
+		ascent := float64(metrics.Ascent) / 64.0
+		descent := float64(metrics.Descent) / 64.0
+		lineBoxHeight := label.H * transform.Scale
+		if lineBoxHeight < ascent+descent {
+			lineBoxHeight = ascent + descent
+		}
+		py += (lineBoxHeight-(ascent+descent))/2.0 + ascent
+		textWidth := float64(drawer.MeasureString(label.Text)) / 64.0
 		if mindmapCenteredText && label.W > 0 {
-			textWidth := float64(drawer.MeasureString(label.Text)) / 64.0
-			boxWidth := label.W * scaleX
+			boxWidth := label.W * transform.Scale
 			px += (boxWidth - textWidth) / 2.0
 			px += 11.0
+		} else if label.W > 0 {
+			switch strings.ToLower(strings.TrimSpace(label.TextAlign)) {
+			case "center", "middle":
+				px += (label.W*transform.Scale - textWidth) / 2.0
+			case "right", "end":
+				px += label.W*transform.Scale - textWidth
+			}
 		}
 		drawer.Dot = fixed.P(int(math.Round(px)), int(math.Round(py)))
 		drawer.DrawString(label.Text)
@@ -862,6 +1217,7 @@ type foreignObjectLabel struct {
 	FontSize   float64
 	FontFamily string
 	Color      string
+	TextAlign  string
 }
 
 type foreignObjectCapture struct {
@@ -874,6 +1230,7 @@ type foreignObjectCapture struct {
 	FontSize   float64
 	FontFamily string
 	Color      string
+	TextAlign  string
 	Depth      int
 	Text       strings.Builder
 }
@@ -959,6 +1316,7 @@ func extractForeignObjectLabels(svg string, viewBox svgViewBox) []foreignObjectL
 						FontSize:   current.FontSize,
 						FontFamily: current.FontFamily,
 						Color:      current.Color,
+						TextAlign:  current.TextAlign,
 					})
 				}
 				current = nil
@@ -985,11 +1343,14 @@ func updateCaptureStyle(capture *foreignObjectCapture, attrs []xml.Attr) {
 				capture.FontSize = parsed
 			}
 		}
-		if v := styleValue(style, "font-family"); v != "" && capture.FontFamily == "" {
+		if v := styleValue(style, "font-family"); v != "" {
 			capture.FontFamily = v
 		}
-		if v := styleValue(style, "color"); v != "" && capture.Color == "" {
+		if v := styleValue(style, "color"); v != "" {
 			capture.Color = v
+		}
+		if v := styleValue(style, "text-align"); v != "" {
+			capture.TextAlign = v
 		}
 	}
 	if size := xmlAttr(attrs, "font-size"); size != "" {
@@ -997,14 +1358,17 @@ func updateCaptureStyle(capture *foreignObjectCapture, attrs []xml.Attr) {
 			capture.FontSize = parsed
 		}
 	}
-	if family := xmlAttr(attrs, "font-family"); family != "" && capture.FontFamily == "" {
+	if family := xmlAttr(attrs, "font-family"); family != "" {
 		capture.FontFamily = family
 	}
-	if col := xmlAttr(attrs, "color"); col != "" && capture.Color == "" {
+	if col := xmlAttr(attrs, "color"); col != "" {
 		capture.Color = col
 	}
-	if fill := xmlAttr(attrs, "fill"); fill != "" && capture.Color == "" {
+	if fill := xmlAttr(attrs, "fill"); fill != "" {
 		capture.Color = fill
+	}
+	if align := xmlAttr(attrs, "text-align"); align != "" {
+		capture.TextAlign = align
 	}
 }
 
@@ -1035,42 +1399,121 @@ func parseDimensionValueWithPercent(raw string, reference float64) (float64, boo
 	return parseAnyFloat(firstNumericToken(value))
 }
 
-func parseTransformOffset(transform string) (float64, float64) {
-	tx := 0.0
-	ty := 0.0
-	for _, match := range svgTranslatePattern.FindAllStringSubmatch(transform, -1) {
-		if len(match) < 2 {
-			continue
-		}
-		if x, ok := parseAnyFloat(match[1]); ok {
-			tx += x
-		}
-		if len(match) >= 3 && strings.TrimSpace(match[2]) != "" {
-			if y, ok := parseAnyFloat(match[2]); ok {
-				ty += y
-			}
-		}
+type svgAffineTransform struct {
+	A float64
+	B float64
+	C float64
+	D float64
+	E float64
+	F float64
+}
+
+func identitySVGTransform() svgAffineTransform {
+	return svgAffineTransform{A: 1, D: 1}
+}
+
+func (t svgAffineTransform) multiply(other svgAffineTransform) svgAffineTransform {
+	return svgAffineTransform{
+		A: t.A*other.A + t.C*other.B,
+		B: t.B*other.A + t.D*other.B,
+		C: t.A*other.C + t.C*other.D,
+		D: t.B*other.C + t.D*other.D,
+		E: t.A*other.E + t.C*other.F + t.E,
+		F: t.B*other.E + t.D*other.F + t.F,
 	}
-	for _, match := range svgMatrixPattern.FindAllStringSubmatch(transform, -1) {
+}
+
+func (t svgAffineTransform) apply(x, y float64) (float64, float64) {
+	return t.A*x + t.C*y + t.E, t.B*x + t.D*y + t.F
+}
+
+func (t svgAffineTransform) rotationDegrees() float64 {
+	return math.Atan2(t.B, t.A) * 180.0 / math.Pi
+}
+
+var svgTransformOpPattern = regexp.MustCompile(`([a-zA-Z]+)\(([^)]*)\)`)
+
+func parseSVGTransform(transform string) svgAffineTransform {
+	current := identitySVGTransform()
+	for _, match := range svgTransformOpPattern.FindAllStringSubmatch(transform, -1) {
 		if len(match) < 3 {
 			continue
 		}
-		if x, ok := parseAnyFloat(match[1]); ok {
-			tx += x
+		name := strings.ToLower(strings.TrimSpace(match[1]))
+		fields := strings.Fields(strings.ReplaceAll(match[2], ",", " "))
+		values := make([]float64, 0, len(fields))
+		for _, field := range fields {
+			if value, ok := parseAnyFloat(field); ok {
+				values = append(values, value)
+			}
 		}
-		if y, ok := parseAnyFloat(match[2]); ok {
-			ty += y
+		switch name {
+		case "translate":
+			if len(values) == 0 {
+				continue
+			}
+			tx := values[0]
+			ty := 0.0
+			if len(values) > 1 {
+				ty = values[1]
+			}
+			current = current.multiply(svgAffineTransform{A: 1, D: 1, E: tx, F: ty})
+		case "scale":
+			if len(values) == 0 {
+				continue
+			}
+			sx := values[0]
+			sy := sx
+			if len(values) > 1 {
+				sy = values[1]
+			}
+			current = current.multiply(svgAffineTransform{A: sx, D: sy})
+		case "rotate":
+			if len(values) == 0 {
+				continue
+			}
+			angle := values[0] * math.Pi / 180.0
+			cosA := math.Cos(angle)
+			sinA := math.Sin(angle)
+			rotation := svgAffineTransform{A: cosA, B: sinA, C: -sinA, D: cosA}
+			if len(values) >= 3 {
+				cx := values[1]
+				cy := values[2]
+				current = current.
+					multiply(svgAffineTransform{A: 1, D: 1, E: cx, F: cy}).
+					multiply(rotation).
+					multiply(svgAffineTransform{A: 1, D: 1, E: -cx, F: -cy})
+			} else {
+				current = current.multiply(rotation)
+			}
+		case "matrix":
+			if len(values) != 6 {
+				continue
+			}
+			current = current.multiply(svgAffineTransform{
+				A: values[0],
+				B: values[1],
+				C: values[2],
+				D: values[3],
+				E: values[4],
+				F: values[5],
+			})
 		}
 	}
-	return tx, ty
+	return current
+}
+
+func parseTransformOffset(transform string) (float64, float64) {
+	matrix := parseSVGTransform(transform)
+	return matrix.E, matrix.F
 }
 
 var svgGOpenPattern = regexp.MustCompile(`<g\b([^>]*)>`)
 var svgGClosePattern = regexp.MustCompile(`</g\s*>`)
 
-func accumulateTransforms(svgPrefix string) (float64, float64) {
+func accumulateGroupTransform(svgPrefix string) svgAffineTransform {
 	type gEntry struct {
-		tx, ty float64
+		transform svgAffineTransform
 	}
 	var stack []gEntry
 
@@ -1099,11 +1542,11 @@ func accumulateTransforms(svgPrefix string) (float64, float64) {
 
 	for _, ev := range events {
 		if ev.isOpen {
-			dx, dy := 0.0, 0.0
-			if transform := parseAttr(ev.attrs, "transform"); transform != "" {
-				dx, dy = parseTransformOffset(transform)
+			matrix := identitySVGTransform()
+			if transformAttr := parseAttr(ev.attrs, "transform"); transformAttr != "" {
+				matrix = parseSVGTransform(transformAttr)
 			}
-			stack = append(stack, gEntry{tx: dx, ty: dy})
+			stack = append(stack, gEntry{transform: matrix})
 		} else {
 			if len(stack) > 0 {
 				stack = stack[:len(stack)-1]
@@ -1111,12 +1554,16 @@ func accumulateTransforms(svgPrefix string) (float64, float64) {
 		}
 	}
 
-	totalX, totalY := 0.0, 0.0
+	total := identitySVGTransform()
 	for _, entry := range stack {
-		totalX += entry.tx
-		totalY += entry.ty
+		total = total.multiply(entry.transform)
 	}
-	return totalX, totalY
+	return total
+}
+
+func accumulateTransforms(svgPrefix string) (float64, float64) {
+	total := accumulateGroupTransform(svgPrefix)
+	return total.E, total.F
 }
 
 func extractTextContent(input string) string {
@@ -1127,7 +1574,7 @@ func extractTextContent(input string) string {
 }
 
 func parseAttr(attrs string, name string) string {
-	pattern := regexp.MustCompile(name + `\s*=\s*"([^"]*)"`)
+	pattern := regexp.MustCompile(`\b` + regexp.QuoteMeta(name) + `\s*=\s*"([^"]*)"`)
 	match := pattern.FindStringSubmatch(attrs)
 	if len(match) < 2 {
 		return ""
@@ -1153,7 +1600,8 @@ func styleValue(style string, key string) string {
 		if k != strings.ToLower(strings.TrimSpace(key)) {
 			continue
 		}
-		return strings.TrimSpace(parts[1])
+		value := strings.ReplaceAll(parts[1], "!important", "")
+		return strings.TrimSpace(value)
 	}
 	return ""
 }

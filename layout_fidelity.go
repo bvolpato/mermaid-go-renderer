@@ -821,13 +821,11 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		if score > 3 {
 			layout.Paths = append(layout.Paths, LayoutPath{
 				Class:       "mouth",
-				D:           "M -5 2 Q 0 8 5 2",
+				D:           "M7.5,0A7.5,7.5,0,1,1,-7.5,0L-6.818,0A6.818,6.818,0,1,0,6.818,0Z",
 				Transform:   "translate(" + formatFloat(center) + "," + formatFloat(faceY+2) + ")",
 				Fill:        "none",
 				Stroke:      "#666",
 				StrokeWidth: 1.2,
-				LineCap:     "round",
-				LineJoin:    "round",
 			})
 		} else if score < 3 {
 			layout.Paths = append(layout.Paths, LayoutPath{
@@ -841,14 +839,14 @@ func layoutJourneyFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 				LineJoin:    "round",
 			})
 		} else {
-			layout.Paths = append(layout.Paths, LayoutPath{
+			layout.Lines = append(layout.Lines, LayoutLine{
 				Class:       "mouth",
-				D:           "M -5 6 L 5 6",
-				Transform:   "translate(" + formatFloat(center) + "," + formatFloat(faceY) + ")",
-				Fill:        "none",
+				X1:          center - 5,
+				Y1:          faceY + 7,
+				X2:          center + 5,
+				Y2:          faceY + 7,
 				Stroke:      "#666",
-				StrokeWidth: 1.4,
-				LineCap:     "round",
+				StrokeWidth: 1,
 			})
 		}
 
@@ -943,7 +941,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	if len(graph.TimelineEvents) == 0 {
 		return layoutGeneric(graph, theme)
 	}
-	timeBoxH := 62.3078125
+	timeBoxH := 60.815625
 	eventBoxH := 45.0
 	colGap := 10.0
 	textPadX := 14.0
@@ -960,14 +958,14 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		}
 	}
 
-	startX := 188.0
-	topBoxY := 46.0
-	axisY := 157.8
-	eventTopY := 240.5
+	startX := 200.0
+	topBoxY := 50.0
+	axisY := 165.815625
+	eventTopY := 250.0
 	if title != "" {
 		layout.Texts = append(layout.Texts, LayoutText{
-			X:      33.1,
-			Y:      9,
+			X:      45.0,
+			Y:      20.0,
 			Value:  title,
 			Anchor: "start",
 			Size:   theme.FontSize * 1.9,
@@ -1085,7 +1083,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		})
 
 		for j, item := range event.Events {
-			ey := eventTopY + float64(j)*(eventBoxH+8.0)
+			ey := eventTopY + float64(j)*(eventBoxH+15.0)
 			layout.Rects = append(layout.Rects, LayoutRect{
 				ID:          "node-undefined",
 				Class:       "node-bkg node-undefined",
@@ -2042,7 +2040,7 @@ func layoutGanttFidelityV2(graph *Graph, theme Theme, config LayoutConfig) Layou
 	}
 
 	const (
-		totalWidth           = 784.0
+		defaultTotalWidth    = 784.0
 		totalHeight          = 148.0
 		titleTopMargin       = 25.0
 		barHeight            = 20.0
@@ -2056,6 +2054,10 @@ func layoutGanttFidelityV2(graph *Graph, theme Theme, config LayoutConfig) Layou
 		numberSectionStyles  = 4
 		defaultDuration      = 1.0
 	)
+	totalWidth := defaultTotalWidth
+	if config.ViewportWidth > 16 {
+		totalWidth = max(leftPadding+rightPadding+1, config.ViewportWidth-16)
+	}
 	gap := barHeight + barGap
 	plotWidth := totalWidth - leftPadding - rightPadding
 

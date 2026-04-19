@@ -63,8 +63,8 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 
 	switch astGraph.Kind {
 	case DiagramFlowchart:
-		marginx = 20
-		marginy = 20
+		marginx = 8
+		marginy = 8
 	case DiagramState:
 		nodesep = max(14, nodesep*0.55)
 		if len(astGraph.FlowSubgraphs) > 0 {
@@ -220,18 +220,52 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		}
 		tlX := dn.X - dn.Width/2
 		tlY := dn.Y - dn.Height/2
+		clusterW := dn.Width
+		clusterH := dn.Height
+
+		if astGraph.Kind == DiagramFlowchart && len(sg.NodeIDs) > 0 {
+			minChildX := math.Inf(1)
+			minChildY := math.Inf(1)
+			maxChildX := math.Inf(-1)
+			maxChildY := math.Inf(-1)
+			for _, childID := range sg.NodeIDs {
+				child, ok := nodeIndex[childID]
+				if !ok {
+					continue
+				}
+				minChildX = min(minChildX, child.X)
+				minChildY = min(minChildY, child.Y)
+				maxChildX = max(maxChildX, child.X+child.W)
+				maxChildY = max(maxChildY, child.Y+child.H)
+			}
+			if !math.IsInf(minChildX, 1) && !math.IsInf(minChildY, 1) {
+				clusterPadX := 30.0
+				clusterPadTop := 25.0
+				clusterPadBottom := 25.0
+				tlX = minChildX - clusterPadX
+				tlY = minChildY - clusterPadTop
+				clusterW = (maxChildX - minChildX) + clusterPadX*2
+				clusterH = (maxChildY - minChildY) + clusterPadTop + clusterPadBottom
+				minLabelW := measureTextWidth(sg.Label, config.FastTextMetrics) + 28.0
+				if clusterW < minLabelW {
+					extra := minLabelW - clusterW
+					tlX -= extra / 2
+					clusterW = minLabelW
+				}
+			}
+		}
 
 		minX = min(minX, tlX)
 		minY = min(minY, tlY)
-		maxX = max(maxX, dn.X+dn.Width/2)
-		maxY = max(maxY, dn.Y+dn.Height/2)
+		maxX = max(maxX, tlX+clusterW)
+		maxY = max(maxY, tlY+clusterH)
 
 		layout.Rects = append(layout.Rects, LayoutRect{
 			Class:         "cluster",
 			X:             tlX,
 			Y:             tlY,
-			W:             dn.Width,
-			H:             dn.Height,
+			W:             clusterW,
+			H:             clusterH,
 			RX:            6,
 			RY:            6,
 			Fill:          "rgba(255, 255, 222, 0.5)",
@@ -239,10 +273,14 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 			StrokeWidth:   1,
 			StrokeOpacity: 1,
 		})
+		labelY := tlY + 13
+		if astGraph.Kind == DiagramFlowchart {
+			labelY = tlY + 18
+		}
 		layout.Texts = append(layout.Texts, LayoutText{
 			Class:            "cluster-label",
-			X:                dn.X,
-			Y:                tlY + 13,
+			X:                tlX + clusterW/2,
+			Y:                labelY,
 			Value:            sg.Label,
 			Anchor:           "middle",
 			Size:             max(11, theme.FontSize-1),
@@ -335,6 +373,7 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 				From:        e.From,
 				To:          e.To,
 				Label:       e.Label,
+				D:           dagreEdgePath(dl.Points),
 				X1:          x1,
 				Y1:          y1,
 				X2:          x2,
@@ -363,10 +402,14 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		}
 	}
 
-	layout.ViewBoxX = minX - 10
-	layout.ViewBoxY = minY - 10
-	layout.ViewBoxWidth = (maxX - minX) + 20
-	layout.ViewBoxHeight = (maxY - minY) + 20
+	viewBoxPad := 10.0
+	if astGraph.Kind == DiagramFlowchart {
+		viewBoxPad = 8.0
+	}
+	layout.ViewBoxX = minX - viewBoxPad
+	layout.ViewBoxY = minY - viewBoxPad
+	layout.ViewBoxWidth = (maxX - minX) + viewBoxPad*2
+	layout.ViewBoxHeight = (maxY - minY) + viewBoxPad*2
 
 	if astGraph.Kind == DiagramC4 {
 		layout.ViewBoxY = minY - 70
@@ -392,12 +435,15 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 	applyAspectRatio(&layout, config.PreferredAspectRatio)
 	addGraphPrimitives(&layout, theme)
 
-
 	return layout
 }
 
 // dagreNodeSize computes width/height for a node based on diagram type.
 func dagreNodeSize(g *Graph, node Node, theme Theme, config LayoutConfig) (float64, float64) {
+	if g.Kind == DiagramFlowchart {
+		return mermaidFlowchartNodeSize(node, config)
+	}
+
 	minW := 50.0
 	maxW := 300.0
 	paddingW := 40.0
@@ -419,9 +465,6 @@ func dagreNodeSize(g *Graph, node Node, theme Theme, config LayoutConfig) (float
 		maxW = 320
 		paddingW = 30
 		baseHeight = 76
-	case DiagramFlowchart:
-		minW = 20
-		paddingW = 20
 	}
 
 	labelWidth := measureTextWidth(node.Label, config.FastTextMetrics)
@@ -451,5 +494,3 @@ func dagreNodeSize(g *Graph, node Node, theme Theme, config LayoutConfig) (float
 
 	return w, h
 }
-
-

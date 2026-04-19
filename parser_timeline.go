@@ -57,6 +57,15 @@ func parseTimeline(input string) (ParseOutput, error) {
 		timePart := strings.TrimSpace(line[:colonIdx])
 		eventsPart := strings.TrimSpace(line[colonIdx+1:])
 		if timePart == "" {
+			if strings.TrimSpace(pendingTime) == "" {
+				continue
+			}
+			for _, event := range strings.Split(eventsPart, ":") {
+				ev := stripQuotes(strings.TrimSpace(event))
+				if ev != "" {
+					pendingEvents = append(pendingEvents, ev)
+				}
+			}
 			continue
 		}
 		flushPending()

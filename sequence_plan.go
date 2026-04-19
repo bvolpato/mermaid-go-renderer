@@ -17,6 +17,8 @@ const (
 	sequenceDiagramMarginY  = 10.0
 	sequenceLabelBoxHeight  = 20.0
 	sequenceMessageFontSize = 16.0
+	sequenceTextLineHeight  = 17.0
+	sequenceNoteMargin      = 10.0
 	sequenceWrapPadding     = 10.0
 )
 
@@ -26,6 +28,7 @@ type sequenceMessageLayout struct {
 	StopX   float64
 	LineY   float64
 	TextY   float64
+	Height  float64
 	Self    bool
 	Dashed  bool
 	Note    bool
@@ -218,25 +221,46 @@ func buildSequencePlan(
 			}
 			msg := messages[event.MessageIndex]
 			if msg.IsNote {
-				center, ok := participantCenter[msg.From]
-				if !ok {
+				fromLeft, okFromLeft := participantLeft[msg.From]
+				fromWidth, okFromWidth := participantWidth[msg.From]
+				fromCenter, okFromCenter := participantCenter[msg.From]
+				if !okFromLeft || !okFromWidth || !okFromCenter {
 					continue
 				}
 				noteWidth := max(
 					sequenceActorWidth,
-					math.Ceil(measureTextWidthWithFontSize(msg.Label, sequenceMessageFontSize, true, theme.FontFamily)+2*sequenceWrapPadding),
+					math.Ceil(measureTextWidthWithFontSize(msg.Label, sequenceMessageFontSize, true, theme.FontFamily)+2*sequenceNoteMargin),
 				)
-				noteHeight := 39.0
+				startX := fromLeft + (fromWidth-noteWidth)/2
+				stopX := startX + noteWidth
+				switch msg.NotePlacement {
+				case SequenceNoteRightOf:
+					startX = fromLeft + (fromWidth+sequenceActorMargin)/2
+					stopX = startX + noteWidth
+				case SequenceNoteLeftOf:
+					stopX = fromLeft + (fromWidth-sequenceActorMargin)/2
+					startX = stopX - noteWidth
+				default:
+					if msg.To != "" && msg.To != msg.From {
+						toCenter, okToCenter := participantCenter[msg.To]
+						if okToCenter {
+							startX = min(fromCenter, toCenter) - sequenceActorMargin/2
+							stopX = max(fromCenter, toCenter) + sequenceActorMargin/2
+						}
+					}
+				}
+				noteHeight := sequenceMessageTextHeight(msg.Label) + 2*sequenceNoteMargin
 				verticalPos += sequenceBoxMargin
 				noteTop := verticalPos
 				noteBottom := noteTop + noteHeight
-				updateOpenLoopBounds(openLoops, center-noteWidth/2, noteTop, center+noteWidth/2, noteBottom)
+				updateOpenLoopBounds(openLoops, startX, noteTop, stopX, noteBottom)
 				messageLayouts = append(messageLayouts, sequenceMessageLayout{
 					Message: msg,
-					StartX:  center - noteWidth/2,
-					StopX:   center + noteWidth/2,
+					StartX:  startX,
+					StopX:   stopX,
 					LineY:   noteTop,
 					TextY:   noteTop + 5,
+					Height:  noteHeight,
 					Note:    true,
 				})
 				verticalPos = noteBottom
@@ -248,6 +272,7 @@ func buildSequencePlan(
 			if !okFrom || !okTo {
 				continue
 			}
+			messageStartY := verticalPos
 
 			isArrowToRight := fromLeft <= toLeft
 			startX := fromLeft
@@ -307,7 +332,7 @@ func buildSequencePlan(
 				StartX:  startX,
 				StopX:   stopX,
 				LineY:   lineY,
-				TextY:   lineY - 33,
+				TextY:   messageStartY + sequenceBoxMargin + sequenceBoxTextMargin,
 				Self:    msg.From == msg.To,
 				Dashed:  strings.Contains(sequenceArrowBase(msg.Arrow), "--") || msg.IsReturn,
 			})
@@ -457,6 +482,10 @@ func buildSequencePlan(
 		boxStartX = min(boxStartX, loop.StartX)
 		boxStopX = max(boxStopX, loop.StopX)
 	}
+	for _, msg := range messageLayouts {
+		boxStartX = min(boxStartX, msg.StartX)
+		boxStopX = max(boxStopX, msg.StopX)
+	}
 
 	viewBoxWidth := (boxStopX - boxStartX) + 2*sequenceDiagramMarginX
 	viewBoxHeight := finalVertical + 2*sequenceDiagramMarginY - sequenceBoxMargin + sequenceBottomMarginAdj
@@ -482,7 +511,7 @@ func buildSequencePlan(
 func sequenceMessageTextHeight(label string) float64 {
 	trimmed := strings.TrimSpace(label)
 	if trimmed == "" {
-		return 19
+		return sequenceTextLineHeight
 	}
 	normalized := strings.ReplaceAll(trimmed, "<br/>", "\n")
 	normalized = strings.ReplaceAll(normalized, "<br>", "\n")
@@ -497,7 +526,7 @@ func sequenceMessageTextHeight(label string) float64 {
 	if count == 0 {
 		count = 1
 	}
-	return float64(count) * 19
+	return float64(count) * sequenceTextLineHeight
 }
 
 func defaultSequenceEvents(messages []SequenceMessage) []SequenceEvent {

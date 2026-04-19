@@ -5,7 +5,50 @@ import (
 	"strings"
 )
 
-var erRelationshipRe = regexp.MustCompile(`^\s*("[^"]+"|\S+)\s+([|}o]{1,2}(?:--|\.\.)[|{o]{1,2})\s+("[^"]+"|\S+)\s*$`)
+var erRelationshipHeadRe = regexp.MustCompile(`^\s*("[^"]+"|\S+)\s+(.+)\s+("[^"]+"|\S+)\s*$`)
+
+type erCardinalityAlias struct {
+	alias string
+	kind  string
+}
+
+var erCardinalityAliases = []erCardinalityAlias{
+	{alias: "one or zero", kind: "zeroOrOne"},
+	{alias: "zero or one", kind: "zeroOrOne"},
+	{alias: "zero or more", kind: "zeroOrMore"},
+	{alias: "zero or many", kind: "zeroOrMore"},
+	{alias: "one or more", kind: "oneOrMore"},
+	{alias: "one or many", kind: "oneOrMore"},
+	{alias: "only one", kind: "onlyOne"},
+	{alias: "many(0)", kind: "zeroOrMore"},
+	{alias: "many(1)", kind: "oneOrMore"},
+	{alias: "1+", kind: "oneOrMore"},
+	{alias: "0+", kind: "zeroOrMore"},
+	{alias: "many", kind: "zeroOrMore"},
+	{alias: "one", kind: "onlyOne"},
+	{alias: "1", kind: "onlyOne"},
+	{alias: "||", kind: "onlyOne"},
+	{alias: "|o", kind: "zeroOrOne"},
+	{alias: "o|", kind: "zeroOrOne"},
+	{alias: "}o", kind: "zeroOrMore"},
+	{alias: "o{", kind: "zeroOrMore"},
+	{alias: "}|", kind: "oneOrMore"},
+	{alias: "|{", kind: "oneOrMore"},
+}
+
+type erRelationAlias struct {
+	alias string
+	style EdgeStyle
+}
+
+var erRelationAliases = []erRelationAlias{
+	{alias: "optionally to", style: EdgeDotted},
+	{alias: "to", style: EdgeSolid},
+	{alias: "--", style: EdgeSolid},
+	{alias: "..", style: EdgeDotted},
+	{alias: ".-", style: EdgeDotted},
+	{alias: "-.", style: EdgeDotted},
+}
 
 func parseERDiagram(input string) (ParseOutput, error) {
 	lines, err := preprocessInput(input)
@@ -132,53 +175,88 @@ func parseERRelationship(line string) (
 		relationLabel = stripQuotes(strings.TrimSpace(parts[1]))
 	}
 
-	m := erRelationshipRe.FindStringSubmatch(head)
+	m := erRelationshipHeadRe.FindStringSubmatch(head)
 	if len(m) != 4 {
 		return "", "", "", "", "", "", false
 	}
 	left = strings.TrimSpace(m[1])
-	relation := strings.TrimSpace(m[2])
 	right = strings.TrimSpace(m[3])
-	markerStart, markerEnd = parseERCardinalityMarkers(relation)
-	style = EdgeSolid
-	if strings.Contains(relation, "..") {
-		style = EdgeDotted
+	relation := strings.TrimSpace(m[2])
+
+	startKind, parsedStyle, endKind, ok := parseERRelationshipSpec(relation)
+	if !ok {
+		return "", "", "", "", "", "", false
 	}
+	markerStart = erCardinalityMarkerID(startKind, true)
+	markerEnd = erCardinalityMarkerID(endKind, false)
+	style = parsedStyle
 	return left, right, relationLabel, style, markerStart, markerEnd, true
 }
 
-func parseERCardinalityMarkers(relation string) (start string, end string) {
-	connector := "--"
-	if strings.Contains(relation, "..") {
-		connector = ".."
+func parseERRelationshipSpec(spec string) (startKind string, style EdgeStyle, endKind string, ok bool) {
+	firstKind, rest, ok := consumeERCardinality(spec)
+	if !ok {
+		return "", "", "", false
 	}
-	parts := strings.SplitN(relation, connector, 2)
-	if len(parts) != 2 {
-		return "", ""
+	style, rest, ok = consumeERRelationshipConnector(rest)
+	if !ok {
+		return "", "", "", false
 	}
-	startKind := erMarkerKind(parts[0])
-	endKind := erMarkerKind(parts[1])
-	if startKind != "" {
-		start = "my-svg_er-" + startKind + "Start"
+	secondKind, rest, ok := consumeERCardinality(rest)
+	if !ok || strings.TrimSpace(rest) != "" {
+		return "", "", "", false
 	}
-	if endKind != "" {
-		end = "my-svg_er-" + endKind + "End"
-	}
-	return start, end
+	return firstKind, style, secondKind, true
 }
 
-func erMarkerKind(token string) string {
-	card := strings.ReplaceAll(strings.TrimSpace(token), "}", "{")
-	switch {
-	case strings.Contains(card, "o") && strings.Contains(card, "{"):
-		return "zeroOrMore"
-	case strings.Contains(card, "|") && strings.Contains(card, "{"):
-		return "oneOrMore"
-	case strings.Count(card, "|") >= 2:
-		return "onlyOne"
-	case strings.Contains(card, "o") && strings.Contains(card, "|"):
-		return "zeroOrOne"
+func consumeERCardinality(raw string) (kind string, rest string, ok bool) {
+	trimmed := strings.TrimSpace(raw)
+	lowered := lower(trimmed)
+	for _, alias := range erCardinalityAliases {
+		if !strings.HasPrefix(lowered, alias.alias) {
+			continue
+		}
+		if !erTokenBoundary(trimmed, len(alias.alias)) {
+			continue
+		}
+		return alias.kind, strings.TrimSpace(trimmed[len(alias.alias):]), true
+	}
+	return "", raw, false
+}
+
+func consumeERRelationshipConnector(raw string) (style EdgeStyle, rest string, ok bool) {
+	trimmed := strings.TrimSpace(raw)
+	lowered := lower(trimmed)
+	for _, alias := range erRelationAliases {
+		if !strings.HasPrefix(lowered, alias.alias) {
+			continue
+		}
+		if !erTokenBoundary(trimmed, len(alias.alias)) {
+			continue
+		}
+		return alias.style, strings.TrimSpace(trimmed[len(alias.alias):]), true
+	}
+	return "", raw, false
+}
+
+func erTokenBoundary(raw string, offset int) bool {
+	if offset >= len(raw) {
+		return true
+	}
+	switch raw[offset] {
+	case ' ', '\t', '\r', '\n', '-', '.', '|', '{', '}', 'o':
+		return true
 	default:
+		return false
+	}
+}
+
+func erCardinalityMarkerID(kind string, start bool) string {
+	if kind == "" {
 		return ""
 	}
+	if start {
+		return "my-svg_er-" + kind + "Start"
+	}
+	return "my-svg_er-" + kind + "End"
 }

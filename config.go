@@ -294,8 +294,8 @@ type GitGraphConfig struct {
 
 func DefaultGitGraphConfig() GitGraphConfig {
 	return GitGraphConfig{
-		DiagramPadding:                         6.0,
-		TitleTopMargin:                         22.0,
+		DiagramPadding:                         8.0,
+		TitleTopMargin:                         25.0,
 		UseMaxWidth:                            true,
 		MainBranchName:                         "main",
 		MainBranchOrder:                        0.0,
@@ -303,11 +303,11 @@ func DefaultGitGraphConfig() GitGraphConfig {
 		ShowBranches:                           true,
 		RotateCommitLabel:                      true,
 		ParallelCommits:                        false,
-		CommitStep:                             36.0,
-		LayoutOffset:                           8.0,
-		DefaultPos:                             24.0,
-		BranchSpacing:                          45.0,
-		BranchSpacingRotateExtra:               32.0,
+		CommitStep:                             40.0,
+		LayoutOffset:                           10.0,
+		DefaultPos:                             30.0,
+		BranchSpacing:                          50.0,
+		BranchSpacingRotateExtra:               40.0,
 		BranchLabelRotateExtra:                 24.0,
 		BranchLabelTranslateX:                  -16.0,
 		BranchLabelBGOffsetX:                   3.0,
@@ -322,24 +322,24 @@ func DefaultGitGraphConfig() GitGraphConfig {
 		BranchLabelBTOffsetY:                   0.0,
 		BranchLabelCornerRadius:                4.0,
 		BranchLabelFontSize:                    0.0,
-		BranchLabelLineHeight:                  1.54,
-		TextWidthScale:                         1.0,
+		BranchLabelLineHeight:                  1.125,
+		TextWidthScale:                         0.95,
 		CommitLabelFontSize:                    10.0,
-		CommitLabelLineHeight:                  1.2,
-		CommitLabelOffsetY:                     20.0,
-		CommitLabelBGOffsetY:                   10.5,
-		CommitLabelPadding:                     1.5,
+		CommitLabelLineHeight:                  1.1,
+		CommitLabelOffsetY:                     25.0,
+		CommitLabelBGOffsetY:                   13.5,
+		CommitLabelPadding:                     2.0,
 		CommitLabelBGOpacity:                   0.5,
 		CommitLabelRotateAngle:                 -45.0,
-		CommitLabelRotateTranslateXBase:        -6.0,
-		CommitLabelRotateTranslateXScale:       8.0 / 25.0,
-		CommitLabelRotateTranslateXWidthOffset: 8.0,
-		CommitLabelRotateTranslateYBase:        8.0,
-		CommitLabelRotateTranslateYScale:       7.5 / 25.0,
-		CommitLabelTBTextExtra:                 12.0,
-		CommitLabelTBBGExtra:                   16.0,
-		CommitLabelTBTextOffsetY:               -10.0,
-		CommitLabelTBBGOffsetY:                 -10.0,
+		CommitLabelRotateTranslateXBase:        -7.5,
+		CommitLabelRotateTranslateXScale:       9.5 / 25.0,
+		CommitLabelRotateTranslateXWidthOffset: 10.0,
+		CommitLabelRotateTranslateYBase:        10.0,
+		CommitLabelRotateTranslateYScale:       8.5 / 25.0,
+		CommitLabelTBTextExtra:                 16.0,
+		CommitLabelTBBGExtra:                   21.0,
+		CommitLabelTBTextOffsetY:               -12.0,
+		CommitLabelTBBGOffsetY:                 -12.0,
 		TagLabelFontSize:                       10.0,
 		TagLabelLineHeight:                     1.2,
 		TagTextOffsetY:                         13.0,
@@ -353,13 +353,13 @@ func DefaultGitGraphConfig() GitGraphConfig {
 		TagRotateAngle:                         45.0,
 		TagTextOffsetXTB:                       4.0,
 		TagTextOffsetYTB:                       2.0,
-		ArrowRerouteRadius:                     8.0,
-		ArrowRadius:                            16.0,
+		ArrowRerouteRadius:                     10.0,
+		ArrowRadius:                            20.0,
 		LaneSpacing:                            8.0,
 		LaneMaxDepth:                           5,
-		CommitRadius:                           8.0,
-		MergeRadiusOuter:                       7.5,
-		MergeRadiusInner:                       5.0,
+		CommitRadius:                           10.0,
+		MergeRadiusOuter:                       9.0,
+		MergeRadiusInner:                       6.0,
 		HighlightOuterSize:                     16.0,
 		HighlightInnerSize:                     10.0,
 		ReverseCrossSize:                       4.0,
@@ -382,6 +382,8 @@ type LayoutConfig struct {
 	RankSpacing          float64
 	LabelLineHeight      float64
 	PreferredAspectRatio *float64
+	ViewportWidth        float64
+	ViewportHeight       float64
 	FastTextMetrics      bool
 	AllowApproximate     bool
 	Pie                  PieConfig
@@ -482,5 +484,15 @@ func (o RenderOptions) WithPreferredAspectRatioParts(width, height float64) Rend
 
 func (o RenderOptions) WithAllowApproximate(allow bool) RenderOptions {
 	o.Layout.AllowApproximate = allow
+	return o
+}
+
+func (o RenderOptions) WithViewportSize(width, height float64) RenderOptions {
+	if width > 0 {
+		o.Layout.ViewportWidth = width
+	}
+	if height > 0 {
+		o.Layout.ViewportHeight = height
+	}
 	return o
 }
