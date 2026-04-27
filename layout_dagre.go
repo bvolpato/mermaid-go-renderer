@@ -69,8 +69,6 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		nodesep = max(14, nodesep*0.55)
 		if len(astGraph.FlowSubgraphs) > 0 {
 			ranksep = max(52, ranksep*0.7)
-		} else {
-			ranksep = max(38, ranksep*0.76)
 		}
 		marginx = 8
 		marginy = 8
@@ -82,6 +80,9 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 	case DiagramRequirement:
 		nodesep = max(10, nodesep*0.2)
 		ranksep = max(185, ranksep*3.7)
+		marginx = 8
+		marginy = 8
+	case DiagramER:
 		marginx = 8
 		marginy = 8
 	}
@@ -416,8 +417,8 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		layout.ViewBoxHeight = (maxY - minY) + 80
 	}
 
-	// State diagrams: mmdc always uses viewBox origin at 0,0.
-	if astGraph.Kind == DiagramState {
+	// State, ER, and Requirement diagrams: mmdc always uses viewBox origin at 0,0.
+	if astGraph.Kind == DiagramState || astGraph.Kind == DiagramER || astGraph.Kind == DiagramRequirement {
 		layout.ViewBoxWidth = maxX + viewBoxPad
 		layout.ViewBoxHeight = maxY + viewBoxPad
 		layout.ViewBoxX = 0
