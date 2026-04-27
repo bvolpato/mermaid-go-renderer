@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
 # update_samples.sh — re-renders all samples/*.mmd files into samples/*.png
-# using the canonical mmdc (Mermaid JS CLI) renderer.
+# using the native mmdg renderer.
 #
 # Usage: ./scripts/update_samples.sh
 #
-# Requirements: mmdc must be installed (npm install -g @mermaid-js/mermaid-cli)
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SAMPLES_DIR="$REPO_ROOT/samples"
 
-if ! command -v mmdc > /dev/null 2>&1; then
-  echo "error: mmdc not found in PATH. Install with: npm install -g @mermaid-js/mermaid-cli" >&2
-  exit 1
-fi
+echo "Building mmdg..."
+cd "$REPO_ROOT"
+go build -o mmdg_bin ./cmd/mmdg
 
-echo "mmdc $(mmdc --version 2>&1 | head -1)"
 echo "Rendering samples from $SAMPLES_DIR ..."
 echo
 
@@ -27,12 +24,12 @@ for mmd_file in "$SAMPLES_DIR"/*.mmd; do
   png_file="$SAMPLES_DIR/${name}.png"
 
   printf "  %-35s ... " "$name"
-  if mmdc -i "$mmd_file" -o "$png_file" -e png -b white -q 2>/tmp/mmdc_${name}.log; then
+  if ./mmdg_bin -i "$mmd_file" -o "$png_file" -e png -w 1600 -H 1200 -allowApproximate 2>/tmp/mmdg_${name}.log; then
     echo "ok"
-    ((passed++))
+    passed=$((passed + 1))
   else
-    echo "FAILED (see /tmp/mmdc_${name}.log)"
-    ((failed++))
+    echo "FAILED (see /tmp/mmdg_${name}.log)"
+    failed=$((failed + 1))
   fi
 done
 
