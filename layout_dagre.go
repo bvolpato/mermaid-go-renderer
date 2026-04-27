@@ -338,7 +338,7 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 			layout.Paths = append(layout.Paths, LayoutPath{
 				ID:          pathID,
 				D:           dBuilder.String(),
-				Class:       thicknessClass + " " + patternClass + " " + thicknessClass + " " + patternClass + " flowchart-link",
+				Class:       thicknessClass + " " + patternClass + " flowchart-link",
 				Fill:        "none",
 				Stroke:      theme.LineColor,
 				StrokeWidth: strokeWidth,

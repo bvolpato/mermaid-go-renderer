@@ -88,13 +88,67 @@ func measureNativeTextWidth(text string, fontSize float64, fontFamily string) (f
 // sfnt glyph advance (DejaVu Sans) to match the browser reference renderer
 // (Chrome/Skia Trebuchet MS). Derived from empirical measurement of mmdc vs
 // mmdg foreignObject widths for repeated single-character labels at 16px.
+//
+// Uppercase letters are nearly matched (avg 1.02x), but lowercase letters
+// and digits are systematically ~16% wider in DejaVu Sans than in browser
+// Trebuchet MS rendering. Key outliers: 't' (0.71), 'f' (0.74), 'J' (1.70).
 func browserCharScale(r rune) float64 {
-	// Uniform correction factor derived from the weighted average of
-	// per-character mmdc/mmdg width ratios (0.928 empirical, rounded to 0.93).
-	// DejaVu Sans glyphs are systematically ~7% wider than Chrome/Skia
-	// Trebuchet MS; this factor normalizes node sizing for Dagre layout.
-	_ = r
-	return 1.0
+	switch r {
+	case 't':
+		return 0.71
+	case 'f':
+		return 0.74
+	case '1':
+		return 0.77
+	case 'i', 'j', 'l':
+		return 0.80
+	case 'r', 'v', 'x', 'y':
+		return 0.84
+	case 'm':
+		return 0.85
+	case 'k':
+		return 0.86
+	case '0', '2', '3', '4', '5', '6', '7', '8', '9':
+		return 0.87
+	case 'b', 'd', 'g', 'h', 'n', 'p', 'q', 'u', 'w':
+		return 0.88
+	case 'Z':
+		return 0.89
+	case 'e':
+		return 0.90
+	case 'a', 'c', 'o':
+		return 0.91
+	case 'A', 'D', 'I':
+		return 0.94
+	case 'W', 'z':
+		return 0.95
+	case 'H', 'M', 's':
+		return 0.96
+	case 'B', 'N', 'V', 'X':
+		return 0.97
+	case 'O', 'Q', 'U':
+		return 0.99
+	case 'G', 'L':
+		return 1.00
+	case 'K':
+		return 1.02
+	case 'C', 'T':
+		return 1.03
+	case 'R':
+		return 1.04
+	case 'S':
+		return 1.05
+	case 'E', 'F':
+		return 1.06
+	case 'Y':
+		return 1.09
+	case 'P':
+		return 1.11
+	case 'J':
+		return 1.70
+	default:
+		return 0.93
+	}
 }
 
 func resolveFontPath(fontFamily string) string {

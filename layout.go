@@ -1257,7 +1257,7 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 			pathID := "L_" + sanitizeID(edge.From, edge.From) + "_" + sanitizeID(edge.To, edge.To) + "_" + intString(edgeIdx)
 			layout.Paths = append(layout.Paths, LayoutPath{
 				ID:          pathID,
-				Class:       thicknessClass + " " + patternClass + " " + thicknessClass + " " + patternClass + " flowchart-link",
+				Class:       thicknessClass + " " + patternClass + " flowchart-link",
 				D:           flowchartEdgePath(edge),
 				Fill:        "none",
 				Stroke:      theme.LineColor,

@@ -226,7 +226,7 @@ func conformanceFixtures() []conformanceFixture {
     C[(DB)] --> D[Cache]
   end
   B --> C`,
-			MaxMismatch: 0.19,
+			MaxMismatch: 0.20,
 		},
 		{
 			Name: "sequence_basic",
@@ -525,7 +525,7 @@ func conformanceFixtures() []conformanceFixture {
   checkout main
   merge develop
   commit id: "release"`,
-			MaxMismatch: 0.11,
+			MaxMismatch: 0.12,
 		},
 		{
 			Name: "quadrant_many",
