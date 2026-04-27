@@ -51,21 +51,15 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	svgClass, ariaRoleDesc := diagramDOMClass(layout.Kind)
 	if mermaidRoot {
-		if layout.Kind == DiagramRadar {
-			if styleAttr == "" {
-				styleAttr = fmt.Sprintf("background-color: %s;", background)
-			}
-		} else {
-			widthAttr = "100%"
-			includeHeight = false
-			if layout.Kind == DiagramJourney {
-				includeHeight = true
-				heightAttr = formatFloat(max(1.0, viewBoxHeight-viewBoxY))
-				preserveAspectRatio = "xMinYMin meet"
-			}
-			if styleAttr == "" {
-				styleAttr = fmt.Sprintf("max-width: %spx; background-color: %s;", formatFloat(viewBoxWidth), background)
-			}
+		widthAttr = "100%"
+		includeHeight = false
+		if layout.Kind == DiagramJourney {
+			includeHeight = true
+			heightAttr = formatFloat(max(1.0, viewBoxHeight-viewBoxY))
+			preserveAspectRatio = "xMinYMin meet"
+		}
+		if styleAttr == "" {
+			styleAttr = fmt.Sprintf("max-width: %spx; background-color: %s;", formatFloat(viewBoxWidth), background)
 		}
 	}
 
