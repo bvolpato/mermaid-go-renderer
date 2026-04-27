@@ -12,13 +12,13 @@ import (
 )
 
 type samplesConformanceBaseline struct {
-	Width             int                              `json:"width"`
-	Height            int                              `json:"height"`
-	GeneratedAt       string                           `json:"generated_at"`
-	ReferenceRenderer string                           `json:"reference_renderer"`
-	ReferenceVersion  string                           `json:"reference_version,omitempty"`
-	NodeVersion       string                           `json:"node_version,omitempty"`
-	FixtureCount      int                              `json:"fixture_count"`
+	Width             int                               `json:"width"`
+	Height            int                               `json:"height"`
+	GeneratedAt       string                            `json:"generated_at"`
+	ReferenceRenderer string                            `json:"reference_renderer"`
+	ReferenceVersion  string                            `json:"reference_version,omitempty"`
+	NodeVersion       string                            `json:"node_version,omitempty"`
+	FixtureCount      int                               `json:"fixture_count"`
 	Entries           []samplesConformanceBaselineEntry `json:"entries"`
 }
 
