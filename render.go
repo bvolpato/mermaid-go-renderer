@@ -368,7 +368,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		if groupPrimitives {
 			b.WriteString(`<g class="node default" transform="translate(0,0)">`)
 		}
-		rectAsPath := (mermaidLike && layout.Kind != DiagramFlowchart) || layout.Kind == DiagramTimeline
+		rectAsPath := (mermaidLike && layout.Kind != DiagramFlowchart && layout.Kind != DiagramER) || layout.Kind == DiagramTimeline
 		rectID := strings.TrimSpace(rect.ID)
 		rectClass := strings.TrimSpace(rect.Class)
 		if rectAsPath {
