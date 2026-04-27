@@ -240,8 +240,8 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 			}
 			if !math.IsInf(minChildX, 1) && !math.IsInf(minChildY, 1) {
 				clusterPadX := 30.0
-				clusterPadTop := 25.0
-				clusterPadBottom := 25.0
+				clusterPadTop := 15.0
+				clusterPadBottom := 15.0
 				tlX = minChildX - clusterPadX
 				tlY = minChildY - clusterPadTop
 				clusterW = (maxChildX - minChildX) + clusterPadX*2

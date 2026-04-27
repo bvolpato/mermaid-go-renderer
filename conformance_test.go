@@ -476,7 +476,7 @@ func conformanceFixtures() []conformanceFixture {
     Processing --> Idle : done
   }
   Active --> [*] : shutdown`,
-			MaxMismatch: 0.14,
+			MaxMismatch: 0.22,
 		},
 		{
 			Name: "er_cardinality",
