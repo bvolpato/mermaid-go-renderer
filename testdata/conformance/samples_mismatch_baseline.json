@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-27T19:25:18Z",
+  "generated_at": "2026-04-27T19:58:19Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -41,7 +41,7 @@
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.1129756118336643
+      "mismatch": 0.1698478981600992
     },
     {
       "sample": "gantt",
@@ -49,7 +49,7 @@
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.07711469728149031
+      "mismatch": 0.07788944723618091
     },
     {
       "sample": "gitgraph_complex",
@@ -89,11 +89,11 @@
     },
     {
       "sample": "quadrant_complex",
-      "mismatch": 0.04734993126622881
+      "mismatch": 0.07577020389938979
     },
     {
       "sample": "radar_complex",
-      "mismatch": 0.8762086639176364
+      "mismatch": 0.8058929864448147
     },
     {
       "sample": "requirement_complex",
@@ -117,7 +117,7 @@
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.15375122580076467
+      "mismatch": 0.14617268592310384
     },
     {
       "sample": "timeline",
@@ -133,11 +133,11 @@
     },
     {
       "sample": "xychart",
-      "mismatch": 0.35415577626764244
+      "mismatch": 0.46625369156522367
     },
     {
       "sample": "xychart_complex",
-      "mismatch": 0.024523010941881564
+      "mismatch": 0.03922151910144771
     },
     {
       "sample": "zenuml_complex",

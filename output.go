@@ -187,7 +187,8 @@ func skipViewBoxExpansion(svg string) bool {
 	return strings.Contains(svg, `aria-roledescription="mindmap"`) ||
 		strings.Contains(svg, `class="mindmapDiagram"`) ||
 		strings.Contains(svg, `aria-roledescription="kanban"`) ||
-		strings.Contains(svg, `aria-roledescription="gitGraph"`)
+		strings.Contains(svg, `aria-roledescription="gitGraph"`) ||
+		strings.Contains(svg, `aria-roledescription="radar"`)
 }
 
 func shouldStripSVGTextForRasterizer(svg string) bool {
@@ -1053,6 +1054,14 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 		}
 		localX := x + parseSVGTextLength(rawDX, fontSize)
 		localY := y + parseSVGTextLength(rawDY, fontSize)
+
+		// Apply the text element's own transform (e.g. translate) to local coords.
+		// XY chart text elements use x=0 y=0 with transform="translate(px,py) rotate(r)".
+		if transformAttr := strings.TrimSpace(parseAttr(attrs, "transform")); transformAttr != "" {
+			elemTransform := parseSVGTransform(transformAttr)
+			localX, localY = elemTransform.apply(localX, localY)
+		}
+
 		pointX, pointY := ancestorTransform.apply(localX, localY)
 		px := transform.mapX(pointX, viewBox)
 		py := transform.mapY(pointY, viewBox)
