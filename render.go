@@ -881,7 +881,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 					outerClass = "label-group text"
 				}
 			}
-			textPad := 8.0
+			textPad := 0.0
 			if layout.Kind == DiagramER && outerClass == "edgeLabel" {
 				textPad = 4.0
 			}

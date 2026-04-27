@@ -1490,9 +1490,10 @@ func mermaidFlowchartNodeSize(node Node, config LayoutConfig) (float64, float64)
 		h = d
 	case ShapeDiamond:
 		minW = 90.0
-		minH = 60.0
-		w = max(w+20.0, 90.0)
-		h = max(h+6.0, 60.0)
+		minH = 90.0
+		d := max(w, h, 90.0)
+		w = d
+		h = d
 	case ShapeCylinder:
 		minW = 36.0
 		minH = 56.0

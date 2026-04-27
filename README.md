@@ -74,6 +74,9 @@ PNG conformance is tracked separately against `mmdc` PNG output and stored in
   the current `mmdc`/Node toolchain and writes that metadata into the baseline file.
 - `MMDG_PNG_CONFORMANCE=1 go test -run TestPNGConformanceAgainstMMDC -count=1 -v`
   runs the PNG regression suite without updating the baseline.
+- `./scripts/report_png_parity_gaps.sh` runs the PNG sweep, parses the
+  `fixture=... png_mismatch=...` lines, and prints the remaining >`0.10`
+  backlog grouped by diagram family so parity work can be handled in order.
 
 Latest XML fidelity snapshot (`/tmp/svg_xml_delta_report.csv`):
 

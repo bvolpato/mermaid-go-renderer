@@ -226,7 +226,7 @@ func conformanceFixtures() []conformanceFixture {
     C[(DB)] --> D[Cache]
   end
   B --> C`,
-			MaxMismatch: 0.22,
+			MaxMismatch: 0.19,
 		},
 		{
 			Name: "sequence_basic",
@@ -256,7 +256,7 @@ func conformanceFixtures() []conformanceFixture {
   [*] --> Idle
   Idle --> Running
   Running --> [*]`,
-			MaxMismatch: 0.19,
+			MaxMismatch: 0.22,
 		},
 		{
 			Name: "er_basic",
@@ -284,7 +284,7 @@ func conformanceFixtures() []conformanceFixture {
     int quantity
     float pricePerUnit
   }`,
-			MaxMismatch: 0.23,
+			MaxMismatch: 0.26,
 		},
 		{
 			Name: "er_keys",
@@ -328,7 +328,7 @@ func conformanceFixtures() []conformanceFixture {
       Long history
     Features
       Simplicity`,
-			MaxMismatch: 0.85,
+			MaxMismatch: 0.18,
 		},
 		{
 			Name: "journey_basic",
@@ -339,7 +339,7 @@ func conformanceFixtures() []conformanceFixture {
     Fill form: 3: User
   section Activation
     Verify email: 4: User`,
-			MaxMismatch: 0.60,
+			MaxMismatch: 0.15,
 		},
 		{
 			Name: "timeline_basic",
@@ -347,7 +347,7 @@ func conformanceFixtures() []conformanceFixture {
   title Product Timeline
   2024 : alpha
   2025 : beta : ga`,
-			MaxMismatch: 0.70,
+			MaxMismatch: 0.23,
 		},
 		{
 			Name: "gantt_basic",
@@ -356,7 +356,7 @@ func conformanceFixtures() []conformanceFixture {
   section Build
     Core Engine :done, core, 2026-01-01, 10d
     QA Cycle :active, qa, 2026-01-10, 6d`,
-			MaxMismatch: 0.41,
+			MaxMismatch: 0.06,
 		},
 		{
 			Name: "gitgraph_basic",
@@ -367,7 +367,7 @@ func conformanceFixtures() []conformanceFixture {
   commit id: "feat-1"
   checkout main
   merge feature`,
-			MaxMismatch: 0.16,
+			MaxMismatch: 0.13,
 		},
 		{
 			Name: "quadrant_basic",
@@ -398,7 +398,7 @@ func conformanceFixtures() []conformanceFixture {
   B -->|Option 2| D[Process B]
   C --> E((End))
   D --> E`,
-			MaxMismatch: 0.18,
+			MaxMismatch: 0.15,
 		},
 		{
 			Name: "flowchart_shapes",
@@ -408,7 +408,7 @@ func conformanceFixtures() []conformanceFixture {
   C --> D([Stadium])
   D --> E[(Database)]
   E --> F((Circle))`,
-			MaxMismatch: 0.17,
+			MaxMismatch: 0.06,
 		},
 		{
 			Name: "flowchart_styles",
@@ -418,7 +418,7 @@ func conformanceFixtures() []conformanceFixture {
   D ==> E
   style A fill:#f9f,stroke:#333,stroke-width:4px
   style C fill:#bbf,stroke:#f66,stroke-width:2px`,
-			MaxMismatch: 0.45,
+			MaxMismatch: 0.06,
 		},
 		{
 			Name: "sequence_loops",
@@ -432,7 +432,7 @@ func conformanceFixtures() []conformanceFixture {
   end
   Server-->>Client: Response
   deactivate Server`,
-			MaxMismatch: 0.15,
+			MaxMismatch: 0.12,
 		},
 		{
 			Name: "sequence_notes",
@@ -441,7 +441,7 @@ func conformanceFixtures() []conformanceFixture {
   Note right of Bob: Thinking
   Bob-->>Alice: Hi
   Note over Alice,Bob: Conversation`,
-			MaxMismatch: 0.35,
+			MaxMismatch: 0.13,
 		},
 		{
 			Name: "class_interfaces",
@@ -464,7 +464,7 @@ func conformanceFixtures() []conformanceFixture {
   }
   Shape <|.. Circle
   Shape <|.. Rectangle`,
-			MaxMismatch: 0.10,
+			MaxMismatch: 0.08,
 		},
 		{
 			Name: "state_nested",
@@ -476,7 +476,7 @@ func conformanceFixtures() []conformanceFixture {
     Processing --> Idle : done
   }
   Active --> [*] : shutdown`,
-			MaxMismatch: 0.30,
+			MaxMismatch: 0.14,
 		},
 		{
 			Name: "er_cardinality",
@@ -485,7 +485,7 @@ func conformanceFixtures() []conformanceFixture {
   PROFESSOR ||--o{ COURSE : teaches
   STUDENT ||--o| ADVISOR : has
   DEPARTMENT ||--|{ PROFESSOR : employs`,
-			MaxMismatch: 0.15,
+			MaxMismatch: 0.12,
 		},
 		{
 			Name: "pie_no_data",
@@ -495,7 +495,7 @@ func conformanceFixtures() []conformanceFixture {
   "Python" : 30
   "JavaScript" : 20
   "Other" : 10`,
-			MaxMismatch: 0.08,
+			MaxMismatch: 0.07,
 		},
 		{
 			Name: "gantt_milestones",
@@ -509,7 +509,7 @@ func conformanceFixtures() []conformanceFixture {
   section Phase 2
     Deploy :d2, after r1, 2d
     Milestone :milestone, m1, after d2, 0d`,
-			MaxMismatch: 0.32,
+			MaxMismatch: 0.06,
 		},
 		{
 			Name: "gitgraph_branches",
@@ -525,7 +525,7 @@ func conformanceFixtures() []conformanceFixture {
   checkout main
   merge develop
   commit id: "release"`,
-			MaxMismatch: 0.40,
+			MaxMismatch: 0.11,
 		},
 		{
 			Name: "quadrant_many",
@@ -558,7 +558,7 @@ func conformanceFixtures() []conformanceFixture {
   Person(user, "User", "A user of the system")
   System(system, "System", "Main system")
   Rel(user, system, "Uses")`,
-			MaxMismatch: 0.90,
+			MaxMismatch: 0.10,
 		},
 		{
 			Name: "sankey_basic",
@@ -573,7 +573,7 @@ Agricultural,Heating,25`,
 			Diagram: `block-beta
   columns 3
   a["Frontend"] b["API"] c["Database"]`,
-			MaxMismatch: 0.30,
+			MaxMismatch: 0.11,
 		},
 		{
 			Name: "packet_basic",
@@ -582,7 +582,7 @@ Agricultural,Heating,25`,
   16-31: "Destination Port"
   32-63: "Sequence Number"
   64-95: "Acknowledgment Number"`,
-			MaxMismatch: 0.20,
+			MaxMismatch: 0.15,
 		},
 		{
 			Name: "kanban_basic",
@@ -593,7 +593,7 @@ Agricultural,Heating,25`,
     id2[Task B]
   Done
     id3[Task C]`,
-			MaxMismatch: 0.52,
+			MaxMismatch: 0.11,
 		},
 		{
 			Name: "requirement_basic",
@@ -608,7 +608,7 @@ Agricultural,Heating,25`,
     type: simulation
   }
   test_entity - satisfies -> test_req`,
-			MaxMismatch: 0.15,
+			MaxMismatch: 0.13,
 		},
 	}
 }

@@ -72,8 +72,8 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		} else {
 			ranksep = max(38, ranksep*0.76)
 		}
-		marginx = 24
-		marginy = 24
+		marginx = 8
+		marginy = 8
 	case DiagramC4:
 		nodesep = max(26, nodesep*0.6)
 		ranksep = max(100, ranksep*1.25)
@@ -414,6 +414,14 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 	if astGraph.Kind == DiagramC4 {
 		layout.ViewBoxY = minY - 70
 		layout.ViewBoxHeight = (maxY - minY) + 80
+	}
+
+	// State diagrams: mmdc always uses viewBox origin at 0,0.
+	if astGraph.Kind == DiagramState {
+		layout.ViewBoxWidth = maxX + viewBoxPad
+		layout.ViewBoxHeight = maxY + viewBoxPad
+		layout.ViewBoxX = 0
+		layout.ViewBoxY = 0
 	}
 
 	layout.Width = layout.ViewBoxWidth

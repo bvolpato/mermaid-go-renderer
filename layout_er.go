@@ -26,8 +26,8 @@ func layoutERDiagramFidelity(graph *Graph, theme Theme, config LayoutConfig) Lay
 		NodeSep: max(100, config.NodeSpacing*2),
 		EdgeSep: 100,
 		RankSep: max(80, config.RankSpacing*1.6),
-		MarginX: 20,
-		MarginY: 20,
+		MarginX: 8,
+		MarginY: 8,
 	})
 
 	for _, id := range graph.NodeOrder {
@@ -151,11 +151,11 @@ func layoutERDiagramFidelity(graph *Graph, theme Theme, config LayoutConfig) Lay
 
 	appendERNodePrimitives(&layout, graph, metrics, theme)
 
-	viewBoxPad := 20.0
-	layout.ViewBoxX = minX - viewBoxPad
-	layout.ViewBoxY = minY - viewBoxPad
-	layout.ViewBoxWidth = (maxX - minX) + viewBoxPad*2
-	layout.ViewBoxHeight = (maxY - minY) + viewBoxPad*2
+	viewBoxPad := 8.0
+	layout.ViewBoxX = max(0, minX-viewBoxPad)
+	layout.ViewBoxY = max(0, minY-viewBoxPad)
+	layout.ViewBoxWidth = (maxX - layout.ViewBoxX) + viewBoxPad
+	layout.ViewBoxHeight = (maxY - layout.ViewBoxY) + viewBoxPad
 	layout.Width = layout.ViewBoxWidth
 	layout.Height = layout.ViewBoxHeight
 	applyAspectRatio(&layout, config.PreferredAspectRatio)
@@ -171,7 +171,7 @@ func measureERNodeMetrics(graph *Graph, theme Theme, config LayoutConfig) map[st
 		rowH           = 42.75
 	)
 
-	attrFontSize := max(10.0, theme.FontSize*0.85)
+	attrFontSize := max(10.0, theme.FontSize-2)
 	out := map[string]erNodeMetrics{}
 	for _, id := range graph.NodeOrder {
 		label := graph.Nodes[id].Label
@@ -317,19 +317,19 @@ func appendERNodePrimitives(layout *Layout, graph *Graph, metrics map[string]erN
 			textY := attrY + rowH/2 + theme.FontSize*0.35 - 2
 			curX := node.X + entityPadding/1.2
 			if colWidths[0] > 0 {
-				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.t, Anchor: "start", Size: max(10, theme.FontSize-1), Color: theme.PrimaryTextColor, Class: "label attribute-type"})
+				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.t, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor, Class: "label attribute-type"})
 				curX += colWidths[0]
 			}
 			if colWidths[1] > 0 {
-				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.n, Anchor: "start", Size: max(10, theme.FontSize-1), Color: theme.PrimaryTextColor, Class: "label attribute-name"})
+				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.n, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor, Class: "label attribute-name"})
 				curX += colWidths[1]
 			}
 			if colWidths[2] > 0 {
-				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.k, Anchor: "start", Size: max(10, theme.FontSize-1), Color: theme.PrimaryTextColor, Class: "label attribute-keys"})
+				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.k, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor, Class: "label attribute-keys"})
 				curX += colWidths[2]
 			}
 			if colWidths[3] > 0 {
-				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.c, Anchor: "start", Size: max(10, theme.FontSize-1), Color: theme.PrimaryTextColor, Class: "label attribute-comment"})
+				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.c, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor, Class: "label attribute-comment"})
 			}
 			attrY += rowH
 		}
