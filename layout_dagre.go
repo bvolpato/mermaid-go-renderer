@@ -120,7 +120,7 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 		if astGraph.Kind == DiagramState &&
 			(node.Shape == ShapeCircle || node.Shape == ShapeDoubleCircle) &&
 			strings.TrimSpace(node.Label) == "" {
-			dg.SetNode(v, &dagre.NodeLabel{Width: 28, Height: 28})
+			dg.SetNode(v, &dagre.NodeLabel{Width: 14, Height: 14})
 			continue
 		}
 
