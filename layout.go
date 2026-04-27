@@ -1483,9 +1483,9 @@ func mermaidFlowchartNodeSize(node Node, config LayoutConfig) (float64, float64)
 
 	switch node.Shape {
 	case ShapeCircle, ShapeDoubleCircle:
-		minW = 54.0
-		minH = 54.0
-		d := max(w, h)
+		minW = 40.0
+		minH = 40.0
+		d := max(labelWidth+15.0, textHeight+15.0, 40.0)
 		w = d
 		h = d
 	case ShapeDiamond:
