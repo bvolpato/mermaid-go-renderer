@@ -108,7 +108,7 @@ func run() error {
 	}
 
 	if len(diagrams) == 1 {
-		return renderOne(diagrams[0], outputPath, outputFormat, options, timing)
+		return renderOne(diagrams[0], outputPath, outputFormat, options, timing, width, height)
 	}
 
 	if outputPath == "" {
@@ -120,7 +120,7 @@ func run() error {
 		return err
 	}
 	for i, diagram := range diagrams {
-		if err := renderOne(diagram, outputs[i], outputFormat, options, false); err != nil {
+		if err := renderOne(diagram, outputs[i], outputFormat, options, false, width, height); err != nil {
 			return fmt.Errorf("diagram %d: %w", i+1, err)
 		}
 	}
@@ -138,13 +138,13 @@ func printUsage(fs *flag.FlagSet) {
 	fs.SetOutput(io.Discard)
 }
 
-func renderOne(diagram, outputPath, outputFormat string, options mermaid.RenderOptions, timing bool) error {
+func renderOne(diagram, outputPath, outputFormat string, options mermaid.RenderOptions, timing bool, width, height float64) error {
 	if timing {
 		result, err := mermaid.RenderWithTiming(diagram, options)
 		if err != nil {
 			return err
 		}
-		if err := writeOutput(result.SVG, outputPath, outputFormat); err != nil {
+		if err := writeOutput(result.SVG, outputPath, outputFormat, width, height); err != nil {
 			return err
 		}
 		payload, _ := json.Marshal(map[string]any{
@@ -161,15 +161,15 @@ func renderOne(diagram, outputPath, outputFormat string, options mermaid.RenderO
 	if err != nil {
 		return err
 	}
-	return writeOutput(svg, outputPath, outputFormat)
+	return writeOutput(svg, outputPath, outputFormat, width, height)
 }
 
-func writeOutput(svg, outputPath, outputFormat string) error {
+func writeOutput(svg, outputPath, outputFormat string, width, height float64) error {
 	switch lower(outputFormat) {
 	case "svg":
 		return mermaid.WriteOutputSVG(svg, outputPath)
 	case "png":
-		return mermaid.WriteOutputPNG(svg, outputPath)
+		return mermaid.WriteOutputPNGWithSize(svg, outputPath, int(width), int(height))
 	default:
 		return fmt.Errorf("unsupported output format %q", outputFormat)
 	}
