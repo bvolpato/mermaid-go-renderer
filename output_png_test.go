@@ -677,12 +677,12 @@ func TestWriteOutputPNGFromTimelineDiagramPreservesSectionColors(t *testing.T) {
 		t.Fatalf("decode timeline png: %v", err)
 	}
 
-	year2024R, year2024G, year2024B, _ := rgba8At(img, 292, 138)
+	year2024R, year2024G, year2024B, _ := rgba8At(img, 280, 138)
 	if !nearRGB(year2024R, year2024G, year2024B, 134, 134, 255, 18) {
 		t.Fatalf("expected first section to stay purple, got rgb(%d,%d,%d)", year2024R, year2024G, year2024B)
 	}
 
-	year2025R, year2025G, year2025B, _ := rgba8At(img, 492, 138)
+	year2025R, year2025G, year2025B, _ := rgba8At(img, 480, 138)
 	if !nearRGB(year2025R, year2025G, year2025B, 255, 255, 120, 18) {
 		t.Fatalf("expected second section to stay yellow, got rgb(%d,%d,%d)", year2025R, year2025G, year2025B)
 	}

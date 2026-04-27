@@ -1911,7 +1911,7 @@ func resolveRasterFontFace(fontFamily string, fontSize float64) font.Face {
 			face, err := opentype.NewFace(faceData, &opentype.FaceOptions{
 				Size:    fontSize,
 				DPI:     72,
-				Hinting: font.HintingNone,
+				Hinting: font.HintingFull,
 			})
 			if err == nil {
 				svgFontFaceCache.Store(key, face)
