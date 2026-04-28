@@ -2899,8 +2899,8 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 			StrokeWidth:   3,
 			StrokeOpacity: 1,
 		})
-		labelSize := clamp(min(f.w, f.h)*0.25, 20, 38)
-		valueSize := clamp(labelSize*0.6, 14, 23)
+		labelSize := math.Round(clamp(min(f.w, f.h)*0.25, 20, 38))
+		valueSize := math.Round(clamp(labelSize*0.6, 14, 23))
 		leafTextColor := sectionTextColor(fill)
 		layout.Texts = append(layout.Texts,
 			LayoutText{

@@ -2635,9 +2635,8 @@ func renderTreemapMermaid(layout Layout) string {
 		fillOpacity := defaultFloat(rect.FillOpacity, 0.6)
 		strokeOpacity := defaultFloat(rect.StrokeOpacity, 0.4)
 		strokeWidth := defaultFloat(rect.StrokeWidth, 2)
-		compositedFill := compositeColorOverWhite(fill, fillOpacity)
 		if strings.TrimSpace(strings.ToLower(fill)) == "transparent" || strings.TrimSpace(strings.ToLower(fill)) == "none" {
-			compositedFill = fill
+			fill = "transparent"
 		}
 		hidden := idx == 0
 		headerStyle := ""
@@ -2672,7 +2671,7 @@ func renderTreemapMermaid(layout Layout) string {
 		b.WriteString(`<g class="treemapSection" transform="translate(` + formatFloat(rect.X) + `,` + formatFloat(rect.Y) + `)">`)
 		b.WriteString(`<rect width="` + formatFloat(rect.W) + `" height="25" class="treemapSectionHeader" fill="none" fill-opacity="0.6" stroke-width="0.6" style="` + headerStyle + `"/>`)
 		b.WriteString(`<clipPath id="clip-section-my-svg-` + intString(idx) + `"><rect width="` + formatFloat(max(1, rect.W-12)) + `" height="25"/></clipPath>`)
-		b.WriteString(`<rect width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" class="` + html.EscapeString(className) + `" fill="` + html.EscapeString(compositedFill) + `" stroke="` + html.EscapeString(stroke) + `" stroke-width="` + formatFloat(strokeWidth) + `" stroke-opacity="` + formatFloat(strokeOpacity) + `" style="` + sectionStyle + `"/>`)
+		b.WriteString(`<rect width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" class="` + html.EscapeString(className) + `" fill="` + html.EscapeString(fill) + `" fill-opacity="` + formatFloat(fillOpacity) + `" stroke="` + html.EscapeString(stroke) + `" stroke-width="` + formatFloat(strokeWidth) + `" stroke-opacity="` + formatFloat(strokeOpacity) + `" style="` + sectionStyle + `"/>`)
 		labelStyle := "dominant-baseline: middle; font-size: " + formatFloat(labelSize) + "px; fill:" + textColor + "; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
 		valueStyle := "text-anchor: end; dominant-baseline: middle; font-size: " + formatFloat(valueSize) + "px; fill:" + textColor + "; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
 		if hidden {
@@ -2684,42 +2683,10 @@ func renderTreemapMermaid(layout Layout) string {
 		b.WriteString(`</g>`)
 	}
 
-	// Build a map of section fills for compositing leaf fills over the correct background
-	sectionCompositedFills := make([]string, len(sectionRects))
-	for idx, rect := range sectionRects {
-		fill := defaultColor(rect.Fill, "#efefef")
-		fillOpacity := defaultFloat(rect.FillOpacity, 0.6)
-		cf := compositeColorOverWhite(fill, fillOpacity)
-		if strings.TrimSpace(strings.ToLower(fill)) == "transparent" || strings.TrimSpace(strings.ToLower(fill)) == "none" {
-			cf = "#ffffff"
-		}
-		sectionCompositedFills[idx] = cf
-	}
-
-	// Find the deepest section containing a leaf (closest parent)
-	findParentSectionFill := func(lx, ly, lw, lh float64) string {
-		bestIdx := -1
-		bestArea := math.MaxFloat64
-		for idx, rect := range sectionRects {
-			if lx >= rect.X && ly >= rect.Y && lx+lw <= rect.X+rect.W && ly+lh <= rect.Y+rect.H {
-				area := rect.W * rect.H
-				if area < bestArea {
-					bestArea = area
-					bestIdx = idx
-				}
-			}
-		}
-		if bestIdx >= 0 {
-			return sectionCompositedFills[bestIdx]
-		}
-		return "#ffffff"
-	}
 
 	for idx, rect := range leafRects {
 		fill := defaultColor(rect.Fill, "#efefef")
 		fillOpacity := defaultFloat(rect.FillOpacity, 0.3)
-		parentFill := findParentSectionFill(rect.X, rect.Y, rect.W, rect.H)
-		compositedFill := compositeColor(fill, fillOpacity, parentFill)
 		stroke := defaultColor(rect.Stroke, fill)
 		strokeWidth := defaultFloat(rect.StrokeWidth, 3)
 		label := leafLabelByIdx[idx]
@@ -2761,7 +2728,7 @@ func renderTreemapMermaid(layout Layout) string {
 		}
 
 		b.WriteString(`<g class="treemapNode treemapLeafGroup leaf` + intString(idx) + `x" transform="translate(` + formatFloat(rect.X) + `,` + formatFloat(rect.Y) + `)">`)
-		b.WriteString(`<rect width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" class="treemapLeaf" fill="` + html.EscapeString(compositedFill) + `" stroke="` + html.EscapeString(stroke) + `" stroke-width="` + formatFloat(strokeWidth) + `"/>`)
+		b.WriteString(`<rect width="` + formatFloat(rect.W) + `" height="` + formatFloat(rect.H) + `" class="treemapLeaf" fill="` + html.EscapeString(fill) + `" style="" fill-opacity="` + formatFloat(fillOpacity) + `" stroke="` + html.EscapeString(stroke) + `" stroke-width="` + formatFloat(strokeWidth) + `"/>`)
 		b.WriteString(`<clipPath id="clip-my-svg-` + intString(idx) + `"><rect width="` + formatFloat(max(1, rect.W-4)) + `" height="` + formatFloat(max(1, rect.H-4)) + `"/></clipPath>`)
 		b.WriteString(`<text class="treemapLabel" x="` + formatFloat(labelX) + `" y="` + formatFloat(labelY) + `" style="text-anchor: middle; dominant-baseline: middle; font-size: ` + formatFloat(labelSize) + `px;fill:` + labelTextColor + `;" clip-path="url(#clip-my-svg-` + intString(idx) + `)">` + html.EscapeString(labelText) + `</text>`)
 		b.WriteString(`<text class="treemapValue" x="` + formatFloat(valueX) + `" y="` + formatFloat(valueY) + `" style="text-anchor: middle; dominant-baseline: hanging; font-size: ` + formatFloat(valueSize) + `px; fill: ` + valueTextColor + `;" clip-path="url(#clip-my-svg-` + intString(idx) + `)">` + html.EscapeString(valueText) + `</text>`)
