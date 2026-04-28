@@ -3448,13 +3448,13 @@ func formatSankeyValue(value float64) string {
 func renderRadarMermaid(layout Layout) string {
 	var b strings.Builder
 	b.WriteString("<g/>\n")
-	b.WriteString(`<g transform="translate(` + formatFloat(layout.Width*0.5) + `, ` + formatFloat(layout.Height*0.5) + `)">`)
+	b.WriteString(`<g transform="translate(` + formatFloat(layout.RadarCenterX) + `, ` + formatFloat(layout.RadarCenterY) + `)">`)
 
 	if layout.RadarGraticule == "polygon" && len(layout.RadarAxes) > 0 {
 		for _, r := range layout.RadarGraticuleRadii {
 			points := make([]string, 0, len(layout.RadarAxes))
-			for i := range layout.RadarAxes {
-				angle := 2*math.Pi*float64(i)/float64(len(layout.RadarAxes)) - math.Pi*0.5
+			for j := range layout.RadarAxes {
+				angle := 2*math.Pi*float64(j)/float64(len(layout.RadarAxes)) - math.Pi*0.5
 				points = append(points, formatFloat(r*math.Cos(angle))+","+formatFloat(r*math.Sin(angle)))
 			}
 			b.WriteString(`<polygon points="` + strings.Join(points, " ") + `" class="radarGraticule"/>`)
@@ -3495,20 +3495,20 @@ func renderRadarMermaid(layout Layout) string {
 
 func radarStyleCSS() string {
 	var b strings.Builder
-	b.WriteString(`#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .radarTitle{font-size:16px;color:#333;dominant-baseline:hanging;text-anchor:middle;}#my-svg .radarAxisLine{stroke:#333333;stroke-width:2;}#my-svg .radarAxisLabel{dominant-baseline:middle;text-anchor:middle;font-size:12px;color:#333333;}#my-svg .radarGraticule{fill:#DEDEDE;fill-opacity:0.3;stroke:#DEDEDE;stroke-width:1;}#my-svg .radarLegendText{text-anchor:start;font-size:12px;dominant-baseline:hanging;}`)
+	b.WriteString(`#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .radarTitle{font-size:16px;color:#333;dominant-baseline:hanging;text-anchor:middle;}#my-svg .radarAxisLine{stroke:#333333;stroke-width:2;}#my-svg .radarAxisLabel{dominant-baseline:middle;text-anchor:middle;font-size:12px;color:#333333;}#my-svg .radarGraticule{fill:#DEDEDE;fill-opacity:0.3;stroke:#DEDEDE;stroke-width:1;}#my-svg .radarLegendText{text-anchor:start;font-size:12px;dominant-baseline:hanging;}`)
 	palette := []string{
-		"hsl(240, 100%, 76.2745098039%)",
-		"hsl(60, 100%, 73.5294117647%)",
-		"hsl(80, 100%, 76.2745098039%)",
-		"hsl(270, 100%, 76.2745098039%)",
-		"hsl(300, 100%, 76.2745098039%)",
-		"hsl(330, 100%, 76.2745098039%)",
-		"hsl(0, 100%, 76.2745098039%)",
-		"hsl(30, 100%, 76.2745098039%)",
-		"hsl(90, 100%, 76.2745098039%)",
-		"hsl(150, 100%, 76.2745098039%)",
-		"hsl(180, 100%, 76.2745098039%)",
-		"hsl(210, 100%, 76.2745098039%)",
+		"#8686ff", // hsl(240, 100%, 76.2745098039%)
+		"#ffff78", // hsl(60, 100%, 73.5294117647%)
+		"#cdff86", // hsl(80, 100%, 76.2745098039%)
+		"#c086ff", // hsl(270, 100%, 76.2745098039%)
+		"#ff86ff", // hsl(300, 100%, 76.2745098039%)
+		"#ff86bf", // hsl(330, 100%, 76.2745098039%)
+		"#ff8686", // hsl(0, 100%, 76.2745098039%)
+		"#ffc686", // hsl(30, 100%, 76.2745098039%)
+		"#a1ff86", // hsl(90, 100%, 76.2745098039%)
+		"#86ffb2", // hsl(150, 100%, 76.2745098039%)
+		"#86ffff", // hsl(180, 100%, 76.2745098039%)
+		"#86c0ff", // hsl(210, 100%, 76.2745098039%)
 	}
 	for i, color := range palette {
 		b.WriteString(`#my-svg .radarCurve-` + intString(i) + `{color:` + color + `;fill:` + color + `;fill-opacity:0.5;stroke:` + color + `;stroke-width:2;}`)

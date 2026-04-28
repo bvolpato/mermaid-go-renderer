@@ -373,8 +373,18 @@ func inlineElementStyles(attrs []xml.Attr, ctx elementContext, ancestors []eleme
 	}
 
 	if len(computed) > 0 {
-		attrs = setAttrValue(attrs, "style", computed.String())
 		attrs = materializePresentationAttrs(attrs, ctx, computed)
+		// Remove the 'style' attribute entirely, as oksvg has a bug where it fails
+		// to accumulate alpha correctly if fill-opacity is provided via 'style'.
+		// Since we materialized all supported styles into presentation attributes,
+		// we no longer need the 'style' attribute.
+		var newAttrs []xml.Attr
+		for _, attr := range attrs {
+			if !strings.EqualFold(attr.Name.Local, "style") {
+				newAttrs = append(newAttrs, attr)
+			}
+		}
+		attrs = newAttrs
 	}
 	return attrs
 }

@@ -261,6 +261,8 @@ type Layout struct {
 	RadarTicks            int
 	RadarGraticule        string
 	RadarGraticuleRadii   []float64
+	RadarCenterX          float64
+	RadarCenterY          float64
 	RadarLegendX          float64
 	RadarLegendY          float64
 	RadarLegendLineHeight float64

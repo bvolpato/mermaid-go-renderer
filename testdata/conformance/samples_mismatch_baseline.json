@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-28T05:37:26Z",
+  "generated_at": "2026-04-28T07:01:45Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -21,11 +21,11 @@
     },
     {
       "sample": "class",
-      "mismatch": 0.06518215498610683
+      "mismatch": 0.06525933930225378
     },
     {
       "sample": "class_complex",
-      "mismatch": 0.06631214872460009
+      "mismatch": 0.06637267617812365
     },
     {
       "sample": "er",
@@ -37,23 +37,23 @@
     },
     {
       "sample": "flowchart",
-      "mismatch": 0.1278045265467885
+      "mismatch": 0.12294942191603288
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.1259783548870277
+      "mismatch": 0.14161602238790386
     },
     {
       "sample": "gantt",
-      "mismatch": 0.024467381235940187
+      "mismatch": 0.03696344940587545
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.06888720666161999
+      "mismatch": 0.06923579359895493
     },
     {
       "sample": "gitgraph_complex",
-      "mismatch": 0.18163240774131506
+      "mismatch": 0.175656660412758
     },
     {
       "sample": "journey",
@@ -65,7 +65,7 @@
     },
     {
       "sample": "kanban_complex",
-      "mismatch": 0.2518570847515681
+      "mismatch": 0.25189989938561
     },
     {
       "sample": "mindmap",
@@ -73,7 +73,7 @@
     },
     {
       "sample": "mindmap_complex",
-      "mismatch": 0.22176965782502994
+      "mismatch": 0.22417661501989672
     },
     {
       "sample": "packet_complex",
@@ -93,11 +93,11 @@
     },
     {
       "sample": "radar_complex",
-      "mismatch": 0.8058929864448147
+      "mismatch": 0.0915474869269801
     },
     {
       "sample": "requirement_complex",
-      "mismatch": 0.14236521143392858
+      "mismatch": 0.1425970655034428
     },
     {
       "sample": "sankey_complex",
@@ -113,11 +113,11 @@
     },
     {
       "sample": "state",
-      "mismatch": 0.1845682302771855
+      "mismatch": 0.1857675906183369
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.1469382685380698
+      "mismatch": 0.15015970921907698
     },
     {
       "sample": "timeline",
@@ -125,7 +125,7 @@
     },
     {
       "sample": "timeline_complex",
-      "mismatch": 0.743784407277303
+      "mismatch": 0.3818402587243582
     },
     {
       "sample": "treemap_complex",
@@ -133,15 +133,15 @@
     },
     {
       "sample": "xychart",
-      "mismatch": 0.4825145711906744
+      "mismatch": 0.3061630218687873
     },
     {
       "sample": "xychart_complex",
-      "mismatch": 0.07893222973030987
+      "mismatch": 0.03754808421766643
     },
     {
       "sample": "zenuml_complex",
-      "mismatch": 0.1579176271039012
+      "mismatch": 0.3221412517877818
     }
   ]
 }

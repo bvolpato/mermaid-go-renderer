@@ -962,6 +962,20 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	topBoxY := 50.0
 	axisY := 165.815625
 	eventTopY := 250.0
+
+	hasSections := false
+	for _, section := range graph.TimelineSections {
+		if strings.TrimSpace(section) != "" {
+			hasSections = true
+			break
+		}
+	}
+	if hasSections {
+		topBoxY += 115.815625
+		axisY += 115.815625
+		eventTopY += 115.815625
+	}
+
 	if title != "" {
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      45.0,
@@ -1005,8 +1019,10 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 	type sectionSpan struct {
 		first int
 		last  int
+		idx   int
 	}
 	sectionSpans := map[string]sectionSpan{}
+	validSectionCount := 0
 	for idx, event := range graph.TimelineEvents {
 		section := strings.TrimSpace(event.Section)
 		if section == "" {
@@ -1014,13 +1030,14 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		}
 		span, ok := sectionSpans[section]
 		if !ok {
-			sectionSpans[section] = sectionSpan{first: idx, last: idx}
+			sectionSpans[section] = sectionSpan{first: idx, last: idx, idx: validSectionCount}
+			validSectionCount++
 			continue
 		}
 		span.last = idx
 		sectionSpans[section] = span
 	}
-	sectionY := topBoxY - 12.0
+
 	for _, section := range graph.TimelineSections {
 		section = strings.TrimSpace(section)
 		if section == "" {
@@ -1032,23 +1049,50 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		}
 		xStart := startX + float64(span.first)*(maxBoxW+colGap)
 		xEnd := startX + float64(span.last)*(maxBoxW+colGap) + maxBoxW
+		color := topColors[span.idx%len(topColors)]
+		textColor := textColors[span.idx%len(textColors)]
+
+		layout.Rects = append(layout.Rects, LayoutRect{
+			Class:       "section-bkg",
+			X:           xStart,
+			Y:           50.0,
+			W:           xEnd - xStart,
+			H:           timeBoxH,
+			RX:          5,
+			RY:          5,
+			Fill:        color,
+			Stroke:      "none",
+			StrokeWidth: 0,
+		})
+
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      (xStart + xEnd) / 2.0,
-			Y:      sectionY,
+			Y:      50.0 + timeBoxH/2.0 + theme.FontSize*0.3 - 3.0,
 			Value:  section,
 			Anchor: "middle",
 			Size:   theme.FontSize * 0.95,
-			Weight: "700",
-			Color:  theme.PrimaryTextColor,
+			Color:  textColor,
 		})
 	}
 
 	for i, event := range graph.TimelineEvents {
 		x := startX + float64(i)*(maxBoxW+colGap)
 		cx := x + maxBoxW/2.0
-		color := topColors[i%len(topColors)]
-		lineColor := lineColors[i%len(lineColors)]
-		textColor := textColors[i%len(textColors)]
+
+		colorIdx := i
+		if len(graph.TimelineSections) > 0 {
+			sectionStr := strings.TrimSpace(event.Section)
+			for idx, name := range graph.TimelineSections {
+				if strings.TrimSpace(name) == sectionStr {
+					colorIdx = idx
+					break
+				}
+			}
+		}
+
+		color := topColors[colorIdx%len(topColors)]
+		lineColor := lineColors[colorIdx%len(lineColors)]
+		textColor := textColors[colorIdx%len(textColors)]
 
 		layout.Rects = append(layout.Rects, LayoutRect{
 			ID:          "node-undefined",
@@ -1159,15 +1203,19 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 
 	allValues := []float64{}
 	maxSeriesValues := 0
-	barSeries := make([]XYSeries, 0, len(graph.XYSeries))
-	lineSeries := make([]XYSeries, 0, len(graph.XYSeries))
-	for _, series := range graph.XYSeries {
+	type renderSeries struct {
+		series XYSeries
+		idx    int
+	}
+	barSeries := make([]renderSeries, 0, len(graph.XYSeries))
+	lineSeries := make([]renderSeries, 0, len(graph.XYSeries))
+	for i, series := range graph.XYSeries {
 		allValues = append(allValues, series.Values...)
 		maxSeriesValues = max(maxSeriesValues, len(series.Values))
 		if series.Kind == XYSeriesBar {
-			barSeries = append(barSeries, series)
+			barSeries = append(barSeries, renderSeries{series, i})
 		} else if series.Kind == XYSeriesLine {
-			lineSeries = append(lineSeries, series)
+			lineSeries = append(lineSeries, renderSeries{series, i})
 		}
 	}
 
@@ -1206,18 +1254,33 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 	const (
 		totalWidth     = 700.0
 		totalHeight    = 500.0
-		axisLeft       = 66.53125190734863
+		axisLeft       = 67.572
 		axisBottom     = 468.0
 		axisRight      = 700.0
-		axisTop        = 43.5
-		yLabelTop      = 51.5
+		axisTop        = 42.0
+		yLabelTop      = 50.0
 		yLabelBottom   = 459.0
 		yZeroLine      = 459.0
 		barBottom      = 467.0
-		centerStart    = 102.53125190734863
-		centerEnd      = 665.0
-		barSeriesWidth = 66.5
 	)
+
+	var centerStart, centerEnd, barSeriesWidth float64
+	axisWidth := axisRight - axisLeft
+	if len(barSeries) > 0 {
+		padding := axisWidth / float64(numCategories) * 0.33
+		centerStart = axisLeft + padding
+		centerEnd = axisRight - padding
+		step := (centerEnd - centerStart) / math.Max(1, float64(numCategories-1))
+		if numCategories == 1 {
+			step = axisWidth
+		}
+		barSeriesWidth = step * 0.6
+	} else {
+		padding := axisWidth / math.Max(1, float64(numCategories-1)) * 0.06
+		centerStart = axisLeft + padding
+		centerEnd = axisRight - padding
+		barSeriesWidth = 0
+	}
 
 	layout.Rects = append(layout.Rects, LayoutRect{
 		Class:  "background",
@@ -1230,7 +1293,7 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 	})
 
 	centers := make([]float64, numCategories)
-	if numCategories == 1 {
+	if numCategories <= 1 {
 		centers[0] = (centerStart + centerEnd) / 2.0
 	} else {
 		step := (centerEnd - centerStart) / float64(numCategories-1)
@@ -1248,28 +1311,33 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		return yZeroLine - ratio*(yLabelBottom-yLabelTop)
 	}
 
+	palette := []string{"#ECECFF", "#8493A6", "#ffcccc"}
 	barCount := max(1, len(barSeries))
 	barWidth := barSeriesWidth / float64(barCount)
-	for idx, series := range barSeries {
+	for bIdx, rs := range barSeries {
+		series := rs.series
+		color := palette[rs.idx%len(palette)]
 		for i, value := range series.Values {
 			if i >= len(centers) {
 				break
 			}
-			x := centers[i] - barSeriesWidth/2.0 + float64(idx)*barWidth
+			x := centers[i] - barSeriesWidth/2.0 + float64(bIdx)*barWidth
 			y := valueToY(value)
 			layout.Rects = append(layout.Rects, LayoutRect{
 				X:           x,
 				Y:           y,
 				W:           barWidth,
-				H:           max(0, barBottom-y),
-				Fill:        "#ECECFF",
-				Stroke:      "#ECECFF",
+				H:           math.Max(0, barBottom-y),
+				Fill:        color,
+				Stroke:      color,
 				StrokeWidth: 0,
 			})
 		}
 	}
 
-	for _, series := range lineSeries {
+	for _, rs := range lineSeries {
+		series := rs.series
+		color := palette[rs.idx%len(palette)]
 		if len(series.Values) == 0 {
 			continue
 		}
@@ -1290,7 +1358,7 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		layout.Paths = append(layout.Paths, LayoutPath{
 			D:           d.String(),
 			Fill:        "none",
-			Stroke:      "#8493A6",
+			Stroke:      color,
 			StrokeWidth: 2,
 		})
 	}
@@ -1328,12 +1396,6 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 			Fill:        "none",
 			Stroke:      "#131300",
 			StrokeWidth: 2,
-		})
-		layout.Paths = append(layout.Paths, LayoutPath{
-			D:           "M " + formatFloat(axisLeft+1.0) + "," + formatFloat(y) + " L " + formatFloat(axisRight) + "," + formatFloat(y),
-			Fill:        "none",
-			Stroke:      "#e0e0e0",
-			StrokeWidth: 1,
 		})
 		label := strconv.FormatFloat(value, 'f', 0, 64)
 		if math.Abs(value-math.Round(value)) > 0.001 {

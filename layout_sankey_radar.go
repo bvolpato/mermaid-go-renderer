@@ -403,12 +403,21 @@ func layoutRadarFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout 
 		marginLeft      = 50.0
 		axisScaleFactor = 1.0
 		axisLabelFactor = 1.05
-		curveTension    = 0.17
+		curveTension = 0.280
 	)
 
 	totalWidth := chartWidth + marginLeft + marginRight
 	totalHeight := chartHeight + marginTop + marginBottom
 	radius := math.Min(chartWidth, chartHeight) * 0.5
+
+	w := totalWidth
+	if config.ViewportWidth > w {
+		w = config.ViewportWidth
+	}
+	h := totalHeight
+	if config.ViewportHeight > h {
+		h = config.ViewportHeight
+	}
 
 	ticks := graph.RadarTicks
 	if ticks <= 0 {
@@ -443,16 +452,18 @@ func layoutRadarFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout 
 
 	layout := Layout{
 		Kind:                  DiagramRadar,
-		Width:                 totalWidth,
-		Height:                totalHeight,
+		Width:                 w,
+		Height:                h,
 		ViewBoxX:              0,
 		ViewBoxY:              0,
-		ViewBoxWidth:          totalWidth,
-		ViewBoxHeight:         totalHeight,
+		ViewBoxWidth:          w,
+		ViewBoxHeight:         h,
 		RadarTitle:            graph.RadarTitle,
 		RadarShowLegend:       graph.RadarShowLegend,
 		RadarTicks:            ticks,
 		RadarGraticule:        graph.RadarGraticule,
+		RadarCenterX:          totalWidth * 0.5,
+		RadarCenterY:          (chartHeight * 0.5) + marginTop,
 		RadarLegendX:          ((chartWidth*0.5 + marginRight) * 3.0) / 4.0,
 		RadarLegendY:          (-(chartHeight*0.5 + marginTop) * 3.0) / 4.0,
 		RadarLegendLineHeight: 20.0,
@@ -460,7 +471,7 @@ func layoutRadarFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout 
 	if layout.RadarGraticule == "" {
 		layout.RadarGraticule = "circle"
 	}
-	for i := 1; i <= ticks; i++ {
+	for i := ticks; i >= 1; i-- {
 		layout.RadarGraticuleRadii = append(layout.RadarGraticuleRadii, radius*float64(i)/float64(ticks))
 	}
 
@@ -494,8 +505,8 @@ func layoutRadarFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout 
 			Class: "radarCurve-" + intString(i),
 		}
 		if layout.RadarGraticule == "polygon" {
-			curveLayout.Path = radarPointsString(points)
 			curveLayout.Polygon = true
+			curveLayout.Path = radarPointsString(points)
 		} else {
 			curveLayout.Path = closedRoundCurve(points, curveTension)
 		}
