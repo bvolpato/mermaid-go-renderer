@@ -1114,7 +1114,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 			X2:          x + maxBoxW,
 			Y2:          topBoxY + timeBoxH + 5,
 			Stroke:      lineColor,
-			StrokeWidth: 3.0,
+			StrokeWidth: 0.0,
 		})
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      cx,
@@ -1148,7 +1148,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 				X2:          x + maxBoxW,
 				Y2:          ey + eventBoxH + 5,
 				Stroke:      lineColor,
-				StrokeWidth: 3.0,
+				StrokeWidth: 0.0,
 			})
 			layout.Texts = append(layout.Texts, LayoutText{
 				X:      cx,
@@ -1164,7 +1164,7 @@ func layoutTimelineFidelity(graph *Graph, theme Theme, config LayoutConfig) Layo
 		layout.Lines = append(layout.Lines, LayoutLine{
 			Class:       "lineWrapper",
 			X1:          cx,
-			Y1:          topBoxY + timeBoxH,
+			Y1:          topBoxY + timeBoxH + 5.0,
 			X2:          cx,
 			Y2:          laneBottom - 7.0,
 			Stroke:      "#000000",

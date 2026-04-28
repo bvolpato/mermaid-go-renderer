@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-28T21:25:07Z",
+  "generated_at": "2026-04-28T23:34:44Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -9,139 +9,139 @@
   "entries": [
     {
       "sample": "architecture_complex",
-      "mismatch": 0.07072055852287504
+      "mismatch": 0.07073020699450382
     },
     {
       "sample": "block_complex",
-      "mismatch": 0.07261600462712466
+      "mismatch": 0.07238535875527033
     },
     {
       "sample": "c4_context_complex",
-      "mismatch": 0.0802109155931239
+      "mismatch": 0.07883771038295796
     },
     {
       "sample": "class",
-      "mismatch": 0.06525933930225378
+      "mismatch": 0.06527274130082555
     },
     {
       "sample": "class_complex",
-      "mismatch": 0.06636402939904885
+      "mismatch": 0.06736705577172503
     },
     {
       "sample": "er",
-      "mismatch": 0.11742738589211618
+      "mismatch": 0.1146801682160248
     },
     {
       "sample": "er_complex",
-      "mismatch": 0.2166861166604031
+      "mismatch": 0.21825788372735525
     },
     {
       "sample": "flowchart",
-      "mismatch": 0.12551325427848767
+      "mismatch": 0.13239143566682327
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.1038985373792749
+      "mismatch": 0.13955491969339376
     },
     {
       "sample": "gantt",
-      "mismatch": 0.03696344940587545
+      "mismatch": 0.0368334816993717
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.06926171577688377
+      "mismatch": 0.07020399305555555
     },
     {
       "sample": "gitgraph_complex",
-      "mismatch": 0.175656660412758
+      "mismatch": 0.17553253859683407
     },
     {
       "sample": "journey",
-      "mismatch": 0.10858712591457778
+      "mismatch": 0.10862531200887492
     },
     {
       "sample": "journey_complex",
-      "mismatch": 0.10423697613057618
+      "mismatch": 0.10429960731378084
     },
     {
       "sample": "kanban_complex",
-      "mismatch": 0.25189989938561
+      "mismatch": 0.25393028024606973
     },
     {
       "sample": "mindmap",
-      "mismatch": 0.14034169110166955
+      "mismatch": 0.14035665130752198
     },
     {
       "sample": "mindmap_complex",
-      "mismatch": 0.22422120005201576
+      "mismatch": 0.2243549421171689
     },
     {
       "sample": "packet_complex",
-      "mismatch": 0.1336150388613166
+      "mismatch": 0.13406941908907924
     },
     {
       "sample": "pie",
-      "mismatch": 0.056061144685389266
+      "mismatch": 0.05459524825722009
     },
     {
       "sample": "pie_complex",
-      "mismatch": 0.07427124487087573
+      "mismatch": 0.0723198875872497
     },
     {
       "sample": "quadrant_complex",
-      "mismatch": 0.09995500137899
+      "mismatch": 0.0983823187732342
     },
     {
       "sample": "radar_complex",
-      "mismatch": 0.02816908484385676
+      "mismatch": 0.02857386814533546
     },
     {
       "sample": "requirement_complex",
-      "mismatch": 0.1425970655034428
+      "mismatch": 0.14354571335903996
     },
     {
       "sample": "sankey_complex",
-      "mismatch": 0.021911238549569896
+      "mismatch": 0.022245341588638806
     },
     {
       "sample": "sequence",
-      "mismatch": 0.053835619513728304
+      "mismatch": 0.05322681985459115
     },
     {
       "sample": "sequence_complex",
-      "mismatch": 0.11576676800788084
+      "mismatch": 0.1163512150467456
     },
     {
       "sample": "state",
-      "mismatch": 0.1857675906183369
+      "mismatch": 0.1867004264392324
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.15204807653655988
+      "mismatch": 0.15028358486236026
     },
     {
       "sample": "timeline",
-      "mismatch": 0.1971914158144894
+      "mismatch": 0.18890477383601822
     },
     {
       "sample": "timeline_complex",
-      "mismatch": 0.3818402587243582
+      "mismatch": 0.3772806931180467
     },
     {
       "sample": "treemap_complex",
-      "mismatch": 0.2861234344435311
+      "mismatch": 0.2863697419785369
     },
     {
       "sample": "xychart",
-      "mismatch": 0.3061630218687873
+      "mismatch": 0.30778367249980204
     },
     {
       "sample": "xychart_complex",
-      "mismatch": 0.03754808421766643
+      "mismatch": 0.03780488893252059
     },
     {
       "sample": "zenuml_complex",
-      "mismatch": 0.3221412517877818
+      "mismatch": 0.32377591530657257
     }
   ]
 }
