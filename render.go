@@ -875,11 +875,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 					outerClass = "label-group text"
 				}
 			}
-			textPad := 0.0
-			if layout.Kind == DiagramER && outerClass == "edgeLabel" {
-				textPad = 4.0
-			}
-			textW := max(1.0, measureTextWidthWithFontSize(text.Value, size, false, family)+textPad)
+			textW := max(1.0, measureTextWidthWithFontSize(text.Value, size, false, family))
 			textH := max(16.0, size*1.5)
 			if layout.Kind == DiagramER && strings.TrimSpace(text.Value) == "" {
 				textW = 0
@@ -900,6 +896,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			groupTransform := `translate(0,0)`
 			labelWithTransform := layout.Kind == DiagramER || layout.Kind == DiagramClass || layout.Kind == DiagramFlowchart
 			if labelWithTransform {
+				y = text.Y - textH/2
 				groupTransform = `translate(` + formatFloat(x) + `,` + formatFloat(y) + `)`
 			}
 			b.WriteString(`<g class="` + html.EscapeString(outerClass) + `" transform="` + groupTransform + `">`)
@@ -962,7 +959,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 					} else if anchor == "end" {
 						align = "right"
 					}
-					b.WriteString(`><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: ` + align + `;"><span class="nodeLabel"><p>`)
+					b.WriteString(`><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: ` + align + `;"><span class="nodeLabel markdown-node-label"><p>`)
 					b.WriteString(html.EscapeString(text.Value))
 					b.WriteString(`</p></span></div></foreignObject>`)
 				} else {
@@ -1541,6 +1538,8 @@ func renderQuadrantMermaid(layout Layout) string {
 		Value string
 	}
 	labels := make([]pointLabel, 0, 4)
+	var quadLabels [4]string
+	quadLabelIdx := 0
 	for _, text := range layout.Texts {
 		value := strings.TrimSpace(text.Value)
 		if strings.TrimSpace(value) == "" {
@@ -1571,6 +1570,13 @@ func renderQuadrantMermaid(layout Layout) string {
 			}
 			continue
 		}
+		if text.Size == 14 {
+			if quadLabelIdx < 4 {
+				quadLabels[quadLabelIdx] = value
+				quadLabelIdx++
+			}
+			continue
+		}
 		if text.Size <= 13 {
 			labels = append(labels, pointLabel{X: text.X, Y: text.Y, Value: value})
 		}
@@ -1591,10 +1597,10 @@ func renderQuadrantMermaid(layout Layout) string {
 
 	b.WriteString(`<g class="main">`)
 	b.WriteString(`<g class="quadrants">`)
-	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(top) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTR) + `"/><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(top+5) + `) rotate(0)"/></g>`)
-	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(top) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTL) + `"/><text x="0" y="0" fill="#0e0e00" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(top+5) + `) rotate(0)"/></g>`)
-	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBL) + `"/><text x="0" y="0" fill="#090900" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(midY+5) + `) rotate(0)"/></g>`)
-	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBR) + `"/><text x="0" y="0" fill="#040400" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(midY+5) + `) rotate(0)"/></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(top) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTR) + `"/><text x="0" y="0" fill="#131300" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(top+5) + `) rotate(0)">` + html.EscapeString(quadLabels[0]) + `</text></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(top) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(midY-top) + `" fill="` + html.EscapeString(fillTL) + `"/><text x="0" y="0" fill="#0e0e00" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(top+5) + `) rotate(0)">` + html.EscapeString(quadLabels[1]) + `</text></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(left) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(midX-left) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBL) + `"/><text x="0" y="0" fill="#090900" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.25) + `, ` + formatFloat(midY+5) + `) rotate(0)">` + html.EscapeString(quadLabels[2]) + `</text></g>`)
+	b.WriteString(`<g class="quadrant"><rect x="` + formatFloat(midX) + `" y="` + formatFloat(midY) + `" width="` + formatFloat(right-midX) + `" height="` + formatFloat(bottom-midY) + `" fill="` + html.EscapeString(fillBR) + `"/><text x="0" y="0" fill="#040400" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(left+width*0.75) + `, ` + formatFloat(midY+5) + `) rotate(0)">` + html.EscapeString(quadLabels[3]) + `</text></g>`)
 	b.WriteString(`</g>`)
 
 	b.WriteString(`<g class="border">`)
@@ -3554,7 +3560,7 @@ func c4StyleCSS() string {
 
 func useMermaidLikeDOM(kind DiagramKind) bool {
 	switch kind {
-	case DiagramClass, DiagramER, DiagramState, DiagramFlowchart, DiagramMindmap, DiagramRequirement:
+	case DiagramClass, DiagramState, DiagramFlowchart, DiagramMindmap, DiagramRequirement:
 		return true
 	default:
 		return false

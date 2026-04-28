@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-27T06:52:08Z",
+  "generated_at": "2026-04-27T22:06:00Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -9,143 +9,143 @@
   "entries": [
     {
       "fixture": "block_basic",
-      "mismatch": 0.09325917512044181
+      "mismatch": 0.09155038759689922
     },
     {
       "fixture": "c4_context",
-      "mismatch": 0.05927266148000724
+      "mismatch": 0.06006517016654598
     },
     {
       "fixture": "class_basic",
-      "mismatch": 0.05720893202411192
+      "mismatch": 0.06518215498610683
     },
     {
       "fixture": "class_interfaces",
-      "mismatch": 0.061902328637126795
+      "mismatch": 0.06006893156080748
     },
     {
       "fixture": "er_attributes",
-      "mismatch": 0.2361264869869769
+      "mismatch": 0.20919831925781088
     },
     {
       "fixture": "er_basic",
-      "mismatch": 0.11047684944934556
+      "mismatch": 0.1159612724757953
     },
     {
       "fixture": "er_cardinality",
-      "mismatch": 0.0965956169318523
+      "mismatch": 0.09788878311026489
     },
     {
       "fixture": "er_keys",
-      "mismatch": 0.18868097765209246
+      "mismatch": 0.16952423159663554
     },
     {
       "fixture": "flowchart_basic",
-      "mismatch": 0.12866186693147963
+      "mismatch": 0.12226314712502558
     },
     {
       "fixture": "flowchart_shapes",
-      "mismatch": 0.03848432233683995
+      "mismatch": 0.03563587365751199
     },
     {
       "fixture": "flowchart_styles",
-      "mismatch": 0.033774764648025854
+      "mismatch": 0.03305989675411923
     },
     {
       "fixture": "flowchart_subgraph",
-      "mismatch": 0.169725218145358
+      "mismatch": 0.1946920321766191
     },
     {
       "fixture": "flowchart_td",
-      "mismatch": 0.12618885539239522
+      "mismatch": 0.1388204185900596
     },
     {
       "fixture": "gantt_basic",
-      "mismatch": 0.024479966125019847
+      "mismatch": 0.024467381235940187
     },
     {
       "fixture": "gantt_milestones",
-      "mismatch": 0.02460914881297047
+      "mismatch": 0.024530213628274882
     },
     {
       "fixture": "gitgraph_basic",
-      "mismatch": 0.1079004701295723
+      "mismatch": 0.08766961651917404
     },
     {
       "fixture": "gitgraph_branches",
-      "mismatch": 0.08818195186510465
+      "mismatch": 0.12259839582167506
     },
     {
       "fixture": "journey_basic",
-      "mismatch": 0.10862531200887492
+      "mismatch": 0.10858712591457778
     },
     {
       "fixture": "kanban_basic",
-      "mismatch": 0.0910253308912465
+      "mismatch": 0.0907646062951318
     },
     {
       "fixture": "mindmap_basic",
-      "mismatch": 0.14022703139254894
+      "mismatch": 0.14021207543783556
     },
     {
       "fixture": "packet_basic",
-      "mismatch": 0.1313230583143551
+      "mismatch": 0.1308534868116394
     },
     {
       "fixture": "pie_basic",
-      "mismatch": 0.05564586720020007
+      "mismatch": 0.056061144685389266
     },
     {
       "fixture": "pie_no_data",
-      "mismatch": 0.05175489252486365
+      "mismatch": 0.053366079537459865
     },
     {
       "fixture": "quadrant_basic",
-      "mismatch": 0.03798851240627017
+      "mismatch": 0.05011504756931412
     },
     {
       "fixture": "quadrant_many",
-      "mismatch": 0.04879578524836929
+      "mismatch": 0.08066276566716186
     },
     {
       "fixture": "requirement_basic",
-      "mismatch": 0.11259986244114067
+      "mismatch": 0.11906053902130205
     },
     {
       "fixture": "sankey_basic",
-      "mismatch": 0.02034718202822442
+      "mismatch": 0.020361298944525225
     },
     {
       "fixture": "sequence_basic",
-      "mismatch": 0.10914408179666919
+      "mismatch": 0.07577070969749505
     },
     {
       "fixture": "sequence_loops",
-      "mismatch": 0.09894724390820914
+      "mismatch": 0.09219951852504257
     },
     {
       "fixture": "sequence_notes",
-      "mismatch": 0.1122637716123844
+      "mismatch": 0.10056677576434901
     },
     {
       "fixture": "state_basic",
-      "mismatch": 0.20172509738452976
+      "mismatch": 0.19097724582401684
     },
     {
       "fixture": "state_nested",
-      "mismatch": 0.2008833308520669
+      "mismatch": 0.17137416693113297
     },
     {
       "fixture": "timeline_basic",
-      "mismatch": 0.1958746540590406
+      "mismatch": 0.1971914158144894
     },
     {
       "fixture": "xychart_basic",
-      "mismatch": 0.01062545762401611
+      "mismatch": 0.058338192419825075
     },
     {
       "fixture": "xychart_multi",
-      "mismatch": 0.008150411092789515
+      "mismatch": 0.0564160266131794
     }
   ]
 }

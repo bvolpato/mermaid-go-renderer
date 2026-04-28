@@ -1070,15 +1070,16 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 		if anchor == "" {
 			anchor = styleValue(parseAttr(attrs, "style"), "text-anchor")
 		}
+		var anchorOffsetX, baselineOffsetY float64
 		switch anchor {
 		case "middle":
-			px -= float64(advance) / 128.0
+			anchorOffsetX = -float64(advance) / 128.0
 		case "end":
-			px -= float64(advance) / 64.0
+			anchorOffsetX = -float64(advance) / 64.0
 		}
 		if textColor == nil {
 			textWidth := float64(advance) / 64.0
-			sampleX := px + textWidth/2.0
+			sampleX := px + anchorOffsetX + textWidth/2.0
 			sampleY := py - fontSize*transform.Scale*0.35
 			textColor = autoContrastTextColor(img, int(math.Round(sampleX)), int(math.Round(sampleY)))
 		}
@@ -1098,10 +1099,7 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 		if dominantBaseline == "" {
 			dominantBaseline = styleValue(parseAttr(attrs, "style"), "alignment-baseline")
 		}
-		if baselineOffset := svgTextBaselineOffset(face, dominantBaseline); baselineOffset != 0 {
-			px = math.Round(px)
-			py += baselineOffset
-		}
+		baselineOffsetY = svgTextBaselineOffset(face, dominantBaseline)
 
 		rotateAngle := ancestorTransform.rotationDegrees()
 		if transformAttr := strings.TrimSpace(parseAttr(attrs, "transform")); transformAttr != "" {
@@ -1109,9 +1107,9 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 		}
 
 		if rotateAngle != 0 {
-			overlayRotatedText(img, content, face, textColor, px, py, rotateAngle)
+			overlayRotatedText(img, content, face, textColor, px, py, rotateAngle, anchorOffsetX, baselineOffsetY)
 		} else {
-			drawer.Dot = fixed.P(int(math.Round(px)), int(math.Round(py)))
+			drawer.Dot = fixed.P(int(math.Round(px+anchorOffsetX)), int(math.Round(py+baselineOffsetY)))
 			drawer.DrawString(content)
 		}
 	}
@@ -1941,7 +1939,7 @@ func clampInt(v int, lo int, hi int) int {
 	return v
 }
 
-func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textColor color.Color, px, py, angleDeg float64) {
+func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textColor color.Color, px, py, angleDeg, anchorOffsetX, baselineOffsetY float64) {
 	// 1. Measure the text
 	advance := font.MeasureString(face, content)
 	metrics := face.Metrics()
@@ -1964,8 +1962,8 @@ func overlayRotatedText(img *image.NRGBA, content string, face font.Face, textCo
 	drawer.DrawString(content)
 
 	// Origin point inside the offscreen image corresponds to dot
-	ox := float64(pad)
-	oy := float64(pad + ascent)
+	ox := float64(pad) - anchorOffsetX
+	oy := float64(pad+ascent) - baselineOffsetY
 
 	// Rotation (SVG rotations act on origin, we want to rotate around px, py)
 	// Actually SVG rotate(angle) is clockwise for positive angles, but math.Sincos is CCW in standard math plane.
