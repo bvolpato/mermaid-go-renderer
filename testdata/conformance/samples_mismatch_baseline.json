@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-28T21:09:07Z",
+  "generated_at": "2026-04-28T21:17:09Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -17,19 +17,19 @@
     },
     {
       "sample": "c4_context_complex",
-      "mismatch": 0.08014995732921526
+      "mismatch": 0.0802109155931239
     },
     {
       "sample": "class",
-      "mismatch": 0.060313164508022425
+      "mismatch": 0.06525933930225378
     },
     {
       "sample": "class_complex",
-      "mismatch": 0.06725588716023972
+      "mismatch": 0.06637267617812365
     },
     {
       "sample": "er",
-      "mismatch": 0.11455048409405257
+      "mismatch": 0.11742738589211618
     },
     {
       "sample": "er_complex",
@@ -37,11 +37,11 @@
     },
     {
       "sample": "flowchart",
-      "mismatch": 0.13295980675031874
+      "mismatch": 0.12551325427848767
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.14387351371401488
+      "mismatch": 0.11617782579681592
     },
     {
       "sample": "gantt",
@@ -49,11 +49,11 @@
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.06896178412904623
+      "mismatch": 0.06886097877869207
     },
     {
       "sample": "gitgraph_complex",
-      "mismatch": 0.20293122886133033
+      "mismatch": 0.175656660412758
     },
     {
       "sample": "journey",
@@ -81,15 +81,15 @@
     },
     {
       "sample": "pie",
-      "mismatch": 0.055650746055543654
+      "mismatch": 0.056061144685389266
     },
     {
       "sample": "pie_complex",
-      "mismatch": 0.06761783751511719
+      "mismatch": 0.07427124487087573
     },
     {
       "sample": "quadrant_complex",
-      "mismatch": 0.10021628369453194
+      "mismatch": 0.09995500137899
     },
     {
       "sample": "radar_complex",
@@ -97,7 +97,7 @@
     },
     {
       "sample": "requirement_complex",
-      "mismatch": 0.1410144848715578
+      "mismatch": 0.1425970655034428
     },
     {
       "sample": "sankey_complex",
@@ -117,7 +117,7 @@
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.15837291837291836
+      "mismatch": 0.1473453737847804
     },
     {
       "sample": "timeline",
