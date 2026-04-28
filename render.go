@@ -2326,10 +2326,10 @@ func renderSequenceMermaid(layout Layout, theme Theme) string {
 				" C " + formatFloat(msg.StartX+60) + "," + formatFloat(msg.LineY-10) +
 				" " + formatFloat(msg.StartX+60) + "," + formatFloat(msg.LineY+30) +
 				" " + formatFloat(msg.StartX) + "," + formatFloat(msg.LineY+20)
-			b.WriteString(`<path d="` + path + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
+			b.WriteString(`<path d="` + path + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#my-svg-arrowhead)" style="` + lineStyle + `"/>`)
 			continue
 		}
-		b.WriteString(`<line x1="` + formatFloat(msg.StartX) + `" y1="` + formatFloat(msg.LineY) + `" x2="` + formatFloat(msg.StopX) + `" y2="` + formatFloat(msg.LineY) + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#arrowhead)" style="` + lineStyle + `"/>`)
+		b.WriteString(`<line x1="` + formatFloat(msg.StartX) + `" y1="` + formatFloat(msg.LineY) + `" x2="` + formatFloat(msg.StopX) + `" y2="` + formatFloat(msg.LineY) + `" class="` + lineClass + `" stroke-width="2" stroke="#333" marker-end="url(#my-svg-arrowhead)" style="` + lineStyle + `"/>`)
 	}
 
 	return b.String()
@@ -2880,13 +2880,21 @@ func writeSequenceDefs(b *strings.Builder) {
 	b.WriteString("\n")
 	b.WriteString(`<defs><symbol id="clock" width="24" height="24"><path transform="scale(.5)" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z"/></symbol></defs>`)
 	b.WriteString("\n")
-	b.WriteString(`<defs><marker id="arrowhead" refX="7.9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M -1 0 L 10 5 L 0 10 z"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg-arrowhead" refX="7.9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M -1 0 L 10 5 L 0 10 z"/></marker></defs>`)
 	b.WriteString("\n")
-	b.WriteString(`<defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="4" refY="4.5"><path fill="none" stroke="#000000" stroke-width="1pt" d="M 1,2 L 6,7 M 6,2 L 1,7" style="stroke-dasharray: 0, 0;"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg-crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="4" refY="4.5"><path fill="none" stroke="#000000" stroke-width="1pt" d="M 1,2 L 6,7 M 6,2 L 1,7" style="stroke-dasharray: 0, 0;"/></marker></defs>`)
 	b.WriteString("\n")
-	b.WriteString(`<defs><marker id="filled-head" refX="15.5" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg-filled-head" refX="15.5" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"/></marker></defs>`)
 	b.WriteString("\n")
-	b.WriteString(`<defs><marker id="sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"/></marker></defs>`)
+	b.WriteString(`<defs><marker id="my-svg-sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="my-svg-solidTopArrowHead" refX="7.9" refY="7.25" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 0 0 L 10 8 L 0 8 z"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="my-svg-solidBottomArrowHead" refX="7.9" refY="0.75" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 0 0 L 10 0 L 0 8 z"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="my-svg-stickTopArrowHead" refX="7.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 0 0 L 7 7" stroke="black" stroke-width="1.5" fill="none"/></marker></defs>`)
+	b.WriteString("\n")
+	b.WriteString(`<defs><marker id="my-svg-stickBottomArrowHead" refX="7.5" refY="0" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 0 7 L 7 0" stroke="black" stroke-width="1.5" fill="none"/></marker></defs>`)
 	b.WriteString("\n")
 }
 
