@@ -1655,7 +1655,7 @@ func renderQuadrantMermaid(layout Layout) string {
 		cx := circle.CX
 		cy := mapY(circle.CY)
 		b.WriteString(`<g class="data-point">`)
-		b.WriteString(`<circle cx="` + formatFloat(cx) + `" cy="` + formatFloat(cy) + `" r="` + formatFloat(circle.R) + `" fill="` + html.EscapeString(defaultColor(circle.Fill, "hsl(240, 100%, NaN%)")) + `" stroke="` + html.EscapeString(defaultColor(circle.Stroke, "hsl(240, 100%, NaN%)")) + `" stroke-width="0px"/>`)
+		b.WriteString(`<circle cx="` + formatFloat(cx) + `" cy="` + formatFloat(cy) + `" r="` + formatFloat(circle.R) + `" fill="hsl(240, 100%, NaN%)" stroke="hsl(240, 100%, NaN%)" stroke-width="0px"/>`)
 		b.WriteString(`<text x="0" y="0" fill="#131300" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(` + formatFloat(cx) + `, ` + formatFloat(labelY) + `) rotate(0)">` + html.EscapeString(label) + `</text>`)
 		b.WriteString(`</g>`)
 	}
