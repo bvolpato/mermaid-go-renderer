@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-28T20:48:48Z",
+  "generated_at": "2026-04-28T20:58:15Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -37,11 +37,11 @@
     },
     {
       "sample": "flowchart",
-      "mismatch": 0.12461281868000953
+      "mismatch": 0.12551325427848767
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.10710249082999232
+      "mismatch": 0.13960460682666945
     },
     {
       "sample": "gantt",
@@ -49,7 +49,7 @@
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.06888720666161999
+      "mismatch": 0.06907037358818419
     },
     {
       "sample": "gitgraph_complex",
@@ -117,7 +117,7 @@
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.15158071397518982
+      "mismatch": 0.15403849068040612
     },
     {
       "sample": "timeline",
