@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-27T22:06:00Z",
+  "generated_at": "2026-04-28T05:36:57Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -21,23 +21,23 @@
     },
     {
       "fixture": "class_interfaces",
-      "mismatch": 0.06006893156080748
+      "mismatch": 0.06005981362948374
     },
     {
       "fixture": "er_attributes",
-      "mismatch": 0.20919831925781088
+      "mismatch": 0.2166861166604031
     },
     {
       "fixture": "er_basic",
-      "mismatch": 0.1159612724757953
+      "mismatch": 0.11720608575380359
     },
     {
       "fixture": "er_cardinality",
-      "mismatch": 0.09788878311026489
+      "mismatch": 0.10366632139329848
     },
     {
       "fixture": "er_keys",
-      "mismatch": 0.16952423159663554
+      "mismatch": 0.1687192118226601
     },
     {
       "fixture": "flowchart_basic",
@@ -45,7 +45,7 @@
     },
     {
       "fixture": "flowchart_shapes",
-      "mismatch": 0.03563587365751199
+      "mismatch": 0.035627947529029445
     },
     {
       "fixture": "flowchart_styles",
@@ -57,7 +57,7 @@
     },
     {
       "fixture": "flowchart_td",
-      "mismatch": 0.1388204185900596
+      "mismatch": 0.13437099349962886
     },
     {
       "fixture": "gantt_basic",
@@ -129,11 +129,11 @@
     },
     {
       "fixture": "state_basic",
-      "mismatch": 0.19097724582401684
+      "mismatch": 0.18443496801705758
     },
     {
       "fixture": "state_nested",
-      "mismatch": 0.17137416693113297
+      "mismatch": 0.16979337314379328
     },
     {
       "fixture": "timeline_basic",
@@ -141,11 +141,11 @@
     },
     {
       "fixture": "xychart_basic",
-      "mismatch": 0.058338192419825075
+      "mismatch": 0.08445675821417283
     },
     {
       "fixture": "xychart_multi",
-      "mismatch": 0.0564160266131794
+      "mismatch": 0.08036443135010368
     }
   ]
 }

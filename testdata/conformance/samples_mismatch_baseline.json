@@ -1,7 +1,7 @@
 {
   "width": 1600,
   "height": 1200,
-  "generated_at": "2026-04-27T19:58:19Z",
+  "generated_at": "2026-04-28T05:37:26Z",
   "reference_renderer": "mmdc",
   "reference_version": "11.12.0",
   "node_version": "v24.13.0",
@@ -29,19 +29,19 @@
     },
     {
       "sample": "er",
-      "mismatch": 0.12270133164235891
+      "mismatch": 0.11742738589211618
     },
     {
       "sample": "er_complex",
-      "mismatch": 0.23498055035297508
+      "mismatch": 0.2166861166604031
     },
     {
       "sample": "flowchart",
-      "mismatch": 0.12018279789918833
+      "mismatch": 0.1278045265467885
     },
     {
       "sample": "flowchart_complex",
-      "mismatch": 0.1698478981600992
+      "mismatch": 0.1259783548870277
     },
     {
       "sample": "gantt",
@@ -49,11 +49,11 @@
     },
     {
       "sample": "gitgraph",
-      "mismatch": 0.07788944723618091
+      "mismatch": 0.06888720666161999
     },
     {
       "sample": "gitgraph_complex",
-      "mismatch": 0.21180232322823492
+      "mismatch": 0.18163240774131506
     },
     {
       "sample": "journey",
@@ -89,7 +89,7 @@
     },
     {
       "sample": "quadrant_complex",
-      "mismatch": 0.07577020389938979
+      "mismatch": 0.10021628369453194
     },
     {
       "sample": "radar_complex",
@@ -97,7 +97,7 @@
     },
     {
       "sample": "requirement_complex",
-      "mismatch": 0.13984434527049092
+      "mismatch": 0.14236521143392858
     },
     {
       "sample": "sankey_complex",
@@ -105,19 +105,19 @@
     },
     {
       "sample": "sequence",
-      "mismatch": 0.1050102641611586
+      "mismatch": 0.053835619513728304
     },
     {
       "sample": "sequence_complex",
-      "mismatch": 0.1665066424593684
+      "mismatch": 0.11576676800788084
     },
     {
       "sample": "state",
-      "mismatch": 0.19189652896924905
+      "mismatch": 0.1845682302771855
     },
     {
       "sample": "state_complex",
-      "mismatch": 0.14617268592310384
+      "mismatch": 0.1469382685380698
     },
     {
       "sample": "timeline",
@@ -133,11 +133,11 @@
     },
     {
       "sample": "xychart",
-      "mismatch": 0.46625369156522367
+      "mismatch": 0.4825145711906744
     },
     {
       "sample": "xychart_complex",
-      "mismatch": 0.03922151910144771
+      "mismatch": 0.07893222973030987
     },
     {
       "sample": "zenuml_complex",

@@ -1319,15 +1319,21 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 		})
 	}
 
-	tickCount := 12
-	for i := 0; i <= tickCount; i++ {
-		y := yLabelTop + float64(i)*(yLabelBottom-yLabelTop)/float64(tickCount)
-		value := maxVal - float64(i)*(maxVal-minVal)/float64(tickCount)
+	tickStep := niceTickStep(minVal, maxVal, 11)
+	startTick := math.Ceil(minVal/tickStep) * tickStep
+	for value := startTick; value <= maxVal+tickStep*0.001; value += tickStep {
+		y := yLabelTop + (maxVal-value)/(maxVal-minVal)*(yLabelBottom-yLabelTop)
 		layout.Paths = append(layout.Paths, LayoutPath{
 			D:           "M " + formatFloat(axisLeft-1.0) + "," + formatFloat(y) + " L " + formatFloat(axisLeft-6.0) + "," + formatFloat(y),
 			Fill:        "none",
 			Stroke:      "#131300",
 			StrokeWidth: 2,
+		})
+		layout.Paths = append(layout.Paths, LayoutPath{
+			D:           "M " + formatFloat(axisLeft+1.0) + "," + formatFloat(y) + " L " + formatFloat(axisRight) + "," + formatFloat(y),
+			Fill:        "none",
+			Stroke:      "#e0e0e0",
+			StrokeWidth: 1,
 		})
 		label := strconv.FormatFloat(value, 'f', 0, 64)
 		if math.Abs(value-math.Round(value)) > 0.001 {
@@ -2996,4 +3002,26 @@ func layoutTreemapFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 
 func isFinite(value float64) bool {
 	return !math.IsNaN(value) && !math.IsInf(value, 0)
+}
+
+func niceTickStep(lo, hi float64, maxTicks int) float64 {
+	span := hi - lo
+	if span <= 0 {
+		return 1
+	}
+	raw := span / float64(maxTicks)
+	mag := math.Pow(10, math.Floor(math.Log10(raw)))
+	residual := raw / mag
+	var nice float64
+	switch {
+	case residual <= 1.5:
+		nice = 1
+	case residual <= 3:
+		nice = 2
+	case residual <= 7:
+		nice = 5
+	default:
+		nice = 10
+	}
+	return nice * mag
 }

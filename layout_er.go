@@ -164,11 +164,11 @@ func layoutERDiagramFidelity(graph *Graph, theme Theme, config LayoutConfig) Lay
 
 func measureERNodeMetrics(graph *Graph, theme Theme, config LayoutConfig) map[string]erNodeMetrics {
 	const (
-		entityPadding  = 20.0
+		entityPadding  = 25.0
 		minEntityWidth = 100.0
-		minEntityH     = 75.0
-		titleH         = 24.0
-		rowH           = 21.0
+		minEntityH     = 84.0
+		titleH         = 42.75
+		rowH           = 42.75
 	)
 
 	attrFontSize := max(10.0, theme.FontSize-2)
@@ -176,7 +176,7 @@ func measureERNodeMetrics(graph *Graph, theme Theme, config LayoutConfig) map[st
 	for _, id := range graph.NodeOrder {
 		label := graph.Nodes[id].Label
 		metrics := erNodeMetrics{}
-		nameW := max(minEntityWidth, measureTextWidthWithFontSize(label, theme.FontSize, config.FastTextMetrics)+entityPadding*2)
+		nameW := max(minEntityWidth, measureTextWidthWithFontSize(label, theme.FontSize, config.FastTextMetrics)+40)
 		maxTypeW := 0.0
 		maxNameW := 0.0
 		maxKeyW := 0.0
@@ -198,7 +198,7 @@ func measureERNodeMetrics(graph *Graph, theme Theme, config LayoutConfig) map[st
 		if len(metrics.attrs) == 0 {
 			metrics.size = Point{
 				X: nameW,
-				Y: max(minEntityH, titleH*2),
+				Y: max(minEntityH, titleH*2-1.5),
 			}
 			out[id] = metrics
 			continue
@@ -248,9 +248,9 @@ func measureERNodeMetrics(graph *Graph, theme Theme, config LayoutConfig) map[st
 
 func appendERNodePrimitives(layout *Layout, graph *Graph, metrics map[string]erNodeMetrics, theme Theme) {
 	const (
-		entityPadding = 20.0
-		titleH        = 24.0
-		rowH          = 21.0
+		entityPadding = 25.0
+		titleH        = 42.75
+		rowH          = 42.75
 		erStroke      = "#9370DB"
 		erFill        = "#ececff"
 	)
@@ -267,9 +267,9 @@ func appendERNodePrimitives(layout *Layout, graph *Graph, metrics map[string]erN
 			Class:       "outer-path",
 		})
 
-		titleY := node.Y + titleH/2
+		titleY := node.Y + titleH/2 + theme.FontSize*0.35 - 2
 		if len(metrics[node.ID].attrs) == 0 {
-			titleY = node.Y + node.H/2
+			titleY = node.Y + node.H/2 + theme.FontSize*0.35
 		}
 		layout.Texts = append(layout.Texts, LayoutText{
 			X:      node.X + node.W/2,
@@ -314,8 +314,8 @@ func appendERNodePrimitives(layout *Layout, graph *Graph, metrics map[string]erN
 				Class:       "divider",
 			})
 
-			textY := attrY + rowH/2
-			curX := node.X + entityPadding/1.2
+			textY := attrY + rowH/2 + theme.FontSize*0.35 - 2
+			curX := node.X + entityPadding/2
 			if colWidths[0] > 0 {
 				layout.Texts = append(layout.Texts, LayoutText{X: curX, Y: textY, Value: attr.t, Anchor: "start", Size: max(10, theme.FontSize-2), Color: theme.PrimaryTextColor, Class: "label attribute-type"})
 				curX += colWidths[0]
