@@ -326,7 +326,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			b.WriteString(`<g class="nodes">`)
 			b.WriteString("\n")
 		}
-	} else {
+	} else if layout.Kind != DiagramC4 && layout.Kind != DiagramQuadrant && layout.Kind != DiagramKanban {
 		b.WriteString(
 			fmt.Sprintf(
 				`<rect x="%s" y="%s" width="%s" height="%s" fill="%s"/>`,
