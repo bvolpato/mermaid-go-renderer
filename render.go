@@ -175,6 +175,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	if layout.Kind == DiagramMindmap {
 		b.WriteString(renderMindmapMermaid(layout))
+		b.WriteString(dropShadowDefs())
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
@@ -348,6 +349,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		if mermaidRoot && mermaidLike {
 			b.WriteString("</g>\n")
 		}
+		b.WriteString(dropShadowDefs())
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
@@ -359,6 +361,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 		if mermaidRoot && mermaidLike {
 			b.WriteString("</g>\n")
 		}
+		b.WriteString(dropShadowDefs())
 		b.WriteString("</svg>\n")
 		return b.String()
 	}
@@ -1170,6 +1173,9 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	if mermaidRoot && mermaidLike {
 		b.WriteString("</g>\n")
+	}
+	if needsDropShadowDefs(layout.Kind) {
+		b.WriteString(dropShadowDefs())
 	}
 	b.WriteString("</svg>\n")
 	return b.String()
@@ -3665,4 +3671,16 @@ func rectToPath(rect LayoutRect) string {
 		" V" + formatFloat(y+ry) +
 		" A" + formatFloat(rx) + "," + formatFloat(ry) + " 0 0 1 " + formatFloat(x+rx) + "," + formatFloat(y) +
 		" Z"
+}
+
+func dropShadowDefs() string {
+	return `<defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs>`
+}
+
+func needsDropShadowDefs(kind DiagramKind) bool {
+	switch kind {
+	case DiagramFlowchart, DiagramER, DiagramRequirement:
+		return true
+	}
+	return false
 }
