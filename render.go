@@ -237,30 +237,44 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 			} else if layout.Kind == DiagramER {
 				writeERMarkerDefs(&b)
 			} else {
-				b.WriteString("<defs>\n")
-				if layout.Kind == DiagramState {
-					b.WriteString(`<marker id="my-svg_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">`)
-					b.WriteString(`<path d="M 19,7 L9,13 L14,7 L9,1 Z"/>`)
-					b.WriteString(`</marker>`)
-					b.WriteString("\n")
-				} else if layout.Kind == DiagramTimeline || layout.Kind == DiagramJourney {
-					b.WriteString(`<marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto">`)
-					b.WriteString(`<path d="M 0,0 V 4 L6,2 Z"/>`)
-					b.WriteString(`</marker>`)
-					b.WriteString("\n")
-				} else {
-					b.WriteString(`<marker id="arrow-end" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
-					b.WriteString(`<path d="M0,0 L10,3.5 L0,7 z" fill="`)
-					b.WriteString(theme.LineColor)
-					b.WriteString(`"/></marker>`)
-					b.WriteString("\n")
-					b.WriteString(`<marker id="arrow-start" markerWidth="10" markerHeight="7" refX="2" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
-					b.WriteString(`<path d="M10,0 L0,3.5 L10,7 z" fill="`)
-					b.WriteString(theme.LineColor)
-					b.WriteString(`"/></marker>`)
-					b.WriteString("\n")
+				noMarkerKinds := layout.Kind == DiagramXYChart ||
+					layout.Kind == DiagramPie ||
+					layout.Kind == DiagramSankey ||
+					layout.Kind == DiagramGantt ||
+					layout.Kind == DiagramPacket ||
+					layout.Kind == DiagramTreemap ||
+					layout.Kind == DiagramQuadrant ||
+					layout.Kind == DiagramArchitecture ||
+					layout.Kind == DiagramRadar ||
+					layout.Kind == DiagramGitGraph ||
+					layout.Kind == DiagramKanban ||
+					layout.Kind == DiagramZenUML
+				if !noMarkerKinds {
+					b.WriteString("<defs>\n")
+					if layout.Kind == DiagramState {
+						b.WriteString(`<marker id="my-svg_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">`)
+						b.WriteString(`<path d="M 19,7 L9,13 L14,7 L9,1 Z"/>`)
+						b.WriteString(`</marker>`)
+						b.WriteString("\n")
+					} else if layout.Kind == DiagramTimeline || layout.Kind == DiagramJourney {
+						b.WriteString(`<marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto">`)
+						b.WriteString(`<path d="M 0,0 V 4 L6,2 Z"/>`)
+						b.WriteString(`</marker>`)
+						b.WriteString("\n")
+					} else {
+						b.WriteString(`<marker id="arrow-end" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
+						b.WriteString(`<path d="M0,0 L10,3.5 L0,7 z" fill="`)
+						b.WriteString(theme.LineColor)
+						b.WriteString(`"/></marker>`)
+						b.WriteString("\n")
+						b.WriteString(`<marker id="arrow-start" markerWidth="10" markerHeight="7" refX="2" refY="3.5" orient="auto" markerUnits="strokeWidth">`)
+						b.WriteString(`<path d="M10,0 L0,3.5 L10,7 z" fill="`)
+						b.WriteString(theme.LineColor)
+						b.WriteString(`"/></marker>`)
+						b.WriteString("\n")
+					}
+					b.WriteString("</defs>\n")
 				}
-				b.WriteString("</defs>\n")
 			}
 		}
 	}
