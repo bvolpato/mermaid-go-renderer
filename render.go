@@ -213,7 +213,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	if includeArrowMarkers {
 		if layout.Kind == DiagramFlowchart {
-		b.WriteString(`<marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString(`<marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
 			b.WriteString("\n")
 			b.WriteString(`<marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
 			b.WriteString("\n")
@@ -1684,7 +1684,7 @@ func renderKanbanMermaid(layout Layout) string {
 	type cardRender struct {
 		Rect         LayoutRect
 		ID           string
-		Title        string
+		Title        []string
 		Ticket       string
 		Assigned     string
 		PriorityLine *LayoutLine
@@ -1737,9 +1737,7 @@ func renderKanbanMermaid(layout Layout) string {
 				continue
 			}
 			if strings.Contains(textClass, "kanban-card-text") {
-				if card.Title == "" {
-					card.Title = strings.TrimSpace(text.Value)
-				}
+				card.Title = append(card.Title, strings.TrimSpace(text.Value))
 				continue
 			}
 			if strings.Contains(textClass, "kanban-card-meta") {
@@ -1797,10 +1795,17 @@ func renderKanbanMermaid(layout Layout) string {
 	}
 	b.WriteString(`</g>`)
 
-	writeItemLabel := func(x float64, y float64, value string, align string) float64 {
-		labelW := measureLabelWidth(value)
-		labelH := 24.0
-		if strings.TrimSpace(value) == "" {
+	writeItemLabel := func(x float64, y float64, values []string, align string) float64 {
+		maxLabelW := 0.0
+		for _, value := range values {
+			w := measureLabelWidth(value)
+			if w > maxLabelW {
+				maxLabelW = w
+			}
+		}
+		labelW := maxLabelW
+		labelH := 24.0 * float64(max(1, len(values)))
+		if len(values) == 0 || (len(values) == 1 && strings.TrimSpace(values[0]) == "") {
 			labelW = 0
 			labelH = 0
 		}
@@ -1810,10 +1815,12 @@ func renderKanbanMermaid(layout Layout) string {
 		b.WriteString(`<g class="label" style="text-align:` + html.EscapeString(align) + ` !important" transform="translate(` + formatFloat(x) + `, ` + formatFloat(y) + `)">`)
 		b.WriteString(`<rect/><foreignObject width="` + formatFloat(labelW) + `" height="` + formatFloat(labelH) + `">`)
 		b.WriteString(`<div style="text-align: ` + html.EscapeString(align) + `; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 175px;" xmlns="http://www.w3.org/1999/xhtml"><span style="text-align:` + html.EscapeString(align) + ` !important" class="nodeLabel">`)
-		if strings.TrimSpace(value) != "" {
-			b.WriteString(`<p>`)
-			b.WriteString(html.EscapeString(value))
-			b.WriteString(`</p>`)
+		for _, value := range values {
+			if strings.TrimSpace(value) != "" {
+				b.WriteString(`<p>`)
+				b.WriteString(html.EscapeString(value))
+				b.WriteString(`</p>`)
+			}
 		}
 		b.WriteString(`</span></div></foreignObject></g>`)
 		return labelW
@@ -1832,9 +1839,9 @@ func renderKanbanMermaid(layout Layout) string {
 		}
 		writeItemLabel(x0+10, y0+10, card.Title, "left")
 		metaY := card.Rect.H/2 - 10
-		writeItemLabel(x0+10, metaY, card.Ticket, "left")
+		writeItemLabel(x0+10, metaY, []string{card.Ticket}, "left")
 		assignedWidth := measureLabelWidth(card.Assigned)
-		writeItemLabel(card.Rect.W/2-10-assignedWidth, metaY, card.Assigned, "right")
+		writeItemLabel(card.Rect.W/2-10-assignedWidth, metaY, []string{card.Assigned}, "right")
 		b.WriteString(`</g>`)
 	}
 	b.WriteString(`</g>`)
@@ -2716,7 +2723,6 @@ func renderTreemapMermaid(layout Layout) string {
 		b.WriteString(`<text class="treemapSectionValue" x="` + formatFloat(rect.W-10) + `" y="12.5" text-anchor="end" dominant-baseline="middle" font-style="italic" style="` + valueStyle + `">` + html.EscapeString(valueValue) + `</text>`)
 		b.WriteString(`</g>`)
 	}
-
 
 	for idx, rect := range leafRects {
 		fill := defaultColor(rect.Fill, "#efefef")
