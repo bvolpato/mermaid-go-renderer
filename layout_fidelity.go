@@ -1252,16 +1252,16 @@ func layoutXYChartFidelity(graph *Graph, theme Theme, config LayoutConfig) Layou
 	}
 
 	const (
-		totalWidth     = 700.0
-		totalHeight    = 500.0
-		axisLeft       = 67.572
-		axisBottom     = 468.0
-		axisRight      = 700.0
-		axisTop        = 42.0
-		yLabelTop      = 50.0
-		yLabelBottom   = 459.0
-		yZeroLine      = 459.0
-		barBottom      = 467.0
+		totalWidth   = 700.0
+		totalHeight  = 500.0
+		axisLeft     = 67.572
+		axisBottom   = 468.0
+		axisRight    = 700.0
+		axisTop      = 42.0
+		yLabelTop    = 50.0
+		yLabelBottom = 459.0
+		yZeroLine    = 459.0
+		barBottom    = 467.0
 	)
 
 	var centerStart, centerEnd, barSeriesWidth float64

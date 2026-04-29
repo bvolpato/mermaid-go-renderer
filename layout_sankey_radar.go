@@ -403,7 +403,7 @@ func layoutRadarFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout 
 		marginLeft      = 50.0
 		axisScaleFactor = 1.0
 		axisLabelFactor = 1.05
-		curveTension = 0.17
+		curveTension    = 0.17
 	)
 
 	totalWidth := chartWidth + marginLeft + marginRight

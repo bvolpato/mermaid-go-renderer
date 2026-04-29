@@ -213,7 +213,7 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 	}
 	if includeArrowMarkers {
 		if layout.Kind == DiagramFlowchart {
-		b.WriteString(`<marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
+			b.WriteString(`<marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
 			b.WriteString("\n")
 			b.WriteString(`<marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker>`)
 			b.WriteString("\n")
@@ -2723,7 +2723,6 @@ func renderTreemapMermaid(layout Layout) string {
 		b.WriteString(`<text class="treemapSectionValue" x="` + formatFloat(rect.W-10) + `" y="12.5" text-anchor="end" dominant-baseline="middle" font-style="italic" style="` + valueStyle + `">` + html.EscapeString(valueValue) + `</text>`)
 		b.WriteString(`</g>`)
 	}
-
 
 	for idx, rect := range leafRects {
 		fill := defaultColor(rect.Fill, "#efefef")
