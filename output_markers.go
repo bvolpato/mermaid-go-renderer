@@ -532,17 +532,17 @@ func inlineMarkers(svg string) string {
 			if marker, ok := markers[markerID]; ok {
 				x, y, angle, found := pathEndpoint(d, true)
 				if found {
-					angle += math.Pi
+					angleStart := angle + math.Pi
 					if special := buildSpecialMarkerElements(markerID, strokeColor, x, y, angle); special != "" {
 						arrowheads.WriteString(special)
-					} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x, y, angle); transformed != "" {
+					} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x, y, angleStart); transformed != "" {
 						arrowheads.WriteString(transformed)
 					} else {
 						m := marker
 						if strokeColor != "" && strokeColor != "none" {
 							m.FillColor = strokeColor
 						}
-						arrowheads.WriteString(buildArrowheadPath(x, y, angle, m))
+						arrowheads.WriteString(buildArrowheadPath(x, y, angleStart, m))
 					}
 				}
 			}
@@ -590,7 +590,7 @@ func inlineMarkers(svg string) string {
 			markerID := startMatch[1]
 			if marker, ok := markers[markerID]; ok {
 				angleStart := angle + math.Pi
-				if special := buildSpecialMarkerElements(markerID, strokeColor, x1, y1, angleStart); special != "" {
+				if special := buildSpecialMarkerElements(markerID, strokeColor, x1, y1, angle); special != "" {
 					arrowheads.WriteString(special)
 				} else if transformed := buildTransformedMarkerPath(markerID, marker, strokeColor, x1, y1, angleStart); transformed != "" {
 					arrowheads.WriteString(transformed)
