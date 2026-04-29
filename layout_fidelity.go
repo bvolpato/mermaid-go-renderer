@@ -2602,6 +2602,8 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 	}
 	cardLayouts := make([]cardLayout, 0, 16)
 	columnFillPalette := []string{
+		"hsl(240, 100%, 86.2745098039%)",
+		"hsl(60, 100%, 83.5294117647%)",
 		"hsl(80, 100%, 86.2745098039%)",
 		"hsl(270, 100%, 86.2745098039%)",
 		"hsl(300, 100%, 86.2745098039%)",
@@ -2609,6 +2611,8 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 		"hsl(0, 100%, 86.2745098039%)",
 	}
 	columnStrokePalette := []string{
+		"hsl(240, 100%, 76.2745098039%)",
+		"hsl(60, 100%, 73.5294117647%)",
 		"hsl(80, 100%, 76.2745098039%)",
 		"hsl(270, 100%, 76.2745098039%)",
 		"hsl(300, 100%, 76.2745098039%)",
@@ -2623,12 +2627,12 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 		fill := columnFillPalette[idx%len(columnFillPalette)]
 		stroke := columnStrokePalette[idx%len(columnStrokePalette)]
 		titleColor := "#000000"
-		if idx%len(columnFillPalette) == 1 {
-			titleColor = "#ffffff"
+		if idx%len(columnFillPalette) == 0 {
+			titleColor = "#000000"
 		}
 
 		for _, card := range column.Cards {
-			titleLines := wrapKanbanText(card.Title, cardWidth-20.0, 15.0, config.FastTextMetrics)
+			titleLines := wrapKanbanText(card.Title, 175.0, 16.0, config.FastTextMetrics)
 			if len(titleLines) == 0 {
 				titleLines = []string{card.Title}
 			}
@@ -2642,7 +2646,7 @@ func layoutKanbanFidelity(graph *Graph, theme Theme, config LayoutConfig) Layout
 				colX:      x,
 				y:         cardY,
 				h:         height,
-				title:     []string{card.Title},
+				title:     titleLines,
 				ticket:    card.Ticket,
 				assigned:  card.Assigned,
 				priority:  card.Priority,

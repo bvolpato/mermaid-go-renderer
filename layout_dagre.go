@@ -68,7 +68,7 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 	case DiagramState:
 		nodesep = max(14, nodesep*0.55)
 		if len(astGraph.FlowSubgraphs) > 0 {
-			ranksep = max(52, ranksep*0.7)
+			ranksep = ranksep * 0.7
 		}
 		marginx = 8
 		marginy = 8
