@@ -1093,6 +1093,12 @@ func RenderSVG(layout Layout, theme Theme, _ LayoutConfig) string {
 				b.WriteString(html.EscapeString(text.Value))
 				b.WriteString(`</tspan></text></switch></g>`)
 				b.WriteString("\n")
+				// Standalone text for Go SVG rasterizer (the switch block above gets stripped).
+				b.WriteString(`<text x="` + formatFloat(text.X) + `" y="` + formatFloat(text.Y) + `" text-anchor="middle" fill="#333" font-family="'trebuchet ms', verdana, arial, sans-serif" font-size="` + textSize + `" dominant-baseline="central" alignment-baseline="central">`)
+				b.WriteString(`<tspan x="` + formatFloat(text.X) + `" dy="0">`)
+				b.WriteString(html.EscapeString(text.Value))
+				b.WriteString(`</tspan></text>`)
+				b.WriteString("\n")
 				if wrapTextGroup {
 					b.WriteString("</g>\n")
 				}
