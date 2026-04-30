@@ -334,42 +334,6 @@ func appendERNodePrimitives(layout *Layout, graph *Graph, metrics map[string]erN
 			attrY += rowH
 		}
 
-		curX := node.X + colWidths[0]
-		if colWidths[0] > 0 {
-			layout.Lines = append(layout.Lines, LayoutLine{
-				X1:          curX,
-				Y1:          node.Y + titleH,
-				X2:          curX,
-				Y2:          node.Y + node.H,
-				Stroke:      erStroke,
-				StrokeWidth: 1,
-				Class:       "divider",
-			})
-		}
-		curX += colWidths[1]
-		if colWidths[1] > 0 && curX < node.X+node.W-1 {
-			layout.Lines = append(layout.Lines, LayoutLine{
-				X1:          curX,
-				Y1:          node.Y + titleH,
-				X2:          curX,
-				Y2:          node.Y + node.H,
-				Stroke:      erStroke,
-				StrokeWidth: 1,
-				Class:       "divider",
-			})
-		}
-		curX += colWidths[2]
-		if colWidths[2] > 0 && curX < node.X+node.W-1 {
-			layout.Lines = append(layout.Lines, LayoutLine{
-				X1:          curX,
-				Y1:          node.Y + titleH,
-				X2:          curX,
-				Y2:          node.Y + node.H,
-				Stroke:      erStroke,
-				StrokeWidth: 1,
-				Class:       "divider",
-			})
-		}
 	}
 }
 
