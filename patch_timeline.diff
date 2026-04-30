@@ -1,0 +1,20 @@
+--- layout_fidelity.go
++++ layout_fidelity.go
+@@ -976,17 +976,6 @@
+ 		eventTopY += 115.815625
+ 	}
+ 
+-	if title != "" {
+-		layout.Texts = append(layout.Texts, LayoutText{
+-			X:      45.0,
+-			Y:      20.0,
+-			Value:  title,
+-			Anchor: "start",
+-			Size:   theme.FontSize * 1.9,
+-			Weight: "700",
+-			Color:  theme.PrimaryTextColor,
+-		})
+-	}
+-
+ 	topColors := []string{"#8686ff", "#ffff78"}
+ 	lineColors := []string{"#ffffb8", "#ababff"}

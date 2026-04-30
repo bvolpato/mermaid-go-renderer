@@ -1,0 +1,10 @@
+--- text_metrics.go
++++ text_metrics.go
+@@ -77,8 +77,7 @@
+ 			continue
+ 		}
+ 		charWidth := float64(advance) / 64.0
+-		charWidth *= browserCharScale(r)
+ 		width += charWidth
+ 		prevGlyph = glyphIdx
+ 	}
