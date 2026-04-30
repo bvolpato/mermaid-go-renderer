@@ -177,6 +177,7 @@ func prepareSVGForRasterizer(svg string) string {
 	svg = convertHSLToHex(svg)
 	svg = inlineMarkers(svg)
 	svg = stripSVGForeignObjectSwitches(svg)
+	svg = normalizeFontsForRasterizer(svg)
 	svg = stripClipPaths(svg)
 	svg = inlineCSS(svg)
 	svg = regexp.MustCompile(`(?i)rotate\(\s*([\d\.-]+)\s*deg\s*\)`).ReplaceAllString(svg, "rotate(${1})")
@@ -189,6 +190,12 @@ func skipViewBoxExpansion(svg string) bool {
 		strings.Contains(svg, `aria-roledescription="kanban"`) ||
 		strings.Contains(svg, `aria-roledescription="gitGraph"`) ||
 		strings.Contains(svg, `aria-roledescription="radar"`)
+}
+
+func normalizeFontsForRasterizer(svg string) string {
+	svg = strings.ReplaceAll(svg, `&quot;Open Sans&quot;, sans-serif`, `'trebuchet ms', verdana, arial, sans-serif`)
+	svg = strings.ReplaceAll(svg, `"Open Sans", sans-serif`, `'trebuchet ms', verdana, arial, sans-serif`)
+	return svg
 }
 
 func shouldStripSVGTextForRasterizer(svg string) bool {
@@ -747,7 +754,11 @@ func stripSVGForeignObjects(svg string) string {
 }
 
 func stripSVGForeignObjectSwitches(svg string) string {
-	return svgForeignObjectSwitchPattern.ReplaceAllString(svg, "")
+	// Extract <text> fallbacks from <switch> blocks, removing the foreignObject.
+	// The switch structure is: <switch><foreignObject>...</foreignObject><text>...</text></switch>
+	// We keep the <text>...</text> and remove the rest.
+	re := regexp.MustCompile(`(?s)<switch\b[^>]*>\s*<foreignObject\b[^>]*>.*?</foreignObject>\s*(<text\b[^>]*>.*?</text>)\s*</switch>`)
+	return re.ReplaceAllString(svg, "$1")
 }
 
 var svgClipPathElementPattern = regexp.MustCompile(`(?s)<clipPath\b[^>]*>.*?</clipPath>`)
@@ -1034,6 +1045,9 @@ func overlaySVGText(img *image.NRGBA, svg string, width int, height int, viewBox
 			}
 		}
 		fontFamily := parseAttr(attrs, "font-family")
+		if fontFamily == "" {
+			fontFamily = styleValue(parseAttr(attrs, "style"), "font-family")
+		}
 		face := resolveRasterFontFace(fontFamily, max(8.0, fontSize*transform.Scale))
 		textColor := color.Color(nil)
 		if hasTSpan {

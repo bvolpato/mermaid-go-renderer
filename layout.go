@@ -1231,9 +1231,9 @@ func addGraphPrimitives(layout *Layout, theme Theme) {
 		// For flowcharts: dagre layout already provides edge paths via
 		// layout.Paths, so skip generating duplicate paths here. Edge
 		// layout entries are still used for edge label positioning.
-		if layout.Kind == DiagramFlowchart && hasDagrePaths {
+		if (layout.Kind == DiagramFlowchart || layout.Kind == DiagramRequirement) && hasDagrePaths {
 			// Skip path generation (dagre paths already exist)
-		} else if layout.Kind == DiagramFlowchart {
+		} else if layout.Kind == DiagramFlowchart || layout.Kind == DiagramRequirement {
 			markerStart := edge.MarkerStart
 			markerEnd := edge.MarkerEnd
 			if markerStart == "" && edge.ArrowStart {
@@ -3488,8 +3488,8 @@ func seriesColor(index int) string {
 }
 
 func formatFloat(v float64) string {
-	if math.Abs(v-math.Round(v)) < 0.0001 {
+	if math.Abs(v-math.Round(v)) < 1e-10 {
 		return intString(int(math.Round(v)))
 	}
-	return strings.TrimRight(strings.TrimRight(strconv.FormatFloat(v, 'f', 2, 64), "0"), ".")
+	return strconv.FormatFloat(v, 'f', -1, 64)
 }

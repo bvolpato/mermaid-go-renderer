@@ -348,6 +348,15 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 			})
 		} else {
 			edgeClass := "edgePath"
+			if astGraph.Kind == DiagramRequirement {
+				edgeClass = "edge-thickness-normal edge-pattern-solid relationshipLine"
+				if e.Style == EdgeDotted {
+					edgeClass = "edge-thickness-normal edge-pattern-dashed relationshipLine"
+				} else if e.Style == EdgeThick {
+					edgeClass = "edge-thickness-thick edge-pattern-solid relationshipLine"
+				}
+			}
+
 			path := LayoutPath{
 				ID:          e.From + "-" + e.To + "-" + strconv.Itoa(i),
 				D:           dBuilder.String(),
@@ -356,10 +365,19 @@ func layoutGraphLikeDagre(astGraph *Graph, theme Theme, config LayoutConfig) Lay
 				MarkerEnd:   e.MarkerEnd,
 			}
 
-			if e.Style == EdgeDotted {
-				path.DashArray = "3,3"
-			} else if e.Style == EdgeThick {
-				path.StrokeWidth = 3
+			if astGraph.Kind == DiagramRequirement {
+				if path.MarkerEnd == "" && (e.ArrowEnd || e.Directed) {
+					path.MarkerEnd = "my-svg_requirement-requirement_arrowEnd"
+				}
+				if e.Style == EdgeDotted {
+					path.DashArray = "10,7"
+				}
+			} else {
+				if e.Style == EdgeDotted {
+					path.DashArray = "3,3"
+				} else if e.Style == EdgeThick {
+					path.StrokeWidth = 3
+				}
 			}
 
 			layout.Paths = append(layout.Paths, path)

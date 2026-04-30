@@ -2767,7 +2767,7 @@ func wrapKanbanText(text string, maxWidth float64, fontSize float64, fast bool) 
 	current := words[0]
 	for _, word := range words[1:] {
 		candidate := current + " " + word
-		if measureTextWidthWithFontSize(candidate, fontSize, fast) <= maxWidth {
+		if measureTextWidthWithFontSize(candidate, fontSize, fast) <= maxWidth*1.05 {
 			current = candidate
 			continue
 		}
