@@ -99,6 +99,8 @@ There are three corpora under `testdata/corpus`.
 | `mermaid-docs` | 596 | The examples of the mermaid documentation. No port was developed against it. |
 | `mermaid-large` | 70 | Generated diagrams with 15 to 150 nodes, for the layout paths that small graphs do not reach. |
 
+The fixtures of `mermaid-e2e` are the `.mmd` files of the tests of mermaid. A test does not give the text of its file to mermaid directly. Its page puts the text into an element as HTML, and `mermaid.run()` reads it back, decodes the HTML entities and removes the indentation. 64 fixtures need these steps to be valid: a class or usecase diagram that writes `<<interface>>` as `&lt;&lt;interface&gt;&gt;`, and two diagrams with an indented front matter. `tools/reference/gen-run-text.mjs` runs the steps in Chromium, with the functions of mermaid, and these 64 fixtures have the text that mermaid gets in its own test.
+
 ## Determinism and concurrency
 
 A render depends only on the source text and the options. The clock, the random numbers and the viewport have fixed defaults. Upstream keeps state in module variables. Here each render has its own `render.Context`, so renders can run at the same time. `TestConcurrentRendersAreIdentical` checks that, also with the race detector.

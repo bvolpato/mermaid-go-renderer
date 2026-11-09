@@ -930,34 +930,54 @@
    "bytes": 20389
   },
   "class-diagram/nightly-check/2-1-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a26d12ec0b84d9ba9b8edfed5a58806d4a88cd5a1f74808c731698fd9db857c6",
+   "bytes": 22181
   },
   "class-diagram/nightly-check/2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "27f0be93fef4d07318793cc1c2b9d8d709a188d61babd88ded5053cbdcbc246f",
+   "bytes": 68789
   },
   "class-diagram/nightly-check/2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "ee5332d6cccbd15128639bed9ed022da179f3d1f89c97e60365c1dc21afd0ce5",
+   "bytes": 22027
   },
   "class-diagram/nightly-check/2-3-should-render-a-simple-class-diagram-with-different-visibilities-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "af2321b05ecdd796c9b995bb7146dfc3cbadd446cb9524a84925389db386d09a",
+   "bytes": 23262
   },
   "class-diagram/nightly-check/2-should-render-a-simple-class-diagrams-with-cardinality": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c40039e593dd9a85b776ec5df08528267c6a19fad8f79879e6843713b4266781",
+   "bytes": 61612
   },
   "class-diagram/nightly-check/2-should-render-a-simple-class-diagrams-with-cardinality-2": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5cedf8e36e43edb781b8aadb68fca89c31ee798d877248a7b65ac967afcd8a4b",
+   "bytes": 60765
   },
   "class-diagram/nightly-check/3-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "ee5332d6cccbd15128639bed9ed022da179f3d1f89c97e60365c1dc21afd0ce5",
+   "bytes": 22027
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a07caae6f85fc883ec77427928ce6a5050e44e68d244d8fb14746e789efbdfda",
+   "bytes": 53547
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments-2": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "04de80abf55531dd44508e22a38d39872fb7681c502942454a1baae5927035d6",
+   "bytes": 52684
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments-3": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "04de80abf55531dd44508e22a38d39872fb7681c502942454a1baae5927035d6",
+   "bytes": 52684
   },
   "class-diagram/nightly-check/5-should-render-a-simple-class-diagram-with-abstract-method": {
    "type": "classDiagram",
@@ -1120,7 +1140,9 @@
    "bytes": 20868
   },
   "class-diagram/nightly-check/dagre/dagre-2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "da2a42256ce370d5a154ea815dd851085aaf37d7bf55123396d1118047f742c4",
+   "bytes": 69723
   },
   "class-diagram/nightly-check/dagre/dagre-2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
    "type": "classDiagram",
@@ -1308,7 +1330,9 @@
    "bytes": 444235
   },
   "class-diagram/nightly-check/dagre/handdrawn/dagre-should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "e7a82725f62de053321a1b3809cea1efb93c7d9f8ac5efbc94a5aa804b19ecc1",
+   "bytes": 384179
   },
   "class-diagram/nightly-check/dagre/handdrawn/dagre-should-render-a-simple-class-diagram-with-styles-and-the-handdrawn-look": {
    "type": "classDiagram",
@@ -1331,10 +1355,14 @@
    "bytes": 102232
   },
   "class-diagram/nightly-check/handdrawn/hd-1-1-should-render-a-simple-class-diagram-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "ae7dd832f6e87adbdc68957cd67c6f32c36202a6cd7c41e00d247830b52009f3",
+   "bytes": 371622
   },
   "class-diagram/nightly-check/handdrawn/hd-1-should-render-a-simple-class-diagram": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "7ea022c76bd82af3ae9b16a3f38589965a6b1f7d27cca5da4920b081112f636e",
+   "bytes": 380544
   },
   "class-diagram/nightly-check/handdrawn/hd-10-should-render-a-simple-class-diagram-with-clickable-callback": {
    "type": "classDiagram",
@@ -1412,19 +1440,29 @@
    "bytes": 92212
   },
   "class-diagram/nightly-check/handdrawn/hd-2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5ec284573ab335318ca6b3367e1047dbe2a9b0ac6c26ed9cf23b287d345b89c1",
+   "bytes": 316356
   },
   "class-diagram/nightly-check/handdrawn/hd-2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "1e14e44e79604d9fee8c2461d609a4456f2d2d63301cda652d428aa910ffc4db",
+   "bytes": 96701
   },
   "class-diagram/nightly-check/handdrawn/hd-2-3-should-render-a-simple-class-diagram-with-different-visibilities-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5d11a4c2e9ff6d5aa8f431c3069e5601bac515594400cac13451f06b0393f01e",
+   "bytes": 93451
   },
   "class-diagram/nightly-check/handdrawn/hd-2-should-render-a-simple-class-diagrams-with-cardinality": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "60dec8bdadfd61e7e1c6d03365afec8d2cc5272c7fd8f917fe7041c5856713c3",
+   "bytes": 323794
   },
   "class-diagram/nightly-check/handdrawn/hd-4-should-render-a-simple-class-diagram-with-comments": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "3ba33f059cf63068ff4a7aeb9bcb501c709dcfb4a1a4258adb7f846bf9d149e2",
+   "bytes": 315557
   },
   "class-diagram/nightly-check/handdrawn/hd-5-1-should-render-a-simple-class-diagram-with-abstract-method-without-htmllabels": {
    "type": "classDiagram",
@@ -1477,10 +1515,14 @@
    "bytes": 62241
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-full-class-diagram-using-elk": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "17fa35f0df106ed4e8d19763e5a6fe97cf8794656f9f4ad624e86c9743541680",
+   "bytes": 438016
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-full-class-diagram-with-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "17fa35f0df106ed4e8d19763e5a6fe97cf8794656f9f4ad624e86c9743541680",
+   "bytes": 438016
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-namespace-with-a-custom-label": {
    "type": "classDiagram",
@@ -1493,10 +1535,14 @@
    "bytes": 65635
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-a-custom-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "f0740be576a3334d11de17e12499d49ed23e40e0ced4f39ec65873e8c8e186a6",
+   "bytes": 402604
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "f0740be576a3334d11de17e12499d49ed23e40e0ced4f39ec65873e8c8e186a6",
+   "bytes": 402604
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-classdef-definitions": {
    "type": "classDiagram",
@@ -1604,10 +1650,14 @@
    "bytes": 77152
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-full-class-diagram-with-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "17fa35f0df106ed4e8d19763e5a6fe97cf8794656f9f4ad624e86c9743541680",
+   "bytes": 438016
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "f0740be576a3334d11de17e12499d49ed23e40e0ced4f39ec65873e8c8e186a6",
+   "bytes": 402604
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-simple-class-diagram-with-styles-and-the-handdrawn-look": {
    "type": "classDiagram",
@@ -1705,7 +1755,9 @@
    "bytes": 18796
   },
   "class-diagram/nightly-check/should-render-a-full-class-diagram-using-elk": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "aff3324035d4d6a7fb293cd97a3e1bf5d351fa6ca10ab2c1b6af395ae12ad3de",
+   "bytes": 70767
   },
   "class-diagram/nightly-check/should-render-a-namespace-with-a-custom-label": {
    "type": "classDiagram",
@@ -1718,7 +1770,9 @@
    "bytes": 19052
   },
   "class-diagram/nightly-check/should-render-a-simple-class-diagram-with-a-custom-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "e993eb7072703abc3cfed3966a27b59368909c2d3654cd6563d95bb7efe01d38",
+   "bytes": 56562
   },
   "class-diagram/nightly-check/should-render-a-simple-class-diagram-with-classdef-definitions": {
    "type": "classDiagram",
@@ -1831,7 +1885,9 @@
    "bytes": 18902
   },
   "class-diagram/nightly-check/should-render-with-newlines-in-title-and-an-annotation": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "9d54bdcaa56d544d09d23247e85c1401af653e0c7b274d266652c8590b2db42a",
+   "bytes": 18574
   },
   "class-diagram/pr-check/1-should-render-a-simple-class-diagram": {
    "type": "classDiagram",
@@ -1884,76 +1940,124 @@
    "bytes": 198868
   },
   "class-diagram/visual-check/all-relationships-classic-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "fc1e7dc5e965d419360d533e9de1eeec56fa7eead2ed644c4edcf5abfa991fee",
+   "bytes": 58189
   },
   "class-diagram/visual-check/all-relationships-classic-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "769207bb3798787870eb0ba899e4dabff8de45b9c7ad481b60d6529aee74ede8",
+   "bytes": 57908
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "31f0a40037d6a05b30b476b2653c7a95fb54453ef758ad2a0c119de1b810e530",
+   "bytes": 60403
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "6e106a924cfab6e7e71e7f7397c6f733836e7670e06134d6496aab2c503825af",
+   "bytes": 60614
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c768d157db322341bffe8565546912dce9fe06c80b4de797fda95dad6092a97e",
+   "bytes": 58172
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "1f5f5397853c544bb7f98134e4c8da906be08e70ff630130868960ff6b9d5455",
+   "bytes": 57805
   },
   "class-diagram/visual-check/all-relationships-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "fc1e7dc5e965d419360d533e9de1eeec56fa7eead2ed644c4edcf5abfa991fee",
+   "bytes": 58189
   },
   "class-diagram/visual-check/all-relationships-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "769207bb3798787870eb0ba899e4dabff8de45b9c7ad481b60d6529aee74ede8",
+   "bytes": 57908
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "31f0a40037d6a05b30b476b2653c7a95fb54453ef758ad2a0c119de1b810e530",
+   "bytes": 60403
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "6e106a924cfab6e7e71e7f7397c6f733836e7670e06134d6496aab2c503825af",
+   "bytes": 60614
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c768d157db322341bffe8565546912dce9fe06c80b4de797fda95dad6092a97e",
+   "bytes": 58172
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "1f5f5397853c544bb7f98134e4c8da906be08e70ff630130868960ff6b9d5455",
+   "bytes": 57805
   },
   "class-diagram/visual-check/cardinality-classic-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5a9c56faeaa3b1dcecd54f4a3992822f45d1e28cca3c9d1f050ff80207a4e091",
+   "bytes": 58653
   },
   "class-diagram/visual-check/cardinality-classic-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "563993e2831796f60ed960891203811293605ffc4b79ac0fa47433d7b55a54a8",
+   "bytes": 58354
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5cedf8e36e43edb781b8aadb68fca89c31ee798d877248a7b65ac967afcd8a4b",
+   "bytes": 60765
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "96b903e78c025afdd197465e541c6d5808d5a2b0a8132233119b702e9ee77f7a",
+   "bytes": 60976
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "955d872067396bb9c3e498c0e23138eaad2e65931c755a42a43b701ea396d582",
+   "bytes": 58582
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "0fd19aeefc3434f91f55341a0a26e59a20e65bddc859a66576b3ee533fe35fe1",
+   "bytes": 58215
   },
   "class-diagram/visual-check/cardinality-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5a9c56faeaa3b1dcecd54f4a3992822f45d1e28cca3c9d1f050ff80207a4e091",
+   "bytes": 58653
   },
   "class-diagram/visual-check/cardinality-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "563993e2831796f60ed960891203811293605ffc4b79ac0fa47433d7b55a54a8",
+   "bytes": 58354
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5cedf8e36e43edb781b8aadb68fca89c31ee798d877248a7b65ac967afcd8a4b",
+   "bytes": 60765
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "96b903e78c025afdd197465e541c6d5808d5a2b0a8132233119b702e9ee77f7a",
+   "bytes": 60976
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "955d872067396bb9c3e498c0e23138eaad2e65931c755a42a43b701ea396d582",
+   "bytes": 58582
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "0fd19aeefc3434f91f55341a0a26e59a20e65bddc859a66576b3ee533fe35fe1",
+   "bytes": 58215
   },
   "class-diagram/visual-check/dark-theme": {
    "type": "classDiagram",
@@ -2001,22 +2105,34 @@
    "bytes": 87334
   },
   "class-diagram/visual-check/full-with-notes-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "e1d0260fad041006bd7e8f622f851499feefad2f13c11dc0ef741744e4d286b4",
+   "bytes": 69048
   },
   "class-diagram/visual-check/full-with-notes-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "7c9fad17532256bb18d3a205deb2c43f135ecf9b12fcfd4b842185814d8de8ec",
+   "bytes": 68767
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5dc5fff3bc5a379ece9c773e6c0f03ea97071c19c7171064b1b5f5667e128983",
+   "bytes": 71070
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "763c9ed379aab41c9cebe3d8b8bb211ee6351e1b6dcaf91acbc0ce371eb6e6bd",
+   "bytes": 71281
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "99f6ac4b2bc3f7d74294a728c323ad228af28ec1848acc5ecd913bb21b936a17",
+   "bytes": 68839
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "ecbd071158b16eebc1276151727fd746304d24ec66ebe45d3025f00c656df293",
+   "bytes": 68472
   },
   "class-diagram/visual-check/generic-classes-neo-look-neo-dark-theme": {
    "type": "classDiagram",
@@ -7679,10 +7795,14 @@
    "bytes": 11232
   },
   "requirement/visual-check/with-a-theme-default": {
-   "error": true
+   "type": "requirement",
+   "sha256": "621570fabaedc53d2b9ba6d5d1ef0176a0f578b1504b6a4d1e66b6b0e178ef03",
+   "bytes": 15205
   },
   "requirement/visual-check/with-a-title-default": {
-   "error": true
+   "type": "requirement",
+   "sha256": "bde18da570a715e60ee1a5e33568e777fc7dc36726d9927b2ddd360523822493",
+   "bytes": 15329
   },
   "sankey/nightly-check/align-nodes-left": {
    "type": "sankey",
@@ -10090,7 +10210,9 @@
    "bytes": 27078
   },
   "usecase/nightly-check/09-business-and-stereotypes": {
-   "error": true
+   "type": "usecase",
+   "sha256": "8f063c4c883bc8ffa07bbc3e685bb5be3c1e2f9c69df1b670c18c1daee53fb34",
+   "bytes": 22545
   },
   "usecase/nightly-check/10-configuration-and-accessibility": {
    "type": "usecase",
@@ -10143,7 +10265,9 @@
    "bytes": 23706
   },
   "usecase/nightly-check/20-full-featured-order-system": {
-   "error": true
+   "type": "usecase",
+   "sha256": "4eb4ba229e4afd3f4c4018437c927d2e2836556ea417d02cb16a3831d5d0539a",
+   "bytes": 35226
   },
   "usecase/nightly-check/themed-elements-redux-color-theme": {
    "type": "usecase",
@@ -10156,7 +10280,9 @@
    "bytes": 32301
   },
   "usecase/pr-check/complete-hand-drawn-rendering-contract": {
-   "error": true
+   "type": "usecase",
+   "sha256": "c0828235cb5559813ef8dad1973c80c15221679cce3c4d145e4a7bb53bc7aef8",
+   "bytes": 652105
   },
   "usecase/pr-check/empty-diagram": {
    "type": "usecase",
@@ -10174,7 +10300,9 @@
    "bytes": 42315
   },
   "usecase/pr-check/small-representative-visual-snapshot": {
-   "error": true
+   "type": "usecase",
+   "sha256": "5728bbf2c3a36c1a86e224e5986816e7b6528f335a5df1e879d645121113c337",
+   "bytes": 49973
   },
   "usecase/pr-check/themed-elements-base-theme": {
    "type": "usecase",
