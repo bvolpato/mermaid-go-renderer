@@ -21,12 +21,14 @@
   <img src="docs/assets/gallery-flowchart.png" alt="A flowchart that mmdg rendered" width="860">
 </p>
 
+<!-- generated:speed start -->
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/speed-dark.svg">
     <img src="docs/assets/speed-light.svg" alt="mmdg is 13 times faster than mermaid in a warm Chromium page, and 16 times faster than mmdc as a command" width="860">
   </picture>
 </p>
+<!-- generated:speed end -->
 
 ```go
 svg, err := mermaid.Render("flowchart LR\n  A[Start] --> B{Done?}\n  B -->|yes| C[Stop]")
@@ -44,10 +46,11 @@ A renderer without a browser can replace mermaid only if its output is the same.
 
 ## Result
 
+<!-- generated:result start -->
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/parity-dark.svg">
-    <img src="docs/assets/parity-light.svg" alt="One square for each of the 2145 diagrams of the end-to-end tests of mermaid. 2141 give the output of mermaid, byte for byte." width="860">
+    <img src="docs/assets/parity-light.svg" alt="One square for each of the 2145 diagrams of the end-to-end tests of mermaid. 2140 give the output of mermaid, byte for byte." width="860">
   </picture>
 </p>
 
@@ -57,11 +60,11 @@ A renderer without a browser can replace mermaid only if its output is the same.
 
 | Corpus | Diagrams | Pass | Byte-exact | Same error as mermaid |
 |---|---:|---:|---:|---:|
-| The end-to-end tests of mermaid | 2145 | 2141 (99.8%) | 2076 | 65 |
+| The end-to-end tests of mermaid | 2145 | 2141 (99.8%) | 2140 | 1 |
 | The examples of the mermaid documentation | 596 | 594 (99.7%) | 576 | 18 |
-| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100%) | 70 | 0 |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100.0%) | 70 | 0 |
 
-- "Pass" means byte-exact output, or an error for a diagram that mermaid also rejects.
+- "Pass" means byte-exact output, or an error for a diagram that mermaid also rejects: ZenUML, which needs a plugin, and two examples of the documentation that are not whole diagrams.
 - The 6 diagrams that do not pass use KaTeX math, which is not supported.
 - The ports were developed against the first corpus only. The other two show that the result holds for diagrams that the code never saw.
 - Each corpus passes with the same counts against two references: Chromium 156 on Linux with the Liberation fonts, and Chromium 156 on macOS with the system fonts.
@@ -72,11 +75,12 @@ A renderer without a browser can replace mermaid only if its output is the same.
 |---|---:|---:|---:|
 | The end-to-end tests of mermaid | 2145 | 2140 (99.8%) | 2131 (99.3%) |
 | The examples of the mermaid documentation | 596 | 578 (97.0%) | 578 (97.0%) |
-| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100%) | 70 (100%) |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100.0%) | 70 (100.0%) |
 
 - "Pass" means that both files of `mmdc` have the same bytes: the file with the embedded fonts and the file of `--no-font-embed`. It also counts an error for a diagram that `mmdc` rejects.
 - The diagrams that do not pass use KaTeX math (6) or ZenUML (17), which `mmdc` renders with a plugin. Neither is supported.
 - On macOS, 9 more diagrams have one number that differs in its last digit, for example `182.4px` where `mmdc` writes `182.399px`.
+<!-- generated:result end -->
 
 You can check this yourself. The repository has the SHA-256 of every reference SVG, and one test compares them:
 
@@ -90,6 +94,7 @@ The test also runs in a container with no fonts and no browser, because the defa
 
 ## Performance
 
+<!-- generated:performance start -->
 | Measurement | mermaid in Chromium | mmdg | Ratio |
 |---|---:|---:|---:|
 | One render in a warm process, median of 2076 diagrams | 11.5 ms | 0.88 ms | 13x |
@@ -99,7 +104,8 @@ The test also runs in a container with no fonts and no browser, because the defa
 
 - The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
 - The last two rows compare whole processes. `mmdc` starts a browser in each run.
-- All numbers are from one machine. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.
+- All numbers are from one machine, measured on 2026-11-09. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.
+<!-- generated:performance end -->
 
 ## Gallery
 
@@ -263,6 +269,15 @@ go run ./tools/fmacheck ./internal/... # no fused multiply-add in ported code
 ```
 
 The website is in `website`. `go run ./tools/sitegen -out dist` builds it, with the corpus comparison, the gallery and the WebAssembly playground. A push to `main` publishes it.
+
+No number in this README, in the documents or on the website is written by hand. They come from two kinds of data in the repository:
+
+| Data | What updates it |
+|---|---|
+| `testdata/reference`: the hashes of the reference files, and which diagrams pass | `go test -run TestCorpusParity -update-parity .` |
+| `docs/performance.json`: the performance | `node tools/reference/bench.mjs`, which measures mermaid, `mmdc` and `mmdg` on this machine |
+
+`tools/update-docs.sh` then writes the tables of this README, the documents under `docs` and the images under `docs/assets` again. The website reads the same data when it is built.
 
 The reference SVG files come from `tools/reference/oracle.mjs`, which runs mermaid 12.2.0 in headless Chromium, and from `tools/reference/oracle-linux.mjs`, which does the same in a Linux container. Only these tools need node and a browser. The library and its tests do not.
 

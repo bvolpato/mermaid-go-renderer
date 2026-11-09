@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 // Compares the run time of the command-line tools mmdc (mermaid-cli) and
-// mmdg, and writes a Markdown section for docs/PERFORMANCE.md.
+// mmdg, and writes the result as JSON. tools/perfdoc puts it into
+// docs/PERFORMANCE.md and docs/performance.json. tools/reference/bench.mjs
+// runs this script as one step of the whole measurement.
 //
-//   node bench-cli.mjs --mmdg PATH_OF_MMDG --out FILE.md [--runs 5] [--warmup 3]
+//   node bench-cli.mjs --mmdg PATH_OF_MMDG --out FILE.json [--runs 9] [--warmup 3]
 //
 // Each run is one process that reads a diagram file and writes an SVG or a
 // PNG file. mmdc starts a browser in each run. The time is the wall time of
@@ -11,7 +13,9 @@
 //
 // Each tool first has warm-up runs that do not count. The operating system
 // checks a new binary in its first runs, and reads the files of a tool from
-// the disk.
+// the disk. mmdg runs first: many starts of a browser leave the machine
+// busy for a while. The fastest run of each tool counts, because other work
+// on the machine can only add time to a run.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -96,11 +100,11 @@ function fastest(values) {
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   if (!opts.mmdg || !opts.out) {
-    process.stderr.write('usage: bench-cli.mjs --mmdg PATH_OF_MMDG --out FILE.md [--runs 5]\n');
+    process.stderr.write('usage: bench-cli.mjs --mmdg PATH_OF_MMDG --out FILE.json [--runs 9] [--warmup 3]\n');
     process.exit(2);
   }
   const mmdg = path.resolve(opts.mmdg);
-  const runs = Number(opts.runs || 5);
+  const runs = Number(opts.runs || 9);
   const warmup = Number(opts.warmup || 3);
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'mmdg-bench-cli-'));
   const cases = [];
@@ -162,26 +166,17 @@ async function main() {
       }
       mmdcMs.push(result.ms);
     }
-    const mmdgMs = mmdgTimes[c];
-    const a = fastest(mmdcMs);
-    const b = fastest(mmdgMs);
-    rows.push(`| ${input.name} | ${format.toUpperCase()} | ${a.toFixed(0)} | ${b.toFixed(1)} | ${(a / b).toFixed(0)}x |`);
+    rows.push({ input: input.name, output: format.toUpperCase(), mmdc: fastest(mmdcMs), mmdg: Math.round(fastest(mmdgTimes[c]) * 10) / 10 });
   }
   await fs.rm(dir, { recursive: true, force: true });
 
   const mmdcVersion = JSON.parse(
     await fs.readFile(path.join(HERE, 'node_modules/@mermaid-js/mermaid-cli/package.json'), 'utf8')
   ).version;
-  const text = `## Command-line tools
-
-The table compares \`mmdg\` with \`mmdc\` (mermaid-cli ${mmdcVersion}). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the fastest of ${runs} runs, after ${warmup} runs of each tool that do not count. \`mmdc\` starts a browser in each run.
-
-| Input | Output | mmdc | mmdg | Ratio |
-|---|---|---:|---:|---:|
-${rows.join('\n')}
-`;
-  await fs.writeFile(opts.out, text);
-  process.stderr.write(text);
+  await fs.writeFile(opts.out, JSON.stringify({ mmdc: mmdcVersion, runs, warmup, rows }, null, 1) + '\n');
+  for (const row of rows) {
+    process.stderr.write(`${row.input}, ${row.output}: mmdc ${row.mmdc} ms, mmdg ${row.mmdg} ms\n`);
+  }
 }
 
 await main();

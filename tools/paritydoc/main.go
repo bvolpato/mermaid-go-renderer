@@ -57,7 +57,7 @@ func main() {
 	paths := strings.Split(*manifestPaths, ",")
 	var b strings.Builder
 	b.WriteString("# " + *title + "\n\n")
-	b.WriteString("This file is generated. Do not edit it. The command `go run ./tools/paritydoc` writes it.\n\n")
+	b.WriteString("This file is generated. Do not edit it. `tools/update-docs.sh` writes it with the command `go run ./tools/paritydoc`.\n\n")
 	var summary []string
 	for _, path := range paths {
 		m, err := parity.LoadManifest(path)
@@ -67,6 +67,12 @@ func main() {
 		}
 		if m.Corpus == "" {
 			m.Corpus = "mermaid-e2e"
+		}
+		// A reference from system fonts needs the same fonts. On another
+		// machine the document cannot be made, and it stays as it is.
+		if m.Fonts == "system" && parity.SystemFontFingerprint() != m.FontFingerprint {
+			fmt.Fprintf(os.Stderr, "%s: skipped, the system fonts of this machine are not the fonts of the reference %s\n", *out, m.Environment)
+			return
 		}
 		from := *source
 		if from == "" {

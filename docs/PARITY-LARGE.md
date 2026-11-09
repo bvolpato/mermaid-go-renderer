@@ -1,6 +1,6 @@
 # Parity with mermaid on large diagrams
 
-This file is generated. Do not edit it. The command `go run ./tools/paritydoc` writes it.
+This file is generated. Do not edit it. `tools/update-docs.sh` writes it with the command `go run ./tools/paritydoc`.
 
 The corpus `testdata/corpus/mermaid-large` has 70 diagrams from a seeded generator (tools/reference/gen-large-corpus.mjs): flowcharts, class, state and ER diagrams with 15 to 150 nodes. Each diagram was rendered with mermaid 12.2.0 in the reference environment `chromium-156-linux-liberation`, and the SHA-256 of the SVG that `mermaid.render()` returned is in `testdata/reference/linux-large.json`. The table compares the output of this package with those hashes.
 

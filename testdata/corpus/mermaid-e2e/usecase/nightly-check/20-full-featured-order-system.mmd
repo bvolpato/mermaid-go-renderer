@@ -15,10 +15,10 @@ usecase-beta
   }
 
   actor Customer("Customer")
-  actor Staff("Order staff")@{ type: hollow, business: true } &lt;&lt;Employee&gt;&gt;
+  actor Staff("Order staff")@{ type: hollow, business: true } <<Employee>>
   systemBoundary ordering["Ordering System"]@{ type: package }:::system
     Browse("Browse products")
-    Checkout("Checkout") &lt;&lt;Core&gt;&gt;:::critical
+    Checkout("Checkout") <<Core>>:::critical
     Payment("Process payment")
     Review[Review order]
   end

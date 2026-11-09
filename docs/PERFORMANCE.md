@@ -1,8 +1,8 @@
 # Performance
 
-This file is generated. Do not edit it. The command `go run ./tools/perfdoc` writes it.
+This file is generated. Do not edit it. `node tools/reference/bench.mjs` runs the measurement and writes this file and `docs/performance.json`, which has the same numbers for the website and the README.
 
-The numbers compare `mmdg` with mermaid 12.2.0 in Chromium 156.0.8078.4, for the 2076 diagrams of the corpus `testdata/corpus/mermaid-e2e` that both sides render. Both ran on the same machine (darwin/arm64, 18 CPUs), one diagram at a time. Times are in milliseconds.
+The numbers compare `mmdg` with mermaid 12.2.0 in Chromium 156.0.8078.4, for 2076 diagrams of the corpus `testdata/corpus/mermaid-e2e`: the diagrams that both sides rendered on the day of the measurement. Both ran on the same machine (darwin/arm64, 18 CPUs) on 2026-11-09, one diagram at a time. Times are in milliseconds.
 
 ## Summary
 
@@ -29,7 +29,7 @@ The first-render comparison favors mermaid, because it leaves out the start of t
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `flowchart-v2` | 404 | 13.90 | 1.34 | 3.93 | 10x | 163.8 | 32.1 |
 | `classDiagram` | 227 | 16.00 | 1.19 | 3.19 | 13x | 166.0 | 76.9 |
-| `er` | 206 | 13.50 | 1.59 | 3.39 | 9x | 158.1 | 33.6 |
+| `er` | 206 | 13.50 | 1.59 | 3.39 | 8x | 158.1 | 33.6 |
 | `sequence` | 193 | 8.60 | 0.48 | 1.01 | 18x | 26.2 | 36.4 |
 | `requirement` | 170 | 13.30 | 1.06 | 2.51 | 13x | 135.9 | 42.6 |
 | `stateDiagram` | 144 | 21.00 | 1.06 | 2.42 | 20x | 164.4 | 34.7 |
@@ -44,22 +44,22 @@ The first-render comparison favors mermaid, because it leaves out the start of t
 | `timeline` | 30 | 3.70 | 0.94 | 1.22 | 4x | 21.6 | 71.7 |
 | `usecase` | 28 | 12.30 | 1.26 | 1.92 | 10x | 153.4 | 76.8 |
 | `treemap` | 26 | 2.20 | 0.27 | 0.64 | 8x | 37.8 | 82.2 |
-| `pie` | 24 | 2.10 | 0.10 | 0.22 | 22x | 36.8 | 32.9 |
+| `pie` | 24 | 2.10 | 0.10 | 0.22 | 21x | 36.8 | 32.9 |
 | `venn` | 21 | 2.20 | 0.46 | 0.64 | 5x | 14.5 | 71.9 |
 | `architecture` | 20 | 14.30 | 1.20 | 3.00 | 12x | 131.8 | 76.0 |
-| `journey` | 18 | 4.80 | 0.26 | 0.52 | 19x | 16.9 | 34.0 |
-| `sankey` | 18 | 2.60 | 0.07 | 0.13 | 40x | 15.2 | 39.4 |
-| `treeView` | 15 | 1.70 | 0.12 | 0.21 | 15x | 44.8 | 70.9 |
-| `quadrantChart` | 14 | 4.10 | 0.12 | 0.24 | 36x | 11.7 | 27.4 |
-| `ishikawa` | 13 | 3.70 | 0.12 | 0.42 | 30x | 14.4 | 32.3 |
-| `cynefin` | 12 | 3.20 | 0.18 | 0.24 | 17x | 39.9 | 23.3 |
+| `journey` | 18 | 4.80 | 0.26 | 0.52 | 18x | 16.9 | 34.0 |
+| `sankey` | 18 | 2.60 | 0.07 | 0.13 | 37x | 15.2 | 39.4 |
+| `treeView` | 15 | 1.70 | 0.12 | 0.21 | 14x | 44.8 | 70.9 |
+| `quadrantChart` | 14 | 4.10 | 0.12 | 0.24 | 34x | 11.7 | 27.4 |
+| `ishikawa` | 13 | 3.70 | 0.12 | 0.42 | 31x | 14.4 | 32.3 |
+| `cynefin` | 12 | 3.20 | 0.18 | 0.24 | 18x | 39.9 | 23.3 |
 | `kanban` | 11 | 4.10 | 0.22 | 0.29 | 19x | 18.5 | 31.5 |
 | `wardley` | 10 | 2.00 | 0.19 | 0.28 | 11x | 43.5 | 72.2 |
 | `eventmodeling` | 6 | 2.60 | 0.28 | 0.31 | 9x | 56.5 | 25.8 |
-| `packet` | 6 | 2.60 | 0.06 | 0.15 | 44x | 33.6 | 30.6 |
+| `packet` | 6 | 2.60 | 0.06 | 0.15 | 43x | 33.6 | 30.6 |
 | `radar` | 6 | 2.40 | 0.11 | 0.20 | 22x | 36.6 | 30.3 |
 | `railroad` | 5 | 6.00 | 0.26 | 0.47 | 23x | 41.9 | 28.4 |
-| `info` | 3 | 1.30 | 0.02 | 0.03 | 63x | 30.5 | 29.9 |
+| `info` | 3 | 1.30 | 0.02 | 0.03 | 65x | 30.5 | 29.9 |
 | `railroadEbnf` | 2 | 6.20 | 0.24 | 0.24 | 26x | 44.2 | 29.8 |
 | `railroadAbnf` | 1 | 5.30 | 0.20 | 0.20 | 26x | 41.7 | 30.2 |
 | `railroadPeg` | 1 | 7.20 | 0.29 | 0.29 | 25x | 45.7 | 28.9 |

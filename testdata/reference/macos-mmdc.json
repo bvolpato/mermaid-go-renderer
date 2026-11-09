@@ -1053,34 +1053,64 @@
    "embedSha256": "0385ba43b9ced3b7d3d63e00644bcbc43f34530b179bf6840c0bafdbbb718692"
   },
   "class-diagram/nightly-check/2-1-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a770056cea09d2a63bc16fd1c818fd9d202935f90f41872163aa4daceee1af8f",
+   "bytes": 21989,
+   "embedSha256": "5b1e4250d4609f616d0e58f376ba509d90112f80b025b5bdfaf3a90309655d1a"
   },
   "class-diagram/nightly-check/2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "1b328408e176fd5ca744050c9c8e2480a51202cbcb11c115d5c24b7ddc424ed9",
+   "bytes": 60454,
+   "embedSha256": "d5f289eac98ada7d0ce28910d9707563979afc0b51127f4776473b1b0f185431"
   },
   "class-diagram/nightly-check/2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "accbea9d41f97a87b03694ea5da0bf0d5007564d6e9283545982b4a93f709d3f",
+   "bytes": 21917,
+   "embedSha256": "7ec2edd69e6b4654e0fcf37e69d87c79715ade19d389a07a31995f5b52cba1d0"
   },
   "class-diagram/nightly-check/2-3-should-render-a-simple-class-diagram-with-different-visibilities-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a5dbe468c1650bb182530919c79c1b4a3c5e0f028ea655ae3c3dc48c607c1d99",
+   "bytes": 21854,
+   "embedSha256": "8c35c6d903353bc2d903d6d49e092f4dbdc3743d346bc412b2d527f23d774475"
   },
   "class-diagram/nightly-check/2-should-render-a-simple-class-diagrams-with-cardinality": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "d0dde07700e2cb6eddd8c601227b98fb4c5540f8a0d47d1d13aa8b21e335e00a",
+   "bytes": 61000,
+   "embedSha256": "86df73c2259a36fd0dec6c2f64035415a7b98c200833a9b7c1d9e923336f3c71"
   },
   "class-diagram/nightly-check/2-should-render-a-simple-class-diagrams-with-cardinality-2": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "8c25e85811dfab466b828d9fcc145a1f88afe24ef117f7300c2b8fea9d06529e",
+   "bytes": 60805,
+   "embedSha256": "412a45344949d00590a64a80d710235630a119b48a91d8477273c268e3809f77"
   },
   "class-diagram/nightly-check/3-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "accbea9d41f97a87b03694ea5da0bf0d5007564d6e9283545982b4a93f709d3f",
+   "bytes": 21917,
+   "embedSha256": "7ec2edd69e6b4654e0fcf37e69d87c79715ade19d389a07a31995f5b52cba1d0"
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "62daa45f8cefa3baabb78d6a8ee51edf155526b3be30c8eb07135bb801f85ef3",
+   "bytes": 53069,
+   "embedSha256": "7497028f32af4c2ad233d585d82c3390423f86e9d5693270af11781d11684d09"
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments-2": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "44191172a234407ec4805febe53abab4dfc03084ec774d7f3d32893137dafe3f",
+   "bytes": 52602,
+   "embedSha256": "1e395e4bbd9ebc98d2c2aa63a741130cb0108ed305d8775dccd1425a9f999a12"
   },
   "class-diagram/nightly-check/4-should-render-a-simple-class-diagram-with-comments-3": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "44191172a234407ec4805febe53abab4dfc03084ec774d7f3d32893137dafe3f",
+   "bytes": 52602,
+   "embedSha256": "1e395e4bbd9ebc98d2c2aa63a741130cb0108ed305d8775dccd1425a9f999a12"
   },
   "class-diagram/nightly-check/5-should-render-a-simple-class-diagram-with-abstract-method": {
    "type": "classDiagram",
@@ -1275,7 +1305,10 @@
    "embedSha256": "91d3d57cce9a1b91e4d65cbfc268b7794875022184457562623846795465a9bf"
   },
   "class-diagram/nightly-check/dagre/dagre-2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "b4049611d93f964480649216663debdee2f33dba29a47461c4fc015d87b8281a",
+   "bytes": 61194,
+   "embedSha256": "81ecdfc057ddfdb7644928ab04937054f911c2c586ead2e3426767d9b31e56e9"
   },
   "class-diagram/nightly-check/dagre/dagre-2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
    "type": "classDiagram",
@@ -1499,7 +1532,9 @@
    "embedSha256": "011bdfd3ba6cb56c88dc3f98e6d223b9e15ce81171adb974b8017cc7a8127d0e"
   },
   "class-diagram/nightly-check/dagre/handdrawn/dagre-should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "5e08aa5f69621017e0d59617f03cb696685d6e9eaf82110933d7f6bef3530c98",
+   "bytes": 378899
   },
   "class-diagram/nightly-check/dagre/handdrawn/dagre-should-render-a-simple-class-diagram-with-styles-and-the-handdrawn-look": {
    "type": "classDiagram",
@@ -1526,10 +1561,16 @@
    "embedSha256": "c1f6c96a0e9e5130aec81ed89db72127920701691123225f160a13e9ba499fe6"
   },
   "class-diagram/nightly-check/handdrawn/hd-1-1-should-render-a-simple-class-diagram-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "baec36daa8428b7f08f44e1963713de3a2aa79db6493ba2b2b4865b672d855a9",
+   "bytes": 378434,
+   "embedSha256": "09bfd91008ace416b60ee525bd4809def82624049165f53b0e8cc46039d66991"
   },
   "class-diagram/nightly-check/handdrawn/hd-1-should-render-a-simple-class-diagram": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "37e514ab25f51100230e3a42a009bf415b72d1a894c637f636e952132bc875b3",
+   "bytes": 386933,
+   "embedSha256": "c48d1308d05bf61114e27e8d793675b0bc60a9e1737d6c8e1ab810570d4e962c"
   },
   "class-diagram/nightly-check/handdrawn/hd-10-should-render-a-simple-class-diagram-with-clickable-callback": {
    "type": "classDiagram",
@@ -1622,19 +1663,34 @@
    "embedSha256": "d74ee7b0ec3993c5b611f12aa10b687b1afc8009476f0a53901410311bab0cda"
   },
   "class-diagram/nightly-check/handdrawn/hd-2-1-should-render-a-simple-class-diagrams-with-cardinality-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a59d5ded5f82826b23c322b2aade5a4c04eaaccfcdd02af230b2aee31d61d346",
+   "bytes": 321424,
+   "embedSha256": "ca19f93090a0989720733a5dff04736ccdb420ef7ddbee489419ddff9d0af2dd"
   },
   "class-diagram/nightly-check/handdrawn/hd-2-2-should-render-a-simple-class-diagram-with-different-visibilities": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "db3254222aa7f7112f98f96a1f03e82187a5a4c303def0ffe0ee81beeb4cf4ec",
+   "bytes": 99971,
+   "embedSha256": "03e4107a84cd81624295b95e0ab47a2a645c20924283e2df23bad93990955cc9"
   },
   "class-diagram/nightly-check/handdrawn/hd-2-3-should-render-a-simple-class-diagram-with-different-visibilities-without-htmllabels": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "4baab0936b09d8d9acce89e372494847f73d74a8674e333b6503d6bbbf205c36",
+   "bytes": 97135,
+   "embedSha256": "33dc9b34da6be6b44e269788d8b3fe164aaf5ab3483f811b9169221f8f08bc1f"
   },
   "class-diagram/nightly-check/handdrawn/hd-2-should-render-a-simple-class-diagrams-with-cardinality": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "67317a6a3adc28201b977a68b36670bbb1d3d59835c098e1f1189ab1396e439f",
+   "bytes": 328763,
+   "embedSha256": "b826551534e2aa746cf1d644a86e0d4bce6d01097cc8d34f898719029ff673e6"
   },
   "class-diagram/nightly-check/handdrawn/hd-4-should-render-a-simple-class-diagram-with-comments": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "d93de9e44b5dc6ad50fc321779093699f96e1d705be78f1cfb3901ec54fcc5a7",
+   "bytes": 320456,
+   "embedSha256": "b66469021a5a8dd4b7b16e22de7b45206837528f352a7cde0a9f564a72d9c0a4"
   },
   "class-diagram/nightly-check/handdrawn/hd-5-1-should-render-a-simple-class-diagram-with-abstract-method-without-htmllabels": {
    "type": "classDiagram",
@@ -1697,10 +1753,16 @@
    "embedSha256": "671616ed48d3c09e86ae7bafb52db86a0f0c925523d9d0e806ac83bbff5dc4c9"
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-full-class-diagram-using-elk": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "173b22e084201c35155d0868fbd9684eec08664acc92466596bf081043717ca7",
+   "bytes": 449800,
+   "embedSha256": "652a897d9a99bda30ef3eef0beb39de2aec182f818443292d2aa2c97ee60ee6f"
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-full-class-diagram-with-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "173b22e084201c35155d0868fbd9684eec08664acc92466596bf081043717ca7",
+   "bytes": 449800,
+   "embedSha256": "652a897d9a99bda30ef3eef0beb39de2aec182f818443292d2aa2c97ee60ee6f"
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-namespace-with-a-custom-label": {
    "type": "classDiagram",
@@ -1715,10 +1777,14 @@
    "embedSha256": "5b75cfa32a84419a1461915cda7440a0351030a3587354682546916e73d58c03"
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-a-custom-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "6476e5e7b94f0bb572dcf919d62f59720c133ec3016e029deab11a05b535f352",
+   "bytes": 396859
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "6476e5e7b94f0bb572dcf919d62f59720c133ec3016e029deab11a05b535f352",
+   "bytes": 396859
   },
   "class-diagram/nightly-check/handdrawn/hd-should-render-a-simple-class-diagram-with-classdef-definitions": {
    "type": "classDiagram",
@@ -1847,10 +1913,15 @@
    "embedSha256": "570c0bf13ffbb54725dfe1d315f4c484c81cccdcb058ee5e1b3350f2d2206297"
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-full-class-diagram-with-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "173b22e084201c35155d0868fbd9684eec08664acc92466596bf081043717ca7",
+   "bytes": 449800,
+   "embedSha256": "652a897d9a99bda30ef3eef0beb39de2aec182f818443292d2aa2c97ee60ee6f"
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-simple-class-diagram-with-a-custom-theme-and-the-handdrawn-look": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "6476e5e7b94f0bb572dcf919d62f59720c133ec3016e029deab11a05b535f352",
+   "bytes": 396859
   },
   "class-diagram/nightly-check/handdrawn/should-render-a-simple-class-diagram-with-styles-and-the-handdrawn-look": {
    "type": "classDiagram",
@@ -1967,7 +2038,10 @@
    "embedSha256": "30e62b3d94b619c5be9e48e4095220f7f65363667f35903183c68ba688d2b738"
   },
   "class-diagram/nightly-check/should-render-a-full-class-diagram-using-elk": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "556d6938c82309197a3c055d6962b3b64fc9c19cd7d6bafd1c6a070da86a19e2",
+   "bytes": 71198,
+   "embedSha256": "18fcf5a44f12e79ca5714ea99c349c93782cd5612d01d74496dc3d7e3866087f"
   },
   "class-diagram/nightly-check/should-render-a-namespace-with-a-custom-label": {
    "type": "classDiagram",
@@ -1982,7 +2056,9 @@
    "embedSha256": "f43890a2ae55448e1fe00e99b5e9caffc0c2f6addfb32d984a4f5c1298a32f31"
   },
   "class-diagram/nightly-check/should-render-a-simple-class-diagram-with-a-custom-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c2c4a66b493804142b94ddadee8c4156ccad83b3c4a4b3c01d992bc59bac3e59",
+   "bytes": 56340
   },
   "class-diagram/nightly-check/should-render-a-simple-class-diagram-with-classdef-definitions": {
    "type": "classDiagram",
@@ -2117,7 +2193,10 @@
    "embedSha256": "9ddcc4b6f4cb37d0ec719f70c291e896b4e5512be551b077ac6202b542da086e"
   },
   "class-diagram/nightly-check/should-render-with-newlines-in-title-and-an-annotation": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "dd2192dcaedf50677fc4b858ace59ecb9dd62388119dd13065363d61ec650fcf",
+   "bytes": 18386,
+   "embedSha256": "0d69adeda944add58493af41ca3008645e37f11720482e75fb22567a6400d6cf"
   },
   "class-diagram/pr-check/1-should-render-a-simple-class-diagram": {
    "type": "classDiagram",
@@ -2180,76 +2259,140 @@
    "embedSha256": "0658d0600075535905411aff449fe66c6311f0e367d8dfa6d1224155b5458292"
   },
   "class-diagram/visual-check/all-relationships-classic-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c8c6369a0a289a7d1a3a4de74a17fb83fa6b36bb656c88ecc2c60d3f0b4d0ab7",
+   "bytes": 57534
   },
   "class-diagram/visual-check/all-relationships-classic-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "cb53f14f6d4ce0e6efc7196d3ae8da20c874a7565cf408dd25049dd05b9cd372",
+   "bytes": 57253
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "08fef0fa1d206e78269cbbdb8b9c89728d6c1afbd69feec800bd9d73760a6fea",
+   "bytes": 60579,
+   "embedSha256": "c59e4c8222d9ad9b81f728afc47d3b568951d8cd65a0466e352516dd71a8e87c"
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "bedad7b26f442338609553028e8cc3f6f2fc4132e01a11dafc3317a9941681a0",
+   "bytes": 60790,
+   "embedSha256": "c63dc8b1fd6aead56b161bdcc5dcb300b9a301d2caa9878dfa37718a79aef747"
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "e5c19c7624cc69af79c4a11c185e39b054fae9ba8206a48ebfbb9414e62e516d",
+   "bytes": 58348,
+   "embedSha256": "3798f8585c9e9cc151b87df67a169c9f9dc10a10a8c84493f4258791b6227ece"
   },
   "class-diagram/visual-check/all-relationships-classic-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "de60b4210f1040df0fd4274a1e72a30844310a9b41feae0ea3fc959e66e7ac68",
+   "bytes": 57981,
+   "embedSha256": "779cf295f64d6711316a2cb28bf967afac6a48a80ef12094196f708e31e37d07"
   },
   "class-diagram/visual-check/all-relationships-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "c8c6369a0a289a7d1a3a4de74a17fb83fa6b36bb656c88ecc2c60d3f0b4d0ab7",
+   "bytes": 57534
   },
   "class-diagram/visual-check/all-relationships-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "cb53f14f6d4ce0e6efc7196d3ae8da20c874a7565cf408dd25049dd05b9cd372",
+   "bytes": 57253
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "08fef0fa1d206e78269cbbdb8b9c89728d6c1afbd69feec800bd9d73760a6fea",
+   "bytes": 60579,
+   "embedSha256": "c59e4c8222d9ad9b81f728afc47d3b568951d8cd65a0466e352516dd71a8e87c"
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "bedad7b26f442338609553028e8cc3f6f2fc4132e01a11dafc3317a9941681a0",
+   "bytes": 60790,
+   "embedSha256": "c63dc8b1fd6aead56b161bdcc5dcb300b9a301d2caa9878dfa37718a79aef747"
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "e5c19c7624cc69af79c4a11c185e39b054fae9ba8206a48ebfbb9414e62e516d",
+   "bytes": 58348,
+   "embedSha256": "3798f8585c9e9cc151b87df67a169c9f9dc10a10a8c84493f4258791b6227ece"
   },
   "class-diagram/visual-check/all-relationships-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "de60b4210f1040df0fd4274a1e72a30844310a9b41feae0ea3fc959e66e7ac68",
+   "bytes": 57981,
+   "embedSha256": "779cf295f64d6711316a2cb28bf967afac6a48a80ef12094196f708e31e37d07"
   },
   "class-diagram/visual-check/cardinality-classic-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "79e4d0a28761aec2348dc4460ad1b84241f12d2844c56cef5d5ba652681f7877",
+   "bytes": 58076
   },
   "class-diagram/visual-check/cardinality-classic-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "f1094d73c23428684a9fb33f64abb0218290dd9417005c3ab4d7dd59e333c5d7",
+   "bytes": 57777
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "8c25e85811dfab466b828d9fcc145a1f88afe24ef117f7300c2b8fea9d06529e",
+   "bytes": 60805,
+   "embedSha256": "412a45344949d00590a64a80d710235630a119b48a91d8477273c268e3809f77"
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "3cda97e93782b18cba82fe0d5a20cd393e1c9697e41e79086bcffe540d3a6f51",
+   "bytes": 61016,
+   "embedSha256": "f7c22a15844d330381e5fe1ee9bcfb43d8d2f61d0e62e46b5e93e8882bd9d12e"
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "52196e1ed90ade2c31aff3c75e63e8030f06bc2d2773cff3e9f14bcaa00b4512",
+   "bytes": 58622,
+   "embedSha256": "7499c50a17bba0478c2bed0cdf5465c384649fb4fe099e0bcfb766f8f31096f1"
   },
   "class-diagram/visual-check/cardinality-classic-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "9b9b5174f818bcf654639c2d6b23aa857c84155d52ce116839104f5ca2bdd8f6",
+   "bytes": 58255,
+   "embedSha256": "6cbeaa7c5bca758bfa9452e7a17280034082faa04c30827039b96b1cec19d69f"
   },
   "class-diagram/visual-check/cardinality-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "79e4d0a28761aec2348dc4460ad1b84241f12d2844c56cef5d5ba652681f7877",
+   "bytes": 58076
   },
   "class-diagram/visual-check/cardinality-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "f1094d73c23428684a9fb33f64abb0218290dd9417005c3ab4d7dd59e333c5d7",
+   "bytes": 57777
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "8c25e85811dfab466b828d9fcc145a1f88afe24ef117f7300c2b8fea9d06529e",
+   "bytes": 60805,
+   "embedSha256": "412a45344949d00590a64a80d710235630a119b48a91d8477273c268e3809f77"
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "3cda97e93782b18cba82fe0d5a20cd393e1c9697e41e79086bcffe540d3a6f51",
+   "bytes": 61016,
+   "embedSha256": "f7c22a15844d330381e5fe1ee9bcfb43d8d2f61d0e62e46b5e93e8882bd9d12e"
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "52196e1ed90ade2c31aff3c75e63e8030f06bc2d2773cff3e9f14bcaa00b4512",
+   "bytes": 58622,
+   "embedSha256": "7499c50a17bba0478c2bed0cdf5465c384649fb4fe099e0bcfb766f8f31096f1"
   },
   "class-diagram/visual-check/cardinality-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "9b9b5174f818bcf654639c2d6b23aa857c84155d52ce116839104f5ca2bdd8f6",
+   "bytes": 58255,
+   "embedSha256": "6cbeaa7c5bca758bfa9452e7a17280034082faa04c30827039b96b1cec19d69f"
   },
   "class-diagram/visual-check/dark-theme": {
    "type": "classDiagram",
@@ -2301,22 +2444,38 @@
    "bytes": 86933
   },
   "class-diagram/visual-check/full-with-notes-neo-look-neo-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "9ebfd836ba2b2d1d33159bc5c140cc198ae5e12572e6984b0b88ad3d554d4e8f",
+   "bytes": 68353
   },
   "class-diagram/visual-check/full-with-notes-neo-look-neo-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "435d663cd06dbcbd7cd7975f62d68045bcadcccf68b276963cf3765eb2b9025d",
+   "bytes": 68072
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "8c5770f43b0f00b4c05256a6ce0b76de879e151b39d6b96906122572642dbc46",
+   "bytes": 71285,
+   "embedSha256": "6ff8282d2e83a2d608e29755f60110bf03f6826c6a0189174b3a006689c9a14c"
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-dark-color-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "d486eb6df833169abd99148e025f78a0cf760555cf6e156de13496debb5a8cf2",
+   "bytes": 71496,
+   "embedSha256": "a0e0eae3efc2fbc5a2f90944c03098edcb4d453fcd48f4b2431612b52246d846"
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-dark-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "a5ba0a9bc4b95da56e2684393b1ba5c230a0124236450dd2702139d4c169ac6c",
+   "bytes": 69054,
+   "embedSha256": "9adfe56cc80ad0ab21732298c12e9e925016752e1ad9e3193ff7a4d744715abb"
   },
   "class-diagram/visual-check/full-with-notes-neo-look-redux-theme": {
-   "error": true
+   "type": "classDiagram",
+   "sha256": "d5dbb32d93014e204c155d61900af02f0a117b2d46de299f27d33ff177a1b6ff",
+   "bytes": 68687,
+   "embedSha256": "045adf081051d39772f5cdd9d6b9556c875355c7d92f04c1939be6d4823ecde6"
   },
   "class-diagram/visual-check/generic-classes-neo-look-neo-dark-theme": {
    "type": "classDiagram",
@@ -8680,10 +8839,16 @@
    "bytes": 11134
   },
   "requirement/visual-check/with-a-theme-default": {
-   "error": true
+   "type": "requirement",
+   "sha256": "1b0e263f9433ed4bf37bf2c8bca1911a17c3d685ecb38925fa340d5389a454b7",
+   "bytes": 15000,
+   "embedSha256": "152ee6965b7b15735f824ac3fef9fe37a57503114dc5a36c928791833e226ab8"
   },
   "requirement/visual-check/with-a-title-default": {
-   "error": true
+   "type": "requirement",
+   "sha256": "05115afe09ff7f05e372923c3b9a134b9a7a7ffb83f82eead87aa955c715d5d6",
+   "bytes": 15123,
+   "embedSha256": "5d33e8bffe938796c24b69d1dc99e0ca62fef6327cad4f75c76928f41bdefbf8"
   },
   "sankey/nightly-check/align-nodes-left": {
    "type": "sankey",
@@ -11350,7 +11515,10 @@
    "embedSha256": "9db3e51f34dbb830390e70f35fa9e5639d7b604f6d999e056196ca86b37ec0b8"
   },
   "usecase/nightly-check/09-business-and-stereotypes": {
-   "error": true
+   "type": "usecase",
+   "sha256": "7b957e3450c4a595a4d86787401516b60f7421452c2f8800e5aca21239fb858a",
+   "bytes": 22211,
+   "embedSha256": "ff9addbce10e9000dd1ccae4c071c9331b827672f6d7aeaadf9430cd5b60cd2b"
   },
   "usecase/nightly-check/10-configuration-and-accessibility": {
    "type": "usecase",
@@ -11413,7 +11581,10 @@
    "embedSha256": "e6f41a8d4457c08c5965dea46b44d53431a9293773997bcf0c0c4366cd55947d"
   },
   "usecase/nightly-check/20-full-featured-order-system": {
-   "error": true
+   "type": "usecase",
+   "sha256": "ce4bdc89ccc4ed517e5a0f1611eab6fa906fd0804bf679c4dad51c085c80f6ce",
+   "bytes": 35233,
+   "embedSha256": "27e6a3d4a4d007a14e94f112f7e8e2c02d4f2351058f30f62bfce39b4476987e"
   },
   "usecase/nightly-check/themed-elements-redux-color-theme": {
    "type": "usecase",
@@ -11428,7 +11599,10 @@
    "embedSha256": "7b8bc04f28ddf80e152ae96dbd3cf21a6d7176f5941ed9071326149c95f9a748"
   },
   "usecase/pr-check/complete-hand-drawn-rendering-contract": {
-   "error": true
+   "type": "usecase",
+   "sha256": "c0271fc48f242b20eb12d919de04be8df3a4328d32d1e1e929cee328c3a9c6ab",
+   "bytes": 666105,
+   "embedSha256": "8c20aaf31da72c8efc6cf7d39c1b66eb199e60b703d6636b55efb794eefeddea"
   },
   "usecase/pr-check/empty-diagram": {
    "type": "usecase",
@@ -11449,7 +11623,10 @@
    "embedSha256": "0e492833243edc6605a76c45f6771ebb347ca1043e643d5fb7ccf3cd8e8b8e62"
   },
   "usecase/pr-check/small-representative-visual-snapshot": {
-   "error": true
+   "type": "usecase",
+   "sha256": "f8ee2ccabc8234897b9ed4f6a0cb46033df711b36d3f5ad4fcc3f796f22b590d",
+   "bytes": 49270,
+   "embedSha256": "79e5b7f936c708b60539c524388b37229ef0e06e4229d3881f5847cfd9bc10a6"
   },
   "usecase/pr-check/themed-elements-base-theme": {
    "type": "usecase",
