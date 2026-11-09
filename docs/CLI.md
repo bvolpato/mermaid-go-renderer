@@ -154,15 +154,17 @@ The reference is the code of `mmdc` 12.0.0 itself, with mermaid 12.2.0: the func
 
 The table has the result for Chromium on Linux with only the Liberation fonts as system fonts, which is what `--fonts embedded` reproduces. [PARITY-MMDC.md](PARITY-MMDC.md) has the tables for each diagram type.
 
+<!-- generated:corpus start -->
 | Corpus | Diagrams | Both files are the files of mmdc | mmdc fails, and mmdg fails too | Different | Not supported |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| The end-to-end tests of mermaid | 2145 | 2076 | 64 | 0 | 5 |
+| The end-to-end tests of mermaid | 2145 | 2140 | 0 | 0 | 5 |
 | The examples of the mermaid documentation | 596 | 576 | 2 | 0 | 18 |
-| Large generated diagrams | 70 | 70 | 0 | 0 | 0 |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 | 0 | 0 | 0 |
 
-The diagrams that do not pass are of two kinds: KaTeX math and ZenUML. See [What differs from mmdc](#what-differs-from-mmdc).
+The diagrams that do not pass use KaTeX math or ZenUML. See [What differs from mmdc](#what-differs-from-mmdc).
 
 With `--fonts system` on macOS, the reference is Chromium on macOS with its system fonts. There 2131 of 2145, 578 of 596 and 70 of 70 diagrams pass. 9 diagrams of the first corpus have one number that differs in its last digit, for example `max-width: 182.4px` where `mmdc` writes `182.399px`. [PARITY-MMDC-MACOS.md](PARITY-MMDC-MACOS.md) has the tables.
+<!-- generated:corpus end -->
 
 The reference makes `mmdc` repeatable in four points, where the `mmdc` command is not: the random numbers have a fixed seed, the clock shows a fixed time, the time zone is UTC, and the style sheets of the page have the order of the source of `mmdc`. `mmdg` has the same seed. Give `--now 2026-01-15T12:00:00Z` for the same time.
 

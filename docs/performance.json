@@ -1,0 +1,400 @@
+{
+ "measured": "2026-11-09",
+ "mermaid": "12.2.0",
+ "chromium": "156.0.8078.4",
+ "platform": "darwin/arm64",
+ "cpus": 18,
+ "corpus": "testdata/corpus/mermaid-e2e",
+ "diagrams": 2076,
+ "repeatMermaid": 7,
+ "repeatMmdg": 7,
+ "warmMedian": {
+  "mermaid": 11.5,
+  "mmdg": 0.88
+ },
+ "warmP90": {
+  "mermaid": 25.8,
+  "mmdg": 2.55
+ },
+ "warmTotalSeconds": {
+  "mermaid": 29.0,
+  "mmdg": 2.79
+ },
+ "firstMedian": {
+  "mermaid": 130.4,
+  "mmdg": 36.7
+ },
+ "firstP90": {
+  "mermaid": 189.5,
+  "mmdg": 79.0
+ },
+ "types": [
+  {
+   "type": "flowchart-v2",
+   "diagrams": 404,
+   "mermaid": 13.9,
+   "mmdg": 1.34,
+   "mmdg90": 3.93,
+   "mermaidFirst": 163.8,
+   "mmdgFirst": 32.1
+  },
+  {
+   "type": "classDiagram",
+   "diagrams": 227,
+   "mermaid": 16.0,
+   "mmdg": 1.19,
+   "mmdg90": 3.19,
+   "mermaidFirst": 166.0,
+   "mmdgFirst": 76.9
+  },
+  {
+   "type": "er",
+   "diagrams": 206,
+   "mermaid": 13.5,
+   "mmdg": 1.59,
+   "mmdg90": 3.39,
+   "mermaidFirst": 158.1,
+   "mmdgFirst": 33.6
+  },
+  {
+   "type": "sequence",
+   "diagrams": 193,
+   "mermaid": 8.6,
+   "mmdg": 0.48,
+   "mmdg90": 1.01,
+   "mermaidFirst": 26.2,
+   "mmdgFirst": 36.4
+  },
+  {
+   "type": "requirement",
+   "diagrams": 170,
+   "mermaid": 13.3,
+   "mmdg": 1.06,
+   "mmdg90": 2.51,
+   "mermaidFirst": 135.9,
+   "mmdgFirst": 42.6
+  },
+  {
+   "type": "stateDiagram",
+   "diagrams": 144,
+   "mermaid": 21.0,
+   "mmdg": 1.06,
+   "mmdg90": 2.42,
+   "mermaidFirst": 164.4,
+   "mmdgFirst": 34.7
+  },
+  {
+   "type": "gitGraph",
+   "diagrams": 135,
+   "mermaid": 7.9,
+   "mmdg": 0.19,
+   "mmdg90": 0.32,
+   "mermaidFirst": 47.2,
+   "mmdgFirst": 30.2
+  },
+  {
+   "type": "block",
+   "diagrams": 58,
+   "mermaid": 9.4,
+   "mmdg": 0.39,
+   "mmdg90": 0.95,
+   "mermaidFirst": 40.5,
+   "mmdgFirst": 76.8
+  },
+  {
+   "type": "gantt",
+   "diagrams": 52,
+   "mermaid": 3.0,
+   "mmdg": 0.18,
+   "mmdg90": 0.42,
+   "mermaidFirst": 17.4,
+   "mmdgFirst": 32.6
+  },
+  {
+   "type": "xychart",
+   "diagrams": 48,
+   "mermaid": 3.8,
+   "mmdg": 0.25,
+   "mmdg90": 0.38,
+   "mermaidFirst": 18.3,
+   "mmdgFirst": 73.9
+  },
+  {
+   "type": "swimlane",
+   "diagrams": 46,
+   "mermaid": 21.7,
+   "mmdg": 2.47,
+   "mmdg90": 19.73,
+   "mermaidFirst": 73.4,
+   "mmdgFirst": 34.0
+  },
+  {
+   "type": "agentflow",
+   "diagrams": 38,
+   "mermaid": 13.8,
+   "mmdg": 1.48,
+   "mmdg90": 3.5,
+   "mermaidFirst": 197.8,
+   "mmdgFirst": 77.7
+  },
+  {
+   "type": "mindmap",
+   "diagrams": 33,
+   "mermaid": 13.9,
+   "mmdg": 0.55,
+   "mmdg90": 5.61,
+   "mermaidFirst": 47.8,
+   "mmdgFirst": 36.1
+  },
+  {
+   "type": "c4",
+   "diagrams": 32,
+   "mermaid": 3.9,
+   "mmdg": 0.68,
+   "mmdg90": 1.68,
+   "mermaidFirst": 28.5,
+   "mmdgFirst": 80.5
+  },
+  {
+   "type": "timeline",
+   "diagrams": 30,
+   "mermaid": 3.7,
+   "mmdg": 0.94,
+   "mmdg90": 1.22,
+   "mermaidFirst": 21.6,
+   "mmdgFirst": 71.7
+  },
+  {
+   "type": "usecase",
+   "diagrams": 28,
+   "mermaid": 12.3,
+   "mmdg": 1.26,
+   "mmdg90": 1.92,
+   "mermaidFirst": 153.4,
+   "mmdgFirst": 76.8
+  },
+  {
+   "type": "treemap",
+   "diagrams": 26,
+   "mermaid": 2.2,
+   "mmdg": 0.27,
+   "mmdg90": 0.64,
+   "mermaidFirst": 37.8,
+   "mmdgFirst": 82.2
+  },
+  {
+   "type": "pie",
+   "diagrams": 24,
+   "mermaid": 2.1,
+   "mmdg": 0.1,
+   "mmdg90": 0.22,
+   "mermaidFirst": 36.8,
+   "mmdgFirst": 32.9
+  },
+  {
+   "type": "venn",
+   "diagrams": 21,
+   "mermaid": 2.2,
+   "mmdg": 0.46,
+   "mmdg90": 0.64,
+   "mermaidFirst": 14.5,
+   "mmdgFirst": 71.9
+  },
+  {
+   "type": "architecture",
+   "diagrams": 20,
+   "mermaid": 14.3,
+   "mmdg": 1.2,
+   "mmdg90": 3.0,
+   "mermaidFirst": 131.8,
+   "mmdgFirst": 76.0
+  },
+  {
+   "type": "journey",
+   "diagrams": 18,
+   "mermaid": 4.8,
+   "mmdg": 0.26,
+   "mmdg90": 0.52,
+   "mermaidFirst": 16.9,
+   "mmdgFirst": 34.0
+  },
+  {
+   "type": "sankey",
+   "diagrams": 18,
+   "mermaid": 2.6,
+   "mmdg": 0.07,
+   "mmdg90": 0.13,
+   "mermaidFirst": 15.2,
+   "mmdgFirst": 39.4
+  },
+  {
+   "type": "treeView",
+   "diagrams": 15,
+   "mermaid": 1.7,
+   "mmdg": 0.12,
+   "mmdg90": 0.21,
+   "mermaidFirst": 44.8,
+   "mmdgFirst": 70.9
+  },
+  {
+   "type": "quadrantChart",
+   "diagrams": 14,
+   "mermaid": 4.1,
+   "mmdg": 0.12,
+   "mmdg90": 0.24,
+   "mermaidFirst": 11.7,
+   "mmdgFirst": 27.4
+  },
+  {
+   "type": "ishikawa",
+   "diagrams": 13,
+   "mermaid": 3.7,
+   "mmdg": 0.12,
+   "mmdg90": 0.42,
+   "mermaidFirst": 14.4,
+   "mmdgFirst": 32.3
+  },
+  {
+   "type": "cynefin",
+   "diagrams": 12,
+   "mermaid": 3.2,
+   "mmdg": 0.18,
+   "mmdg90": 0.24,
+   "mermaidFirst": 39.9,
+   "mmdgFirst": 23.3
+  },
+  {
+   "type": "kanban",
+   "diagrams": 11,
+   "mermaid": 4.1,
+   "mmdg": 0.22,
+   "mmdg90": 0.29,
+   "mermaidFirst": 18.5,
+   "mmdgFirst": 31.5
+  },
+  {
+   "type": "wardley",
+   "diagrams": 10,
+   "mermaid": 2.0,
+   "mmdg": 0.19,
+   "mmdg90": 0.28,
+   "mermaidFirst": 43.5,
+   "mmdgFirst": 72.2
+  },
+  {
+   "type": "eventmodeling",
+   "diagrams": 6,
+   "mermaid": 2.6,
+   "mmdg": 0.28,
+   "mmdg90": 0.31,
+   "mermaidFirst": 56.5,
+   "mmdgFirst": 25.8
+  },
+  {
+   "type": "packet",
+   "diagrams": 6,
+   "mermaid": 2.6,
+   "mmdg": 0.06,
+   "mmdg90": 0.15,
+   "mermaidFirst": 33.6,
+   "mmdgFirst": 30.6
+  },
+  {
+   "type": "radar",
+   "diagrams": 6,
+   "mermaid": 2.4,
+   "mmdg": 0.11,
+   "mmdg90": 0.2,
+   "mermaidFirst": 36.6,
+   "mmdgFirst": 30.3
+  },
+  {
+   "type": "railroad",
+   "diagrams": 5,
+   "mermaid": 6.0,
+   "mmdg": 0.26,
+   "mmdg90": 0.47,
+   "mermaidFirst": 41.9,
+   "mmdgFirst": 28.4
+  },
+  {
+   "type": "info",
+   "diagrams": 3,
+   "mermaid": 1.3,
+   "mmdg": 0.02,
+   "mmdg90": 0.03,
+   "mermaidFirst": 30.5,
+   "mmdgFirst": 29.9
+  },
+  {
+   "type": "railroadEbnf",
+   "diagrams": 2,
+   "mermaid": 6.2,
+   "mmdg": 0.24,
+   "mmdg90": 0.24,
+   "mermaidFirst": 44.2,
+   "mmdgFirst": 29.8
+  },
+  {
+   "type": "railroadAbnf",
+   "diagrams": 1,
+   "mermaid": 5.3,
+   "mmdg": 0.2,
+   "mmdg90": 0.2,
+   "mermaidFirst": 41.7,
+   "mmdgFirst": 30.2
+  },
+  {
+   "type": "railroadPeg",
+   "diagrams": 1,
+   "mermaid": 7.2,
+   "mmdg": 0.29,
+   "mmdg90": 0.29,
+   "mermaidFirst": 45.7,
+   "mmdgFirst": 28.9
+  }
+ ],
+ "cli": {
+  "mmdc": "12.0.0",
+  "runs": 9,
+  "warmup": 3,
+  "rows": [
+   {
+    "input": "Flowchart, 8 nodes",
+    "output": "SVG",
+    "mmdc": 729.0,
+    "mmdg": 46.8
+   },
+   {
+    "input": "Flowchart, 8 nodes",
+    "output": "PNG",
+    "mmdc": 711.0,
+    "mmdg": 52.5
+   },
+   {
+    "input": "Sequence diagram, 4 actors",
+    "output": "SVG",
+    "mmdc": 489.0,
+    "mmdg": 42.4
+   },
+   {
+    "input": "Sequence diagram, 4 actors",
+    "output": "PNG",
+    "mmdc": 538.0,
+    "mmdg": 53.1
+   },
+   {
+    "input": "Class diagram, 5 classes",
+    "output": "SVG",
+    "mmdc": 675.0,
+    "mmdg": 52.9
+   },
+   {
+    "input": "Class diagram, 5 classes",
+    "output": "PNG",
+    "mmdc": 810.0,
+    "mmdg": 49.9
+   }
+  ]
+ }
+}

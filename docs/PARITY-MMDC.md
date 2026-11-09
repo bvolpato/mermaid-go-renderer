@@ -1,6 +1,6 @@
 # Parity with mermaid-cli
 
-This file is generated. Do not edit it. The command `go run ./tools/paritydoc` writes it.
+This file is generated. Do not edit it. `tools/update-docs.sh` writes it with the command `go run ./tools/paritydoc`.
 
 ## chromium-156-linux-liberation, corpus `mermaid-e2e`
 
@@ -12,18 +12,17 @@ The corpus `testdata/corpus/mermaid-e2e` has 2145 diagrams from the end-to-end t
 - **Different**: the diagram renders, and the file without fonts differs.
 - **Not supported**: the diagram type, or a feature that the diagram uses, is not ported.
 
-Result: 2140 of 2145 diagrams pass (99.8%). 2076 are byte-exact and 64 give the same error.
+Result: 2140 of 2145 diagrams pass (99.8%). 2140 are byte-exact and 0 give the same error.
 
 | Diagram type | Diagrams | Byte-exact | Without fonts only | Same error | Different | Not supported |
 |---|---:|---:|---:|---:|---:|---:|
 | `flowchart-v2` | 408 | 404 | 0 | 0 | 0 | 4 |
-| `classDiagram` | 227 | 227 | 0 | 0 | 0 | 0 |
+| `classDiagram` | 285 | 285 | 0 | 0 | 0 | 0 |
 | `er` | 206 | 206 | 0 | 0 | 0 | 0 |
 | `sequence` | 193 | 193 | 0 | 0 | 0 | 0 |
-| `requirement` | 170 | 170 | 0 | 0 | 0 | 0 |
+| `requirement` | 172 | 172 | 0 | 0 | 0 | 0 |
 | `stateDiagram` | 144 | 144 | 0 | 0 | 0 | 0 |
 | `gitGraph` | 135 | 135 | 0 | 0 | 0 | 0 |
-| (mermaid fails) | 64 | 0 | 0 | 64 | 0 | 0 |
 | `block` | 58 | 58 | 0 | 0 | 0 | 0 |
 | `gantt` | 52 | 52 | 0 | 0 | 0 | 0 |
 | `xychart` | 48 | 48 | 0 | 0 | 0 | 0 |
@@ -31,8 +30,8 @@ Result: 2140 of 2145 diagrams pass (99.8%). 2076 are byte-exact and 64 give the 
 | `agentflow` | 38 | 38 | 0 | 0 | 0 | 0 |
 | `mindmap` | 33 | 33 | 0 | 0 | 0 | 0 |
 | `c4` | 32 | 32 | 0 | 0 | 0 | 0 |
+| `usecase` | 32 | 32 | 0 | 0 | 0 | 0 |
 | `timeline` | 30 | 30 | 0 | 0 | 0 | 0 |
-| `usecase` | 28 | 28 | 0 | 0 | 0 | 0 |
 | `treemap` | 26 | 26 | 0 | 0 | 0 | 0 |
 | `pie` | 24 | 24 | 0 | 0 | 0 | 0 |
 | `venn` | 21 | 21 | 0 | 0 | 0 | 0 |
@@ -54,7 +53,7 @@ Result: 2140 of 2145 diagrams pass (99.8%). 2076 are byte-exact and 64 give the 
 | `railroadAbnf` | 1 | 1 | 0 | 0 | 0 | 0 |
 | `railroadPeg` | 1 | 1 | 0 | 0 | 0 | 0 |
 | `zenuml` | 1 | 0 | 0 | 0 | 0 | 1 |
-| **Total** | 2145 | 2076 | 0 | 64 | 0 | 5 |
+| **Total** | 2145 | 2140 | 0 | 0 | 0 | 5 |
 
 ## chromium-156-linux-liberation, corpus `mermaid-docs`
 

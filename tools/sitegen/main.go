@@ -4,7 +4,7 @@
 // README.
 //
 //	go run ./tools/sitegen -out dist                 # the website
-//	go run ./tools/sitegen -readme docs/assets       # the images of the README
+//	go run ./tools/sitegen -readme docs/assets       # the images and the numbers of the README
 //
 // The website is static. Its sources are in the directory website: the page
 // template and the style sheet and scripts in website/static, and the
@@ -15,7 +15,8 @@
 //   - The result of the corpus comparison. The generator renders every
 //     diagram of the three corpora and compares the hashes with the
 //     manifests in testdata/reference, as the test TestCorpusParity does.
-//   - The numbers of docs/PERFORMANCE.md.
+//   - The numbers of docs/performance.json, which
+//     tools/reference/bench.mjs writes.
 //   - The web fonts of internal/webfonts, which the diagrams use.
 //   - The renderer as a WebAssembly module, for the playground.
 //
@@ -30,10 +31,10 @@ import (
 	"flag"
 	"fmt"
 	"io/fs"
+	"math"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"sort"
 	"strconv"
@@ -44,6 +45,7 @@ import (
 
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
 	"github.com/bvolpato/mermaid-go-renderer/internal/parity"
+	"github.com/bvolpato/mermaid-go-renderer/internal/perfdata"
 	"github.com/bvolpato/mermaid-go-renderer/internal/webfonts"
 )
 
@@ -63,11 +65,14 @@ func main() {
 }
 
 func run(out, readme string, wasm bool) error {
-	gallery, err := loadGallery()
+	perf, err := perfdata.Load(filepath.Join("docs", "performance.json"))
 	if err != nil {
 		return err
 	}
-	perf, err := loadPerformance(filepath.Join("docs", "PERFORMANCE.md"))
+	if perf.CLI == nil || len(perf.CLI.Rows) == 0 {
+		return errors.New("docs/performance.json has no comparison of the command-line tools")
+	}
+	gallery, err := loadGallery(perf)
 	if err != nil {
 		return err
 	}
@@ -77,6 +82,9 @@ func run(out, readme string, wasm bool) error {
 	}
 	if readme != "" {
 		if err := writeReadmeImages(readme, gallery, perf, par); err != nil {
+			return err
+		}
+		if err := writeGeneratedText(perf); err != nil {
 			return err
 		}
 	}
@@ -99,7 +107,99 @@ type galleryItem struct {
 	SVG string `json:"-"`
 }
 
-func loadGallery() ([]galleryItem, error) {
+// galleryData is the data of a diagram of the gallery that shows numbers of
+// the repository. Such a diagram is a template (text/template).
+type galleryData struct {
+	// WarmMmdg is the median time of a warm render of mmdg in ms.
+	WarmMmdg string
+	// CorpusTypes has the number of diagrams of the largest diagram types
+	// of the end-to-end corpus, and of the others together.
+	CorpusTypes []namedCount
+	// Chart has the median render times of some diagram types, as the
+	// lists of an xychart.
+	Chart struct{ Labels, Mermaid, Mmdg, Max string }
+}
+
+type namedCount struct {
+	Name  string
+	Count int
+}
+
+// typeLabels has the names of diagram types for a reader.
+var typeLabels = map[string]string{
+	"flowchart-v2": "Flowchart", "classDiagram": "Class", "er": "ER", "sequence": "Sequence",
+	"requirement": "Requirement", "stateDiagram": "State", "gitGraph": "Git graph", "gantt": "Gantt", "pie": "Pie",
+}
+
+func loadGalleryData(perf *perfdata.Data) (*galleryData, error) {
+	d := &galleryData{WarmMmdg: fmt.Sprintf("%.1f", perf.WarmMedian.Mmdg)}
+	m, err := parity.LoadManifest(filepath.Join("testdata", "reference", "linux.json"))
+	if err != nil {
+		return nil, err
+	}
+	count := map[string]int{}
+	for _, entry := range m.Fixtures {
+		if entry.Type != "" {
+			count[entry.Type]++
+		}
+	}
+	var all []namedCount
+	for t, n := range count {
+		all = append(all, namedCount{t, n})
+	}
+	sort.Slice(all, func(i, j int) bool {
+		if all[i].Count != all[j].Count {
+			return all[i].Count > all[j].Count
+		}
+		return all[i].Name < all[j].Name
+	})
+	other := 0
+	for i, c := range all {
+		if i >= 6 {
+			other += c.Count
+			continue
+		}
+		if label, ok := typeLabels[c.Name]; ok {
+			c.Name = label
+		}
+		d.CorpusTypes = append(d.CorpusTypes, c)
+	}
+	d.CorpusTypes = append(d.CorpusTypes, namedCount{"Other", other})
+
+	byType := map[string]perfdata.Type{}
+	for _, t := range perf.Types {
+		byType[t.Type] = t
+	}
+	var labels, mermaidMs, mmdgMs []string
+	top := 0.0
+	for _, id := range []string{"flowchart-v2", "classDiagram", "er", "sequence", "stateDiagram", "gitGraph", "gantt", "pie"} {
+		t, ok := byType[id]
+		if !ok {
+			continue
+		}
+		labels = append(labels, strings.ToLower(strings.ReplaceAll(typeLabels[id], " ", "")))
+		mermaidMs = append(mermaidMs, fmt.Sprintf("%.1f", t.Mermaid))
+		mmdgMs = append(mmdgMs, fmt.Sprintf("%.2f", t.Mmdg))
+		top = max(top, t.Mermaid)
+	}
+	d.Chart.Labels, d.Chart.Mermaid, d.Chart.Mmdg = strings.Join(labels, ", "), strings.Join(mermaidMs, ", "), strings.Join(mmdgMs, ", ")
+	d.Chart.Max = fmt.Sprintf("%.0f", math.Ceil(top*1.05))
+	return d, nil
+}
+
+func loadGallery(perf *perfdata.Data) ([]galleryItem, error) {
+	data, err := loadGalleryData(perf)
+	if err != nil {
+		return nil, err
+	}
+	gallery, err := loadGalleryWith(data)
+	if err != nil {
+		return nil, err
+	}
+	return gallery, nil
+}
+
+func loadGalleryWith(numbers *galleryData) ([]galleryItem, error) {
 	dir := filepath.Join("website", "diagrams")
 	data, err := os.ReadFile(filepath.Join(dir, "index.json"))
 	if err != nil {
@@ -116,7 +216,18 @@ func loadGallery() ([]galleryItem, error) {
 		if err != nil {
 			return nil, err
 		}
-		items[i].Source = strings.TrimRight(string(src), "\n")
+		// A diagram with numbers of the repository is a template.
+		// The actions are between {% and %}, because {{ and }} are a
+		// node shape of mermaid.
+		tmpl, err := template.New(items[i].File).Delims("{%", "%}").Parse(string(src))
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", items[i].File, err)
+		}
+		var text bytes.Buffer
+		if err := tmpl.Execute(&text, numbers); err != nil {
+			return nil, fmt.Errorf("%s: %w", items[i].File, err)
+		}
+		items[i].Source = strings.TrimRight(text.String(), "\n")
 		svg, err := mermaid.Render(items[i].Source, mermaid.WithPage(mermaid.PageMermaidCLI), mermaid.WithID("d-"+items[i].File))
 		if err != nil {
 			return nil, fmt.Errorf("%s: %w", items[i].File, err)
@@ -124,121 +235,6 @@ func loadGallery() ([]galleryItem, error) {
 		items[i].SVG = svg
 	}
 	return items, nil
-}
-
-// ---- The performance numbers ----
-
-type perfRow struct {
-	Label   string  `json:"label"`
-	Mermaid float64 `json:"mermaid"`
-	Mmdg    float64 `json:"mmdg"`
-	Ratio   float64 `json:"ratio"`
-}
-
-type perfType struct {
-	Type         string  `json:"type"`
-	Diagrams     int     `json:"diagrams"`
-	Mermaid      float64 `json:"mermaid"`
-	Mmdg         float64 `json:"mmdg"`
-	Mmdg90       float64 `json:"mmdg90"`
-	MermaidFirst float64 `json:"mermaidFirst"`
-	MmdgFirst    float64 `json:"mmdgFirst"`
-}
-
-type perfCLI struct {
-	Input  string  `json:"input"`
-	Output string  `json:"output"`
-	Mmdc   float64 `json:"mmdc"`
-	Mmdg   float64 `json:"mmdg"`
-}
-
-type performance struct {
-	Chromium string     `json:"chromium"`
-	Diagrams int        `json:"diagrams"`
-	Summary  []perfRow  `json:"summary"`
-	Types    []perfType `json:"types"`
-	CLI      []perfCLI  `json:"cli"`
-}
-
-// row returns the summary row whose label starts with the prefix.
-func (p *performance) row(prefix string) perfRow {
-	for _, r := range p.Summary {
-		if strings.HasPrefix(r.Label, prefix) {
-			return r
-		}
-	}
-	return perfRow{}
-}
-
-// tableRows returns the cells of the rows of the first Markdown table after
-// a heading. It leaves out the heading row and the rule.
-func tableRows(doc, heading string) [][]string {
-	i := strings.Index(doc, heading)
-	if i < 0 {
-		return nil
-	}
-	var rows [][]string
-	seen := 0
-	for _, line := range strings.Split(doc[i:], "\n")[1:] {
-		line = strings.TrimSpace(line)
-		if !strings.HasPrefix(line, "|") {
-			if seen > 0 {
-				break
-			}
-			if strings.HasPrefix(line, "## ") {
-				break
-			}
-			continue
-		}
-		seen++
-		if seen <= 2 {
-			continue
-		}
-		cells := strings.Split(strings.Trim(line, "|"), "|")
-		for j := range cells {
-			cells[j] = strings.Trim(strings.TrimSpace(cells[j]), "`*")
-		}
-		rows = append(rows, cells)
-	}
-	return rows
-}
-
-func num(s string) float64 {
-	v, _ := strconv.ParseFloat(strings.TrimSuffix(strings.TrimSpace(s), "x"), 64)
-	return v
-}
-
-func loadPerformance(path string) (*performance, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-	doc := string(data)
-	p := &performance{}
-	if m := regexp.MustCompile(`Chromium ([0-9.]+), for the (\d+) diagrams`).FindStringSubmatch(doc); m != nil {
-		p.Chromium = m[1]
-		p.Diagrams, _ = strconv.Atoi(m[2])
-	}
-	for _, c := range tableRows(doc, "## Summary") {
-		if len(c) >= 4 {
-			p.Summary = append(p.Summary, perfRow{c[0], num(c[1]), num(c[2]), num(c[3])})
-		}
-	}
-	for _, c := range tableRows(doc, "## By diagram type") {
-		if len(c) >= 8 && c[0] != "All" {
-			n, _ := strconv.Atoi(c[1])
-			p.Types = append(p.Types, perfType{c[0], n, num(c[2]), num(c[3]), num(c[4]), num(c[6]), num(c[7])})
-		}
-	}
-	for _, c := range tableRows(doc, "## Command-line tools") {
-		if len(c) >= 4 {
-			p.CLI = append(p.CLI, perfCLI{c[0], c[1], num(c[2]), num(c[3])})
-		}
-	}
-	if len(p.Summary) == 0 || len(p.Types) == 0 || len(p.CLI) == 0 {
-		return nil, fmt.Errorf("%s: a table was not found", path)
-	}
-	return p, nil
 }
 
 // ---- The corpus comparison ----
@@ -426,12 +422,12 @@ func notSupported(src string, err error) string {
 type siteData struct {
 	Gallery     []galleryItem
 	Pipeline    galleryItem
-	Perf        *performance
+	Perf        *perfdata.Data
 	Parity      *parityData
 	Plain       paritySet
 	Mmdc        paritySet
-	Warm        perfRow
-	CLI         perfCLI
+	Warm        perfdata.Pair
+	CLI         perfdata.CLIRow
 	CLIRatio    string
 	WasmMB      string
 	Year        int
@@ -441,7 +437,7 @@ type siteData struct {
 	GalleryJSON string
 }
 
-func writeSite(out string, gallery []galleryItem, perf *performance, par *parityData, wasm bool) error {
+func writeSite(out string, gallery []galleryItem, perf *perfdata.Data, par *parityData, wasm bool) error {
 	if err := os.MkdirAll(out, 0o755); err != nil {
 		return err
 	}
@@ -485,8 +481,8 @@ func writeSite(out string, gallery []galleryItem, perf *performance, par *parity
 		}
 	}
 	data.Plain, data.Mmdc = par.Sets[0], par.Sets[1]
-	data.Warm = perf.row("Warm render, median")
-	data.CLI = perf.CLI[0]
+	data.Warm = perf.WarmMedian
+	data.CLI = perf.CLI.Rows[0]
 	data.CLIRatio = fmt.Sprintf("%.0f", data.CLI.Mmdc/data.CLI.Mmdg)
 
 	if wasm {
@@ -606,11 +602,4 @@ func writeFile(path string, data []byte) error {
 		return err
 	}
 	return os.WriteFile(path, data, 0o644)
-}
-
-// sortedTypes returns the diagram types by the number of their diagrams.
-func sortedTypes(types []perfType) []perfType {
-	out := append([]perfType(nil), types...)
-	sort.SliceStable(out, func(i, j int) bool { return out[i].Diagrams > out[j].Diagrams })
-	return out
 }

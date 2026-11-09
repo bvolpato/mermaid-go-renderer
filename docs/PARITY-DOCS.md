@@ -1,6 +1,6 @@
 # Parity with mermaid on the documentation examples
 
-This file is generated. Do not edit it. The command `go run ./tools/paritydoc` writes it.
+This file is generated. Do not edit it. `tools/update-docs.sh` writes it with the command `go run ./tools/paritydoc`.
 
 The corpus `testdata/corpus/mermaid-docs` has 596 diagrams from the examples of the mermaid documentation, a corpus that no part of this package was developed against. Each diagram was rendered with mermaid 12.2.0 in the reference environment `chromium-156-linux-liberation`, and the SHA-256 of the SVG that `mermaid.render()` returned is in `testdata/reference/linux-docs.json`. The table compares the output of this package with those hashes.
 

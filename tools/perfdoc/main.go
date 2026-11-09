@@ -1,14 +1,19 @@
 // Command perfdoc measures the render time of every diagram of a corpus and
 // compares it with the time that mermaid took for the same diagram in
-// Chromium. It writes docs/PERFORMANCE.md.
+// Chromium. It writes docs/PERFORMANCE.md and docs/performance.json. The
+// website and the README take their numbers from the JSON file.
 //
-// Usage:
+// tools/reference/bench.mjs runs the whole measurement and calls this
+// command as its last step:
 //
-//	cd tools/reference
-//	node oracle.mjs bench --base ../../testdata/corpus/mermaid-e2e --list FILES --out warm.json
-//	node oracle.mjs bench --base ../../testdata/corpus/mermaid-e2e --list FILES --out cold.json --fresh --repeat 1
-//	cd ../..
-//	go run ./tools/perfdoc -warm warm.json -cold cold.json -o docs/PERFORMANCE.md
+//	node tools/reference/bench.mjs
+//
+// The command alone, with files of "oracle.mjs bench" and "bench-cli.mjs":
+//
+//	go run ./tools/perfdoc -warm 'DIR/warm-*.json' -cold 'DIR/cold-*.json' -cli DIR/cli.json
+//
+// With -from-json the command does not measure. It writes the Markdown file
+// again from the JSON file.
 //
 // The comparison has two parts, and each part measures both sides in the
 // same state.
@@ -28,6 +33,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"math"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -38,6 +44,7 @@ import (
 
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
 	"github.com/bvolpato/mermaid-go-renderer/internal/parity"
+	"github.com/bvolpato/mermaid-go-renderer/internal/perfdata"
 )
 
 // benchFile is what "oracle.mjs bench" writes.
@@ -130,14 +137,28 @@ func renderOptions(systemFonts bool) []mermaid.Option {
 
 func main() {
 	corpus := flag.String("corpus", "testdata/corpus/mermaid-e2e", "directory of .mmd fixtures")
-	warm := flag.String("warm", ".parity/perf/chunks/shared.*.json", "files of \"oracle.mjs bench\": mermaid in a page that stays open")
-	cold := flag.String("cold", ".parity/perf/chunks/fresh.*.json", "files of \"oracle.mjs bench --fresh\": mermaid in a new page for each diagram")
+	warm := flag.String("warm", ".parity/perf/bench/warm-*.json", "files of \"oracle.mjs bench\": mermaid in a page that stays open")
+	cold := flag.String("cold", ".parity/perf/bench/cold-*.json", "files of \"oracle.mjs bench --fresh\": mermaid in a new page for each diagram")
 	repeat := flag.Int("repeat", 7, "renders of each diagram; the fastest counts")
 	systemFonts := flag.Bool("system-fonts", false, "measure with the system fonts")
-	cli := flag.String("cli", "", "Markdown file with the comparison of the command-line tools, added as a section")
-	out := flag.String("o", "", "Markdown file to write (default: standard output)")
+	cli := flag.String("cli", "", "JSON file of bench-cli.mjs with the comparison of the command-line tools")
+	out := flag.String("o", "docs/PERFORMANCE.md", "Markdown file to write")
+	jsonOut := flag.String("json", "docs/performance.json", "JSON file to write, for the website and the README")
+	fromJSON := flag.Bool("from-json", false, "do not measure: write the Markdown file again from the JSON file")
 	child := flag.String("child", "", "render this file one time and exit (the first-render measurement uses it)")
 	flag.Parse()
+
+	if *fromJSON {
+		data, err := perfdata.Load(*jsonOut)
+		if err == nil {
+			err = os.WriteFile(*out, []byte(markdown(data)), 0o644)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		return
+	}
 
 	if *child != "" {
 		src, err := os.ReadFile(*child)
@@ -252,29 +273,90 @@ func main() {
 		}
 		return t
 	}
+	// The JSON file has the digits of the tables.
+	round := func(v float64, digits int) float64 {
+		p := math.Pow(10, float64(digits))
+		return math.Round(v*p) / p
+	}
 
+	data := &perfdata.Data{
+		Measured:      time.Now().Format("2006-01-02"),
+		Mermaid:       warmMeta.Mermaid,
+		Chromium:      warmMeta.Chromium,
+		Platform:      runtime.GOOS + "/" + runtime.GOARCH,
+		CPUs:          runtime.NumCPU(),
+		Corpus:        filepath.ToSlash(*corpus),
+		Diagrams:      len(samples),
+		RepeatMermaid: warmMeta.Repeat,
+		RepeatMmdg:    *repeat,
+		WarmMedian:    perfdata.Pair{Mermaid: round(quantile(mmWarm, 0.5), 2), Mmdg: round(quantile(goWarm, 0.5), 2)},
+		WarmP90:       perfdata.Pair{Mermaid: round(quantile(mmWarm, 0.9), 2), Mmdg: round(quantile(goWarm, 0.9), 2)},
+		WarmTotal:     perfdata.Pair{Mermaid: round(sum(mmWarm)/1000, 2), Mmdg: round(sum(goWarm)/1000, 2)},
+	}
+	if len(coldBoth) > 0 {
+		data.FirstMedian = perfdata.Pair{Mermaid: round(quantile(mmCold, 0.5), 1), Mmdg: round(quantile(goCold, 0.5), 1)}
+		data.FirstP90 = perfdata.Pair{Mermaid: round(quantile(mmCold, 0.9), 1), Mmdg: round(quantile(goCold, 0.9), 1)}
+	}
+	for _, t := range types {
+		list := byType[t]
+		g := column(list, func(s sample) float64 { return s.goWarm })
+		m := column(list, func(s sample) float64 { return s.mermaidWarm })
+		row := perfdata.Type{Type: t, Diagrams: len(list), Mermaid: round(quantile(m, 0.5), 2), Mmdg: round(quantile(g, 0.5), 2), Mmdg90: round(quantile(g, 0.9), 2)}
+		if v := column(list, func(s sample) float64 { return s.mermaidCold }); len(v) > 0 {
+			row.MermaidFirst = round(quantile(v, 0.5), 1)
+		}
+		if v := column(list, func(s sample) float64 { return s.goCold }); len(v) > 0 {
+			row.MmdgFirst = round(quantile(v, 0.5), 1)
+		}
+		data.Types = append(data.Types, row)
+	}
+	if *cli != "" {
+		raw, err := os.ReadFile(*cli)
+		if err == nil {
+			data.CLI = &perfdata.CLI{}
+			err = json.Unmarshal(raw, data.CLI)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
+
+	if err := data.Save(*jsonOut); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := os.WriteFile(*out, []byte(markdown(data)), 0o644); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	fmt.Printf("%s and %s: %d diagrams, warm median: mermaid %.2f ms, mmdg %.2f ms\n", *out, *jsonOut, data.Diagrams, data.WarmMedian.Mermaid, data.WarmMedian.Mmdg)
+}
+
+// markdown writes docs/PERFORMANCE.md from the data.
+func markdown(d *perfdata.Data) string {
 	var b strings.Builder
 	b.WriteString("# Performance\n\n")
-	b.WriteString("This file is generated. Do not edit it. The command `go run ./tools/perfdoc` writes it.\n\n")
-	fmt.Fprintf(&b, "The numbers compare `mmdg` with mermaid %s in Chromium %s, for the %d diagrams of the corpus `%s` that both sides render. Both ran on the same machine (%s/%s, %d CPUs), one diagram at a time. Times are in milliseconds.\n\n", warmMeta.Mermaid, warmMeta.Chromium, len(samples), filepath.ToSlash(*corpus), runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
+	b.WriteString("This file is generated. Do not edit it. `node tools/reference/bench.mjs` runs the measurement and writes this file and `docs/performance.json`, which has the same numbers for the website and the README.\n\n")
+	fmt.Fprintf(&b, "The numbers compare `mmdg` with mermaid %s in Chromium %s, for %d diagrams of the corpus `%s`: the diagrams that both sides rendered on the day of the measurement. Both ran on the same machine (%s, %d CPUs) on %s, one diagram at a time. Times are in milliseconds.\n\n", d.Mermaid, d.Chromium, d.Diagrams, d.Corpus, d.Platform, d.CPUs, d.Measured)
 
 	b.WriteString("## Summary\n\n")
 	b.WriteString("| Measurement | mermaid in Chromium | mmdg | Ratio |\n")
 	b.WriteString("|---|---:|---:|---:|\n")
-	line := func(name string, mm, g float64, format string) {
-		fmt.Fprintf(&b, "| %s | "+format+" | "+format+" | %.0fx |\n", name, mm, g, mm/g)
+	line := func(name string, p perfdata.Pair, format string) {
+		fmt.Fprintf(&b, "| %s | "+format+" | "+format+" | %.0fx |\n", name, p.Mermaid, p.Mmdg, p.Ratio())
 	}
-	line("Warm render, median", quantile(mmWarm, 0.5), quantile(goWarm, 0.5), "%.2f")
-	line("Warm render, 90th percentile", quantile(mmWarm, 0.9), quantile(goWarm, 0.9), "%.2f")
-	line("Warm render, all diagrams, in seconds", sum(mmWarm)/1000, sum(goWarm)/1000, "%.2f")
-	if len(coldBoth) > 0 {
-		line("First render, median", quantile(mmCold, 0.5), quantile(goCold, 0.5), "%.1f")
-		line("First render, 90th percentile", quantile(mmCold, 0.9), quantile(goCold, 0.9), "%.1f")
+	line("Warm render, median", d.WarmMedian, "%.2f")
+	line("Warm render, 90th percentile", d.WarmP90, "%.2f")
+	line("Warm render, all diagrams, in seconds", d.WarmTotal, "%.2f")
+	if d.FirstMedian.Mmdg > 0 {
+		line("First render, median", d.FirstMedian, "%.1f")
+		line("First render, 90th percentile", d.FirstP90, "%.1f")
 	}
 	b.WriteString("\n")
 	b.WriteString("What each measurement is:\n\n")
-	fmt.Fprintf(&b, "- **Warm render, mermaid**: the fastest of %d `mermaid.render()` calls for the diagram, in a page that stays open and renders many diagrams. V8 has compiled the code.\n", warmMeta.Repeat)
-	fmt.Fprintf(&b, "- **Warm render, mmdg**: the fastest of %d `mermaid.Render` calls for the diagram, in a process that stays running.\n", *repeat)
+	fmt.Fprintf(&b, "- **Warm render, mermaid**: the fastest of %d `mermaid.render()` calls for the diagram, in a page that stays open and renders many diagrams. V8 has compiled the code.\n", d.RepeatMermaid)
+	fmt.Fprintf(&b, "- **Warm render, mmdg**: the fastest of %d `mermaid.Render` calls for the diagram, in a process that stays running.\n", d.RepeatMmdg)
 	b.WriteString("- **First render, mermaid**: the first `mermaid.render()` call in a new page. The browser is running and the page has loaded mermaid. The start of the browser and the load of the script are not in the time.\n")
 	b.WriteString("- **First render, mmdg**: a new process that reads the file, renders it one time and exits. The start and the end of the process are in the time.\n\n")
 	b.WriteString("The first-render comparison favors mermaid, because it leaves out the start of the browser. A tool that starts a browser for each run, such as mermaid-cli, pays that start each time.\n\n")
@@ -282,44 +364,26 @@ func main() {
 	b.WriteString("## By diagram type\n\n")
 	b.WriteString("| Diagram type | Diagrams | mermaid warm | mmdg warm | mmdg warm, 90th percentile | Warm ratio | mermaid first | mmdg first |\n")
 	b.WriteString("|---|---:|---:|---:|---:|---:|---:|---:|\n")
-	row := func(name string, list []sample) {
-		g := column(list, func(s sample) float64 { return s.goWarm })
-		m := column(list, func(s sample) float64 { return s.mermaidWarm })
-		gm, mm := quantile(g, 0.5), quantile(m, 0.5)
-		first := func(get func(sample) float64) string {
-			v := column(list, get)
-			if len(v) == 0 {
-				return ""
-			}
-			return fmt.Sprintf("%.1f", quantile(v, 0.5))
+	first := func(v float64) string {
+		if v == 0 {
+			return ""
 		}
-		fmt.Fprintf(&b, "| %s | %d | %.2f | %.2f | %.2f | %.0fx | %s | %s |\n", name, len(list), mm, gm, quantile(g, 0.9), mm/gm,
-			first(func(s sample) float64 { return s.mermaidCold }), first(func(s sample) float64 { return s.goCold }))
+		return fmt.Sprintf("%.1f", v)
 	}
-	for _, t := range types {
-		row("`"+t+"`", byType[t])
+	for _, t := range d.Types {
+		fmt.Fprintf(&b, "| `%s` | %d | %.2f | %.2f | %.2f | %.0fx | %s | %s |\n", t.Type, t.Diagrams, t.Mermaid, t.Mmdg, t.Mmdg90, t.Mermaid/t.Mmdg, first(t.MermaidFirst), first(t.MmdgFirst))
 	}
-	row("**All**", samples)
+	fmt.Fprintf(&b, "| **All** | %d | %.2f | %.2f | %.2f | %.0fx | %s | %s |\n", d.Diagrams, d.WarmMedian.Mermaid, d.WarmMedian.Mmdg, d.WarmP90.Mmdg, d.WarmMedian.Ratio(), first(d.FirstMedian.Mermaid), first(d.FirstMedian.Mmdg))
 	b.WriteString("\nThe columns have the median of the diagrams of the type, except where the heading says otherwise.\n")
 
-	if *cli != "" {
-		text, err := os.ReadFile(*cli)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			os.Exit(1)
+	if d.CLI != nil {
+		b.WriteString("\n## Command-line tools\n\n")
+		fmt.Fprintf(&b, "The table compares `mmdg` with `mmdc` (mermaid-cli %s). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the fastest of %d runs, after %d runs of each tool that do not count. `mmdc` starts a browser in each run.\n\n", d.CLI.Mmdc, d.CLI.Runs, d.CLI.Warmup)
+		b.WriteString("| Input | Output | mmdc | mmdg | Ratio |\n")
+		b.WriteString("|---|---|---:|---:|---:|\n")
+		for _, r := range d.CLI.Rows {
+			fmt.Fprintf(&b, "| %s | %s | %.0f | %.1f | %.0fx |\n", r.Input, r.Output, r.Mmdc, r.Mmdg, r.Mmdc/r.Mmdg)
 		}
-		b.WriteString("\n")
-		b.WriteString(strings.TrimSpace(string(text)))
-		b.WriteString("\n")
 	}
-
-	if *out == "" {
-		fmt.Print(b.String())
-		return
-	}
-	if err := os.WriteFile(*out, []byte(b.String()), 0o644); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	fmt.Printf("%s: %d diagrams, warm median: mermaid %.2f ms, mmdg %.2f ms\n", *out, len(samples), quantile(mmWarm, 0.5), quantile(goWarm, 0.5))
+	return b.String()
 }

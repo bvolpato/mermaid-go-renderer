@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
+	"github.com/bvolpato/mermaid-go-renderer/internal/perfdata"
 )
 
 // readmeGallery lists the diagrams of the gallery that the README shows as
@@ -37,7 +38,7 @@ var chartThemes = []chartTheme{
 
 const chartFont = `-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif`
 
-func writeReadmeImages(dir string, gallery []galleryItem, perf *performance, par *parityData) error {
+func writeReadmeImages(dir string, gallery []galleryItem, perf *perfdata.Data, par *parityData) error {
 	for _, th := range chartThemes {
 		if err := writeFile(filepath.Join(dir, "speed-"+th.name+".svg"), []byte(speedChart(th, perf))); err != nil {
 			return err
@@ -88,9 +89,9 @@ func msText(v float64) string {
 
 // speedChart draws two panels. Each one has a ratio as its headline and two
 // bars on one axis: the thing that mmdg is compared with, and mmdg.
-func speedChart(th chartTheme, perf *performance) string {
-	warm := perf.row("Warm render, median")
-	cli := perf.CLI[0]
+func speedChart(th chartTheme, perf *perfdata.Data) string {
+	warm := perf.WarmMedian
+	cli := perf.CLI.Rows[0]
 	type panel struct {
 		eyebrow, other string
 		a, b           float64
