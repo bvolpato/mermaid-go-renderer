@@ -1,0 +1,1183 @@
+jison-synthetic 1
+G calc
+F calc
+I "1+2*3;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T *	INITIAL	0	1	1:3-1:4	"*"
+R 12	1:2-1:3
+T NUMBER	INITIAL	0	1	1:4-1:5	"3"
+T ;	INITIAL	0	1	1:5-1:6	";"
+R 12	1:4-1:5
+R 8	1:2-1:5
+R 6	1:0-1:5
+T EOF	INITIAL	0	0	1:6-1:6	""
+R 4	1:0-1:6
+R 3	1:0-1:6
+R 1	1:0-1:6
+OK return 1
+V "7@1:0-1:5[0,5]"
+F calc
+I "1 + 2 * 3; (4 - 1) / 2;\n-3 * -(2 + 1);\n"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:2-1:3	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:4-1:5	"2"
+T *	INITIAL	0	1	1:6-1:7	"*"
+R 12	1:4-1:5
+T NUMBER	INITIAL	0	1	1:8-1:9	"3"
+T ;	INITIAL	0	1	1:9-1:10	";"
+R 12	1:8-1:9
+R 8	1:4-1:9
+R 6	1:0-1:9
+T (	INITIAL	0	1	1:11-1:12	"("
+R 4	1:0-1:10
+R 3	1:0-1:10
+T NUMBER	INITIAL	0	1	1:12-1:13	"4"
+T -	INITIAL	0	1	1:14-1:15	"-"
+R 12	1:12-1:13
+T NUMBER	INITIAL	0	1	1:16-1:17	"1"
+T )	INITIAL	0	1	1:17-1:18	")"
+R 12	1:16-1:17
+R 7	1:12-1:17
+T /	INITIAL	0	1	1:19-1:20	"/"
+R 11	1:11-1:18
+T NUMBER	INITIAL	0	1	1:21-1:22	"2"
+T ;	INITIAL	0	1	1:22-1:23	";"
+R 12	1:21-1:22
+R 9	1:11-1:22
+T -	INITIAL	1	1	2:0-2:1	"-"
+R 4	1:11-1:23
+R 3	1:0-1:23
+T NUMBER	INITIAL	1	1	2:1-2:2	"3"
+T *	INITIAL	1	1	2:3-2:4	"*"
+R 12	2:1-2:2
+R 10	2:0-2:2
+T -	INITIAL	1	1	2:5-2:6	"-"
+T (	INITIAL	1	1	2:6-2:7	"("
+T NUMBER	INITIAL	1	1	2:7-2:8	"2"
+T +	INITIAL	1	1	2:9-2:10	"+"
+R 12	2:7-2:8
+T NUMBER	INITIAL	1	1	2:11-2:12	"1"
+T )	INITIAL	1	1	2:12-2:13	")"
+R 12	2:11-2:12
+R 6	2:7-2:12
+T ;	INITIAL	1	1	2:13-2:14	";"
+R 11	2:6-2:13
+R 10	2:5-2:13
+R 8	2:0-2:13
+T EOF	INITIAL	2	0	3:0-3:0	""
+R 4	2:0-2:14
+R 3	1:0-2:14
+R 1	1:0-3:0
+OK return 1
+V "7@1:0-1:9[0,9] 1.5@1:11-1:22[11,22] 9@2:0-2:13[24,37]"
+F calc
+I ""
+LOC
+T EOF	INITIAL	0	0	1:0-1:0	""
+R 2	1:0-1:0
+R 1	1:0-1:0
+OK return 1
+V ""
+F calc
+I ";"
+LOC
+T ;	INITIAL	0	1	1:0-1:1	";"
+R 2	1:0-1:0
+T EOF	INITIAL	0	0	1:1-1:1	""
+R 5	1:0-1:1
+R 3	1:0-1:1
+R 1	1:0-1:1
+OK return 1
+V "error(;,1,0)@0[0,1]"
+F calc
+I "1+;2;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T ;	INITIAL	0	1	1:2-1:3	";"
+T NUMBER	INITIAL	0	1	1:3-1:4	"2"
+R 5	1:2-1:3
+R 3	1:0-1:3
+T ;	INITIAL	0	1	1:4-1:5	";"
+R 12	1:3-1:4
+T EOF	INITIAL	0	0	1:5-1:5	""
+R 4	1:3-1:5
+R 3	1:0-1:5
+R 1	1:0-1:5
+OK return 1
+V "error(;,1,0)@2[2,3] 2@1:3-1:4[3,4]"
+F calc
+I "1 + + 2; 3*4;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:2-1:3	"+"
+R 12	1:0-1:1
+T +	INITIAL	0	1	1:4-1:5	"+"
+T NUMBER	INITIAL	0	1	1:6-1:7	"2"
+T ;	INITIAL	0	1	1:7-1:8	";"
+T NUMBER	INITIAL	0	1	1:9-1:10	"3"
+R 5	1:7-1:8
+R 3	1:0-1:8
+T *	INITIAL	0	1	1:10-1:11	"*"
+R 12	1:9-1:10
+T NUMBER	INITIAL	0	1	1:11-1:12	"4"
+T ;	INITIAL	0	1	1:12-1:13	";"
+R 12	1:11-1:12
+R 8	1:9-1:12
+T EOF	INITIAL	0	0	1:13-1:13	""
+R 4	1:9-1:13
+R 3	1:0-1:13
+R 1	1:0-1:13
+OK return 1
+V "error(;,1,0)@7[7,8] 12@1:9-1:12[9,12]"
+F calc
+I "(1+2; 5;"
+LOC
+T (	INITIAL	0	1	1:0-1:1	"("
+R 2	1:0-1:0
+T NUMBER	INITIAL	0	1	1:1-1:2	"1"
+T +	INITIAL	0	1	1:2-1:3	"+"
+R 12	1:1-1:2
+T NUMBER	INITIAL	0	1	1:3-1:4	"2"
+T ;	INITIAL	0	1	1:4-1:5	";"
+R 12	1:3-1:4
+R 6	1:1-1:4
+T NUMBER	INITIAL	0	1	1:6-1:7	"5"
+R 5	1:4-1:5
+R 3	1:0-1:5
+T ;	INITIAL	0	1	1:7-1:8	";"
+R 12	1:6-1:7
+T EOF	INITIAL	0	0	1:8-1:8	""
+R 4	1:6-1:8
+R 3	1:0-1:8
+R 1	1:0-1:8
+OK return 1
+V "error(;,1,0)@4[4,5] 5@1:6-1:7[6,7]"
+F calc
+I "1 2 3; 7;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T NUMBER	INITIAL	0	1	1:4-1:5	"3"
+T ;	INITIAL	0	1	1:5-1:6	";"
+T NUMBER	INITIAL	0	1	1:7-1:8	"7"
+R 5	1:5-1:6
+R 3	1:0-1:6
+T ;	INITIAL	0	1	1:8-1:9	";"
+R 12	1:7-1:8
+T EOF	INITIAL	0	0	1:9-1:9	""
+R 4	1:7-1:9
+R 3	1:0-1:9
+R 1	1:0-1:9
+OK return 1
+V "error(;,1,0)@5[5,6] 7@1:7-1:8[7,8]"
+F calc
+I "@; 1;"
+LOC
+T INVALID	INITIAL	0	1	1:0-1:1	"@"
+R 2	1:0-1:0
+T ;	INITIAL	0	1	1:1-1:2	";"
+T NUMBER	INITIAL	0	1	1:3-1:4	"1"
+R 5	1:1-1:2
+R 3	1:0-1:2
+T ;	INITIAL	0	1	1:4-1:5	";"
+R 12	1:3-1:4
+T EOF	INITIAL	0	0	1:5-1:5	""
+R 4	1:3-1:5
+R 3	1:0-1:5
+R 1	1:0-1:5
+OK return 1
+V "error(;,1,0)@1[1,2] 1@1:3-1:4[3,4]"
+F calc
+I "1+2"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T EOF	INITIAL	0	0	1:3-1:3	""
+T 1	INITIAL	0	0	1:3-1:3	""
+ERR Error	"Parsing halted while starting to recover from another error."
+F calc
+I "1+2; 3 +"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T ;	INITIAL	0	1	1:3-1:4	";"
+R 12	1:2-1:3
+R 6	1:0-1:3
+T NUMBER	INITIAL	0	1	1:5-1:6	"3"
+R 4	1:0-1:4
+R 3	1:0-1:4
+T +	INITIAL	0	1	1:7-1:8	"+"
+R 12	1:5-1:6
+T EOF	INITIAL	0	0	1:8-1:8	""
+T 1	INITIAL	0	0	1:8-1:8	""
+ERR Error	"Parsing halted while starting to recover from another error."
+F calc
+I "1+2; 3 + ;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T ;	INITIAL	0	1	1:3-1:4	";"
+R 12	1:2-1:3
+R 6	1:0-1:3
+T NUMBER	INITIAL	0	1	1:5-1:6	"3"
+R 4	1:0-1:4
+R 3	1:0-1:4
+T +	INITIAL	0	1	1:7-1:8	"+"
+R 12	1:5-1:6
+T ;	INITIAL	0	1	1:9-1:10	";"
+T EOF	INITIAL	0	0	1:10-1:10	""
+R 5	1:9-1:10
+R 3	1:0-1:10
+R 1	1:0-1:10
+OK return 1
+V "3@1:0-1:3[0,3] error(;,1,0)@9[9,10]"
+F calc
+I ") ) ); 8/4;"
+LOC
+T )	INITIAL	0	1	1:0-1:1	")"
+R 2	1:0-1:0
+T )	INITIAL	0	1	1:2-1:3	")"
+T )	INITIAL	0	1	1:4-1:5	")"
+T ;	INITIAL	0	1	1:5-1:6	";"
+T NUMBER	INITIAL	0	1	1:7-1:8	"8"
+R 5	1:5-1:6
+R 3	1:0-1:6
+T /	INITIAL	0	1	1:8-1:9	"/"
+R 12	1:7-1:8
+T NUMBER	INITIAL	0	1	1:9-1:10	"4"
+T ;	INITIAL	0	1	1:10-1:11	";"
+R 12	1:9-1:10
+R 9	1:7-1:10
+T EOF	INITIAL	0	0	1:11-1:11	""
+R 4	1:7-1:11
+R 3	1:0-1:11
+R 1	1:0-1:11
+OK return 1
+V "error(;,1,0)@5[5,6] 2@1:7-1:10[7,10]"
+F calc
+I "1;;2;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T ;	INITIAL	0	1	1:1-1:2	";"
+R 12	1:0-1:1
+T ;	INITIAL	0	1	1:2-1:3	";"
+R 4	1:0-1:2
+R 3	1:0-1:2
+T NUMBER	INITIAL	0	1	1:3-1:4	"2"
+R 5	1:2-1:3
+R 3	1:0-1:3
+T ;	INITIAL	0	1	1:4-1:5	";"
+R 12	1:3-1:4
+T EOF	INITIAL	0	0	1:5-1:5	""
+R 4	1:3-1:5
+R 3	1:0-1:5
+R 1	1:0-1:5
+OK return 1
+V "1@1:0-1:1[0,1] error(;,1,0)@2[2,3] 2@1:3-1:4[3,4]"
+F calc
+I "1/0; 0/0; 2.5*2;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T /	INITIAL	0	1	1:1-1:2	"/"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"0"
+T ;	INITIAL	0	1	1:3-1:4	";"
+R 12	1:2-1:3
+R 9	1:0-1:3
+T NUMBER	INITIAL	0	1	1:5-1:6	"0"
+R 4	1:0-1:4
+R 3	1:0-1:4
+T /	INITIAL	0	1	1:6-1:7	"/"
+R 12	1:5-1:6
+T NUMBER	INITIAL	0	1	1:7-1:8	"0"
+T ;	INITIAL	0	1	1:8-1:9	";"
+R 12	1:7-1:8
+R 9	1:5-1:8
+T NUMBER	INITIAL	0	3	1:10-1:13	"2.5"
+R 4	1:5-1:9
+R 3	1:0-1:9
+T *	INITIAL	0	1	1:13-1:14	"*"
+R 12	1:10-1:13
+T NUMBER	INITIAL	0	1	1:14-1:15	"2"
+T ;	INITIAL	0	1	1:15-1:16	";"
+R 12	1:14-1:15
+R 8	1:10-1:15
+T EOF	INITIAL	0	0	1:16-1:16	""
+R 4	1:10-1:16
+R 3	1:0-1:16
+R 1	1:0-1:16
+OK return 1
+V "Infinity@1:0-1:3[0,3] NaN@1:5-1:8[5,8] 5@1:10-1:15[10,15]"
+F calc
+I "1 @ 2 @ 3; 4 @; 5;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T INVALID	INITIAL	0	1	1:2-1:3	"@"
+T NUMBER	INITIAL	0	1	1:4-1:5	"2"
+T INVALID	INITIAL	0	1	1:6-1:7	"@"
+T NUMBER	INITIAL	0	1	1:8-1:9	"3"
+T ;	INITIAL	0	1	1:9-1:10	";"
+T NUMBER	INITIAL	0	1	1:11-1:12	"4"
+R 5	1:9-1:10
+R 3	1:0-1:10
+T INVALID	INITIAL	0	1	1:13-1:14	"@"
+T ;	INITIAL	0	1	1:14-1:15	";"
+T NUMBER	INITIAL	0	1	1:16-1:17	"5"
+R 5	1:14-1:15
+R 3	1:0-1:15
+T ;	INITIAL	0	1	1:17-1:18	";"
+R 12	1:16-1:17
+T EOF	INITIAL	0	0	1:18-1:18	""
+R 4	1:16-1:18
+R 3	1:0-1:18
+R 1	1:0-1:18
+OK return 1
+V "error(;,1,0)@9[9,10] error(;,1,0)@14[14,15] 5@1:16-1:17[16,17]"
+F calc
+I "1 # 2;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+ERR Error	"Lexical error on line 1. Unrecognized text.\n1 # 2;\n--^"
+H ""	0	""	-	""
+F calc
+I "1+2;\n3+;\n\n4*;5;\n6"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:1-1:2	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	0	1	1:2-1:3	"2"
+T ;	INITIAL	0	1	1:3-1:4	";"
+R 12	1:2-1:3
+R 6	1:0-1:3
+T NUMBER	INITIAL	1	1	2:0-2:1	"3"
+R 4	1:0-1:4
+R 3	1:0-1:4
+T +	INITIAL	1	1	2:1-2:2	"+"
+R 12	2:0-2:1
+T ;	INITIAL	1	1	2:2-2:3	";"
+T NUMBER	INITIAL	3	1	4:0-4:1	"4"
+R 5	2:2-2:3
+R 3	1:0-2:3
+T *	INITIAL	3	1	4:1-4:2	"*"
+R 12	4:0-4:1
+T ;	INITIAL	3	1	4:2-4:3	";"
+T NUMBER	INITIAL	3	1	4:3-4:4	"5"
+R 5	4:2-4:3
+R 3	1:0-4:3
+T ;	INITIAL	3	1	4:4-4:5	";"
+R 12	4:3-4:4
+T NUMBER	INITIAL	4	1	5:0-5:1	"6"
+R 4	4:3-4:5
+R 3	1:0-4:5
+T EOF	INITIAL	4	0	5:1-5:1	""
+T 1	INITIAL	4	0	5:1-5:1	""
+ERR Error	"Parsing halted while starting to recover from another error."
+F calc
+I "((((1))));"
+LOC
+T (	INITIAL	0	1	1:0-1:1	"("
+R 2	1:0-1:0
+T (	INITIAL	0	1	1:1-1:2	"("
+T (	INITIAL	0	1	1:2-1:3	"("
+T (	INITIAL	0	1	1:3-1:4	"("
+T NUMBER	INITIAL	0	1	1:4-1:5	"1"
+T )	INITIAL	0	1	1:5-1:6	")"
+R 12	1:4-1:5
+T )	INITIAL	0	1	1:6-1:7	")"
+R 11	1:3-1:6
+T )	INITIAL	0	1	1:7-1:8	")"
+R 11	1:2-1:7
+T )	INITIAL	0	1	1:8-1:9	")"
+R 11	1:1-1:8
+T ;	INITIAL	0	1	1:9-1:10	";"
+R 11	1:0-1:9
+T EOF	INITIAL	0	0	1:10-1:10	""
+R 4	1:0-1:10
+R 3	1:0-1:10
+R 1	1:0-1:10
+OK return 1
+V "1@1:0-1:9[0,9]"
+F calc
+I "1 +\n 2 @\n ;\n 3;"
+LOC
+T NUMBER	INITIAL	0	1	1:0-1:1	"1"
+R 2	1:0-1:0
+T +	INITIAL	0	1	1:2-1:3	"+"
+R 12	1:0-1:1
+T NUMBER	INITIAL	1	1	2:1-2:2	"2"
+T INVALID	INITIAL	1	1	2:3-2:4	"@"
+T ;	INITIAL	2	1	3:1-3:2	";"
+T NUMBER	INITIAL	3	1	4:1-4:2	"3"
+R 5	3:1-3:2
+R 3	1:0-3:2
+T ;	INITIAL	3	1	4:2-4:3	";"
+R 12	4:1-4:2
+T EOF	INITIAL	3	0	4:3-4:3	""
+R 4	4:1-4:3
+R 3	1:0-4:3
+R 1	1:0-4:3
+OK return 1
+V "error(;,1,2)@1[10,11] 3@4:1-4:2[13,14]"
+F calc
+I "-;-1;--1;"
+LOC
+T -	INITIAL	0	1	1:0-1:1	"-"
+R 2	1:0-1:0
+T ;	INITIAL	0	1	1:1-1:2	";"
+T -	INITIAL	0	1	1:2-1:3	"-"
+R 5	1:1-1:2
+R 3	1:0-1:2
+T NUMBER	INITIAL	0	1	1:3-1:4	"1"
+T ;	INITIAL	0	1	1:4-1:5	";"
+R 12	1:3-1:4
+R 10	1:2-1:4
+T -	INITIAL	0	1	1:5-1:6	"-"
+R 4	1:2-1:5
+R 3	1:0-1:5
+T -	INITIAL	0	1	1:6-1:7	"-"
+T NUMBER	INITIAL	0	1	1:7-1:8	"1"
+T ;	INITIAL	0	1	1:8-1:9	";"
+R 12	1:7-1:8
+R 10	1:6-1:8
+R 10	1:5-1:8
+T EOF	INITIAL	0	0	1:9-1:9	""
+R 4	1:5-1:9
+R 3	1:0-1:9
+R 1	1:0-1:9
+OK return 1
+V "error(;,1,0)@1[1,2] -1@1:2-1:4[2,4] 1@1:5-1:8[5,8]"
+G flexlex
+F flexlex
+I "if iffy ifs i"
+LOC
+T IF	INITIAL	0	2	1:0-1:2	"if"
+R 2	1:0-1:0
+T IFFY	INITIAL	0	4	1:3-1:7	"iffy"
+R 4	1:0-1:2
+R 3	1:0-1:2
+T ID	INITIAL	0	3	1:8-1:11	"ifs"
+R 5	1:3-1:7
+R 3	1:0-1:7
+T ID	INITIAL	0	1	1:12-1:13	"i"
+R 6	1:8-1:11
+R 3	1:0-1:11
+T EOF	INITIAL	0	0	1:13-1:13	""
+R 6	1:12-1:13
+R 3	1:0-1:13
+R 1	1:0-1:13
+OK return 1
+V "(if)(iffy)(ifs)(i)"
+F flexlex
+I "if==iffy=1"
+LOC
+T IF	INITIAL	0	2	1:0-1:2	"if"
+R 2	1:0-1:0
+T EQ	INITIAL	0	2	1:2-1:4	"=="
+R 4	1:0-1:2
+R 3	1:0-1:2
+T IFFY	INITIAL	0	4	1:4-1:8	"iffy"
+R 8	1:2-1:4
+R 3	1:0-1:4
+T ASSIGN	INITIAL	0	1	1:8-1:9	"="
+R 5	1:4-1:8
+R 3	1:0-1:8
+T NUM	INITIAL	0	1	1:9-1:10	"1"
+R 9	1:8-1:9
+R 3	1:0-1:9
+T EOF	INITIAL	0	0	1:10-1:10	""
+R 7	1:9-1:10
+R 3	1:0-1:10
+R 1	1:0-1:10
+OK return 1
+V "(if)(==)(iffy)(=)(1)"
+F flexlex
+I "a = 12 == b"
+LOC
+T ID	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T ASSIGN	INITIAL	0	1	1:2-1:3	"="
+R 6	1:0-1:1
+R 3	1:0-1:1
+T NUM	INITIAL	0	2	1:4-1:6	"12"
+R 9	1:2-1:3
+R 3	1:0-1:3
+T EQ	INITIAL	0	2	1:7-1:9	"=="
+R 7	1:4-1:6
+R 3	1:0-1:6
+T ID	INITIAL	0	1	1:10-1:11	"b"
+R 8	1:7-1:9
+R 3	1:0-1:9
+T EOF	INITIAL	0	0	1:11-1:11	""
+R 6	1:10-1:11
+R 3	1:0-1:11
+R 1	1:0-1:11
+OK return 1
+V "(a)(=)(12)(==)(b)"
+F flexlex
+I ""
+LOC
+T EOF	INITIAL	0	0	1:0-1:0	""
+R 2	1:0-1:0
+R 1	1:0-1:0
+OK return 1
+V ""
+F flexlex
+I "if"
+LOC
+T IF	INITIAL	0	2	1:0-1:2	"if"
+R 2	1:0-1:0
+T EOF	INITIAL	0	0	1:2-1:2	""
+R 4	1:0-1:2
+R 3	1:0-1:2
+R 1	1:0-1:2
+OK return 1
+V "(if)"
+F flexlex
+I "iffyx iffy9 if9"
+LOC
+T ID	INITIAL	0	5	1:0-1:5	"iffyx"
+R 2	1:0-1:0
+T IFFY	INITIAL	0	4	1:6-1:10	"iffy"
+R 6	1:0-1:5
+R 3	1:0-1:5
+T NUM	INITIAL	0	1	1:10-1:11	"9"
+R 5	1:6-1:10
+R 3	1:0-1:10
+T IF	INITIAL	0	2	1:12-1:14	"if"
+R 7	1:10-1:11
+R 3	1:0-1:11
+T NUM	INITIAL	0	1	1:14-1:15	"9"
+R 4	1:12-1:14
+R 3	1:0-1:14
+T EOF	INITIAL	0	0	1:15-1:15	""
+R 7	1:14-1:15
+R 3	1:0-1:15
+R 1	1:0-1:15
+OK return 1
+V "(iffyx)(iffy)(9)(if)(9)"
+F flexlex
+I "a # b"
+LOC
+T ID	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+LOG "#"
+T ID	INITIAL	0	1	1:4-1:5	"b"
+R 6	1:0-1:1
+R 3	1:0-1:1
+T EOF	INITIAL	0	0	1:5-1:5	""
+R 6	1:4-1:5
+R 3	1:0-1:5
+R 1	1:0-1:5
+OK return 1
+V "(a)(b)"
+F flexlex
+I "=== =="
+LOC
+T EQ	INITIAL	0	2	1:0-1:2	"=="
+R 2	1:0-1:0
+T ASSIGN	INITIAL	0	1	1:2-1:3	"="
+R 8	1:0-1:2
+R 3	1:0-1:2
+T EQ	INITIAL	0	2	1:4-1:6	"=="
+R 9	1:2-1:3
+R 3	1:0-1:3
+T EOF	INITIAL	0	0	1:6-1:6	""
+R 8	1:4-1:6
+R 3	1:0-1:6
+R 1	1:0-1:6
+OK return 1
+V "(==)(=)(==)"
+F flexlex
+I "if\niffy\n\tx"
+LOC
+T IF	INITIAL	0	2	1:0-1:2	"if"
+R 2	1:0-1:0
+T IFFY	INITIAL	1	4	2:0-2:4	"iffy"
+R 4	1:0-1:2
+R 3	1:0-1:2
+T ID	INITIAL	2	1	3:1-3:2	"x"
+R 5	2:0-2:4
+R 3	1:0-2:4
+T EOF	INITIAL	2	0	3:2-3:2	""
+R 6	3:1-3:2
+R 3	1:0-3:2
+R 1	1:0-3:2
+OK return 1
+V "(if)(iffy)(x)"
+G backtrack
+F backtrack
+I "abc end"
+LOC
+T WORD	INITIAL	0	3	1:0-1:3	"abc"
+R 2	1:0-1:0
+T END	INITIAL	0	3	undefined:4-1:7	"end"
+R 4	1:0-1:3
+R 3	1:0-1:3
+T EOF	INITIAL	0	0	1:7-1:7	""
+R 5	undefined:4-1:7
+R 3	1:0-1:7
+R 1	1:0-1:7
+OK return 1
+V "(abc@1:0-1:3)(end@undefined:4-1:7)"
+F backtrack
+I "end"
+LOC
+T END	INITIAL	0	3	undefined:0-1:3	"end"
+R 2	1:0-1:0
+T EOF	INITIAL	0	0	1:3-1:3	""
+R 5	undefined:0-1:3
+R 3	1:0-1:3
+R 1	1:0-1:3
+OK return 1
+V "(end@undefined:0-1:3)"
+F backtrack
+I "abcdefgh 12 1234 9"
+LOC
+T TRI	INITIAL	0	3	undefined:0-1:3	"abc"
+R 2	1:0-1:0
+T WORD	INITIAL	0	5	1:3-1:8	"defgh"
+R 6	undefined:0-1:3
+R 3	1:0-1:3
+T NUM	INITIAL	0	2	1:9-1:11	"12"
+R 4	1:3-1:8
+R 3	1:0-1:8
+T DIGIT	INITIAL	0	1	undefined:12-1:13	"1"
+R 8	1:9-1:11
+R 3	1:0-1:11
+T DIGIT	INITIAL	0	1	undefined:13-1:14	"2"
+R 9	undefined:12-1:13
+R 3	1:0-1:13
+T NUM	INITIAL	0	2	1:14-1:16	"34"
+R 9	undefined:13-1:14
+R 3	1:0-1:14
+T NUM	INITIAL	0	1	1:17-1:18	"9"
+R 8	1:14-1:16
+R 3	1:0-1:16
+T EOF	INITIAL	0	0	1:18-1:18	""
+R 8	1:17-1:18
+R 3	1:0-1:18
+R 1	1:0-1:18
+OK return 1
+V "(abc@undefined:0-1:3)(defgh@1:3-1:8)(12@1:9-1:11)(1@undefined:12-1:13)(2@undefined:13-1:14)(34@1:14-1:16)(9@1:17-1:18)"
+F backtrack
+I "ab\nend\nabcdefg\n"
+LOC
+T WORD	INITIAL	0	2	1:0-1:2	"ab"
+R 2	1:0-1:0
+T END	INITIAL	1	3	undefined:0-2:3	"end"
+R 4	1:0-1:2
+R 3	1:0-1:2
+T TRI	INITIAL	2	3	undefined:0-3:3	"abc"
+R 5	undefined:0-2:3
+R 3	1:0-2:3
+T WORD	INITIAL	2	4	3:3-3:7	"defg"
+R 6	undefined:0-3:3
+R 3	1:0-3:3
+T EOF	INITIAL	3	0	4:0-4:0	""
+R 4	3:3-3:7
+R 3	1:0-3:7
+R 1	1:0-4:0
+OK return 1
+V "(ab@1:0-1:2)(end@undefined:0-2:3)(abc@undefined:0-3:3)(defg@3:3-3:7)"
+F backtrack
+I ""
+LOC
+T EOF	INITIAL	0	0	1:0-1:0	""
+R 2	1:0-1:0
+R 1	1:0-1:0
+OK return 1
+V ""
+F backtrack
+I "abc # d"
+LOC
+T WORD	INITIAL	0	3	1:0-1:3	"abc"
+R 2	1:0-1:0
+ERR Error	"Lexical error on line 1. Unrecognized text.\nabc # d\n----^"
+H ""	0	""	-	""
+F backtrack
+I "endx end endings"
+LOC
+T WORD	INITIAL	0	4	1:0-1:4	"endx"
+R 2	1:0-1:0
+T END	INITIAL	0	3	undefined:5-1:8	"end"
+R 4	1:0-1:4
+R 3	1:0-1:4
+T TRI	INITIAL	0	3	undefined:9-1:12	"end"
+R 5	undefined:5-1:8
+R 3	1:0-1:8
+T WORD	INITIAL	0	4	1:12-1:16	"ings"
+R 6	undefined:9-1:12
+R 3	1:0-1:12
+T EOF	INITIAL	0	0	1:16-1:16	""
+R 4	1:12-1:16
+R 3	1:0-1:16
+R 1	1:0-1:16
+OK return 1
+V "(endx@1:0-1:4)(end@undefined:5-1:8)(end@undefined:9-1:12)(ings@1:12-1:16)"
+F backtrack
+I "123456 12"
+LOC
+T DIGIT	INITIAL	0	1	undefined:0-1:1	"1"
+R 2	1:0-1:0
+T DIGIT	INITIAL	0	1	undefined:1-1:2	"2"
+R 9	undefined:0-1:1
+R 3	1:0-1:1
+T DIGIT	INITIAL	0	1	undefined:2-1:3	"3"
+R 9	undefined:1-1:2
+R 3	1:0-1:2
+T DIGIT	INITIAL	0	1	undefined:3-1:4	"4"
+R 9	undefined:2-1:3
+R 3	1:0-1:3
+T NUM	INITIAL	0	2	1:4-1:6	"56"
+R 9	undefined:3-1:4
+R 3	1:0-1:4
+T NUM	INITIAL	0	2	1:7-1:9	"12"
+R 8	1:4-1:6
+R 3	1:0-1:6
+T EOF	INITIAL	0	0	1:9-1:9	""
+R 8	1:7-1:9
+R 3	1:0-1:9
+R 1	1:0-1:9
+OK return 1
+V "(1@undefined:0-1:1)(2@undefined:1-1:2)(3@undefined:2-1:3)(4@undefined:3-1:4)(56@1:4-1:6)(12@1:7-1:9)"
+G moreless
+F moreless
+I "abc def"
+LOC
+T A	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T WORD	INITIAL	0	2	1:1-1:3	"bc"
+R 5	1:0-1:1
+R 3	1:0-1:1
+T WORD	INITIAL	0	3	1:4-1:7	"def"
+R 16	1:1-1:3
+R 3	1:0-1:3
+T EOF	INITIAL	0	0	1:7-1:7	""
+R 16	1:4-1:7
+R 3	1:0-1:7
+R 1	1:0-1:7
+OK return 1
+V "<a><bc><def>"
+F moreless
+I "\"a string\" x"
+LOC
+T STRING	INITIAL	0	10	1:9-1:10	"\"a string\""
+R 2	1:0-1:0
+T WORD	INITIAL	0	1	1:11-1:12	"x"
+R 4	1:9-1:10
+R 3	1:0-1:10
+T EOF	INITIAL	0	0	1:12-1:12	""
+R 16	1:11-1:12
+R 3	1:0-1:12
+R 1	1:0-1:12
+OK return 1
+V "<\"a string\"><x>"
+F moreless
+I "\"multi\nline \\\" quoted\\\\\" y \"z\""
+LOC
+T STRING	INITIAL	1	24	2:16-2:17	"\"multi\nline \\\" quoted\\\\\""
+R 2	1:0-1:0
+T WORD	INITIAL	1	1	2:18-2:19	"y"
+R 4	2:16-2:17
+R 3	1:0-2:17
+T STRING	INITIAL	1	3	2:22-2:23	"\"z\""
+R 16	2:18-2:19
+R 3	1:0-2:19
+T EOF	INITIAL	1	0	2:23-2:23	""
+R 4	2:22-2:23
+R 3	1:0-2:23
+R 1	1:0-2:23
+OK return 1
+V "<\"multi\nline \\\" quoted\\\\\"><y><\"z\">"
+F moreless
+I "\"never closed"
+LOC
+T 1	INITIAL str	0	13	1:1-1:13	"\"never closed"
+ERR Error	"Parse error on line 1:\n\"never closed\n^\nExpecting 'EOF', 'STRING', 'A', 'OPEN', 'CLOSE', 'HASH', 'AT', 'BANG', 'Q', 'DOLLAR', 'PCT', 'AMP', 'LINE', 'WORD', 'NUM', got '1'"
+H "1"	0	"\"never closed"	1:0-1:0	"'EOF','STRING','A','OPEN','CLOSE','HASH','AT','BANG','Q','DOLLAR','PCT','AMP','LINE','WORD','NUM'"
+F moreless
+I "x << y"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"x"
+R 2	1:0-1:0
+T OPEN	INITIAL	0	0	1:2-1:1	""
+R 16	1:0-1:1
+R 3	1:0-1:1
+T CLOSE	INITIAL	0	2	1:1-1:3	">>"
+R 6	1:2-1:1
+R 3	1:0-1:1
+T WORD	INITIAL	0	1	1:3-1:4	"x"
+R 7	1:1-1:3
+R 3	1:0-1:3
+T WORD	INITIAL	0	1	1:5-1:6	"y"
+R 16	1:3-1:4
+R 3	1:0-1:4
+T EOF	INITIAL	0	0	1:6-1:6	""
+R 16	1:5-1:6
+R 3	1:0-1:6
+R 1	1:0-1:6
+OK return 1
+V "<x><><>>><x><y>"
+F moreless
+I "a #b #\nc #"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T HASH	INITIAL	0	2	1:2-1:4	"#b|b|INITIAL|INITIAL|1"
+R 16	1:0-1:1
+R 3	1:0-1:1
+T HASH	INITIAL	1	2	1:5-2:6	"#\n|\n|INITIAL|INITIAL|1"
+R 8	1:2-1:4
+R 3	1:0-1:4
+T WORD	INITIAL	1	1	2:6-2:7	"c"
+R 8	1:5-2:6
+R 3	1:0-2:6
+ERR TypeError	"Cannot read properties of undefined (reading 'match')"
+F moreless
+I "#"
+LOC
+ERR TypeError	"Cannot read properties of undefined (reading 'match')"
+F moreless
+I "@ a ! b ! c"
+LOC
+T AT	INITIAL incl	0	1	1:0-1:1	"@"
+R 2	1:0-1:0
+T WORD	INITIAL incl	0	1	1:2-1:3	"a"
+R 9	1:0-1:1
+R 3	1:0-1:1
+T BANG	INITIAL	0	1	1:4-1:5	"!"
+R 16	1:2-1:3
+R 3	1:0-1:3
+T WORD	INITIAL	0	1	1:6-1:7	"b"
+R 10	1:4-1:5
+R 3	1:0-1:5
+ERR Error	"Lexical error on line 1. Unrecognized text.\n@ a ! b ! c\n--------^"
+H ""	0	""	-	""
+F moreless
+I "@ @ # !"
+LOC
+T AT	INITIAL incl	0	1	1:0-1:1	"@"
+R 2	1:0-1:0
+T AT	INITIAL incl incl	0	1	1:2-1:3	"@"
+R 9	1:0-1:1
+R 3	1:0-1:1
+T HASH	INITIAL incl incl	0	2	1:4-1:6	"# | |incl|incl|3"
+R 9	1:2-1:3
+R 3	1:0-1:3
+T BANG	INITIAL incl	0	1	1:6-1:7	"!"
+R 8	1:4-1:6
+R 3	1:0-1:6
+T EOF	INITIAL incl	0	0	1:7-1:7	""
+R 10	1:6-1:7
+R 3	1:0-1:7
+R 1	1:0-1:7
+OK return 1
+V "<@><@><# | |incl|incl|3><!>"
+F moreless
+I "one two three four five six seven ? eight nine ten eleven twelve thirteen"
+LOC
+T WORD	INITIAL	0	3	1:0-1:3	"one"
+R 2	1:0-1:0
+T WORD	INITIAL	0	3	1:4-1:7	"two"
+R 16	1:0-1:3
+R 3	1:0-1:3
+T WORD	INITIAL	0	5	1:8-1:13	"three"
+R 16	1:4-1:7
+R 3	1:0-1:7
+T WORD	INITIAL	0	4	1:14-1:18	"four"
+R 16	1:8-1:13
+R 3	1:0-1:13
+T WORD	INITIAL	0	4	1:19-1:23	"five"
+R 16	1:14-1:18
+R 3	1:0-1:18
+T WORD	INITIAL	0	3	1:24-1:27	"six"
+R 16	1:19-1:23
+R 3	1:0-1:23
+T WORD	INITIAL	0	5	1:28-1:33	"seven"
+R 16	1:24-1:27
+R 3	1:0-1:27
+T Q	INITIAL	0	1	1:34-1:35	"...four five six seven ^? eight nine ten ele^...four five six seven ? eight nine ten ele\n-----------------------^"
+R 16	1:28-1:33
+R 3	1:0-1:33
+T WORD	INITIAL	0	5	1:36-1:41	"eight"
+R 11	1:34-1:35
+R 3	1:0-1:35
+T WORD	INITIAL	0	4	1:42-1:46	"nine"
+R 16	1:36-1:41
+R 3	1:0-1:41
+T WORD	INITIAL	0	3	1:47-1:50	"ten"
+R 16	1:42-1:46
+R 3	1:0-1:46
+T WORD	INITIAL	0	6	1:51-1:57	"eleven"
+R 16	1:47-1:50
+R 3	1:0-1:50
+T WORD	INITIAL	0	6	1:58-1:64	"twelve"
+R 16	1:51-1:57
+R 3	1:0-1:57
+T WORD	INITIAL	0	8	1:65-1:73	"thirteen"
+R 16	1:58-1:64
+R 3	1:0-1:64
+T EOF	INITIAL	0	0	1:73-1:73	""
+R 16	1:65-1:73
+R 3	1:0-1:73
+R 1	1:0-1:73
+OK return 1
+V "<one><two><three><four><five><six><seven><...four five six seven ^? eight nine ten ele^...four five six seven ? eight nine ten ele\n-----------------------^><eight><nine><ten><eleven><twelve><thirteen>"
+F moreless
+I "a\nb\n?\nc"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T WORD	INITIAL	1	1	2:0-2:1	"b"
+R 16	1:0-1:1
+R 3	1:0-1:1
+T Q	INITIAL	2	1	3:0-3:1	"ab^?c^ab?c\n--^"
+R 16	2:0-2:1
+R 3	1:0-2:1
+T WORD	INITIAL	3	1	4:0-4:1	"c"
+R 11	3:0-3:1
+R 3	1:0-3:1
+T EOF	INITIAL	3	0	4:1-4:1	""
+R 16	4:0-4:1
+R 3	1:0-4:1
+R 1	1:0-4:1
+OK return 1
+V "<a><b><ab^?c^ab?c\n--^><c>"
+F moreless
+I "?"
+LOC
+T Q	INITIAL	0	1	1:0-1:1	"^?^?\n^"
+R 2	1:0-1:0
+T EOF	INITIAL	0	0	1:1-1:1	""
+R 11	1:0-1:1
+R 3	1:0-1:1
+R 1	1:0-1:1
+OK return 1
+V "<^?^?\n^>"
+F moreless
+I "x $ y"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"x"
+R 2	1:0-1:0
+T DOLLAR	INITIAL nosuch	0	1	1:2-1:3	"$"
+R 16	1:0-1:1
+R 3	1:0-1:1
+ERR TypeError	"Cannot read properties of undefined (reading 'rules')"
+F moreless
+I "x % abc % y"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"x"
+R 2	1:0-1:0
+T PCT	INITIAL 	0	1	1:2-1:3	"%"
+R 16	1:0-1:1
+R 3	1:0-1:1
+T A	INITIAL 	0	1	1:4-1:5	"a"
+R 13	1:2-1:3
+R 3	1:0-1:3
+T WORD	INITIAL 	0	2	1:5-1:7	"bc"
+R 5	1:4-1:5
+R 3	1:0-1:5
+T PCT	INITIAL  	0	1	1:8-1:9	"%"
+R 16	1:5-1:7
+R 3	1:0-1:7
+T WORD	INITIAL  	0	1	1:10-1:11	"y"
+R 13	1:8-1:9
+R 3	1:0-1:9
+T EOF	INITIAL  	0	0	1:11-1:11	""
+R 16	1:10-1:11
+R 3	1:0-1:11
+R 1	1:0-1:11
+OK return 1
+V "<x><%><a><bc><%><y>"
+F moreless
+I "x ~ y"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"x"
+R 2	1:0-1:0
+T TILDE_UNKNOWN	INITIAL	0	1	1:2-1:3	"~"
+ERR Error	"Parse error on line 1:\nx ~ y\n--^\nExpecting 'EOF', 'STRING', 'A', 'OPEN', 'CLOSE', 'HASH', 'AT', 'BANG', 'Q', 'DOLLAR', 'PCT', 'AMP', 'LINE', 'WORD', 'NUM', got 'TILDE_UNKNOWN'"
+H "TILDE_UNKNOWN"	0	"~"	1:0-1:1	"'EOF','STRING','A','OPEN','CLOSE','HASH','AT','BANG','Q','DOLLAR','PCT','AMP','LINE','WORD','NUM'"
+F moreless
+I "abc abc\nabc"
+LOC
+T A	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T WORD	INITIAL	0	2	1:1-1:3	"bc"
+R 5	1:0-1:1
+R 3	1:0-1:1
+T A	INITIAL	0	1	1:4-1:5	"a"
+R 16	1:1-1:3
+R 3	1:0-1:3
+T WORD	INITIAL	0	2	1:5-1:7	"bc"
+R 5	1:4-1:5
+R 3	1:0-1:5
+T A	INITIAL	1	1	2:0-2:1	"a"
+R 16	1:5-1:7
+R 3	1:0-1:7
+T WORD	INITIAL	1	2	2:1-2:3	"bc"
+R 5	2:0-2:1
+R 3	1:0-2:1
+T EOF	INITIAL	1	0	2:3-2:3	""
+R 16	2:1-2:3
+R 3	1:0-2:3
+R 1	1:0-2:3
+OK return 1
+V "<a><bc><a><bc><a><bc>"
+F moreless
+I "a & b"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+ERR TypeError	"Cannot read properties of undefined (reading 'length')"
+F moreless
+I "line\ntwo x"
+LOC
+T LINE	INITIAL	0	4	1:0-1:4	"line"
+R 2	1:0-1:0
+T WORD	INITIAL	1	3	2:0-2:3	"two"
+R 15	1:0-1:4
+R 3	1:0-1:4
+T WORD	INITIAL	1	1	2:4-2:5	"x"
+R 16	2:0-2:3
+R 3	1:0-2:3
+T EOF	INITIAL	1	0	2:5-2:5	""
+R 16	2:4-2:5
+R 3	1:0-2:5
+R 1	1:0-2:5
+OK return 1
+V "<line><two><x>"
+F moreless
+I "q \"s1\" << 12 >> \"s2\n\" # @!"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"q"
+R 2	1:0-1:0
+T STRING	INITIAL	0	4	1:5-1:6	"\"s1\""
+R 16	1:0-1:1
+R 3	1:0-1:1
+T OPEN	INITIAL	0	0	1:7-1:6	""
+R 4	1:5-1:6
+R 3	1:0-1:6
+T CLOSE	INITIAL	0	2	1:6-1:8	">>"
+R 6	1:7-1:6
+R 3	1:0-1:6
+T WORD	INITIAL	0	1	1:8-1:9	"x"
+R 7	1:6-1:8
+R 3	1:0-1:8
+T NUM	INITIAL	0	2	1:10-1:12	"12"
+R 16	1:8-1:9
+R 3	1:0-1:9
+T CLOSE	INITIAL	0	2	1:13-1:15	">>"
+R 17	1:10-1:12
+R 3	1:0-1:12
+T STRING	INITIAL	1	5	2:0-2:1	"\"s2\n\""
+R 7	1:13-1:15
+R 3	1:0-1:15
+T HASH	INITIAL	1	2	2:2-2:4	"# | |INITIAL|INITIAL|1"
+R 4	2:0-2:1
+R 3	1:0-2:1
+T AT	INITIAL incl	1	1	2:4-2:5	"@"
+R 8	2:2-2:4
+R 3	1:0-2:4
+T BANG	INITIAL	1	1	2:5-2:6	"!"
+R 9	2:4-2:5
+R 3	1:0-2:5
+T EOF	INITIAL	1	0	2:6-2:6	""
+R 10	2:5-2:6
+R 3	1:0-2:6
+R 1	1:0-2:6
+OK return 1
+V "<q><\"s1\"><><>>><x><12><>>><\"s2\n\"><# | |INITIAL|INITIAL|1><@><!>"
+F moreless
+I "\r\n abc \r \"x\r\ny\" ? \r\n"
+LOC
+T A	INITIAL	1	1	2:1-2:2	"a"
+R 2	1:0-1:0
+T WORD	INITIAL	1	2	2:2-2:4	"bc"
+R 5	2:1-2:2
+R 3	1:0-2:2
+T STRING	INITIAL	4	6	5:1-5:2	"\"x\r\ny\""
+R 16	2:2-2:4
+R 3	1:0-2:4
+T Q	INITIAL	4	1	5:3-5:4	"\r abbc \r \"x\ry\" ^? \r^\r abbc \r \"x\ry\" ? \r\n---------------^"
+R 4	5:1-5:2
+R 3	1:0-5:2
+T EOF	INITIAL	5	0	6:0-6:0	""
+R 11	5:3-5:4
+R 3	1:0-5:4
+R 1	1:0-6:0
+OK return 1
+V "<a><bc><\"x\r\ny\"><\r abbc \r \"x\ry\" ^? \r^\r abbc \r \"x\ry\" ? \r\n---------------^>"
+F moreless
+I "😀 a"
+LOC
+ERR Error	"Lexical error on line 1. Unrecognized text.\n😀 a\n^"
+H ""	0	""	-	""
+F moreless
+I "a \"😀\" ?"
+LOC
+T WORD	INITIAL	0	1	1:0-1:1	"a"
+R 2	1:0-1:0
+T STRING	INITIAL	0	4	1:5-1:6	"\"😀\""
+R 16	1:0-1:1
+R 3	1:0-1:1
+T Q	INITIAL	0	1	1:7-1:8	"a \"😀\" ^?^a \"😀\" ?\n-------^"
+R 4	1:5-1:6
+R 3	1:0-1:6
+T EOF	INITIAL	0	0	1:8-1:8	""
+R 11	1:7-1:8
+R 3	1:0-1:8
+R 1	1:0-1:8
+OK return 1
+V "<a><\"😀\"><a \"😀\" ^?^a \"😀\" ?\n-------^>"
+G stall
+F stall
+I "abc"
+LOC
+T 1	INITIAL	0	0	1:3-1:3	""
+ERR Error	"Parse error on line 1:\nabc\n---^\nExpecting 'EOF', 'NUM', got '1'"
+H "1"	0	""	1:0-1:0	"'EOF','NUM'"
+F stall
+I "abc 1"
+LOC
+ERR RangeError	"Maximum call stack size exceeded"
+F stall
+I "2"
+LOC
+ERR RangeError	"Maximum call stack size exceeded"
+F stall
+I "abc 22 1 2"
+LOC
+ERR RangeError	"Maximum call stack size exceeded"
+F stall
+I ""
+LOC
+T 1	INITIAL	0	0	1:0-1:0	""
+ERR Error	"Parse error on line 1:\n\n^\nExpecting 'EOF', 'NUM', got '1'"
+H "1"	0	""	1:0-1:0	"'EOF','NUM'"

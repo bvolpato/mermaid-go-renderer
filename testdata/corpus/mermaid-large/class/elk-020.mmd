@@ -1,0 +1,92 @@
+classDiagram
+  class C0 {
+  }
+  class C1 {
+    +int trace0
+  }
+  class C2 {
+    +List~int~ stream0
+    +int shard1
+    +int queue2
+    +int trace3
+  }
+  class C3 {
+    +string shard0
+  }
+  class C4 {
+  }
+  class C5 {
+    +schema0(id) int
+    +bool metric1
+    +span2(id) void
+  }
+  class C6 {
+    +int order0
+  }
+  class C7 {
+  }
+  class C8 {
+    +int payment0
+  }
+  class C9 {
+  }
+  class C10 {
+    +string session0
+    +string metric1
+    +bool lease2
+  }
+  class C11 {
+    +List~int~ metric0
+  }
+  class C12 {
+    +bool span0
+  }
+  class C13 {
+    +span0() void
+    +ledger1(id) void
+    +string alert2
+    +policy3() bool
+  }
+  class C14 {
+    +schema0() bool
+  }
+  class C15 {
+    +stream0() bool
+    +List~int~ metric1
+    +string replica2
+  }
+  class C16 {
+    +bool ledger0
+    +int metric1
+    +trace2() void
+  }
+  class C17 {
+  }
+  class C18 {
+    +quota0(id) void
+    +policy1() int
+  }
+  class C19 {
+    +span0() bool
+    +event1(id) bool
+  }
+  C0 ..> C1
+  C1 ..> C2 : audit
+  C2 <|-- C3
+  C3 ..> C4 : ledger
+  C2 o-- C5
+  C0 ..|> C6 : token
+  C2 <|-- C7
+  C3 -- C9
+  C6 --> C10
+  C7 <|-- C12 : policy
+  C12 -- C13
+  C11 ..|> C15
+  C11 ..|> C16 : audit
+  C10 -- C17
+  C11 ..> C18
+  C18 *-- C19
+  C18 <|-- C13
+  C9 ..|> C13
+  C1 <|-- C12
+  C1 ..|> C16

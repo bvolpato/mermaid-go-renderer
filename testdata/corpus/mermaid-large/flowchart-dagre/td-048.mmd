@@ -1,0 +1,112 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  subgraph g0 [Batch]
+    n0[/Ledger schema/]
+    n6((Batch queue))
+    n10[(Span cache)]
+    n11[/Lease/]
+    n13((Shard replica token))
+    n14{{Span}}
+    n15(Index token invoice)
+    n21[(Audit batch audit)]
+    n25[Stream report report]
+    n28[(Queue ledger)]
+    n31[/Schema shard/]
+    n32[[Quota gateway metric]]
+    n33(Ledger)
+    n37[[Quota]]
+    n39((Shard alert))
+    n41[/Index gateway lease/]
+    n46(Replica)
+  end
+  subgraph g1 [User]
+    n1[User shard report]
+    n5(Report payment token)
+    n8([Queue])
+    n9([Event])
+    n12[(Queue)]
+    n16[[Worker]]
+    n18((Worker))
+    n20(Quota)
+    n22{{Event}}
+    n24([Token router])
+    n26[(Probe gateway)]
+    n27[[Batch alert span]]
+    n34[[Policy invoice]]
+    n35{Payment queue}
+    n40{Schema replica metric}
+    n42[(Lease trace user)]
+    n44{{Replica router}}
+    n45(Report batch queue)
+  end
+  n2((Cache stream))
+  n3{Audit}
+  n4{Token router}
+  n7[Token payment]
+  n17((Report))
+  n19{Replica batch}
+  n23{{Quota token shard}}
+  n29{Span metric}
+  n30[(Token worker gateway)]
+  n36{Worker}
+  n38([Metric lease ledger])
+  n43[[Order]]
+  n47[Batch queue order]
+  n0 --o n1
+  n1 --x n2
+  n1 --o n3
+  n1 --x n5
+  n0 --o n6
+  n2 --> n7
+  n0 --- n8
+  n0 --o|Gateway policy| n9
+  n5 --x n10
+  n3 --o n11
+  n8 -.->|Index| n12
+  n10 ==>|Probe span| n13
+  n5 --x n14
+  n14 -.-> n15
+  n13 -.-> n17
+  n11 ==> n18
+  n12 -.-> n20
+  n18 --- n21
+  n21 -.-> n22
+  n16 ---|Worker| n23
+  n17 ==> n24
+  n24 --x n25
+  n22 --> n26
+  n26 -->|Bucket ledger| n27
+  n24 --o|Bucket| n28
+  n24 ==>|Audit| n30
+  n25 ==>|Lease| n31
+  n31 --x n33
+  n28 ==> n34
+  n27 --o n35
+  n34 --o n36
+  n31 --x n37
+  n32 -->|Quota| n39
+  n34 ---|Metric gateway| n40
+  n33 ==> n41
+  n40 --x|Event ledger| n42
+  n41 -.-> n43
+  n39 ==>|Event gateway| n44
+  n40 --x n45
+  n38 -.->|Report batch| n46
+  n0 --- n19
+  n17 -.-> n39
+  n1 --o n29
+  n0 --> n23
+  n12 -.-> n21
+  n46 --- n25
+  n7 -.-> n31
+  n40 --x n47
+  n14 --x n17
+  n43 --- n3
+  n23 -.-> n43
+  n16 -.-> n17
+  n19 --x n22
+  n35 ==> n30
+  g0 --> g1

@@ -1,0 +1,55 @@
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s5 --> s21
+    s21 --> s27
+    s27 --> s32
+    s32 --> s37
+  }
+  state Group1 {
+    s4 --> s9 : lease
+    s9 --> s13
+    s13 --> s15
+    s15 --> s20
+    s20 --> s23
+    s23 --> s33
+    s33 --> s35
+    s35 --> s36
+    s36 --> s39 : lease
+  }
+  state Group2 {
+    s7 --> s10
+    s10 --> s14
+    s14 --> s17 : trace
+    s17 --> s18
+  }
+  state Group3 {
+    s6 --> s11
+    s11 --> s25
+    s25 --> s26
+  }
+  s0 --> s1 : Cache invoice
+  s0 --> s3 : Replica session
+  s4 --> s5
+  s2 --> s6
+  s3 --> s7
+  s7 --> s8
+  s4 --> s9 : Ledger replica
+  s8 --> s14
+  s13 --> s15
+  s11 --> s16
+  s16 --> s18
+  s16 --> s19
+  s20 --> s21
+  s19 --> s22
+  s19 --> s23
+  s19 --> s25
+  s26 --> s28 : Batch
+  s28 --> s30 : Metric bucket
+  s27 --> s32
+  s30 --> s34
+  s32 --> s35
+  s34 --> s37 : Payment
+  s32 --> s38
+  s35 --> s39 : Trace ledger
+  s39 --> [*]

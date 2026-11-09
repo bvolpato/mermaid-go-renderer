@@ -1,0 +1,361 @@
+{
+ "sheets": [
+  {
+   "text": ".loopText { fill: #ffffff !important; } .labelBox { fill: red !important; }",
+   "rules": [
+    ".loopText { fill: rgb(255, 255, 255) !important; }",
+    ".labelBox { fill: red !important; }"
+   ]
+  },
+  {
+   "text": ".a{fill:red}",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { fill : RED ; stroke:#FFF;stroke-width:2 }",
+   "rules": [
+    ".a { fill: red; stroke: rgb(255, 255, 255); stroke-width: 2; }"
+   ]
+  },
+  {
+   "text": ".a,.b>.c  ~ .d + .e{color:blue}",
+   "rules": [
+    ".a, .b > .c ~ .d + .e { color: blue; }"
+   ]
+  },
+  {
+   "text": ".a , .b { color: rgb(1,2,3) ; }",
+   "rules": [
+    ".a, .b { color: rgb(1, 2, 3); }"
+   ]
+  },
+  {
+   "text": "g.node rect { fill: hsl(120, 50%, 50%); stroke: rgba(0,0,0,0.5) }",
+   "rules": [
+    "g.node rect { fill: rgb(64, 191, 64); stroke: rgba(0, 0, 0, 0.5); }"
+   ]
+  },
+  {
+   "text": ".a { }",
+   "rules": [
+    ".a { }"
+   ]
+  },
+  {
+   "text": ".a { bogus: 1; fill: red }",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { fill: notacolor; stroke: red }",
+   "rules": [
+    ".a { stroke: red; }"
+   ]
+  },
+  {
+   "text": ".a { color: red; color: blue }",
+   "rules": [
+    ".a { color: blue; }"
+   ]
+  },
+  {
+   "text": ".a { color: red !important; color: blue }",
+   "rules": [
+    ".a { color: red !important; }"
+   ]
+  },
+  {
+   "text": "/* c */ .a { /* d */ fill: red /* e */ }",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": "#id.cls[data-x=\"1\"]:hover::before { content: \"a b\"; }",
+   "rules": [
+    "#id.cls[data-x=\"1\"]:hover::before { content: \"a b\"; }"
+   ]
+  },
+  {
+   "text": ".a:not(.b):nth-child(2n+1) { opacity: .5 }",
+   "rules": [
+    ".a:not(.b):nth-child(2n+1) { opacity: 0.5; }"
+   ]
+  },
+  {
+   "text": "A B { FILL: Red }",
+   "rules": [
+    "a b { fill: red; }"
+   ]
+  },
+  {
+   "text": "svg|rect { fill: red }",
+   "rules": []
+  },
+  {
+   "text": "* { margin: 0 }",
+   "rules": [
+    "* { margin: 0px; }"
+   ]
+  },
+  {
+   "text": ".a { margin: 1px 2px 3px 4px; padding: 0 0 0 0 }",
+   "rules": [
+    ".a { margin: 1px 2px 3px 4px; padding: 0px; }"
+   ]
+  },
+  {
+   "text": ".a { font: bold 12px/14px Arial, sans-serif }",
+   "rules": [
+    ".a { font: bold 12px / 14px Arial, sans-serif; }"
+   ]
+  },
+  {
+   "text": ".a { font-family: \"Trebuchet MS\", Verdana ; font-size: 14PX }",
+   "rules": [
+    ".a { font-family: \"Trebuchet MS\", Verdana; font-size: 14px; }"
+   ]
+  },
+  {
+   "text": ".a { background: url(x.png) no-repeat }",
+   "rules": [
+    ".a { background: url(\"x.png\") no-repeat; }"
+   ]
+  },
+  {
+   "text": ".a { stroke-dasharray: 5,5; stroke-width: 2px }",
+   "rules": [
+    ".a { stroke-dasharray: 5, 5; stroke-width: 2px; }"
+   ]
+  },
+  {
+   "text": ".a { transform: translate( 10px , 20px ) rotate(45deg) }",
+   "rules": [
+    ".a { transform: translate(10px, 20px) rotate(45deg); }"
+   ]
+  },
+  {
+   "text": "@media screen { .a { fill: red } }",
+   "rules": [
+    "@media screen {\n  .a { fill: red; }\n}"
+   ]
+  },
+  {
+   "text": "@media (max-width: 100px) { .a { fill: red } .b { fill: blue } }",
+   "rules": [
+    "@media (max-width: 100px) {\n  .a { fill: red; }\n  .b { fill: blue; }\n}"
+   ]
+  },
+  {
+   "text": "@media print { }",
+   "rules": [
+    "@media print {\n}"
+   ]
+  },
+  {
+   "text": "@keyframes dash { from { stroke-dashoffset: 10 } to { stroke-dashoffset: 0 } }",
+   "rules": [
+    "@keyframes dash { \n  0% { stroke-dashoffset: 10; }\n  100% { stroke-dashoffset: 0; }\n}"
+   ]
+  },
+  {
+   "text": "@keyframes x { 0% { opacity: 0 } 50.5% { opacity: .5 } 100% { opacity: 1 } }",
+   "rules": [
+    "@keyframes x { \n  0% { opacity: 0; }\n  50.5% { opacity: 0.5; }\n  100% { opacity: 1; }\n}"
+   ]
+  },
+  {
+   "text": "@font-face { font-family: X; src: url(x.woff) }",
+   "rules": [
+    "@font-face { font-family: X; src: url(\"x.woff\"); }"
+   ]
+  },
+  {
+   "text": "@import url(x.css); .a { fill: red }",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": "@charset \"utf-8\"; .a { fill: red }",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": "@supports (display: grid) { .a { display: grid } }",
+   "rules": [
+    "@supports (display: grid) {\n  .a { display: grid; }\n}"
+   ]
+  },
+  {
+   "text": ".a { fill: red",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { fill: red } garbage",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { fill: red } .b {",
+   "rules": [
+    ".a { fill: red; }",
+    ".b { }"
+   ]
+  },
+  {
+   "text": "} .a { fill: red }",
+   "rules": []
+  },
+  {
+   "text": ".a { fill: red; } ; .b { fill: blue }",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { & .b { fill: red } }",
+   "rules": [
+    ".a {\n  & .b { fill: red; }\n}"
+   ]
+  },
+  {
+   "text": ".a { fill: red; .b { fill: blue } }",
+   "rules": [
+    ".a {\n  fill: red;\n  & .b { fill: blue; }\n}"
+   ]
+  },
+  {
+   "text": ":root { --x: 1px; --Y:  a  b ; }",
+   "rules": [
+    ":root { --x: 1px; --Y: a  b; }"
+   ]
+  },
+  {
+   "text": ".a { fill: var(--x) ; stroke: var( --y , red ) }",
+   "rules": [
+    ".a { fill: var(--x); stroke: var( --y , red ); }"
+   ]
+  },
+  {
+   "text": ".a { width: calc( 1px + 2px ) ; height: CALC(100% - 10px) }",
+   "rules": [
+    ".a { width: calc(3px); height: calc(100% - 10px); }"
+   ]
+  },
+  {
+   "text": ".a::after { content: '\\201C' }",
+   "rules": [
+    ".a::after { content: \"“\"; }"
+   ]
+  },
+  {
+   "text": ".a { color: #abc; background-color: #AABBCCDD; border-color: transparent }",
+   "rules": [
+    ".a { color: rgb(170, 187, 204); background-color: rgba(170, 187, 204, 0.867); border-color: transparent; }"
+   ]
+  },
+  {
+   "text": ".a { fill: currentColor; stroke: none; }",
+   "rules": [
+    ".a { fill: currentcolor; stroke: none; }"
+   ]
+  },
+  {
+   "text": ".a{fill:red}.b{fill:blue}\n.c{fill:green}",
+   "rules": [
+    ".a { fill: red; }",
+    ".b { fill: blue; }",
+    ".c { fill: green; }"
+   ]
+  },
+  {
+   "text": "",
+   "rules": []
+  },
+  {
+   "text": "   ",
+   "rules": []
+  },
+  {
+   "text": ".a { animation: dash 1s linear infinite }",
+   "rules": [
+    ".a { animation: 1s linear 0s infinite normal none running dash; }"
+   ]
+  },
+  {
+   "text": ".a { transition: all .3s ease-in-out }",
+   "rules": [
+    ".a { transition: 0.3s ease-in-out; }"
+   ]
+  },
+  {
+   "text": ".a > * { color: red }",
+   "rules": [
+    ".a > * { color: red; }"
+   ]
+  },
+  {
+   "text": ".a\n{\n  fill:\n red\n}",
+   "rules": [
+    ".a { fill: red; }"
+   ]
+  },
+  {
+   "text": ".a { fill: #FFFFFF; stroke: #fff; color: #FfFfFf80 }",
+   "rules": [
+    ".a { fill: rgb(255, 255, 255); stroke: rgb(255, 255, 255); color: rgba(255, 255, 255, 0.5); }"
+   ]
+  },
+  {
+   "text": ".a { stroke-width: 1.50px; opacity: 0.50; font-size: 1.0em; line-height: 1.250 }",
+   "rules": [
+    ".a { stroke-width: 1.5px; opacity: 0.5; font-size: 1em; line-height: 1.25; }"
+   ]
+  },
+  {
+   "text": ".a { fill: red !IMPORTANT }",
+   "rules": [
+    ".a { fill: red !important; }"
+   ]
+  },
+  {
+   "text": ".a { fill: red ! important }",
+   "rules": [
+    ".a { fill: red !important; }"
+   ]
+  },
+  {
+   "text": "@media screen and (min-width: 10px), print { .a { fill: red } }",
+   "rules": [
+    "@media screen and (min-width: 10px), print {\n  .a { fill: red; }\n}"
+   ]
+  },
+  {
+   "text": "@layer base { .a { fill: red } }",
+   "rules": [
+    "@layer base {\n  .a { fill: red; }\n}"
+   ]
+  },
+  {
+   "text": "@page { margin: 1cm }",
+   "rules": [
+    "@page { margin: 1cm; }"
+   ]
+  },
+  {
+   "text": "@namespace svg url(http://www.w3.org/2000/svg); svg|a { fill: red }",
+   "rules": [
+    "@namespace svg url(\"http://www.w3.org/2000/svg\");",
+    "svg|a { fill: red; }"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,243 @@
+{
+ "mmdc": "12.0.0",
+ "diagrams": {
+  "small": "flowchart LR\n  A[Hello] --> B(World)\n",
+  "wide": "flowchart LR\n  A[Alpha node] --> B[Bravo node] --> C[Charlie node] --> D[Delta node] --> E[Echo node] --> F[Foxtrot node] --> G[Golf node] --> H[Hotel node] --> I[India node] --> J[Juliet node]\n",
+  "tall": "flowchart TD\n  A[Alpha node] --> B[Bravo node] --> C[Charlie node] --> D[Delta node] --> E[Echo node] --> F[Foxtrot node]\n",
+  "fixed": "%%{init: {\"flowchart\": {\"useMaxWidth\": false}}}%%\nflowchart LR\n  A[Alpha node] --> B[Bravo node] --> C[Charlie node] --> D[Delta node] --> E[Echo node] --> F[Foxtrot node] --> G[Golf node] --> H[Hotel node] --> I[India node] --> J[Juliet node]\n",
+  "pie": "pie title Pets\n  \"Dogs\" : 386\n  \"Cats\" : 85\n",
+  "info": "info\n"
+ },
+ "cases": [
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 358,
+   "height": 70,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 784,
+   "height": 27,
+   "colorType": 2
+  },
+  {
+   "diagram": "tall",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 168,
+   "height": 504,
+   "colorType": 2
+  },
+  {
+   "diagram": "fixed",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 1896,
+   "height": 64,
+   "colorType": 2
+  },
+  {
+   "diagram": "pie",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 547,
+   "height": 450,
+   "colorType": 2
+  },
+  {
+   "diagram": "info",
+   "args": [
+    "-t",
+    "default"
+   ],
+   "width": 400,
+   "height": 150,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "2"
+   ],
+   "width": 716,
+   "height": 140,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "2"
+   ],
+   "width": 1568,
+   "height": 54,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "1.5"
+   ],
+   "width": 537,
+   "height": 105,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "1.5"
+   ],
+   "width": 1176,
+   "height": 41,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "1.25"
+   ],
+   "width": 448,
+   "height": 88,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "1.25"
+   ],
+   "width": 980,
+   "height": 34,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "3"
+   ],
+   "width": 1074,
+   "height": 210,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default",
+    "-s",
+    "3"
+   ],
+   "width": 2352,
+   "height": 81,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "--size",
+    "300"
+   ],
+   "width": 300,
+   "height": 59,
+   "colorType": 2
+  },
+  {
+   "diagram": "wide",
+   "args": [
+    "-t",
+    "default",
+    "--size",
+    "300"
+   ],
+   "width": 300,
+   "height": 11,
+   "colorType": 2
+  },
+  {
+   "diagram": "tall",
+   "args": [
+    "-t",
+    "default",
+    "--size",
+    "300"
+   ],
+   "width": 100,
+   "height": 300,
+   "colorType": 2
+  },
+  {
+   "diagram": "pie",
+   "args": [
+    "-t",
+    "default",
+    "--size",
+    "300"
+   ],
+   "width": 300,
+   "height": 247,
+   "colorType": 2
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-b",
+    "transparent"
+   ],
+   "width": 358,
+   "height": 70,
+   "colorType": 6
+  },
+  {
+   "diagram": "small",
+   "args": [
+    "-t",
+    "default",
+    "-b",
+    "red",
+    "-s",
+    "2"
+   ],
+   "width": 716,
+   "height": 140,
+   "colorType": 2
+  }
+ ]
+}

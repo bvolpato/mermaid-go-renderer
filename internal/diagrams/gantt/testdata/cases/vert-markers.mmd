@@ -1,0 +1,14 @@
+gantt
+  dateFormat YYYY-MM-DD
+  title Vertical markers
+  section One
+  A :a, 2024-01-01, 6d
+  Start marker :vert, v0, 2024-01-01, 0d
+  section Two
+  Mid marker :vert, crit, v1, after a, 1d
+  B :b, 2024-01-04, 6d
+  section Only markers
+  End marker :vert, done, 2024-01-10, 2d
+  section Three
+  C :after b, 2d
+  Tagged twice :vert, milestone, 2024-01-05, 0d

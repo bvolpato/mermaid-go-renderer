@@ -1,0 +1,181 @@
+classDiagram
+  class C0 {
+    +shard0() int
+  }
+  class C1 {
+    +batch0(id) void
+    +int order1
+  }
+  class C2 {
+    +invoice0(id) bool
+    +order1(id) bool
+    +index2() bool
+    +event3() int
+  }
+  class C3 {
+  }
+  class C4 {
+    +event0() int
+    +int gateway1
+    +int session2
+    +policy3(id) int
+  }
+  class C5 {
+    +string gateway0
+    +stream1() int
+    +List~int~ event2
+  }
+  class C6 {
+    +string span0
+  }
+  class C7 {
+    +quota0() int
+  }
+  class C8 {
+    +int invoice0
+  }
+  class C9 {
+    +string worker0
+    +invoice1() bool
+  }
+  class C10 {
+  }
+  class C11 {
+    +string batch0
+    +List~int~ stream1
+    +gateway2(id) int
+  }
+  class C12 {
+    +bool cache0
+    +string worker1
+    +span2(id) void
+  }
+  class C13 {
+    +gateway0(id) bool
+    +int index1
+    +metric2(id) void
+  }
+  class C14 {
+  }
+  class C15 {
+    +stream0(id) void
+  }
+  class C16 {
+  }
+  class C17 {
+    +session0(id) int
+    +alert1() bool
+  }
+  class C18 {
+  }
+  class C19 {
+    +payment0() void
+    +queue1() int
+  }
+  class C20 {
+    +List~int~ replica0
+    +bool invoice1
+    +List~int~ batch2
+  }
+  class C21 {
+    +List~int~ metric0
+    +bool shard1
+    +index2() bool
+  }
+  class C22 {
+    +gateway0(id) bool
+    +bool audit1
+    +worker2() void
+  }
+  class C23 {
+    +int index0
+    +stream1() bool
+  }
+  class C24 {
+    +List~int~ payment0
+    +policy1(id) void
+    +string policy2
+    +index3() int
+  }
+  class C25 {
+    +quota0() int
+    +string audit1
+  }
+  class C26 {
+    +quota0(id) bool
+  }
+  class C27 {
+    +int invoice0
+  }
+  class C28 {
+    +lease0() bool
+    +bool lease1
+    +token2() int
+    +string invoice3
+  }
+  class C29 {
+    +quota0(id) int
+  }
+  class C30 {
+    +queue0(id) void
+    +int span1
+  }
+  class C31 {
+    +cache0() int
+    +bool metric1
+    +gateway2() bool
+  }
+  class C32 {
+    +session0() int
+  }
+  class C33 {
+    +bool shard0
+    +payment1(id) bool
+  }
+  class C34 {
+    +bool replica0
+    +order1(id) int
+    +token2() int
+  }
+  class C35 {
+    +int bucket0
+    +string stream1
+  }
+  C0 -- C1 : schema
+  C1 ..|> C2 : stream
+  C1 ..> C4
+  C2 *-- C5
+  C2 ..> C6 : policy
+  C4 ..|> C7
+  C6 ..|> C8
+  C5 ..> C10
+  C6 ..> C11
+  C8 -- C12
+  C8 ..> C13
+  C10 ..> C14
+  C8 --> C15 : probe
+  C11 ..> C16
+  C11 ..> C18
+  C16 ..|> C19 : metric
+  C17 *-- C20
+  C17 ..|> C21
+  C15 ..> C22 : ledger
+  C18 *-- C23
+  C23 -- C24 : token
+  C20 --> C25
+  C20 --> C26
+  C24 o-- C27
+  C22 *-- C28
+  C23 ..> C29
+  C29 <|-- C30
+  C27 <|-- C31
+  C27 *-- C33 : queue
+  C27 *-- C34
+  C30 --> C35
+  C5 ..> C12
+  C4 o-- C10
+  C29 *-- C35
+  C6 ..|> C22
+  C22 --> C23
+  C3 <|-- C2
+  C2 ..> C11

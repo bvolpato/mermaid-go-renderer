@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><defs>
+<filter id="ds" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter>
+<filter id="ds2" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter>
+<filter id="dsw" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.2" flood-color="#FFFFFF"/></filter>
+<filter id="dsb" height="130%" width="130%"><feDropShadow dx="3" dy="3" stdDeviation="1.5" flood-opacity="0.5" flood-color="#000000"/></filter>
+</defs><rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="10" y="8" width="50" height="30" fill="#ECECFF" stroke="#9370DB" stroke-width="1" filter="url(#ds)"/>
+<rect x="72.5" y="8.5" width="50" height="30" rx="5" fill="#ffffde" stroke="#aaaa33" stroke-width="2" style="filter:url(#ds2)"/>
+<circle cx="155" cy="24" r="15" fill="#333333" stroke="#9370DB" stroke-width="2" filter="url(#ds)"/>
+<rect x="180" y="10" width="8" height="8" fill="#cc3366" stroke="#333" stroke-width="3" filter="url(#ds)"/>
+<rect x="100" y="50" width="96" height="66" fill="#1f2020"/>
+<rect x="110" y="58" width="50" height="24" fill="#1f2020" stroke="#cccccc" filter="url(#dsw)"/>
+<rect x="110" y="90" width="50" height="20" fill="#2a3340" stroke="#81B1DB" filter="url(#dsw)"/>
+<rect x="170" y="62" width="20" height="40" fill="#7f7f7f" fill-opacity="0.5" filter="url(#dsw)"/>
+<g filter="url(#ds)"><rect x="10" y="52" width="30" height="20" fill="#ECECFF" stroke="#9370DB"/><text x="14" y="67" font-family="Arial" font-size="12px" fill="#333">grp</text></g>
+<polygon points="50,52 80,52 90,72 60,72" fill="#ECECFF" stroke="#9370DB" filter="url(#ds)" transform="translate(0 0) scale(1)"/>
+<rect x="10" y="84" width="40" height="22" fill="#ffcc00" stroke="#333" filter="url(#dsb)"/>
+<g transform="translate(60 84) scale(0.5)"><rect width="50" height="40" fill="#ECECFF" stroke="#9370DB" stroke-width="2" filter="url(#ds)"/></g></svg>

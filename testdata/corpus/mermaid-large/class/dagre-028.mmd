@@ -1,0 +1,136 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+  class C0 {
+    +int cache0
+    +int stream1
+  }
+  class C1 {
+  }
+  class C2 {
+    +bool worker0
+    +int quota1
+    +cache2(id) int
+    +int schema3
+  }
+  class C3 {
+    +span0() void
+  }
+  class C4 {
+    +List~int~ event0
+    +string user1
+    +string token2
+    +shard3() bool
+  }
+  class C5 {
+    +replica0() int
+  }
+  class C6 {
+    +int policy0
+  }
+  class C7 {
+  }
+  class C8 {
+  }
+  class C9 {
+    +List~int~ probe0
+    +trace1() int
+    +quota2(id) bool
+    +int payment3
+  }
+  class C10 {
+    +bool quota0
+    +token1(id) void
+    +int invoice2
+  }
+  class C11 {
+    +ledger0(id) int
+    +List~int~ worker1
+    +bool user2
+  }
+  class C12 {
+    +invoice0() void
+    +int metric1
+  }
+  class C13 {
+  }
+  class C14 {
+  }
+  class C15 {
+    +replica0() bool
+    +replica1(id) int
+  }
+  class C16 {
+    +string span0
+  }
+  class C17 {
+    +batch0() bool
+  }
+  class C18 {
+    +string alert0
+  }
+  class C19 {
+  }
+  class C20 {
+    +queue0() bool
+    +alert1(id) void
+    +int schema2
+    +payment3() void
+  }
+  class C21 {
+    +cache0() int
+  }
+  class C22 {
+    +router0() bool
+    +bool metric1
+    +bool event2
+  }
+  class C23 {
+    +queue0() int
+    +int batch1
+    +ledger2(id) int
+    +List~int~ trace3
+  }
+  class C24 {
+    +string ledger0
+  }
+  class C25 {
+    +List~int~ index0
+  }
+  class C26 {
+    +List~int~ ledger0
+  }
+  class C27 {
+    +string policy0
+  }
+  C0 -- C1
+  C1 --> C2
+  C0 *-- C3
+  C1 ..> C4
+  C4 ..> C6
+  C3 -- C7
+  C4 -- C8 : trace
+  C7 o-- C9 : audit
+  C6 --> C10 : index
+  C7 ..|> C11
+  C10 ..> C12
+  C10 *-- C13 : index
+  C9 ..|> C14
+  C15 *-- C16
+  C16 -- C17
+  C15 o-- C18 : index
+  C17 *-- C19
+  C13 --> C20 : cache
+  C17 --> C22
+  C21 o-- C23
+  C17 *-- C24
+  C18 <|-- C25
+  C25 --> C26
+  C21 *-- C27
+  C22 o-- C10
+  C5 o-- C24
+  C18 <|-- C11
+  C7 ..|> C21
+  C7 <|-- C8

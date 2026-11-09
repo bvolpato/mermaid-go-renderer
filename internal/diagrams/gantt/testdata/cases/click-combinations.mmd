@@ -1,0 +1,12 @@
+gantt
+  dateFormat YYYY-MM-DD
+  First :a, 2024-01-01, 3d
+  Second :b, after a, 3d
+  Third :c, after b, 3d
+  Fourth :d, after c, 3d
+  click a call f() href "https://example.com/1"
+  click b href "https://example.com/2" call g("a,b", c)
+  click c call h("x")
+  click a,b,c href "mailto:someone@example.com"
+  click d href "data:text/html,hello"
+  click d href "/relative/path"

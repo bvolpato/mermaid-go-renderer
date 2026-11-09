@@ -1,0 +1,11 @@
+gantt
+  dateFormat YYYY-MM-DD
+  section Deps
+  Base :base, 2024-07-01, 5d
+  Late :late, 2024-07-10, 4d
+  After both :ab, after base late, 3d
+  Until late :ul, 2024-07-02, until late
+  Until two :2024-07-01, until late ab
+  After unknown :au, after nothing here, 2d
+  Until unknown :uu, 2024-07-03, until missing
+  After mixed :after base missing, 1d

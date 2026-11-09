@@ -1,0 +1,4260 @@
+{
+ "cases": [
+  {
+   "name": "scriptrun-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">Привет Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">Alice Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">Привет, Alice! Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-36",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-37",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-38",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-39",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-40",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-42",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-43",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-44",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-45",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-46",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-47",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">OK Привет API service 100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-48",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-49",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-50",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-51",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-52",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-53",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-54",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-55",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-56",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-57",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-58",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">fox database Привет A Zürich W API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-60",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-61",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-63",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-64",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-65",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-66",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-67",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-68",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-69",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-70",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-71",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">Ελληνικά Alice v1.2.3 authentication API</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-72",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-73",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-74",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-75",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-76",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-77",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-78",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-79",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-80",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:14px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-81",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:24px;font-weight:normal\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-82",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:23px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-83",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:16px;font-weight:bold\">Alice Ελληνικά Tom</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-84",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-85",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-86",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-87",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-88",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-89",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-90",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-91",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">日本語 Alice fox I the</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-92",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:14px;font-weight:normal\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-93",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:24px;font-weight:normal\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-94",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:23px;font-weight:bold\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-95",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:16px;font-weight:bold\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-96",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:12px;font-weight:normal\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-97",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:19px;font-weight:bold\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-98",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:24px;font-weight:normal\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-99",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:14px;font-weight:normal\">Bob 100% 中文 A I a</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-100",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-101",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-102",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-103",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-104",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-105",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-106",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-107",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">it's &lt; 한국어 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-108",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:12px;font-weight:normal\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-109",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:19px;font-weight:bold\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-110",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:24px;font-weight:normal\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-111",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:14px;font-weight:normal\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-112",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:16px;font-weight:bold\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-113",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:23px;font-weight:bold\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-114",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:19px;font-weight:bold\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-115",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:12px;font-weight:normal\">日本語 A</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-116",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:14px;font-weight:normal\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-117",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:24px;font-weight:normal\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-118",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:23px;font-weight:bold\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-119",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:16px;font-weight:bold\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-120",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:12px;font-weight:normal\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-121",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:19px;font-weight:bold\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-122",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:24px;font-weight:normal\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-123",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:14px;font-weight:normal\">the 中文 jumps &lt; 한국어 Alice (optional)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-124",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-125",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-126",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-127",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-128",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-129",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-130",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-131",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-132",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-133",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-134",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-135",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">Привет (Alice) мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-136",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-137",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-138",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-139",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-140",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-141",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-142",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-143",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-144",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-145",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-146",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-147",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">(Привет) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-148",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-149",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-150",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-151",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-152",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-153",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-154",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-155",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-156",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-157",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-158",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-159",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">Alice (Привет Tom) Yes</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-160",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-161",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-162",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-163",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-164",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-165",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-166",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-167",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-168",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-169",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-170",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-171",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">[Ελ] {AV} (То)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-172",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-173",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-174",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-175",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-176",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-177",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-178",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-179",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-180",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-181",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-182",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-183",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">Привет (A [Tom] Y) W</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-184",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-185",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-186",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-187",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-188",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-189",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-190",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-191",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-192",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-193",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-194",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-195",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">1234567890</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-196",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-197",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-198",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-199",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-200",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-201",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-202",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-203",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-204",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-205",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-206",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-207",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">100%</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-208",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-209",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-210",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-211",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-212",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-213",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-214",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-215",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-216",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-217",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-218",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-219",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">11.5 (74.1%)</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-220",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-221",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-222",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-223",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-224",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-225",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-226",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-227",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-228",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-229",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-230",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-231",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">2014-01-07</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-232",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-233",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-234",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-235",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-236",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-237",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-238",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-239",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-240",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-241",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-242",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-243",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">... !? 1/7</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-244",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-245",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-246",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-247",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-248",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-249",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-250",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-251",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-252",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-253",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-254",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-255",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">100% Привет</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-256",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-257",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-258",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-259",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-260",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-261",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-262",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-263",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-264",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-265",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-266",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-267",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">(1) Alice</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-268",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-269",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-270",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-271",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-272",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-273",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-274",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-275",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-276",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-277",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-278",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-279",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">7 Tom AVATAR</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-280",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-281",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-282",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-283",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-284",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-285",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-286",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-287",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-288",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-289",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-290",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-291",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">AVATAR To Wa Yo</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-292",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:16px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-293",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'trebuchet ms', verdana, arial, sans-serif;font-size:23px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-294",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:19px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-295",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:arial, sans-serif;font-size:12px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-296",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:14px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-297",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:verdana;font-size:24px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-298",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:23px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-299",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:'Open Sans', sans-serif;font-size:16px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-300",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:12px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-301",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:times;font-size:19px;font-weight:bold\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-302",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:24px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "scriptrun-303",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"40\" style=\"font-family:georgia;font-size:14px;font-weight:normal\">Привет мир</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s1 --> s3
+    s3 --> s4
+    s4 --> s13
+    s13 --> s20 : router
+    s20 --> s27
+    s27 --> s28 : invoice
+  }
+  state Group1 {
+    s6 --> s7
+    s7 --> s9
+    s9 --> s10
+  }
+  state Group2 {
+    s8 --> s16 : session
+    s16 --> s19
+    s19 --> s22 : worker
+    s22 --> s24
+    s24 --> s26
+  }
+  s0 --> s1 : Invoice
+  s1 --> s2 : Alert
+  s0 --> s3
+  s2 --> s4 : Quota
+  s2 --> s5
+  s3 --> s6
+  s5 --> s7
+  s6 --> s10 : Lease ledger
+  s6 --> s11 : Event schema
+  s11 --> s13 : Session span
+  s13 --> s16
+  s12 --> s17 : Bucket policy
+  s12 --> s18
+  s14 --> s19
+  s16 --> s20 : Queue ledger
+  s18 --> s21 : Invoice
+  s18 --> s24
+  s20 --> s25 : Shard
+  s20 --> s26
+  s27 --> s28
+  s23 --> s29
+  s27 --> s30
+  s29 --> s31
+  s31 --> [*]

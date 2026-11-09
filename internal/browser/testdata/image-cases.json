@@ -1,0 +1,772 @@
+{
+ "cases": [
+  {
+   "name": "image-png40x20-cell-plain-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=0;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-cell-in-text-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=1;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-cell-alone-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=2;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-cell-with-text-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=3;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-cell-two-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=4;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=4;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-table-plain-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=5;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-table-in-text-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=6;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-table-alone-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=7;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-table-with-text-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=8;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-table-two-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=9;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=9;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-wrap-plain-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=10;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-wrap-in-text-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=11;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-wrap-alone-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=12;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-wrap-with-text-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=13;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-wrap-two-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=14;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=14;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-attrs-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=15;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-width-attr-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=16;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-height-style-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=17;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-max-height-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=18;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-block-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=19;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png40x20-padding-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=20;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAAFElEQVR4nGNoIBIwjCocVTiqEAQAyLSQECx7VnQAAAAASUVORK5CYII=\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-cell-plain-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=21;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-cell-in-text-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=22;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-cell-alone-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=23;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-cell-with-text-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=24;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-cell-two-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=25;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=25;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-table-plain-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=26;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-table-in-text-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=27;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-table-alone-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=28;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-table-with-text-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=29;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-table-two-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=30;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=30;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-wrap-plain-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=31;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-wrap-in-text-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=32;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-wrap-alone-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=33;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-wrap-with-text-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=34;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-wrap-two-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=35;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=35;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-attrs-36",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=36;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-width-attr-37",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=37;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-height-style-38",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=38;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-max-height-39",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=39;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-block-40",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=40;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png100x100-padding-41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=41;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAAAAABVicqIAAAAPUlEQVR4nO3NAQkAAAwDoEVf9LU4HLSA6YFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUTyPxmMBYkeaGnfvwAAAABJRU5ErkJggg==\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-cell-plain-42",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=42;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-cell-in-text-43",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=43;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-cell-alone-44",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=44;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-cell-with-text-45",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=45;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-cell-two-46",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=46;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=46;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-table-plain-47",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=47;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-table-in-text-48",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=48;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-table-alone-49",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=49;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-table-with-text-50",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=50;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-table-two-51",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=51;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=51;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-wrap-plain-52",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=52;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-wrap-in-text-53",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=53;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-wrap-alone-54",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=54;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-wrap-with-text-55",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=55;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-wrap-two-56",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=56;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=56;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-attrs-57",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=57;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-width-attr-58",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=58;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-height-style-59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=59;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-max-height-60",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=60;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-block-61",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=61;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png16x64-padding-62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=62;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAAAAAA2FqhKAAAAF0lEQVR4nGNoQAMMowKjAqMCowLECQAARAAAHxjdMj4AAAAASUVORK5CYII=\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-cell-plain-63",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=63;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-cell-in-text-64",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=64;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-cell-alone-65",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=65;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-cell-with-text-66",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=66;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-cell-two-67",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=67;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=67;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-table-plain-68",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=68;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-table-in-text-69",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=69;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-table-alone-70",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=70;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-table-with-text-71",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=71;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-table-two-72",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=72;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=72;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-wrap-plain-73",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=73;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-wrap-in-text-74",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=74;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-wrap-alone-75",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=75;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-wrap-with-text-76",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=76;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-wrap-two-77",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=77;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=77;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-attrs-78",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=78;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-width-attr-79",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=79;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-height-style-80",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=80;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-max-height-81",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=81;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-block-82",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=82;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-png300x7-padding-83",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=83;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAHCAAAAACXCi/oAAAALUlEQVR4nO3OMQ0AAAjAsElHOhb4liVUQZl3hh0owQ6UYAdKsAMl2IES7EDJAgR5Gj3UdfGuAAAAAElFTkSuQmCC\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-cell-plain-84",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=84,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-cell-in-text-85",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=85,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-cell-alone-86",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=86,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-cell-with-text-87",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=87,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-cell-two-88",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=88,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=88,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-table-plain-89",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=89,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-table-in-text-90",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=90,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-table-alone-91",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=91,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-table-with-text-92",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=92,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-table-two-93",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=93,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=93,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-wrap-plain-94",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=94,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-wrap-in-text-95",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=95,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-wrap-alone-96",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=96,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-wrap-with-text-97",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=97,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-wrap-two-98",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=98,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=98,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-attrs-99",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=99,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-width-attr-100",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=100,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-height-style-101",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=101,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-max-height-102",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=102,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-block-103",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=103,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg30x60-padding-104",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=104,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2260%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-cell-plain-105",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=105,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-cell-in-text-106",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=106,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-cell-alone-107",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=107,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-cell-with-text-108",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=108,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-cell-two-109",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=109,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=109,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-table-plain-110",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=110,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-table-in-text-111",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=111,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-table-alone-112",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=112,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-table-with-text-113",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=113,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-table-two-114",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=114,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=114,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-wrap-plain-115",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=115,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-wrap-in-text-116",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/svg+xml;case=116,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-wrap-alone-117",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=117,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-wrap-with-text-118",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=118,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-wrap-two-119",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/svg+xml;case=119,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/svg+xml;case=119,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-attrs-120",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=120,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-width-attr-121",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=121,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-height-style-122",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=122,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-max-height-123",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=123,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-block-124",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=124,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-svg40viewBox-padding-125",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/svg+xml;case=125,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20viewBox%3D%220%200%20100%2050%22%3E%3Crect%20width%3D%2210%22%20height%3D%2210%22%2F%3E%3C%2Fsvg%3E\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-cell-plain-126",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=126;base64,AAAA\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-cell-in-text-127",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=127;base64,AAAA\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-cell-alone-128",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=128;base64,AAAA\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-cell-with-text-129",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=129;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-cell-two-130",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=130;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=130;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-table-plain-131",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=131;base64,AAAA\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-table-in-text-132",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=132;base64,AAAA\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-table-alone-133",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=133;base64,AAAA\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-table-with-text-134",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=134;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-table-two-135",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=135;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=135;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-wrap-plain-136",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=136;base64,AAAA\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-wrap-in-text-137",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"data:image/png;case=137;base64,AAAA\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-wrap-alone-138",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=138;base64,AAAA\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-wrap-with-text-139",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=139;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-wrap-two-140",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"data:image/png;case=140;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"data:image/png;case=140;base64,AAAA\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-attrs-141",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=141;base64,AAAA\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-width-attr-142",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=142;base64,AAAA\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-height-style-143",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=143;base64,AAAA\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-max-height-144",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=144;base64,AAAA\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-block-145",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=145;base64,AAAA\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badPng-padding-146",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"data:image/png;case=146;base64,AAAA\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-cell-plain-147",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo147\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-cell-in-text-148",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"x-none:foo148\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-cell-alone-149",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo149\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-cell-with-text-150",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo150\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-cell-two-151",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo151\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"x-none:foo151\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-table-plain-152",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo152\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-table-in-text-153",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"x-none:foo153\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-table-alone-154",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo154\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-table-with-text-155",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo155\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-table-two-156",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo156\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"x-none:foo156\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-wrap-plain-157",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo157\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-wrap-in-text-158",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"x-none:foo158\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-wrap-alone-159",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo159\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-wrap-with-text-160",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo160\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-wrap-two-161",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"x-none:foo161\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"x-none:foo161\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-attrs-162",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo162\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-width-attr-163",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo163\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-height-style-164",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo164\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-max-height-165",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo165\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-block-166",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo166\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-badScheme-padding-167",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"x-none:foo167\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-cell-plain-168",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-cell-in-text-169",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-cell-alone-170",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-cell-with-text-171",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-cell-two-172",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-table-plain-173",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-table-in-text-174",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-table-alone-175",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-table-with-text-176",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-table-two-177",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-wrap-plain-178",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-wrap-in-text-179",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">some <img src=\"\"> text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-wrap-alone-180",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-wrap-with-text-181",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-wrap-two-182",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"> more text <img src=\"\" style=\"display: flex; flex-direction: column; width: 100%;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-attrs-183",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" width=\"30\" height=\"20\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-width-attr-184",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" width=\"30\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-height-style-185",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" style=\"height: 30px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-max-height-186",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" style=\"max-height: 10px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-block-187",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" style=\"display: block\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-empty-padding-188",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\">x <img src=\"\" style=\"padding: 2px 3px; border: 1px solid red; margin: 0 4px\"> y</p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-nosrc-plain-189",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-nosrc-alone-190",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img style=\"display: flex; flex-direction: column; min-width: 80px; max-width: 80px;\"></p></span></div></foreignObject></g></svg>"
+  },
+  {
+   "name": "image-nosrc-with-text-191",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: nowrap; line-height: 1.5; max-width: 120px; text-align: center; width: 120px;font-family: arial; font-size: 14px;\"><span class=\"nodeLabel\"><p style=\"margin:0\"><img style=\"display: flex; flex-direction: column; width: 100%;\"> some text</p></span></div></foreignObject></g></svg>"
+  }
+ ]
+}

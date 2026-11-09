@@ -1,0 +1,61 @@
+---
+config:
+  layout: dagre
+---
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s0 --> s2
+    s2 --> s5
+    s5 --> s6
+    s6 --> s28 : user
+  }
+  state Group1 {
+    s4 --> s11
+    s11 --> s18 : event
+    s18 --> s21
+  }
+  state Group2 {
+    s7 --> s12 : user
+    s12 --> s22 : shard
+  }
+  state Group3 {
+    s8 --> s10 : ledger
+    s10 --> s16
+    s16 --> s19
+    s19 --> s29
+    s29 --> s30 : gateway
+    s30 --> s33
+    s33 --> s36
+  }
+  s0 --> s2
+  s1 --> s3
+  s1 --> s4
+  s4 --> s5
+  s4 --> s6 : Event
+  s4 --> s7
+  s5 --> s8
+  s5 --> s11
+  s12 --> s13 : Quota
+  s11 --> s14
+  s12 --> s15
+  s14 --> s16 : Probe metric
+  s16 --> s17
+  s12 --> s18 : Policy router
+  s18 --> s19
+  s15 --> s20
+  s19 --> s21 : Replica
+  s16 --> s22
+  s20 --> s23
+  s21 --> s25
+  s24 --> s26
+  s23 --> s27
+  s26 --> s28
+  s28 --> s31 : Token bucket
+  s28 --> s33
+  s30 --> s34
+  s30 --> s35
+  s33 --> s37
+  s34 --> s38 : Gateway
+  s37 --> s39
+  s39 --> [*]

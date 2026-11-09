@@ -1,0 +1,146 @@
+flowchart LR
+  subgraph g0 [Stream]
+    n1[(Policy report event)]
+    n16((Report))
+    n18{{Session}}
+    n37[(Metric metric)]
+    n42((Replica ledger probe))
+    n44[(Queue)]
+    n49((Shard audit session))
+    n60{Audit}
+    n62[/Trace/]
+  end
+  subgraph g1 [Batch probe]
+    n2[/Order router/]
+    n7[/Token index/]
+    n9([Ledger trace])
+    n14([Probe replica])
+    n22((Gateway))
+    n23[Alert payment]
+    n24{Gateway probe}
+    n30{{Cache batch audit}}
+    n38{Queue policy router}
+    n43[(Queue alert)]
+    n50(Probe bucket)
+    n59((Session report ledger))
+  end
+  subgraph g2 [Alert]
+    n5[/Cache/]
+    n6((Event gateway))
+    n13{{Span lease session}}
+    n19[Trace audit metric]
+    n26[Metric]
+    n31[[Cache user]]
+    n34{Bucket shard replica}
+    n35([Payment session])
+    n39{User}
+    n40((Policy))
+    n47[/Payment/]
+    n48((Index))
+    n51{{Schema}}
+    n54(Event)
+    n55[[Gateway]]
+    n63[[Order]]
+  end
+  n0[Order order batch]
+  n3[/Schema trace/]
+  n4[[Cache ledger lease]]
+  n8[Event]
+  n10[[Stream stream worker]]
+  n11[Worker bucket audit]
+  n12[/Metric payment/]
+  n15{{Alert}}
+  n17[[Queue session]]
+  n20((Stream report))
+  n21[(Batch)]
+  n25(Policy)
+  n27[(Event)]
+  n28([Event])
+  n29((Invoice))
+  n32[/Session/]
+  n33(Gateway payment quota)
+  n36[/Policy ledger payment/]
+  n41[[Quota]]
+  n45{{Span policy lease}}
+  n46[(Session)]
+  n52[(Batch shard)]
+  n53([Metric invoice session])
+  n56([Probe])
+  n57[(Quota)]
+  n58[[Span batch queue]]
+  n61[[Worker]]
+  n0 --x n1
+  n0 --- n2
+  n0 --o n3
+  n0 --> n4
+  n2 --- n6
+  n1 --x n7
+  n2 -.-> n8
+  n3 --x n9
+  n5 --o n10
+  n7 ==>|Queue user| n11
+  n8 --x n13
+  n12 --x n14
+  n10 --- n15
+  n9 --x n16
+  n9 ==>|User| n17
+  n16 -.-> n18
+  n12 -.-> n19
+  n18 -.-> n20
+  n20 --- n21
+  n19 --> n22
+  n18 --> n24
+  n21 -.-> n25
+  n22 --x|Gateway schema| n26
+  n19 --o n27
+  n26 ==> n29
+  n26 --> n30
+  n25 ==> n31
+  n31 --x n32
+  n25 ==>|Index trace| n33
+  n30 ==>|Ledger| n35
+  n33 -->|Batch batch| n36
+  n30 --- n37
+  n36 --x n38
+  n35 --x|Batch event| n39
+  n31 --o n40
+  n33 --x|Alert| n41
+  n33 ==> n42
+  n36 --x n43
+  n37 --> n44
+  n38 --> n45
+  n39 -->|Alert| n46
+  n40 --> n49
+  n46 ==>|Token| n50
+  n49 --x|Bucket| n51
+  n43 --x n52
+  n51 --o n53
+  n47 --- n54
+  n48 -.-> n56
+  n49 ==> n57
+  n57 -.-> n58
+  n52 --- n59
+  n51 --> n60
+  n58 --x n61
+  n54 --o n62
+  n61 -.-> n63
+  n60 --x n0
+  n2 --o n63
+  n29 -.-> n15
+  n47 -.-> n17
+  n52 -.-> n46
+  n39 --> n31
+  n20 --> n7
+  n63 --> n28
+  n19 --> n22
+  n3 --- n36
+  n52 ==> n22
+  n45 --- n57
+  n15 --- n55
+  n58 --o n25
+  n62 -.-> n37
+  n11 --x n39
+  n8 --x n24
+  n29 ==> n31
+  n4 --x n8
+  g0 --> g2

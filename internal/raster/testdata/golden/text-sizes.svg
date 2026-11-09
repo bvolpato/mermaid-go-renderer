@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="116" viewBox="0 0 200 116"><rect width="100%" height="100%" fill="#ffffff"/>
+<text x="6" y="16" font-family="Arial" font-size="13.984375px" fill="#000">Near 14 Sphinx quartz</text>
+<text x="6" y="34" font-family="Trebuchet MS" font-size="15.984375px" fill="#000">Near 16 Sphinx quartz</text>
+<text x="6" y="52" font-family="Arial" font-size="14px" font-style="italic" fill="#000">Italic 14 Sphinx quartz</text>
+<text x="6" y="70" font-family="Trebuchet MS" font-size="16px" font-style="italic" fill="#000">Italic 16 Sphinx</text>
+<text x="6" y="88" font-family="Arial" font-size="14.25px" fill="#000">Size 14.25 Sphinx quartz</text>
+<g transform="scale(0.875)"><text x="8" y="120" font-family="Trebuchet MS" font-size="16px" fill="#000">Scaled to 14 Sphinx</text></g></svg>

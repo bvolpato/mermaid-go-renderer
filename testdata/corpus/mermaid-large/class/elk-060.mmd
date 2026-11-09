@@ -1,0 +1,299 @@
+classDiagram
+  class C0 {
+    +int audit0
+    +int event1
+    +List~int~ metric2
+  }
+  class C1 {
+    +bool gateway0
+    +string shard1
+  }
+  class C2 {
+  }
+  class C3 {
+    +List~int~ worker0
+    +cache1(id) void
+    +user2() void
+    +session3() void
+  }
+  class C4 {
+    +bool span0
+    +order1(id) int
+  }
+  class C5 {
+    +int stream0
+    +List~int~ lease1
+    +bool user2
+    +List~int~ event3
+  }
+  class C6 {
+    +token0(id) void
+    +bool span1
+    +report2() void
+    +bool payment3
+  }
+  class C7 {
+    +int user0
+    +span1() void
+    +List~int~ ledger2
+  }
+  class C8 {
+    +queue0() bool
+    +string index1
+  }
+  class C9 {
+    +router0(id) void
+  }
+  class C10 {
+    +List~int~ replica0
+    +bool router1
+    +int metric2
+  }
+  class C11 {
+  }
+  class C12 {
+    +event0() void
+    +string lease1
+  }
+  class C13 {
+  }
+  class C14 {
+    +bool payment0
+  }
+  class C15 {
+    +bool shard0
+    +bool quota1
+    +schema2() int
+  }
+  class C16 {
+    +event0(id) bool
+    +List~int~ report1
+  }
+  class C17 {
+    +alert0() int
+    +report1() int
+    +List~int~ report2
+  }
+  class C18 {
+  }
+  class C19 {
+    +int cache0
+    +bool worker1
+    +string policy2
+  }
+  class C20 {
+    +int event0
+    +int policy1
+  }
+  class C21 {
+  }
+  class C22 {
+    +int batch0
+  }
+  class C23 {
+    +List~int~ ledger0
+    +bool session1
+    +shard2() bool
+  }
+  class C24 {
+    +string cache0
+    +payment1(id) void
+    +bool policy2
+    +report3(id) bool
+  }
+  class C25 {
+    +int alert0
+  }
+  class C26 {
+    +int token0
+  }
+  class C27 {
+  }
+  class C28 {
+    +index0() bool
+    +bool report1
+  }
+  class C29 {
+    +schema0(id) void
+    +cache1(id) bool
+    +order2(id) int
+    +string cache3
+  }
+  class C30 {
+    +List~int~ queue0
+    +string session1
+    +lease2(id) bool
+  }
+  class C31 {
+    +string alert0
+  }
+  class C32 {
+  }
+  class C33 {
+    +bool user0
+    +ledger1(id) int
+  }
+  class C34 {
+    +List~int~ quota0
+  }
+  class C35 {
+  }
+  class C36 {
+    +metric0(id) void
+    +quota1() int
+  }
+  class C37 {
+  }
+  class C38 {
+    +batch0() void
+    +payment1(id) void
+    +List~int~ schema2
+  }
+  class C39 {
+    +List~int~ event0
+    +event1(id) bool
+  }
+  class C40 {
+  }
+  class C41 {
+    +int cache0
+    +quota1() bool
+    +int event2
+    +bucket3(id) bool
+  }
+  class C42 {
+    +index0() bool
+  }
+  class C43 {
+    +order0(id) int
+    +ledger1() int
+    +bool queue2
+    +payment3(id) bool
+  }
+  class C44 {
+    +router0() int
+    +trace1() bool
+    +int metric2
+    +List~int~ quota3
+  }
+  class C45 {
+    +queue0() void
+    +worker1(id) void
+    +bool lease2
+    +int audit3
+  }
+  class C46 {
+    +report0(id) void
+    +batch1(id) void
+  }
+  class C47 {
+    +List~int~ trace0
+    +int router1
+    +List~int~ lease2
+  }
+  class C48 {
+  }
+  class C49 {
+  }
+  class C50 {
+    +ledger0(id) void
+    +schema1() bool
+    +int bucket2
+  }
+  class C51 {
+    +payment0(id) void
+  }
+  class C52 {
+    +List~int~ shard0
+    +router1(id) int
+  }
+  class C53 {
+    +index0() int
+    +bool schema1
+  }
+  class C54 {
+    +bool batch0
+    +bool payment1
+    +metric2(id) int
+    +quota3() int
+  }
+  class C55 {
+  }
+  class C56 {
+  }
+  class C57 {
+  }
+  class C58 {
+    +string audit0
+    +audit1() bool
+    +stream2() int
+  }
+  class C59 {
+    +int metric0
+    +bool bucket1
+    +span2(id) bool
+    +replica3() int
+  }
+  C0 o-- C1
+  C0 <|-- C2
+  C0 -- C3
+  C3 ..> C4 : alert
+  C4 --> C5 : trace
+  C1 ..> C6
+  C6 ..> C7
+  C5 o-- C9
+  C8 *-- C10
+  C5 ..> C11 : ledger
+  C9 o-- C12
+  C12 ..|> C13 : router
+  C10 -- C14
+  C12 o-- C15
+  C9 o-- C16
+  C16 -- C17 : trace
+  C14 ..> C18
+  C18 o-- C19
+  C18 -- C21
+  C15 *-- C22
+  C17 ..> C23 : report
+  C18 <|-- C24
+  C21 ..|> C27
+  C22 ..|> C28 : order
+  C24 --> C29
+  C26 o-- C30 : stream
+  C24 ..> C31
+  C30 o-- C33
+  C31 *-- C34
+  C30 ..> C35
+  C29 o-- C36
+  C30 o-- C37
+  C34 o-- C38 : token
+  C35 --> C39 : token
+  C38 o-- C40
+  C40 --> C41
+  C41 ..> C42
+  C36 <|-- C43
+  C41 ..> C44 : replica
+  C43 o-- C45
+  C45 --> C46 : audit
+  C42 --> C47
+  C46 --> C48
+  C44 <|-- C50 : alert
+  C45 -- C51
+  C45 o-- C52 : batch
+  C53 ..|> C54 : report
+  C51 <|-- C56 : user
+  C51 <|-- C57
+  C57 <|-- C58
+  C55 o-- C59 : ledger
+  C14 --> C40
+  C53 -- C8
+  C46 -- C35
+  C56 ..> C12
+  C42 o-- C45
+  C17 ..> C58
+  C22 *-- C10
+  C29 ..|> C39
+  C13 ..|> C50
+  C9 *-- C32
+  C8 *-- C17
+  C24 ..> C3

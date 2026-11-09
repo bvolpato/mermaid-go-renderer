@@ -1,0 +1,2942 @@
+[
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: white;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: transparent;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: red;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: red;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: red;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(240, 240, 240);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(240, 240, 240);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 255, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(255, 255, 255, 0.533);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(255, 0, 0, 0.5);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(18, 52, 86, 0.47);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(1, 2, 3);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(1, 2, 3);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(1, 2, 3, 0.5);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(1, 2, 3, 0.25);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(1, 2, 3, 0.5);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 0, 128);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 0, 13);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(64, 191, 64);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(64, 191, 64);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(64, 191, 64, 0.3);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 128, 128);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(26, 204, 26);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: lab(50 40 30);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: lch(50 40 30);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: oklab(0.5 0.1 0.1);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: oklch(0.5 0.1 30);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: color(display-p3 1 0 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: color(srgb 1 0.5 0 / 0.5);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: color-mix(in srgb, red, blue);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: light-dark(red, blue);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: currentcolor;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: currentcolor;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: inherit;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: initial;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: unset;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: revert;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: var(--x);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: var(--x, red);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: canvas;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: canvastext;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: buttonface;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rebeccapurple;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: grey;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: gray;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: transparent;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: white;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(240, 240, 240);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 255, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(17, 34, 51);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: black;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: red;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(0, 0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 255, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 255, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(3, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: black;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: window;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: accentcolor;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(170, 187, 204);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(171, 205, 239);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 1);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 18);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 18, 52);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(1, 35, 69);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(18, 52, 86);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 0, 0);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(255, 255, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 18, 171);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(17, 238, 51);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(0, 1, 255);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgb(187, 170, 221);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px; background-color: rgba(170, 187, 204, 0.867);\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg id=\"a\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123.456px;\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: white;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: transparent;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: red;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: red;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: red;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(240, 240, 240);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(240, 240, 240);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 255, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(255, 255, 255, 0.533);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(255, 0, 0, 0.5);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(18, 52, 86, 0.47);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(1, 2, 3);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(1, 2, 3);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(1, 2, 3, 0.5);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(1, 2, 3, 0.25);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(1, 2, 3, 0.5);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 0, 128);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 0, 13);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(64, 191, 64);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(64, 191, 64);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(64, 191, 64, 0.3);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 128, 128);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(26, 204, 26);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: lab(50 40 30);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: lch(50 40 30);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: oklab(0.5 0.1 0.1);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: oklch(0.5 0.1 30);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: color(display-p3 1 0 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: color(srgb 1 0.5 0 / 0.5);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: color-mix(in srgb, red, blue);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: light-dark(red, blue);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: currentcolor;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: currentcolor;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: inherit;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: initial;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: unset;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: revert;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: var(--x);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: var(--x, red);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: canvas;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: canvastext;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: buttonface;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rebeccapurple;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: grey;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: gray;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: transparent;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: white;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(240, 240, 240);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 255, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(17, 34, 51);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: black;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: red;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(0, 0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 255, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 255, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(3, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: black;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: window;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: accentcolor;\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(170, 187, 204);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(171, 205, 239);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 1);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 18);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 18, 52);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(1, 35, 69);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(18, 52, 86);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 0, 0);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(255, 255, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 18, 171);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(17, 238, 51);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(0, 1, 255);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgb(187, 170, 221);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" style=\"background-color: rgba(170, 187, 204, 0.867);\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: white; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: transparent; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(255, 255, 255, 0.533); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(255, 0, 0, 0.5); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(18, 52, 86, 0.47); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 2, 3); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 2, 3); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.5); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.25); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.5); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 0, 128); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 0, 13); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(64, 191, 64); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(64, 191, 64); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(64, 191, 64, 0.3); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 128, 128); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(26, 204, 26); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: lab(50 40 30); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: lch(50 40 30); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: oklab(0.5 0.1 0.1); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: oklch(0.5 0.1 30); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color(display-p3 1 0 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color(srgb 1 0.5 0 / 0.5); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color-mix(in srgb, red, blue); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: light-dark(red, blue); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: currentcolor; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: currentcolor; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: inherit; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: initial; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: unset; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: revert; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: var(--x); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: var(--x, red); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: canvas; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: canvastext; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: buttonface; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rebeccapurple; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: grey; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: gray; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: transparent; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: white; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(17, 34, 51); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: black; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(0, 0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(3, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: black; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: window; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: accentcolor; max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(170, 187, 204); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(171, 205, 239); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 1); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 18); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 18, 52); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 35, 69); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(18, 52, 86); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 18, 171); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(17, 238, 51); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 1, 255); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(187, 170, 221); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(170, 187, 204, 0.867); max-width: 10px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: blue; max-width: 10px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: white; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: transparent; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: red; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: red; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: red; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(240, 240, 240); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(240, 240, 240); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 255, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(255, 255, 255, 0.533); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(255, 0, 0, 0.5); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(18, 52, 86, 0.47); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(1, 2, 3); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(1, 2, 3); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(1, 2, 3, 0.5); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(1, 2, 3, 0.25); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(1, 2, 3, 0.5); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 0, 128); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 0, 13); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(64, 191, 64); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(64, 191, 64); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(64, 191, 64, 0.3); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 128, 128); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(26, 204, 26); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: lab(50 40 30); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: lch(50 40 30); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: oklab(0.5 0.1 0.1); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: oklch(0.5 0.1 30); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: color(display-p3 1 0 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: color(srgb 1 0.5 0 / 0.5); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: color-mix(in srgb, red, blue); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: light-dark(red, blue); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: currentcolor; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: currentcolor; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: inherit; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: initial; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: unset; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: revert; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: var(--x); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: var(--x, red); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: canvas; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: canvastext; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: buttonface; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rebeccapurple; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: grey; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: gray; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: transparent; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: white; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(240, 240, 240); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 255, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(17, 34, 51); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: black; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: red; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(0, 0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 255, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 255, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(3, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: black; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: window; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: accentcolor; max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(170, 187, 204); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(171, 205, 239); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 1); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 18); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 18, 52); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(1, 35, 69); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(18, 52, 86); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 0, 0); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(255, 255, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 18, 171); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(17, 238, 51); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(0, 1, 255); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgb(187, 170, 221); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 500px; background-color: rgba(170, 187, 204, 0.867); max-height: 7px;\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width:5e2px;BACKGROUND-COLOR:#FF0000;max-height: 7px\" height=\"20\" class=\"c\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: white;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: transparent;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(255, 255, 255, 0.533);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(255, 0, 0, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(18, 52, 86, 0.47);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 2, 3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 2, 3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.25);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(1, 2, 3, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 0, 128);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 0, 13);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(64, 191, 64);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(64, 191, 64);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(64, 191, 64, 0.3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 128, 128);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(26, 204, 26);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: lab(50 40 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: lch(50 40 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: oklab(0.5 0.1 0.1);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: oklch(0.5 0.1 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color(display-p3 1 0 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color(srgb 1 0.5 0 / 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: color-mix(in srgb, red, blue);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: light-dark(red, blue);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: currentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: currentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: inherit;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: initial;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: unset;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: revert;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: var(--x);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: var(--x, red);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: canvas;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: canvastext;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: buttonface;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rebeccapurple;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: grey;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: gray;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: transparent;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: white;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(17, 34, 51);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: black;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(0, 0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(3, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: black;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: window;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: accentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(170, 187, 204);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(171, 205, 239);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 1);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 18);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 18, 52);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(1, 35, 69);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(18, 52, 86);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 18, 171);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(17, 238, 51);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(0, 1, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgb(187, 170, 221);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"background-color: rgba(170, 187, 204, 0.867);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"\" height=\"20\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: white;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "transparent",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: transparent;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "RED",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "Red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#f0f0f0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#FFF8",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(255, 255, 255, 0.533);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#ff000080",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(255, 0, 0, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#12345678",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(18, 52, 86, 0.47);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1,2,3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(1, 2, 3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1 2 3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(1, 2, 3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgba(1,2,3,.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(1, 2, 3, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgba(1, 2, 3, 0.25)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(1, 2, 3, 0.25);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1 2 3 / 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(1, 2, 3, 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(100%, 0%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 0, 128);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(300, -5, 12.6)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 0, 13);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hsl(120, 50%, 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(64, 191, 64);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hsl(120 50% 50%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(64, 191, 64);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hsla(120, 50%, 50%, 0.3)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(64, 191, 64, 0.3);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hsl(0.5turn 100% 25%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 128, 128);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hwb(120 10% 20%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(26, 204, 26);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "lab(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: lab(50 40 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "lch(50% 40 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: lch(50 40 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "oklab(0.5 0.1 0.1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: oklab(0.5 0.1 0.1);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "oklch(0.5 0.1 30)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: oklch(0.5 0.1 30);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "color(display-p3 1 0 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: color(display-p3 1 0 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "color(srgb 1 0.5 0 / 0.5)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: color(srgb 1 0.5 0 / 0.5);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "color-mix(in srgb, red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: color-mix(in srgb, red, blue);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "light-dark(red, blue)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: light-dark(red, blue);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "currentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: currentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "currentColor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: currentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "inherit",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: inherit;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "initial",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: initial;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "unset",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: unset;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "revert",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: revert;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "var(--x)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: var(--x);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "var(--x, red)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: var(--x, red);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "canvas",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: canvas;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "CanvasText",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: canvastext;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "ButtonFace",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: buttonface;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rebeccapurple",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rebeccapurple;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "grey",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: grey;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "gray",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: gray;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "transparent ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: transparent;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": " white",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: white;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "white;",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "white !important",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "notacolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": " ",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#ggg",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "F0F0F0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(240, 240, 240);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "fff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "123",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(17, 34, 51);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "0",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "url(x.png)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "red blue",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(1,2)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "none",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "black/**/",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: black;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "\\72 ed",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: red;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "white; fill: red",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(0 0 0 / 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(0, 0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgba(255,255,255,1)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgba(255,255,255,0.999)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "rgb(calc(1 + 2), 0, 0)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(3, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "hsl(0deg 0% 0%)",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "black",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: black;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "WINDOW",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: window;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "accentcolor",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: accentcolor;\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "abc",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(170, 187, 204);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "ABCDEF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(171, 205, 239);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 1);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "12",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 18);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "1234",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 18, 52);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "12345",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(1, 35, 69);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "123456",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(18, 52, 86);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "1234567",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "000",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "00",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 0, 0);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "ff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "ffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "fffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "ffffff",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(255, 255, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "12ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 18, 171);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "1e3",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(17, 238, 51);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "0001FF",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(0, 1, 255);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "bad",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgb(187, 170, 221);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "face",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#ab",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#abcd",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"max-width: 0.1px !important; background-color: rgba(170, 187, 204, 0.867);\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "#abcde",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "-1",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ },
+ {
+  "svg": "<svg id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g></g></svg>",
+  "background": "1.5",
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\" style=\"not css; max-width: 0.10px !important\" height=\"20\"><g/></svg>"
+ }
+]

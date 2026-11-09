@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><defs>
+<linearGradient id="a"><stop offset="0" stop-color="#ff0000"/><stop offset="1" stop-color="#0000ff"/></linearGradient>
+<linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9370DB"/><stop offset="50%" stop-color="#ffffde"/><stop offset="100%" stop-color="#333333"/></linearGradient>
+<linearGradient id="c" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="60" y2="0"><stop offset="0" stop-color="#00ff00" stop-opacity="1"/><stop offset="1" stop-color="#00ff00" stop-opacity="0"/></linearGradient>
+<linearGradient id="d" x1="0.3" x2="0.6" spreadMethod="reflect"><stop offset="0" stop-color="#ffcc00"/><stop offset="1" stop-color="#003366"/></linearGradient>
+<linearGradient id="e" x1="0.3" x2="0.6" spreadMethod="repeat"><stop offset="0" stop-color="#ffcc00"/><stop offset="1" stop-color="#003366"/></linearGradient>
+<linearGradient id="f" gradientTransform="rotate(45 0.5 0.5)"><stop offset="0.2" stop-color="#ffffff"/><stop offset="0.8" stop-color="#000000"/></linearGradient>
+<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0042eb"/><stop offset="100%" stop-color="#eb0042"/></linearGradient>
+</defs><rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="10" y="8" width="80" height="24" fill="url(#a)"/>
+<rect x="100" y="8" width="40" height="44" fill="url(#b)" stroke="#333" stroke-width="1"/>
+<rect x="10" y="40" width="80" height="14" fill="url(#c)"/>
+<rect x="150" y="8" width="40" height="20" fill="url(#d)"/>
+<rect x="150" y="32" width="40" height="20" fill="url(#e)"/>
+<rect x="10" y="62" width="50" height="50" fill="url(#f)"/>
+<circle cx="95" cy="87" r="24" fill="url(#a)" fill-opacity="0.6"/>
+<rect x="130.5" y="64.5" width="60" height="30" rx="5" fill="#ffffff" stroke="url(#g)" stroke-width="2"/>
+<path d="M130,105 L190,105" stroke="url(#c)" stroke-width="4"/></svg>

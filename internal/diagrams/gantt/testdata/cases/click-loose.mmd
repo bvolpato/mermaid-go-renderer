@@ -1,0 +1,11 @@
+---
+config:
+  securityLevel: loose
+---
+gantt
+  dateFormat YYYY-MM-DD
+  Link task :cl1, 2024-01-01, 3d
+  Invoke task :cl2, after cl1, 3d
+  click cl1 href "javascript:alert(1)"
+  click cl2 call fn()
+  click cl2 href "https://example.com" call fn(1)

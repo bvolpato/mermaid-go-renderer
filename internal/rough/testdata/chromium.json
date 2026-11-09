@@ -1,0 +1,85 @@
+{
+ "meta": {
+  "reference": "mermaid 12.2.0 in headless Chromium (.parity/ref)",
+  "randomSeed": 1835885671
+ },
+ "shapes": [
+  {
+   "kind": "rectangle",
+   "source": "mermaid-e2e/flowchart/nightly-check/handdrawn/should-honor-minimum-edge-length-as-specified-by-the-user.svg",
+   "f": "rectangle",
+   "a": [
+    -90,
+    -25.5,
+    180,
+    51
+   ],
+   "o": {
+    "roughness": 0.7,
+    "fill": "#ffffff",
+    "fillStyle": "hachure",
+    "fillWeight": 1.5,
+    "hachureGap": 1.5,
+    "stroke": "#28253D",
+    "seed": 1,
+    "strokeWidth": 1.3,
+    "fillLineDash": [
+     0,
+     0
+    ],
+    "strokeLineDash": [
+     0,
+     0
+    ]
+   },
+   "position": 0,
+   "draws": 0,
+   "paths": [
+    [
+     [
+      "d",
+      "26296:5271599b3a1c3f7946c0:M-90.13106857927826 -25.34922284721895 C-90.13106857927826 -25.34922284721895, -90.13106857927826 -25.34922284721895, -9"
+     ],
+     [
+      "stroke",
+      "#ffffff"
+     ],
+     [
+      "stroke-width",
+      "1.5"
+     ],
+     [
+      "fill",
+      "none"
+     ],
+     [
+      "stroke-dasharray",
+      "0 0"
+     ]
+    ],
+    [
+     [
+      "d",
+      "1237:3aaa67e48d3bffcad2f3:M-89.39991558659821 -24.825280682556333 C-54.22301847096533 -24.941127222608774, -18.390468164719643 -26.9664625881426, "
+     ],
+     [
+      "stroke",
+      "#28253D"
+     ],
+     [
+      "stroke-width",
+      "1.3"
+     ],
+     [
+      "fill",
+      "none"
+     ],
+     [
+      "stroke-dasharray",
+      "0 0"
+     ]
+    ]
+   ]
+  }
+ ]
+}

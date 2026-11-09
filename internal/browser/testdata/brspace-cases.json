@@ -1,0 +1,1824 @@
+{
+ "cases": [
+  {
+   "name": "brspace-0-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-0-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using <br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-1-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span class=\"edgeLabel\"><p>long line using<br>should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-2-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>long line using<br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-3-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p>long line using <br> should work</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-4-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa   <br>   b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-5-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span>aaaa <br>b</span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-6-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\">aaaa <br>b</div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-7-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold </b><br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-8-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>aaaa <b>bold</b> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-9-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p>aaaa <i>it </i> <br>c</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-10-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-11-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>aaaa <br> <br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-12-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p> <br>bbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-13-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br></p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-14-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>aaaa&nbsp;<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-15-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p>aaaa\n<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-16-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa\t<br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-17-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>aaaa <br>bbbbbbbbbb</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-18-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p>a <br>b <br>cccc </p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-19-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:courier;font-size:14px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:arial;font-size:16px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:courier;font-size:14px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:arial;font-size:16px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-20-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:courier;font-size:14px\"><span><p>aaaa<span> </span><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:courier;font-size:14px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:arial;font-size:16px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:courier;font-size:14px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:arial;font-size:16px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:courier;font-size:14px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-21-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:arial;font-size:16px\"><span><p>aaaa <!-- c --><br>b</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;font-family:arial;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: nowrap;font-family:courier;font-size:14px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block;font-family:arial;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; width: 70px;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-line;font-family:courier;font-size:14px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre-wrap;font-family:arial;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "brspace-22-s7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(20.5, 30.25)\"><foreignObject id=\"fo\" width=\"2000px\" height=\"2000px\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: inline-block; white-space: pre;font-family:'trebuchet ms',verdana,arial,sans-serif;font-size:16px\"><span><p>aaaa <br>b</p><p>cccccc <br>d</p></span></div></foreignObject></g></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    }
+   ]
+  }
+ ]
+}

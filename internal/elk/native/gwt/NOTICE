@@ -1,0 +1,62 @@
+Notice for internal/elk/native/gwt
+
+The Go files in this directory, and the file ../prop/enum.go, are
+translations of parts of the Java runtime emulation of GWT
+(https://www.gwtproject.org, https://github.com/gwtproject/gwt). They were
+made from the compiled form of that code in lib/elk-worker.js of elkjs
+0.9.3. The Go files are changed versions of the GWT code.
+
+GWT has the Apache License, Version 2.0. The file LICENSE-GWT.txt in this
+directory has the license. It is the file
+https://www.apache.org/licenses/LICENSE-2.0.txt.
+
+elk-worker.js has no notice for the GWT code, and it does not state the
+version of GWT. The notices below are from the Java source files on the main
+branch of https://github.com/gwtproject/gwt (commit 3e636995f379), read on
+2026-11-09. Each Go file names its Java source files and their copyright
+lines in its first comment.
+
+The Java source files have this notice, with the year 2007, 2008, 2009 or
+2014:
+
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+
+The file user/super/com/google/gwt/emul/java/util/Random.java, which
+random.go follows, has a second notice:
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with this
+  work for additional information regarding copyright ownership. The ASF
+  licenses this file to You under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+
+  INCLUDES MODIFICATIONS BY RICHARD ZSCHECH AS WELL AS GOOGLE.
+
+The root of the repository of GWT has no file with the name NOTICE at that
+commit. The NOTICE file that the second notice names was not found. The
+license information of GWT is in the file distro-source/core/src/COPYING of
+that repository.
+
+The other packages under internal/elk/native are a port of Eclipse ELK and
+are under the Eclipse Public License 2.0. See ../LICENSE and ../NOTICE.

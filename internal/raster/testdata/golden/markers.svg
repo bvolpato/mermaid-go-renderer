@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>
+<marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9370DB" stroke="#333333"/></marker>
+<marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" fill="#333333" stroke="#333333" stroke-width="1"/></marker>
+<marker id="cross" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" stroke="#333333" stroke-width="2"/></marker>
+<marker id="fixed" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="172.5"><path d="M2,2 L10,6 L2,10" fill="none" stroke="#cc0000"/></marker>
+<marker id="big" markerWidth="4" markerHeight="4" refX="2" refY="2"><circle cx="2" cy="2" r="4" fill="#00aa00"/></marker>
+<marker id="vis" markerWidth="4" markerHeight="4" refX="2" refY="2" overflow="visible"><circle cx="2" cy="2" r="4" fill="#0000aa" fill-opacity="0.5"/></marker>
+</defs><rect width="100%" height="100%" fill="#ffffff"/>
+<g fill="none" stroke="#333333">
+<line x1="10" y1="12" x2="90" y2="12" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="10" y1="28" x2="90" y2="38" stroke-width="1" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+<path d="M110,10 C130,40 160,-10 190,30" stroke-width="2" marker-start="url(#dot)" marker-end="url(#arrow)"/>
+<polyline points="10,60 40,50 70,70 100,55" stroke-width="1.5" marker-start="url(#dot)" marker-mid="url(#dot)" marker-end="url(#cross)"/>
+<line x1="120" y1="55" x2="185" y2="70" stroke-width="3" marker-end="url(#arrow2)"/>
+<line x1="10" y1="95" x2="60" y2="95" stroke-width="1" marker-end="url(#fixed)"/>
+<line x1="80" y1="95" x2="120" y2="105" stroke-width="2" marker-start="url(#big)" marker-end="url(#big)"/>
+<line x1="140" y1="95" x2="180" y2="105" stroke-width="2" marker-start="url(#vis)" marker-end="url(#vis)"/>
+</g></svg>

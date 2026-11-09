@@ -1,0 +1,92 @@
+flowchart LR
+  subgraph g0 [Policy audit]
+    n5[[Order invoice]]
+    n8[(Lease lease)]
+    n9[(Payment span audit)]
+    n10[/Alert router/]
+    n14[Report user]
+    n18(Probe token invoice)
+    n23[[Ledger]]
+    n25[(Trace index)]
+    n27[[Replica bucket]]
+    n30[/Quota/]
+    n31{{Router session invoice}}
+    n34[[Report]]
+    n36[Invoice]
+    n37[/Order/]
+  end
+  subgraph g1 [Cache]
+    n0[(User queue payment)]
+    n1(Policy)
+    n7([User])
+    n11((Invoice token router))
+    n15{Trace}
+    n20{Worker user token}
+    n22[[Probe]]
+    n24([Audit])
+    n32[(Order user session)]
+  end
+  n2(Replica queue lease)
+  n3{Replica shard}
+  n4([Batch])
+  n6((Bucket session))
+  n12[/Shard lease token/]
+  n13[(Order)]
+  n16[[Session router]]
+  n17[[Stream probe]]
+  n19(Lease payment order)
+  n21{{Router bucket}}
+  n26[Span lease span]
+  n28{{Cache}}
+  n29[[Index]]
+  n33[/Shard order/]
+  n35[[Worker worker]]
+  n38[Quota]
+  n39[[Lease replica]]
+  n40{{Order}}
+  n0 ==> n1
+  n1 --o n2
+  n1 --x|Lease| n3
+  n1 --- n4
+  n3 ==> n5
+  n3 --o n6
+  n4 -.-> n9
+  n6 --> n10
+  n5 --- n11
+  n8 ==> n12
+  n9 --- n15
+  n15 --- n16
+  n15 -->|Router trace| n17
+  n9 -.->|Lease| n18
+  n11 --o n19
+  n16 --- n20
+  n13 ==> n21
+  n13 ==> n22
+  n22 ==> n23
+  n17 --x n24
+  n22 --> n25
+  n21 -.-> n26
+  n19 --> n27
+  n26 --x|Session| n28
+  n28 ==> n29
+  n23 --x n30
+  n22 --o n31
+  n28 ==> n32
+  n25 --> n33
+  n32 --> n36
+  n34 --o|Router| n37
+  n29 --> n38
+  n33 --o n39
+  n31 --x|Bucket| n40
+  n5 --o n3
+  n16 --x n25
+  n11 --o n1
+  n10 --x n27
+  n32 --x n29
+  n17 --- n22
+  n40 --> n11
+  n5 --> n35
+  n31 -.-> n7
+  n6 --o n32
+  n39 --- n4
+  g0 --> g1

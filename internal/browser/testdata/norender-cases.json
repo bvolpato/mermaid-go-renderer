@@ -1,0 +1,3508 @@
+{
+ "cases": [
+  {
+   "name": "norender-switch-fo-text",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-fo-text-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-text-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-text-fo-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-rect-circle",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-rect-circle-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-three",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-three-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><g id=\"g\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-g-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><g id=\"g\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-empty",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"></switch><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-empty-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"></switch><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-one",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-one-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-space",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\">\n  <rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/>\n  <circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/>\n</switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-space-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\">\n  <rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/>\n  <circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/>\n</switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"http://example.org/ext\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"http://example.org/ext\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension-xhtml",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" requiredExtensions=\"http://www.w3.org/1999/xhtml\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension-xhtml-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" requiredExtensions=\"http://www.w3.org/1999/xhtml\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension-empty",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-extension-empty-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-features",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredFeatures=\"http://www.w3.org/TR/SVG11/feature#Extensibility\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-features-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredFeatures=\"http://www.w3.org/TR/SVG11/feature#Extensibility\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-en",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-en-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-en-us",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en-US\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-en-us-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en-US\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-fr",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-fr-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-fr-en",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr, en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-fr-en-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr, en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-empty",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-lang-empty-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-display-none",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" style=\"display: none\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-display-none-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" style=\"display: none\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-empty-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-empty-rect-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-title",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><title>t</title><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-title-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><title>t</title><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-defs",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><defs></defs><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-defs-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><defs></defs><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-nested",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><switch><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-nested-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><switch><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-in-switch-second",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><switch><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-in-switch-second-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><switch><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><switch id=\"w\" transform=\"translate(10, 20)\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-switch-moved-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><switch id=\"w\" transform=\"translate(10, 20)\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></switch></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "bbox"
+    },
+    {
+     "sel": "#w",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-extension",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"http://example.org/ext\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-extension-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" requiredExtensions=\"http://example.org/ext\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"fr\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-en",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-en-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" systemLanguage=\"en\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-text",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" systemLanguage=\"fr\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-text-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" systemLanguage=\"fr\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><g id=\"g\" systemLanguage=\"fr\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-g-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><g id=\"g\" systemLanguage=\"fr\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" systemLanguage=\"fr\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-lang-fr-fo-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" systemLanguage=\"fr\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-text",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" display=\"none\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-text-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" display=\"none\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-text-style",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"display: none; font: 14px arial\"><tspan id=\"s\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-text-style-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"display: none; font: 14px arial\"><tspan id=\"s\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-tspan",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\">ab<tspan id=\"s\" style=\"display: none\">Onboarding</tspan>cd</text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-tspan-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\">ab<tspan id=\"s\" style=\"display: none\">Onboarding</tspan>cd</text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><g id=\"g\" style=\"display: none\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-g-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><g id=\"g\" style=\"display: none\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-g-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><g id=\"g\" style=\"display: none\" transform=\"translate(40, 50)\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-g-moved-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><g id=\"g\" style=\"display: none\" transform=\"translate(40, 50)\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></g><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "bbox"
+    },
+    {
+     "sel": "#g",
+     "op": "rect"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" style=\"display: none\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-rect-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\" style=\"display: none\"/><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" style=\"display: none\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-fo-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\" style=\"display: none\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-in-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: none; font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-none-in-fo-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><foreignObject id=\"f\" x=\"150\" y=\"50\" width=\"120\" height=\"50\"><div id=\"d\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: none; font: 14px arial\">Onboarding</div></foreignObject><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#f",
+     "op": "bbox"
+    },
+    {
+     "sel": "#f",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-hidden-text",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" visibility=\"hidden\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-hidden-text-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\" visibility=\"hidden\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-defs-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><defs><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></defs><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-defs-rect-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><defs><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"20\" y=\"75\" style=\"font: 14px arial\"><tspan id=\"s\" x=\"20\" dy=\"0\">Onboarding</tspan></text></defs><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "rect"
+    },
+    {
+     "sel": "#x",
+     "op": "textlen"
+    },
+    {
+     "sel": "#s",
+     "op": "bbox"
+    },
+    {
+     "sel": "#s",
+     "op": "textlen"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-marker-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><marker id=\"m\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></marker><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-marker-rect-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><marker id=\"m\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></marker><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-symbol-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><symbol id=\"sy\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></symbol><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "norender-symbol-rect-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(3.5, 4.25)\"><g id=\"t\"><symbol id=\"sy\"><rect id=\"r\" x=\"5\" y=\"6\" width=\"30\" height=\"40\"/></symbol><circle id=\"c\" cx=\"300\" cy=\"300\" r=\"10\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "bbox"
+    },
+    {
+     "sel": "#r",
+     "op": "rect"
+    },
+    {
+     "sel": "#c",
+     "op": "bbox"
+    },
+    {
+     "sel": "#c",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  }
+ ]
+}

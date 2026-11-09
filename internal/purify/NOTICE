@@ -1,0 +1,31 @@
+Notice for internal/purify
+
+The Go files in this directory are a port of DOMPurify 3.4.12
+(https://github.com/cure53/DOMPurify), the version that the mermaid 12.2.0
+bundle contains. They are changed versions of the files of DOMPurify: they
+are translations from TypeScript to Go.
+
+The copyright line and the license statement of DOMPurify 3.4.12, from the
+banner of DOMPurify in the mermaid 12.2.0 bundle:
+
+  DOMPurify 3.4.12 | (c) Cure53 and other contributors | Released under the
+  Apache license 2.0 and Mozilla Public License 2.0 |
+  github.com/cure53/DOMPurify/blob/3.4.12/LICENSE
+
+The file package.json of DOMPurify states the license as
+"(MPL-2.0 OR Apache-2.0)". The user of DOMPurify can choose one of the two
+licenses.
+
+The owner of this repository has not chosen which of the two licenses this
+port uses. docs/LICENSE-AUDIT.md, finding F5, says what each choice asks.
+Until the owner chooses, both license texts are in this directory:
+
+  LICENSE-Apache-2.0.txt   The Apache License, Version 2.0.
+  LICENSE-MPL-2.0.txt      The Mozilla Public License, Version 2.0.
+
+The two files are the files LICENSE and LICENSE-MPL of the npm package
+dompurify 3.4.17, the version in tools/reference/node_modules. That package
+has no NOTICE file.
+
+clobber_names.go has lists of property names that a script recorded from
+Chromium. It ports no file of DOMPurify.

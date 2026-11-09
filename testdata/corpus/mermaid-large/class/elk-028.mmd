@@ -1,0 +1,149 @@
+classDiagram
+  class C0 {
+    +stream0(id) bool
+  }
+  class C1 {
+    +int schema0
+    +report1() bool
+    +string replica2
+    +quota3(id) int
+  }
+  class C2 {
+    +int lease0
+    +stream1(id) bool
+  }
+  class C3 {
+    +bool payment0
+    +bool report1
+    +payment2() void
+    +string span3
+  }
+  class C4 {
+    +router0() void
+    +int cache1
+  }
+  class C5 {
+    +bool stream0
+    +order1(id) int
+    +int ledger2
+    +schema3() void
+  }
+  class C6 {
+    +replica0(id) bool
+    +invoice1(id) void
+    +string invoice2
+    +string cache3
+  }
+  class C7 {
+    +List~int~ session0
+  }
+  class C8 {
+    +int lease0
+    +cache1(id) bool
+  }
+  class C9 {
+    +int event0
+    +replica1() void
+    +queue2() bool
+  }
+  class C10 {
+    +int payment0
+    +string quota1
+    +List~int~ audit2
+  }
+  class C11 {
+    +stream0(id) void
+    +replica1(id) int
+  }
+  class C12 {
+    +string alert0
+    +worker1() void
+    +string invoice2
+  }
+  class C13 {
+    +bool batch0
+    +router1(id) void
+    +int probe2
+  }
+  class C14 {
+    +user0(id) int
+    +batch1() int
+    +span2(id) bool
+  }
+  class C15 {
+    +batch0(id) bool
+  }
+  class C16 {
+    +int report0
+    +batch1() int
+    +invoice2() bool
+    +invoice3() int
+  }
+  class C17 {
+    +audit0() void
+  }
+  class C18 {
+  }
+  class C19 {
+    +queue0() void
+    +int router1
+  }
+  class C20 {
+    +payment0(id) int
+  }
+  class C21 {
+  }
+  class C22 {
+    +string trace0
+    +ledger1() void
+    +bool event2
+    +schema3(id) void
+  }
+  class C23 {
+    +bool ledger0
+  }
+  class C24 {
+  }
+  class C25 {
+    +int router0
+    +trace1() int
+  }
+  class C26 {
+    +List~int~ session0
+    +ledger1(id) bool
+  }
+  class C27 {
+    +string bucket0
+    +quota1(id) void
+    +List~int~ schema2
+    +string payment3
+  }
+  C0 ..|> C1
+  C1 o-- C2
+  C1 ..|> C3
+  C2 o-- C4 : stream
+  C3 --> C5 : index
+  C5 --> C6 : invoice
+  C0 ..> C7
+  C4 -- C8
+  C4 -- C9
+  C5 o-- C11
+  C5 ..> C12 : policy
+  C12 *-- C13
+  C11 --> C14
+  C11 o-- C15
+  C11 ..> C16 : replica
+  C11 *-- C17
+  C16 o-- C18 : token
+  C14 o-- C19
+  C17 *-- C20
+  C14 o-- C21 : token
+  C20 o-- C22
+  C18 o-- C24
+  C21 *-- C25 : gateway
+  C23 -- C26
+  C25 ..> C11
+  C13 -- C26
+  C2 ..|> C19
+  C2 ..|> C9
+  C3 ..|> C11

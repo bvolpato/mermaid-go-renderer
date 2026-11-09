@@ -1,0 +1,77 @@
+{
+ "mermaid": "12.2.0",
+ "modules": [
+  {
+   "name": "cytoscape",
+   "package": "cytoscape",
+   "version": "3.34.0",
+   "file": "dist/cytoscape.esm.mjs",
+   "bytes": 1108285,
+   "sha256": "9ffbc8172ca3bd6723fba3513f96194f0e4c98225e00f380948f285869517803",
+   "mermaidChunk": "chunk-GBM4U3XT.mjs",
+   "sameAsNodeModules": null
+  },
+  {
+   "name": "layoutBase1",
+   "package": "layout-base",
+   "version": "1.0.2",
+   "file": "layout-base.js",
+   "bytes": 117750,
+   "sha256": "c7fdd9f59676fadd6c4a9c0fd6aa51d1ce8497695d396a7bdd98ffc95788b8ea",
+   "mermaidChunk": "cose-bilkent-7SFLS5CW.mjs",
+   "sameAsNodeModules": true
+  },
+  {
+   "name": "coseBase1",
+   "package": "cose-base",
+   "version": "1.0.3",
+   "file": "cose-base.js",
+   "bytes": 46060,
+   "sha256": "1d02502a96159bae374926ae66414fd245476d2b62ffe256f4e96734a96bad2a",
+   "mermaidChunk": "cose-bilkent-7SFLS5CW.mjs",
+   "sameAsNodeModules": true
+  },
+  {
+   "name": "coseBilkent",
+   "package": "cytoscape-cose-bilkent",
+   "version": "4.1.0",
+   "file": "cytoscape-cose-bilkent.js",
+   "bytes": 16374,
+   "sha256": "9297c5b4245efd314941c622cb045fb96ffbfde3268985463745311699cae0b2",
+   "mermaidChunk": "cose-bilkent-7SFLS5CW.mjs",
+   "sameAsNodeModules": true
+  },
+  {
+   "name": "layoutBase2",
+   "package": "layout-base",
+   "version": "2.0.1",
+   "file": "layout-base.js",
+   "bytes": 147958,
+   "sha256": "ec15ab5df9af3f20708f4faab994accf91cda71848cd5bb10a23432cc50b6745",
+   "mermaidChunk": "architectureDiagram-X7FUPT5M.mjs",
+   "sameAsNodeModules": true
+  },
+  {
+   "name": "coseBase2",
+   "package": "cose-base",
+   "version": "2.2.0",
+   "file": "cose-base.js",
+   "bytes": 118906,
+   "sha256": "7cae9509bd36235a63a85e71c8d9fa2cd0bc1d0c1ecc5b5a737976f39d040ddf",
+   "mermaidChunk": "architectureDiagram-X7FUPT5M.mjs",
+   "sameAsNodeModules": true
+  },
+  {
+   "name": "fcose",
+   "package": "cytoscape-fcose",
+   "version": "2.2.0",
+   "file": "cytoscape-fcose.js",
+   "bytes": 57239,
+   "sha256": "4b1cab218d74996aa59cd8473f9239cc6398b8c1774d84d7e59ad9a68959cb57",
+   "mermaidChunk": "architectureDiagram-X7FUPT5M.mjs",
+   "sameAsNodeModules": true
+  }
+ ],
+ "bytes": 1615194,
+ "sha256": "360acd6ed31949981b72361e18f90d97eb3acc30bb9b273d97d0936f002417a4"
+}

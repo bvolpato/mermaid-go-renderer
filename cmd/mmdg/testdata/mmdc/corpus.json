@@ -1,0 +1,2629 @@
+{
+ "mmdc": "12.0.0",
+ "note": "hash is the first 16 hex digits of the SHA-256 of the .svg file of mmdc",
+ "cssFile": ".node rect { fill: #fdd !important; }\n.messageText { fill: #00f; }\n",
+ "fixtures": [
+  {
+   "name": "agentflow/nightly-check/4b-should-render-the-input-value-pattern",
+   "pageFonts": true
+  },
+  {
+   "name": "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon",
+   "pageFonts": false
+  },
+  {
+   "name": "architecture/nightly-check/should-render-edges-at-correct-length",
+   "pageFonts": false
+  },
+  {
+   "name": "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs",
+   "pageFonts": false
+  },
+  {
+   "name": "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads",
+   "pageFonts": false
+  },
+  {
+   "name": "block/nightly-check/width-alignment-blocks-should-be-equal-in-width",
+   "pageFonts": false
+  },
+  {
+   "name": "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider",
+   "pageFonts": false
+  },
+  {
+   "name": "block/visual-check/flat-redux-theme",
+   "pageFonts": true
+  },
+  {
+   "name": "c4/nightly-check/boundaries/generic-boundary",
+   "pageFonts": true
+  },
+  {
+   "name": "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey",
+   "pageFonts": true
+  },
+  {
+   "name": "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions",
+   "pageFonts": false
+  },
+  {
+   "name": "cynefin/pr-check/should-render-an-empty-cynefin-framework",
+   "pageFonts": false
+  },
+  {
+   "name": "cynefin/pr-check/should-render-cynefin-with-config-override",
+   "pageFonts": false
+  },
+  {
+   "name": "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "er-diagram/nightly-check/should-render-empty-subgraphs",
+   "pageFonts": true
+  },
+  {
+   "name": "eventmodeling/pr-check/state-view-pattern",
+   "pageFonts": false
+  },
+  {
+   "name": "eventmodeling/pr-check/with-qualified-names",
+   "pageFonts": false
+  },
+  {
+   "name": "eventmodeling/pr-check/with-data-block-reference",
+   "pageFonts": false
+  },
+  {
+   "name": "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default",
+   "pageFonts": true
+  },
+  {
+   "name": "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false",
+   "pageFonts": false
+  },
+  {
+   "name": "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title",
+   "pageFonts": false
+  },
+  {
+   "name": "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch",
+   "pageFonts": false
+  },
+  {
+   "name": "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme",
+   "pageFonts": true
+  },
+  {
+   "name": "info/pr-check/should-handle-an-info-definition",
+   "pageFonts": false
+  },
+  {
+   "name": "info/pr-check/should-handle-an-info-definition-with-showinfo",
+   "pageFonts": false
+  },
+  {
+   "name": "ishikawa/pr-check/5-should-render-with-no-children-root-only",
+   "pageFonts": false
+  },
+  {
+   "name": "ishikawa/pr-check/4-should-render-with-a-single-cause",
+   "pageFonts": false
+  },
+  {
+   "name": "ishikawa/nightly-check/should-render-usemaxwidth-false",
+   "pageFonts": false
+  },
+  {
+   "name": "journey/pr-check/simple-test",
+   "pageFonts": false
+  },
+  {
+   "name": "journey/nightly-check/single-word-hyphenation",
+   "pageFonts": true
+  },
+  {
+   "name": "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item",
+   "pageFonts": false
+  },
+  {
+   "name": "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node",
+   "pageFonts": false
+  },
+  {
+   "name": "kanban/pr-check/1-should-render-a-kanban-with-a-single-section",
+   "pageFonts": false
+  },
+  {
+   "name": "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet",
+   "pageFonts": true
+  },
+  {
+   "name": "mindmap/nightly-check/square-shape",
+   "pageFonts": false
+  },
+  {
+   "name": "mindmap/nightly-check/a-root-with-a-shape",
+   "pageFonts": false
+  },
+  {
+   "name": "mindmap/nightly-check/circle-shape",
+   "pageFonts": false
+  },
+  {
+   "name": "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme",
+   "pageFonts": true
+  },
+  {
+   "name": "packet/pr-check/should-render-a-simple-packet-beta-diagram",
+   "pageFonts": false
+  },
+  {
+   "name": "packet/pr-check/should-render-a-simple-packet-diagram",
+   "pageFonts": false
+  },
+  {
+   "name": "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges",
+   "pageFonts": false
+  },
+  {
+   "name": "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set",
+   "pageFonts": false
+  },
+  {
+   "name": "pie/pr-check/should-render-a-pie-diagram-with-showdata",
+   "pageFonts": false
+  },
+  {
+   "name": "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels",
+   "pageFonts": false
+  },
+  {
+   "name": "pie/nightly-check/redux-color-theme",
+   "pageFonts": true
+  },
+  {
+   "name": "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided",
+   "pageFonts": false
+  },
+  {
+   "name": "quadrant-chart/nightly-check/should-render-without-title",
+   "pageFonts": false
+  },
+  {
+   "name": "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side",
+   "pageFonts": false
+  },
+  {
+   "name": "radar/pr-check/should-render-a-simple-radar-diagram",
+   "pageFonts": false
+  },
+  {
+   "name": "radar/pr-check/should-render-radar-diagram-with-config-override",
+   "pageFonts": false
+  },
+  {
+   "name": "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves",
+   "pageFonts": false
+  },
+  {
+   "name": "railroad/pr-check/ir-a-simple-rule",
+   "pageFonts": false
+  },
+  {
+   "name": "railroad/pr-check/abnf-alternation-and-repetition",
+   "pageFonts": false
+  },
+  {
+   "name": "railroad/pr-check/ebnf-iso-14977-notation",
+   "pageFonts": false
+  },
+  {
+   "name": "sankey/nightly-check/links-same-color-as-source-node",
+   "pageFonts": false
+  },
+  {
+   "name": "sankey/nightly-check/links-same-color-as-target-node",
+   "pageFonts": false
+  },
+  {
+   "name": "sankey/nightly-check/links-use-hex-color",
+   "pageFonts": false
+  },
+  {
+   "name": "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font",
+   "pageFonts": false
+  },
+  {
+   "name": "sequence/nightly-check/should-render-with-an-init-directive",
+   "pageFonts": false
+  },
+  {
+   "name": "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "sequence/nightly-check/shouldnt-display-unused-participants",
+   "pageFonts": true
+  },
+  {
+   "name": "state-diagram/nightly-check/simplest-composite-state",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram-v2/nightly-check/v2-should-render-a-simple-info",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram-v2/pr-check/can-have-styles-applied",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram-v2/nightly-check/v2-simplest-composite-state",
+   "pageFonts": false
+  },
+  {
+   "name": "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme",
+   "pageFonts": true
+  },
+  {
+   "name": "swimlanes/nightly-check/custom-theme-variables",
+   "pageFonts": true
+  },
+  {
+   "name": "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections",
+   "pageFonts": false
+  },
+  {
+   "name": "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections",
+   "pageFonts": false
+  },
+  {
+   "name": "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "timeline/nightly-check/space-exploration-redux-color-theme-classic-look",
+   "pageFonts": true
+  },
+  {
+   "name": "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels",
+   "pageFonts": false
+  },
+  {
+   "name": "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels",
+   "pageFonts": false
+  },
+  {
+   "name": "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons",
+   "pageFonts": false
+  },
+  {
+   "name": "treemap/nightly-check/4-should-handle-long-text-that-wraps",
+   "pageFonts": false
+  },
+  {
+   "name": "treemap/nightly-check/8g-should-handle-scientific-notation-format",
+   "pageFonts": false
+  },
+  {
+   "name": "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes",
+   "pageFonts": false
+  },
+  {
+   "name": "usecase/pr-check/empty-diagram",
+   "pageFonts": true
+  },
+  {
+   "name": "venn/nightly-check/9-should-render-with-dark-theme",
+   "pageFonts": false
+  },
+  {
+   "name": "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look",
+   "pageFonts": false
+  },
+  {
+   "name": "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title",
+   "pageFonts": false
+  },
+  {
+   "name": "venn/nightly-check/explicit-set-style-over-redux-palette",
+   "pageFonts": true
+  },
+  {
+   "name": "wardley/pr-check/theme-test-base",
+   "pageFonts": false
+  },
+  {
+   "name": "wardley/pr-check/theme-test-neutral",
+   "pageFonts": false
+  },
+  {
+   "name": "wardley/pr-check/5-should-render-custom-canvas-size",
+   "pageFonts": false
+  },
+  {
+   "name": "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent",
+   "pageFonts": false
+  },
+  {
+   "name": "xychart/nightly-check/render-spark-bar-without-displaying-other-property",
+   "pageFonts": false
+  },
+  {
+   "name": "xychart/nightly-check/label-rotation-clamped-above-limit",
+   "pageFonts": false
+  }
+ ],
+ "sets": {
+  "default": {
+   "args": [],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "cdad3e4ac9a2dc71",
+     "fontEmbed": true
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "22b612bb945fb788",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "fb274cf8bfbd29e5",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "6d28536771f47b0c",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "abf012e1bb7c636b",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "0ed9715b66c8d804",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "0b1a55e5405373c7",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "3cfb6d05ac722593",
+     "fontEmbed": true
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "e63c1660bb6daf4f",
+     "fontEmbed": true
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "6968f72673bc6a4e",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "37cb0114c2fcca2d",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "5c97a141ccbb4bb9",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "90c02a13fe0419e9",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "51e767ca3250c12b",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "acaaaa5da82e46e6",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "3019720770b82814",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "b9576f7259877037",
+     "fontEmbed": true
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "ce45bb5307e4fec6",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "920a7cac1ff939a6",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "25209517a0a0a687",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "74c349b56a40370d",
+     "fontEmbed": true
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "49828dd498fdbc6e",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "a9b24b70a368f4c4",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "54c9909b9a05c107",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "98c1c5ec9298b57b",
+     "fontEmbed": true
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "eb748b39c856703c",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "eb748b39c856703c",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "900b710b141c28a4",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "94a54b1438ebbe74",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "0342077b22fc2aa6",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "07f0d4bfe0ddaad0",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "d6ee931c374f3854",
+     "fontEmbed": true
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "b190ee581ebfac3f",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "d2671c67741a845b",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "7f597f45909e3214",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "8a39dd69b7d6a4f0",
+     "fontEmbed": true
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "06bda990a3e55309",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "1d7666b3258cd79e",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "1f1bbb8ebc5123f2",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "e6eddf6c99f62425",
+     "fontEmbed": true
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "e1fd11d887a77607",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "e1fd11d887a77607",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "64544b95ec94086a",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "37c7d8f423d08039",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "6ac8389c42216269",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "68fdbafc8bfc17ab",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "b4ed9a21fc87f068",
+     "fontEmbed": true
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "8d417306564cc3b5",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "86ad403eac682f51",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "f7e0a5cc00da158d",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "38258a6f2df83d94",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "3053387adaca2856",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "80aedbeda810cfd5",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "75b60002eb63fcd2",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "fc75baffb071f1e1",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "1c51c985c10c691e",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "67ca0914f1c60eb1",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "e01c8a0f211bc867",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "113d13acb1a5a426",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "7d76557a0ba4a0e6",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "7f6c30321da37cb6",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "c650260d1ff6889c",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "4b810dafafedd877",
+     "fontEmbed": true
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "72d5fdf92763779d",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "2d1aeff495a7534e",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "73b74e9a4f44ec07",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "f68bb7780ec6bec9",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "a955cfbed7f032f7",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "72d5fdf92763779d",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "9c2b9b60abbfefd8",
+     "fontEmbed": true
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "7aeecf9a935df303",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "e179a7c5e0f7c3f1",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "10eb591864b0f2fa",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "0a01d5da289b5b89",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "cb54e1c5ae77b2a6",
+     "fontEmbed": true
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "7c629a63f36eabcd",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "e9cfc82ca8ec59a0",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "1e6477ef2f4c3166",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "4c14b3ab74c63335",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "bc77616aca4f115e",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "2692a523ab821525",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "8b43fe0e230ef0d1",
+     "fontEmbed": true
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "2377be5449d9b4c5",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "d12197cac10d501a",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "8eca364a2b3e395f",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "df72c77d1f9a6ba5",
+     "fontEmbed": true
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "85c2aa13008d10c8",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "5a5f85bd0ab0eb00",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "81ca0e8110e4f9dd",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "c2ed4c4de1890a64",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "3475b6c3a8ba5254",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "7e931506bd8a5c63",
+     "fontEmbed": false
+    }
+   }
+  },
+  "no-font-embed": {
+   "args": [
+    "--no-font-embed"
+   ],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "c70aa7dd7366c48b",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "22b612bb945fb788",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "fb274cf8bfbd29e5",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "6d28536771f47b0c",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "abf012e1bb7c636b",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "0ed9715b66c8d804",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "0b1a55e5405373c7",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "f9bfeff6da3a3726",
+     "fontEmbed": false
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "c7ffc46d7eccedbf",
+     "fontEmbed": false
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "6968f72673bc6a4e",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "37cb0114c2fcca2d",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "5c97a141ccbb4bb9",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "90c02a13fe0419e9",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "51e767ca3250c12b",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "acaaaa5da82e46e6",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "3019720770b82814",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "ed538b5699618288",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "ce45bb5307e4fec6",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "920a7cac1ff939a6",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "25209517a0a0a687",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "709e0c9825ead37c",
+     "fontEmbed": false
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "49828dd498fdbc6e",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "a9b24b70a368f4c4",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "54c9909b9a05c107",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "b756929584d536e3",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "eb748b39c856703c",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "eb748b39c856703c",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "900b710b141c28a4",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "94a54b1438ebbe74",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "0342077b22fc2aa6",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "07f0d4bfe0ddaad0",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "80cd2c3757d26aa6",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "b190ee581ebfac3f",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "d2671c67741a845b",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "7f597f45909e3214",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "c73641927c53f7cb",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "06bda990a3e55309",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "1d7666b3258cd79e",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "1f1bbb8ebc5123f2",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "98a2f237b609ccde",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "e1fd11d887a77607",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "e1fd11d887a77607",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "64544b95ec94086a",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "37c7d8f423d08039",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "6ac8389c42216269",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "68fdbafc8bfc17ab",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "0eab2f1616df4aa4",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "8d417306564cc3b5",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "86ad403eac682f51",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "f7e0a5cc00da158d",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "38258a6f2df83d94",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "3053387adaca2856",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "80aedbeda810cfd5",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "75b60002eb63fcd2",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "fc75baffb071f1e1",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "1c51c985c10c691e",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "67ca0914f1c60eb1",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "e01c8a0f211bc867",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "113d13acb1a5a426",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "7d76557a0ba4a0e6",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "7f6c30321da37cb6",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "c650260d1ff6889c",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "f17807c936b47167",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "72d5fdf92763779d",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "2d1aeff495a7534e",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "73b74e9a4f44ec07",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "f68bb7780ec6bec9",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "a955cfbed7f032f7",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "72d5fdf92763779d",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "63e4ba609fcd657e",
+     "fontEmbed": false
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "7aeecf9a935df303",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "e179a7c5e0f7c3f1",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "10eb591864b0f2fa",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "0a01d5da289b5b89",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "07bc317bbf3d0107",
+     "fontEmbed": false
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "7c629a63f36eabcd",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "e9cfc82ca8ec59a0",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "1e6477ef2f4c3166",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "4c14b3ab74c63335",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "bc77616aca4f115e",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "2692a523ab821525",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "d2e62972aeeb06a4",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "2377be5449d9b4c5",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "d12197cac10d501a",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "8eca364a2b3e395f",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "6145f58639772763",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "85c2aa13008d10c8",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "5a5f85bd0ab0eb00",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "81ca0e8110e4f9dd",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "c2ed4c4de1890a64",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "3475b6c3a8ba5254",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "7e931506bd8a5c63",
+     "fontEmbed": false
+    }
+   }
+  },
+  "transparent": {
+   "args": [
+    "-b",
+    "transparent"
+   ],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "e4f90b24e589c7fc",
+     "fontEmbed": true
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "a073e56ea8561cbe",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "fad3f1ccb3c13fba",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "71f4dfc384ac53b4",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "41c351ba81cc0274",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "4ddb8c9fbf36b79c",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "db435b82eb0af414",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "b799c3b18bd112b2",
+     "fontEmbed": true
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "abb6fb7e493d58fb",
+     "fontEmbed": true
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "0934388540de5029",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "76d034da5c370396",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "11e7f362087474fd",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "9d29a91211c9bebc",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "8f382e864c961fe9",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "409cc77da2f74d08",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "e575d213b705d698",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "c5ce2a612fc34a91",
+     "fontEmbed": true
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "c262e4e894e0a1ec",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "eb67130a3db9b749",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "3972d581d3c18fa7",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "36d09a4a5cf48c27",
+     "fontEmbed": true
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "13ed739b5e456b10",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "76b96136a288416f",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "b4705dcd10e0aa45",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "e6f02fc5eade2987",
+     "fontEmbed": true
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "740ea9e14fae34ea",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "740ea9e14fae34ea",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "55e4e15984d75133",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "79084d3dad05bc93",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "b7cc3049bc72c031",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "694cfc87fcdceb6e",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "96b3d051812b4632",
+     "fontEmbed": true
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "cbfb4c25368b3f8d",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "e79d5e712c70c414",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "fa4cf5fad38ee3fa",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "552c399e1f7b976b",
+     "fontEmbed": true
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "7da0b2bce0c57dbc",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "ace93847ad9e40fb",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "ced7da351906c400",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "72677504af112973",
+     "fontEmbed": true
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "cb3a58fd0f13542b",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "cb3a58fd0f13542b",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "e055956034752dca",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "eb36531688f3138a",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "ba93161effcd1b66",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "cb588a5c2afb46de",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "eb2112a5cb215264",
+     "fontEmbed": true
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "882dbbef8f7196d0",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "cf2a0e545ece821c",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "23b9bee7bb4efcf4",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "b3d0f8ad9bd1fbb3",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "b79fc3400d3101d5",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "5707aec5025a8475",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "225222bb3ab8db63",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "d21ad06750cfff2f",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "9254f96cf97c5273",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "b65e16403ee51048",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "a932af51632cfda4",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "c33feac0cc666848",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "83afc12235dc433f",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "9c7a87a67415f242",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "5f9c23ad7c18fff4",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "294ee0e5b36783ad",
+     "fontEmbed": true
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "fa86f9e0d7f2c3d2",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "a1795ac9f3d742c8",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "ff0c94175076b4a7",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "2ecd5b9322ca4560",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "0c801a162220784e",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "fa86f9e0d7f2c3d2",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "7ff68e6bec9c85b9",
+     "fontEmbed": true
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "508b5520a82b1598",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "875e620fb0217d09",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "d050a74c78165ca7",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "ebb3276a62145e11",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "42fc46efbc00377a",
+     "fontEmbed": true
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "712e63cbb2562378",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "e78da851d0efc682",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "73b5b6c7a2146ac4",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "baaa408dc9ac8d65",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "1c80dbbb4285dc67",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "0f8ded4c0475286b",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "adda97b1ea4f423e",
+     "fontEmbed": true
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "304e915acf452c8d",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "90ccbd13b9340208",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "bec849b8383e4986",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "157daef963c1822d",
+     "fontEmbed": true
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "95ea0cbd0f65c5da",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "22d0f0ef11ce3377",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "42049dce03f24c0b",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "3917493de4e0bcf2",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "d5784c5418d547b0",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "0443973becfa1092",
+     "fontEmbed": false
+    }
+   }
+  },
+  "css": {
+   "args": [
+    "-C",
+    "style.css"
+   ],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "bb39da8edbea9be7",
+     "fontEmbed": true
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "3423d388777a7803",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "4a283e5d24175c11",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "54d4a03d392f3194",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "5e170fb310b60dd0",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "7554ae020407cf96",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "c9ec1088064cfdc5",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "7822c5fdb3f0114a",
+     "fontEmbed": true
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "357f35dcab7e77c7",
+     "fontEmbed": true
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "54bdd0fa3695565c",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "bcd8c0b5efa769b8",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "07bc89a7150a1224",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "025876bf67e781b1",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "a03eb4889e88b21f",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "bda30f409527e400",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "689f12f8fca18a1a",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "508841b06dab17e5",
+     "fontEmbed": true
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "fd86f556bcf1d41a",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "d17de16048d30f4e",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "29c63605408b05f5",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "c9c47514c10e4f22",
+     "fontEmbed": true
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "d09a12a4af693634",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "43b688a885521d92",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "1129eb6c2afe4209",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "921a6a999768044d",
+     "fontEmbed": true
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "6b0f251fc83562c9",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "6b0f251fc83562c9",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "138bf90145373751",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "cd251896ee6d1e29",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "51bdc868197cb355",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "d87409161bac414d",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "67a19ea544065081",
+     "fontEmbed": true
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "3e17967b4a2e3883",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "ecdff05de6fb9b15",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "11b340e6cc32b746",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "471da9ec4ef7b619",
+     "fontEmbed": true
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "3fa6477e3072d307",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "7702b86624d78760",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "6f36ef08001ac47e",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "093f7efcd74bcb85",
+     "fontEmbed": true
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "fde586cdd8fbfd60",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "fde586cdd8fbfd60",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "47fcb57c527aec12",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "4176db1bb1bc9f45",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "f669826c5c02fe8e",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "1de9fb016082e9e3",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "8414cd79060ff9a3",
+     "fontEmbed": true
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "2cc7dc33c0a286d9",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "d035dc9d9ff1ca6b",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "2f5c65b7c24e5f43",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "2fbd88e84315c09c",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "f0bbe7d5d6ffa6a9",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "4e9a9e9fd89ffc4f",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "11da9130613f8368",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "e4b9e1e3413d2941",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "40da8f8f7677200e",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "b3667152860b2a0e",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "30a5d707eb871225",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "8978d998596b8456",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "0412f2aa404187ac",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "311019e4b30b4331",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "330c07a4f848b2e7",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "7bba2c8e0f885860",
+     "fontEmbed": true
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "2c4e9b27a7a5fd7a",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "da88472e3833e5aa",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "0621d56e8179eedd",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "ebd6c34a6ce3e309",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "f0f3ca4a93e22b66",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "2c4e9b27a7a5fd7a",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "f97794e62565c091",
+     "fontEmbed": true
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "5f7ff33291d87f66",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "c73a581e66b1ff1a",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "309f3877700ab529",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "723dad0d1235f93c",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "0259c973bf4dc33d",
+     "fontEmbed": true
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "1702b1b219ad98b7",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "08b85bde60aa88c7",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "ed6008f1a12cb4d4",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "9ec34bc8ec64e82e",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "a2c14ec05a63fc96",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "813a69a7dca5778e",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "1e844082b72f3f1d",
+     "fontEmbed": true
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "d94bcbc80eb5c655",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "f2c9cd2cc9dee0c3",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "303dee04881f8fc3",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "b4afc5f2935e65cc",
+     "fontEmbed": true
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "85c2aa13008d10c8",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "5a5f85bd0ab0eb00",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "81ca0e8110e4f9dd",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "dcc6e102ae3dca15",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "503004682037bca7",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "498b64b9166d48fa",
+     "fontEmbed": false
+    }
+   }
+  },
+  "id": {
+   "args": [
+    "-I",
+    "diagram"
+   ],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "a2f4c7dc6b565bff",
+     "fontEmbed": true
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "156b3daf57f31f92",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "7e38cf2025c28635",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "41012507f496aaff",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "9651678ef9738e16",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "a0ddbeabb17549af",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "85c23c4fc54b0812",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "2906140c2f1e46ef",
+     "fontEmbed": true
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "14275168f5b41cf5",
+     "fontEmbed": true
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "8fb14bf3a500d821",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "2ed3847bdb2f73ee",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "402e5c2106366344",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "fdd4feebe6f7e6ce",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "29835eae6b724811",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "c8f8a129943d5b96",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "e983015992138950",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "c0a20602cca46148",
+     "fontEmbed": true
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "3fe34ca79e3836f1",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "89fc2ef34e7dd0aa",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "eb14de5b9d2e9e3e",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "ccedc975b231d6e0",
+     "fontEmbed": true
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "64b790e5319dee85",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "1265d749a134405c",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "7ddf775259943cd3",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "0fc7de512271a0f7",
+     "fontEmbed": true
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "6309169110211aa9",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "6309169110211aa9",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "28e26a4c8bc54755",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "06b18c79683f2588",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "db5a9fd11bd5cb60",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "c365039c7e4f3878",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "62f195eee49c3cf3",
+     "fontEmbed": true
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "1e60eaaa045afd34",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "4b30067a0842b032",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "3ebf6f0fc2b28f17",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "39bc075dc5f7c8c6",
+     "fontEmbed": true
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "596952249bc57dab",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "f1702a48e5d75ace",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "ea698ed75059f8ec",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "b95a66855eee8cbd",
+     "fontEmbed": true
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "1cb4e8e4a110d431",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "1cb4e8e4a110d431",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "d2ba1f6aa77f25ba",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "71047c8678f4f11e",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "a5d37ac532412dd9",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "df47cd8b6db8ac5a",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "124a848fa1512d69",
+     "fontEmbed": true
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "ab725201fd1e191a",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "41e4d139d8079d3f",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "72a7b407e7538c2f",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "27e7ae93e99f93fa",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "601118859e037e78",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "f95a1711c73326ec",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "9c8d2da32c9420e5",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "032b68b07085003f",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "792c6e260f55f21b",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "7b4dc1d520509491",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "76c2f42e70aa42dd",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "7faa892b191d6719",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "820e717cf5ed8c9d",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "1d021afda9fc1157",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "5354d90878a79b43",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "8a13eb1895ba93c4",
+     "fontEmbed": true
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "136d571c02493d48",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "21e31cc8a49260e6",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "490b055a8008a2a2",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "fcbe931bf074665b",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "0d8ce2511d7de6c3",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "136d571c02493d48",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "3d9cb0443204e3ad",
+     "fontEmbed": true
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "b22b805162c20f01",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "065b4f4423058f95",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "207edf0362df4e0b",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "911f371fc65ab390",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "308c0dcb57abe4f6",
+     "fontEmbed": true
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "b094569051a90089",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "0175a10d44fbd58c",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "1f72904e890e0cf1",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "e1e29bd2a50e8906",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "55248f9456302acc",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "e3b8b58669c985ec",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "a5631ec180716e11",
+     "fontEmbed": true
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "e9c5cca5f2da08e7",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "7927e4d131ddd8c7",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "83b6466a267951bc",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "e3bf18f9d89533a5",
+     "fontEmbed": true
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "2ab6a9cb9fb47238",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "c50e3d3c27467cae",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "7a9cc1fe111ae34f",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "cd2b414ca6f5fe45",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "943931c6097fd927",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "2dba95c6134e2261",
+     "fontEmbed": false
+    }
+   }
+  },
+  "dark": {
+   "args": [
+    "-t",
+    "dark"
+   ],
+   "files": {
+    "agentflow/nightly-check/4b-should-render-the-input-value-pattern": {
+     "hash": "2723d9d0cab32d09",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-an-architecture-diagram-with-the-fallback-icon": {
+     "hash": "685f50d5685d144e",
+     "fontEmbed": false
+    },
+    "architecture/nightly-check/should-render-edges-at-correct-length": {
+     "hash": "0f66a7374b338beb",
+     "fontEmbed": false
+    },
+    "architecture/visual-check/should-render-a-linear-chain-with-default-fcose-knobs": {
+     "hash": "412ebb4da6ad652a",
+     "fontEmbed": false
+    },
+    "block/nightly-check/edge-without-arrow-syntax-should-render-with-no-arrowheads": {
+     "hash": "57e179fabd8d9fbf",
+     "fontEmbed": false
+    },
+    "block/nightly-check/width-alignment-blocks-should-be-equal-in-width": {
+     "hash": "811e346f7362569c",
+     "fontEmbed": false
+    },
+    "block/nightly-check/sizing-it-should-be-possible-to-make-a-block-wider": {
+     "hash": "ec819a2fc306e6d9",
+     "fontEmbed": false
+    },
+    "block/visual-check/flat-redux-theme": {
+     "hash": "3cfb6d05ac722593",
+     "fontEmbed": true
+    },
+    "c4/nightly-check/boundaries/generic-boundary": {
+     "hash": "a350706529a4c991",
+     "fontEmbed": true
+    },
+    "conf-and-directives/pr-check/settings-from-frontmatter-nodes-should-be-grey": {
+     "hash": "6968f72673bc6a4e",
+     "fontEmbed": false
+    },
+    "cynefin/nightly-check/should-render-cynefin-without-domain-descriptions": {
+     "hash": "05c7be394320e487",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-an-empty-cynefin-framework": {
+     "hash": "51facf11bda157b7",
+     "fontEmbed": false
+    },
+    "cynefin/pr-check/should-render-cynefin-with-config-override": {
+     "hash": "5d09aa9fd1ab54d2",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-theme": {
+     "hash": "51e767ca3250c12b",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/a-simple-er-diagram-with-basic-relationships-neo-look-neo-dark-theme": {
+     "hash": "acaaaa5da82e46e6",
+     "fontEmbed": false
+    },
+    "er-diagram/visual-check/er-diagram-with-all-relationship-types-neo-look-neo-theme": {
+     "hash": "3019720770b82814",
+     "fontEmbed": false
+    },
+    "er-diagram/nightly-check/should-render-empty-subgraphs": {
+     "hash": "2663455a2d8486fe",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/state-view-pattern": {
+     "hash": "b9c6f9195ff715b5",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-qualified-names": {
+     "hash": "8e22c1b557c8899f",
+     "fontEmbed": false
+    },
+    "eventmodeling/pr-check/with-data-block-reference": {
+     "hash": "048de93c8100b38a",
+     "fontEmbed": false
+    },
+    "flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default": {
+     "hash": "21c5526daa0cded3",
+     "fontEmbed": true
+    },
+    "git/nightly-check/82-should-hide-both-branches-and-commit-labels-when-both-directives-are-false": {
+     "hash": "870e1c0cebfd065d",
+     "fontEmbed": false
+    },
+    "git/nightly-check/1433-should-render-a-simple-gitgraph-with-a-title": {
+     "hash": "ecd5fb8984439cf9",
+     "fontEmbed": false
+    },
+    "git/nightly-check/31-should-render-a-simple-gitgraph-with-a-title-vertical-branch": {
+     "hash": "52c88537d7823078",
+     "fontEmbed": false
+    },
+    "git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme": {
+     "hash": "98c1c5ec9298b57b",
+     "fontEmbed": true
+    },
+    "info/pr-check/should-handle-an-info-definition": {
+     "hash": "a0f8feadf92a674b",
+     "fontEmbed": false
+    },
+    "info/pr-check/should-handle-an-info-definition-with-showinfo": {
+     "hash": "a0f8feadf92a674b",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/5-should-render-with-no-children-root-only": {
+     "hash": "2af92c7b6de1f5e2",
+     "fontEmbed": false
+    },
+    "ishikawa/pr-check/4-should-render-with-a-single-cause": {
+     "hash": "0493d29b5ed51d81",
+     "fontEmbed": false
+    },
+    "ishikawa/nightly-check/should-render-usemaxwidth-false": {
+     "hash": "c1e8840cd5104a9d",
+     "fontEmbed": false
+    },
+    "journey/pr-check/simple-test": {
+     "hash": "5b6fc9ad3a0490f2",
+     "fontEmbed": false
+    },
+    "journey/nightly-check/single-word-hyphenation": {
+     "hash": "66c9bd0c64d3a701",
+     "fontEmbed": true
+    },
+    "kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item": {
+     "hash": "177f4e5fcce3e84c",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/3-should-render-a-kanban-with-a-single-wrapping-node": {
+     "hash": "285d6644f613276e",
+     "fontEmbed": false
+    },
+    "kanban/pr-check/1-should-render-a-kanban-with-a-single-section": {
+     "hash": "ab2b6859645cab0c",
+     "fontEmbed": false
+    },
+    "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
+     "hash": "2ca3162d4f2a6de2",
+     "fontEmbed": true
+    },
+    "mindmap/nightly-check/square-shape": {
+     "hash": "8a40525038ce7b9f",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/a-root-with-a-shape": {
+     "hash": "cc9b8b0959af4771",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/circle-shape": {
+     "hash": "b4760c68086f3801",
+     "fontEmbed": false
+    },
+    "mindmap/nightly-check/all-shapes-neo-look-redux-color-theme": {
+     "hash": "e6eddf6c99f62425",
+     "fontEmbed": true
+    },
+    "packet/pr-check/should-render-a-simple-packet-beta-diagram": {
+     "hash": "d636ca328be9cfdb",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram": {
+     "hash": "d636ca328be9cfdb",
+     "fontEmbed": false
+    },
+    "packet/pr-check/should-render-a-simple-packet-diagram-without-ranges": {
+     "hash": "d4d0f7400fc1851f",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-when-textposition-is-set": {
+     "hash": "8e91feb0298838a3",
+     "fontEmbed": false
+    },
+    "pie/pr-check/should-render-a-pie-diagram-with-showdata": {
+     "hash": "b19473a5c47d0584",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/should-render-a-simple-pie-diagram-with-long-labels": {
+     "hash": "c1e1aaae28cbf6c9",
+     "fontEmbed": false
+    },
+    "pie/nightly-check/redux-color-theme": {
+     "hash": "b4ed9a21fc87f068",
+     "fontEmbed": true
+    },
+    "quadrant-chart/nightly-check/should-render-if-only-chart-type-is-provided": {
+     "hash": "177b20a751409c84",
+     "fontEmbed": false
+    },
+    "quadrant-chart/nightly-check/should-render-without-title": {
+     "hash": "977462185da022d9",
+     "fontEmbed": false
+    },
+    "quadrant-chart/pr-check/should-able-to-render-y-axis-on-right-side": {
+     "hash": "cd9c8a9804f837c8",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-simple-radar-diagram": {
+     "hash": "09d812c143a829da",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-radar-diagram-with-config-override": {
+     "hash": "e04fa8dd09749ef3",
+     "fontEmbed": false
+    },
+    "radar/pr-check/should-render-a-radar-diagram-with-multiple-curves": {
+     "hash": "332ec17c5180fca8",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ir-a-simple-rule": {
+     "hash": "e626de9d99e3bf34",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/abnf-alternation-and-repetition": {
+     "hash": "643e43af98259225",
+     "fontEmbed": false
+    },
+    "railroad/pr-check/ebnf-iso-14977-notation": {
+     "hash": "4c9b6b0ee42bc39b",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-source-node": {
+     "hash": "1e911a87bef8b508",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-same-color-as-target-node": {
+     "hash": "62238eec8fcec1bd",
+     "fontEmbed": false
+    },
+    "sankey/nightly-check/links-use-hex-color": {
+     "hash": "1a5a3448a09ea13d",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font": {
+     "hash": "7d76557a0ba4a0e6",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/should-render-with-an-init-directive": {
+     "hash": "7f6c30321da37cb6",
+     "fontEmbed": false
+    },
+    "sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme": {
+     "hash": "c650260d1ff6889c",
+     "fontEmbed": false
+    },
+    "sequence/nightly-check/shouldnt-display-unused-participants": {
+     "hash": "71ff6bca5d79eea3",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/simplest-composite-state": {
+     "hash": "cd320c64d76bebff",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-long-descriptions-instead-of-id-when-available": {
+     "hash": "deec311924429e94",
+     "fontEmbed": false
+    },
+    "state-diagram/nightly-check/should-render-a-single-state-with-short-descriptions": {
+     "hash": "be9a3479ed65126c",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-should-render-a-simple-info": {
+     "hash": "9a3fd356b77cd7b8",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/pr-check/can-have-styles-applied": {
+     "hash": "a67855600b31d7bb",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/v2-simplest-composite-state": {
+     "hash": "cd320c64d76bebff",
+     "fontEmbed": false
+    },
+    "state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme": {
+     "hash": "9c2b9b60abbfefd8",
+     "fontEmbed": true
+    },
+    "swimlanes/nightly-check/custom-theme-variables": {
+     "hash": "7aeecf9a935df303",
+     "fontEmbed": false
+    },
+    "timeline/pr-check/1-should-render-a-simple-timeline-with-no-specific-sections": {
+     "hash": "a46dabc40c64eff3",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/13-should-render-a-simple-vertical-timeline-with-no-specific-sections": {
+     "hash": "843e08aec4f3dbc9",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/9-should-render-a-simple-timeline-in-neutral-theme": {
+     "hash": "0a01d5da289b5b89",
+     "fontEmbed": false
+    },
+    "timeline/nightly-check/space-exploration-redux-color-theme-classic-look": {
+     "hash": "cb54e1c5ae77b2a6",
+     "fontEmbed": true
+    },
+    "tree-view/nightly-check/should-render-a-simple-treeview-diagram-with-quoted-labels": {
+     "hash": "4a18767aeb3b6405",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-preserve-consecutive-spaces-and-unicode-in-labels": {
+     "hash": "96c946f07c0a8870",
+     "fontEmbed": false
+    },
+    "tree-view/pr-check/should-render-the-unknown-icon-fallback-for-unregistered-icons": {
+     "hash": "1bf34f04ddc0f6e6",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/4-should-handle-long-text-that-wraps": {
+     "hash": "bd176fcf082fa5c7",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/8g-should-handle-scientific-notation-format": {
+     "hash": "4c7288162bbe0007",
+     "fontEmbed": false
+    },
+    "treemap/nightly-check/12-should-apply-classdef-fill-color-to-leaf-nodes": {
+     "hash": "edd5924ff1737e50",
+     "fontEmbed": false
+    },
+    "usecase/pr-check/empty-diagram": {
+     "hash": "0cb5d386cd4def3d",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/9-should-render-with-dark-theme": {
+     "hash": "2377be5449d9b4c5",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/handdrawn/14-should-render-a-two-set-venn-diagram-with-handdrawn-look": {
+     "hash": "8660cdfeb2f022a9",
+     "fontEmbed": false
+    },
+    "venn/pr-check/15-should-render-a-three-set-venn-with-handdrawn-look-and-title": {
+     "hash": "9da003eaef74a360",
+     "fontEmbed": false
+    },
+    "venn/nightly-check/explicit-set-style-over-redux-palette": {
+     "hash": "df72c77d1f9a6ba5",
+     "fontEmbed": true
+    },
+    "wardley/pr-check/theme-test-base": {
+     "hash": "85c2aa13008d10c8",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/theme-test-neutral": {
+     "hash": "5a5f85bd0ab0eb00",
+     "fontEmbed": false
+    },
+    "wardley/pr-check/5-should-render-custom-canvas-size": {
+     "hash": "485380cd010da59f",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-line-with-plotreservedspacepercent": {
+     "hash": "c2ed4c4de1890a64",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/render-spark-bar-without-displaying-other-property": {
+     "hash": "3475b6c3a8ba5254",
+     "fontEmbed": false
+    },
+    "xychart/nightly-check/label-rotation-clamped-above-limit": {
+     "hash": "feb3c110f279e5fd",
+     "fontEmbed": false
+    }
+   }
+  }
+ }
+}

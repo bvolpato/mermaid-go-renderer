@@ -1,0 +1,103 @@
+css	agentflow/nightly-check/4b-should-render-the-input-value-pattern	mmdc embedded the fonts of its page into the SVG
+css	block/visual-check/flat-redux-theme	mmdc embedded the fonts of its page into the SVG
+css	c4/nightly-check/boundaries/generic-boundary	mmdc embedded the fonts of its page into the SVG
+css	er-diagram/nightly-check/should-render-empty-subgraphs	mmdc embedded the fonts of its page into the SVG
+css	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	mmdc embedded the fonts of its page into the SVG
+css	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+css	journey/nightly-check/single-word-hyphenation	mmdc embedded the fonts of its page into the SVG
+css	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+css	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+css	pie/nightly-check/redux-color-theme	mmdc embedded the fonts of its page into the SVG
+css	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+css	sequence/nightly-check/should-render-with-an-init-directive	other
+css	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+css	sequence/nightly-check/shouldnt-display-unused-participants	mmdc embedded the fonts of its page into the SVG
+css	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	mmdc embedded the fonts of its page into the SVG
+css	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	mmdc embedded the fonts of its page into the SVG
+css	usecase/pr-check/empty-diagram	mmdc embedded the fonts of its page into the SVG
+css	venn/nightly-check/explicit-set-style-over-redux-palette	mmdc embedded the fonts of its page into the SVG
+dark	block/visual-check/flat-redux-theme	mmdc embedded the fonts of its page into the SVG
+dark	c4/nightly-check/boundaries/generic-boundary	mmdc embedded the fonts of its page into the SVG
+dark	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	mmdc embedded the fonts of its page into the SVG
+dark	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+dark	journey/nightly-check/single-word-hyphenation	mmdc embedded the fonts of its page into the SVG
+dark	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+dark	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+dark	pie/nightly-check/redux-color-theme	mmdc embedded the fonts of its page into the SVG
+dark	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+dark	sequence/nightly-check/should-render-with-an-init-directive	other
+dark	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+dark	sequence/nightly-check/shouldnt-display-unused-participants	the diagram uses a font or a style sheet of the page of mmdc
+dark	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	mmdc embedded the fonts of its page into the SVG
+dark	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	mmdc embedded the fonts of its page into the SVG
+dark	usecase/pr-check/empty-diagram	the diagram uses a font or a style sheet of the page of mmdc
+dark	venn/nightly-check/explicit-set-style-over-redux-palette	mmdc embedded the fonts of its page into the SVG
+default	agentflow/nightly-check/4b-should-render-the-input-value-pattern	mmdc embedded the fonts of its page into the SVG
+default	block/visual-check/flat-redux-theme	mmdc embedded the fonts of its page into the SVG
+default	c4/nightly-check/boundaries/generic-boundary	mmdc embedded the fonts of its page into the SVG
+default	er-diagram/nightly-check/should-render-empty-subgraphs	mmdc embedded the fonts of its page into the SVG
+default	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	mmdc embedded the fonts of its page into the SVG
+default	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+default	journey/nightly-check/single-word-hyphenation	mmdc embedded the fonts of its page into the SVG
+default	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+default	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+default	pie/nightly-check/redux-color-theme	mmdc embedded the fonts of its page into the SVG
+default	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+default	sequence/nightly-check/should-render-with-an-init-directive	other
+default	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+default	sequence/nightly-check/shouldnt-display-unused-participants	mmdc embedded the fonts of its page into the SVG
+default	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	mmdc embedded the fonts of its page into the SVG
+default	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	mmdc embedded the fonts of its page into the SVG
+default	usecase/pr-check/empty-diagram	mmdc embedded the fonts of its page into the SVG
+default	venn/nightly-check/explicit-set-style-over-redux-palette	mmdc embedded the fonts of its page into the SVG
+id	agentflow/nightly-check/4b-should-render-the-input-value-pattern	mmdc embedded the fonts of its page into the SVG
+id	block/visual-check/flat-redux-theme	mmdc embedded the fonts of its page into the SVG
+id	c4/nightly-check/boundaries/generic-boundary	mmdc embedded the fonts of its page into the SVG
+id	er-diagram/nightly-check/should-render-empty-subgraphs	mmdc embedded the fonts of its page into the SVG
+id	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	mmdc embedded the fonts of its page into the SVG
+id	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+id	journey/nightly-check/single-word-hyphenation	mmdc embedded the fonts of its page into the SVG
+id	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+id	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+id	pie/nightly-check/redux-color-theme	mmdc embedded the fonts of its page into the SVG
+id	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+id	sequence/nightly-check/should-render-with-an-init-directive	other
+id	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+id	sequence/nightly-check/shouldnt-display-unused-participants	mmdc embedded the fonts of its page into the SVG
+id	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	mmdc embedded the fonts of its page into the SVG
+id	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	mmdc embedded the fonts of its page into the SVG
+id	usecase/pr-check/empty-diagram	mmdc embedded the fonts of its page into the SVG
+id	venn/nightly-check/explicit-set-style-over-redux-palette	mmdc embedded the fonts of its page into the SVG
+no-font-embed	agentflow/nightly-check/4b-should-render-the-input-value-pattern	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	block/visual-check/flat-redux-theme	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	c4/nightly-check/boundaries/generic-boundary	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	er-diagram/nightly-check/should-render-empty-subgraphs	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+no-font-embed	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	pie/nightly-check/redux-color-theme	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+no-font-embed	sequence/nightly-check/should-render-with-an-init-directive	other
+no-font-embed	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+no-font-embed	sequence/nightly-check/shouldnt-display-unused-participants	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	the diagram uses a font or a style sheet of the page of mmdc
+no-font-embed	usecase/pr-check/empty-diagram	the diagram uses a font or a style sheet of the page of mmdc
+transparent	agentflow/nightly-check/4b-should-render-the-input-value-pattern	mmdc embedded the fonts of its page into the SVG
+transparent	block/visual-check/flat-redux-theme	mmdc embedded the fonts of its page into the SVG
+transparent	c4/nightly-check/boundaries/generic-boundary	mmdc embedded the fonts of its page into the SVG
+transparent	er-diagram/nightly-check/should-render-empty-subgraphs	mmdc embedded the fonts of its page into the SVG
+transparent	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	mmdc embedded the fonts of its page into the SVG
+transparent	git/visual-check/showbranches-false-and-showcommitlabel-false-hiding-branch-lines-and-commit-labels-lr-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+transparent	journey/nightly-check/single-word-hyphenation	mmdc embedded the fonts of its page into the SVG
+transparent	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+transparent	mindmap/nightly-check/all-shapes-neo-look-redux-color-theme	mmdc embedded the fonts of its page into the SVG
+transparent	pie/nightly-check/redux-color-theme	mmdc embedded the fonts of its page into the SVG
+transparent	sequence/nightly-check/should-render-dark-theme-from-init-directive-and-configure-font-size-24-font	other
+transparent	sequence/nightly-check/should-render-with-an-init-directive	other
+transparent	sequence/pr-check/should-render-sequence-rect-with-theme-aware-default-background-dark-theme	other
+transparent	sequence/nightly-check/shouldnt-display-unused-participants	mmdc embedded the fonts of its page into the SVG
+transparent	state-diagram-v2/nightly-check/user-styled-composite-containers-redux-theme	mmdc embedded the fonts of its page into the SVG
+transparent	timeline/nightly-check/space-exploration-redux-color-theme-classic-look	mmdc embedded the fonts of its page into the SVG
+transparent	usecase/pr-check/empty-diagram	mmdc embedded the fonts of its page into the SVG
+transparent	venn/nightly-check/explicit-set-style-over-redux-palette	mmdc embedded the fonts of its page into the SVG

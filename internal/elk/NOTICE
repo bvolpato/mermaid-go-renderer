@@ -1,0 +1,46 @@
+Notice for internal/elk
+
+This directory has code of the Eclipse Layout Kernel (ELK) and of elkjs,
+which is ELK compiled from Java to JavaScript:
+
+  elkjs
+  https://github.com/kieler/elkjs (version 0.9.3)
+  Copyright (c) 2017 Kiel University and others.
+  Copyright (c) 2021 Kiel University and others.
+
+  Eclipse Layout Kernel
+  https://github.com/eclipse/elk (tag v0.9.1, plus the change of pull request
+  955, which elkjs 0.9.3 includes)
+  Copyright (c) Kiel University and others.
+
+ELK and elkjs are made available under the terms of the Eclipse Public
+License 2.0, which is available at http://www.eclipse.org/legal/epl-2.0 and
+in the file LICENSE-EPL-2.0.txt in this directory.
+
+SPDX-License-Identifier: EPL-2.0
+
+These files are under the Eclipse Public License 2.0:
+
+  elkjs/elk-worker.min.js
+      The file lib/elk-worker.min.js of elkjs 0.9.3, unchanged. See
+      elkjs/LICENSE.md and elkjs/NOTICE.
+  engine.go
+      Go code and JavaScript code that replace lib/elk-api.js of elkjs and
+      the FakeWorker of the worker script, and seven text patches that
+      replace functions of the worker script when the script is compiled.
+      The file is a derivative work of elkjs.
+  native/
+      A Go port of the layered algorithm of ELK. See native/LICENSE and
+      native/NOTICE.
+
+These files port no file of ELK or of elkjs: elk.go and graph.go. They have
+the Go API of the engine.
+
+The files under testdata are records of the results of elkjs 0.9.3.
+
+The two copyright lines of elkjs are the lines of lib/elk-api.js and
+lib/main.js of the npm package elkjs 0.9.3. The file elk-worker.min.js has
+no copyright line.
+
+The source code of the code under the Eclipse Public License 2.0 is in this
+repository and in the two repositories above.

@@ -1,0 +1,233 @@
+erDiagram
+  E0 {
+    string span_0 PK
+  }
+  E1 {
+    int worker_0 PK
+  }
+  E2 {
+    date audit_0 PK
+  }
+  E3 {
+    int shard_0 PK
+    date alert_1
+    date replica_2
+    int lease_3
+  }
+  E4 {
+    date lease_0 PK
+    string alert_1 FK
+  }
+  E5 {
+    float quota_0 PK
+    date lease_1
+    date probe_2
+    int alert_3
+    date policy_4
+  }
+  E6 {
+    date trace_0 PK
+    date lease_1
+  }
+  E7 {
+    int order_0 PK
+  }
+  E8 {
+    string probe_0 PK
+    string gateway_1
+  }
+  E9 {
+    string quota_0 PK
+    date quota_1
+    int router_2
+    float ledger_3
+  }
+  E10 {
+    string session_0 PK
+    string quota_1
+    date session_2 FK
+    date alert_3
+    int queue_4
+  }
+  E11 {
+    float session_0 PK
+    float payment_1 FK
+    int gateway_2
+    date span_3
+    float replica_4 FK
+  }
+  E12 {
+    date replica_0 PK
+  }
+  E13 {
+    date quota_0 PK
+    date stream_1
+    date alert_2 FK
+  }
+  E14 {
+    date batch_0 PK
+    int worker_1
+  }
+  E15 {
+    float user_0 PK
+    int probe_1 FK
+    float policy_2
+    int probe_3
+  }
+  E16 {
+    float replica_0 PK
+    int shard_1
+  }
+  E17 {
+    float worker_0 PK
+  }
+  E18 {
+    date audit_0 PK
+    int worker_1
+    string event_2
+  }
+  E19 {
+    date trace_0 PK
+  }
+  E20 {
+    date bucket_0 PK
+    date span_1
+  }
+  E21 {
+    int lease_0 PK
+  }
+  E22 {
+    string gateway_0 PK
+    string schema_1
+  }
+  E23 {
+    float router_0 PK
+  }
+  E24 {
+    int stream_0 PK
+    float bucket_1
+    string audit_2
+  }
+  E25 {
+    float worker_0 PK
+    date shard_1
+  }
+  E26 {
+    string event_0 PK
+    string trace_1
+    date probe_2
+    string policy_3
+  }
+  E27 {
+    float index_0 PK
+    int token_1
+    int bucket_2 FK
+    int ledger_3
+    float replica_4
+  }
+  E28 {
+    float shard_0 PK
+    date lease_1
+    string worker_2
+    float shard_3 FK
+  }
+  E29 {
+    int token_0 PK
+    int event_1 FK
+    int alert_2 FK
+    float audit_3
+    float index_4
+  }
+  E30 {
+    float policy_0 PK
+    date event_1
+    string queue_2
+  }
+  E31 {
+    string token_0 PK
+    string lease_1 FK
+    float index_2 FK
+    float bucket_3
+    string session_4
+  }
+  E32 {
+    int invoice_0 PK
+    string report_1 FK
+    string queue_2
+    date worker_3
+    float token_4
+  }
+  E33 {
+    string stream_0 PK
+    date order_1
+    int probe_2
+    date report_3
+  }
+  E34 {
+    float audit_0 PK
+    string session_1
+  }
+  E35 {
+    int alert_0 PK
+  }
+  E36 {
+    string report_0 PK
+  }
+  E37 {
+    date user_0 PK
+    string alert_1
+  }
+  E38 {
+    int metric_0 PK
+    date event_1 FK
+    int probe_2
+  }
+  E39 {
+    float invoice_0 PK
+    float shard_1
+    date index_2
+    int router_3
+    date audit_4 FK
+  }
+  E0 ||--|{ E1 : worker
+  E1 ||--o{ E2 : event
+  E1 }|..|{ E3 : event
+  E1 ||--|| E4 : cache
+  E3 ||--|{ E5 : span
+  E3 }|..|{ E6 : replica
+  E6 }o--o{ E7 : audit
+  E7 |o--o| E8 : probe
+  E5 ||--|| E9 : router
+  E8 ||--o{ E10 : index
+  E10 ||--o{ E11 : stream
+  E11 ||--o{ E12 : report
+  E9 |o--o| E13 : bucket
+  E13 ||--|{ E14 : trace
+  E12 ||--|| E15 : probe
+  E15 ||--o{ E16 : report
+  E14 ||--|{ E17 : invoice
+  E12 |o--o| E18 : cache
+  E17 }|..|{ E19 : order
+  E15 }o--o{ E20 : router
+  E19 ||--|{ E21 : order
+  E18 }o--o{ E23 : span
+  E22 }o--o{ E24 : session
+  E21 |o--o| E25 : gateway
+  E20 ||--o{ E26 : probe
+  E25 ||--|| E27 : stream
+  E23 ||--|{ E28 : stream
+  E26 ||--|{ E29 : order
+  E24 |o--o| E30 : policy
+  E31 ||--|{ E32 : span
+  E33 }o--o{ E34 : trace
+  E31 |o--o| E35 : bucket
+  E35 }|..|{ E36 : span
+  E32 }|..|{ E37 : bucket
+  E35 |o--o| E38 : event
+  E36 ||--|| E39 : user
+  E39 ||--o{ E3 : index
+  E18 ||--|| E30 : router
+  E32 }|..|{ E4 : probe
+  E6 }o--o{ E13 : policy
+  E32 }|..|{ E38 : router
+  E8 ||--o{ E4 : policy

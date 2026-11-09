@@ -1,0 +1,29 @@
+The Go code in this directory and its subdirectories is a port of parts of
+these JavaScript packages, in the versions that mermaid 12.2.0 bundles:
+
+  cytoscape 3.34.0                https://github.com/cytoscape/cytoscape.js
+  cytoscape-cose-bilkent 4.1.0    https://github.com/cytoscape/cytoscape.js-cose-bilkent
+  cytoscape-fcose 2.2.0           https://github.com/iVis-at-Bilkent/cytoscape.js-fcose
+  cose-base 1.0.3 and 2.2.0       https://github.com/iVis-at-Bilkent/cose-base
+  layout-base 1.0.2 and 2.0.1     https://github.com/iVis-at-Bilkent/layout-base
+
+All of them have the MIT license. The license texts and the copyright
+notices of the packages are in the file LICENSES.txt of the parent directory
+(internal/cytoscape). The port is a derivative work of the packages. Each
+ported file names the source file, the package and the version that it was
+ported from.
+
+The file fcose/svd.go is a port of src/util/SVD.js of layout-base 2.0.1,
+whose singular value decomposition is adopted from JamaJS
+(https://github.com/dragonfly-ai/JamaJS), which has the Apache License,
+Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0). layout-base
+changed that code to take a two-dimensional array and to return an object
+with the components, and the port changed it to Go.
+
+The files cosebilkent.go and architecture.go also port the statements of
+mermaid 12.2.0 (https://github.com/mermaid-js/mermaid, MIT license) that
+create the cytoscape instance and read its results, as the other packages of
+this module port mermaid.
+
+The golden files in testdata are records of the behavior of the packages in
+the JavaScript interpreter of internal/cytoscape.

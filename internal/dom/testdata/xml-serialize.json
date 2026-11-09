@@ -1,0 +1,5409 @@
+[
+ {
+  "name": "root/with-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/></svg>"
+ },
+ {
+  "name": "root/no-xmlns",
+  "svg": "<svg viewBox=\"0 0 10 10\" id=\"a\"><g></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "viewBox",
+     "value": "0 0 10 10"
+    },
+    {
+     "local": "id",
+     "value": "a"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 10 10\" id=\"a\"><g/></svg>"
+ },
+ {
+  "name": "root/xmlns-in-the-middle",
+  "svg": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\"><g></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "id",
+     "value": "a"
+    },
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "width",
+     "value": "10"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\"><g/></svg>"
+ },
+ {
+  "name": "root/xmlns-last",
+  "svg": "<svg id=\"a\" width=\"10\" xmlns=\"http://www.w3.org/2000/svg\"></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "id",
+     "value": "a"
+    },
+    {
+     "local": "width",
+     "value": "10"
+    },
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": []
+  },
+  "xml": "<svg id=\"a\" width=\"10\" xmlns=\"http://www.w3.org/2000/svg\"/>"
+ },
+ {
+  "name": "root/wrong-xmlns",
+  "svg": "<svg xmlns=\"http://example.com/x\" id=\"a\"><g xmlns=\"http://example.com/y\"><rect></rect></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://example.com/x",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "id",
+     "value": "a"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "http://example.com/y",
+       "ns": "http://www.w3.org/2000/xmlns/"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "rect",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\"><g><rect/></g></svg>"
+ },
+ {
+  "name": "root/empty-xmlns",
+  "svg": "<svg xmlns=\"\" id=\"a\"><g xmlns=\"\"></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "id",
+     "value": "a"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "",
+       "ns": "http://www.w3.org/2000/xmlns/"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"a\"><g/></svg>"
+ },
+ {
+  "name": "root/empty",
+  "svg": "<svg></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [],
+   "kids": []
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"/>"
+ },
+ {
+  "name": "root/mermaid-header",
+  "svg": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" class=\"flowchart\" style=\"max-width: 123.456px;\" viewBox=\"0 0 123.456 78\" role=\"graphics-document document\" aria-roledescription=\"flowchart-v2\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;}#my-svg .a>b{fill:#333;}</style><g></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "id",
+     "value": "my-svg"
+    },
+    {
+     "local": "width",
+     "value": "100%"
+    },
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xlink",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    },
+    {
+     "local": "class",
+     "value": "flowchart"
+    },
+    {
+     "local": "style",
+     "value": "max-width: 123.456px;"
+    },
+    {
+     "local": "viewBox",
+     "value": "0 0 123.456 78"
+    },
+    {
+     "local": "role",
+     "value": "graphics-document document"
+    },
+    {
+     "local": "aria-roledescription",
+     "value": "flowchart-v2"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;}#my-svg .a>b{fill:#333;}"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" class=\"flowchart\" style=\"max-width: 123.456px;\" viewBox=\"0 0 123.456 78\" role=\"graphics-document document\" aria-roledescription=\"flowchart-v2\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;}#my-svg .a&gt;b{fill:#333;}</style><g/></svg>"
+ },
+ {
+  "name": "root/not-first",
+  "svg": "<p>before</p><div><svg id=\"inner\"><g></g></svg></div><svg id=\"second\"></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "id",
+     "value": "inner"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"inner\"><g/></svg>"
+ },
+ {
+  "name": "root/text-around",
+  "svg": "text before <svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg> text after",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/></svg>"
+ },
+ {
+  "name": "empty/svg-elements",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g></g><path></path><rect></rect><circle></circle><ellipse></ellipse><line></line><polygon></polygon><polyline></polyline><text></text><tspan></tspan><textPath></textPath><defs></defs><marker></marker><style></style><title></title><desc></desc><use></use><image></image><a></a><switch></switch><symbol></symbol><clipPath></clipPath><mask></mask><pattern></pattern><linearGradient></linearGradient><radialGradient></radialGradient><stop></stop><filter></filter><feGaussianBlur></feGaussianBlur><feDropShadow></feDropShadow><foreignObject></foreignObject><script></script><animate></animate><unknownelement></unknownelement></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "path",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "rect",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "circle",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "ellipse",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "line",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "polygon",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "polyline",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "tspan",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "textPath",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "defs",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "marker",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "title",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "desc",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "image",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "switch",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "symbol",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "clipPath",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "mask",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "pattern",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "linearGradient",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "radialGradient",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "stop",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "filter",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "feGaussianBlur",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "feDropShadow",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "script",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "animate",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "unknownelement",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/><path/><rect/><circle/><ellipse/><line/><polygon/><polyline/><text/><tspan/><textPath/><defs/><marker/><style/><title/><desc/><use/><image/><a/><switch/><symbol/><clipPath/><mask/><pattern/><linearGradient/><radialGradient/><stop/><filter/><feGaussianBlur/><feDropShadow/><foreignObject/><script/><animate/><unknownelement/></svg>"
+ },
+ {
+  "name": "empty/svg-elements-with-attrs",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g class=\"c\" data-x=\"1\"></g><path class=\"c\" data-x=\"1\"></path><rect class=\"c\" data-x=\"1\"></rect><circle class=\"c\" data-x=\"1\"></circle><ellipse class=\"c\" data-x=\"1\"></ellipse><line class=\"c\" data-x=\"1\"></line><polygon class=\"c\" data-x=\"1\"></polygon><polyline class=\"c\" data-x=\"1\"></polyline><text class=\"c\" data-x=\"1\"></text><tspan class=\"c\" data-x=\"1\"></tspan><textPath class=\"c\" data-x=\"1\"></textPath><defs class=\"c\" data-x=\"1\"></defs><marker class=\"c\" data-x=\"1\"></marker><style class=\"c\" data-x=\"1\"></style><title class=\"c\" data-x=\"1\"></title><desc class=\"c\" data-x=\"1\"></desc><use class=\"c\" data-x=\"1\"></use><image class=\"c\" data-x=\"1\"></image><a class=\"c\" data-x=\"1\"></a><switch class=\"c\" data-x=\"1\"></switch><symbol class=\"c\" data-x=\"1\"></symbol><clipPath class=\"c\" data-x=\"1\"></clipPath><mask class=\"c\" data-x=\"1\"></mask><pattern class=\"c\" data-x=\"1\"></pattern><linearGradient class=\"c\" data-x=\"1\"></linearGradient><radialGradient class=\"c\" data-x=\"1\"></radialGradient><stop class=\"c\" data-x=\"1\"></stop><filter class=\"c\" data-x=\"1\"></filter><feGaussianBlur class=\"c\" data-x=\"1\"></feGaussianBlur><feDropShadow class=\"c\" data-x=\"1\"></feDropShadow><foreignObject class=\"c\" data-x=\"1\"></foreignObject><script class=\"c\" data-x=\"1\"></script><animate class=\"c\" data-x=\"1\"></animate><unknownelement class=\"c\" data-x=\"1\"></unknownelement></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "path",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "rect",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "circle",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "ellipse",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "line",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "polygon",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "polyline",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "tspan",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "textPath",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "defs",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "marker",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "title",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "desc",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "image",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "switch",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "symbol",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "clipPath",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "mask",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "pattern",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "linearGradient",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "radialGradient",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "stop",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "filter",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "feGaussianBlur",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "feDropShadow",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "script",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "animate",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "unknownelement",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "c"
+      },
+      {
+       "local": "data-x",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g class=\"c\" data-x=\"1\"/><path class=\"c\" data-x=\"1\"/><rect class=\"c\" data-x=\"1\"/><circle class=\"c\" data-x=\"1\"/><ellipse class=\"c\" data-x=\"1\"/><line class=\"c\" data-x=\"1\"/><polygon class=\"c\" data-x=\"1\"/><polyline class=\"c\" data-x=\"1\"/><text class=\"c\" data-x=\"1\"/><tspan class=\"c\" data-x=\"1\"/><textPath class=\"c\" data-x=\"1\"/><defs class=\"c\" data-x=\"1\"/><marker class=\"c\" data-x=\"1\"/><style class=\"c\" data-x=\"1\"/><title class=\"c\" data-x=\"1\"/><desc class=\"c\" data-x=\"1\"/><use class=\"c\" data-x=\"1\"/><image class=\"c\" data-x=\"1\"/><a class=\"c\" data-x=\"1\"/><switch class=\"c\" data-x=\"1\"/><symbol class=\"c\" data-x=\"1\"/><clipPath class=\"c\" data-x=\"1\"/><mask class=\"c\" data-x=\"1\"/><pattern class=\"c\" data-x=\"1\"/><linearGradient class=\"c\" data-x=\"1\"/><radialGradient class=\"c\" data-x=\"1\"/><stop class=\"c\" data-x=\"1\"/><filter class=\"c\" data-x=\"1\"/><feGaussianBlur class=\"c\" data-x=\"1\"/><feDropShadow class=\"c\" data-x=\"1\"/><foreignObject class=\"c\" data-x=\"1\"/><script class=\"c\" data-x=\"1\"/><animate class=\"c\" data-x=\"1\"/><unknownelement class=\"c\" data-x=\"1\"/></svg>"
+ },
+ {
+  "name": "empty/svg-self-closing-source",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/><path d=\"M0,0\"/><rect width=\"1\" height=\"1\"/><text/></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "path",
+     "attrs": [
+      {
+       "local": "d",
+       "value": "M0,0"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "rect",
+     "attrs": [
+      {
+       "local": "width",
+       "value": "1"
+      },
+      {
+       "local": "height",
+       "value": "1"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/><path d=\"M0,0\"/><rect width=\"1\" height=\"1\"/><text/></svg>"
+ },
+ {
+  "name": "empty/html-elements",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><a></a><b></b><i></i><p></p><div></div><span></span><em></em><strong></strong><code></code><pre></pre><ul></ul><li></li><table></table><textarea></textarea><button></button><label></label><small></small><sub></sub><sup></sup><u></u><s></s><h1></h1><center></center><font></font><section></section><canvas></canvas><video></video><audio></audio><picture></picture><object></object><select></select><option></option><details></details><summary></summary><dialog></dialog><slot></slot><template></template><custom-element></custom-element><unknownelement></unknownelement></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "a",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "b",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "i",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "p",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "div",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "em",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "strong",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "code",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "pre",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "ul",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "li",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "table",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "textarea",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "button",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "label",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "small",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "sub",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "sup",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "u",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "s",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "h1",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "center",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "font",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "section",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "canvas",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "video",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "audio",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "picture",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "object",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "select",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "option",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "details",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "summary",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "dialog",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "slot",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "template",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "custom-element",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "unknownelement",
+         "attrs": [],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><a></a><b></b><i></i><p></p><div></div><span></span><em></em><strong></strong><code></code><pre></pre><ul></ul><li></li><table></table><textarea></textarea><button></button><label></label><small></small><sub></sub><sup></sup><u></u><s></s><h1></h1><center></center><font></font><section></section><canvas></canvas><video></video><audio></audio><picture></picture><object></object><select></select><option></option><details></details><summary></summary><dialog></dialog><slot></slot><template></template><custom-element></custom-element><unknownelement></unknownelement></div></foreignObject></svg>"
+ },
+ {
+  "name": "empty/html-void",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><area><base><basefont><bgsound><br><col><embed><frame><hr><img><input><keygen><link><meta><param><source><track><wbr></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "area",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "base",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "basefont",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "bgsound",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "br",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "embed",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "hr",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "img",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "input",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "keygen",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "link",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "meta",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "param",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "source",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "track",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "wbr",
+         "attrs": [],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><area /><base /><basefont /><bgsound /><br /><embed /><hr /><img /><input /><keygen /><link /><meta /><param /><source /><track /><wbr /></div></foreignObject></svg>"
+ },
+ {
+  "name": "empty/html-void-with-attrs",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div>a<br>b<br/>c<img src=\"x.png\" alt=\"x\"><hr class=\"h\"><input type=\"text\" value=\"v\" disabled><wbr></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "a"
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "br",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "t": "b"
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "br",
+         "attrs": [],
+         "kids": []
+        },
+        {
+         "t": "c"
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "img",
+         "attrs": [
+          {
+           "local": "src",
+           "value": "x.png"
+          },
+          {
+           "local": "alt",
+           "value": "x"
+          }
+         ],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "hr",
+         "attrs": [
+          {
+           "local": "class",
+           "value": "h"
+          }
+         ],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "input",
+         "attrs": [
+          {
+           "local": "type",
+           "value": "text"
+          },
+          {
+           "local": "value",
+           "value": "v"
+          },
+          {
+           "local": "disabled",
+           "value": ""
+          }
+         ],
+         "kids": []
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "wbr",
+         "attrs": [],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\">a<br />b<br />c<img src=\"x.png\" alt=\"x\" /><hr class=\"h\" /><input type=\"text\" value=\"v\" disabled=\"\" /><wbr /></div></foreignObject></svg>"
+ },
+ {
+  "name": "empty/whitespace-only",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g> </g><g>\n</g><text> </text><foreignObject><div> </div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "t": " "
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "\n"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": " "
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "t": " "
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g> </g><g>\n</g><text> </text><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"> </div></foreignObject></svg>"
+ },
+ {
+  "name": "empty/comment-only",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g><!--c--></g><foreignObject><div><!--c--></div><br><!--c--></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "c": "c"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "c": "c"
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "br",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "c": "c"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g><!--c--></g><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><!--c--></div><br xmlns=\"http://www.w3.org/1999/xhtml\" /><!--c--></foreignObject></svg>"
+ },
+ {
+  "name": "empty/math-elements",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi></mi><mrow></mrow><mspace width=\"1em\"></mspace><annotation></annotation></math></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1998/Math/MathML",
+         "tag": "math",
+         "attrs": [
+          {
+           "local": "xmlns",
+           "value": "http://www.w3.org/1998/Math/MathML",
+           "ns": "http://www.w3.org/2000/xmlns/"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "mi",
+           "attrs": [],
+           "kids": []
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "mrow",
+           "attrs": [],
+           "kids": []
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "mspace",
+           "attrs": [
+            {
+             "local": "width",
+             "value": "1em"
+            }
+           ],
+           "kids": []
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "annotation",
+           "attrs": [],
+           "kids": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi/><mrow/><mspace width=\"1em\"/><annotation/></math></div></foreignObject></svg>"
+ },
+ {
+  "name": "text/entities",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a&nbsp;b &amp; &lt;c&gt; &quot;q&quot; &apos;s&apos; &copy; &#x1F600; &hellip; &#38;amp; &#160;</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a b & <c> \"q\" 's' © 😀 … &amp;  "
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a b &amp; &lt;c&gt; \"q\" 's' © 😀 … &amp;amp;  </text></svg>"
+ },
+ {
+  "name": "text/html-entities",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div>a&nbsp;b &amp; &lt;c&gt; &quot;q&quot; &apos;s&apos; &copy; &#x1F600; &amp;nbsp;  </div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "a b & <c> \"q\" 's' © 😀 &nbsp;  "
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\">a b &amp; &lt;c&gt; \"q\" 's' © 😀 &amp;nbsp;  </div></foreignObject></svg>"
+ },
+ {
+  "name": "text/non-bmp",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>😀 𝒳 􏿿   ﻿ ​</text><foreignObject><div title=\"😀\">👩‍💻</div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "😀 𝒳 􏿿   ﻿ ​"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "title",
+         "value": "😀"
+        }
+       ],
+       "kids": [
+        {
+         "t": "👩‍💻"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>😀 𝒳 􏿿   ﻿ ​</text><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\" title=\"😀\">👩‍💻</div></foreignObject></svg>"
+ },
+ {
+  "name": "text/whitespace",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>  a\tb\nc\r\nd  </text><foreignObject><div>  a\tb\nc\r\nd  <pre>\n\nx</pre><textarea>\n\ny</textarea></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "  a\tb\nc\nd  "
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "  a\tb\nc\nd  "
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "pre",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "\nx"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "textarea",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "\ny"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>  a\tb\nc\nd  </text><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\">  a\tb\nc\nd  <pre>\nx</pre><textarea>\ny</textarea></div></foreignObject></svg>"
+ },
+ {
+  "name": "text/control",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a\u0001bcd￾e</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a\u0001bcd￾e"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a\u0001bcd￾e</text></svg>"
+ },
+ {
+  "name": "text/cdata-end",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a]]>b</text><style>a]]>b</style></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a]]>b"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a]]>b"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a]]&gt;b</text><style>a]]&gt;b</style></svg>"
+ },
+ {
+  "name": "text/style-svg",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><style>#a > b{content:\"<&>\";font-family:'x'}/* c */@media (min-width:1px){a{}}</style></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "#a > b{content:\"<&>\";font-family:'x'}/* c */@media (min-width:1px){a{}}"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><style>#a &gt; b{content:\"&lt;&amp;&gt;\";font-family:'x'}/* c */@media (min-width:1px){a{}}</style></svg>"
+ },
+ {
+  "name": "text/style-escaped-source",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><style>#a &gt; b{content:\"&lt;&amp;&gt;\"}</style></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "#a > b{content:\"<&>\"}"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><style>#a &gt; b{content:\"&lt;&amp;&gt;\"}</style></svg>"
+ },
+ {
+  "name": "text/style-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><style>#a > b{content:\"<&>\"}</style><script>if (a < b && c > d) {}</script><xmp><b>&amp;</xmp><textarea><b>&amp;</textarea><title><b>&amp;</title><noscript><b>&amp;</noscript><iframe><b>&amp;</iframe><plaintext><b>&amp;</plaintext></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "style",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "#a > b{content:\"<&>\"}"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "script",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "if (a < b && c > d) {}"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "xmp",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&amp;"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "textarea",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "title",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "noscript",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&amp;"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "iframe",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&amp;"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "plaintext",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "<b>&amp;</plaintext></div></foreignObject></svg>"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><style>#a &gt; b{content:\"&lt;&amp;&gt;\"}</style><script>if (a &lt; b &amp;&amp; c &gt; d) {}</script><xmp>&lt;b&gt;&amp;amp;</xmp><textarea>&lt;b&gt;&amp;</textarea><title>&lt;b&gt;&amp;</title><noscript>&lt;b&gt;&amp;amp;</noscript><iframe>&lt;b&gt;&amp;amp;</iframe><plaintext>&lt;b&gt;&amp;amp;&lt;/plaintext&gt;&lt;/div&gt;&lt;/foreignObject&gt;&lt;/svg&gt;</plaintext></div></foreignObject></svg>"
+ },
+ {
+  "name": "text/cdata-foreign",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text><![CDATA[a < b & c > d]]></text><style><![CDATA[a > b]]></style></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a < b & c > d"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a > b"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a &lt; b &amp; c &gt; d</text><style>a &gt; b</style></svg>"
+ },
+ {
+  "name": "text/cdata-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><![CDATA[a < b]]></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "c": "[CDATA[a < b]]"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><!--[CDATA[a < b]]--></div></foreignObject></svg>"
+ },
+ {
+  "name": "text/adjacent",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>a</text></svg>",
+  "script": "svg.firstChild.appendChild(document.createTextNode('b<'));svg.firstChild.appendChild(document.createTextNode(''));svg.firstChild.appendChild(document.createTextNode('>c'));",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "a"
+      },
+      {
+       "t": "b<"
+      },
+      {
+       "t": ""
+      },
+      {
+       "t": ">c"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>ab&lt;&gt;c</text></svg>"
+ },
+ {
+  "name": "comment/plain",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><!-- a comment --><g><!--x--></g><!----></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "c": " a comment "
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "c": "x"
+      }
+     ]
+    },
+    {
+     "c": ""
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><!-- a comment --><g><!--x--></g><!----></svg>"
+ },
+ {
+  "name": "comment/markup-inside",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><!-- a -- b <g> &amp; --><!--->--></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "c": " a -- b <g> &amp; "
+    },
+    {
+     "c": ""
+    },
+    {
+     "t": "-->"
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><!-- a -- b <g> &amp; --><!---->--&gt;</svg>"
+ },
+ {
+  "name": "comment/in-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><!-- c --><!bogus><!doctype html></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "c": " c "
+        },
+        {
+         "c": "bogus"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><!-- c --><!--bogus--></div></foreignObject></svg>"
+ },
+ {
+  "name": "comment/before-root",
+  "svg": "<!-- before --><svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg><!-- after -->",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/></svg>"
+ },
+ {
+  "name": "attr/quotes",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a='say \"hi\"' data-b=\"it's\" data-c=\"&quot;&apos;\" data-d='\"'>t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "data-a",
+       "value": "say \"hi\""
+      },
+      {
+       "local": "data-b",
+       "value": "it's"
+      },
+      {
+       "local": "data-c",
+       "value": "\"'"
+      },
+      {
+       "local": "data-d",
+       "value": "\""
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"say &quot;hi&quot;\" data-b=\"it's\" data-c=\"&quot;'\" data-d=\"&quot;\">t</text></svg>"
+ },
+ {
+  "name": "attr/newlines",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"line1\nline2\" data-b=\"line1&#10;line2\" data-c=\"tab\tx&#9;y\" data-d=\"cr&#13;x\" data-e=\"crlf\r\nx\">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "data-a",
+       "value": "line1\nline2"
+      },
+      {
+       "local": "data-b",
+       "value": "line1\nline2"
+      },
+      {
+       "local": "data-c",
+       "value": "tab\tx\ty"
+      },
+      {
+       "local": "data-d",
+       "value": "cr\rx"
+      },
+      {
+       "local": "data-e",
+       "value": "crlf\nx"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"line1&#10;line2\" data-b=\"line1&#10;line2\" data-c=\"tab&#9;x&#9;y\" data-d=\"cr&#13;x\" data-e=\"crlf&#10;x\">t</text></svg>"
+ },
+ {
+  "name": "attr/markup",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"a<b>c&amp;d\" data-b=\"&lt;&gt;&amp;lt;\" data-c=\"a&b\" data-d=\"x&notit;y\">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "data-a",
+       "value": "a<b>c&d"
+      },
+      {
+       "local": "data-b",
+       "value": "<>&lt;"
+      },
+      {
+       "local": "data-c",
+       "value": "a&b"
+      },
+      {
+       "local": "data-d",
+       "value": "x&notit;y"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"a&lt;b&gt;c&amp;d\" data-b=\"&lt;&gt;&amp;lt;\" data-c=\"a&amp;b\" data-d=\"x&amp;notit;y\">t</text></svg>"
+ },
+ {
+  "name": "attr/nbsp",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"a&nbsp;b\" data-b=\"a b\" data-c=\"😀 \">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "data-a",
+       "value": "a b"
+      },
+      {
+       "local": "data-b",
+       "value": "a b"
+      },
+      {
+       "local": "data-c",
+       "value": "😀 "
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"a b\" data-b=\"a b\" data-c=\"😀 \">t</text></svg>"
+ },
+ {
+  "name": "attr/empty-and-bare",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"\" data-b data-c=x data-d = \"y\">t</text><foreignObject><input disabled checked=\"\" value></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "data-a",
+       "value": ""
+      },
+      {
+       "local": "data-b",
+       "value": ""
+      },
+      {
+       "local": "data-c",
+       "value": "x"
+      },
+      {
+       "local": "data-d",
+       "value": "y"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "input",
+       "attrs": [
+        {
+         "local": "disabled",
+         "value": ""
+        },
+        {
+         "local": "checked",
+         "value": ""
+        },
+        {
+         "local": "value",
+         "value": ""
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text data-a=\"\" data-b=\"\" data-c=\"x\" data-d=\"y\">t</text><foreignObject><input xmlns=\"http://www.w3.org/1999/xhtml\" disabled=\"\" checked=\"\" value=\"\" /></foreignObject></svg>"
+ },
+ {
+  "name": "attr/duplicate",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text class=\"a\" class=\"b\" CLASS=\"c\">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "class",
+       "value": "a"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text class=\"a\">t</text></svg>"
+ },
+ {
+  "name": "attr/case",
+  "svg": "<svg viewbox=\"0 0 1 1\" VIEWBOX=\"0 0 2 2\" preserveaspectratio=\"none\" Data-Foo=\"1\"><marker markerwidth=\"1\" refx=\"2\" markerUnits=\"userSpaceOnUse\"></marker><lineargradient gradientunits=\"x\"></lineargradient><foreignobject requiredextensions=\"x\"><DIV Class=\"A\" onClick=\"x\"></DIV></foreignobject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "viewBox",
+     "value": "0 0 1 1"
+    },
+    {
+     "local": "preserveAspectRatio",
+     "value": "none"
+    },
+    {
+     "local": "data-foo",
+     "value": "1"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "marker",
+     "attrs": [
+      {
+       "local": "markerWidth",
+       "value": "1"
+      },
+      {
+       "local": "refX",
+       "value": "2"
+      },
+      {
+       "local": "markerUnits",
+       "value": "userSpaceOnUse"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "linearGradient",
+     "attrs": [
+      {
+       "local": "gradientUnits",
+       "value": "x"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [
+      {
+       "local": "requiredExtensions",
+       "value": "x"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "class",
+         "value": "A"
+        },
+        {
+         "local": "onclick",
+         "value": "x"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\" preserveAspectRatio=\"none\" data-foo=\"1\"><marker markerWidth=\"1\" refX=\"2\" markerUnits=\"userSpaceOnUse\"/><linearGradient gradientUnits=\"x\"/><foreignObject requiredExtensions=\"x\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"A\" onclick=\"x\"></div></foreignObject></svg>"
+ },
+ {
+  "name": "attr/odd-names",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text a:b=\"1\" :c=\"2\" d:=\"3\" _e=\"4\" -f=\"5\" 9g=\"6\" h.i=\"7\" j/k=\"8\">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "a:b",
+       "value": "1"
+      },
+      {
+       "local": ":c",
+       "value": "2"
+      },
+      {
+       "local": "d:",
+       "value": "3"
+      },
+      {
+       "local": "_e",
+       "value": "4"
+      },
+      {
+       "local": "-f",
+       "value": "5"
+      },
+      {
+       "local": "9g",
+       "value": "6"
+      },
+      {
+       "local": "h.i",
+       "value": "7"
+      },
+      {
+       "local": "j",
+       "value": ""
+      },
+      {
+       "local": "k",
+       "value": "8"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text a:b=\"1\" :c=\"2\" d:=\"3\" _e=\"4\" -f=\"5\" 9g=\"6\" h.i=\"7\" j=\"\" k=\"8\">t</text></svg>"
+ },
+ {
+  "name": "attr/style",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g style=\"fill:red;stroke:#00F ; opacity:.5\"><rect style=\"\"></rect><rect style=\"not css\"></rect></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "style",
+       "value": "fill:red;stroke:#00F ; opacity:.5"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "rect",
+       "attrs": [
+        {
+         "local": "style",
+         "value": ""
+        }
+       ],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "rect",
+       "attrs": [
+        {
+         "local": "style",
+         "value": "not css"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g style=\"fill:red;stroke:#00F ; opacity:.5\"><rect style=\"\"/><rect style=\"not css\"/></g></svg>"
+ },
+ {
+  "name": "attr/url",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a href=\"http://x/?a=1&amp;b=2&c=3#f\"><text>t</text></a><image href=\"data:image/png;base64,AAAA\"></image></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "http://x/?a=1&b=2&c=3#f"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "text",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "t"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "image",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "data:image/png;base64,AAAA"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a href=\"http://x/?a=1&amp;b=2&amp;c=3#f\"><text>t</text></a><image href=\"data:image/png;base64,AAAA\"/></svg>"
+ },
+ {
+  "name": "xlink/declared-on-root",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:href=\"http://x/?a=1&amp;b=2\"><text>t</text></a><use xlink:href=\"#a\"></use></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xlink",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "http://x/?a=1&b=2",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "text",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "t"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:href=\"http://x/?a=1&amp;b=2\"><text>t</text></a><use xlink:href=\"#a\"/></svg>"
+ },
+ {
+  "name": "xlink/not-declared",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><image xlink:href=\"a.png\"></image><g><use xlink:href=\"#b\"></use><use xlink:href=\"#c\" xlink:title=\"t\" xlink:show=\"new\"></use></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "image",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "a.png",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#c",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        },
+        {
+         "local": "title",
+         "value": "t",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        },
+        {
+         "local": "show",
+         "value": "new",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><image xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"a.png\"/><g><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#b\"/><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#c\" xlink:title=\"t\" xlink:show=\"new\"/></g></svg>"
+ },
+ {
+  "name": "xlink/declared-on-element",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"><use xlink:href=\"#b\"></use></a><use xlink:href=\"#c\"></use></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "xlink",
+       "value": "http://www.w3.org/1999/xlink",
+       "ns": "http://www.w3.org/2000/xmlns/",
+       "prefix": "xmlns"
+      },
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#c",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"><use xlink:href=\"#b\"/></a><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#c\"/></svg>"
+ },
+ {
+  "name": "xlink/declared-after-use",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xlink:href=\"#a\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><use xlink:href=\"#b\"></use></a></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "xlink",
+       "value": "http://www.w3.org/1999/xlink",
+       "ns": "http://www.w3.org/2000/xmlns/",
+       "prefix": "xmlns"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xlink:href=\"#a\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><use xlink:href=\"#b\"/></a></svg>"
+ },
+ {
+  "name": "xlink/nested-not-declared",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xlink:href=\"#a\"><use xlink:href=\"#b\"></use><g><use xlink:href=\"#c\"></use></g></a><use xlink:href=\"#d\"></use></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "g",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/2000/svg",
+         "tag": "use",
+         "attrs": [
+          {
+           "local": "href",
+           "value": "#c",
+           "ns": "http://www.w3.org/1999/xlink",
+           "prefix": "xlink"
+          }
+         ],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#d",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"><use xlink:href=\"#b\"/><g><use xlink:href=\"#c\"/></g></a><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#d\"/></svg>"
+ },
+ {
+  "name": "xlink/wrong-declaration",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://example.com/wrong\"><a xlink:href=\"#a\"><use xlink:href=\"#b\"></use></a></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://example.com/wrong",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://example.com/wrong\"><a xmlns:ns1=\"http://www.w3.org/1999/xlink\" ns1:href=\"#a\"><use ns1:href=\"#b\"/></a></svg>"
+ },
+ {
+  "name": "xlink/all-names",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:actuate=\"a\" xlink:arcrole=\"b\" xlink:href=\"c\" xlink:role=\"d\" xlink:show=\"e\" xlink:title=\"f\" xlink:type=\"g\" xlink:other=\"h\"></a></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xlink",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a",
+     "attrs": [
+      {
+       "local": "actuate",
+       "value": "a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "arcrole",
+       "value": "b",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "href",
+       "value": "c",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "role",
+       "value": "d",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "show",
+       "value": "e",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "title",
+       "value": "f",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "type",
+       "value": "g",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      },
+      {
+       "local": "xlink:other",
+       "value": "h"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:actuate=\"a\" xlink:arcrole=\"b\" xlink:href=\"c\" xlink:role=\"d\" xlink:show=\"e\" xlink:title=\"f\" xlink:type=\"g\" xlink:other=\"h\"/></svg>"
+ },
+ {
+  "name": "xlink/on-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><foreignObject><div xlink:href=\"#a\" xml:space=\"preserve\" xmlns:xlink=\"x\"></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xlink",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xlink:href",
+         "value": "#a"
+        },
+        {
+         "local": "xml:space",
+         "value": "preserve"
+        },
+        {
+         "local": "xmlns:xlink",
+         "value": "x"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\" xlink:href=\"#a\" xml:space=\"preserve\" xmlns:xlink=\"x\"></div></foreignObject></svg>"
+ },
+ {
+  "name": "xlink/prefix-for-html-namespace",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xhtml\"><foreignObject><div><span>a</span><br></div><p xmlns=\"http://www.w3.org/1999/xhtml\">b</p></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xhtml",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "a"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "br",
+         "attrs": [],
+         "kids": []
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "p",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://www.w3.org/1999/xhtml"
+        }
+       ],
+       "kids": [
+        {
+         "t": "b"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xhtml\"><foreignObject><xlink:div><xlink:span>a</xlink:span><xlink:br /></xlink:div><p xmlns=\"http://www.w3.org/1999/xhtml\">b</p></foreignObject></svg>"
+ },
+ {
+  "name": "xlink/prefix-for-svg-namespace",
+  "svg": "<svg xmlns:xlink=\"http://www.w3.org/2000/svg\" id=\"a\"><g xlink:href=\"#x\"></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    },
+    {
+     "local": "id",
+     "value": "a"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#x",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<xlink:svg xmlns:xlink=\"http://www.w3.org/2000/svg\" id=\"a\"><xlink:g xmlns:ns1=\"http://www.w3.org/1999/xlink\" ns1:href=\"#x\"/></xlink:svg>"
+ },
+ {
+  "name": "xml/space-lang",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text xml:space=\"preserve\" xml:lang=\"en\" xml:base=\"b\" xml:id=\"i\" xml:other=\"o\">t</text></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "space",
+       "value": "preserve",
+       "ns": "http://www.w3.org/XML/1998/namespace",
+       "prefix": "xml"
+      },
+      {
+       "local": "lang",
+       "value": "en",
+       "ns": "http://www.w3.org/XML/1998/namespace",
+       "prefix": "xml"
+      },
+      {
+       "local": "xml:base",
+       "value": "b"
+      },
+      {
+       "local": "xml:id",
+       "value": "i"
+      },
+      {
+       "local": "xml:other",
+       "value": "o"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text xml:space=\"preserve\" xml:lang=\"en\" xml:base=\"b\" xml:id=\"i\" xml:other=\"o\">t</text></svg>"
+ },
+ {
+  "name": "xmlns/unknown-prefix",
+  "svg": "<svg xmlns:foo=\"http://foo/\" xmlns=\"http://www.w3.org/2000/svg\"><g foo:bar=\"1\" xmlns:bar=\"http://bar/\"></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns:foo",
+     "value": "http://foo/"
+    },
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "foo:bar",
+       "value": "1"
+      },
+      {
+       "local": "xmlns:bar",
+       "value": "http://bar/"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns:foo=\"http://foo/\" xmlns=\"http://www.w3.org/2000/svg\"><g foo:bar=\"1\" xmlns:bar=\"http://bar/\"/></svg>"
+ },
+ {
+  "name": "xlink/set-without-prefix",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><use></use><use></use></svg>",
+  "script": "svg.children[0].setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#a');svg.children[1].setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#b');svg.children[1].setAttributeNS('http://www.w3.org/1999/xlink', 'x:title', 't');svg.children[1].setAttributeNS('http://example.com/ns', 'k', 'v');",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#b",
+       "ns": "http://www.w3.org/1999/xlink"
+      },
+      {
+       "local": "title",
+       "value": "t",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "x"
+      },
+      {
+       "local": "k",
+       "value": "v",
+       "ns": "http://example.com/ns"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><use xmlns:ns1=\"http://www.w3.org/1999/xlink\" ns1:href=\"#a\"/><use xmlns:ns2=\"http://www.w3.org/1999/xlink\" ns2:href=\"#b\" ns2:title=\"t\" xmlns:ns3=\"http://example.com/ns\" ns3:k=\"v\"/></svg>"
+ },
+ {
+  "name": "xlink/set-with-prefix",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><use></use><g><use></use></g></svg>",
+  "script": "svg.children[0].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#a');svg.children[1].setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xl', 'http://www.w3.org/1999/xlink');svg.children[1].firstChild.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#b');",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "use",
+     "attrs": [
+      {
+       "local": "href",
+       "value": "#a",
+       "ns": "http://www.w3.org/1999/xlink",
+       "prefix": "xlink"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "xl",
+       "value": "http://www.w3.org/1999/xlink",
+       "ns": "http://www.w3.org/2000/xmlns/",
+       "prefix": "xmlns"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "use",
+       "attrs": [
+        {
+         "local": "href",
+         "value": "#b",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"/><g xmlns:xl=\"http://www.w3.org/1999/xlink\"><use xl:href=\"#b\"/></g></svg>"
+ },
+ {
+  "name": "xmlns/set-by-script",
+  "svg": "<svg><g></g><text>t</text></svg>",
+  "script": "svg.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', 'http://www.w3.org/2000/svg');svg.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');svg.children[0].setAttribute('xmlns', 'http://example.com/plain');svg.children[1].setAttribute('xmlns:q', 'http://example.com/q');",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    },
+    {
+     "local": "xlink",
+     "value": "http://www.w3.org/1999/xlink",
+     "ns": "http://www.w3.org/2000/xmlns/",
+     "prefix": "xmlns"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "http://example.com/plain"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "text",
+     "attrs": [
+      {
+       "local": "xmlns:q",
+       "value": "http://example.com/q"
+      }
+     ],
+     "kids": [
+      {
+       "t": "t"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><g xmlns=\"http://example.com/plain\"/><text xmlns:q=\"http://example.com/q\">t</text></svg>"
+ },
+ {
+  "name": "nested/svg",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"1\" y=\"2\"><rect></rect></svg><svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg><svg xmlns=\"http://example.com/x\"></svg><g><svg></svg></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "svg",
+     "attrs": [
+      {
+       "local": "x",
+       "value": "1"
+      },
+      {
+       "local": "y",
+       "value": "2"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "rect",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "svg",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "http://www.w3.org/2000/svg",
+       "ns": "http://www.w3.org/2000/xmlns/"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "g",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "svg",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "http://example.com/x",
+       "ns": "http://www.w3.org/2000/xmlns/"
+      }
+     ],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "svg",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"1\" y=\"2\"><rect/></svg><svg xmlns=\"http://www.w3.org/2000/svg\"><g/></svg><svg/><g><svg/></g></svg>"
+ },
+ {
+  "name": "nested/foreignobject-html-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"10\" height=\"10\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell;\"><span class=\"nodeLabel\"><p>a<br>b</p></span></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [
+      {
+       "local": "width",
+       "value": "10"
+      },
+      {
+       "local": "height",
+       "value": "10"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://www.w3.org/1999/xhtml"
+        },
+        {
+         "local": "style",
+         "value": "display: table-cell;"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [
+          {
+           "local": "class",
+           "value": "nodeLabel"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "p",
+           "attrs": [],
+           "kids": [
+            {
+             "t": "a"
+            },
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "br",
+             "attrs": [],
+             "kids": []
+            },
+            {
+             "t": "b"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"10\" height=\"10\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"display: table-cell;\"><span class=\"nodeLabel\"><p>a<br />b</p></span></div></foreignObject></svg>"
+ },
+ {
+  "name": "nested/foreignobject-html-no-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"10\" height=\"10\"><div><span class=\"nodeLabel\"><p>a<br>b</p></span></div><span>c</span></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [
+      {
+       "local": "width",
+       "value": "10"
+      },
+      {
+       "local": "height",
+       "value": "10"
+      }
+     ],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [
+          {
+           "local": "class",
+           "value": "nodeLabel"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "p",
+           "attrs": [],
+           "kids": [
+            {
+             "t": "a"
+            },
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "br",
+             "attrs": [],
+             "kids": []
+            },
+            {
+             "t": "b"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "span",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "c"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"10\" height=\"10\"><div xmlns=\"http://www.w3.org/1999/xhtml\"><span class=\"nodeLabel\"><p>a<br />b</p></span></div><span xmlns=\"http://www.w3.org/1999/xhtml\">c</span></foreignObject></svg>"
+ },
+ {
+  "name": "nested/foreignobject-wrong-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://example.com/wrong\"><span xmlns=\"http://www.w3.org/1999/xhtml\">a</span></div><div xmlns=\"http://www.w3.org/2000/svg\"></div><div xmlns=\"\"><b></b></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://example.com/wrong"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [
+          {
+           "local": "xmlns",
+           "value": "http://www.w3.org/1999/xhtml"
+          }
+         ],
+         "kids": [
+          {
+           "t": "a"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://www.w3.org/2000/svg"
+        }
+       ],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": ""
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "b",
+         "attrs": [],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\" xmlns=\"http://example.com/wrong\"><span xmlns=\"http://www.w3.org/1999/xhtml\">a</span></div><div xmlns=\"http://www.w3.org/1999/xhtml\" xmlns=\"http://www.w3.org/2000/svg\"></div><div xmlns=\"http://www.w3.org/1999/xhtml\" xmlns=\"\"><b></b></div></foreignObject></svg>"
+ },
+ {
+  "name": "nested/foreignobject-xmlns-prefix",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns:foo=\"http://foo/\" foo:bar=\"1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"><span foo:baz=\"2\"></span></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns:foo",
+         "value": "http://foo/"
+        },
+        {
+         "local": "foo:bar",
+         "value": "1"
+        },
+        {
+         "local": "xmlns:xlink",
+         "value": "http://www.w3.org/1999/xlink"
+        },
+        {
+         "local": "xlink:href",
+         "value": "#a"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [
+          {
+           "local": "foo:baz",
+           "value": "2"
+          }
+         ],
+         "kids": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:foo=\"http://foo/\" foo:bar=\"1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#a\"><span foo:baz=\"2\"></span></div></foreignObject></svg>"
+ },
+ {
+  "name": "nested/svg-in-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><svg width=\"1\" height=\"1\"><circle r=\"1\"></circle></svg><svg xmlns=\"http://www.w3.org/2000/svg\"><circle r=\"1\"></circle></svg>text<span><svg><foreignObject><b>deep</b><svg></svg></foreignObject></svg></span></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/2000/svg",
+         "tag": "svg",
+         "attrs": [
+          {
+           "local": "width",
+           "value": "1"
+          },
+          {
+           "local": "height",
+           "value": "1"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/2000/svg",
+           "tag": "circle",
+           "attrs": [
+            {
+             "local": "r",
+             "value": "1"
+            }
+           ],
+           "kids": []
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/2000/svg",
+         "tag": "svg",
+         "attrs": [
+          {
+           "local": "xmlns",
+           "value": "http://www.w3.org/2000/svg",
+           "ns": "http://www.w3.org/2000/xmlns/"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/2000/svg",
+           "tag": "circle",
+           "attrs": [
+            {
+             "local": "r",
+             "value": "1"
+            }
+           ],
+           "kids": []
+          }
+         ]
+        },
+        {
+         "t": "text"
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/2000/svg",
+           "tag": "svg",
+           "attrs": [],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/2000/svg",
+             "tag": "foreignObject",
+             "attrs": [],
+             "kids": [
+              {
+               "ns": "http://www.w3.org/1999/xhtml",
+               "tag": "b",
+               "attrs": [],
+               "kids": [
+                {
+                 "t": "deep"
+                }
+               ]
+              },
+              {
+               "ns": "http://www.w3.org/2000/svg",
+               "tag": "svg",
+               "attrs": [],
+               "kids": []
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1\" height=\"1\"><circle r=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\"><circle r=\"1\"/></svg>text<span><svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><b xmlns=\"http://www.w3.org/1999/xhtml\">deep</b><svg/></foreignObject></svg></span></div></foreignObject></svg>"
+ },
+ {
+  "name": "nested/foreignobject-text",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject>bare text <b>bold</b> &amp; more</foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "bare text "
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "b",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "bold"
+        }
+       ]
+      },
+      {
+       "t": " & more"
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject>bare text <b xmlns=\"http://www.w3.org/1999/xhtml\">bold</b> &amp; more</foreignObject></svg>"
+ },
+ {
+  "name": "nested/html-breaks-out",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g><div>x</div><rect></rect></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g/></svg>"
+ },
+ {
+  "name": "nested/desc-title-html",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><title>t <b>bold</b></title><desc><p>para</p></desc></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "title",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "t "
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "b",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "bold"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "desc",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "p",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "para"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><title>t <b xmlns=\"http://www.w3.org/1999/xhtml\">bold</b></title><desc><p xmlns=\"http://www.w3.org/1999/xhtml\">para</p></desc></svg>"
+ },
+ {
+  "name": "nested/table",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><table><tr><td>a</td><td>b<br></td></tr></table><ul><li>x<li>y</ul><p>p1<p>p2</foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "table",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "tbody",
+         "attrs": [],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "tr",
+           "attrs": [],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "td",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "a"
+              }
+             ]
+            },
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "td",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "b"
+              },
+              {
+               "ns": "http://www.w3.org/1999/xhtml",
+               "tag": "br",
+               "attrs": [],
+               "kids": []
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "ul",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "li",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "x"
+          }
+         ]
+        },
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "li",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "y"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "p",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "p1"
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "p",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "p2"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><table xmlns=\"http://www.w3.org/1999/xhtml\"><tbody><tr><td>a</td><td>b<br /></td></tr></tbody></table><ul xmlns=\"http://www.w3.org/1999/xhtml\"><li>x</li><li>y</li></ul><p xmlns=\"http://www.w3.org/1999/xhtml\">p1</p><p xmlns=\"http://www.w3.org/1999/xhtml\">p2</p></foreignObject></svg>"
+ },
+ {
+  "name": "nested/label-icons",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><span class=\"nodeLabel\"><i class=\"fa fa-car\"></i> Car <img src=\"https://example.com/a.png\" width=\"20\" height=\"20\" style=\"display: flex;\"> <strong>bold</strong> <em>em</em></span></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://www.w3.org/1999/xhtml"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "span",
+         "attrs": [
+          {
+           "local": "class",
+           "value": "nodeLabel"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "i",
+           "attrs": [
+            {
+             "local": "class",
+             "value": "fa fa-car"
+            }
+           ],
+           "kids": []
+          },
+          {
+           "t": " Car "
+          },
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "img",
+           "attrs": [
+            {
+             "local": "src",
+             "value": "https://example.com/a.png"
+            },
+            {
+             "local": "width",
+             "value": "20"
+            },
+            {
+             "local": "height",
+             "value": "20"
+            },
+            {
+             "local": "style",
+             "value": "display: flex;"
+            }
+           ],
+           "kids": []
+          },
+          {
+           "t": " "
+          },
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "strong",
+           "attrs": [],
+           "kids": [
+            {
+             "t": "bold"
+            }
+           ]
+          },
+          {
+           "t": " "
+          },
+          {
+           "ns": "http://www.w3.org/1999/xhtml",
+           "tag": "em",
+           "attrs": [],
+           "kids": [
+            {
+             "t": "em"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><span class=\"nodeLabel\"><i class=\"fa fa-car\"></i> Car <img src=\"https://example.com/a.png\" width=\"20\" height=\"20\" style=\"display: flex;\" /> <strong>bold</strong> <em>em</em></span></div></foreignObject></svg>"
+ },
+ {
+  "name": "math/with-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mspace></mspace><mo>&lt;</mo><mo>&InvisibleTimes;</mo></mrow><annotation encoding=\"application/x-tex\">x=\\frac{1}{2}&lt;</annotation></semantics></math></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [
+        {
+         "local": "xmlns",
+         "value": "http://www.w3.org/1999/xhtml"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1998/Math/MathML",
+         "tag": "math",
+         "attrs": [
+          {
+           "local": "xmlns",
+           "value": "http://www.w3.org/1998/Math/MathML",
+           "ns": "http://www.w3.org/2000/xmlns/"
+          },
+          {
+           "local": "display",
+           "value": "block"
+          }
+         ],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "semantics",
+           "attrs": [],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1998/Math/MathML",
+             "tag": "mrow",
+             "attrs": [],
+             "kids": [
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mi",
+               "attrs": [],
+               "kids": [
+                {
+                 "t": "x"
+                }
+               ]
+              },
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mo",
+               "attrs": [],
+               "kids": [
+                {
+                 "t": "="
+                }
+               ]
+              },
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mfrac",
+               "attrs": [],
+               "kids": [
+                {
+                 "ns": "http://www.w3.org/1998/Math/MathML",
+                 "tag": "mn",
+                 "attrs": [],
+                 "kids": [
+                  {
+                   "t": "1"
+                  }
+                 ]
+                },
+                {
+                 "ns": "http://www.w3.org/1998/Math/MathML",
+                 "tag": "mn",
+                 "attrs": [],
+                 "kids": [
+                  {
+                   "t": "2"
+                  }
+                 ]
+                }
+               ]
+              },
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mspace",
+               "attrs": [],
+               "kids": []
+              },
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mo",
+               "attrs": [],
+               "kids": [
+                {
+                 "t": "<"
+                }
+               ]
+              },
+              {
+               "ns": "http://www.w3.org/1998/Math/MathML",
+               "tag": "mo",
+               "attrs": [],
+               "kids": [
+                {
+                 "t": "⁢"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "ns": "http://www.w3.org/1998/Math/MathML",
+             "tag": "annotation",
+             "attrs": [
+              {
+               "local": "encoding",
+               "value": "application/x-tex"
+              }
+             ],
+             "kids": [
+              {
+               "t": "x=\\frac{1}{2}<"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mspace/><mo>&lt;</mo><mo>⁢</mo></mrow><annotation encoding=\"application/x-tex\">x=\\frac{1}{2}&lt;</annotation></semantics></math></div></foreignObject></svg>"
+ },
+ {
+  "name": "math/no-xmlns",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div><math><mi>y</mi><mtext><b>html</b></mtext><annotation-xml encoding=\"text/html\"><b>bold</b><br></annotation-xml><annotation-xml encoding=\"application/xhtml+xml\"><i>it</i></annotation-xml><annotation-xml><mi>z</mi><svg></svg></annotation-xml></math></div></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "div",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1998/Math/MathML",
+         "tag": "math",
+         "attrs": [],
+         "kids": [
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "mi",
+           "attrs": [],
+           "kids": [
+            {
+             "t": "y"
+            }
+           ]
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "mtext",
+           "attrs": [],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "b",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "html"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "annotation-xml",
+           "attrs": [
+            {
+             "local": "encoding",
+             "value": "text/html"
+            }
+           ],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "b",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "bold"
+              }
+             ]
+            },
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "br",
+             "attrs": [],
+             "kids": []
+            }
+           ]
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "annotation-xml",
+           "attrs": [
+            {
+             "local": "encoding",
+             "value": "application/xhtml+xml"
+            }
+           ],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1999/xhtml",
+             "tag": "i",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "it"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "ns": "http://www.w3.org/1998/Math/MathML",
+           "tag": "annotation-xml",
+           "attrs": [],
+           "kids": [
+            {
+             "ns": "http://www.w3.org/1998/Math/MathML",
+             "tag": "mi",
+             "attrs": [],
+             "kids": [
+              {
+               "t": "z"
+              }
+             ]
+            },
+            {
+             "ns": "http://www.w3.org/2000/svg",
+             "tag": "svg",
+             "attrs": [],
+             "kids": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mtext><b xmlns=\"http://www.w3.org/1999/xhtml\">html</b></mtext><annotation-xml encoding=\"text/html\"><b xmlns=\"http://www.w3.org/1999/xhtml\">bold</b><br xmlns=\"http://www.w3.org/1999/xhtml\" /></annotation-xml><annotation-xml encoding=\"application/xhtml+xml\"><i xmlns=\"http://www.w3.org/1999/xhtml\">it</i></annotation-xml><annotation-xml><mi>z</mi><svg xmlns=\"http://www.w3.org/2000/svg\"/></annotation-xml></math></div></foreignObject></svg>"
+ },
+ {
+  "name": "math/in-svg",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><math><mi>x</mi></math><g><math></math></g></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "math",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "mi",
+       "attrs": [],
+       "kids": [
+        {
+         "t": "x"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "math",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><math><mi>x</mi></math><g><math/></g></svg>"
+ },
+ {
+  "name": "math/definitionurl",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><math definitionurl=\"u\" xlink:href=\"#a\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><mi mathvariant=\"bold\">x</mi></math></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1998/Math/MathML",
+       "tag": "math",
+       "attrs": [
+        {
+         "local": "definitionURL",
+         "value": "u"
+        },
+        {
+         "local": "href",
+         "value": "#a",
+         "ns": "http://www.w3.org/1999/xlink",
+         "prefix": "xlink"
+        },
+        {
+         "local": "xlink",
+         "value": "http://www.w3.org/1999/xlink",
+         "ns": "http://www.w3.org/2000/xmlns/",
+         "prefix": "xmlns"
+        }
+       ],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1998/Math/MathML",
+         "tag": "mi",
+         "attrs": [
+          {
+           "local": "mathvariant",
+           "value": "bold"
+          }
+         ],
+         "kids": [
+          {
+           "t": "x"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><foreignObject><math xmlns=\"http://www.w3.org/1998/Math/MathML\" definitionURL=\"u\" xlink:href=\"#a\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><mi mathvariant=\"bold\">x</mi></math></foreignObject></svg>"
+ },
+ {
+  "name": "tags/case",
+  "svg": "<SVG><G><ForeignObject><DIV>a</DIV></ForeignObject><foreignobject></foreignobject><LINEARGRADIENT></LINEARGRADIENT><clippath></clippath><textpath></textpath><altglyph></altglyph></G></SVG>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "foreignObject",
+       "attrs": [],
+       "kids": [
+        {
+         "ns": "http://www.w3.org/1999/xhtml",
+         "tag": "div",
+         "attrs": [],
+         "kids": [
+          {
+           "t": "a"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "foreignObject",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "linearGradient",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "clipPath",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "textPath",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "altGlyph",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g><foreignObject><div xmlns=\"http://www.w3.org/1999/xhtml\">a</div></foreignObject><foreignObject/><linearGradient/><clipPath/><textPath/><altGlyph/></g></svg>"
+ },
+ {
+  "name": "tags/odd-names",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a:b></a:b><foo-bar></foo-bar><x.y></x.y><_z></_z></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "a:b",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foo-bar",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "x.y",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "t": "<_z>"
+    },
+    {
+     "c": "_z"
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><a:b/><foo-bar/><x.y/>&lt;_z&gt;<!--_z--></svg>"
+ },
+ {
+  "name": "tags/svg-prefix",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><svg:g></svg:g><xlink:a></xlink:a><foreignObject><html:div></html:div><svg:rect></svg:rect></foreignObject></svg>",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "svg:g",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "xlink:a",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "foreignObject",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "html:div",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "svg:rect",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><svg:g/><xlink:a/><foreignObject><html:div xmlns=\"http://www.w3.org/1999/xhtml\"></html:div><svg:rect xmlns=\"http://www.w3.org/1999/xhtml\"></svg:rect></foreignObject></svg>"
+ },
+ {
+  "name": "tags/created-with-prefix",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg>",
+  "script": "const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg:rect'); e.setAttribute('x', '1'); svg.firstChild.appendChild(e); const n = document.createElementNS(null, 'nons'); n.appendChild(document.createElementNS(null, 'kid')); n.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g')); n.setAttribute('xmlns', ''); svg.appendChild(n); const m = document.createElementNS(null, 'nons2'); m.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', 'http://example.com/z'); svg.appendChild(m);",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "rect",
+       "prefix": "svg",
+       "attrs": [
+        {
+         "local": "x",
+         "value": "1"
+        }
+       ],
+       "kids": []
+      }
+     ]
+    },
+    {
+     "ns": null,
+     "tag": "nons",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": ""
+      }
+     ],
+     "kids": [
+      {
+       "ns": null,
+       "tag": "kid",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "g",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    },
+    {
+     "ns": null,
+     "tag": "nons2",
+     "attrs": [
+      {
+       "local": "xmlns",
+       "value": "http://example.com/z",
+       "ns": "http://www.w3.org/2000/xmlns/"
+      }
+     ],
+     "kids": []
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g><rect x=\"1\"/></g><nons xmlns=\"\"><kid/><g xmlns=\"http://www.w3.org/2000/svg\"/></nons><nons2 xmlns=\"\"/></svg>"
+ },
+ {
+  "name": "tags/html-style-created",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\"><g></g></svg>",
+  "script": "const s = document.createElement('style'); s.textContent = '#a>b{c:\"<&>\"}'; svg.insertBefore(s, svg.firstChild); const d = document.createElement('div'); svg.appendChild(d); d.appendChild(document.createElement('br')); d.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'br'));",
+  "tree": {
+   "ns": "http://www.w3.org/2000/svg",
+   "tag": "svg",
+   "attrs": [
+    {
+     "local": "xmlns",
+     "value": "http://www.w3.org/2000/svg",
+     "ns": "http://www.w3.org/2000/xmlns/"
+    }
+   ],
+   "kids": [
+    {
+     "ns": "http://www.w3.org/1999/xhtml",
+     "tag": "style",
+     "attrs": [],
+     "kids": [
+      {
+       "t": "#a>b{c:\"<&>\"}"
+      }
+     ]
+    },
+    {
+     "ns": "http://www.w3.org/2000/svg",
+     "tag": "g",
+     "attrs": [],
+     "kids": []
+    },
+    {
+     "ns": "http://www.w3.org/1999/xhtml",
+     "tag": "div",
+     "attrs": [],
+     "kids": [
+      {
+       "ns": "http://www.w3.org/1999/xhtml",
+       "tag": "br",
+       "attrs": [],
+       "kids": []
+      },
+      {
+       "ns": "http://www.w3.org/2000/svg",
+       "tag": "br",
+       "attrs": [],
+       "kids": []
+      }
+     ]
+    }
+   ]
+  },
+  "xml": "<svg xmlns=\"http://www.w3.org/2000/svg\"><style xmlns=\"http://www.w3.org/1999/xhtml\">#a&gt;b{c:\"&lt;&amp;&gt;\"}</style><g/><div xmlns=\"http://www.w3.org/1999/xhtml\"><br /><br xmlns=\"http://www.w3.org/2000/svg\"/></div></svg>"
+ }
+]

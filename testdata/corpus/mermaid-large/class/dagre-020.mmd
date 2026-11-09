@@ -1,0 +1,106 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+  class C0 {
+  }
+  class C1 {
+  }
+  class C2 {
+    +queue0(id) bool
+    +string session1
+  }
+  class C3 {
+  }
+  class C4 {
+    +bool gateway0
+    +user1() bool
+    +int cache2
+    +gateway3() bool
+  }
+  class C5 {
+    +int index0
+    +int token1
+    +report2() bool
+  }
+  class C6 {
+    +List~int~ policy0
+    +shard1(id) void
+    +span2(id) bool
+    +int schema3
+  }
+  class C7 {
+    +worker0() void
+  }
+  class C8 {
+    +token0(id) void
+  }
+  class C9 {
+    +stream0(id) void
+  }
+  class C10 {
+    +int gateway0
+  }
+  class C11 {
+    +span0(id) void
+    +bool span1
+    +payment2() bool
+    +int worker3
+  }
+  class C12 {
+    +bool payment0
+    +report1() int
+    +int index2
+  }
+  class C13 {
+    +List~int~ metric0
+    +bool policy1
+  }
+  class C14 {
+    +string report0
+    +string bucket1
+  }
+  class C15 {
+    +string audit0
+    +trace1(id) void
+    +report2(id) int
+  }
+  class C16 {
+    +cache0(id) bool
+  }
+  class C17 {
+    +List~int~ report0
+    +gateway1() int
+  }
+  class C18 {
+    +lease0() int
+    +int lease1
+  }
+  class C19 {
+    +List~int~ index0
+    +bool index1
+    +int metric2
+  }
+  C0 <|-- C1
+  C1 ..|> C2 : shard
+  C0 <|-- C3
+  C3 ..|> C4 : probe
+  C0 o-- C5
+  C4 ..> C7
+  C3 o-- C8
+  C4 o-- C9
+  C3 *-- C10
+  C4 o-- C11
+  C9 *-- C12
+  C7 o-- C13 : span
+  C8 ..|> C14
+  C11 ..|> C15
+  C14 *-- C16
+  C10 --> C17
+  C11 ..|> C18
+  C17 --> C19
+  C10 --> C4
+  C3 *-- C16
+  C17 ..> C18
+  C19 *-- C18

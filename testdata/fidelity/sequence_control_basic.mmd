@@ -1,9 +1,0 @@
-sequenceDiagram
-  participant Client
-  participant Service
-  Client->>Service: request
-  alt valid
-    Service-->>Client: ok
-  else invalid
-    Service-->>Client: error
-  end

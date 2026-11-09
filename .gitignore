@@ -1,2 +1,17 @@
 bin/mmdg
 mmdg_bin
+# Binaries of the commands, built in the root directory
+/mmdg
+/parity
+/pixelparity
+/perfdoc
+/paritydoc
+/manifest
+/fmacheck
+/.upstream/
+/tools/reference/node_modules/
+/.parity/
+/tools/reference/.oracle.lock/
+# Test binaries and profiles
+*.test
+*.prof

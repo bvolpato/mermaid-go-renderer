@@ -1,0 +1,64 @@
+flowchart LR
+  n0([Trace])
+  n1((Token cache metric))
+  n2(Ledger)
+  n3((Router))
+  n4[[Quota router policy]]
+  n5{{Token alert}}
+  n6[Cache]
+  n7(User session)
+  n8[/Token bucket/]
+  n9([Cache token router])
+  n10(Router ledger session)
+  n11(Session queue gateway)
+  n12{Alert}
+  n13(Bucket report batch)
+  n14[Trace metric audit]
+  n15[(Token)]
+  n16[/Cache/]
+  n17{{Stream}}
+  n18[[Policy index token]]
+  n19{{Invoice}}
+  n20(Trace)
+  n21[/Policy policy/]
+  n22{Router order}
+  n23([Cache audit])
+  n24[/Index gateway bucket/]
+  n25([Schema worker gateway])
+  n26{{Trace probe trace}}
+  n27[[Event]]
+  n28{Batch gateway report}
+  n29([Bucket user span])
+  n0 -.-> n1
+  n0 --x|Session lease| n2
+  n1 --> n3
+  n2 --o n4
+  n4 --x n5
+  n1 ==> n8
+  n5 --> n9
+  n5 --- n10
+  n4 ---|Lease probe| n11
+  n8 -.->|Metric| n12
+  n11 ==> n13
+  n11 --> n14
+  n7 --- n15
+  n11 --o n16
+  n16 ---|Quota cache| n17
+  n11 --> n18
+  n13 --x n19
+  n12 ==>|Trace span| n20
+  n14 --x|Order invoice| n21
+  n16 -.-> n24
+  n24 --- n25
+  n24 -->|Audit router| n26
+  n23 --> n27
+  n23 --- n28
+  n14 --> n19
+  n3 --> n11
+  n8 --o n27
+  n7 --o n4
+  n19 --x n7
+  n1 -.-> n18
+  n7 --x n6
+  n27 --o n21
+  n1 --> n6

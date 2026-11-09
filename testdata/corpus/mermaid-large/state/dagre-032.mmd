@@ -1,0 +1,46 @@
+---
+config:
+  layout: dagre
+---
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s2 --> s3
+    s3 --> s4 : policy
+    s4 --> s5 : shard
+    s5 --> s6 : gateway
+    s6 --> s10
+    s10 --> s25
+    s25 --> s26
+    s26 --> s31
+  }
+  state Group1 {
+    s7 --> s8
+    s8 --> s19 : user
+    s19 --> s22
+    s22 --> s28
+    s28 --> s30
+  }
+  s0 --> s1 : Replica schema
+  s1 --> s2
+  s1 --> s3
+  s3 --> s4 : Queue user
+  s0 --> s5
+  s3 --> s7
+  s7 --> s8
+  s4 --> s9
+  s4 --> s10
+  s12 --> s13 : Lease ledger
+  s10 --> s14
+  s10 --> s15 : Router gateway
+  s14 --> s16 : Ledger
+  s14 --> s17
+  s16 --> s21
+  s20 --> s23
+  s20 --> s24
+  s20 --> s26
+  s26 --> s27
+  s27 --> s28
+  s28 --> s29
+  s26 --> s30
+  s31 --> [*]

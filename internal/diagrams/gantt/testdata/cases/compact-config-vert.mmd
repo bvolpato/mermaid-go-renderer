@@ -1,0 +1,18 @@
+---
+config:
+  gantt:
+    displayMode: compact
+---
+gantt
+  dateFormat YYYY-MM-DD
+  Loose task :2024-02-01, 3d
+  Second loose :2024-02-02, 3d
+  section One
+  Alpha :crit, a, 2024-02-01, 5d
+  Marker :vert, v1, 2024-02-03, 0d
+  Beta :done, b, 2024-02-02, 2d
+  Gamma :active, c, after b, 2d
+  section Two
+  Delta :d, 2024-02-01, 1d
+  Epsilon :e, after d, 1d
+  Zeta :milestone, z, 2024-02-04, 0d

@@ -1,0 +1,91 @@
+flowchart LR
+  subgraph g0 [Index]
+    n1{Queue ledger user}
+    n2[(User user stream)]
+    n3([Report])
+    n4{Batch}
+    n9[/Worker replica/]
+    n10{{Stream}}
+    n11((Span payment))
+    n12[Gateway audit lease]
+    n13{Gateway}
+    n15[/Alert order replica/]
+    n18{Token batch}
+    n19{Audit queue}
+    n20[/Audit alert/]
+    n21[[Index policy probe]]
+    n25[Invoice probe token]
+    n26{Probe trace replica}
+    n27[[Policy]]
+    n28[Alert]
+    n29[/Session/]
+    n30{User user batch}
+    n32{{Payment}}
+    n34[[Report]]
+    n35[/Ledger order/]
+    n36((Schema lease))
+    n37[[Metric router ledger]]
+    n38{{Quota audit router}}
+    n39(Trace payment user)
+  end
+  n0{Router user}
+  n5[(Router batch)]
+  n6(Shard metric router)
+  n7[(Lease)]
+  n8[[Event]]
+  n14([Invoice worker])
+  n16{Queue bucket}
+  n17[/Policy/]
+  n22(Stream batch audit)
+  n23[/Report replica/]
+  n24[(Payment cache batch)]
+  n31[(Report alert bucket)]
+  n33[/Batch replica/]
+  n0 --> n1
+  n0 -->|Report| n2
+  n0 -.-> n3
+  n3 ---|Queue event| n4
+  n2 --o n5
+  n5 -.-> n6
+  n5 --- n7
+  n0 --> n8
+  n0 -.-> n9
+  n8 ==> n10
+  n9 -.-> n11
+  n5 --o|Replica| n12
+  n12 --> n13
+  n11 --- n14
+  n7 --> n15
+  n13 -.-> n16
+  n10 ==> n17
+  n12 --o n18
+  n16 --x n19
+  n14 --- n20
+  n16 --> n21
+  n22 ---|Order| n23
+  n22 --- n24
+  n19 ==> n25
+  n24 --> n26
+  n21 ==> n27
+  n23 -.->|Queue| n28
+  n27 --- n29
+  n27 ==> n32
+  n32 ==> n33
+  n30 --- n34
+  n26 -.-> n35
+  n30 ==>|Payment payment| n36
+  n31 ==>|Order| n37
+  n32 -.-> n38
+  n30 -.-> n39
+  n39 --> n26
+  n32 --o n28
+  n15 ==> n3
+  n31 --- n22
+  n1 -.-> n36
+  n10 -.-> n25
+  n2 ==> n23
+  n11 --> n8
+  n6 --o n39
+  n32 --x n4
+  n31 --> n17
+  n4 --- n39

@@ -1,0 +1,1535 @@
+{
+ "cases": [
+  {
+   "name": "cssvar-undefined-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:courier;font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;}.c{font-family:verdana;font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef);font-family:courier;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef);}.c{font-family:courier;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:courier;}.c{font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#t{font-family:courier;}.c{font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-size:24px;}.c{font-size:10px;font-size:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-weight:bold;}.c{font-weight:normal;font-weight:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:courier,var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-undefined-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;font-size:20px;}.c{font:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-mermaid-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg .c{font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#my-svg :root{--mermaid-font-family:courier;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-mermaid-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;}#my-svg .c{font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#my-svg :root{--mermaid-font-family:verdana;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{--f:courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{--f:courier;font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--f);}.c{--f:courier;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--f);--f:courier;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}:root{--f:courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:verdana;}.p{--f:courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:\"trebuchet ms\", courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f: courier ;}.c{font-family:var( --f );}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}.c{font-family:VAR(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--F:courier;}.c{font-family:verdana;font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}.c{font-family:var(--f) !important;}#t{font-family:verdana;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:verdana !important;}.p{--f:courier;}.c{font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--s:22px;--w:bold;}.c{font-size:var(--s);font-weight:var(--w);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-defined-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}.c{font-family:nosuchfont,var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef, courier);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef,courier);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:verdana;}.c{font-family:var(--f, courier);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--undef, \"trebuchet ms\", courier);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--a, var(--b, courier));}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--b:verdana;}.c{font-family:var(--a, var(--b, courier));}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-size:var(--undef, 12px);font-weight:var(--undef2, bold);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--mermaid-usecase-font-family, \"trebuchet ms\", verdana, arial, sans-serif);font-size:var(--mermaid-usecase-font-size, 12px);font-weight:var(--mermaid-usecase-font-weight, normal);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-fallback-36",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;}.c{font-family:verdana;font-family:var(--undef,);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-chain-37",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--b);--b:courier;}.c{font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-chain-38",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--b:courier;}.p{--a:var(--b);}.c{font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-chain-39",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--b);}.p{--b:courier;}.c{font-family:verdana;font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-chain-40",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--b, courier);}.c{font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-cycle-41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--b);--b:var(--a);}.p{font-family:courier;}.c{font-family:verdana;font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-cycle-42",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--a);}.p{font-family:courier;}.c{font-family:verdana;font-family:var(--a);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-cycle-43",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--a:var(--b);--b:var(--a);}.c{font-family:var(--a, courier);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-keyword-44",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{--f:courier;font-family:verdana;}.c{--f:initial;font-family:courier;font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-keyword-45",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{--f:courier;}.c{--f:inherit;font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-keyword-46",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{--f:courier;}.c{--f:unset;font-family:var(--f);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-keyword-47",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--e:;}.p{font-family:courier;}.c{font-family:verdana;font-family:var(--e);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-shorthand-48",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--fs:bold 20px courier;}.c{font:var(--fs);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-shorthand-49",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--fs:bold 20px courier;}.c{font-size:30px;font:var(--fs);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-shorthand-50",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--fs:bold 20px courier;}.c{font:var(--fs);font-size:30px;}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-shorthand-51",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--fam:courier;}.c{font:italic 18px var(--fam);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-display-52",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{display:none;display:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-display-53",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--d:none;}.c{display:var(--d);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-display-54",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{display:none;}.c{display:var(--undef);}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-display-55",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{--d:none;}.c{display:var(--undef, var(--d));}</style><g class=\"p\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-inline-56",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}</style><g class=\"p\"><text id=\"t\" y=\"20\" style=\"font-family: var(--f)\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-inline-57",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}</style><g class=\"p\"><text id=\"t\" y=\"20\" style=\"--f: courier; font-family: var(--f)\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-inline-58",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;}</style><g class=\"p\"><text id=\"t\" y=\"20\" style=\"font-family: verdana; font-family: var(--undef)\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-inline-59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{font-family:var(--f);}</style><g class=\"p\" style=\"--f: courier\"><text id=\"t\" class=\"c\" y=\"20\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-attr-60",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;--s:22px;}</style><g class=\"p\"><text id=\"t\" y=\"20\" font-family=\"var(--f)\" font-size=\"var(--s)\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-attr-61",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;}</style><g class=\"p\"><text id=\"t\" y=\"20\" font-family=\"var(--undef)\">Branch main 123</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-tspan-62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;}.r{font-family:var(--f);}.u{font-family:var(--undef);}</style><g class=\"p\"><text id=\"t\" y=\"20\">Branch <tspan class=\"r\">main</tspan> <tspan class=\"u\">123</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "textlen"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-size"
+    },
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-html-63",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--f:courier;--s:20px;}.c{display:inline-block;font-family:var(--f);font-size:var(--s);}</style><foreignObject id=\"fo\" width=\"500\" height=\"500\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"p\"><div id=\"d\" class=\"c\">Branch main 123</div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "style",
+     "arg": "font-size"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-html-64",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.p{font-family:courier;font-size:20px;}.c{display:inline-block;font-family:verdana;font-family:var(--undef);font-size:var(--undef);}</style><foreignObject id=\"fo\" width=\"500\" height=\"500\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"p\"><div id=\"d\" class=\"c\">Branch main 123</div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "style",
+     "arg": "font-size"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-html-65",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--pad:7px;--w:120px;}.c{display:inline-block;padding:var(--pad);width:var(--w);}</style><foreignObject id=\"fo\" width=\"500\" height=\"500\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"p\"><div id=\"d\" class=\"c\">Branch</div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "style",
+     "arg": "font-size"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-html-66",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}.c{display:inline-block;padding:5px;padding:var(--undef);width:120px;width:var(--undef, 90px);}</style><foreignObject id=\"fo\" width=\"500\" height=\"500\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"p\"><div id=\"d\" class=\"c\">Branch</div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "style",
+     "arg": "font-size"
+    }
+   ]
+  },
+  {
+   "name": "cssvar-html-67",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><style>#my-svg{font-family:\"trebuchet ms\",verdana,arial,sans-serif;font-size:16px;}#my-svg{--pad:3px 11px;}.c{display:inline-block;padding:var(--pad);padding-left:1px;}</style><foreignObject id=\"fo\" width=\"500\" height=\"500\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"p\"><div id=\"d\" class=\"c\">Branch</div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#d",
+     "op": "rect"
+    },
+    {
+     "sel": "#d",
+     "op": "style",
+     "arg": "font-size"
+    }
+   ]
+  }
+ ]
+}

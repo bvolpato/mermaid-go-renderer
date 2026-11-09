@@ -1,0 +1,878 @@
+{
+ "cases": [
+  {
+   "name": "selector-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignobject"
+    ],
+    [
+     "matches",
+     "foreignobject"
+    ],
+    [
+     "closest",
+     "foreignobject"
+    ]
+   ]
+  },
+  {
+   "name": "selector-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignObject"
+    ],
+    [
+     "matches",
+     "foreignObject"
+    ],
+    [
+     "closest",
+     "foreignObject"
+    ]
+   ]
+  },
+  {
+   "name": "selector-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "FOREIGNOBJECT"
+    ],
+    [
+     "matches",
+     "FOREIGNOBJECT"
+    ],
+    [
+     "closest",
+     "FOREIGNOBJECT"
+    ]
+   ]
+  },
+  {
+   "name": "selector-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "ForeignObject"
+    ],
+    [
+     "matches",
+     "ForeignObject"
+    ],
+    [
+     "closest",
+     "ForeignObject"
+    ]
+   ]
+  },
+  {
+   "name": "selector-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignobject > *"
+    ],
+    [
+     "matches",
+     "foreignobject > *"
+    ],
+    [
+     "closest",
+     "foreignobject > *"
+    ]
+   ]
+  },
+  {
+   "name": "selector-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignObject > *"
+    ],
+    [
+     "matches",
+     "foreignObject > *"
+    ],
+    [
+     "closest",
+     "foreignObject > *"
+    ]
+   ]
+  },
+  {
+   "name": "selector-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignobject div"
+    ],
+    [
+     "matches",
+     "foreignobject div"
+    ],
+    [
+     "closest",
+     "foreignobject div"
+    ]
+   ]
+  },
+  {
+   "name": "selector-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "g > foreignobject > div"
+    ],
+    [
+     "matches",
+     "g > foreignobject > div"
+    ],
+    [
+     "closest",
+     "g > foreignobject > div"
+    ]
+   ]
+  },
+  {
+   "name": "selector-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "svg foreignobject .label"
+    ],
+    [
+     "matches",
+     "svg foreignobject .label"
+    ],
+    [
+     "closest",
+     "svg foreignobject .label"
+    ]
+   ]
+  },
+  {
+   "name": "selector-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "lineargradient"
+    ],
+    [
+     "matches",
+     "lineargradient"
+    ],
+    [
+     "closest",
+     "lineargradient"
+    ]
+   ]
+  },
+  {
+   "name": "selector-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "linearGradient"
+    ],
+    [
+     "matches",
+     "linearGradient"
+    ],
+    [
+     "closest",
+     "linearGradient"
+    ]
+   ]
+  },
+  {
+   "name": "selector-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "LINEARGRADIENT"
+    ],
+    [
+     "matches",
+     "LINEARGRADIENT"
+    ],
+    [
+     "closest",
+     "LINEARGRADIENT"
+    ]
+   ]
+  },
+  {
+   "name": "selector-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "clippath"
+    ],
+    [
+     "matches",
+     "clippath"
+    ],
+    [
+     "closest",
+     "clippath"
+    ]
+   ]
+  },
+  {
+   "name": "selector-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "clipPath"
+    ],
+    [
+     "matches",
+     "clipPath"
+    ],
+    [
+     "closest",
+     "clipPath"
+    ]
+   ]
+  },
+  {
+   "name": "selector-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "textpath"
+    ],
+    [
+     "matches",
+     "textpath"
+    ],
+    [
+     "closest",
+     "textpath"
+    ]
+   ]
+  },
+  {
+   "name": "selector-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "textPath"
+    ],
+    [
+     "matches",
+     "textPath"
+    ],
+    [
+     "closest",
+     "textPath"
+    ]
+   ]
+  },
+  {
+   "name": "selector-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "TEXTPATH"
+    ],
+    [
+     "matches",
+     "TEXTPATH"
+    ],
+    [
+     "closest",
+     "TEXTPATH"
+    ]
+   ]
+  },
+  {
+   "name": "selector-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "tspan"
+    ],
+    [
+     "matches",
+     "tspan"
+    ],
+    [
+     "closest",
+     "tspan"
+    ]
+   ]
+  },
+  {
+   "name": "selector-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "TSPAN"
+    ],
+    [
+     "matches",
+     "TSPAN"
+    ],
+    [
+     "closest",
+     "TSPAN"
+    ]
+   ]
+  },
+  {
+   "name": "selector-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "Tspan"
+    ],
+    [
+     "matches",
+     "Tspan"
+    ],
+    [
+     "closest",
+     "Tspan"
+    ]
+   ]
+  },
+  {
+   "name": "selector-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "g"
+    ],
+    [
+     "matches",
+     "g"
+    ],
+    [
+     "closest",
+     "g"
+    ]
+   ]
+  },
+  {
+   "name": "selector-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "G"
+    ],
+    [
+     "matches",
+     "G"
+    ],
+    [
+     "closest",
+     "G"
+    ]
+   ]
+  },
+  {
+   "name": "selector-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "SVG"
+    ],
+    [
+     "matches",
+     "SVG"
+    ],
+    [
+     "closest",
+     "SVG"
+    ]
+   ]
+  },
+  {
+   "name": "selector-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "svg"
+    ],
+    [
+     "matches",
+     "svg"
+    ],
+    [
+     "closest",
+     "svg"
+    ]
+   ]
+  },
+  {
+   "name": "selector-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "Svg"
+    ],
+    [
+     "matches",
+     "Svg"
+    ],
+    [
+     "closest",
+     "Svg"
+    ]
+   ]
+  },
+  {
+   "name": "selector-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "div"
+    ],
+    [
+     "matches",
+     "div"
+    ],
+    [
+     "closest",
+     "div"
+    ]
+   ]
+  },
+  {
+   "name": "selector-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "DIV"
+    ],
+    [
+     "matches",
+     "DIV"
+    ],
+    [
+     "closest",
+     "DIV"
+    ]
+   ]
+  },
+  {
+   "name": "selector-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "Div"
+    ],
+    [
+     "matches",
+     "Div"
+    ],
+    [
+     "closest",
+     "Div"
+    ]
+   ]
+  },
+  {
+   "name": "selector-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "span"
+    ],
+    [
+     "matches",
+     "span"
+    ],
+    [
+     "closest",
+     "span"
+    ]
+   ]
+  },
+  {
+   "name": "selector-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "SPAN"
+    ],
+    [
+     "matches",
+     "SPAN"
+    ],
+    [
+     "closest",
+     "SPAN"
+    ]
+   ]
+  },
+  {
+   "name": "selector-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignobject > DIV"
+    ],
+    [
+     "matches",
+     "foreignobject > DIV"
+    ],
+    [
+     "closest",
+     "foreignobject > DIV"
+    ]
+   ]
+  },
+  {
+   "name": "selector-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "FOREIGNOBJECT > div > SPAN"
+    ],
+    [
+     "matches",
+     "FOREIGNOBJECT > div > SPAN"
+    ],
+    [
+     "closest",
+     "FOREIGNOBJECT > div > SPAN"
+    ]
+   ]
+  },
+  {
+   "name": "selector-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "text"
+    ],
+    [
+     "matches",
+     "text"
+    ],
+    [
+     "closest",
+     "text"
+    ]
+   ]
+  },
+  {
+   "name": "selector-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "TEXT"
+    ],
+    [
+     "matches",
+     "TEXT"
+    ],
+    [
+     "closest",
+     "TEXT"
+    ]
+   ]
+  },
+  {
+   "name": "selector-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "rect"
+    ],
+    [
+     "matches",
+     "rect"
+    ],
+    [
+     "closest",
+     "rect"
+    ]
+   ]
+  },
+  {
+   "name": "selector-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "RECT"
+    ],
+    [
+     "matches",
+     "RECT"
+    ],
+    [
+     "closest",
+     "RECT"
+    ]
+   ]
+  },
+  {
+   "name": "selector-36",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "stop"
+    ],
+    [
+     "matches",
+     "stop"
+    ],
+    [
+     "closest",
+     "stop"
+    ]
+   ]
+  },
+  {
+   "name": "selector-37",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "STOP"
+    ],
+    [
+     "matches",
+     "STOP"
+    ],
+    [
+     "closest",
+     "STOP"
+    ]
+   ]
+  },
+  {
+   "name": "selector-38",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "defs > LINEARGRADIENT > Stop"
+    ],
+    [
+     "matches",
+     "defs > LINEARGRADIENT > Stop"
+    ],
+    [
+     "closest",
+     "defs > LINEARGRADIENT > Stop"
+    ]
+   ]
+  },
+  {
+   "name": "selector-39",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     ":not(foreignobject)"
+    ],
+    [
+     "matches",
+     ":not(foreignobject)"
+    ],
+    [
+     "closest",
+     ":not(foreignobject)"
+    ]
+   ]
+  },
+  {
+   "name": "selector-40",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     ":not(FOREIGNOBJECT) > div"
+    ],
+    [
+     "matches",
+     ":not(FOREIGNOBJECT) > div"
+    ],
+    [
+     "closest",
+     ":not(FOREIGNOBJECT) > div"
+    ]
+   ]
+  },
+  {
+   "name": "selector-41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "foreignobject:first-child"
+    ],
+    [
+     "matches",
+     "foreignobject:first-child"
+    ],
+    [
+     "closest",
+     "foreignobject:first-child"
+    ]
+   ]
+  },
+  {
+   "name": "selector-42",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "G.node"
+    ],
+    [
+     "matches",
+     "G.node"
+    ],
+    [
+     "closest",
+     "G.node"
+    ]
+   ]
+  },
+  {
+   "name": "selector-43",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "g.NODE"
+    ],
+    [
+     "matches",
+     "g.NODE"
+    ],
+    [
+     "closest",
+     "g.NODE"
+    ]
+   ]
+  },
+  {
+   "name": "selector-44",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "#FO"
+    ],
+    [
+     "matches",
+     "#FO"
+    ],
+    [
+     "closest",
+     "#FO"
+    ]
+   ]
+  },
+  {
+   "name": "selector-45",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lg\"><stop offset=\"0\"></stop></linearGradient><clipPath id=\"cp\"><rect></rect></clipPath></defs><g id=\"p\" class=\"node\"><foreignObject id=\"fo\" width=\"100\" height=\"50\"><div id=\"t\" class=\"label\"><span>text</span><DIV>upper</DIV></div></foreignObject><text id=\"tx\"><tspan>a</tspan><textPath href=\"#x\">b</textPath></text></g></svg>",
+   "target": "#t",
+   "ops": [
+    [
+     "query",
+     "#fo"
+    ],
+    [
+     "matches",
+     "#fo"
+    ],
+    [
+     "closest",
+     "#fo"
+    ]
+   ]
+  }
+ ]
+}

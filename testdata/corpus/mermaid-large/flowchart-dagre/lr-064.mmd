@@ -1,0 +1,156 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+  subgraph g0 [Schema alert]
+    n3{Event schema queue}
+    n4[/User span/]
+    n9[/Ledger report gateway/]
+    n12[(Index)]
+    n15((Shard worker cache))
+    n21{{Schema}}
+    n22[(Batch)]
+    n44[(Schema probe)]
+    n46{Queue queue}
+    n49[/User worker queue/]
+  end
+  subgraph g1 [Schema lease]
+    n16((Trace))
+    n17[(Router)]
+    n28([Bucket])
+    n29[[Alert order cache]]
+    n32[/Batch ledger/]
+    n35{Ledger shard}
+    n41[Schema]
+    n42((Alert ledger shard))
+  end
+  subgraph g2 [Trace]
+    n1[[Lease]]
+    n10([Policy])
+    n11((Trace invoice index))
+    n14[[Ledger batch token]]
+    n25[(Replica lease payment)]
+    n30{Audit alert}
+    n40[Bucket session]
+    n48[[Quota user]]
+    n56[(Probe shard)]
+  end
+  subgraph g3 [Lease shard]
+    n2{{Invoice}}
+    n5[Metric bucket invoice]
+    n6(Shard payment)
+    n23[[Batch]]
+    n24[/Alert/]
+    n43[(Event payment metric)]
+    n51(Quota queue)
+    n54[Policy]
+    n55[[Session token]]
+    n57[Alert span user]
+    n58{{Cache metric}}
+    n59[/Bucket session/]
+    n61{{Report}}
+  end
+  n0[/Session/]
+  n7[/Batch/]
+  n8{{Cache}}
+  n13([Index event audit])
+  n18[/Ledger session cache/]
+  n19(Schema)
+  n20(Shard bucket alert)
+  n26[[Index worker]]
+  n27[(Alert event report)]
+  n31{Queue}
+  n33((Quota replica))
+  n34[[Queue]]
+  n36([Trace worker])
+  n37[Trace alert batch]
+  n38{{Policy token}}
+  n39[/Payment queue/]
+  n45[/Lease invoice/]
+  n47([Invoice event queue])
+  n50(Cache schema order)
+  n52[(Order)]
+  n53((Cache payment index))
+  n60{Ledger}
+  n62[/Bucket/]
+  n63([Metric])
+  n0 --x n1
+  n1 --o n2
+  n2 --- n4
+  n2 --o n5
+  n4 -.-> n6
+  n2 --- n7
+  n1 --x n8
+  n5 -.-> n10
+  n6 ---|Quota metric| n11
+  n4 ==> n12
+  n4 ==> n13
+  n5 -.-> n14
+  n8 ---|Shard| n15
+  n10 ==> n16
+  n15 -.-> n17
+  n17 ==> n18
+  n16 ==>|Index| n19
+  n12 --o n20
+  n19 ---|Ledger| n21
+  n15 -.-> n22
+  n19 ---|Ledger| n23
+  n18 --> n24
+  n19 --x n25
+  n17 --- n26
+  n19 --- n27
+  n22 ---|Report| n28
+  n23 --- n29
+  n28 -.->|Ledger| n30
+  n27 --> n31
+  n23 --o|Schema event| n32
+  n25 --o n33
+  n32 --- n34
+  n30 -.->|Event| n35
+  n35 -.->|Invoice token| n36
+  n31 ==> n37
+  n34 --x n38
+  n31 -.-> n39
+  n36 -.-> n40
+  n37 --> n41
+  n39 --o n43
+  n43 ---|Gateway| n44
+  n40 ==> n45
+  n40 --o n46
+  n39 --> n47
+  n45 --o n48
+  n46 --> n49
+  n47 --o n50
+  n50 --x n51
+  n45 -.-> n52
+  n44 --o|Alert replica| n53
+  n46 --o n54
+  n46 --> n55
+  n49 --- n56
+  n53 -.->|Report span| n57
+  n54 ---|Queue| n58
+  n52 --x n59
+  n52 --x n60
+  n52 -.-> n61
+  n59 --- n62
+  n60 --x n63
+  n11 -.-> n4
+  n57 --- n14
+  n25 --o n62
+  n40 --x n52
+  n43 --- n11
+  n32 -.-> n1
+  n44 ==> n24
+  n18 -.-> n10
+  n31 --> n21
+  n39 --o n0
+  n50 --- n11
+  n0 ==> n12
+  n59 ==> n38
+  n55 --- n50
+  n47 --- n28
+  n38 --x n11
+  n49 ==> n34
+  n25 -.-> n5
+  n39 --o n51

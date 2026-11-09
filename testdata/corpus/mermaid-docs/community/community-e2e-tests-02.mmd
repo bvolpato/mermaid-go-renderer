@@ -1,0 +1,13 @@
+flowchart TD
+  start{"What triggered this run?"}
+  start -->|"PR → develop"| pr_label{"'run pr tests'<br/>label set?"}
+  start -->|"PR → master"| release_label{"'run release test'<br/>label set?"}
+  start -->|"Push to develop<br/>(e.g. a PR merge)"| push_develop["pr-check tier only"]
+  start -->|"Push to master"| push_master["pr-check + nightly-check tiers"]
+  start -->|"Scheduled (daily) or<br/>manual 'simulated nightly'"| nightly_run["pr-check + nightly-check tiers"]
+
+  pr_label -->|yes, or PR just opened| pr_scoped["pr-check tier only"]
+  pr_label -->|no| blocked1["e2e skipped —<br/>required check fails"]
+
+  release_label -->|yes, or PR just opened| gated["pr-check + nightly-check tiers<br/>(visual-check excluded — see Applitools)"]
+  release_label -->|no| blocked2["e2e skipped —<br/>required check fails"]

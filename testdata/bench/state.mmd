@@ -1,7 +1,0 @@
-stateDiagram-v2
-  [*] --> Idle
-  Idle --> Loading : fetch
-  Loading --> Ready : success
-  Loading --> Error : timeout
-  Error --> Loading : retry
-  Ready --> Idle : reset

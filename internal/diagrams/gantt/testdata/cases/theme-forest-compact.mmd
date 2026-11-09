@@ -1,0 +1,14 @@
+---
+config:
+  theme: forest
+  gantt:
+    displayMode: compact
+    topAxis: true
+---
+gantt
+  dateFormat YYYY-MM-DD
+  title Forest
+  section A
+  One :done, a, 2024-01-01, 4d
+  Two :active, b, 2024-01-03, 4d
+  Three :crit, c, after a, 2d

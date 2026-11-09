@@ -1,0 +1,11618 @@
+[
+ {
+  "name": "baseline-dominant-0",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-1",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-2",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-3",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-4",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-5",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-6",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-7",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-8",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-9",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-10",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-11",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-12",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-13",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-14",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-15",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-16",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-17",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-18",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-19",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-20",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-21",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-22",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-23",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-24",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-25",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-26",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-27",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-28",
+  "results": [
+   [
+    10,
+    39.1875,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-29",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-30",
+  "results": [
+   [
+    10,
+    38.359375,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-31",
+  "results": [
+   [
+    10,
+    39.59375,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-32",
+  "results": [
+   [
+    10,
+    39.609375,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-33",
+  "results": [
+   [
+    10,
+    40.1875,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-34",
+  "results": [
+   [
+    10,
+    40.1875,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-35",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-36",
+  "results": [
+   [
+    10,
+    40.140625,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-37",
+  "results": [
+   [
+    10,
+    40.625,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-38",
+  "results": [
+   [
+    10,
+    42.109375,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-39",
+  "results": [
+   [
+    10,
+    43.59375,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-40",
+  "results": [
+   [
+    10,
+    42.859375,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-41",
+  "results": [
+   [
+    10,
+    41.375,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-42",
+  "results": [
+   [
+    10,
+    39.890625,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-43",
+  "results": [
+   [
+    10,
+    39.40625,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-44",
+  "results": [
+   [
+    10,
+    38.671875,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-45",
+  "results": [
+   [
+    10,
+    37.1875,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-46",
+  "results": [
+   [
+    10,
+    34.21875,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-47",
+  "results": [
+   [
+    10,
+    44.328125,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-48",
+  "results": [
+   [
+    10,
+    29.296875,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-49",
+  "results": [
+   [
+    10,
+    39.28125,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-50",
+  "results": [
+   [
+    10,
+    41.453125,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-51",
+  "results": [
+   [
+    10,
+    35.8125,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-52",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-53",
+  "results": [
+   [
+    10,
+    40.140625,
+    32.90625,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-54",
+  "results": [
+   [
+    20,
+    56.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-55",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-56",
+  "results": [
+   [
+    10,
+    40.5,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-57",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-58",
+  "results": [
+   [
+    10,
+    40.5,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-59",
+  "results": [
+   [
+    10,
+    41,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-60",
+  "results": [
+   [
+    10,
+    41,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-61",
+  "results": [
+   [
+    10,
+    41,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-62",
+  "results": [
+   [
+    10,
+    41,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-63",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-64",
+  "results": [
+   [
+    10,
+    41.5,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-65",
+  "results": [
+   [
+    10,
+    42,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-66",
+  "results": [
+   [
+    10,
+    43,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-67",
+  "results": [
+   [
+    10,
+    44.5,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-68",
+  "results": [
+   [
+    10,
+    44,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-69",
+  "results": [
+   [
+    10,
+    42.5,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-70",
+  "results": [
+   [
+    10,
+    41.5,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-71",
+  "results": [
+   [
+    10,
+    40.5,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-72",
+  "results": [
+   [
+    10,
+    40,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-73",
+  "results": [
+   [
+    10,
+    39,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-74",
+  "results": [
+   [
+    10,
+    36.5,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-75",
+  "results": [
+   [
+    10,
+    45,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-76",
+  "results": [
+   [
+    10,
+    32,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-77",
+  "results": [
+   [
+    10,
+    41,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-78",
+  "results": [
+   [
+    10,
+    42.5,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-79",
+  "results": [
+   [
+    10,
+    37.5,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-80",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-81",
+  "results": [
+   [
+    10,
+    41.5,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-82",
+  "results": [
+   [
+    20,
+    57.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-83",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-84",
+  "results": [
+   [
+    10,
+    47,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-85",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-86",
+  "results": [
+   [
+    10,
+    46.796875,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-87",
+  "results": [
+   [
+    10,
+    47.203125,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-88",
+  "results": [
+   [
+    10,
+    47.203125,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-89",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-90",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-91",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-92",
+  "results": [
+   [
+    10,
+    47.203125,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-93",
+  "results": [
+   [
+    10,
+    47.40625,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-94",
+  "results": [
+   [
+    10,
+    47.796875,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-95",
+  "results": [
+   [
+    10,
+    48.203125,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-96",
+  "results": [
+   [
+    10,
+    48,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-97",
+  "results": [
+   [
+    10,
+    47.59375,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-98",
+  "results": [
+   [
+    10,
+    47.203125,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-99",
+  "results": [
+   [
+    10,
+    47,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-100",
+  "results": [
+   [
+    10,
+    46.796875,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-101",
+  "results": [
+   [
+    10,
+    46.40625,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-102",
+  "results": [
+   [
+    10,
+    45.59375,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-103",
+  "results": [
+   [
+    10,
+    48.40625,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-104",
+  "results": [
+   [
+    10,
+    44.203125,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-105",
+  "results": [
+   [
+    10,
+    47,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-106",
+  "results": [
+   [
+    10,
+    47.59375,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-107",
+  "results": [
+   [
+    10,
+    46,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-108",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-109",
+  "results": [
+   [
+    10,
+    47.203125,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-110",
+  "results": [
+   [
+    20,
+    63.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-111",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-112",
+  "results": [
+   [
+    10,
+    42.5,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-113",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-114",
+  "results": [
+   [
+    10,
+    42,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-115",
+  "results": [
+   [
+    10,
+    43,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-116",
+  "results": [
+   [
+    10,
+    43,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-117",
+  "results": [
+   [
+    10,
+    43,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-118",
+  "results": [
+   [
+    10,
+    43,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-119",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-120",
+  "results": [
+   [
+    10,
+    43,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-121",
+  "results": [
+   [
+    10,
+    43.5,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-122",
+  "results": [
+   [
+    10,
+    44.5,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-123",
+  "results": [
+   [
+    10,
+    45.5,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-124",
+  "results": [
+   [
+    10,
+    45,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-125",
+  "results": [
+   [
+    10,
+    44,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-126",
+  "results": [
+   [
+    10,
+    43,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-127",
+  "results": [
+   [
+    10,
+    42.5,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-128",
+  "results": [
+   [
+    10,
+    42,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-129",
+  "results": [
+   [
+    10,
+    41,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-130",
+  "results": [
+   [
+    10,
+    39,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-131",
+  "results": [
+   [
+    10,
+    46,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-132",
+  "results": [
+   [
+    10,
+    35.5,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-133",
+  "results": [
+   [
+    10,
+    42.5,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-134",
+  "results": [
+   [
+    10,
+    44,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-135",
+  "results": [
+   [
+    10,
+    40,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-136",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-137",
+  "results": [
+   [
+    10,
+    43,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-138",
+  "results": [
+   [
+    20,
+    59,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-139",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-140",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-141",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-142",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-143",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-144",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-145",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-146",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-147",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-148",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-149",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-150",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-151",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-152",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-153",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-154",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-155",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-156",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-157",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-158",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-159",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-160",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-161",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-162",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-163",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-164",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-165",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-166",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-167",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-168",
+  "results": [
+   [
+    10,
+    31,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-169",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-170",
+  "results": [
+   [
+    10,
+    31,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-171",
+  "results": [
+   [
+    10,
+    32,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-172",
+  "results": [
+   [
+    10,
+    32,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-173",
+  "results": [
+   [
+    10,
+    32,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-174",
+  "results": [
+   [
+    10,
+    32,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-175",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-176",
+  "results": [
+   [
+    10,
+    33,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-177",
+  "results": [
+   [
+    10,
+    34,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-178",
+  "results": [
+   [
+    10,
+    36,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-179",
+  "results": [
+   [
+    10,
+    39,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-180",
+  "results": [
+   [
+    10,
+    38,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-181",
+  "results": [
+   [
+    10,
+    35,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-182",
+  "results": [
+   [
+    10,
+    33,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-183",
+  "results": [
+   [
+    10,
+    31,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-184",
+  "results": [
+   [
+    10,
+    30,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-185",
+  "results": [
+   [
+    10,
+    28,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-186",
+  "results": [
+   [
+    10,
+    23,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-187",
+  "results": [
+   [
+    10,
+    40,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-188",
+  "results": [
+   [
+    10,
+    14,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-189",
+  "results": [
+   [
+    10,
+    32,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-190",
+  "results": [
+   [
+    10,
+    35,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-191",
+  "results": [
+   [
+    10,
+    25,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-192",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-193",
+  "results": [
+   [
+    10,
+    33,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-194",
+  "results": [
+   [
+    20,
+    49,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-195",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-196",
+  "results": [
+   [
+    10,
+    50,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-197",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-198",
+  "results": [
+   [
+    10,
+    50,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-199",
+  "results": [
+   [
+    10,
+    50,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-200",
+  "results": [
+   [
+    10,
+    50,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-201",
+  "results": [
+   [
+    10,
+    50,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-202",
+  "results": [
+   [
+    10,
+    50,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-203",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-204",
+  "results": [
+   [
+    10,
+    50,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-205",
+  "results": [
+   [
+    10,
+    50,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-206",
+  "results": [
+   [
+    10,
+    50,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-207",
+  "results": [
+   [
+    10,
+    50,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-208",
+  "results": [
+   [
+    10,
+    50,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-209",
+  "results": [
+   [
+    10,
+    50,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-210",
+  "results": [
+   [
+    10,
+    50,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-211",
+  "results": [
+   [
+    10,
+    50,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-212",
+  "results": [
+   [
+    10,
+    50,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-213",
+  "results": [
+   [
+    10,
+    50,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-214",
+  "results": [
+   [
+    10,
+    50,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-215",
+  "results": [
+   [
+    10,
+    50,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-216",
+  "results": [
+   [
+    10,
+    50,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-217",
+  "results": [
+   [
+    10,
+    50,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-218",
+  "results": [
+   [
+    10,
+    50,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-219",
+  "results": [
+   [
+    10,
+    50,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-220",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-221",
+  "results": [
+   [
+    10,
+    50,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-222",
+  "results": [
+   [
+    20,
+    66,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-223",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-224",
+  "results": [
+   [
+    10,
+    31,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-225",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-226",
+  "results": [
+   [
+    10,
+    31,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-227",
+  "results": [
+   [
+    10,
+    32,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-228",
+  "results": [
+   [
+    10,
+    32,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-229",
+  "results": [
+   [
+    10,
+    32,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-230",
+  "results": [
+   [
+    10,
+    32,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-231",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-232",
+  "results": [
+   [
+    10,
+    33,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-233",
+  "results": [
+   [
+    10,
+    34,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-234",
+  "results": [
+   [
+    10,
+    36,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-235",
+  "results": [
+   [
+    10,
+    39,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-236",
+  "results": [
+   [
+    10,
+    38,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-237",
+  "results": [
+   [
+    10,
+    35,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-238",
+  "results": [
+   [
+    10,
+    33,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-239",
+  "results": [
+   [
+    10,
+    31,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-240",
+  "results": [
+   [
+    10,
+    30,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-241",
+  "results": [
+   [
+    10,
+    28,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-242",
+  "results": [
+   [
+    10,
+    23,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-243",
+  "results": [
+   [
+    10,
+    40,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-244",
+  "results": [
+   [
+    10,
+    14,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-245",
+  "results": [
+   [
+    10,
+    32,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-246",
+  "results": [
+   [
+    10,
+    35,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-247",
+  "results": [
+   [
+    10,
+    25,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-248",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-249",
+  "results": [
+   [
+    10,
+    33,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-250",
+  "results": [
+   [
+    20,
+    49,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-251",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-252",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-253",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-254",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-255",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-256",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-257",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-258",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-259",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-260",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-261",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-262",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-263",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-264",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-265",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-266",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-267",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-268",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-269",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-270",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-271",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-272",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-273",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-274",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-275",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-276",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-277",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-278",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-279",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-280",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-281",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-282",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-283",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-284",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-285",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-286",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-287",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-288",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-289",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-290",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-291",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-292",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-293",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-294",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-295",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-296",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-297",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-298",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-299",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-300",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-301",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-302",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-303",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-304",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-305",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-306",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-307",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-308",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-309",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-310",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-311",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-312",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-313",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-314",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-315",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-316",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-317",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-318",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-319",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-320",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-321",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-322",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-323",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-324",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-325",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-326",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-327",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-328",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-329",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-330",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-331",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-332",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-333",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-334",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-335",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-336",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-337",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-338",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-339",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-340",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-341",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-342",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-343",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-344",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-345",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-346",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-347",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-348",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-349",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-350",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-351",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-352",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-353",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-354",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-355",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-356",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-357",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-358",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-359",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-360",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-361",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-362",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-363",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-364",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-365",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-366",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-367",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-368",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-369",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-370",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-371",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-372",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-373",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-374",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-375",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-376",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-377",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-378",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-379",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-380",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-381",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-382",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-383",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-384",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-385",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-386",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-387",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-388",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-389",
+  "results": [
+   [
+    10,
+    50,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-390",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-391",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-392",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-393",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-394",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-395",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-396",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-397",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-398",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-399",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-400",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-401",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-402",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-403",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-404",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-405",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-406",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-407",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-408",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-409",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-410",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-411",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-412",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-413",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-414",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-415",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-416",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-417",
+  "results": [
+   [
+    10,
+    33,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-418",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-419",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-420",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-421",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-422",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-423",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-424",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-425",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-426",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-427",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-428",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-429",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-430",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-431",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-432",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-433",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-434",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-435",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-436",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-437",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-438",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-439",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-440",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-441",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-442",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-443",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-444",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-445",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-446",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-447",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-448",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-449",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-450",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-451",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-452",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-453",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-454",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-455",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-456",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-457",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-458",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-459",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-460",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-461",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-462",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-463",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-464",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-465",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-466",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-467",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-468",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-469",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-470",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-471",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-472",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-473",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-474",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-475",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-476",
+  "results": [
+   [
+    10,
+    35,
+    142.171875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-477",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-478",
+  "results": [
+   [
+    10,
+    34,
+    156.2890625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-479",
+  "results": [
+   [
+    10,
+    36,
+    124.4609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-480",
+  "results": [
+   [
+    10,
+    36,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-481",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-482",
+  "results": [
+   [
+    10,
+    36,
+    135.1875,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-dominant-483",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-484",
+  "results": [
+   [
+    10,
+    36,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-485",
+  "results": [
+   [
+    10,
+    37,
+    104.25,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-486",
+  "results": [
+   [
+    10,
+    39,
+    89.359375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-487",
+  "results": [
+   [
+    10,
+    41,
+    74.46875,
+    11.1044921875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-488",
+  "results": [
+   [
+    10,
+    40,
+    81.921875,
+    12.31494140625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-489",
+  "results": [
+   [
+    10,
+    38,
+    96.8125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-490",
+  "results": [
+   [
+    10,
+    36,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-491",
+  "results": [
+   [
+    10,
+    35,
+    126.59375,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-492",
+  "results": [
+   [
+    10,
+    34,
+    134.046875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-493",
+  "results": [
+   [
+    10,
+    32,
+    148.9375,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-494",
+  "results": [
+   [
+    10,
+    28,
+    178.71875,
+    27.05078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-495",
+  "results": [
+   [
+    10,
+    42,
+    67.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-496",
+  "results": [
+   [
+    10,
+    21,
+    238.28125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-497",
+  "results": [
+   [
+    10,
+    35,
+    122.875,
+    18.472412109375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-498",
+  "results": [
+   [
+    10,
+    38,
+    99.265625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-size-499",
+  "results": [
+   [
+    10,
+    30,
+    166.796875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-alignment-500",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-both-501",
+  "results": [
+   [
+    10,
+    36,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-tspan-502",
+  "results": [
+   [
+    20,
+    52,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-css-503",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-504",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-505",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-506",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-507",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-508",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-509",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-510",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-511",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-512",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-513",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-514",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-515",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-516",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-517",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-518",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-519",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-520",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-521",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-522",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-523",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-524",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-525",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-526",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-527",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-528",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-529",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-530",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-531",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-532",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-533",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-534",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-535",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-536",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-537",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-538",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-539",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-540",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-541",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-542",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-543",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-544",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-545",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-546",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-547",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-548",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-549",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-550",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-551",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-552",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-553",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-554",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-555",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-556",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-557",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-558",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-559",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-560",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-561",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-562",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-563",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-564",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-565",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-566",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-567",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-568",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-569",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-570",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-571",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-572",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-573",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-574",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-575",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-576",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-577",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-578",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-579",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-580",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-581",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-582",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-583",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-584",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-585",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-586",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-587",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-588",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-589",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-590",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-591",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-592",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-593",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-594",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-595",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-596",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-597",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-598",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-599",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-600",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-601",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-602",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-603",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-604",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-605",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-606",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-607",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-608",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-609",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-610",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-611",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-612",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-613",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-614",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-615",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-616",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-617",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-618",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-619",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-620",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-621",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-622",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-623",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-624",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-625",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-626",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-627",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-628",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-629",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-630",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-631",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-632",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-633",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-634",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-635",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-636",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-637",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-638",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-639",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-640",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-641",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-642",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-643",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-644",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-645",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-646",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-647",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-648",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-649",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-650",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-651",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-652",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-653",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-654",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-655",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-656",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-657",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-658",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-659",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-660",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-661",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-662",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-663",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-664",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-665",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-666",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-667",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-668",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-669",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-670",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-671",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-672",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-673",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-674",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-675",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-676",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-677",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-678",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-679",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-680",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-681",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-682",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-683",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-684",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-685",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-686",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-687",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-688",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-689",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-690",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-691",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-692",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-693",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-694",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-695",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-696",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-697",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-698",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-699",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-700",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-701",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-702",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-703",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-704",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-705",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-706",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-707",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-708",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-709",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-710",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-711",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-712",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-713",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-714",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-715",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-716",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-717",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-718",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-719",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-720",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-721",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-722",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-723",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-724",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-725",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-726",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-727",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-728",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-729",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-730",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-731",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-732",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-733",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-734",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-735",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-736",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-737",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-738",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-739",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-740",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-741",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-742",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-743",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-744",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-745",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-746",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-747",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-748",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-749",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-750",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-751",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-752",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-753",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-754",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-755",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-756",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-757",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-758",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-759",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-760",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-761",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-762",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-763",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-764",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-765",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-766",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-767",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-768",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-769",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-770",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-771",
+  "results": [
+   [
+    10,
+    40.546875,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-772",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-773",
+  "results": [
+   [
+    10,
+    42,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-774",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-775",
+  "results": [
+   [
+    10,
+    47.40625,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-776",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-777",
+  "results": [
+   [
+    10,
+    43.5,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-778",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-779",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-780",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-781",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-782",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-783",
+  "results": [
+   [
+    10,
+    34,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-784",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-785",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-786",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-787",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-788",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-789",
+  "results": [
+   [
+    10,
+    50,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-790",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-mixed-791",
+  "results": [
+   [
+    10,
+    37,
+    36.46875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-792",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-793",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-794",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-795",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-796",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-797",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-798",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-799",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-800",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-801",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-802",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-803",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-804",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-805",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-806",
+  "results": [
+   [
+    10,
+    47.203125,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-807",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-808",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-809",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-810",
+  "results": [
+   [
+    10,
+    43,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-811",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-812",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-813",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-814",
+  "results": [
+   [
+    10,
+    50,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-815",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-816",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-817",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-818",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-819",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-820",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-821",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-822",
+  "results": [
+   [
+    10,
+    33,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-823",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-824",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-825",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-826",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-827",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-828",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-829",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-830",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-831",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-832",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-833",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-834",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-835",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-836",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-837",
+  "results": [
+   [
+    10,
+    36,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-838",
+  "results": [
+   [
+    10,
+    40.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-inherit-839",
+  "results": [
+   [
+    10,
+    41.5,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-840",
+  "results": [
+   [
+    7.40625,
+    141.140625,
+    135.3984375,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-841",
+  "results": [
+   [
+    7.40625,
+    24,
+    135.3984375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-842",
+  "results": [
+   [
+    15.4296875,
+    141.140625,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-843",
+  "results": [
+   [
+    15.4296875,
+    24,
+    119.140625,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-844",
+  "results": [
+   [
+    71,
+    141.140625,
+    8,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-845",
+  "results": [
+   [
+    71,
+    24,
+    8,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-846",
+  "results": [
+   [
+    58.546875,
+    141.140625,
+    32.90625,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-847",
+  "results": [
+   [
+    58.546875,
+    24,
+    32.90625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-848",
+  "results": [
+   [
+    55.875,
+    141.140625,
+    38.25,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-849",
+  "results": [
+   [
+    55.875,
+    24,
+    38.25,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-850",
+  "results": [
+   [
+    15.421875,
+    141.140625,
+    119.15625,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-851",
+  "results": [
+   [
+    15.421875,
+    24,
+    119.15625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-852",
+  "results": [
+   [
+    39.125,
+    141.140625,
+    71.75,
+    17.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-853",
+  "results": [
+   [
+    39.125,
+    24,
+    71.75,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-note-854",
+  "results": [
+   [
+    42.5390625,
+    141.140625,
+    64.921875,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-actor-855",
+  "results": [
+   [
+    42.5390625,
+    24,
+    64.921875,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-856",
+  "results": [
+   [
+    10,
+    37.5,
+    15.140625,
+    31
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-857",
+  "results": [
+   [
+    0,
+    22.015625,
+    114.5,
+    32
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-858",
+  "results": [
+   [
+    10.25,
+    34,
+    43.515625,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-859",
+  "results": [
+   [
+    0,
+    27,
+    101.9375,
+    28.286483764648438
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-860",
+  "results": [
+   [
+    10.25,
+    49.93000030517578,
+    71.734375,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-861",
+  "results": [
+   [
+    0,
+    60.91999816894531,
+    30.171875,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-862",
+  "results": [
+   [
+    0,
+    30.015625,
+    122.3125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-863",
+  "results": [
+   [
+    10.25,
+    39.5,
+    29.53125,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-864",
+  "results": [
+   [
+    0,
+    15.806249618530273,
+    67.484375,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-865",
+  "results": [
+   [
+    10,
+    5.066875457763672,
+    81.1875,
+    39
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-866",
+  "results": [
+   [
+    10,
+    10.680000305175781,
+    134.203125,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-867",
+  "results": [
+   [
+    10.25,
+    7.370000839233398,
+    7.234375,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-868",
+  "results": [
+   [
+    10.25,
+    28,
+    187.3135986328125,
+    28
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-869",
+  "results": [
+   [
+    10,
+    40.5,
+    73.03125,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-870",
+  "results": [
+   [
+    0,
+    13.299999237060547,
+    255.40625,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-871",
+  "results": [
+   [
+    10,
+    15.299999237060547,
+    86.53125,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-872",
+  "results": [
+   [
+    0,
+    33.015625,
+    119.15625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-873",
+  "results": [
+   [
+    10,
+    42,
+    136.125,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-874",
+  "results": [
+   [
+    0,
+    9.299999237060547,
+    205.515625,
+    29
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-875",
+  "results": [
+   [
+    0,
+    16.799999237060547,
+    273.65625,
+    41
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-876",
+  "results": [
+   [
+    10,
+    28.015625,
+    10.03125,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-877",
+  "results": [
+   [
+    10,
+    19.015625,
+    213.453125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-878",
+  "results": [
+   [
+    10.25,
+    27.299999237060547,
+    7.4375,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-879",
+  "results": [
+   [
+    10,
+    35.015625,
+    58.765625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-880",
+  "results": [
+   [
+    0,
+    28.015625,
+    216.28125,
+    24
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-881",
+  "results": [
+   [
+    10,
+    18.299999237060547,
+    35.765625,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-882",
+  "results": [
+   [
+    10,
+    37.5,
+    61.375,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-883",
+  "results": [
+   [
+    10,
+    56.25,
+    28.171875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-884",
+  "results": [
+   [
+    10,
+    48.296875,
+    54.046875,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-885",
+  "results": [
+   [
+    0,
+    37,
+    19.453125,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-886",
+  "results": [
+   [
+    10,
+    42,
+    76.93843078613281,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-887",
+  "results": [
+   [
+    0,
+    17.5731258392334,
+    18.6875,
+    42
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-888",
+  "results": [
+   [
+    10,
+    17.299999237060547,
+    132.23974609375,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-889",
+  "results": [
+   [
+    10.25,
+    39,
+    178.734375,
+    28
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-890",
+  "results": [
+   [
+    10.25,
+    20.299999237060547,
+    62.703125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-891",
+  "results": [
+   [
+    0,
+    26.299999237060547,
+    136.7529296875,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-892",
+  "results": [
+   [
+    0,
+    36,
+    8.34375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-893",
+  "results": [
+   [
+    10,
+    30,
+    92.296875,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-894",
+  "results": [
+   [
+    10,
+    30.28125,
+    53.515625,
+    28
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-895",
+  "results": [
+   [
+    10,
+    25.25,
+    73.46875,
+    37
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-896",
+  "results": [
+   [
+    10.25,
+    50,
+    108.15625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-897",
+  "results": [
+   [
+    10.25,
+    21.299999237060547,
+    52.75,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-898",
+  "results": [
+   [
+    10.25,
+    32.5,
+    89.6875,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-899",
+  "results": [
+   [
+    10,
+    23.299999237060547,
+    22.625,
+    12
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-900",
+  "results": [
+   [
+    0,
+    40,
+    49.328125,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-901",
+  "results": [
+   [
+    10,
+    9,
+    160.875,
+    41
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-902",
+  "results": [
+   [
+    0,
+    50,
+    168.984375,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-903",
+  "results": [
+   [
+    0,
+    24.40999984741211,
+    132.625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-904",
+  "results": [
+   [
+    10,
+    33,
+    43.03125,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-905",
+  "results": [
+   [
+    10,
+    32.5625,
+    177.53125,
+    24.087810516357422
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-906",
+  "results": [
+   [
+    10,
+    -7.78000020980835,
+    70.00927734375,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-907",
+  "results": [
+   [
+    0,
+    32.015625,
+    8.25,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-908",
+  "results": [
+   [
+    0,
+    42,
+    84.859375,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-909",
+  "results": [
+   [
+    0,
+    40.984375,
+    54.9375,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-910",
+  "results": [
+   [
+    0,
+    26.93000030517578,
+    67.265625,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-911",
+  "results": [
+   [
+    10.25,
+    47.015625,
+    96.828125,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-912",
+  "results": [
+   [
+    10.25,
+    33.5,
+    65.171875,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-913",
+  "results": [
+   [
+    10,
+    32.515625,
+    16.0625,
+    29
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-914",
+  "results": [
+   [
+    10,
+    39.5,
+    74.359375,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-915",
+  "results": [
+   [
+    10.25,
+    29,
+    92.03125,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-916",
+  "results": [
+   [
+    0,
+    22.015625,
+    68.03125,
+    32
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-917",
+  "results": [
+   [
+    10,
+    35,
+    34.96875,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-918",
+  "results": [
+   [
+    10.25,
+    1.2999992370605469,
+    167.40625,
+    39
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-919",
+  "results": [
+   [
+    10,
+    40.015625,
+    77.484375,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-920",
+  "results": [
+   [
+    10,
+    42.51625061035156,
+    115.21875,
+    28.015625
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-921",
+  "results": [
+   [
+    10,
+    39,
+    26.953125,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-922",
+  "results": [
+   [
+    10,
+    50.5,
+    178.734375,
+    27
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-923",
+  "results": [
+   [
+    10.25,
+    17.015625,
+    266.328125,
+    37
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-924",
+  "results": [
+   [
+    10.25,
+    33.5,
+    37.03125,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-925",
+  "results": [
+   [
+    0,
+    21,
+    331.046875,
+    37
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-926",
+  "results": [
+   [
+    10.25,
+    42.5,
+    152.3232421875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-927",
+  "results": [
+   [
+    0,
+    30,
+    92.3125,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-928",
+  "results": [
+   [
+    10,
+    -0.7000007629394531,
+    178.6875,
+    43
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-929",
+  "results": [
+   [
+    10.25,
+    37.5,
+    94.203125,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-930",
+  "results": [
+   [
+    10.25,
+    33.015625,
+    40.9375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-931",
+  "results": [
+   [
+    0,
+    23.299999237060547,
+    22.859375,
+    12
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-932",
+  "results": [
+   [
+    10.25,
+    33,
+    136.046875,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-933",
+  "results": [
+   [
+    0,
+    22.799999237060547,
+    38.984375,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-934",
+  "results": [
+   [
+    0,
+    49.91999816894531,
+    166.65625,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-935",
+  "results": [
+   [
+    0,
+    62.459999084472656,
+    146.52099609375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-936",
+  "results": [
+   [
+    0,
+    50.5,
+    234.2198028564453,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-937",
+  "results": [
+   [
+    10,
+    15.015625,
+    137.53125,
+    40
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-938",
+  "results": [
+   [
+    0,
+    33.015625,
+    182.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-939",
+  "results": [
+   [
+    10,
+    42.1875,
+    26.015625,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-940",
+  "results": [
+   [
+    0,
+    46.01000213623047,
+    19.5,
+    41
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-941",
+  "results": [
+   [
+    0,
+    24.674999237060547,
+    102.890625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-942",
+  "results": [
+   [
+    0,
+    37,
+    171.03125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-943",
+  "results": [
+   [
+    10,
+    11.320625305175781,
+    106.625,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-944",
+  "results": [
+   [
+    10,
+    6.329999923706055,
+    28.890625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-945",
+  "results": [
+   [
+    0,
+    31.015625,
+    28.796875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-946",
+  "results": [
+   [
+    10.25,
+    31.015625,
+    152.3232421875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-947",
+  "results": [
+   [
+    0,
+    13.299999237060547,
+    230.15625,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-948",
+  "results": [
+   [
+    10.25,
+    10.299999237060547,
+    107.796875,
+    28.138927459716797
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-949",
+  "results": [
+   [
+    0,
+    55.279998779296875,
+    169.248046875,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-950",
+  "results": [
+   [
+    10.25,
+    37.900001525878906,
+    58.890625,
+    27.183364868164062
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-951",
+  "results": [
+   [
+    0,
+    18.299999237060547,
+    142.9375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-952",
+  "results": [
+   [
+    10.25,
+    36,
+    131.875,
+    37
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-953",
+  "results": [
+   [
+    0,
+    34.5,
+    39.015625,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-954",
+  "results": [
+   [
+    0,
+    36.5,
+    24.421875,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-955",
+  "results": [
+   [
+    0,
+    50,
+    93.345703125,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-956",
+  "results": [
+   [
+    0,
+    25,
+    220.15625,
+    31
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-957",
+  "results": [
+   [
+    10,
+    18.299999237060547,
+    32,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-958",
+  "results": [
+   [
+    10.25,
+    45.078125,
+    4.03125,
+    9
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-959",
+  "results": [
+   [
+    10,
+    8.299999237060547,
+    203.21875,
+    31
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-960",
+  "results": [
+   [
+    10.25,
+    17.015625,
+    108.50581359863281,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-961",
+  "results": [
+   [
+    0,
+    25,
+    69.09375,
+    30.087154388427734
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-962",
+  "results": [
+   [
+    10.25,
+    30.015625,
+    131.8125,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-963",
+  "results": [
+   [
+    10.25,
+    16.299999237060547,
+    171.03125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-964",
+  "results": [
+   [
+    10,
+    39,
+    28.6875,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-965",
+  "results": [
+   [
+    10,
+    14.889999389648438,
+    54.1875,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-966",
+  "results": [
+   [
+    10,
+    14,
+    264.375,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-967",
+  "results": [
+   [
+    0,
+    47.63999938964844,
+    6.515625,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-968",
+  "results": [
+   [
+    10,
+    16.299999237060547,
+    81.734375,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-969",
+  "results": [
+   [
+    10,
+    29.015625,
+    132.03125,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-970",
+  "results": [
+   [
+    10,
+    17.299999237060547,
+    6.921875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-971",
+  "results": [
+   [
+    0,
+    38,
+    55.5625,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-972",
+  "results": [
+   [
+    10.25,
+    33.29999923706055,
+    166.828125,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-973",
+  "results": [
+   [
+    0,
+    35.8125,
+    90.890625,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-974",
+  "results": [
+   [
+    10,
+    35.015625,
+    6.515625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-975",
+  "results": [
+   [
+    10,
+    35.5,
+    30.375,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-976",
+  "results": [
+   [
+    10.25,
+    30.503124237060547,
+    8.296875,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-977",
+  "results": [
+   [
+    0,
+    31.015625,
+    126.609375,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-978",
+  "results": [
+   [
+    10,
+    39.015625,
+    70.625,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-979",
+  "results": [
+   [
+    10.25,
+    28.299999237060547,
+    70.265625,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-980",
+  "results": [
+   [
+    0,
+    34.5,
+    67.21875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-981",
+  "results": [
+   [
+    10.25,
+    50.5,
+    129.90594482421875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-982",
+  "results": [
+   [
+    0,
+    19.299999237060547,
+    36.453125,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-983",
+  "results": [
+   [
+    10.25,
+    27,
+    60.015625,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-984",
+  "results": [
+   [
+    0,
+    49.980003356933594,
+    168.46875,
+    25
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-985",
+  "results": [
+   [
+    0,
+    29.015625,
+    157.265625,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-986",
+  "results": [
+   [
+    10.25,
+    1.2999992370605469,
+    153.828125,
+    39
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-987",
+  "results": [
+   [
+    0,
+    35,
+    69.515625,
+    19
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-988",
+  "results": [
+   [
+    10.25,
+    17.299999237060547,
+    9,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-989",
+  "results": [
+   [
+    10.25,
+    64.31999969482422,
+    147.875,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-990",
+  "results": [
+   [
+    0,
+    16.299999237060547,
+    141.296875,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-991",
+  "results": [
+   [
+    0,
+    21,
+    64.546875,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-992",
+  "results": [
+   [
+    10,
+    18.299999237060547,
+    57.0625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-993",
+  "results": [
+   [
+    10.25,
+    33.015625,
+    76.8125,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-994",
+  "results": [
+   [
+    10.25,
+    22,
+    229.53125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-995",
+  "results": [
+   [
+    10,
+    18.015625,
+    133.484375,
+    29
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-996",
+  "results": [
+   [
+    10,
+    38.015625,
+    88.234375,
+    11
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-997",
+  "results": [
+   [
+    0,
+    45.269996643066406,
+    59.734375,
+    32
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-998",
+  "results": [
+   [
+    0,
+    54.70124816894531,
+    41.21875,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-999",
+  "results": [
+   [
+    10.25,
+    8.290000915527344,
+    71.75,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1000",
+  "results": [
+   [
+    0,
+    34.015625,
+    6.515625,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1001",
+  "results": [
+   [
+    10,
+    33.015625,
+    115.953125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1002",
+  "results": [
+   [
+    0,
+    15.299999237060547,
+    149.4375,
+    18
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1003",
+  "results": [
+   [
+    10,
+    0.5,
+    54.35479736328125,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1004",
+  "results": [
+   [
+    10.25,
+    20,
+    260.171875,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1005",
+  "results": [
+   [
+    10.25,
+    19.015625,
+    136.109375,
+    35
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1006",
+  "results": [
+   [
+    10.25,
+    44.386871337890625,
+    258.28125,
+    38
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1007",
+  "results": [
+   [
+    0,
+    15.015625,
+    167.40625,
+    39
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1008",
+  "results": [
+   [
+    0,
+    24.5,
+    68.46875,
+    33
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1009",
+  "results": [
+   [
+    0,
+    40,
+    25.734375,
+    12.264434814453125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1010",
+  "results": [
+   [
+    0,
+    23.456249237060547,
+    67.21875,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1011",
+  "results": [
+   [
+    10,
+    41.5,
+    88.9375,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1012",
+  "results": [
+   [
+    0,
+    40,
+    49.5625,
+    12
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1013",
+  "results": [
+   [
+    10,
+    3.299999237060547,
+    76.5,
+    37.078125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1014",
+  "results": [
+   [
+    10.25,
+    19.299999237060547,
+    111.703125,
+    17.15673828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1015",
+  "results": [
+   [
+    10,
+    38.5,
+    62.421875,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1016",
+  "results": [
+   [
+    10,
+    50.5,
+    58.515625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1017",
+  "results": [
+   [
+    10,
+    27.015625,
+    36.859375,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1018",
+  "results": [
+   [
+    10,
+    26.015625,
+    10.015625,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1019",
+  "results": [
+   [
+    10.25,
+    40.80000305175781,
+    54.578125,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1020",
+  "results": [
+   [
+    10,
+    30.015625,
+    80.71875,
+    21
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1021",
+  "results": [
+   [
+    0,
+    39.171875,
+    146.078125,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1022",
+  "results": [
+   [
+    10.25,
+    9.299999237060547,
+    13.109375,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1023",
+  "results": [
+   [
+    10,
+    69.20999908447266,
+    5.40625,
+    12
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1024",
+  "results": [
+   [
+    10,
+    31.015625,
+    9.390625,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1025",
+  "results": [
+   [
+    0,
+    42.5,
+    4.515625,
+    10
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1026",
+  "results": [
+   [
+    10.25,
+    41.5,
+    43.84375,
+    11.08984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1027",
+  "results": [
+   [
+    10.25,
+    18.5,
+    408.875,
+    41
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1028",
+  "results": [
+   [
+    10,
+    47.015625,
+    58.515625,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1029",
+  "results": [
+   [
+    0,
+    37.015625,
+    43.03125,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1030",
+  "results": [
+   [
+    0,
+    15.299999237060547,
+    47.8125,
+    22.208984375
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1031",
+  "results": [
+   [
+    10.25,
+    31,
+    86.90625,
+    23
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1032",
+  "results": [
+   [
+    10.25,
+    39.015625,
+    26.8125,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1033",
+  "results": [
+   [
+    10.25,
+    49.308746337890625,
+    19.203125,
+    37
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1034",
+  "results": [
+   [
+    10.25,
+    44.609375,
+    107.875,
+    15
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1035",
+  "results": [
+   [
+    10.25,
+    20.299999237060547,
+    56.8125,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1036",
+  "results": [
+   [
+    10,
+    2.9599990844726562,
+    134.78125,
+    36
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1037",
+  "results": [
+   [
+    10,
+    -11.290000915527344,
+    315.65625,
+    44
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1038",
+  "results": [
+   [
+    10,
+    23.015625,
+    215.84375,
+    31
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1039",
+  "results": [
+   [
+    10,
+    2.3999996185302734,
+    24.59375,
+    14
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1040",
+  "results": [
+   [
+    0,
+    17.5,
+    60.6875,
+    33
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1041",
+  "results": [
+   [
+    10.25,
+    27.5,
+    213.25,
+    28
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1042",
+  "results": [
+   [
+    0,
+    8.299999237060547,
+    188.203125,
+    32
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1043",
+  "results": [
+   [
+    10,
+    40,
+    48.21875,
+    12.298828125
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1044",
+  "results": [
+   [
+    10,
+    17.299999237060547,
+    9.390625,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1045",
+  "results": [
+   [
+    10,
+    50.5,
+    74.171875,
+    22
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1046",
+  "results": [
+   [
+    10,
+    40.5,
+    6.328125,
+    13
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1047",
+  "results": [
+   [
+    10.25,
+    30.015625,
+    9.765625,
+    20
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1048",
+  "results": [
+   [
+    0,
+    29.639999389648438,
+    227.49070739746094,
+    27
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1049",
+  "results": [
+   [
+    10.25,
+    27.015625,
+    11.203125,
+    26
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1050",
+  "results": [
+   [
+    10.25,
+    25.015625,
+    49.359375,
+    28
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1051",
+  "results": [
+   [
+    10,
+    33.29999923706055,
+    64.921875,
+    17.3671875
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1052",
+  "results": [
+   [
+    10,
+    37,
+    150.578125,
+    17
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1053",
+  "results": [
+   [
+    10.25,
+    26,
+    207.140625,
+    30
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1054",
+  "results": [
+   [
+    10,
+    -5.199999809265137,
+    64.09375,
+    16
+   ]
+  ]
+ },
+ {
+  "name": "baseline-random-1055",
+  "results": [
+   [
+    10,
+    35.599998474121094,
+    42.0625,
+    20
+   ]
+  ]
+ }
+]

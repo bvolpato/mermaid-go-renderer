@@ -1,0 +1,69 @@
+---
+config:
+  layout: dagre
+---
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s10 --> s21
+    s21 --> s26 : alert
+    s26 --> s31
+    s31 --> s33
+    s33 --> s36 : queue
+    s36 --> s43 : policy
+  }
+  state Group1 {
+    s5 --> s22
+    s22 --> s48 : metric
+  }
+  state Group2 {
+    s2 --> s8 : report
+    s8 --> s15
+    s15 --> s16
+    s16 --> s18
+    s18 --> s20
+    s20 --> s30 : token
+    s30 --> s44
+    s44 --> s45 : probe
+    s45 --> s49
+  }
+  state Group3 {
+    s13 --> s24
+    s24 --> s27 : router
+    s27 --> s34 : alert
+    s34 --> s38
+    s38 --> s39
+    s39 --> s40
+    s40 --> s42
+  }
+  s0 --> s1
+  s1 --> s2
+  s1 --> s4
+  s1 --> s5
+  s5 --> s7
+  s5 --> s8
+  s8 --> s9
+  s9 --> s11
+  s6 --> s12
+  s8 --> s13
+  s10 --> s15
+  s13 --> s16
+  s14 --> s18
+  s19 --> s20
+  s16 --> s22
+  s20 --> s24 : Trace
+  s24 --> s26
+  s25 --> s28
+  s24 --> s29
+  s26 --> s30 : Trace
+  s31 --> s33
+  s33 --> s37
+  s37 --> s39
+  s35 --> s40 : Payment span
+  s40 --> s41 : Index
+  s36 --> s42
+  s39 --> s44
+  s43 --> s45 : Alert
+  s47 --> s48
+  s44 --> s49
+  s49 --> [*]

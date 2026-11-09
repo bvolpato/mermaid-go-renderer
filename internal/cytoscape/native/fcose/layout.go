@@ -1,0 +1,177 @@
+// Ported from layout-base 2.0.1 (MIT license): src/Layout.js.
+//
+// The JavaScript has the classes Layout, FDLayout and CoSELayout, each one an
+// extension of the one before. The extension creates a CoSELayout only, so
+// Layout has the fields of the three. fdlayout.go and coselayout.go have the
+// methods of the other two classes.
+
+package fcose
+
+import "github.com/bvolpato/mermaid-go-renderer/internal/cytoscape/native/internal/bail"
+
+// Layout is a CoSELayout.
+type Layout struct {
+	params params
+
+	// Layout.
+	layoutQuality         int
+	createBendsAsNeeded   bool
+	incremental           bool
+	animationOnLayout     bool
+	animationDuringLayout bool
+	animationPeriod       float64
+	uniformLeafNodeSizes  bool
+	graphManager          *GraphManager
+	isLayoutFinished      bool
+	isSubLayout           bool
+
+	// FDLayout.
+	useSmartIdealEdgeLengthCalculation bool
+	idealEdgeLength                    float64
+	gravityConstant                    float64
+	compoundGravityConstant            float64
+	gravityRangeFactor                 float64
+	compoundGravityRangeFactor         float64
+	displacementThresholdPerNode       float64
+	coolingFactor                      float64
+	initialCoolingFactor               float64
+	totalDisplacement                  float64
+	oldTotalDisplacement               float64
+	maxIterations                      float64
+	totalIterations                    float64
+	notAnimatedIterations              float64
+	useFRGridVariant                   bool
+	grid                               nodeGrid
+	maxNodeDisplacement                float64
+	totalDisplacementThreshold         float64
+	repulsionRange                     float64
+
+	// CoSELayout.
+	constraints            Constraints
+	prunedNodesAll         [][]*Node
+	growTreeIterations     int
+	afterGrowthIterations  int
+	isTreeGrowing          bool
+	isGrowthFinished       bool
+	coolingCycle           float64
+	maxCoolingCycle        float64
+	finalTemperature       float64
+	coolingAdjuster        float64
+	level                  float64
+	nodesWithGravity       []*Node
+	initialAnimationPeriod float64
+
+	// The variables of initConstraintVariables.
+	cv constraintVariables
+
+	// random is Math.random.
+	random func() float64
+
+	// stamp numbers the sets of calcRepulsionForces. See Node.processed.
+	stamp uint64
+
+	// trace receives the state of the layout at the points that the oracle
+	// records. nil for none.
+	trace func(stage string, values []float64)
+	// cancelled tells that the caller does not wait for the result.
+	cancelled func() bool
+}
+
+// newLayout is new CoSELayout(), with the constants of the run.
+func newLayout(p params) *Layout {
+	l := &Layout{params: p}
+	// Layout.
+	l.layoutQuality = quality
+	l.createBendsAsNeeded = defaultCreateBendsAsNeeded
+	l.incremental = defaultIncremental
+	l.animationOnLayout = defaultAnimationOnLayout
+	l.animationDuringLayout = defaultAnimationDuringLayout
+	l.animationPeriod = defaultAnimationPeriod
+	l.uniformLeafNodeSizes = defaultUniformLeafNodeSizes
+	l.graphManager = newGraphManager(l)
+	// FDLayout. displacementThresholdPerNode is set again in
+	// initSpringEmbedder, before its first use.
+	l.useSmartIdealEdgeLengthCalculation = defaultUseSmartIdealEdgeLengthCalculation
+	l.gravityConstant = defaultGravityStrength
+	l.compoundGravityConstant = defaultCompoundGravityStrength
+	l.gravityRangeFactor = defaultGravityRangeFactor
+	l.compoundGravityRangeFactor = defaultCompoundGravityRangeFactor
+	l.coolingFactor = defaultCoolingFactorIncremental
+	l.initialCoolingFactor = defaultCoolingFactorIncremental
+	l.maxIterations = p.maxIterations
+	return l
+}
+
+func (l *Layout) getGraphManager() *GraphManager { return l.graphManager }
+func (l *Layout) getAllNodes() []*Node           { return l.graphManager.getAllNodes() }
+func (l *Layout) getAllEdges() []*Edge           { return l.graphManager.getAllEdges() }
+
+func (l *Layout) getAllNodesToApplyGravitation() []*Node {
+	return l.graphManager.getAllNodesToApplyGravitation()
+}
+
+// checkLayoutSuccess is Layout.checkLayoutSuccess: true means that there is
+// nothing to lay out.
+func (l *Layout) checkLayoutSuccess() bool {
+	return l.graphManager.getRoot() == nil || len(l.graphManager.getRoot().getNodes()) == 0 || l.graphManager.includesInvalidEdge()
+}
+
+func (l *Layout) runLayout() bool {
+	l.isLayoutFinished = false
+
+	l.tilingPreLayout()
+
+	l.initParameters()
+	var isLayoutSuccessfull bool
+
+	if l.checkLayoutSuccess() {
+		isLayoutSuccessfull = false
+	} else {
+		isLayoutSuccessfull = l.layout()
+	}
+
+	if layoutConstantsAnimateDuring {
+		// If this is a 'during' layout animation. Layout is not finished yet.
+		return false
+	}
+
+	if isLayoutSuccessfull {
+		if !l.isSubLayout {
+			l.doPostLayout()
+		}
+	}
+
+	l.tilingPostLayout()
+
+	l.isLayoutFinished = true
+
+	return isLayoutSuccessfull
+}
+
+// doPostLayout propagates the geometric changes. Layout.update does nothing
+// for the objects of the extension, which have no v-level object.
+func (l *Layout) doPostLayout() {
+	if !l.incremental {
+		bail.Out("fcose: a layout that is not incremental")
+	}
+	if l.createBendsAsNeeded {
+		bail.Out("fcose: bend points")
+	}
+}
+
+// layoutInitParameters is Layout.initParameters.
+func (l *Layout) layoutInitParameters() {
+	if !l.isSubLayout {
+		l.layoutQuality = quality
+		l.animationDuringLayout = defaultAnimationDuringLayout
+		l.animationPeriod = defaultAnimationPeriod
+		l.animationOnLayout = defaultAnimationOnLayout
+		l.incremental = defaultIncremental
+		l.createBendsAsNeeded = defaultCreateBendsAsNeeded
+		l.uniformLeafNodeSizes = defaultUniformLeafNodeSizes
+	}
+
+	if l.animationDuringLayout {
+		l.animationOnLayout = false
+	}
+}
