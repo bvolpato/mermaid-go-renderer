@@ -51,6 +51,23 @@ type Library struct {
 	fallbackFaces map[string]*Face
 	// parses counts the fonts that the library parsed. See ParsedFonts.
 	parses int
+
+	// The web fonts of a page. See webfonts.go. webLib is the library that
+	// WithWebFonts returns for this library. base is not nil for such a
+	// library: it is the library that has the fonts of the system, and
+	// webFaces has the faces of the web fonts that texts have used.
+	webOnce sync.Once
+	webLib  *Library
+	base    *Library
+	// webChromiumLib is the library of WithWebFontsInChromium, and
+	// webShell says that a library with web fonts has the generic families
+	// of the headless shell.
+	webChromiumOnce sync.Once
+	webChromiumLib  *Library
+	webShell        bool
+	webFaces        map[webFaceKey]*Face
+	webRefs         map[webRefKey]*webFaceRef
+	webParsing      int
 }
 
 // ParsedFonts returns the number of fonts that the library has parsed. A
@@ -58,8 +75,12 @@ type Library struct {
 // of the family, in any goroutine, gets the same face.
 func (l *Library) ParsedFonts() int {
 	l.mu.Lock()
-	defer l.mu.Unlock()
-	return l.parses
+	n := l.parses + l.webParsing
+	l.mu.Unlock()
+	if l.base != nil {
+		n += l.base.ParsedFonts()
+	}
+	return n
 }
 
 // faceRef is one face of a font file: the family and the style, as a scan
@@ -571,6 +592,10 @@ func isGenericFamily(name string) bool {
 // family that is not installed gives the font that is metric-compatible
 // with it (see linuxFamily).
 func (l *Library) Match(family string, weight int, italic bool) *Face {
+	if l.base != nil {
+		// A library with web fonts has the fonts of the system in its base.
+		return l.base.Match(family, weight, italic)
+	}
 	if l.platform == PlatformLinux {
 		return l.linuxFamily(family, weight, italic)
 	}
@@ -647,6 +672,14 @@ type Chain struct {
 	// first is the first family name of the font-family list. On Linux
 	// the fallback for a bold or italic text tries its regular face.
 	first string
+
+	// web is true for a chain of a library with web fonts. Such a chain
+	// has entries in place of faces, and lib is the library of the system
+	// fonts. See webfonts.go.
+	web         bool
+	entries     []chainEntry
+	primaryOnce sync.Once
+	primary     *Face
 }
 
 // Resolve builds the fallback chain for a font-family list.
@@ -664,6 +697,18 @@ func (l *Library) Resolve(families []string, weight int, italic bool) *Chain {
 	}
 	l.mu.Unlock()
 
+	if l.base != nil {
+		c := l.resolveWeb(families, weight, italic)
+		l.mu.Lock()
+		if kept, ok := l.chains[key]; ok {
+			// Another goroutine made the chain of this key first.
+			c = kept
+		} else {
+			l.chains[key] = c
+		}
+		l.mu.Unlock()
+		return c
+	}
 	c := &Chain{lib: l, weight: weight, italic: italic}
 	if l.platform == PlatformLinux {
 		if len(families) > 0 {
@@ -725,6 +770,9 @@ func (l *Library) Resolve(families []string, weight int, italic bool) *Chain {
 
 // Primary is the first face of the chain. Line metrics come from it.
 func (c *Chain) Primary() *Face {
+	if c.web {
+		return c.webPrimary()
+	}
 	if len(c.faces) == 0 {
 		return nil
 	}
@@ -733,6 +781,9 @@ func (c *Chain) Primary() *Face {
 
 // FaceFor returns the face that renders a character.
 func (c *Chain) FaceFor(r rune) *Face {
+	if c.web {
+		return c.webFaceFor(r, c.webPrimary())
+	}
 	if c.lib.platform == PlatformLinux {
 		return c.linuxFaceFor(r)
 	}

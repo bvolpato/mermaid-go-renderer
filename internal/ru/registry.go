@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
+	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 	"github.com/bvolpato/mermaid-go-renderer/internal/render"
 )
 
@@ -184,4 +185,61 @@ func lookupLayout(name string) (LayoutAlgorithm, string, error) {
 		return nil, "", fmt.Errorf("Unknown layout algorithm: %s", name)
 	}
 	return fn, layoutAlgorithmNames[name].algorithm, nil
+}
+
+// pageLayout is a layout that a page registers by itself.
+type pageLayout struct {
+	fn        LayoutAlgorithm
+	algorithm string
+}
+
+// pageLayouts are the layouts that a kind of page adds to the registry of
+// mermaid before it renders, with mermaid.registerLayoutLoaders. They are
+// apart from layouts, so that a plain page does not have them.
+var pageLayouts = map[render.Page]map[string]pageLayout{}
+
+// RegisterPageLayout adds a layout that only one kind of page has: the page
+// calls mermaid.registerLayoutLoaders before it renders. The page of
+// mermaid-cli does that for the layout "tidy-tree". name and algorithm are
+// as in RegisterLayout. Layout packages call it from init.
+func RegisterPageLayout(page render.Page, name, algorithm string, fn LayoutAlgorithm) {
+	regMu.Lock()
+	defer regMu.Unlock()
+	if pageLayouts[page] == nil {
+		pageLayouts[page] = map[string]pageLayout{}
+	}
+	pageLayouts[page][name] = pageLayout{fn: fn, algorithm: algorithm}
+}
+
+// lookupPageLayout returns the layout that the page of the render
+// registered under the `layout` of the config of the layout data. ok is
+// false when the page registered no layout with that name. That is always
+// so in a plain page.
+//
+// Upstream finds such a layout in getRegisteredLayoutAlgorithm. Its port,
+// GetRegisteredLayoutAlgorithm, has no render context and so knows only the
+// layouts of mermaid itself. Render has the context: it calls
+// lookupPageLayout first.
+//
+// The name is data.config.layout, which is the value that every diagram
+// renderer gives to getRegisteredLayoutAlgorithm. The config of the layout
+// data is getConfig() for all of them but the mindmap, which sets the
+// layout "cose-bilkent" in its copy when the user set no top-level layout,
+// and then reads the layout from that copy. So a mindmap whose layout
+// comes only from `mindmap.layout` does not get a layout of the page, as
+// in mermaid-cli.
+func lookupPageLayout(ctx *render.Context, data *LayoutData) (name string, l pageLayout, ok bool) {
+	regMu.RLock()
+	defer regMu.RUnlock()
+	registered := pageLayouts[ctx.Page]
+	if len(registered) == 0 {
+		return "", pageLayout{}, false
+	}
+	// The default parameter of getRegisteredLayoutAlgorithm is the empty
+	// string, and Object.hasOwn converts another value to a string.
+	if layout := js.Path(data.Config, "layout"); layout != nil {
+		name = js.ToString(layout)
+	}
+	l, ok = registered[name]
+	return name, l, ok
 }

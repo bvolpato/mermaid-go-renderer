@@ -46,6 +46,10 @@ type Context struct {
 	ConfigState *config.State
 	// Title is the title from the front matter.
 	Title string
+	// Page is the kind of web page that the render reproduces. See
+	// Options.Page. The page of mermaid-cli loads the ESM build of mermaid,
+	// where a plain page of the reference loads the IIFE build.
+	Page Page
 
 	Doc    *dom.Document
 	Engine *browser.Engine

@@ -70,6 +70,10 @@ type Face struct {
 	// ascentHack is the 15% ascent adjustment that Blink applies on macOS
 	// to Times, Helvetica and Courier.
 	ascentHack bool
+
+	// web has the state of a face of a web font, and is nil for a font of
+	// the system. See webfonts_face.go.
+	web *webFace
 }
 
 type shaper struct {
@@ -145,6 +149,11 @@ func newFace(platform Platform, ld *ot.Loader, index int) (*Face, error) {
 	if err != nil {
 		return nil, err
 	}
+	return newFaceOfFont(platform, ld, ft, index), nil
+}
+
+// newFaceOfFont makes the face of a font that go-text has parsed.
+func newFaceOfFont(platform Platform, ld *ot.Loader, ft *gtfont.Font, index int) *Face {
 	f := &Face{Index: index, gt: gtfont.NewFace(ft), platform: platform}
 	desc := ft.Describe()
 	f.Family = desc.Family
@@ -157,7 +166,7 @@ func newFace(platform Platform, ld *ot.Loader, index int) (*Face, error) {
 	f.readTables(ld)
 	f.ft = newFTFace(ld, f)
 	f.shaper.New = func() any { return f.newShaper() }
-	return f, nil
+	return f
 }
 
 func (f *Face) readTables(ld *ot.Loader) {
@@ -235,6 +244,14 @@ func (f *Face) Metrics(size float64) Metrics {
 	asc := f32(float64(f.hheaAscent * scale))
 	desc := f32(float64(f.hheaDescent * scale))
 	gap := f32(float64(f.hheaLineGap * scale))
+	if f.web != nil && len(f.web.coords) != 0 {
+		// CoreText has the metrics of an instance of a variable font as
+		// 16.16 fractions of the em, as its advances. See
+		// webCoreTextAdvance.
+		asc = float64(f.webCoreTextAdvance(int32(f.hheaAscent), size))
+		desc = float64(f.webCoreTextAdvance(int32(f.hheaDescent), size))
+		gap = float64(f.webCoreTextAdvance(int32(f.hheaLineGap), size))
+	}
 	m := Metrics{FloatAscent: asc, FloatDescent: desc, LineGap: gap}
 	m.Ascent = roundScalar(asc)
 	m.Descent = roundScalar(desc)
@@ -256,6 +273,14 @@ func (f *Face) Metrics(size float64) Metrics {
 // On other platforms it reads the OS/2 table.
 func (f *Face) xHeightPx(size, ascent float64) float64 {
 	scale := size / f.upem
+	if f.web != nil && f.platform == PlatformDarwin && (f.web.syntheticBold || f.web.syntheticItalic) {
+		// The glyph of x has the synthetic style of the face.
+		if gid, ok := f.NominalGlyph('x'); ok {
+			if _, top, _, _, empty := f.webDarwinBounds(gid, size); !empty {
+				return float64(-top)
+			}
+		}
+	}
 	if f.platform == PlatformDarwin {
 		if gid, ok := f.NominalGlyph('x'); ok {
 			if maxY, ok := f.tightTop(gid); ok {
@@ -402,6 +427,10 @@ func (f *Face) shape(text []rune, size float64, script language.Script) []Glyph 
 	if len(text) == 0 {
 		return nil
 	}
+	if f.isWebLinux() {
+		// A web font on Linux has whole pixel advances.
+		return f.shapeWebLinux(text, size, script)
+	}
 	if f.platform == PlatformLinux {
 		text = f.linuxShapeText(text)
 	}
@@ -442,6 +471,11 @@ func (f *Face) shape(text []rune, size float64, script language.Script) []Glyph 
 		// Skia returns the advance as a float32 in px. Blink truncates it
 		// to 16.16. Kerning is added in fixed point, so the sum is exact.
 		adv16 := int64(float32(float64(nominal)*size/f.upem) * 65536)
+		if f.web != nil && f.platform == PlatformDarwin && len(f.web.coords) != 0 {
+			// CoreText has the advances of an instance of a variable font
+			// as 16.16 fractions of the em. See webCoreTextAdvance.
+			adv16 = int64(f.webCoreTextAdvance(nominal, size) * 65536)
+		}
 		if f.platform == PlatformLinux {
 			// See linux_scaler.go.
 			adv16 = f.linuxAdvance16(nominal, size)

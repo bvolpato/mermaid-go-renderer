@@ -15,7 +15,7 @@
 //
 // --webfonts loads the web fonts and the style sheets of the page of
 // mermaid-cli 12 into the page (see addWebFonts). It works with render,
-// eval and esm-eval.
+// shoot, eval and esm-eval.
 //
 // Determinism: Math.random is a fixed-seed PRNG, the clock is frozen, and the
 // timezone and locale are fixed. The Go renderer uses the same values.
@@ -275,6 +275,10 @@ async function cmdShoot(browser, opts) {
             '<style>html,body{margin:0;padding:0;background:white}svg{display:block}</style>' +
             `</head><body>${svg}</body></html>`
         );
+        if (opts.webfonts) {
+          // The page of mermaid-cli: its style sheets and its web fonts.
+          await addWebFonts(page);
+        }
         const box = await page.evaluate(() => {
           const r = document.querySelector('body > svg').getBoundingClientRect();
           return { width: r.width, height: r.height };

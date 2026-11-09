@@ -222,6 +222,10 @@ func (f *Face) linuxAdvance16(nominal int32, size float64) int64 {
 // then FontMetrics::AscentDescentWithHacks and SimpleFontData::PlatformInit
 // of Blink.
 func (f *Face) linuxMetrics(size float64) Metrics {
+	if f.web != nil {
+		// A variable web font has the metrics of its instance.
+		return f.webLinuxMetrics(size)
+	}
 	t := f.ft
 	// Size::linear_scale: the font size divided by the em size in float32.
 	// Every value is the value of the font times this factor.
@@ -297,7 +301,19 @@ func (f *Face) letterHeight(r rune, size float64) (float32, bool) {
 // Above 256px they are the bounds at 64px without hinting, times size/64.
 func (f *Face) ScalerBounds(gid uint32, size float64) (left, top, right, bottom float32, empty, handled bool) {
 	if f.platform != PlatformLinux {
+		if f.web != nil && f.platform == PlatformDarwin && (f.web.syntheticBold || f.web.syntheticItalic || len(f.web.coords) != 0) {
+			// A web font with a synthetic style, or an instance of a
+			// variable font, on macOS: the bounds of the path that Skia
+			// makes.
+			left, top, right, bottom, empty = f.webDarwinBounds(gid, size)
+			return left, top, right, bottom, empty, true
+		}
 		return 0, 0, 0, 0, false, false
+	}
+	if f.web != nil {
+		// A web font has normal hinting and can have synthetic styles.
+		left, top, right, bottom, empty = f.webScalerBounds(gid, size)
+		return left, top, right, bottom, empty, true
 	}
 	if float32(size) > canonicalLimit {
 		l, t, r, b, empty := f.pixelBounds(gid, canonicalSize, false)
@@ -330,6 +346,21 @@ func (f *Face) ScalerBounds(gid uint32, size float64) (left, top, right, bottom 
 // The segments are the segments of the path of Skia. A move starts a
 // contour, and each contour is closed. There is no segment for the close.
 func (f *Face) ScalerOutline(gid uint32, size float64) (gtfont.GlyphOutline, bool) {
+	if f.isWebLinux() {
+		if float32(size) > canonicalLimit {
+			outline, ok := f.ScalerOutlineUnhinted(gid, canonicalSize)
+			s := float32(size) / canonicalSize
+			for i := range outline.Segments {
+				for j := range outline.Segments[i].Args {
+					p := &outline.Segments[i].Args[j]
+					p.X, p.Y = float32(p.X*s), float32(p.Y*s)
+				}
+			}
+			return outline, ok
+		}
+		segments, _, _ := f.webFinalPath(gid, float32(size), true)
+		return gtfont.GlyphOutline{Segments: segments}, true
+	}
 	if float32(size) > canonicalLimit {
 		outline, ok := f.ScalerOutlineUnhinted(gid, canonicalSize)
 		s := float32(size) / canonicalSize
@@ -357,6 +388,12 @@ func (f *Face) ScalerOutline(gid uint32, size float64) (gtfont.GlyphOutline, boo
 // The outline is not the outline of the font times the scale: the scaler
 // rounds each point to 1/64 px at the font size.
 func (f *Face) ScalerOutlineUnhinted(gid uint32, size float64) (gtfont.GlyphOutline, bool) {
+	if f.isWebLinux() {
+		// The segments are shared: copy them, because the caller of the
+		// size above 256px scales the result.
+		segments, _, _ := f.webFinalPath(gid, float32(size), false)
+		return gtfont.GlyphOutline{Segments: append([]ot.Segment(nil), segments...)}, true
+	}
 	inst := f.scalerHinter()
 	if inst == nil {
 		return gtfont.GlyphOutline{}, false

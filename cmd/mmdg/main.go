@@ -10,6 +10,10 @@
 //	mmdg -i README.md -o README.out.md  # the markdown with images in place of the blocks
 //	cat diagram.mmd | mmdg -i - -o - -e svg > diagram.svg
 //
+// By default mmdg reproduces the web page of mmdc, which has web fonts that
+// a plain page has not, and puts the fonts that a diagram uses into the
+// SVG, as mmdc does. --page plain renders as a page with only mermaid.
+//
 // See docs/CLI.md for every option and for the differences from mmdc.
 //
 // The handling of the options follows mermaid-cli 12.0.0, src/index.js
@@ -38,6 +42,7 @@ import (
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
 	"github.com/bvolpato/mermaid-go-renderer/internal/mmdc"
+	"github.com/bvolpato/mermaid-go-renderer/internal/render"
 )
 
 // version is set by the release build.
@@ -86,7 +91,10 @@ type config struct {
 	iconPacks                                     []string
 	// The options of mermaid-cli 11 that version 12 removed.
 	width int
+	// fontEmbed is false after --no-font-embed.
+	fontEmbed bool
 	// The options of mmdg.
+	page       string
 	fonts      string
 	fontDirs   []string
 	imageSizes string
@@ -299,14 +307,16 @@ var options = []option{
 		set: func(*config, string) string { return "" }},
 	{long: "pdf-paper-format", arg: "format", usage: "Accepted for mermaid-cli. PDF is not supported.",
 		set: choice(paperFormats, func(*config, string) {})},
-	{long: "no-font-embed", usage: "Accepted for mermaid-cli. mmdg never embeds fonts into an SVG.",
-		set: func(*config, string) string { return "" }},
+	{long: "no-font-embed", usage: "Do not embed the fonts of the page into an SVG. The file is smaller, and it shows other fonts on a machine that has not the fonts of the page.",
+		set: func(c *config, _ string) string { c.fontEmbed = false; return "" }},
 	{short: "p", long: "puppeteerConfigFile", arg: "puppeteerConfigFile", usage: "Accepted for mermaid-cli and not read. mmdg uses no browser.",
 		set: func(*config, string) string { return "" }},
 	{long: "iconPacks", arg: "icon-packages", variadic: true, usage: "Icon packs of mermaid-cli. They are not supported.",
 		set: func(c *config, v string) string { c.iconPacks = append(c.iconPacks, v); return "" }},
 	{long: "iconPacksNamesAndUrls", arg: "prefix#iconsurl", variadic: true, usage: "Icon packs of mermaid-cli. They are not supported.",
 		set: func(c *config, v string) string { c.iconPacks = append(c.iconPacks, v); return "" }},
+	{long: "page", arg: "page", usage: "Web page that the render reproduces: mermaid-cli (the page of mmdc, which has the web fonts Recursive Variable, Open Sans and Font Awesome) or plain (a page with only mermaid). The default is mermaid-cli.",
+		set: choice([]string{"mermaid-cli", "plain"}, func(c *config, v string) { c.page = v })},
 	{long: "fonts", arg: "fonts", usage: "Fonts that measure the text: embedded (the fonts in mmdg, the same result on every machine) or system (the fonts of this machine, as a browser here). The default is embedded.",
 		set: choice([]string{"embedded", "system"}, func(c *config, v string) { c.fonts = v })},
 	{long: "fontDir", arg: "dir", usage: "Directory with more font files for --fonts embedded. Repeat the option for more directories.",
@@ -348,7 +358,7 @@ func findOption(short, long string) *option {
 // "--name=value", "-n value", "-nvalue", and "-ab" for two options without
 // a value.
 func parseArgs(args []string) (*config, error) {
-	c := &config{backgroundColor: "white", scale: 1, jobs: max(runtime.NumCPU()/2, 1)}
+	c := &config{backgroundColor: "white", scale: 1, jobs: max(runtime.NumCPU()/2, 1), fontEmbed: true, page: "mermaid-cli"}
 	store := func(o *option, value string) error {
 		if reason := o.set(c, value); reason != "" {
 			return usagef("option '%s' argument '%s' is invalid. %s", o.flags(), value, reason)
@@ -579,6 +589,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 	default:
 		fonts = font.Embedded()
 	}
+	// The page. mmdc renders in a page that has web fonts and style
+	// sheets. They come before the fonts of the machine.
+	var pageSheets []string
+	if c.page == "mermaid-cli" {
+		fontOpts = append(fontOpts, mermaid.WithPage(mermaid.PageMermaidCLI))
+		fonts = fonts.WithWebFonts()
+		pageSheets = render.PageSheets(render.PageMermaidCLI)
+	}
 	opts = append(opts, fontOpts...)
 
 	if c.imageSizes != "" {
@@ -601,12 +619,13 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 	opts = append(opts, mermaid.WithTime(now, loc))
 
 	r := &renderer{
-		opts:     opts,
-		fontOpts: fontOpts,
-		page:     mmdc.Options{Background: c.backgroundColor, SetBackground: true, Size: c.size, Fonts: fonts},
-		viewport: viewportWidth,
-		scale:    c.scale,
-		timeout:  c.timeout,
+		opts:      opts,
+		fontOpts:  fontOpts,
+		page:      mmdc.Options{Background: c.backgroundColor, SetBackground: true, Size: c.size, Fonts: fonts, PageSheets: pageSheets},
+		fontEmbed: c.fontEmbed,
+		viewport:  viewportWidth,
+		scale:     c.scale,
+		timeout:   c.timeout,
 	}
 	info := func(message string) {
 		if !quiet {
@@ -906,12 +925,16 @@ func findMermaidBlocks(markdown string) []mermaidBlock {
 
 // renderer renders one diagram to the bytes of an output file.
 type renderer struct {
+	// opts are the options of the render. fontOpts are those of them that
+	// the rasterizer also needs: the fonts and the page.
 	opts, fontOpts []mermaid.Option
 	page           mmdc.Options
-	viewport       float64
-	scale          float64
-	format         string
-	timeout        time.Duration
+	// fontEmbed is true to embed the fonts of the page into an SVG.
+	fontEmbed bool
+	viewport  float64
+	scale     float64
+	format    string
+	timeout   time.Duration
 }
 
 // rendered is an output file and the accessible text of its diagram.
@@ -941,10 +964,16 @@ func (r *renderer) render(definition string) (*rendered, error) {
 	out := &rendered{title: page.Title(), desc: page.Desc()}
 	if r.format == "png" {
 		out.data, err = r.png(page)
-	} else {
-		out.data = []byte(page.XML())
+		return out, err
 	}
-	return out, err
+	if r.fontEmbed {
+		// For SVGs, mmdc embeds the fonts of its page into the SVG.
+		if err := page.EmbedFonts(); err != nil {
+			return nil, errors.New("Error: " + err.Error())
+		}
+	}
+	out.data = []byte(page.XML())
+	return out, nil
 }
 
 // png is the screenshot of mmdc: an image of the size of the svg element in

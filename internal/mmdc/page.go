@@ -40,9 +40,13 @@ type Options struct {
 	SetBackground bool
 	// Size is the value of --size in CSS px, or 0 without the option.
 	Size int
-	// Fonts is the font library that laid out the diagram. Only Screenshot
-	// uses it. Nil is the library of the system.
+	// Fonts is the font library that laid out the diagram. Screenshot and
+	// EmbedFonts use it. Nil is the library of the system.
 	Fonts *font.Library
+	// PageSheets is the text of the style sheets in the head of the page,
+	// in their order. A plain page has none. The page of mermaid-cli has
+	// the style sheets of internal/webfonts (render.PageSheets).
+	PageSheets []string
 }
 
 // Page is the page of mmdc after the diagram is in it.
@@ -60,6 +64,7 @@ func Load(svgText string, opts Options) (*Page, error) {
 	engine := browser.NewWithFonts(opts.Fonts)
 	doc := dom.NewDocument()
 	doc.Engine = engine
+	doc.PageSheets = opts.PageSheets
 	// The page of mmdc: body > div#container.
 	container := doc.Body.Append("div").Attr("id", "container")
 	// container.innerHTML = svgText
@@ -134,8 +139,9 @@ func quirkyColor(value string) string {
 }
 
 // XML is what mmdc writes to an .svg file: the XML serialization of the svg
-// element. mmdc can also embed the fonts of its page into the SVG. This
-// package has no such fonts, so the result is that of mmdc --no-font-embed.
+// element. By default mmdc embeds the fonts of its page into the SVG
+// first: call EmbedFonts before XML for that file. Without the call the
+// result is the file of mmdc --no-font-embed.
 func (p *Page) XML() string {
 	return p.SVG.XML()
 }

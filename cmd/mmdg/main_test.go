@@ -69,10 +69,11 @@ func TestOptions(t *testing.T) {
 		args []string
 		// wantErr is a part of the error text. "" means success.
 		wantErr string
-		// file is the output file to read, and contains lists texts that
-		// it must have.
+		// file is the output file to read. contains lists texts that it
+		// must have, and lacks lists texts that it must not have.
 		file     string
 		contains []string
+		lacks    []string
 		stderr   string
 	}{
 		{name: "long options", args: []string{"--input", "d.mmd", "--output", "o.svg", "--quiet"}, file: "o.svg", contains: []string{`<svg id="my-svg"`}},
@@ -91,11 +92,19 @@ func TestOptions(t *testing.T) {
 			stderr: "\nOverriding existing themeCSS in mermaidConfig with CSS from \"style.css\"\n\n"},
 		{name: "size", args: []string{"-i", "d.mmd", "-o", "o.svg", "--size", "300"}, file: "o.svg", contains: []string{"max-width: 300px;", "max-height: 300px;"}},
 		{name: "width and height of mermaid-cli 11", args: []string{"-i", "d.mmd", "-o", "o.svg", "-w", "1024", "-H", "768", "-f"}, file: "o.svg"},
-		{name: "options without effect", args: []string{"-i", "d.mmd", "-o", "o.svg", "-p", "missing.json", "--no-font-embed", "--pdf-paper-format", "A4", "-j", "2"}, file: "o.svg"},
+		{name: "options without effect", args: []string{"-i", "d.mmd", "-o", "o.svg", "-p", "missing.json", "--pdf-paper-format", "A4", "-j", "2"}, file: "o.svg"},
 		{name: "fonts", args: []string{"-i", "d.mmd", "-o", "o.svg", "--fonts", "embedded", "--fontDir", ".", "--fontDir", "."}, file: "o.svg"},
 		{name: "image sizes", args: []string{"-i", "d.mmd", "-o", "o.svg", "--imageSizes", "sizes.json"}, file: "o.svg"},
 		{name: "timeout", args: []string{"-i", "d.mmd", "-o", "o.svg", "--timeout", "1m"}, file: "o.svg"},
 		{name: "scale", args: []string{"-i", "d.mmd", "-o", "o.png", "-s", "2"}, file: "o.png", contains: []string{"\x89PNG"}},
+		// The default theme of a flowchart names Recursive Variable, a font
+		// of the page of mermaid-cli: the SVG gets the font.
+		{name: "fonts of the page are embedded", args: []string{"-i", "d.mmd", "-o", "o.svg"}, file: "o.svg",
+			contains: []string{"</style><style>/* Copyright 2019 The Recursive Project Authors", `src: url("data:font/woff2;base64,`}},
+		{name: "no font embed", args: []string{"-i", "d.mmd", "-o", "o.svg", "--no-font-embed"}, file: "o.svg", lacks: []string{"</style><style>", "base64"}},
+		{name: "page mermaid-cli", args: []string{"-i", "d.mmd", "-o", "o.svg", "--page", "mermaid-cli", "-t", "default"}, file: "o.svg", lacks: []string{"</style><style>"}},
+		{name: "page plain", args: []string{"-i", "d.mmd", "-o", "o.svg", "--page", "plain"}, file: "o.svg", lacks: []string{"</style><style>", "base64"}},
+		{name: "page plain as PNG", args: []string{"-i", "d.mmd", "-o", "o.png", "--page=plain"}, file: "o.png", contains: []string{"\x89PNG"}},
 
 		{name: "pdf", args: []string{"-i", "d.mmd", "-o", "o.pdf"}, wantErr: "PDF output is not supported"},
 		{name: "pdf by the format option", args: []string{"-i", "d.mmd", "-e", "pdf"}, wantErr: "PDF output is not supported"},
@@ -104,6 +113,7 @@ func TestOptions(t *testing.T) {
 		{name: "missing value", args: []string{"-i", "d.mmd", "-o"}, wantErr: "option '-o, --output <output>' argument missing"},
 		{name: "value for an option without a value", args: []string{"-i", "d.mmd", "--quiet=yes"}, wantErr: "unknown option '--quiet=yes'"},
 		{name: "fonts choice", args: []string{"-i", "d.mmd", "--fonts", "web"}, wantErr: "Allowed choices are embedded, system."},
+		{name: "page choice", args: []string{"-i", "d.mmd", "--page", "mmdc"}, wantErr: "Allowed choices are mermaid-cli, plain."},
 		{name: "paper format choice", args: []string{"-i", "d.mmd", "--pdf-paper-format", "B5"}, wantErr: "Allowed choices are Letter, Legal"},
 		{name: "timeout value", args: []string{"-i", "d.mmd", "--timeout", "soon"}, wantErr: "Not a positive duration"},
 		{name: "timeout reached", args: []string{"-i", "d.mmd", "--timeout", "1ns"}, wantErr: "did not finish in 1ns"},
@@ -134,6 +144,11 @@ func TestOptions(t *testing.T) {
 			for _, text := range c.contains {
 				if !strings.Contains(string(data), text) {
 					t.Errorf("%s has no %q: %.300s", c.file, text, data)
+				}
+			}
+			for _, text := range c.lacks {
+				if strings.Contains(string(data), text) {
+					t.Errorf("%s has %q", c.file, text)
 				}
 			}
 		})

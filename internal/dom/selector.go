@@ -31,6 +31,11 @@ type Selector struct {
 	// ancestorClass is a class that an ancestor of an element must have
 	// for the selector to match the element, or "". See AncestorClass.
 	ancestorClass string
+	// pseudoElement is the name of the pseudo-element of the selector in
+	// lower case, such as "before", or "". pseudoCompound is the index of
+	// the compound that has it. See PseudoElement.
+	pseudoElement  string
+	pseudoCompound int
 }
 
 // SelectorDeps says what a selector reads in the tree besides the element
@@ -203,12 +208,10 @@ type selectorCacheEntry struct {
 	err  error
 }
 
-// ParseSelector parses a selector list. Results are cached.
-func ParseSelector(s string) (SelectorList, error) {
-	if e, ok := selectorCache.Load(s); ok {
-		ent := e.(selectorCacheEntry)
-		return ent.list, ent.err
-	}
+// ParseSelectorUncached parses a selector list and does not keep the result
+// in the cache of ParseSelector. It is for a caller that keeps the result
+// itself, such as the rule set of a large style sheet.
+func ParseSelectorUncached(s string) (SelectorList, error) {
 	p := &selParser{s: s}
 	list, err := p.parseList(false)
 	if err == nil && p.i < len(p.s) {
@@ -217,6 +220,16 @@ func ParseSelector(s string) (SelectorList, error) {
 	if err != nil {
 		list = nil
 	}
+	return list, err
+}
+
+// ParseSelector parses a selector list. Results are cached.
+func ParseSelector(s string) (SelectorList, error) {
+	if e, ok := selectorCache.Load(s); ok {
+		ent := e.(selectorCacheEntry)
+		return ent.list, ent.err
+	}
+	list, err := ParseSelectorUncached(s)
 	selectorCacheMu.Lock()
 	// The key can contain element ids that are different for every diagram.
 	// Drop the cache when it grows, so that a long-running service is safe.
@@ -471,11 +484,14 @@ func (p *selParser) parsePseudo(c *compound, sel *Selector) error {
 	if p.i < len(p.s) && p.s[p.i] == ':' {
 		// A pseudo-element. It never matches a real element.
 		p.i++
-		p.parseName()
+		name := strings.ToLower(p.parseName())
 		if p.i < len(p.s) && p.s[p.i] == '(' {
 			p.skipParens()
+			// A pseudo-element with an argument is not one that has a box
+			// of generated content.
+			name = ""
 		}
-		sel.never = true
+		sel.setPseudoElement(name)
 		return nil
 	}
 	name := strings.ToLower(p.parseName())
@@ -543,7 +559,8 @@ func (p *selParser) parsePseudo(c *compound, sel *Selector) error {
 	case "nth-last-of-type":
 		return nth(pseudoNthLastOfType)
 	case "before", "after", "first-line", "first-letter":
-		sel.never = true
+		// The forms of CSS 2 with one colon.
+		sel.setPseudoElement(name)
 	default:
 		// A state or unknown pseudo-class (:hover, :focus, :has(...)). It
 		// never matches in a static render.
@@ -552,6 +569,58 @@ func (p *selParser) parsePseudo(c *compound, sel *Selector) error {
 		c.pseudos = append(c.pseudos, pseudo{kind: pseudoEmpty, a: -1})
 	}
 	return nil
+}
+
+// setPseudoElement records the pseudo-element of the compound that the
+// parser reads now. A selector with a pseudo-element never matches an
+// element. A selector with two pseudo-elements has none that PseudoElement
+// reports.
+func (s *Selector) setPseudoElement(name string) {
+	if s.never {
+		name = ""
+	}
+	s.never = true
+	s.pseudoElement, s.pseudoCompound = name, len(s.compounds)
+}
+
+// PseudoElement returns the name of the pseudo-element that the selector
+// styles, in lower case and without the colons: "before" for
+// `.icon::before` and for `.icon:before`. It returns "" for a selector with
+// no pseudo-element, and for one whose pseudo-element is not at the end of
+// the selector.
+func (s *Selector) PseudoElement() string {
+	if s.pseudoElement == "" || s.pseudoCompound != len(s.compounds)-1 {
+		return ""
+	}
+	return s.pseudoElement
+}
+
+// MatchOriginating reports whether the element is the originating element
+// of the pseudo-element of the selector: the selector without its
+// pseudo-element matches it. It is false for a selector without a
+// pseudo-element.
+func (s *Selector) MatchOriginating(n *Node) bool {
+	if s.PseudoElement() == "" || n == nil || n.Type != ElementNode {
+		return false
+	}
+	return s.matchFrom(n, len(s.compounds)-1)
+}
+
+// NeverMatches reports whether the selector matches no element: it has a
+// pseudo-element, or a pseudo-class of a state that a static document does
+// not have, such as :hover.
+func (s *Selector) NeverMatches() bool { return s.never }
+
+// SubjectIsRoot reports whether the last compound of the selector has the
+// pseudo-class :root, so that the selector can match only the root element.
+func (s *Selector) SubjectIsRoot() bool {
+	c := &s.compounds[len(s.compounds)-1]
+	for i := range c.pseudos {
+		if c.pseudos[i].kind == pseudoRoot {
+			return true
+		}
+	}
+	return false
 }
 
 func (p *selParser) skipParens() {

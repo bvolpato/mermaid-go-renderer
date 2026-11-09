@@ -1,7 +1,7 @@
 // Ported from skrifa 0.46.2 (src/outline/mod.rs: draw_unscaled and
 // draw_unhinted, src/outline/unscaled.rs, src/outline/glyf/mod.rs:
-// Outlines::outline and FreeTypeScaler without hinting,
-// src/outline/glyf/outline.rs, src/outline/glyf/memory.rs,
+// Outlines::outline and FreeTypeScaler without the interpreter of TrueType
+// instructions, src/outline/glyf/outline.rs, src/outline/glyf/memory.rs,
 // src/outline/path.rs) and from read-fonts 0.43.3 (src/tables/glyf.rs,
 // src/tables/loca.rs).
 //
@@ -116,6 +116,11 @@ func (f *ahFont) getGlyf(gid uint32) (data ahData, ok bool) {
 type ahSimpleGlyph struct {
 	endPtsOfContours ahData
 	glyphData        ahData
+	// instructionLength is the length field of the instructions, and
+	// instructions has the instructions. They are empty when they do not
+	// fit in the data.
+	instructionLength int
+	instructions      ahData
 }
 
 func newAHSimpleGlyph(data ahData) ahSimpleGlyph {
@@ -124,6 +129,8 @@ func newAHSimpleGlyph(data ahData) ahSimpleGlyph {
 	g.endPtsOfContours = data.array(10, numberOfContours, 2)
 	off := 10 + 2*numberOfContours
 	instructionLength := int(data.u16(off))
+	g.instructionLength = instructionLength
+	g.instructions = data.array(off+2, instructionLength, 1)
 	off += 2 + instructionLength
 	g.glyphData = data.rest(off, 1)
 	return g
@@ -337,6 +344,16 @@ type ahGlyfOutline struct {
 	glyph    ahData // empty for a glyph without an outline
 	points   int
 	contours int
+	// maxSimplePoints is the largest number of points of a simple glyph of
+	// the outline, with its phantom points: the size of the buffers for
+	// the deltas of a variable font.
+	maxSimplePoints int
+	// maxComponentDeltaStack is the size of the stack for the deltas of
+	// the components of the composite glyphs of the outline.
+	maxComponentDeltaStack int
+	// hasHinting says that the glyph or a component of it has
+	// instructions.
+	hasHinting bool
 }
 
 // outline is Outlines::outline. ok is false for a glyph that skrifa does not
@@ -350,7 +367,7 @@ func (f *ahFont) outline(gid uint32) (ahGlyfOutline, bool) {
 	}
 	if len(glyph) != 0 {
 		totalComponents := 0
-		if !f.outlineRec(glyph, &o, 0, &totalComponents) {
+		if !f.outlineRec(glyph, &o, 0, 0, &totalComponents) {
 			return o, false
 		}
 	}
@@ -359,20 +376,28 @@ func (f *ahFont) outline(gid uint32) (ahGlyfOutline, bool) {
 	return o, true
 }
 
-// outlineRec is Outlines::outline_rec.
-func (f *ahFont) outlineRec(glyph ahData, o *ahGlyfOutline, recurseDepth int, totalComponents *int) bool {
+// outlineRec is Outlines::outline_rec. componentDepth is the number of
+// deltas of the composite glyphs that have the glyph as a component.
+func (f *ahFont) outlineRec(glyph ahData, o *ahGlyfOutline, componentDepth, recurseDepth int, totalComponents *int) bool {
 	if recurseDepth > ahGlyfCompositeRecursionLimit {
 		return false
 	}
 	if glyph.i16(0) >= 0 {
 		simple := newAHSimpleGlyph(glyph)
-		o.points += simple.numPoints()
+		numPoints := simple.numPoints()
+		o.maxSimplePoints = max(o.maxSimplePoints, numPoints+ahPhantomPointCount)
+		o.points += numPoints
 		if o.points > ahMaxGlyfPoints {
 			return false
 		}
 		o.contours += len(simple.endPtsOfContours) / 2
+		o.hasHinting = o.hasHinting || simple.instructionLength != 0
 		return true
 	}
+	// A composite glyph has one delta for each component and for each
+	// phantom point.
+	count, instructions := ahCountAndInstructions(glyph)
+	count += ahPhantomPointCount
 	for _, component := range ahComponentGlyphs(glyph) {
 		componentGlyph, ok := f.getGlyf(uint32(component))
 		if !ok {
@@ -385,16 +410,23 @@ func (f *ahFont) outlineRec(glyph ahData, o *ahGlyfOutline, recurseDepth int, to
 		if *totalComponents > ahMaxGraphEdges {
 			return false
 		}
-		if !f.outlineRec(componentGlyph, o, recurseDepth+1, totalComponents) {
+		if !f.outlineRec(componentGlyph, o, componentDepth+count, recurseDepth+1, totalComponents) {
 			return false
 		}
 	}
+	o.maxComponentDeltaStack = max(o.maxComponentDeltaStack, componentDepth+count)
+	o.hasHinting = o.hasHinting || len(instructions) != 0
 	return true
 }
 
-// ahGlyfScaler is FreeTypeScaler of skrifa without hinting. The points are
-// 26.6 numbers. Without a size (isScaled is false) the outline is in font
-// units, which is what the automatic hinter starts from.
+// ahGlyfScaler is FreeTypeScaler of skrifa without the interpreter of
+// TrueType instructions. The points are 26.6 numbers. Without a size
+// (isScaled is false) the outline is in font units, which is what the
+// automatic hinter starts from.
+//
+// scaleOutline makes a scaler without variations and without hinting.
+// scaleOutlineAt in glyf_var.go makes a scaler for an instance of a
+// variable font, and for the hinted mode.
 type ahGlyfScaler struct {
 	font *ahFont
 	// scale converts font units to 26.6 px (Scale26Dot6).
@@ -406,6 +438,34 @@ type ahGlyfScaler struct {
 	pointCount   int
 	contourCount int
 	phantom      [ahPhantomPointCount]ahFPoint
+
+	// coords has the normalized coordinates of the instance. It is empty
+	// for the default instance, and then the scaler reads no deltas.
+	coords []int16
+	// isHinted is FreeTypeScaler::is_hinted: the hinted mode with a size.
+	isHinted bool
+	// backwardCompat is HintInstance::backward_compatibility of the
+	// hinting instance of the hinted mode.
+	backwardCompat bool
+	// deltas and iupBuffer are the buffers for the deltas of the points of
+	// a simple glyph, as 16.16 numbers. compositeDeltas is the stack of
+	// the deltas of the components of the composite glyphs, and
+	// componentDeltaCount is the number of deltas on it.
+	deltas, iupBuffer   []ahFPoint
+	compositeDeltas     []ahFPoint
+	componentDeltaCount int
+	// hdmxWidth is the width of the glyph in the hdmx table, in whole px.
+	hdmxWidth    int32
+	hasHdmxWidth bool
+}
+
+// gvar returns the gvar table when the scaler reads deltas: the font has
+// the table and the instance is not the default instance.
+func (s *ahGlyfScaler) gvar() *ahGvar {
+	if len(s.coords) == 0 || s.font.vari == nil {
+		return nil
+	}
+	return s.font.vari.gvar
 }
 
 // applyPoint is Scale26Dot6::apply_point: a point in font units as a 26.6
@@ -439,19 +499,29 @@ func (s *ahGlyfScaler) load(glyph ahData, gid uint32, recurseDepth int) bool {
 	s.phantom[3] = ahFPoint{0, s.phantom[2].y - vadvance}
 	switch {
 	case len(glyph) == 0:
-		// load_empty.
+		// load_empty: a glyph without an outline can have deltas for its
+		// first two phantom points.
+		unscaled := s.phantom
+		if gvar := s.gvar(); gvar != nil {
+			if deltas, ok := gvar.phantomPointDeltas(s.font, s.coords, gid); ok {
+				for i := 0; i < 2; i++ {
+					unscaled[i].x += ahFixedToI32(deltas[i].x)
+					unscaled[i].y += ahFixedToI32(deltas[i].y)
+				}
+			}
+		}
 		for i := range s.phantom {
-			s.phantom[i] = s.applyPoint(s.phantom[i])
+			s.phantom[i] = s.applyPoint(unscaled[i])
 		}
 		return true
 	case glyph.i16(0) >= 0:
-		return s.loadSimple(newAHSimpleGlyph(glyph))
+		return s.loadSimple(newAHSimpleGlyph(glyph), gid)
 	}
-	return s.loadComposite(glyph, recurseDepth)
+	return s.loadComposite(glyph, gid, recurseDepth)
 }
 
 // loadSimple is load_simple.
-func (s *ahGlyfScaler) loadSimple(glyph ahSimpleGlyph) bool {
+func (s *ahGlyfScaler) loadSimple(glyph ahSimpleGlyph, gid uint32) bool {
 	pointsStart := s.pointCount
 	pointCount := glyph.numPoints()
 	phantomStart := pointCount
@@ -489,11 +559,67 @@ func (s *ahGlyfScaler) loadSimple(glyph ahSimpleGlyph) bool {
 		unscaled[phantomStart+i] = phantom
 		flags[phantomStart+i] = 0
 	}
-	// An outline without a size is in 26.6 also.
-	for i := range scaled {
-		scaled[i] = s.applyPoint(unscaled[i])
+	// The deltas of the points and of the phantom points, for an instance
+	// of a variable font.
+	haveDeltas := false
+	if gvar := s.gvar(); gvar != nil {
+		n := pointCount + ahPhantomPointCount
+		if n > len(s.deltas) || n > len(s.iupBuffer) {
+			return false
+		}
+		haveDeltas = gvar.simpleGlyph(gid, s.coords, unscaled, flags, contours, s.iupBuffer[:n], s.deltas[:n])
+	}
+	switch {
+	case haveDeltas && s.isScaled:
+		for i := range scaled {
+			// The point in 26.6 font units with its delta, times the
+			// scale. The scale gives a number with 12 fraction bits, which
+			// is rounded to 26.6.
+			delta := s.deltas[i]
+			x := ahFixedMul(unscaled[i].x<<6+ahFixedToF26Dot6(delta.x), s.scale)
+			y := ahFixedMul(unscaled[i].y<<6+ahFixedToF26Dot6(delta.y), s.scale)
+			scaled[i] = ahFPoint{ahF26Dot6ToI32(x), ahF26Dot6ToI32(y)}
+		}
+		// FreeType rounds the deltas of HVAR to whole font units. The
+		// deltas of the phantom points get the same rounding for a font
+		// with an HVAR table.
+		if s.font.vari.hvar != nil {
+			for i := phantomStart; i < len(scaled); i++ {
+				delta := s.deltas[i]
+				x := ahFixedMul(unscaled[i].x<<6+ahFixedToI32(delta.x)<<6, s.scale)
+				y := ahFixedMul(unscaled[i].y<<6+ahFixedToI32(delta.y)<<6, s.scale)
+				scaled[i] = ahFPoint{ahF26Dot6ToI32(x), ahF26Dot6ToI32(y)}
+			}
+		}
+		// In the hinted mode skrifa adds the rounded deltas to the points
+		// in font units also. Only the interpreter reads those points.
+	case haveDeltas:
+		// An outline without a size has the deltas rounded to whole font
+		// units.
+		for i := range scaled {
+			delta := s.deltas[i]
+			scaled[i] = ahFPoint{(unscaled[i].x + ahFixedToI32(delta.x)) << 6, (unscaled[i].y + ahFixedToI32(delta.y)) << 6}
+		}
+	default:
+		// An outline without a size is in 26.6 also.
+		for i := range scaled {
+			scaled[i] = s.applyPoint(unscaled[i])
+		}
 	}
 	copy(s.phantom[:], scaled[phantomStart:])
+	// The hinted mode. For a glyph with instructions skrifa rounds the
+	// phantom points and runs the program of the glyph. The program can
+	// move the phantom points, and skrifa takes the moved points when the
+	// backward compatibility mode is off. The interpreter is not ported:
+	// the phantom points are then the rounded points. For a glyph without
+	// instructions the phantom points are the rounded points also when the
+	// mode is off. With the mode on the phantom points stay as they are.
+	if s.isHinted && !s.backwardCompat {
+		for i := range s.phantom {
+			p := scaled[phantomStart+i]
+			s.phantom[i] = ahFPoint{ahPixRound(p.x), ahPixRound(p.y)}
+		}
+	}
 	if pointsStart != 0 {
 		// The end points of a component count from the first point of the
 		// glyph.
@@ -505,12 +631,36 @@ func (s *ahGlyfScaler) loadSimple(glyph ahSimpleGlyph) bool {
 }
 
 // loadComposite is load_composite.
-func (s *ahGlyfScaler) loadComposite(glyph ahData, recurseDepth int) bool {
+func (s *ahGlyfScaler) loadComposite(glyph ahData, gid uint32, recurseDepth int) bool {
 	pointBase := s.pointCount
+	components := ahComponents(glyph)
+	// The deltas of the offsets of the components and of the phantom
+	// points, for an instance of a variable font. A composite glyph can
+	// have a composite glyph as a component, so the deltas are on a stack.
+	haveDeltas := false
+	deltaBase := s.componentDeltaCount
+	if gvar := s.gvar(); gvar != nil {
+		count := len(components) + ahPhantomPointCount
+		if deltaBase+count > len(s.compositeDeltas) {
+			return false
+		}
+		deltas := s.compositeDeltas[deltaBase : deltaBase+count]
+		if gvar.compositeGlyph(gid, s.coords, deltas) {
+			// The deltas of the phantom points, rounded to whole font
+			// units.
+			for i := range s.phantom {
+				delta := deltas[len(deltas)-ahPhantomPointCount+i]
+				s.phantom[i].x += ahFixedToI32(delta.x)
+				s.phantom[i].y += ahFixedToI32(delta.y)
+			}
+			haveDeltas = true
+		}
+		s.componentDeltaCount += count
+	}
 	for i := range s.phantom {
 		s.phantom[i] = s.applyPoint(s.phantom[i])
 	}
-	for _, component := range ahComponents(glyph) {
+	for i, component := range components {
 		// The component changes the phantom points. They come back,
 		// unless the component has the flag USE_MY_METRICS.
 		phantom := s.phantom
@@ -531,10 +681,10 @@ func (s *ahGlyfScaler) loadComposite(glyph ahData, recurseDepth int) bool {
 		xy, yy := int32(component.xy)*4, int32(component.yy)*4
 		haveXform := component.flags&(ahCompWeHaveAScale|ahCompWeHaveAnXAndYScale|ahCompWeHaveATwoByTwo) != 0
 		if haveXform {
-			for i := startPoint; i < endPoint; i++ {
+			for k := startPoint; k < endPoint; k++ {
 				if s.isScaled {
-					px, py := s.scaled[i].x, s.scaled[i].y
-					s.scaled[i] = ahFPoint{
+					px, py := s.scaled[k].x, s.scaled[k].y
+					s.scaled[k] = ahFPoint{
 						ahFixedMul(px, xx) + ahFixedMul(py, xy),
 						ahFixedMul(px, yx) + ahFixedMul(py, yy),
 					}
@@ -542,10 +692,10 @@ func (s *ahGlyfScaler) loadComposite(glyph ahData, recurseDepth int) bool {
 				}
 				// Without a size the point goes back to whole font units,
 				// and the result is in whole font units.
-				ux, uy := (s.scaled[i].x+32)>>6, (s.scaled[i].y+32)>>6
+				ux, uy := (s.scaled[k].x+32)>>6, (s.scaled[k].y+32)>>6
 				x := ahFixedMul(ux, xx) + ahFixedMul(uy, xy)
 				y := ahFixedMul(ux, yx) + ahFixedMul(uy, yy)
-				s.scaled[i] = ahFPoint{x << 6, y << 6}
+				s.scaled[k] = ahFPoint{x << 6, y << 6}
 			}
 		}
 		var anchorOffset ahFPoint
@@ -564,8 +714,22 @@ func (s *ahGlyfScaler) loadComposite(glyph ahData, recurseDepth int) bool {
 				x = ahFixedMul(x, hypot(xx, xy))
 				y = ahFixedMul(y, hypot(yy, yx))
 			}
+			if haveDeltas {
+				// The delta of the offset, rounded to whole font units as
+				// in FreeType. A delta outside of the stack is zero.
+				var delta ahFPoint
+				if ix := deltaBase + i; ix < len(s.compositeDeltas) {
+					delta = s.compositeDeltas[ix]
+				}
+				x += ahFixedToI32(delta.x)
+				y += ahFixedToI32(delta.y)
+			}
 			// Without hinting the offset is not rounded.
 			anchorOffset = s.applyPoint(ahFPoint{x, y})
+			if s.isHinted && component.flags&ahCompRoundXYToGrid != 0 {
+				// The hinted mode rounds y only, as FreeType does.
+				anchorOffset.y = ahPixRound(anchorOffset.y)
+			}
 		} else {
 			// The anchor is a pair of point numbers: a point of the
 			// component goes to a point of the glyph so far.
@@ -578,9 +742,25 @@ func (s *ahGlyfScaler) loadComposite(glyph ahData, recurseDepth int) bool {
 			anchorOffset = ahFPoint{basePoint.x - componentPoint.x, basePoint.y - componentPoint.y}
 		}
 		if anchorOffset.x != 0 || anchorOffset.y != 0 {
-			for i := startPoint; i < endPoint; i++ {
-				s.scaled[i].x += anchorOffset.x
-				s.scaled[i].y += anchorOffset.y
+			for k := startPoint; k < endPoint; k++ {
+				s.scaled[k].x += anchorOffset.x
+				s.scaled[k].y += anchorOffset.y
+			}
+		}
+	}
+	if haveDeltas {
+		s.componentDeltaCount = deltaBase
+	}
+	// The hinted mode. For a composite glyph with instructions skrifa
+	// rounds the phantom points and runs the program of the glyph, and it
+	// takes the phantom points of the program when the backward
+	// compatibility mode is off. The interpreter is not ported: the
+	// phantom points are then the rounded points. A composite glyph
+	// without instructions keeps its phantom points.
+	if s.isHinted && !s.backwardCompat {
+		if _, instructions := ahCountAndInstructions(glyph); len(instructions) != 0 {
+			for i := range s.phantom {
+				s.phantom[i] = ahFPoint{ahPixRound(s.phantom[i].x), ahPixRound(s.phantom[i].y)}
 			}
 		}
 	}

@@ -1,0 +1,9 @@
+---
+config:
+  layout: tidy-tree
+---
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Running: start
+  Idle --> Failed: error
+  Running --> Done

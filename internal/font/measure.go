@@ -83,6 +83,13 @@ func (c *Chain) shapeText(text []rune, size float64) []Run {
 	for _, sr := range scriptRuns(text) {
 		start := sr.start
 		var cur *Face
+		// notdef draws a character that no font has. For a chain with web
+		// fonts it depends on the characters of the run: Blink shapes a
+		// stretch with emoji presentation and a stretch of text apart, and
+		// each has its first font. notdefEnd is the end of the stretch
+		// that notdef is for.
+		var notdef *Face
+		notdefEnd := sr.start
 		flush := func(end int) {
 			if end > start && cur != nil {
 				g := cur.shape(text[start:end], size, sr.script)
@@ -92,11 +99,19 @@ func (c *Chain) shapeText(text []rune, size float64) []Run {
 		}
 		for i := sr.start; i < sr.end; i++ {
 			r := text[i]
+			if c.web && i >= notdefEnd {
+				isEmoji := emoji != nil && emoji[i]
+				for notdefEnd = i + 1; notdefEnd < sr.end && (emoji != nil && emoji[notdefEnd]) == isEmoji; notdefEnd++ {
+				}
+				notdef = c.webFirstCandidate(text[i:notdefEnd])
+			}
 			var f *Face
 			if cur != nil && (unicode.Is(unicode.Mn, r) || r == 0x200d || (r >= 0xfe00 && r <= 0xfe0f)) {
 				f = cur // a mark or joiner stays with its base
 			} else if emoji != nil && emoji[i] {
-				f = c.emojiFaceFor(r, cur)
+				f = c.emojiFaceFor(r, cur, notdef)
+			} else if c.web {
+				f = c.webFaceFor(r, notdef)
 			} else {
 				f = c.FaceFor(r)
 			}

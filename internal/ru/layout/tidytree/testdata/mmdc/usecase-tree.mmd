@@ -1,0 +1,11 @@
+---
+config:
+  layout: tidy-tree
+---
+usecase-beta
+    direction LR
+    actor Customer("Customer")
+    Browse("Browse catalog")
+    Checkout("Place order")
+    Customer --> Browse
+    Customer --> Checkout

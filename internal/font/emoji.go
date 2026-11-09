@@ -165,7 +165,9 @@ func (l *Library) emojiFace() *Face {
 // presentation: the emoji font when it has the character, and the face of
 // a text run in all other cases. A tag character of a flag sequence stays
 // with the emoji font of its base. cur is the face of the character before.
-func (c *Chain) emojiFaceFor(r rune, cur *Face) *Face {
+// notdef is the face that draws a character that no font has, for a chain
+// with web fonts.
+func (c *Chain) emojiFaceFor(r rune, cur, notdef *Face) *Face {
 	if ef := c.lib.emojiFace(); ef != nil {
 		if ef.HasGlyph(r) {
 			return ef
@@ -173,6 +175,9 @@ func (c *Chain) emojiFaceFor(r rune, cur *Face) *Face {
 		if cur == ef && r >= 0xe0020 && r <= 0xe007f {
 			return ef
 		}
+	}
+	if c.web {
+		return c.webFaceFor(r, notdef)
 	}
 	return c.FaceFor(r)
 }

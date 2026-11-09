@@ -9,11 +9,13 @@
 //   - LineInfo: core/layout/inline/line_info.h.
 //   - LineOffsetForTextAlign: core/layout/length_utils.cc.
 //   - LayoutUnit: platform/geometry/layout_unit.h.
+//   - StyleBuilderConverter::ClampLineWidth:
+//     core/css/resolver/style_builder_converter.cc.
 //
 // The paths are in third_party/blink/renderer. These files have the
-// BSD-3-Clause license in their headers at that version. layout_unit.h has
-// the BSD terms in the file, with the copyright of Google. See NOTICE in
-// this directory.
+// BSD-3-Clause license in their headers at that version. layout_unit.h and
+// style_builder_converter.cc have the BSD terms in the file, with the
+// copyright of Google. See NOTICE in this directory.
 
 package browser
 
@@ -21,6 +23,7 @@ import (
 	"math"
 	"strings"
 
+	"github.com/bvolpato/mermaid-go-renderer/internal/css"
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
 )
@@ -83,6 +86,24 @@ func (e *Engine) lengthProp(n *dom.Node, prop string, ts *textStyle, percentBase
 			return 0, false
 		}
 		return lu(float64(percentBase) * f / 100), true
+	}
+	if v[len(v)-1] == ')' && css.IsMathFunction(v) {
+		// A math function can have a percentage of the base.
+		c, ok := e.evalCalc(v, ts)
+		if !ok || c.IsNumber || (c.HasPercent && percentBase >= luInfinite) {
+			return 0, false
+		}
+		px := c.Px
+		if c.HasPercent {
+			px += float64(percentBase.px() * c.Percent / 100)
+		}
+		px = clampCalcPx(px)
+		if px < 0 && !strings.HasPrefix(prop, "margin") {
+			// A math function is clamped to the range of the property:
+			// only a margin can be negative.
+			px = 0
+		}
+		return luFromPx(px), true
 	}
 	px, ok := e.cssLength(v, ts, false)
 	if !ok {
@@ -148,8 +169,7 @@ func (e *Engine) borderEdges(n *dom.Node, ts *textStyle) boxEdges {
 				return luFromPx(5)
 			}
 			if px, ok := e.cssLength(part, ts, false); ok {
-				// Blink snaps border widths to whole pixels.
-				return luFromPx(math.Floor(px))
+				return clampLineWidth(px)
 			}
 		}
 		return 0
@@ -176,7 +196,57 @@ func (e *Engine) borderEdges(n *dom.Node, ts *textStyle) boxEdges {
 			}
 		}
 	}
+	// The longhands border-width and border-style, which expandDecl turns
+	// into the properties of the four sides. A declaration of them that
+	// wins the cascade is there after the border shorthand reset them.
+	if _, ok := e.styleOf(n).declared[borderLonghandsMark]; !ok {
+		return out
+	}
+	for i, side := range borderSides {
+		wv, hasW := e.declared(n, "border-"+side+"-width")
+		sv, hasS := e.declared(n, "border-"+side+"-style")
+		hasW, hasS = hasW && wv != "", hasS && sv != ""
+		if !hasW && !hasS {
+			continue
+		}
+		edge := &out.top
+		switch i {
+		case 1:
+			edge = &out.right
+		case 2:
+			edge = &out.bottom
+		case 3:
+			edge = &out.left
+		}
+		// The style and the width that the shorthands gave: a side with a
+		// width has a style.
+		drawn, width := *edge > 0, *edge
+		if hasS {
+			sv = strings.ToLower(strings.TrimSpace(sv))
+			drawn = sv != "none" && sv != "hidden"
+			if !hasW && width == 0 {
+				// The initial width is medium.
+				width = luFromPx(3)
+			}
+		}
+		if hasW {
+			width = parse(wv)
+		}
+		if !drawn {
+			width = 0
+		}
+		*edge = width
+	}
 	return out
+}
+
+// clampLineWidth is StyleBuilderConverter::ClampLineWidth: the width of a
+// border is a whole number of pixels, and a width between 0 and 1 is 1.
+func clampLineWidth(px float64) lu {
+	if px > 0 && px < 1 {
+		return luFromPx(1)
+	}
+	return luFromPx(math.Floor(px))
 }
 
 func isBlockLevelDisplay(d string) bool {
@@ -195,19 +265,25 @@ func isBlockLevelDisplay(d string) bool {
 // containsBlock reports whether an inline element has a block-level
 // descendant, which splits the inline formatting context.
 func (e *Engine) containsBlock(n *dom.Node) bool {
-	for c := n.FirstChild; c != nil; c = c.Next {
-		if c.Type != dom.ElementNode {
-			continue
-		}
+	check := func(c *dom.Node) bool {
 		d := e.display(c)
-		if d == "none" {
-			continue
+		if d == "none" || e.isOutOfFlow(c) || e.isAtomicInline(c, d) {
+			// An atomic inline box is on a line. Its content is in a
+			// formatting context of its own.
+			return false
 		}
-		if isBlockLevelDisplay(d) || e.containsBlock(c) {
+		return isBlockLevelDisplay(d) || e.containsBlock(c)
+	}
+	before, after := e.pseudoBoxes(n)
+	if before != nil && check(before) {
+		return true
+	}
+	for c := n.FirstChild; c != nil; c = c.Next {
+		if c.Type == dom.ElementNode && check(c) {
 			return true
 		}
 	}
-	return false
+	return after != nil && check(after)
 }
 
 // flowChild is a child of a block container: either a block-level element
@@ -226,27 +302,54 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 			inline = nil
 		}
 	}
-	for c := n.FirstChild; c != nil; c = c.Next {
+	add := func(c *dom.Node) {
 		switch c.Type {
 		case dom.TextNode:
 			inline = append(inline, c)
 		case dom.ElementNode:
 			d := e.display(c)
-			if d == "none" {
-				continue
+			if d == "none" || e.isOutOfFlow(c) {
+				return
 			}
-			if isBlockLevelDisplay(d) {
+			if e.isAtomicInline(c, d) {
+				// An atomic inline box is on a line of this container.
+				inline = append(inline, c)
+			} else if isBlockLevelDisplay(d) {
 				flush()
 				out = append(out, flowChild{block: c})
 			} else if e.containsBlock(c) {
 				// An inline element with block children: its children take
-				// part in the block flow of this container.
+				// part in the block flow of this container. The inline
+				// content in front of its first block is on the line of
+				// the content in front of the element, and the inline
+				// content behind its last block starts the line of the
+				// content behind the element.
+				sub := e.flowChildren(c)
+				if len(sub) > 0 && sub[0].block == nil {
+					inline = append(inline, sub[0].inline...)
+					sub = sub[1:]
+				}
 				flush()
-				out = append(out, e.flowChildren(c)...)
+				if n := len(sub); n > 0 && sub[n-1].block == nil {
+					inline = sub[n-1].inline
+					sub = sub[:n-1]
+				}
+				out = append(out, sub...)
 			} else {
 				inline = append(inline, c)
 			}
 		}
+	}
+	// The boxes of the pseudo-elements are the first and the last child.
+	before, after := e.pseudoBoxes(n)
+	if before != nil {
+		add(before)
+	}
+	for c := n.FirstChild; c != nil; c = c.Next {
+		add(c)
+	}
+	if after != nil {
+		add(after)
 	}
 	flush()
 	return out
@@ -302,7 +405,7 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 				items = append(items, it)
 			}
 		case dom.ElementNode:
-			if e.display(n) == "none" {
+			if e.display(n) == "none" || e.isOutOfFlow(n) {
 				return
 			}
 			if n.NS == dom.NSHTML && n.Tag == "br" {
@@ -325,8 +428,16 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 				cs.atStart, cs.prevSpace = false, false
 				return
 			}
+			if e.isAtomicInline(n, e.display(n)) {
+				// An element with display: inline-block and the like is an
+				// atomic inline box. See inlineblock.go.
+				items = append(items, e.newInlineBlockItem(n, avail))
+				cs.atStart, cs.prevSpace = false, false
+				return
+			}
 			edge := e.inlineEdges(n)
-			if !hasLayoutChild(n) {
+			before, after := e.pseudoBoxes(n)
+			if before == nil && after == nil && !hasLayoutChild(n) {
 				// An inline element with no content has an empty box.
 				items = append(items, e.newMarkItem(markEmpty, n, n, edge))
 				return
@@ -334,8 +445,14 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 			if edge.startMargin != 0 || edge.start != 0 {
 				items = append(items, e.newMarkItem(markOpen, n, n, inlineEdge{startMargin: edge.startMargin, start: edge.start}))
 			}
+			if before != nil {
+				walk(before)
+			}
 			for c := n.FirstChild; c != nil; c = c.Next {
 				walk(c)
+			}
+			if after != nil {
+				walk(after)
 			}
 			if edge.end != 0 || edge.endMargin != 0 {
 				items = append(items, e.newMarkItem(markClose, n, n, inlineEdge{end: edge.end, endMargin: edge.endMargin}))
@@ -719,8 +836,9 @@ func (lb *lineBreaker) finishLines(lines []*htmlLine, contentW lu, align string)
 				w += m.item.mark.advance()
 				open(m.item.owner)
 				if mark := m.item.mark; mark.kind == markAtomic {
-					// The box stands on the baseline of its parent.
-					shift := lb.e.inlineBoxOf(m.item.owner, lb.container).shift
+					// The box stands on the baseline of its parent, moved
+					// by its own vertical-align.
+					shift := lb.e.inlineBoxOf(m.item.owner, lb.container).shift + mark.atomicShift
 					ascent = max(ascent, mark.atomicBaseline-shift)
 					descent = max(descent, mark.atomicH-mark.atomicBaseline+shift)
 				}
@@ -765,7 +883,7 @@ func (lb *lineBreaker) finishLines(lines []*htmlLine, contentW lu, align string)
 			m := lb.e.inlineBoxOf(mk.item.owner, lb.container)
 			mk.top, mk.height = line.baseline+m.shift-m.ascent, m.ascent+m.descent
 			if mark := mk.item.mark; mark.kind == markAtomic {
-				mk.top, mk.height = line.baseline+m.shift-mark.atomicBaseline, mark.atomicH
+				mk.top, mk.height = line.baseline+m.shift+mark.atomicShift-mark.atomicBaseline, mark.atomicH
 			}
 		}
 		line.x = alignOffset(align, contentW, w)
@@ -1075,6 +1193,7 @@ func (e *Engine) layoutBlock(n *dom.Node, avail lu) *htmlBox {
 			line.x += border.left + pad.left
 		}
 		box.lines = append(box.lines, lines...)
+		box.children = placeAtomicBoxes(box.children, lines)
 		y += h
 		if h > 0 {
 			prevMargin = 0

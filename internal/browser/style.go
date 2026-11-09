@@ -1,7 +1,7 @@
-// Ported from Chromium 156.0.8078.4 (Blink), in part: three parts of the
-// font size code follow the functions of Blink that their comments name. The
-// rest of the file ports no upstream file. It has the CSS cascade and the
-// inherited text properties.
+// Ported from Chromium 156.0.8078.4 (Blink), in part: four parts of the
+// font size and line height code follow the functions of Blink that their
+// comments name. The rest of the file ports no upstream file. It has the
+// CSS cascade and the inherited text properties.
 //
 //   - FontDescription::IsAbsoluteSize: platform/fonts/font_description.h
 //     (LGPL-2.0-or-later).
@@ -10,6 +10,9 @@
 //     file).
 //   - CSSToLengthConversionData::FontSizes::Ex:
 //     core/css/css_to_length_conversion_data.cc (BSD-3-Clause, with the
+//     copyright of Google in the file).
+//   - StyleBuilderConverter::ConvertLineHeight, for a math function:
+//     core/css/resolver/style_builder_converter.cc (BSD-3-Clause, with the
 //     copyright of Google in the file).
 //
 // The paths are in third_party/blink/renderer. The license of each file is
@@ -40,14 +43,29 @@ type cascadeRule struct {
 	// ancestorClass is sel.AncestorClass(): the rule can match an element
 	// only when an ancestor of the element has this class.
 	ancestorClass string
+	// pseudo is the pseudo-element that the rule styles, or pseudoNone.
+	pseudo pseudoKind
 }
 
-// ruleSet has the rules of the style sheets of a document. It does not
-// change after collectRules made it, and engines of many renders share it.
+// ruleSet has the rules of the style sheets of a document, or of the style
+// sheets of the page (pagesheets.go). It does not change after parseRuleSet
+// made it, and engines of many renders share it.
 type ruleSet struct {
 	byID, byClass, byTag map[string][]*cascadeRule
-	universal            []*cascadeRule
-	count                int
+	// idFirst, classFirst and tagFirst have the first bytes of the names
+	// in the three maps. A name whose first byte is not there is in no
+	// rule, and needs no lookup in the map: an element of a diagram tries
+	// no rule of the style sheets of Font Awesome, whose classes start
+	// with f.
+	idFirst, classFirst, tagFirst firstBytes
+	universal                     []*cascadeRule
+	// root has the rules whose selector ends in :root. Only the root
+	// element tries them.
+	root []*cascadeRule
+	// pseudo has the rules for the pseudo-elements ::before and ::after.
+	// See pseudo.go.
+	pseudo []*cascadeRule
+	count  int
 	// deps is what the selectors of the rules read in the tree besides an
 	// element and its ancestors. See cascadeIsCurrent.
 	deps dom.SelectorDeps
@@ -75,6 +93,25 @@ type nodeStyle struct {
 	text     *textStyle
 	layout   any // layout cache of the engine (text or HTML layout)
 	layoutOK bool
+	// pseudo has the boxes of the pseudo-elements of the element, or nil
+	// when they are not known yet. They depend on what the cascade of the
+	// element depends on. See pseudo.go.
+	pseudo *pseudoBoxes
+}
+
+// firstBytes is a set of bytes: the first bytes of the names of an index of
+// a rule set.
+type firstBytes [4]uint64
+
+func (f *firstBytes) add(name string) {
+	if name != "" {
+		f[name[0]>>6] |= 1 << (name[0] & 63)
+	}
+}
+
+// has reports whether a name of the index can start as name does.
+func (f *firstBytes) has(name string) bool {
+	return name != "" && f[name[0]>>6]&(1<<(name[0]&63)) != 0
 }
 
 // presentationAttrs are the SVG attributes that act as CSS declarations.
@@ -142,19 +179,27 @@ func (e *Engine) collectRules(doc *dom.Document) *ruleSet {
 	}
 	rs, ok := ruleSets.Get(key)
 	if !ok {
-		rs = parseRuleSet(texts)
+		rs = parseRuleSet(texts, true)
 		ruleSets.Put(key, rs)
 	}
 	e.rules, e.rulesKey, e.rulesGen, e.rulesDoc = rs, key, styleGen, doc
 	return rs
 }
 
-// parseRuleSet makes the rule set of the texts of the style elements.
-func parseRuleSet(texts []string) *ruleSet {
+// parseRuleSet makes the rule set of the texts of style sheets. With
+// cacheSelectors the selectors go through the selector cache of the dom
+// package, which the style sheets of a diagram type fill one time.
+func parseRuleSet(texts []string, cacheSelectors bool) *ruleSet {
 	rs := &ruleSet{byID: map[string][]*cascadeRule{}, byClass: map[string][]*cascadeRule{}, byTag: map[string][]*cascadeRule{}}
 	for _, text := range texts {
 		for _, r := range css.ParseStylesheet(text) {
-			list, err := dom.ParseSelector(r.Selector)
+			var list dom.SelectorList
+			var err error
+			if cacheSelectors {
+				list, err = dom.ParseSelector(r.Selector)
+			} else {
+				list, err = dom.ParseSelectorUncached(r.Selector)
+			}
 			if err != nil {
 				continue
 			}
@@ -162,13 +207,30 @@ func parseRuleSet(texts []string) *ruleSet {
 				cr := &cascadeRule{sel: sel, decls: r.Decls, order: rs.count, ancestorClass: sel.AncestorClass()}
 				rs.count++
 				rs.deps |= sel.Deps()
-				switch kind, name := sel.Key(); kind {
-				case '#':
+				if kind := pseudoKindOfName(sel.PseudoElement()); kind != pseudoNone {
+					// The rule styles a pseudo-element. It matches no
+					// element, and the cascade of an element does not try it.
+					cr.pseudo = kind
+					rs.pseudo = append(rs.pseudo, cr)
+					continue
+				}
+				if sel.NeverMatches() {
+					// A rule for a state such as :hover, or for another
+					// pseudo-element: no cascade needs it.
+					continue
+				}
+				switch kind, name := sel.Key(); {
+				case kind == '#':
 					rs.byID[name] = append(rs.byID[name], cr)
-				case '.':
+					rs.idFirst.add(name)
+				case kind == '.':
 					rs.byClass[name] = append(rs.byClass[name], cr)
-				case 't':
+					rs.classFirst.add(name)
+				case kind == 't':
 					rs.byTag[name] = append(rs.byTag[name], cr)
+					rs.tagFirst.add(name)
+				case sel.SubjectIsRoot():
+					rs.root = append(rs.root, cr)
 				default:
 					rs.universal = append(rs.universal, cr)
 				}
@@ -223,7 +285,11 @@ func (e *Engine) cascadeIsCurrent(n *dom.Node, st *nodeStyle) bool {
 		return true
 	}
 	rs := e.collectRules(n.Document())
-	if st.rules != rs || rs.deps&dom.DepsOther != 0 {
+	deps := rs.deps
+	if page := e.pageRules(n.Document()); page != nil {
+		deps |= page.deps
+	}
+	if st.rules != rs || deps&dom.DepsOther != 0 {
 		return false
 	}
 	at := st.at
@@ -232,10 +298,10 @@ func (e *Engine) cascadeIsCurrent(n *dom.Node, st *nodeStyle) bool {
 			return false
 		}
 		parent := cur.Parent
-		if parent == nil || rs.deps == 0 {
+		if parent == nil || deps == 0 {
 			continue
 		}
-		if rs.deps&dom.DepsSiblings != 0 {
+		if deps&dom.DepsSiblings != 0 {
 			if parent.ChildrenGeneration() > at {
 				return false
 			}
@@ -258,6 +324,10 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	if n.Type != dom.ElementNode {
 		return
 	}
+	if n.NS == pseudoNS {
+		e.cascadePseudo(n, st)
+		return
+	}
 	// 1. Presentation attributes: the lowest author level.
 	if n.NS == dom.NSSVG {
 		for i := range n.Attrs {
@@ -271,16 +341,19 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 			}
 		}
 	}
-	// 2. Author rules.
+	// 2. Author rules: the style sheets of the page, then the style
+	// elements of the document.
 	rs := e.collectRules(n.Document())
 	st.rules = rs
+	page := e.pageRules(n.Document())
 	var ms []matched
 	// The classes of the ancestors of n, collected for the first rule that
 	// needs one of them. Most rules of a style sheet of mermaid are for the
 	// descendants of an element with a class: a rule whose class no ancestor
 	// has cannot match, and is not tried.
 	ancestorClasses, haveAncestorClasses := e.classBuf[:0], false
-	try := func(rules []*cascadeRule) {
+	// base is the number of rules in the sheets before the rule set.
+	try := func(rules []*cascadeRule, base int) {
 		for _, r := range rules {
 			if r.ancestorClass != "" {
 				if !haveAncestorClasses {
@@ -298,24 +371,47 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 			}
 			for i := range r.decls {
 				d := &r.decls[i]
-				ms = append(ms, matched{decl: d, spec: r.sel.Specificity(), order: r.order, important: d.Important})
+				ms = append(ms, matched{decl: d, spec: r.sel.Specificity(), order: base + r.order, important: d.Important})
 			}
 		}
 	}
-	if id := n.ID(); id != "" {
-		try(rs.byID[id])
+	id, classes := n.ID(), n.ClassList()
+	tag := strings.ToLower(n.Tag)
+	match := func(set *ruleSet, base int) {
+		if set.idFirst.has(id) {
+			try(set.byID[id], base)
+		}
+		for _, cl := range classes {
+			if set.classFirst.has(cl) {
+				try(set.byClass[cl], base)
+			}
+		}
+		if set.tagFirst.has(tag) {
+			try(set.byTag[tag], base)
+		}
+		try(set.universal, base)
+		if n.Parent == nil {
+			try(set.root, base)
+		}
 	}
-	for _, cl := range n.ClassList() {
-		try(rs.byClass[cl])
+	if page != nil {
+		match(page, 0)
+		match(rs, page.count)
+	} else {
+		match(rs, 0)
 	}
-	tag := n.Tag
-	if n.NS == dom.NSHTML {
-		tag = strings.ToLower(tag)
-	}
-	try(rs.byTag[strings.ToLower(tag)])
-	try(rs.universal)
 	// Keep the storage for the next cascade.
 	e.classBuf = ancestorClasses[:0]
+	var inline []css.Decl
+	if v, ok := n.InlineStyleExact(); ok && v != "" {
+		inline = css.ParseDeclarations(v)
+	}
+	e.applyCascade(n, st, ms, inline)
+}
+
+// applyCascade sorts the declarations that matched an element and applies
+// them, with the declarations of the style attribute.
+func (e *Engine) applyCascade(n *dom.Node, st *nodeStyle, ms []matched, inline []css.Decl) {
 	sort.SliceStable(ms, func(i, j int) bool {
 		a, b := ms[i], ms[j]
 		if a.important != b.important {
@@ -347,6 +443,18 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 			}
 			value = resolved
 		}
+		if d.Name == "content" {
+			// The CSS parser of a browser drops a declaration whose value
+			// is not valid, and an earlier declaration then wins. With a
+			// var() reference the declaration is invalid at computed-value
+			// time, and the property acts as unset.
+			if _, ok := css.ParseContent(value); !ok {
+				if value != d.Value {
+					st.declared[d.Name] = unsetValue
+				}
+				return
+			}
+		}
 		expandDecl(d.Name, value, func(name, value string) {
 			st.declared[name] = value
 			delete(st.fromAttr, name)
@@ -360,10 +468,6 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 		}
 	}
 	// 3. The style attribute, then !important rules, then inline !important.
-	var inline []css.Decl
-	if v, ok := n.InlineStyleExact(); ok && v != "" {
-		inline = css.ParseDeclarations(v)
-	}
 	for _, custom = range []bool{true, false} {
 		if !custom {
 			// A presentation attribute can have var() references too.
@@ -420,6 +524,64 @@ func expandDecl(name, value string, set func(name, value string)) {
 		set(name+"-right", r)
 		set(name+"-bottom", b)
 		set(name+"-left", l)
+	case "margin-block", "padding-block", "margin-inline", "padding-inline":
+		// The logical shorthands. The engine lays out horizontal text from
+		// left to right: block is top and bottom, inline is left and right.
+		parts := strings.Fields(value)
+		if len(parts) < 1 || len(parts) > 2 {
+			return
+		}
+		prefix, axis, _ := strings.Cut(name, "-")
+		start, end := "-top", "-bottom"
+		if axis == "inline" {
+			start, end = "-left", "-right"
+		}
+		set(prefix+start, parts[0])
+		set(prefix+end, parts[len(parts)-1])
+	case "margin-block-start", "padding-block-start":
+		set(name[:strings.IndexByte(name, '-')]+"-top", value)
+	case "margin-block-end", "padding-block-end":
+		set(name[:strings.IndexByte(name, '-')]+"-bottom", value)
+	case "margin-inline-start", "padding-inline-start":
+		set(name[:strings.IndexByte(name, '-')]+"-left", value)
+	case "margin-inline-end", "padding-inline-end":
+		set(name[:strings.IndexByte(name, '-')]+"-right", value)
+	case "border":
+		// The shorthand resets the longhands of the four sides.
+		set(name, value)
+		for _, side := range borderSides {
+			set("border-"+side+"-width", "")
+			set("border-"+side+"-style", "")
+		}
+	case "border-top", "border-right", "border-bottom", "border-left":
+		set(name, value)
+		set(name+"-width", "")
+		set(name+"-style", "")
+	case "border-width", "border-style":
+		parts := strings.Fields(value)
+		var t, r, b, l string
+		switch len(parts) {
+		case 1:
+			t, r, b, l = parts[0], parts[0], parts[0], parts[0]
+		case 2:
+			t, r, b, l = parts[0], parts[1], parts[0], parts[1]
+		case 3:
+			t, r, b, l = parts[0], parts[1], parts[2], parts[1]
+		case 4:
+			t, r, b, l = parts[0], parts[1], parts[2], parts[3]
+		default:
+			return
+		}
+		suffix := name[len("border"):]
+		set("border-top"+suffix, t)
+		set("border-right"+suffix, r)
+		set("border-bottom"+suffix, b)
+		set("border-left"+suffix, l)
+		set(borderLonghandsMark, "1")
+	case "border-top-width", "border-right-width", "border-bottom-width", "border-left-width",
+		"border-top-style", "border-right-style", "border-bottom-style", "border-left-style":
+		set(name, value)
+		set(borderLonghandsMark, "1")
 	case "background":
 		set("background", value)
 		// The color is the last component that parses as a color.
@@ -437,6 +599,15 @@ func expandDecl(name, value string, set func(name, value string)) {
 		set(name, value)
 	}
 }
+
+// borderSides are the sides of a box in the order of a shorthand.
+var borderSides = [...]string{"top", "right", "bottom", "left"}
+
+// borderLonghandsMark is a name in the declarations of an element that has
+// a declaration of the width or the style of one border side. It is not a
+// CSS property. borderEdges reads the eight properties of the sides only
+// for an element that has it.
+const borderLonghandsMark = "\x00border-longhands"
 
 func expandFontShorthand(value string, set func(name, value string)) {
 	// [style] [variant] [weight] [stretch] size[/line-height] family
@@ -629,6 +800,9 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 			// parent. The computed font size is a float32.
 			ts.size = float64(float32(f * e.exSize(parent)))
 			ts.sizeKeyword = 0
+		} else if px, ok := e.calcFontSize(v, parent); ok {
+			ts.size = px
+			ts.sizeKeyword, ts.sizeAbsolute = 0, true
 		} else if px, ok := resolveFontSize(v, parent.size, fromAttr["font-size"]); ok {
 			ts.size = px
 			if keyword := fontSizeKeywordIndex[strings.ToLower(strings.TrimSpace(v))]; keyword != 0 {
@@ -664,6 +838,22 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 		default:
 			if f, err := strconv.ParseFloat(lower, 64); err == nil {
 				ts.lhKind, ts.lhValue = lhNumber, f
+			} else if css.IsMathFunction(lower) {
+				// ConvertLineHeight: a math function that is a number is a
+				// number. One with a percentage is a length: the
+				// percentage is of the font size, as a LayoutUnit.
+				if c, ok := e.evalCalc(lower, &ts); ok {
+					switch {
+					case c.IsNumber:
+						ts.lhKind, ts.lhValue = lhNumber, c.Number
+					case c.HasPercent:
+						fontSize := luFromFloat(float32(ts.size)).f32()
+						value := luFromFloat(float32(c.Px) + float32(fontSize*float32(c.Percent)/100))
+						ts.lhKind, ts.lhValue = lhLength, value.px()
+					default:
+						ts.lhKind, ts.lhValue = lhLength, clampCalcPx(c.Px)
+					}
+				}
 			} else if px, ok := e.cssLength(lower, &ts, false); ok {
 				ts.lhKind, ts.lhValue = lhLength, px
 			}
@@ -731,6 +921,13 @@ func exValue(v string) (float64, bool) {
 func (e *Engine) cssLength(v string, ts *textStyle, unitlessOK bool) (float64, bool) {
 	if f, ok := exValue(v); ok {
 		return float64(f * e.exSize(ts)), true
+	}
+	if css.IsMathFunction(v) {
+		c, ok := e.evalCalc(v, ts)
+		if !ok || c.IsNumber || c.HasPercent {
+			return 0, false
+		}
+		return clampCalcPx(c.Px), true
 	}
 	return resolveLength(v, ts.size, unitlessOK)
 }
@@ -802,6 +999,17 @@ func resolveLength(v string, emSize float64, unitlessOK bool) (float64, bool) {
 	if s == "" {
 		return 0, false
 	}
+	if s[len(s)-1] == ')' && css.IsMathFunction(s) {
+		// A caller that knows the font of the element uses cssLength: here
+		// the unit ex has the fallback of unitLength.
+		c, ok := css.EvalCalc(s, func(number float64, unit string) (float64, bool) {
+			return unitLength(number, unit, emSize)
+		})
+		if !ok || c.IsNumber || c.HasPercent {
+			return 0, false
+		}
+		return clampCalcPx(c.Px), true
+	}
 	end := len(s)
 	for end > 0 && (s[end-1] < '0' || s[end-1] > '9') && s[end-1] != '.' {
 		end--
@@ -811,14 +1019,21 @@ func resolveLength(v string, emSize float64, unitlessOK bool) (float64, bool) {
 	if err != nil {
 		return 0, false
 	}
-	switch unit {
-	case "px":
-		return f, true
-	case "":
+	if unit == "" {
 		if unitlessOK || f == 0 {
 			return f, true
 		}
 		return 0, false
+	}
+	return unitLength(f, unit, emSize)
+}
+
+// unitLength converts a number with a unit of length to px. emSize is the
+// font size that em refers to. The unit is in lower case.
+func unitLength(f float64, unit string, emSize float64) (float64, bool) {
+	switch unit {
+	case "px":
+		return f, true
 	case "em":
 		return float64(f * emSize), true
 	case "rem":

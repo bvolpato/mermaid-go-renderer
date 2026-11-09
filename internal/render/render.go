@@ -162,6 +162,7 @@ func NewContext(o ContextOptions) *Context {
 		ID:          o.ID,
 		Config:      o.Config,
 		ConfigState: o.ConfigState,
+		Page:        o.Page,
 		Doc:         doc,
 		Engine:      engine,
 		Body:        doc.Body,

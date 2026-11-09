@@ -65,6 +65,10 @@ type Engine struct {
 	// classBuf is storage for the classes of the ancestors of the element
 	// of a cascade. See cascade.
 	classBuf []string
+	// page is the rule set of the style sheets of the page of pageDoc. See
+	// pagesheets.go.
+	page    *ruleSet
+	pageDoc *dom.Document
 }
 
 // New returns an engine that uses the fonts of the system.
@@ -637,6 +641,9 @@ func (e *Engine) ComputedStyle(n *dom.Node, property string) string {
 		return "normal"
 	case "display":
 		return e.display(n)
+	}
+	if v, ok := e.computedExtra(n, property); ok {
+		return v
 	}
 	return e.lookup(n, property)
 }

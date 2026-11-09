@@ -4,7 +4,14 @@
 //
 // Usage:
 //
-//	parity [-filter text] [-type id] [-v] [-out dir] [-report file] [-ref dir] [-fonts system|embedded]
+//	parity [-filter text] [-type id] [-v] [-out dir] [-report file] [-ref dir] [-fonts system|embedded] [-page plain|mermaid-cli]
+//
+// With -page mermaid-cli the renderer reproduces the page of mermaid-cli,
+// and the reference is the output of tools/reference/mmdc-oracle.mjs
+// (tools/reference/render-mmdc-ref.mjs writes it to
+// .parity/ref-mmdc/linux and .parity/ref-mmdc/macos):
+//
+//	parity -page mermaid-cli -fonts embedded -ref .parity/ref-mmdc/linux/mermaid-e2e
 //
 // With -fonts embedded the renderer measures text with the embedded
 // Liberation fonts and the rules of Chromium on Linux. The reference for
@@ -32,6 +39,7 @@ import (
 	"time"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
+	"github.com/bvolpato/mermaid-go-renderer/internal/mmdc"
 	"github.com/bvolpato/mermaid-go-renderer/internal/parity"
 	"github.com/bvolpato/mermaid-go-renderer/internal/render"
 )
@@ -67,6 +75,7 @@ func Main() {
 	pixels := flag.Bool("pixels", false, "for results that are not byte-exact, render both SVGs in Chromium and compare the pixels (needs node and -out)")
 	limit := flag.Int("show", 15, "number of differences to print")
 	fontsFlag := flag.String("fonts", "system", "font library: system (the fonts and the rules of this machine) or embedded (the Liberation fonts and the rules of Linux)")
+	pageFlag := flag.String("page", "plain", "page that the render reproduces: plain (a page with only mermaid, the reference of oracle.mjs) or mermaid-cli (the page of mmdc, the reference of mmdc-oracle.mjs)")
 	flag.Parse()
 
 	var fonts *font.Library
@@ -76,6 +85,20 @@ func Main() {
 		fonts = font.Embedded()
 	default:
 		fmt.Fprintln(os.Stderr, "-fonts must be system or embedded")
+		os.Exit(2)
+	}
+	page := render.PagePlain
+	switch *pageFlag {
+	case "plain":
+	case "mermaid-cli":
+		page = render.PageMermaidCLI
+		if fonts == nil {
+			fonts = font.System()
+		}
+		// The web fonts of the page come before the fonts of the machine.
+		fonts = fonts.WithWebFonts()
+	default:
+		fmt.Fprintln(os.Stderr, "-page must be plain or mermaid-cli")
 		os.Exit(2)
 	}
 
@@ -97,7 +120,7 @@ func Main() {
 		go func(i int, fixture string) {
 			defer wg.Done()
 			defer func() { <-sem }()
-			results[i] = run(fixture, *corpus, *ref, *out, *typ, *tol, fonts)
+			results[i] = run(fixture, *corpus, *ref, *out, *typ, *tol, fonts, page)
 		}(i, fixture)
 	}
 	wg.Wait()
@@ -221,7 +244,7 @@ func pixelProof(results []outcome, ref, out string) {
 	fmt.Printf("pixel-identical in Chromium: %d of %d compared; with the byte-exact ones: %d of %d\n", identical, len(names), identical+exact, len(names)+exact)
 }
 
-func run(fixture, corpus, ref, out, typ string, tol float64, fonts *font.Library) (res outcome) {
+func run(fixture, corpus, ref, out, typ string, tol float64, fonts *font.Library, page render.Page) (res outcome) {
 	rel, _ := filepath.Rel(corpus, fixture)
 	base := strings.TrimSuffix(rel, ".mmd")
 	res = outcome{Fixture: rel, Family: strings.Split(rel, string(filepath.Separator))[0]}
@@ -252,7 +275,15 @@ func run(fixture, corpus, ref, out, typ string, tol float64, fonts *font.Library
 	start := time.Now()
 	// The images that the reference renderer loaded from the network
 	// have their natural sizes here: a render reads no network.
-	got, err := render.Render(string(text), render.Options{Fonts: fonts, ImageSize: parity.CorpusImageSize})
+	got, err := render.Render(string(text), render.Options{Fonts: fonts, ImageSize: parity.CorpusImageSize, Page: page})
+	if err == nil && page == render.PageMermaidCLI {
+		// The reference is the file of mmdc --no-font-embed: the XML of
+		// the svg element with the background that mmdc sets.
+		var file *mmdc.Page
+		if file, err = mmdc.Load(got.SVG, mmdc.Options{Background: "white", SetBackground: true}); err == nil {
+			got.SVG = file.XML()
+		}
+	}
 	res.Micros = time.Since(start).Microseconds()
 	if meta.Error != "" {
 		if err != nil {

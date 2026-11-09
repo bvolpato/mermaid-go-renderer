@@ -15,6 +15,10 @@
 // before oracle.mjs starts. The default, `--fonts image`, keeps the fonts of
 // the image.
 //
+// The option `--script NAME`, before the arguments of the script, runs
+// another script of this directory in the container, for example
+// mmdc-oracle.mjs, the reference of mermaid-cli.
+//
 // This script takes the oracle lock on the host, so only one browser runs at
 // a time, as with oracle.mjs.
 import { spawn } from 'node:child_process';
@@ -108,7 +112,7 @@ function workDir() {
   return rel.startsWith('..') || path.isAbsolute(rel) ? HERE : cwd;
 }
 
-function run(image, fonts, args) {
+function run(image, fonts, script, args) {
   const prelude = fonts === 'liberation' ? LIBERATION_ONLY : '';
   return new Promise((resolve) => {
     const child = spawn(
@@ -120,7 +124,7 @@ function run(image, fonts, args) {
         '-e', 'MMDG_ORACLE_LOCK_HELD=1',
         '-e', 'TZ=UTC',
         image,
-        'sh', '-c', `${prelude}exec node "$0" "$@"`, path.join(HERE, 'oracle.mjs'), ...args,
+        'sh', '-c', `${prelude}exec node "$0" "$@"`, path.join(HERE, script), ...args,
       ],
       { stdio: 'inherit' }
     );
@@ -130,8 +134,13 @@ function run(image, fonts, args) {
 
 let args = process.argv.slice(2);
 let fonts = process.env.MMDG_LINUX_FONTS || 'image';
-if (args[0] === '--fonts') {
-  fonts = args[1];
+let script = 'oracle.mjs';
+while (args[0] === '--fonts' || args[0] === '--script') {
+  if (args[0] === '--fonts') {
+    fonts = args[1];
+  } else {
+    script = path.basename(String(args[1]));
+  }
   args = args.slice(2);
 }
 if (fonts !== 'image' && fonts !== 'liberation') {
@@ -145,7 +154,7 @@ await acquireLock();
 const started = Date.now();
 let code = 1;
 try {
-  code = await run(image, fonts, args);
+  code = await run(image, fonts, script, args);
   if (process.env.MMDG_ORACLE_TIMING) {
     const sec = (ms) => (ms / 1000).toFixed(1);
     process.stderr.write(`oracle-linux: waited ${sec(started - queued)}s for the lock, ran ${sec(Date.now() - started)}s\n`);

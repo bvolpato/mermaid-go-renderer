@@ -14,9 +14,19 @@ import (
 // Render is render(data4Layout, svg): it runs the layout algorithm of the
 // layout data, which also draws the diagram.
 func Render(ctx *render.Context, data *LayoutData, svg *dom.Node) error {
-	layoutFn, algorithm, err := lookupLayout(data.LayoutAlgorithm)
-	if err != nil {
-		return err
+	var layoutFn LayoutAlgorithm
+	var algorithm string
+	if name, l, ok := lookupPageLayout(ctx, data); ok {
+		// The page registered the layout that the config asks for, so
+		// getRegisteredLayoutAlgorithm returned its name and no fallback.
+		data.LayoutAlgorithm = name
+		layoutFn, algorithm = l.fn, l.algorithm
+	} else {
+		var err error
+		layoutFn, algorithm, err = lookupLayout(data.LayoutAlgorithm)
+		if err != nil {
+			return err
+		}
 	}
 
 	// Prefix the DOM ids of the nodes with the id of the svg, so that they

@@ -73,5 +73,16 @@ func (f *Face) NominalGlyph(r rune) (uint32, bool) {
 // HarfBuzz font gets a go-text face of its own, because shaping writes the
 // caches of the face.
 func (f *Face) newShaper() *shaper {
-	return &shaper{font: harfbuzz.NewFont(gtfont.NewFace(f.gt.Font)), buf: harfbuzz.NewBuffer()}
+	face := gtfont.NewFace(f.gt.Font)
+	if f.web == nil {
+		return &shaper{font: harfbuzz.NewFont(face), buf: harfbuzz.NewBuffer()}
+	}
+	if len(f.web.coords) != 0 {
+		// A face of a variable web font shapes at its instance.
+		face.SetCoords(f.web.coords)
+	}
+	font := harfbuzz.NewFont(face)
+	// See webfonts_digest.go.
+	openDigests(font)
+	return &shaper{font: font, buf: harfbuzz.NewBuffer()}
 }

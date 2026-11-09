@@ -1,0 +1,9 @@
+---
+config:
+  layout: tidy-tree
+---
+flowchart LR
+  A{Choice} -- yes --> B(Do it)
+  A -- no --> C(Skip it)
+  B -->|then| D((Done))
+  C -.-> E>Flag]

@@ -44,6 +44,7 @@ import (
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/layout/dagre"
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/layout/elk"
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/layout/swimlanes"
+	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/layout/tidytree"
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/shapes/set1"
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/shapes/set2"
 	_ "github.com/bvolpato/mermaid-go-renderer/internal/ru/shapes/set3"

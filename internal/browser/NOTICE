@@ -39,12 +39,23 @@ Go files that port no upstream file and name a Blink file with the LGPL:
   linebreak.go and linebreak_ascii_gen.go name text_break_iterator.cc. A
   probe recorded their table from Chromium.
 
-These Go files, and html.go and image.go, also follow files of Chromium that
-have BSD licenses. The first comment of each Go file says which part follows
-which file, and gives the license of each file.
+Go files that follow Blink files with BSD licenses and name a Blink file
+with the LGPL:
 
-These Go files follow no Blink file with the LGPL: cmath.go, cssvar.go,
-export_raster.go, html.go, image.go, linux_trig.go, skatan2.go and table.go.
+  pseudo.go names two functions of Blink files with the LGPL, for a fact
+  about the layout tree: Element::CanGeneratePseudoElement of element.cc,
+  and TextContentData::CreateLayoutObject of content_data.cc. A probe
+  recorded the boxes of the pseudo-elements from Chromium
+  (testdata/pagesheets-cases.json.gz).
+
+These Go files, and calc.go, html.go, image.go, inlineblock.go and
+pseudo.go, also follow files of Chromium that have BSD licenses. The first
+comment of each Go file says which part follows which file, and gives the
+license of each file.
+
+These Go files follow no Blink file with the LGPL: calc.go, cmath.go,
+cssvar.go, export_raster.go, html.go, image.go, inlineblock.go,
+linux_trig.go, pagesheets.go, pseudo.go, skatan2.go and table.go.
 
 Files in this directory:
 

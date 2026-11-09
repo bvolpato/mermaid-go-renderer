@@ -132,6 +132,15 @@ type ahFont struct {
 	isItalic bool
 	// isFixedWidth is isFixedPitch of the post table.
 	isFixedWidth bool
+	// vari has the variation tables gvar, HVAR and MVAR (glyf_var.go). It
+	// is nil for a font without them.
+	vari *ahVarFont
+	// forceIntegerPpem is bit 3 of the flags of the head table: the hinted
+	// mode of the scaler rounds the font size to a whole number. It is the
+	// opposite of Outlines::fractional_size_hinting.
+	forceIntegerPpem bool
+	// hdmx is nil for a font without the table.
+	hdmx *ahHdmx
 }
 
 // ahRawTable returns the data of a table.
@@ -203,6 +212,9 @@ func newAHFont(ld *ot.Loader) *ahFont {
 	if cmap, ok := ahRawTable(ld, "cmap"); ok && len(cmap) >= 4 {
 		f.charmap = newAHCharmap(cmap, f)
 	}
+	f.vari = newAHVarFont(ld)
+	f.forceIntegerPpem = head.u16(16)&8 != 0
+	f.hdmx = newAHHdmx(ld, f)
 	return f
 }
 

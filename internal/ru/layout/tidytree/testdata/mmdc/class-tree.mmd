@@ -1,0 +1,14 @@
+---
+config:
+  layout: tidy-tree
+---
+classDiagram
+  Animal <|-- Duck
+  Animal <|-- Fish
+  Animal <|-- Zebra
+  Animal : +int age
+  Animal : +isMammal()
+  class Duck{
+    +String beakColor
+    +swim()
+  }

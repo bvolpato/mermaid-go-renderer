@@ -103,6 +103,10 @@ func (p *painter) drawGlyphRun(run *glyphRun, paint *Paint, ctm Affine) {
 	}
 	ox := float32(m.sx*run.x) + float32(m.kx*run.y) + m.tx + roundX
 	oy := float32(m.ky*run.x) + float32(m.sy*run.y) + m.ty + roundY
+	// A font without subpixel positioning has its glyphs at whole pixels in
+	// both directions (SkGlyphPositionRoundingSpec): a web font on Linux.
+	oxWhole := float32(m.sx*run.x) + float32(m.kx*run.y) + m.tx + half
+	oyWhole := float32(m.ky*run.x) + float32(m.sy*run.y) + m.ty + half
 	var advance float32
 	for i := range run.glyphs {
 		g := &run.glyphs[i]
@@ -114,16 +118,21 @@ func (p *painter) drawGlyphRun(run *glyphRun, paint *Paint, ctm Affine) {
 		}
 		mx := float32(px*m.sx) + float32(py*m.kx) + ox
 		my := float32(px*m.ky) + float32(py*m.sy) + oy
+		whole := !g.Face.SubpixelPositioning()
+		if whole {
+			mx = float32(px*m.sx) + float32(py*m.kx) + oxWhole
+			my = float32(px*m.ky) + float32(py*m.sy) + oyWhole
+		}
 		if !isFinite32(mx) || !isFinite32(my) {
 			continue
 		}
 		ix := int(math.Floor(float64(mx)))
 		iy := int(math.Floor(float64(my)))
 		var qx, qy uint8
-		if subX {
+		if subX && !whole {
 			qx = uint8(int(float32(mx-float32(ix))*4) & 3)
 		}
-		if subY {
+		if subY && !whole {
 			qy = uint8(int(float32(my-float32(iy))*4) & 3)
 		}
 		lum := lumDarwin

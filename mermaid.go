@@ -437,11 +437,24 @@ func WithBackgroundColor(value string) Option {
 // syntax is not always XML: it writes <br> without an end, and a
 // non-breaking space as &nbsp;. StandaloneSVG parses the markup as a browser
 // does and writes the svg element as XML, with the rules of XMLSerializer in
-// Chromium. The result has the same content as the file of mermaid-cli with
-// its option --no-font-embed.
+// Chromium.
 //
-// One option applies: WithBackgroundColor. mermaid-cli sets the background
-// "white" by default. Without the option the svg element keeps its style.
+// These options apply:
+//
+//   - WithBackgroundColor: mermaid-cli sets the background "white" by
+//     default. Without the option the svg element keeps its style.
+//   - WithPage: give the page of the Render call.
+//   - WithFontEmbed: with the page PageMermaidCLI, add the fonts of the page
+//     that the diagram uses to the SVG, as mermaid-cli does by default.
+//     Without it the result is the file of mermaid-cli --no-font-embed.
+//   - The font options of the Render call (WithSystemFonts, WithFontDirs).
+//
+// For the file that the mmdc command writes with its default options:
+//
+//	opts := []mermaid.Option{mermaid.WithPage(mermaid.PageMermaidCLI)}
+//	svg, err := mermaid.Render(src, opts...)
+//	file, err := mermaid.StandaloneSVG(svg, append(opts,
+//		mermaid.WithBackgroundColor("white"), mermaid.WithFontEmbed(true))...)
 func StandaloneSVG(svg string, opts ...Option) (out string, err error) {
 	var o options
 	for _, opt := range opts {
@@ -455,9 +468,19 @@ func StandaloneSVG(svg string, opts ...Option) (out string, err error) {
 			out, err = "", &InternalError{Value: p, Stack: debug.Stack()}
 		}
 	}()
-	page, err := mmdc.Load(svg, mmdc.Options{Background: o.background, SetBackground: o.hasBackground})
+	page, err := mmdc.Load(svg, mmdc.Options{
+		Background:    o.background,
+		SetBackground: o.hasBackground,
+		Fonts:         o.fontLibrary(),
+		PageSheets:    render.PageSheets(render.Page(o.page)),
+	})
 	if err != nil {
 		return "", fmt.Errorf("mermaid: %w", err)
+	}
+	if o.fontEmbed {
+		if err := page.EmbedFonts(); err != nil {
+			return "", fmt.Errorf("mermaid: %w", err)
+		}
 	}
 	return page.XML(), nil
 }

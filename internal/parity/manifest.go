@@ -34,6 +34,15 @@ type Manifest struct {
 	// FontFingerprint identifies the system fonts of the reference
 	// machine. It is empty for embedded fonts.
 	FontFingerprint string `json:"fontFingerprint,omitempty"`
+	// Page is the kind of page of the reference. It is empty for a plain
+	// page with only mermaid, where the reference is the string that
+	// mermaid.render returned (tools/reference/oracle.mjs). It is
+	// "mermaid-cli" for the page of mermaid-cli, where the reference is
+	// the .svg file that mermaid-cli writes
+	// (tools/reference/mmdc-oracle.mjs).
+	Page string `json:"page,omitempty"`
+	// MermaidCLI is the version of mermaid-cli of such a reference.
+	MermaidCLI string `json:"mermaidCLI,omitempty"`
 	// Fixtures maps the path of a fixture, relative to the corpus and
 	// without the extension, to its reference.
 	Fixtures map[string]ManifestEntry `json:"fixtures"`
@@ -45,11 +54,21 @@ type ManifestEntry struct {
 	Type string `json:"type,omitempty"`
 	// Error is true when mermaid failed to render the fixture.
 	Error bool `json:"error,omitempty"`
-	// SHA256 is the hash of the SVG text that mermaid.render returned.
+	// SHA256 is the hash of the SVG text that mermaid.render returned. For
+	// the page of mermaid-cli it is the hash of the .svg file of
+	// mermaid-cli --no-font-embed.
 	SHA256 string `json:"sha256,omitempty"`
 	// Bytes is the length of that text.
 	Bytes int `json:"bytes,omitempty"`
+	// EmbedSHA256 is the hash of the .svg file of mermaid-cli with its
+	// default options, which embed the fonts of the page that the diagram
+	// uses. It is empty when that file is the file of SHA256, and for a
+	// plain page.
+	EmbedSHA256 string `json:"embedSha256,omitempty"`
 }
+
+// PageMermaidCLI is the value of Manifest.Page for the page of mermaid-cli.
+const PageMermaidCLI = "mermaid-cli"
 
 // HashSVG returns the hash that a manifest stores for an SVG text.
 func HashSVG(svg string) string {
@@ -74,12 +93,19 @@ func BuildManifest(corpus, ref string) (*Manifest, error) {
 			Mermaid     string `json:"mermaid"`
 			DiagramType string `json:"diagramType"`
 			Error       string `json:"error"`
+			// The fields of mmdc-oracle.mjs.
+			Page        string `json:"page"`
+			MermaidCLI  string `json:"mmdc"`
+			EmbedSHA256 string `json:"embedSha256"`
 		}
 		if err := json.Unmarshal(data, &meta); err != nil {
 			return fmt.Errorf("%s: %w", base, err)
 		}
 		if m.Mermaid == "" {
 			m.Mermaid = meta.Mermaid
+		}
+		if m.Page == "" {
+			m.Page, m.MermaidCLI = meta.Page, meta.MermaidCLI
 		}
 		entry := ManifestEntry{Type: meta.DiagramType}
 		if meta.Error != "" {
@@ -91,6 +117,9 @@ func BuildManifest(corpus, ref string) (*Manifest, error) {
 			}
 			entry.SHA256 = HashSVG(string(svg))
 			entry.Bytes = len(svg)
+			if meta.EmbedSHA256 != entry.SHA256 {
+				entry.EmbedSHA256 = meta.EmbedSHA256
+			}
 		}
 		m.Fixtures[base] = entry
 		return nil

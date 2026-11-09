@@ -435,7 +435,15 @@ func draw(ctx *render.Context, usecaseDB *DB) error {
 	// recalculated the style before render returns: the style attribute of
 	// the root exists before setupViewPortForSVG adds the class attribute.
 	// Reading the attribute makes it exist here too.
-	svg.GetAttr("style")
+	//
+	// This is what the IIFE build of mermaid gives (mermaid.min.js, the
+	// build of the plain reference page). With the ESM build, which
+	// mermaid-cli loads, the style attribute does not exist yet when
+	// setupViewPortForSVG adds the class attribute: the result has class
+	// before style (tools/reference/probes/usecase-attr-order.js).
+	if ctx.Page == render.PagePlain {
+		svg.GetAttr("style")
+	}
 	annotateUsecaseElements(svg, data4Layout, d.accessibleNames)
 
 	padding := ru.Undef

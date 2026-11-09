@@ -15,3 +15,5 @@ mmdg_bin
 # Test binaries and profiles
 *.test
 *.prof
+# macOS folder metadata
+.DS_Store

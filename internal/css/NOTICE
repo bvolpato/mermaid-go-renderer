@@ -18,6 +18,18 @@ browser.
              (LGPL-2.0-or-later). The Go file does not say if it follows
              those two files.
 
+  calc.go    The value of a CSS math function follows
+             css_math_expression_node.cc (BSD-3-Clause, with the copyright
+             of Google in the file).
+  content.go The parser of the property content and of a CSS string
+             follows css_tokenizer.cc, css_parser_idioms.cc and
+             longhands_custom.cc (BSD-3-Clause). SerializeString is the
+             algorithm "serialize a string" of the CSS Object Model
+             specification. Blink has that algorithm in css_markup.cc
+             (LGPL-2.0-or-later), which the Go file names and does not
+             follow. A probe recorded the strings that Chromium prints
+             (../browser/testdata/pagesheets-cases.json.gz).
+
 decl.go and range.go port no upstream file.
 
 NOTICE-Blink.txt in this directory has the first comment of each Blink file

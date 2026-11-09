@@ -35,6 +35,7 @@ package browser
 import (
 	"strings"
 
+	"github.com/bvolpato/mermaid-go-renderer/internal/css"
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
 )
@@ -95,6 +96,11 @@ type inlineMark struct {
 	// the baseline of the box, and atomicMargin has its margins.
 	atomicW, atomicH, atomicBaseline lu
 	atomicMargin                     boxEdges
+	// atomicBox is the layout of an atomic inline box that has content of
+	// its own, and atomicShift is the baseline shift that its own
+	// vertical-align gives. See inlineblock.go.
+	atomicBox   *htmlBox
+	atomicShift lu
 }
 
 // advance is the width that the mark takes on its line.
@@ -165,6 +171,16 @@ func hasLayoutChild(n *dom.Node) bool {
 		}
 	}
 	return false
+}
+
+// hasLayoutChild is hasLayoutChild with the boxes of the pseudo-elements
+// ::before and ::after, which are children for layout.
+func (e *Engine) hasLayoutChild(n *dom.Node) bool {
+	if hasLayoutChild(n) {
+		return true
+	}
+	before, after := e.pseudoBoxes(n)
+	return before != nil || after != nil
 }
 
 // inlineEdges returns the margins, the borders and the padding of an inline
@@ -253,6 +269,20 @@ func (e *Engine) baselineShift(el *dom.Node, ts *textStyle, box *inlineBoxMetric
 		lineHeight := computedLineHeight(ts, e.primaryMetrics(ts))
 		return -luFromFloat(float32(lineHeight.f32() * float32(f) / 100))
 	}
+	if css.IsMathFunction(v) {
+		// A math function can have a percentage of the line height
+		// (ValueForLength of a calculated length).
+		c, ok := e.evalCalc(v, ts)
+		if !ok || c.IsNumber {
+			return 0
+		}
+		px := float32(c.Px)
+		if c.HasPercent {
+			lineHeight := computedLineHeight(ts, e.primaryMetrics(ts))
+			px += float32(lineHeight.f32() * float32(c.Percent) / 100)
+		}
+		return -luFromFloat(px)
+	}
 	if px, ok := e.cssLength(v, ts, false); ok {
 		return -luFromFloat(float32(px))
 	}
@@ -268,7 +298,8 @@ func computedLineHeight(ts *textStyle, m font.Metrics) lu {
 		percent := float32(ts.lhValue * 100)
 		return luFromFloat(float32(fixedFontSize(ts).f32()*percent) / 100)
 	case lhLength:
-		return luFromFloat(float32(ts.lhValue))
+		// A length is rounded to a LayoutUnit (LayoutUnit::FromFloatRound).
+		return luFromFloatRound(ts.lhValue)
 	}
 	return luFromFloatRound(m.LineSpacing)
 }
@@ -333,7 +364,9 @@ func (e *Engine) htmlQuads(n *dom.Node) ([]luRect, bool) {
 		return nil, false
 	}
 	for p := n; p != nil && p != fo; p = p.Parent {
-		if e.display(p) == "none" {
+		if e.display(p) == "none" || e.isOutOfFlow(p) {
+			// An element with no box, or with a box that is not in the
+			// flow, which the engine does not place.
 			return nil, false
 		}
 	}
@@ -376,7 +409,18 @@ func (c *quadCollector) isBlockChild(n *dom.Node) bool {
 		return false
 	}
 	_, ok := c.root.index[n]
-	return ok
+	return ok && !c.e.isAtomicInline(n, c.e.display(n))
+}
+
+// isAtomicChild reports whether a child of an inline element is an atomic
+// inline box with a layout of its own: an element with display:
+// inline-block and the like.
+func (c *quadCollector) isAtomicChild(n *dom.Node) bool {
+	if n.Type != dom.ElementNode {
+		return false
+	}
+	_, ok := c.root.index[n]
+	return ok && c.e.isAtomicInline(n, c.e.display(n))
 }
 
 // skipsBetweenBlocks reports whether a node does not end a run of blocks:
@@ -430,7 +474,11 @@ func (c *quadCollector) hasInlineContent(n *dom.Node) bool {
 		if c.e.display(n) == "none" || c.isBlockChild(n) {
 			return false
 		}
-		if isImage(n) || (n.NS == dom.NSHTML && n.Tag == "br") {
+		if isImage(n) || c.isAtomicChild(n) || (n.NS == dom.NSHTML && n.Tag == "br") {
+			return true
+		}
+		before, after := c.e.pseudoBoxes(n)
+		if (before != nil && c.hasInlineContent(before)) || (after != nil && c.hasInlineContent(after)) {
 			return true
 		}
 		for ch := n.FirstChild; ch != nil; ch = ch.Next {
@@ -469,7 +517,7 @@ func (c *quadCollector) afterBlockQuads(last *dom.Node) []luRect {
 // own. Without one its rectangles are the rectangles of its children.
 func (c *quadCollector) hasOwnBox(el *dom.Node) bool {
 	e := c.e
-	if !hasLayoutChild(el) {
+	if !e.hasLayoutChild(el) {
 		return true
 	}
 	ts := e.textStyleOf(el)
@@ -491,9 +539,18 @@ func (c *quadCollector) hasOwnBox(el *dom.Node) bool {
 	}
 	// BoxInfo::ShouldCreateBoxFragmentForChild.
 	own := e.primaryMetrics(ts)
-	for ch := el.FirstChild; ch != nil; ch = ch.Next {
-		if ch.Type != dom.ElementNode || c.isBlockChild(ch) || e.display(ch) != "inline" || (ch.NS == dom.NSHTML && ch.Tag == "br") {
-			continue
+	forChild := func(ch *dom.Node) bool {
+		if ch.Type != dom.ElementNode || c.isBlockChild(ch) {
+			return false
+		}
+		if c.isAtomicChild(ch) {
+			// InlineItemsBuilder::AppendAtomicInline: an inline box with an
+			// atomic inline box in it has a box fragment, because the two
+			// can have different heights.
+			return true
+		}
+		if e.display(ch) != "inline" || (ch.NS == dom.NSHTML && ch.Tag == "br") {
+			return false
 		}
 		cts := e.textStyleOf(ch)
 		margin := e.edges(ch, "margin", "", cts, 0)
@@ -501,7 +558,15 @@ func (c *quadCollector) hasOwnBox(el *dom.Node) bool {
 			return true
 		}
 		cm := e.primaryMetrics(cts)
-		if luFromFloatRound(cm.Ascent) != luFromFloatRound(own.Ascent) || luFromFloatRound(cm.Descent) != luFromFloatRound(own.Descent) {
+		return luFromFloatRound(cm.Ascent) != luFromFloatRound(own.Ascent) || luFromFloatRound(cm.Descent) != luFromFloatRound(own.Descent)
+	}
+	// The boxes of the pseudo-elements are children too.
+	before, after := e.pseudoBoxes(el)
+	if (before != nil && forChild(before)) || (after != nil && forChild(after)) {
+		return true
+	}
+	for ch := el.FirstChild; ch != nil; ch = ch.Next {
+		if forChild(ch) {
 			return true
 		}
 	}
@@ -514,6 +579,21 @@ func (c *quadCollector) quads(el *dom.Node) []luRect {
 		return c.boxQuads(el)
 	}
 	var out []luRect
+	// pseudoQuads returns the rectangles of the box of a pseudo-element.
+	pseudoQuads := func(p *dom.Node) []luRect {
+		switch {
+		case c.isBlockChild(p):
+			return []luRect{c.anonymousBlockQuad(p, p)}
+		case c.isAtomicChild(p):
+			return c.markQuads(p)
+		}
+		return c.quads(p)
+	}
+	// The boxes of the pseudo-elements are the first and the last child.
+	before, after := c.e.pseudoBoxes(el)
+	if before != nil {
+		out = append(out, pseudoQuads(before)...)
+	}
 	for ch := el.FirstChild; ch != nil; ch = ch.Next {
 		switch ch.Type {
 		case dom.TextNode:
@@ -526,12 +606,15 @@ func (c *quadCollector) quads(el *dom.Node) []luRect {
 				out = append(out, c.anonymousBlockQuad(ch, last))
 				out = append(out, c.afterBlockQuads(last)...)
 				ch = last
-			case ch.NS == dom.NSHTML && ch.Tag == "br":
+			case c.isAtomicChild(ch), ch.NS == dom.NSHTML && ch.Tag == "br":
 				out = append(out, c.markQuads(ch)...)
 			default:
 				out = append(out, c.quads(ch)...)
 			}
 		}
+	}
+	if after != nil {
+		out = append(out, pseudoQuads(after)...)
 	}
 	return out
 }
@@ -591,7 +674,7 @@ func (c *quadCollector) markQuads(el *dom.Node) []luRect {
 // its own: one box for each line that has a part of the element, and the
 // anonymous block of each run of blocks in the element.
 func (c *quadCollector) boxQuads(el *dom.Node) []luRect {
-	if !hasLayoutChild(el) {
+	if !c.e.hasLayoutChild(el) {
 		return c.markQuads(el)
 	}
 	var out []luRect
@@ -607,7 +690,28 @@ func (c *quadCollector) boxQuads(el *dom.Node) []luRect {
 		out = append(out, c.lineBoxQuad(el, line))
 	}
 	var walk func(n *dom.Node)
+	// visitElement visits the lines that have a part of an inline-level
+	// element in el.
+	visitElement := func(ch *dom.Node) {
+		for _, line := range c.box.lines {
+			for i := range line.marks {
+				if line.marks[i].item.mark.el == ch {
+					visitLine(line)
+					break
+				}
+			}
+		}
+		if !c.isAtomicChild(ch) {
+			walk(ch)
+		}
+	}
 	walk = func(n *dom.Node) {
+		// The boxes of the pseudo-elements are the first and the last
+		// child.
+		before, after := c.e.pseudoBoxes(n)
+		if before != nil {
+			visitElement(before)
+		}
 		for ch := n.FirstChild; ch != nil; ch = ch.Next {
 			switch ch.Type {
 			case dom.TextNode:
@@ -628,17 +732,12 @@ func (c *quadCollector) boxQuads(el *dom.Node) []luRect {
 					out = append(out, c.afterBlockQuads(last)...)
 					ch = last
 				default:
-					for _, line := range c.box.lines {
-						for i := range line.marks {
-							if line.marks[i].item.mark.el == ch {
-								visitLine(line)
-								break
-							}
-						}
-					}
-					walk(ch)
+					visitElement(ch)
 				}
 			}
+		}
+		if after != nil {
+			visitElement(after)
 		}
 	}
 	// The edges of the element itself.

@@ -176,8 +176,25 @@ func longhandsOf(name string) []string {
 		return []string{"font-style", "font-weight", "font-size", "line-height", "font-family"}
 	case "margin", "padding":
 		return []string{name + "-top", name + "-right", name + "-bottom", name + "-left"}
+	case "margin-block", "padding-block":
+		prefix := name[:strings.IndexByte(name, '-')]
+		return []string{prefix + "-top", prefix + "-bottom"}
+	case "margin-inline", "padding-inline":
+		prefix := name[:strings.IndexByte(name, '-')]
+		return []string{prefix + "-left", prefix + "-right"}
+	case "margin-block-start", "padding-block-start":
+		return []string{name[:strings.IndexByte(name, '-')] + "-top"}
+	case "margin-block-end", "padding-block-end":
+		return []string{name[:strings.IndexByte(name, '-')] + "-bottom"}
+	case "margin-inline-start", "padding-inline-start":
+		return []string{name[:strings.IndexByte(name, '-')] + "-left"}
+	case "margin-inline-end", "padding-inline-end":
+		return []string{name[:strings.IndexByte(name, '-')] + "-right"}
 	case "background":
 		return []string{"background", "background-color"}
+	case "border-width", "border-style":
+		suffix := name[len("border"):]
+		return []string{"border-top" + suffix, "border-right" + suffix, "border-bottom" + suffix, "border-left" + suffix}
 	}
 	return []string{name}
 }
