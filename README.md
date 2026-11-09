@@ -124,9 +124,17 @@ The sources are in [website/diagrams](website/diagrams). `go run ./tools/sitegen
 
 ## Install
 
+The library:
+
 ```sh
 go get github.com/bvolpato/mermaid-go-renderer
+```
+
+The command, with Go, with Homebrew, or as an archive from the [releases](https://github.com/bvolpato/mermaid-go-renderer/releases):
+
+```sh
 go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
+brew install bvolpato/tap/mmdg
 ```
 
 The module needs Go 1.27 or newer. A few case mappings and character classes come from the Unicode tables of the Go release, and Go 1.27 has the Unicode version of Chromium 156. With an older release, a label with one of the newest Unicode characters can differ from mermaid.
