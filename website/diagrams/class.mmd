@@ -1,0 +1,22 @@
+classDiagram
+  direction LR
+  class Renderer {
+    +Render(src) string
+    +RenderPNG(src) bytes
+  }
+  class Diagram {
+    <<interface>>
+    +Parse(text)
+    +Draw(ctx)
+  }
+  class Layout {
+    <<interface>>
+    +Run(graph)
+  }
+  class Engine {
+    +MeasureText(s) Box
+    +BBox(node) Box
+  }
+  Renderer --> Diagram : picks by type
+  Diagram --> Layout : dagre, ELK
+  Diagram --> Engine : sizes

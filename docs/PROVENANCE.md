@@ -153,6 +153,7 @@ Each row is one Go package. The second column has the number of Go files that ar
 |---|---|---|---|---|---|---|
 | `(root) github.com/bvolpato/mermaid-go-renderer` | 1 / 0 | Renders Mermaid diagrams to SVG in pure Go. | original. The API follows `mermaid.render` and `mermaid.initialize` of mermaid 12.2.0 | none named | the license of this repository | package doc of `mermaid.go` |
 | `cmd/mmdg` | 1 / 0 | Renders Mermaid diagrams to SVG and PNG without a browser. | mermaid-cli 12.0.0 (`src/index.js`, the functions `cli` and `run`): the options, the messages, the names of the output files and the Markdown output | `index.js` | MIT | package doc |
+| `cmd/wasm` | 1 / 0 | The renderer as a WebAssembly module, for the playground of the website. | original | none named | the license of this repository | package doc |
 | `cmd/parity` | 1 / 0 | Compares this renderer with the reference output of upstream mermaid for every corpus fixture. | original | none named | the license of this repository | package doc |
 | `cmd/pixelparity` | 1 / 0 | Measures how close the pure Go rasterizer is to Chromium. | original | none named | the license of this repository | package doc |
 | `tools/fmacheck` | 1 / 0 | Finds floating-point expressions that the Go compiler fuses into one multiply-add instruction (FMA). | original | none named | the license of this repository | package doc |
@@ -160,6 +161,7 @@ Each row is one Go package. The second column has the number of Go files that ar
 | `tools/mmdcdiff` | 1 / 0 | Compares the reference of real mermaid-cli with the reference of a plain page that has the web fonts, to show what mermaid-cli does besides the fonts. | original | none named | the license of this repository | package doc |
 | `tools/paritydoc` | 1 / 0 | Renders every fixture of the corpus and writes the parity tables of docs/PARITY*.md. | original | none named | the license of this repository | package doc |
 | `tools/perfdoc` | 1 / 0 | Measures the render time of every diagram of a corpus and compares it with the time that mermaid took for the same diagram in Chromium. | original | none named | the license of this repository | package doc |
+| `tools/sitegen` | 2 / 0 | Builds the website and the images of the README: the gallery, the corpus comparison, the charts and the WebAssembly playground. | original | none named | the license of this repository | package doc |
 
 ### The render pipeline of mermaid
 

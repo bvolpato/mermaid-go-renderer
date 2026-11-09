@@ -1,0 +1,12 @@
+flowchart LR
+  req([Request]) --> auth{Token valid?}
+  auth -- no --> deny[401 Unauthorized]
+  auth -- yes --> cache{In cache?}
+  subgraph Renderer
+    direction TB
+    db[(Diagram store)] --> render[Render diagram]
+    render --> store[Write cache]
+  end
+  cache -- miss --> db
+  cache -- hit --> resp([Response])
+  store --> resp
