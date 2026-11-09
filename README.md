@@ -61,10 +61,10 @@ The test also runs in a container with no fonts and no browser, because the defa
 
 | Measurement | mermaid in Chromium | mmdg | Ratio |
 |---|---:|---:|---:|
-| One render in a warm process, median of 2076 diagrams | 11.2 ms | 0.89 ms | 13x |
-| The same, 90th percentile | 26.9 ms | 2.55 ms | 11x |
-| Command-line run, flowchart to SVG (`mmdc` and `mmdg`) | 762 ms | 28.5 ms | 27x |
-| Command-line run, flowchart to PNG | 850 ms | 50.3 ms | 17x |
+| One render in a warm process, median of 2076 diagrams | 11.5 ms | 0.88 ms | 13x |
+| The same, 90th percentile | 25.8 ms | 2.55 ms | 10x |
+| Command-line run, flowchart to SVG (`mmdc` and `mmdg`) | 729 ms | 46.8 ms | 16x |
+| Command-line run, flowchart to PNG | 711 ms | 52.5 ms | 14x |
 
 - The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
 - The last two rows compare whole processes. `mmdc` starts a browser in each run.

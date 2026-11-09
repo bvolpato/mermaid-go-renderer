@@ -86,9 +86,11 @@ function parseArgs(argv) {
   return opts;
 }
 
-function median(values) {
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.floor((sorted.length - 1) / 2)];
+// The fastest run counts, for both tools. Other work on the machine can
+// only add time to a run, so the fastest run is the one with the least of
+// it.
+function fastest(values) {
+  return Math.min(...values);
 }
 
 async function main() {
@@ -107,6 +109,27 @@ async function main() {
     for (const format of ['svg', 'png']) {
       cases.push({ input, format });
     }
+  }
+
+  // mmdg runs first. Many starts of a browser leave the machine busy for a
+  // while, and that must not count against the other tool.
+  for (let r = 0; r < warmup; r++) {
+    spawnSync(mmdg, ['-i', INPUTS[0].file, '-o', path.join(dir, `mmdg-warmup-${r}.svg`), '-q'], { cwd: dir });
+  }
+  const mmdgTimes = [];
+  for (const [c, { input, format }] of cases.entries()) {
+    const times = [];
+    for (let r = 0; r < runs; r++) {
+      const out = path.join(dir, `mmdg-${c}-${r}.${format}`);
+      const started = process.hrtime.bigint();
+      const result = spawnSync(mmdg, ['-i', input.file, '-o', out, '-q'], { cwd: dir, encoding: 'utf8' });
+      const ms = Number(process.hrtime.bigint() - started) / 1e6;
+      if (result.status !== 0) {
+        throw new Error(`mmdg failed for ${input.file} (${format}): ${result.stderr}`);
+      }
+      times.push(ms);
+    }
+    mmdgTimes.push(times);
   }
 
   // mmdc: all runs in one call of mmdc-run.mjs. The first jobs are the
@@ -128,9 +151,6 @@ async function main() {
     throw new Error(`mmdc-run.mjs ended with status ${run.status}`);
   }
   const results = JSON.parse(await fs.readFile(resultsFile, 'utf8')).slice(warmup);
-  for (let r = 0; r < warmup; r++) {
-    spawnSync(mmdg, ['-i', INPUTS[0].file, '-o', path.join(dir, `mmdg-warmup-${r}.svg`), '-q'], { cwd: dir });
-  }
 
   const rows = [];
   for (const [c, { input, format }] of cases.entries()) {
@@ -142,19 +162,9 @@ async function main() {
       }
       mmdcMs.push(result.ms);
     }
-    const mmdgMs = [];
-    for (let r = 0; r < runs; r++) {
-      const out = path.join(dir, `mmdg-${c}-${r}.${format}`);
-      const started = process.hrtime.bigint();
-      const result = spawnSync(mmdg, ['-i', input.file, '-o', out, '-q'], { cwd: dir, encoding: 'utf8' });
-      const ms = Number(process.hrtime.bigint() - started) / 1e6;
-      if (result.status !== 0) {
-        throw new Error(`mmdg failed for ${input.file} (${format}): ${result.stderr}`);
-      }
-      mmdgMs.push(ms);
-    }
-    const a = median(mmdcMs);
-    const b = median(mmdgMs);
+    const mmdgMs = mmdgTimes[c];
+    const a = fastest(mmdcMs);
+    const b = fastest(mmdgMs);
     rows.push(`| ${input.name} | ${format.toUpperCase()} | ${a.toFixed(0)} | ${b.toFixed(1)} | ${(a / b).toFixed(0)}x |`);
   }
   await fs.rm(dir, { recursive: true, force: true });
@@ -164,7 +174,7 @@ async function main() {
   ).version;
   const text = `## Command-line tools
 
-The table compares \`mmdg\` with \`mmdc\` (mermaid-cli ${mmdcVersion}). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the median of ${runs} runs, after ${warmup} runs of each tool that do not count. \`mmdc\` starts a browser in each run.
+The table compares \`mmdg\` with \`mmdc\` (mermaid-cli ${mmdcVersion}). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the fastest of ${runs} runs, after ${warmup} runs of each tool that do not count. \`mmdc\` starts a browser in each run.
 
 | Input | Output | mmdc | mmdg | Ratio |
 |---|---|---:|---:|---:|
