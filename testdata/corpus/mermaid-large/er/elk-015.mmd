@@ -1,0 +1,81 @@
+erDiagram
+  E0 {
+    date ledger_0 PK
+    date order_1 FK
+    int shard_2
+  }
+  E1 {
+    string quota_0 PK
+  }
+  E2 {
+    float event_0 PK
+    float ledger_1
+    date order_2
+  }
+  E3 {
+    float quota_0 PK
+    string order_1
+  }
+  E4 {
+    float alert_0 PK
+  }
+  E5 {
+    string probe_0 PK
+  }
+  E6 {
+    int trace_0 PK
+    int session_1
+    int cache_2
+    float event_3 FK
+  }
+  E7 {
+    int audit_0 PK
+    date probe_1
+    date probe_2
+  }
+  E8 {
+    float payment_0 PK
+    float batch_1 FK
+    date bucket_2
+  }
+  E9 {
+    int batch_0 PK
+    string user_1
+  }
+  E10 {
+    int router_0 PK
+    float bucket_1
+    string batch_2
+    float stream_3
+  }
+  E11 {
+    date cache_0 PK
+  }
+  E12 {
+    int order_0 PK
+    float index_1
+  }
+  E13 {
+    float user_0 PK
+  }
+  E14 {
+    float lease_0 PK
+    float stream_1
+    date index_2
+    date schema_3
+  }
+  E0 |o--o| E1 : bucket
+  E0 |o--o| E2 : report
+  E1 ||--|{ E3 : gateway
+  E1 }o--o{ E4 : event
+  E2 |o--o| E5 : gateway
+  E2 }|..|{ E6 : metric
+  E5 }|..|{ E7 : cache
+  E6 ||--o{ E8 : audit
+  E7 }|..|{ E9 : worker
+  E5 ||--|{ E10 : audit
+  E6 ||--|| E11 : shard
+  E10 }|..|{ E12 : gateway
+  E9 ||--|| E13 : metric
+  E9 ||--|| E7 : gateway
+  E10 ||--o{ E6 : audit

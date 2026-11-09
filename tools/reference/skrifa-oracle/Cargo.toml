@@ -1,0 +1,14 @@
+# The test oracle of internal/font/glyf_var.go: it runs skrifa, the font
+# library of Skia in Chromium 156 (Fontations), and writes what it returns as
+# JSON. gen.sh builds it outside of the repository and writes the golden
+# files. The versions are the versions of Chromium 156.
+[package]
+name = "skrifa-oracle"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+skrifa = "=0.46.2"
+read-fonts = "=0.43.2"
+font-types = "=0.12.5"

@@ -1,0 +1,86 @@
+flowchart TD
+  subgraph g0 [Router span]
+    n4([Token quota gateway])
+    n6[[Lease report stream]]
+    n8([Replica])
+    n12{Audit}
+    n13[(Metric)]
+    n20[Metric]
+    n21[(Payment stream lease)]
+    n22([User batch span])
+    n23(Index replica index)
+    n24([Bucket])
+    n26(Schema session quota)
+    n32[Alert]
+    n35([Shard])
+  end
+  subgraph g1 [Payment]
+    n1[Router]
+    n7(Queue)
+    n11((Replica event))
+    n14[(Router policy index)]
+    n17([Policy user invoice])
+    n18[/Report lease index/]
+    n25[Metric alert]
+    n27((Trace lease))
+  end
+  n0(Alert)
+  n2(Report schema trace)
+  n3(Report probe alert)
+  n5[/Event lease/]
+  n9([Span])
+  n10[/Gateway stream user/]
+  n15{{Replica lease}}
+  n16[Token]
+  n19([Metric ledger])
+  n28[/Cache span schema/]
+  n29[[Probe replica]]
+  n30[[Replica index]]
+  n31[[Token span policy]]
+  n33{Bucket event ledger}
+  n34((Index stream))
+  n0 -.-> n1
+  n0 --- n2
+  n0 ==> n3
+  n3 -.->|Policy| n4
+  n4 -.-> n5
+  n1 --> n6
+  n1 --x n7
+  n1 -.-> n8
+  n0 --x n9
+  n8 --o|User| n10
+  n6 --> n11
+  n11 -->|Lease queue| n12
+  n8 --x|Gateway| n13
+  n7 ==>|Gateway stream| n14
+  n7 ==> n15
+  n14 --> n16
+  n11 --> n17
+  n16 ---|Worker worker| n18
+  n13 --x n19
+  n11 ==> n20
+  n16 --x|Policy| n21
+  n14 ==> n22
+  n21 -.-> n23
+  n15 --x|Metric invoice| n24
+  n20 --> n25
+  n19 ==>|Session worker| n26
+  n21 ---|User router| n27
+  n27 --o n28
+  n23 ==> n29
+  n26 --> n30
+  n22 --x n31
+  n23 --x n32
+  n31 -->|Invoice policy| n33
+  n32 ==> n34
+  n30 --- n35
+  n30 --- n14
+  n31 -.-> n1
+  n3 --o n7
+  n15 --> n22
+  n28 --o n20
+  n0 --o n18
+  n2 --x n8
+  n16 ==> n1
+  n25 --x n5
+  n33 -.-> n9

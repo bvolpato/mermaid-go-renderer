@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="10.5" y="8.5" width="50" height="30" fill="#ECECFF" stroke="#9370DB" style="filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1))"/>
+<circle cx="90" cy="24" r="15" fill="#ECECFF" stroke="#9370DB" style="filter:drop-shadow( 1px 2px 2px rgba(185,185,185,0.5))"/>
+<polygon points="120,10 150,10 160,38 130,38" fill="#ffffde" stroke="#aaaa33" style="filter:drop-shadow( 0px 1px 2px rgba(0, 0, 0, 0.25))"/>
+<rect x="168" y="8" width="24" height="30" fill="#ffffff" stroke="#333" style="filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4))"/>
+<path d="M10,56 h40 a6,6 0 0 1 6,6 v14 a6,6 0 0 1 -6,6 h-40 z" fill="#ECECFF" stroke="#9370DB" stroke-width="2" style="filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1))"/>
+<rect x="70" y="56" width="40" height="26" fill="#9370DB" style="filter:brightness(120%)"/>
+<rect x="116" y="56" width="40" height="26" fill="#9370DB"/>
+<g style="filter:brightness(120%)"><rect x="162" y="56" width="30" height="26" fill="#ffd47f" stroke="#996600"/><text x="166" y="74" font-family="Arial" font-size="12px" fill="#333">hi</text></g>
+<rect x="10" y="92" width="60" height="20" fill="#e8e8e8" stroke="#666" stroke-width="1" style="filter:brightness(120%)"/>
+<g transform="translate(80 92) scale(0.75)"><rect width="60" height="24" rx="4" fill="#ECECFF" stroke="#9370DB" style="filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1))"/></g>
+<circle cx="170" cy="102" r="10" fill="#333" style="filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1))"/></svg>

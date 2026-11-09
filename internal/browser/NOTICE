@@ -1,0 +1,79 @@
+Notice for internal/browser
+
+Some Go files in this directory follow source files of Blink, the layout
+engine of Chromium, that have the GNU Library General Public License,
+version 2 or later (SPDX: LGPL-2.0-or-later). The license of each Blink file
+was read from the header of the file at the tag 156.0.8078.4 of
+https://chromium.googlesource.com/chromium/src, the version of the reference
+browser.
+
+Go files that follow Blink files with the LGPL, and those Blink files:
+
+  boundschange.go   layout_svg_container.cc, layout_svg_shape.cc
+  engine.go         layout_object.cc, layout_inline.cc, element.cc,
+                    computed_style.cc
+  fontmono.go       font_builder.cc, font_size_functions.cc,
+                    font_description.h
+  geom.go           svg_parser_utilities.cc
+  htmlinline.go     layout_inline.cc, layout_object.cc, element.cc,
+                    computed_style.h, computed_style.cc, font_metrics.h,
+                    length_functions.cc
+  norender.go       svg_g_element.cc, svg_tests.cc, svg_switch_element.cc,
+                    layout_svg_transformable_container.cc
+  path.go           svg_path_builder.cc, svg_path_string_source.cc
+  pathquery.go      svg_path_query.cc, svg_path_parser.cc, svg_path_parser.h,
+                    svg_path_string_source.cc, svg_path_data.h,
+                    path_traversal_state.cc
+  style.go          font_description.h
+  svgroot.go        layout_svg_root.cc, layout_svg_root.h,
+                    svg_preserve_aspect_ratio.cc, svg_svg_element.cc,
+                    svg_graphics_element.cc, svg_layout_support.cc,
+                    layout_object.h
+  svgviewport.go    svg_length_functions.cc, svg_length_context.cc,
+                    css_primitive_value.cc
+  text.go           layout_svg_inline_text.cc, svg_length.cc, font_metrics.h
+  transform.go      computed_style.cc
+
+Go files that port no upstream file and name a Blink file with the LGPL:
+
+  linebreak.go and linebreak_ascii_gen.go name text_break_iterator.cc. A
+  probe recorded their table from Chromium.
+
+Go files that follow Blink files with BSD licenses and name a Blink file
+with the LGPL:
+
+  pseudo.go names two functions of Blink files with the LGPL, for a fact
+  about the layout tree: Element::CanGeneratePseudoElement of element.cc,
+  and TextContentData::CreateLayoutObject of content_data.cc. A probe
+  recorded the boxes of the pseudo-elements from Chromium
+  (testdata/pagesheets-cases.json.gz).
+
+These Go files, and calc.go, html.go, image.go, inlineblock.go and
+pseudo.go, also follow files of Chromium that have BSD licenses. The first
+comment of each Go file says which part follows which file, and gives the
+license of each file.
+
+These Go files follow no Blink file with the LGPL: calc.go, cmath.go,
+cssvar.go, export_raster.go, html.go, image.go, inlineblock.go,
+linux_trig.go, pagesheets.go, pseudo.go, skatan2.go and table.go.
+
+Files in this directory:
+
+  LICENSE-LGPL-2.0.txt
+      The GNU Library General Public License, version 2. It is the file
+      third_party/blink/renderer/core/LICENSE-LGPL-2 of Chromium
+      156.0.8078.4.
+  NOTICE-Blink.txt
+      The first comment of each Blink file that has its license terms in
+      the file, with its copyright lines.
+  LICENSE-ArmOptimizedRoutines.txt
+      The MIT license of Arm Optimized Routines, for linux_trig.go.
+
+The license of the Blink files that say "Use of this source code is governed
+by a BSD-style license" is in ../font/LICENSE-Chromium.txt. The license of
+Skia is in ../font/LICENSE-Skia.txt.
+
+The owner of the repository has not decided what to do with the code that
+follows the LGPL files. The options are in docs/LICENSE-AUDIT.md, finding
+F1. This notice states where the code comes from. It does not put the Go
+files under a license.

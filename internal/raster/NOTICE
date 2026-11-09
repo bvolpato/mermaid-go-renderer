@@ -1,0 +1,48 @@
+Notice for internal/raster
+
+Most Go files in this directory are ports of files of Skia. Each of those
+files names its Skia files in its first comment. The license of Skia is
+BSD-3-Clause (../font/LICENSE-Skia.txt).
+
+Some Go files in this directory follow source files of Blink, the layout
+engine of Chromium, that have the GNU Library General Public License,
+version 2 or later (SPDX: LGPL-2.0-or-later). The license of each Blink file
+was read from the header of the file at the tag 156.0.8078.4 of
+https://chromium.googlesource.com/chromium/src, the version of the reference
+browser.
+
+Go files that follow or name Blink files with the LGPL, and those Blink
+files:
+
+  render.go         svg_preserve_aspect_ratio.cc, layout_replaced.cc,
+                    layout_svg_root.cc
+  svg.go            layout_svg_root.cc, layout_svg_shape.cc, svg_tests.cc
+  svg_effects.go    layout_svg_resource_clipper.cc, svg_layout_support.cc,
+                    computed_style.h
+  svg_filter.go     svg_resources.cc, fe_drop_shadow.cc
+  svg_gradient.go   svg_gradient_element.cc, layout_svg_resource_gradient.cc
+  svg_marker.go     svg_marker_data.cc, svg_marker_data.h,
+                    layout_svg_resource_marker.cc, svg_layout_support.cc
+  svg_text.go       font_metrics.h, computed_style.h
+
+These Go files also follow files of Chromium that have BSD licenses. The
+first comment of each Go file says which part follows which file, and gives
+the license of each file.
+
+Files in this directory:
+
+  LICENSE-LGPL-2.0.txt
+      The GNU Library General Public License, version 2. It is the file
+      third_party/blink/renderer/core/LICENSE-LGPL-2 of Chromium
+      156.0.8078.4.
+  NOTICE-Blink.txt
+      The first comment of each Blink file that has its license terms in
+      the file, with its copyright lines.
+
+The license of the Blink files that say "Use of this source code is governed
+by a BSD-style license" is in ../font/LICENSE-Chromium.txt.
+
+The owner of the repository has not decided what to do with the code that
+follows the LGPL files. The options are in docs/LICENSE-AUDIT.md, finding
+F1. This notice states where the code comes from. It does not put the Go
+files under a license.

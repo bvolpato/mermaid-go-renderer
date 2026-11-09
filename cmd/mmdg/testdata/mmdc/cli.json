@@ -1,0 +1,331 @@
+{
+ "mmdc": "12.0.0",
+ "small": "flowchart LR\n  A[Hello] --> B(World)\n",
+ "markdown": "# Title\n\n```mermaid\nflowchart LR\n  accTitle: The \"title\" [x]\n  accDescr: A description [with] back\\slash\n  A --> B\n```\n\ntext\n\n  :::mermaid\npie title Pets\n  \"Dogs\" : 386\n  \"Cats\" : 85\n:::  \n\n```mermaid\ninfo\n```\nend\n",
+ "cases": [
+  {
+   "args": [
+    "-i",
+    "missing.mmd"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nInput file \"missing.mmd\" doesn't exist\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-o",
+    "x.txt"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-o, --output <output>' argument 'x.txt' is invalid. Output file must be either md, svg, png, or pdf.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-o",
+    "nodir/x.svg"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nOutput directory \"nodir/\" doesn't exist\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-t",
+    "nope"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-t, --theme <theme>' argument 'nope' is invalid. Allowed choices are base, dark, default, forest, neutral, neo, neo-dark, redux, redux-dark, redux-color, redux-dark-color, null.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-s",
+    "0"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-s, --scale <scale>' argument '0' is invalid. Not a positive number.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-s",
+    "abc"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-s, --scale <scale>' argument 'abc' is invalid. Not a positive number.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "--size",
+    "0"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '--size <size>' argument '0' is invalid. Not a positive integer.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-e",
+    "gif"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-e, --outputFormat <format>' argument 'gif' is invalid. Allowed choices are svg, png, pdf.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-j",
+    "0"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: option '-j, --jobs <jobs>' argument '0' is invalid. Not a positive integer.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "--bogus"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: unknown option '--bogus'\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-x"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: unknown option '-x'\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "extra"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "error: too many arguments. Expected 0 arguments but got 1: extra.\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-c",
+    "missing.json"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nConfiguration file \"missing.json\" doesn't exist\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-C",
+    "missing.css"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nCSS file \"missing.css\" doesn't exist\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-a",
+    "arte"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nArtefacts [-a|--artefacts] path can only be used with Markdown input file\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "doc.md",
+    "-o",
+    "-",
+    "-e",
+    "svg"
+   ],
+   "code": 1,
+   "stdout": "",
+   "stderr": "\nError: Cannot use `stdout` with markdown input\n\n"
+  },
+  {
+   "args": [
+    "-i",
+    "none.md",
+    "-o",
+    "none-out.md"
+   ],
+   "code": 0,
+   "stdout": "No mermaid charts found in Markdown input\n ✅ none-out.md\n",
+   "stderr": "",
+   "files": {
+    "none-out.md": "# no charts\n\ntext\n"
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "doc.md",
+    "-o",
+    "out.md",
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdout": "Found 3 mermaid charts in Markdown input\n ✅ ./out-3.svg\n ✅ ./out-2.svg\n ✅ ./out-1.svg\n ✅ out.md\n",
+   "stderr": "",
+   "files": {
+    "out.md": "# Title\n\n![A description \\[with\\] back\\\\slash](./out-1.svg \"The \\\"title\\\" [x]\")\n\ntext\n\n![diagram](./out-2.svg)\n\n![diagram](./out-3.svg)\nend\n"
+   },
+   "exists": {
+    "out-1.svg": true,
+    "out-2.svg": true,
+    "out-3.svg": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "doc.md",
+    "-o",
+    "art.md",
+    "-a",
+    "images/deep",
+    "-e",
+    "png",
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdout": "Found 3 mermaid charts in Markdown input\n ✅ ./images/deep/art-3.png\n ✅ ./images/deep/art-2.png\n ✅ ./images/deep/art-1.png\n ✅ art.md\n",
+   "stderr": "",
+   "files": {
+    "art.md": "# Title\n\n![A description \\[with\\] back\\\\slash](./images/deep/art-1.png \"The \\\"title\\\" [x]\")\n\ntext\n\n![diagram](./images/deep/art-2.png)\n\n![diagram](./images/deep/art-3.png)\nend\n"
+   },
+   "exists": {
+    "images/deep/art-1.png": true,
+    "images/deep/art-3.png": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "doc.md",
+    "-o",
+    "tpl.png",
+    "-t",
+    "default",
+    "-q"
+   ],
+   "code": 0,
+   "stdout": "",
+   "stderr": "",
+   "exists": {
+    "tpl-1.png": true,
+    "tpl-2.png": true,
+    "tpl-3.png": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "doc.md",
+    "-t",
+    "default",
+    "-q"
+   ],
+   "code": 0,
+   "stdout": "",
+   "stderr": "",
+   "exists": {
+    "doc.md-1.svg": true,
+    "doc.md-3.svg": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdout": "Generating single mermaid chart\n",
+   "stderr": "",
+   "exists": {
+    "small.mmd.svg": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "small.mmd",
+    "-e",
+    "png",
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdout": "Generating single mermaid chart\n",
+   "stderr": "",
+   "exists": {
+    "small.mmd.png": true
+   }
+  },
+  {
+   "args": [
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdin": "info\n",
+   "stdout": "Generating single mermaid chart\n",
+   "stderr": "\nNo input file specified, reading from stdin. If you want to specify an input file, please use `-i <input>.` You can use `-i -` to read from stdin and to suppress this warning.\n\n",
+   "exists": {
+    "out.svg": true
+   }
+  },
+  {
+   "args": [
+    "-i",
+    "-",
+    "-o",
+    "-",
+    "-t",
+    "default"
+   ],
+   "code": 0,
+   "stdin": "info\n",
+   "stdoutHash": "eb748b39c856703c",
+   "stderr": "\nNo output format specified, using svg. If you want to specify an output format and suppress this warning, please use `-e <format>.` \n\n"
+  }
+ ]
+}

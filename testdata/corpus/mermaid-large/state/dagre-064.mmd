@@ -1,0 +1,77 @@
+---
+config:
+  layout: dagre
+---
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s0 --> s1
+    s1 --> s3 : quota
+    s3 --> s6
+    s6 --> s9
+    s9 --> s10
+    s10 --> s14 : worker
+    s14 --> s17
+    s17 --> s47 : payment
+    s47 --> s54
+    s54 --> s62
+  }
+  state Group1 {
+    s5 --> s8
+    s8 --> s11
+    s11 --> s13 : trace
+    s13 --> s16
+    s16 --> s20 : worker
+    s20 --> s30
+    s30 --> s33
+    s33 --> s36
+    s36 --> s37
+    s37 --> s42
+    s42 --> s43
+    s43 --> s49 : probe
+    s49 --> s57 : queue
+    s57 --> s63
+  }
+  s0 --> s1
+  s1 --> s3
+  s2 --> s4 : Ledger
+  s3 --> s6
+  s6 --> s8 : Trace
+  s7 --> s9
+  s8 --> s11
+  s8 --> s12
+  s11 --> s13
+  s10 --> s14 : Bucket
+  s15 --> s16 : Gateway bucket
+  s19 --> s20
+  s20 --> s21
+  s22 --> s23
+  s22 --> s24
+  s19 --> s25 : Probe metric
+  s26 --> s27
+  s27 --> s30
+  s30 --> s31
+  s26 --> s32
+  s31 --> s34
+  s36 --> s37 : Token payment
+  s33 --> s38 : Report audit
+  s37 --> s39
+  s38 --> s40
+  s41 --> s43
+  s41 --> s44 : Queue
+  s44 --> s46
+  s42 --> s48 : Session
+  s45 --> s50
+  s46 --> s51
+  s47 --> s52
+  s50 --> s53 : Metric
+  s48 --> s54
+  s49 --> s55 : Token
+  s53 --> s56
+  s53 --> s58
+  s57 --> s59
+  s54 --> s60 : Audit policy
+  s59 --> s61
+  s61 --> s62
+  s58 --> s63 : Order
+  s63 --> [*]

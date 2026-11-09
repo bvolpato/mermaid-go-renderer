@@ -1,0 +1,64 @@
+Notice for internal/elk/elkjs
+
+elk-worker.min.js is the file lib/elk-worker.min.js of the npm package elkjs
+0.9.3 (https://github.com/kieler/elkjs), unchanged. elkjs is the Eclipse
+Layout Kernel (ELK) 0.9.1, with the change of pull request 955, compiled
+from Java to JavaScript with GWT.
+
+elkjs is made available under the terms of the Eclipse Public License 2.0.
+The file LICENSE.md in this directory has the license. The source code is at
+https://github.com/kieler/elkjs and https://github.com/eclipse/elk.
+
+SPDX-License-Identifier: EPL-2.0
+
+elk-worker.min.js has no copyright line. The files lib/elk-api.js and
+lib/main.js of the same package have these lines:
+
+  Copyright (c) 2017 Kiel University and others.
+  Copyright (c) 2021 Kiel University and others.
+
+Code of other projects in the file
+
+The file contains compiled code of four other projects. The npm package
+gives no notice for them, and the file does not state their versions. The
+names of their Java packages are in the file.
+
+  GWT, https://www.gwtproject.org
+      Java packages: the Java runtime (java.lang, java.util) and
+      com.google.gwt.core, com.google.gwt.i18n and com.google.gwt.json.
+      License: Apache License 2.0.
+      The source files of GWT have a notice of this form:
+      Copyright 2008 Google Inc.
+
+  Guava, https://github.com/google/guava
+      Java packages: com.google.common.base and com.google.common.collect.
+      License: Apache License 2.0.
+      The file NOTICE.md of ELK 0.9.1 lists Google Guava 30.1.0 and 33.0.0.
+      The source files of Guava have a notice of this form:
+      Copyright (C) 2007 The Guava Authors
+
+  Eclipse EMF, https://github.com/eclipse-emf/org.eclipse.emf
+      Java packages: org.eclipse.emf.common and org.eclipse.emf.ecore.
+      License: Eclipse Public License 2.0.
+
+  Eclipse Xtext, https://github.com/eclipse-xtext/xtext
+      Java package: org.eclipse.xtext.xbase.lib.
+      License: Eclipse Public License 2.0.
+
+The text of the Apache License 2.0 is in ../native/gwt/LICENSE-GWT.txt. The
+text of the Eclipse Public License 2.0 is in LICENSE.md.
+
+Where these facts come from
+
+The license of GWT is from the file distro-source/core/src/COPYING and from
+the headers of the Java source files on the main branch of
+https://github.com/gwtproject/gwt. The license of Guava is from the file
+LICENSE and from the header of
+guava/src/com/google/common/collect/Lists.java at the tag v33.0.0. The
+licenses of EMF and of Xtext are from the files LICENSE and NOTICE.md on the
+default branches of their repositories. All of them were read on 2026-11-09.
+The notices of EMF and of Xtext have no copyright line. They say: "All
+content is the property of the respective authors or their employers."
+
+The file NOTICE.md of ELK 0.9.1 also lists libavoid (LGPL-2.1). The name
+libavoid is not in elk-worker.min.js.

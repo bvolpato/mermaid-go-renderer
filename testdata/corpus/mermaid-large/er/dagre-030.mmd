@@ -1,0 +1,186 @@
+---
+config:
+  layout: dagre
+---
+erDiagram
+  E0 {
+    date invoice_0 PK
+    string payment_1
+  }
+  E1 {
+    date token_0 PK
+    int audit_1
+  }
+  E2 {
+    int ledger_0 PK
+    string invoice_1
+    int queue_2
+    int shard_3
+    string probe_4
+  }
+  E3 {
+    date bucket_0 PK
+    date index_1 FK
+  }
+  E4 {
+    int probe_0 PK
+  }
+  E5 {
+    float ledger_0 PK
+    string probe_1
+    date alert_2
+  }
+  E6 {
+    string stream_0 PK
+    float index_1
+    float bucket_2
+  }
+  E7 {
+    float metric_0 PK
+    date metric_1
+    date schema_2 FK
+  }
+  E8 {
+    float batch_0 PK
+  }
+  E9 {
+    int session_0 PK
+    date policy_1
+    date ledger_2
+    string policy_3
+    int alert_4
+  }
+  E10 {
+    float trace_0 PK
+  }
+  E11 {
+    int audit_0 PK
+    int alert_1
+    string worker_2
+    float queue_3
+  }
+  E12 {
+    float stream_0 PK
+    int shard_1 FK
+    float replica_2
+    date schema_3
+    int bucket_4 FK
+  }
+  E13 {
+    string replica_0 PK
+    string report_1 FK
+    date trace_2 FK
+    int lease_3
+  }
+  E14 {
+    int schema_0 PK
+    string invoice_1 FK
+    int worker_2
+    date metric_3 FK
+  }
+  E15 {
+    date report_0 PK
+  }
+  E16 {
+    int schema_0 PK
+  }
+  E17 {
+    int bucket_0 PK
+    int metric_1
+    string session_2
+    int cache_3
+    date bucket_4
+  }
+  E18 {
+    float schema_0 PK
+  }
+  E19 {
+    string user_0 PK
+    int user_1
+    string audit_2
+  }
+  E20 {
+    date schema_0 PK
+  }
+  E21 {
+    string gateway_0 PK
+    float router_1
+  }
+  E22 {
+    float policy_0 PK
+    float ledger_1
+    string payment_2
+    int worker_3
+  }
+  E23 {
+    int event_0 PK
+    string event_1 FK
+    string quota_2 FK
+  }
+  E24 {
+    float index_0 PK
+    date schema_1
+    date order_2
+    string order_3 FK
+    string session_4
+  }
+  E25 {
+    string stream_0 PK
+    int audit_1
+    float report_2
+    date probe_3 FK
+    float cache_4
+  }
+  E26 {
+    float user_0 PK
+    date payment_1
+    int token_2 FK
+    float schema_3
+  }
+  E27 {
+    date index_0 PK
+    float queue_1
+    int probe_2
+    string lease_3 FK
+  }
+  E28 {
+    date order_0 PK
+    date shard_1
+    int payment_2
+  }
+  E29 {
+    int payment_0 PK
+    int user_1
+    date stream_2
+  }
+  E0 }o--o{ E1 : payment
+  E1 |o--o| E2 : ledger
+  E2 ||--|| E3 : token
+  E3 ||--|{ E4 : payment
+  E1 |o--o| E5 : shard
+  E4 |o--o| E6 : audit
+  E4 ||--o{ E7 : metric
+  E7 ||--|| E8 : gateway
+  E7 ||--|{ E9 : bucket
+  E9 }|..|{ E10 : probe
+  E7 |o--o| E11 : stream
+  E9 }o--o{ E12 : policy
+  E11 }|..|{ E13 : cache
+  E13 |o--o| E14 : schema
+  E11 }o--o{ E15 : ledger
+  E12 }o--o{ E17 : stream
+  E15 }o--o{ E18 : worker
+  E13 }o--o{ E19 : batch
+  E17 |o--o| E20 : event
+  E18 ||--|{ E21 : stream
+  E20 }o--o{ E22 : router
+  E22 }|..|{ E23 : ledger
+  E20 ||--o{ E25 : worker
+  E25 }|..|{ E26 : queue
+  E26 |o--o| E27 : batch
+  E22 ||--|{ E28 : lease
+  E28 ||--|| E29 : lease
+  E1 }o--o{ E6 : quota
+  E25 }o--o{ E26 : batch
+  E15 ||--|{ E14 : router
+  E17 ||--o{ E28 : payment

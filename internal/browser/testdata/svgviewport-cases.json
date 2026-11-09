@@ -1,0 +1,2365 @@
+{
+ "cases": [
+  {
+   "name": "svgviewport-percent-render-text-x",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"50%\" y=\"16\" text-anchor=\"middle\" style=\"font: 16px arial\">Fruits and Vegetables</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-text-xy",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"25%\" y=\"50%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-text-dx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"20\" dx=\"10%\" dy=\"10%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-tspan",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" y=\"20\" style=\"font: 16px arial\">ab<tspan x=\"50%\" dy=\"20%\">cd</tspan></text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-rect-rx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1\" y=\"2\" width=\"33.3%\" height=\"12.5%\" rx=\"5%\" ry=\"5%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-circle",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-ellipse",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse id=\"t\" cx=\"25%\" cy=\"75%\" rx=\"10%\" ry=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-line",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"0\" y1=\"50%\" x2=\"100%\" y2=\"75%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject id=\"t\" x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><div xmlns=\"http://www.w3.org/1999/xhtml\">hi</div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-in-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(10, 20) scale(2)\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-nested",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-nested-viewBox",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\" viewBox=\"0 0 400 50\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-render-nested-percent",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"25%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-text-x",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"50%\" y=\"16\" text-anchor=\"middle\" style=\"font: 16px arial\">Fruits and Vegetables</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-text-xy",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"25%\" y=\"50%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-text-dx",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"20\" dx=\"10%\" dy=\"10%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-tspan",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" y=\"20\" style=\"font: 16px arial\">ab<tspan x=\"50%\" dy=\"20%\">cd</tspan></text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-rect",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-rect-rx",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1\" y=\"2\" width=\"33.3%\" height=\"12.5%\" rx=\"5%\" ry=\"5%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-circle",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-ellipse",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse id=\"t\" cx=\"25%\" cy=\"75%\" rx=\"10%\" ry=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-line",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"0\" y1=\"50%\" x2=\"100%\" y2=\"75%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-fo",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject id=\"t\" x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><div xmlns=\"http://www.w3.org/1999/xhtml\">hi</div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-in-g",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(10, 20) scale(2)\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-nested",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-nested-viewBox",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\" viewBox=\"0 0 400 50\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-nested-percent",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"25%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-text-x",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"50%\" y=\"16\" text-anchor=\"middle\" style=\"font: 16px arial\">Fruits and Vegetables</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-text-xy",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"25%\" y=\"50%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-text-dx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"20\" dx=\"10%\" dy=\"10%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-tspan",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" y=\"20\" style=\"font: 16px arial\">ab<tspan x=\"50%\" dy=\"20%\">cd</tspan></text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-rect-rx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1\" y=\"2\" width=\"33.3%\" height=\"12.5%\" rx=\"5%\" ry=\"5%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-circle",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-ellipse",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse id=\"t\" cx=\"25%\" cy=\"75%\" rx=\"10%\" ry=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-line",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"0\" y1=\"50%\" x2=\"100%\" y2=\"75%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject id=\"t\" x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><div xmlns=\"http://www.w3.org/1999/xhtml\">hi</div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-in-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(10, 20) scale(2)\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-nested",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-nested-viewBox",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\" viewBox=\"0 0 400 50\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-viewBox-nested-percent",
+   "html": "<svg id=\"my-svg\" width=\"100%\" viewBox=\"0 0 1000 500\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"25%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-text-x",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"50%\" y=\"16\" text-anchor=\"middle\" style=\"font: 16px arial\">Fruits and Vegetables</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-text-xy",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"25%\" y=\"50%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-text-dx",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"20\" dx=\"10%\" dy=\"10%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-tspan",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" y=\"20\" style=\"font: 16px arial\">ab<tspan x=\"50%\" dy=\"20%\">cd</tspan></text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-rect",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-rect-rx",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1\" y=\"2\" width=\"33.3%\" height=\"12.5%\" rx=\"5%\" ry=\"5%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-circle",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-ellipse",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse id=\"t\" cx=\"25%\" cy=\"75%\" rx=\"10%\" ry=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-line",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"0\" y1=\"50%\" x2=\"100%\" y2=\"75%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-fo",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject id=\"t\" x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><div xmlns=\"http://www.w3.org/1999/xhtml\">hi</div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-in-g",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(10, 20) scale(2)\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-nested",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-nested-viewBox",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\" viewBox=\"0 0 400 50\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-sized-viewBox-nested-percent",
+   "html": "<svg id=\"my-svg\" width=\"400\" height=\"300\" viewBox=\"10 20 800 200\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"25%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-text-x",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"50%\" y=\"16\" text-anchor=\"middle\" style=\"font: 16px arial\">Fruits and Vegetables</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-text-xy",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"25%\" y=\"50%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-text-dx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"10\" y=\"20\" dx=\"10%\" dy=\"10%\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-tspan",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" y=\"20\" style=\"font: 16px arial\">ab<tspan x=\"50%\" dy=\"20%\">cd</tspan></text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-rect-rx",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1\" y=\"2\" width=\"33.3%\" height=\"12.5%\" rx=\"5%\" ry=\"5%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-circle",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-ellipse",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse id=\"t\" cx=\"25%\" cy=\"75%\" rx=\"10%\" ry=\"10%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-line",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"0\" y1=\"50%\" x2=\"100%\" y2=\"75%\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-fo",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject id=\"t\" x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><div xmlns=\"http://www.w3.org/1999/xhtml\">hi</div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-in-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(10, 20) scale(2)\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-nested",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-nested-viewBox",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"5\" y=\"6\" width=\"200\" height=\"100\" viewBox=\"0 0 400 50\"><rect id=\"t\" x=\"10%\" y=\"20%\" width=\"50%\" height=\"50%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-percent-max-width-nested-percent",
+   "html": "<svg id=\"my-svg\" width=\"100%\" style=\"max-width: 300px\" viewBox=\"0 0 600 400\" xmlns=\"http://www.w3.org/2000/svg\"><svg x=\"10%\" y=\"10%\" width=\"50%\" height=\"50%\"><circle id=\"t\" cx=\"50%\" cy=\"50%\" r=\"25%\"/></svg></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-today",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\" class=\"today\"><line x1=\"117550174\" x2=\"117550174\" y1=\"25\" y2=\"123\" class=\"today\"></line></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-line-x",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"117550174\" x2=\"117550174\" y1=\"25\" y2=\"123\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-line-y",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"5\" x2=\"6\" y1=\"-117550174\" y2=\"4000000000\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-line-max",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"33554428\" x2=\"33554429\" y1=\"33554430\" y2=\"33554432\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-line-under",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"33554426\" x2=\"33554427\" y1=\"-33554428\" y2=\"-33554430\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-line-min",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"-33554431\" x2=\"-33554432\" y1=\"-33554433\" y2=\"-1e12\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-rect",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"1000000000\" y=\"5\" width=\"1000000000\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-rect-wide",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect id=\"t\" x=\"5\" y=\"5\" width=\"1000000000\" height=\"1e10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-circle",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><circle id=\"t\" cx=\"-1000000000\" cy=\"5\" r=\"500000000\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-text",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><text id=\"t\" x=\"1000000000\" y=\"-1000000000\" style=\"font: 16px arial\">abc</text></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-moved",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(-100000000, 0)\"><line id=\"t\" x1=\"117550174\" x2=\"117550174\" y1=\"25\" y2=\"123\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-polyline",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><polyline id=\"t\" points=\"117550174,25 117550175,123\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-path",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><path id=\"t\" d=\"M117550174,25L117550174,123\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-large-em",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"t\" x1=\"10000000em\" x2=\"5\" y1=\"25\" y2=\"123\" style=\"font-size: 16px\"/></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-milestone",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"75\" y=\"122\" width=\"20\" height=\"20\" transform-origin=\"85px 132px\" style=\"transform: rotate(45deg) scale(0.8,0.8)\"></rect></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-milestone-task",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"75\" y=\"122\" width=\"101\" height=\"20\" transform-origin=\"125.5px 132px\"></rect><rect x=\"219\" y=\"170\" width=\"20\" height=\"20\" transform-origin=\"229px 180px\" style=\"transform: rotate(45deg) scale(0.8,0.8)\"></rect></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-attribute",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform=\"rotate(30)\" transform-origin=\"25px 40px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-attribute-scale",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform=\"scale(2, 0.5)\" transform-origin=\"25 40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-style-origin",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"transform-origin: 10px 20px; transform: scale(2)\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-no-transform",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform-origin=\"25px 40px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-translate",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform=\"translate(5.5, 6.25)\" transform-origin=\"25px 40px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-on-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><g transform=\"rotate(90)\" transform-origin=\"50px 50px\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-decimals",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10.1\" y=\"20.2\" width=\"30.3\" height=\"40.4\" transform=\"rotate(33.3) scale(1.1)\" transform-origin=\"25.25px 40.4px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-origin-matrix",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform=\"matrix(0.866,0.5,-0.5,0.866,10,20)\" transform-origin=\"25px 40px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t rect",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-pie-slice",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><circle cx=\"0\" cy=\"0\" r=\"186\"></circle><path d=\"M0,-185A185,185,0,0,1,155.632,100.019L0,0Z\" style=\"scale: 1.05\"></path></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-scale",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: 1.05\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-scale-xy",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: 2 0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-scale-percent",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: 150%\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-translate",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"translate: 5.5px 6.25px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-translate-x",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"translate: 7px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-rotate",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"rotate: 30deg\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-all",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"translate: 5px 6px; rotate: 30deg; scale: 1.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-with-transform",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" transform=\"translate(3, 4)\" style=\"scale: 2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-with-css-transform",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: 2; transform: rotate(45deg)\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-with-origin",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: 2; transform-origin: 25px 40px\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-on-g",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><g style=\"scale: 0.5\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-individual-none",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"scale: none; rotate: none; translate: none\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t > :last-child",
+     "op": "rect"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-normal",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: normal\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-normal",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: normal\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-bold",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: bold\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-bold",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: bold\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-100",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 100\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-100",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 100\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-300",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 300\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-300",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 300\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-400",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 400\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-400",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 400\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-500",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 500\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-500",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 500\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-600",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 600\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-600",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 600\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-700",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 700\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-700",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 700\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-800",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 800\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-800",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 800\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-900",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 900\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-900",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 900\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-lighter",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: lighter\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-lighter",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: lighter\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-b-bolder",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: bolder\">some <b id=\"t\">bold text</b> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-strong-bolder",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: bolder\">some <strong id=\"t\">bold text</strong> here</span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-nested",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><b>a <strong>b <b id=\"t\">bold text</b></strong></b></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-label",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><div style=\"font-weight: bold; display: table-cell\"><span style=\"; font-weight: bold;\" class=\"nodeLabel\"><p><strong id=\"t\">my bolded name</strong></p></span></div></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-h1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><h1 id=\"t\" style=\"margin: 0; font-size: 16px\">bold text</h1></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-h1-b",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><h1 style=\"margin: 0; font-size: 16px\"><b id=\"t\">bold text</b></h1></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "svgviewport-weight-th",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><foreignObject width=\"2000\" height=\"200\"><div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font: 16px arial; white-space: nowrap; display: inline-block\"><span style=\"font-weight: 300\"><th id=\"t\">bold text</th></span></div></foreignObject></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "style",
+     "arg": "font-weight"
+    },
+    {
+     "sel": "#t",
+     "op": "rect"
+    }
+   ]
+  }
+ ]
+}

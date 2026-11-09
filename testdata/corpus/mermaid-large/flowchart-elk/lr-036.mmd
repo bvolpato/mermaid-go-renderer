@@ -1,0 +1,83 @@
+flowchart LR
+  subgraph g0 [Event]
+    n0(Invoice cache)
+    n1[Stream router session]
+    n3{Probe policy}
+    n4([Probe])
+    n6{{Router}}
+    n11{Payment queue}
+    n12{{Audit audit}}
+    n13[Bucket schema]
+    n14{{Router ledger worker}}
+    n16{{Token stream lease}}
+    n19([Probe invoice])
+    n21[[Quota]]
+    n22[Quota bucket report]
+    n23(Stream index lease)
+    n26(Shard span)
+    n27{Stream}
+    n29[/Alert shard/]
+    n30[Index]
+    n31[(Probe)]
+    n33{Bucket probe quota}
+    n34[/Probe/]
+    n35[(Index shard)]
+  end
+  n2((Policy order))
+  n5[Router]
+  n7{{Cache alert}}
+  n8{Batch}
+  n9{Bucket}
+  n10{Report probe worker}
+  n15{Trace bucket}
+  n17([User probe])
+  n18[(Audit)]
+  n20[Replica]
+  n24{{Replica trace schema}}
+  n25[Worker alert]
+  n28[Lease session]
+  n32{Report event quota}
+  n0 --o|Bucket| n1
+  n1 -.->|Quota metric| n2
+  n1 ==> n3
+  n1 --- n4
+  n4 --x n5
+  n0 --o n6
+  n2 --> n7
+  n0 --> n8
+  n8 --o n9
+  n2 --> n10
+  n9 ==>|Event metric| n11
+  n9 -->|Trace replica| n12
+  n10 --x|Session| n13
+  n10 --> n14
+  n9 -.-> n15
+  n10 ==> n16
+  n14 --> n17
+  n11 -->|Stream| n18
+  n16 --- n19
+  n19 ---|Session session| n20
+  n17 ==>|Audit audit| n21
+  n21 --o n22
+  n14 --- n23
+  n19 --x n24
+  n20 -.-> n25
+  n22 ==> n26
+  n26 --x|Trace user| n27
+  n24 --o n28
+  n26 -.->|Shard lease| n29
+  n29 --x|Queue event| n30
+  n30 --- n32
+  n28 --- n33
+  n33 -.-> n34
+  n32 -.-> n35
+  n10 --> n20
+  n8 --> n0
+  n4 --x n19
+  n16 --x n18
+  n31 --- n3
+  n12 -.-> n31
+  n29 --- n8
+  n2 --> n33
+  n14 --> n10
+  n3 --- n30

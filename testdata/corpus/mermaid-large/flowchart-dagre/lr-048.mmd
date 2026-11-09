@@ -1,0 +1,118 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+  subgraph g0 [Index cache]
+    n2[Shard gateway]
+    n3[/Order/]
+    n7((Span))
+    n10[(Report)]
+    n17{{Invoice index cache}}
+    n20[(Invoice metric)]
+    n21[/Policy probe trace/]
+    n26[Audit]
+    n30([Trace worker queue])
+    n33[/Cache payment/]
+    n37[(Order event ledger)]
+    n43[Policy shard]
+    n44[Alert bucket]
+    n45{{Lease stream}}
+  end
+  subgraph g1 [Token order]
+    n0[/Gateway payment invoice/]
+    n1((Gateway order bucket))
+    n5((Gateway batch token))
+    n6[/Event/]
+    n8((Payment metric))
+    n11(Queue lease index)
+    n16([Lease replica])
+    n19[(Index user)]
+    n25(Order)
+    n32{Session}
+    n34((Quota order))
+    n46([Trace])
+  end
+  n4(Bucket invoice invoice)
+  n9(Ledger span)
+  n12[(Session)]
+  n13{{Worker}}
+  n14[/Audit/]
+  n15[[Stream stream shard]]
+  n18{{Ledger}}
+  n22[[Audit index]]
+  n23[/Replica replica/]
+  n24[Order shard trace]
+  n27((Queue))
+  n28{Cache worker shard}
+  n29[(Lease worker)]
+  n31([Schema queue index])
+  n35(Shard queue replica)
+  n36[(Bucket session alert)]
+  n38([Session])
+  n39{Trace}
+  n40{Schema queue}
+  n41(Quota alert report)
+  n42((Worker shard))
+  n47{{Worker token}}
+  n0 --> n1
+  n0 --x|Invoice report| n2
+  n0 --x n3
+  n2 --> n4
+  n0 -.-> n5
+  n5 --o n6
+  n6 --- n7
+  n0 --o n8
+  n7 --x n9
+  n8 --x n10
+  n9 --- n11
+  n4 --o|Event user| n12
+  n12 -->|Schema| n13
+  n13 --> n14
+  n9 --> n15
+  n13 --- n16
+  n14 ==> n17
+  n13 -->|Trace report| n19
+  n13 --o n20
+  n16 ==>|Span session| n21
+  n13 -.-> n22
+  n21 ==> n23
+  n21 --> n24
+  n22 --o|Audit gateway| n25
+  n19 --x n26
+  n22 -.->|Bucket audit| n27
+  n25 --- n28
+  n24 --- n29
+  n28 --o n30
+  n29 ==>|Index| n31
+  n27 --o n32
+  n24 -.-> n33
+  n26 --- n34
+  n31 -->|Queue| n35
+  n35 ==> n36
+  n35 --o n37
+  n31 --- n38
+  n30 --x n39
+  n34 --- n40
+  n38 --- n41
+  n39 ==> n42
+  n39 --- n43
+  n41 -.-> n44
+  n39 --x|Queue schema| n45
+  n39 ==> n46
+  n43 --- n47
+  n44 --- n37
+  n40 -.-> n42
+  n4 --- n42
+  n0 --x n41
+  n20 --- n35
+  n40 --o n42
+  n8 --o n18
+  n30 --- n16
+  n24 ==> n46
+  n25 --x n6
+  n3 --> n44
+  n31 --x n45
+  n3 ==> n37
+  n42 --> n38
+  g0 --> g1

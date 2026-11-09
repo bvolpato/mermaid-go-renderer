@@ -1,0 +1,36 @@
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s3 --> s5
+    s5 --> s6
+    s6 --> s8 : token
+    s8 --> s9 : router
+    s9 --> s11
+    s11 --> s13
+    s13 --> s15 : payment
+    s15 --> s19
+  }
+  state Group1 {
+    s0 --> s4
+    s4 --> s7 : bucket
+    s7 --> s18 : replica
+    s18 --> s20
+    s20 --> s22
+  }
+  s0 --> s3
+  s3 --> s4
+  s5 --> s6 : Audit
+  s5 --> s7
+  s7 --> s8
+  s7 --> s9
+  s9 --> s10 : User
+  s6 --> s11 : Index gateway
+  s6 --> s12
+  s10 --> s13
+  s12 --> s14
+  s12 --> s15
+  s12 --> s16 : Session
+  s16 --> s17
+  s16 --> s19
+  s14 --> s20 : Span
+  s23 --> [*]

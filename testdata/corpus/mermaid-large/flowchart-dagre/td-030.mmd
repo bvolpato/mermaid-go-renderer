@@ -1,0 +1,71 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  subgraph g0 [Gateway]
+    n0[/Event alert index/]
+    n1(Alert gateway probe)
+    n2[[Shard queue]]
+    n3([Index])
+    n4{Probe cache trace}
+    n8[[Report quota]]
+    n9(Span)
+    n10{{Queue trace}}
+    n12[[Session batch]]
+    n14(Ledger)
+    n19([Worker worker])
+    n20[(Audit token)]
+    n21[Report]
+    n23([Batch])
+    n24{Ledger}
+    n27[Token policy]
+    n29{Stream probe}
+  end
+  n5[(Ledger)]
+  n6[(Policy worker trace)]
+  n7[Quota policy]
+  n11[(Replica probe)]
+  n13([Span report])
+  n15((Invoice ledger))
+  n16((Lease span))
+  n17[[User batch metric]]
+  n18{{Token event}}
+  n22(Report)
+  n25{User}
+  n26{Gateway index}
+  n28[/Payment/]
+  n0 --> n2
+  n2 --- n3
+  n3 --> n4
+  n2 -.-> n5
+  n2 -.->|Trace| n6
+  n3 -.-> n7
+  n3 ==> n8
+  n6 -.-> n9
+  n10 --x n11
+  n8 --o|Ledger| n12
+  n10 ---|Lease metric| n13
+  n11 --> n14
+  n8 --- n15
+  n11 --x n16
+  n11 --x n17
+  n11 --x|Probe| n18
+  n11 --- n19
+  n17 --x n20
+  n15 -.->|Worker invoice| n22
+  n17 ==> n23
+  n17 ==> n24
+  n17 --> n25
+  n22 ==>|Lease| n26
+  n19 ==> n27
+  n19 --o|Report shard| n28
+  n26 -.->|Worker| n29
+  n4 --- n29
+  n29 --o n24
+  n15 --o n6
+  n5 ==> n19
+  n26 --- n9
+  n19 --- n15
+  n17 --- n22
+  n18 ==> n19

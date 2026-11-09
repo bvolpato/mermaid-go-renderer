@@ -1,0 +1,273 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+  class C0 {
+    +bool policy0
+    +ledger1(id) bool
+    +List~int~ order2
+  }
+  class C1 {
+    +bool metric0
+    +invoice1(id) bool
+  }
+  class C2 {
+  }
+  class C3 {
+    +List~int~ schema0
+    +order1() bool
+    +List~int~ probe2
+  }
+  class C4 {
+    +string lease0
+    +bucket1() bool
+    +bool order2
+  }
+  class C5 {
+  }
+  class C6 {
+  }
+  class C7 {
+    +replica0(id) int
+    +worker1(id) int
+    +audit2(id) void
+    +bucket3() void
+  }
+  class C8 {
+    +List~int~ gateway0
+    +gateway1() void
+  }
+  class C9 {
+    +bool trace0
+    +span1(id) bool
+    +session2() void
+  }
+  class C10 {
+    +bool replica0
+  }
+  class C11 {
+  }
+  class C12 {
+  }
+  class C13 {
+    +payment0() bool
+    +bool report1
+  }
+  class C14 {
+  }
+  class C15 {
+    +List~int~ gateway0
+    +report1(id) int
+    +bool policy2
+    +bucket3() void
+  }
+  class C16 {
+    +bool schema0
+  }
+  class C17 {
+    +int session0
+    +string batch1
+    +token2() void
+    +bool user3
+  }
+  class C18 {
+    +string report0
+    +queue1(id) void
+    +int probe2
+  }
+  class C19 {
+    +int invoice0
+    +token1() int
+    +bool metric2
+  }
+  class C20 {
+    +bool audit0
+  }
+  class C21 {
+    +bool report0
+    +List~int~ metric1
+  }
+  class C22 {
+    +List~int~ token0
+    +List~int~ metric1
+    +List~int~ lease2
+  }
+  class C23 {
+    +report0() int
+    +shard1(id) bool
+    +report2() bool
+    +quota3(id) void
+  }
+  class C24 {
+    +token0() int
+  }
+  class C25 {
+    +bool index0
+    +replica1() bool
+  }
+  class C26 {
+    +bool span0
+  }
+  class C27 {
+    +policy0() bool
+    +int probe1
+    +bool quota2
+  }
+  class C28 {
+    +payment0() void
+    +order1(id) int
+  }
+  class C29 {
+    +bool ledger0
+    +lease1() bool
+  }
+  class C30 {
+  }
+  class C31 {
+    +int replica0
+    +bucket1(id) int
+    +token2(id) void
+  }
+  class C32 {
+    +bool batch0
+    +int worker1
+    +List~int~ invoice2
+  }
+  class C33 {
+    +order0(id) bool
+    +metric1(id) bool
+    +order2() int
+    +policy3() bool
+  }
+  class C34 {
+    +cache0() int
+    +alert1(id) bool
+  }
+  class C35 {
+    +replica0() bool
+    +audit1(id) void
+    +bool ledger2
+  }
+  class C36 {
+    +session0() int
+    +gateway1(id) bool
+    +string ledger2
+    +List~int~ schema3
+  }
+  class C37 {
+    +bool trace0
+    +bool alert1
+  }
+  class C38 {
+    +quota0() void
+  }
+  class C39 {
+    +int gateway0
+    +string cache1
+  }
+  class C40 {
+    +int span0
+  }
+  class C41 {
+    +queue0() void
+    +invoice1(id) int
+    +bool index2
+    +batch3(id) bool
+  }
+  class C42 {
+  }
+  class C43 {
+    +shard0() bool
+    +int metric1
+    +queue2(id) bool
+    +payment3() bool
+  }
+  class C44 {
+    +string index0
+  }
+  class C45 {
+    +schema0() bool
+    +invoice1() bool
+    +index2() bool
+  }
+  class C46 {
+    +session0() int
+    +invoice1() void
+  }
+  class C47 {
+  }
+  class C48 {
+    +List~int~ token0
+  }
+  class C49 {
+    +int cache0
+    +bool user1
+    +int policy2
+    +metric3() int
+  }
+  class C50 {
+    +bool alert0
+    +worker1() void
+    +string policy2
+    +bool trace3
+  }
+  class C51 {
+    +string stream0
+  }
+  C0 o-- C1
+  C0 ..|> C2
+  C2 --> C3
+  C1 <|-- C4
+  C2 <|-- C5
+  C0 <|-- C6
+  C2 ..|> C7
+  C2 --> C9
+  C8 -- C10
+  C5 ..|> C11 : policy
+  C5 -- C12 : worker
+  C10 -- C13
+  C14 ..|> C16
+  C13 <|-- C17
+  C14 <|-- C18
+  C12 <|-- C19
+  C17 -- C20
+  C14 ..> C21 : gateway
+  C17 ..> C22
+  C20 <|-- C23
+  C23 *-- C24
+  C18 -- C25
+  C20 *-- C26
+  C23 <|-- C27
+  C27 -- C29
+  C27 o-- C31 : event
+  C30 ..|> C32 : report
+  C29 o-- C33
+  C28 <|-- C34
+  C29 *-- C35
+  C34 ..> C36 : quota
+  C34 ..> C37
+  C37 -- C38
+  C33 --> C39
+  C34 ..|> C40
+  C36 ..|> C41
+  C38 --> C42
+  C36 o-- C43
+  C39 --> C44
+  C41 o-- C45
+  C43 --> C46
+  C46 *-- C47
+  C46 -- C48
+  C46 --> C49
+  C49 ..> C50
+  C49 o-- C51
+  C50 ..> C30
+  C13 -- C9
+  C36 <|-- C27
+  C25 -- C14
+  C4 <|-- C23
+  C19 --> C35
+  C38 -- C11
+  C26 ..> C42
+  C5 -- C12
+  C50 ..> C36

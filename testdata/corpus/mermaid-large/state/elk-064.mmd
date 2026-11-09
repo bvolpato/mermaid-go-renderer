@@ -1,0 +1,86 @@
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s0 --> s1 : stream
+    s1 --> s3 : cache
+    s3 --> s5
+    s5 --> s7
+    s7 --> s25 : report
+    s25 --> s27
+    s27 --> s29 : cache
+    s29 --> s33 : user
+    s33 --> s34
+    s34 --> s38 : user
+    s38 --> s58 : shard
+  }
+  state Group1 {
+    s2 --> s12 : order
+    s12 --> s18
+    s18 --> s24
+    s24 --> s31
+    s31 --> s36
+    s36 --> s37
+    s37 --> s54
+    s54 --> s63 : payment
+  }
+  state Group2 {
+    s4 --> s6
+    s6 --> s16 : metric
+    s16 --> s17 : event
+    s17 --> s21
+    s21 --> s26
+    s26 --> s28
+    s28 --> s49
+    s49 --> s56 : probe
+    s56 --> s62 : lease
+  }
+  state Group3 {
+    s10 --> s11
+    s11 --> s14
+    s14 --> s15 : bucket
+    s15 --> s50
+    s50 --> s60 : queue
+  }
+  s0 --> s1
+  s0 --> s2
+  s2 --> s3
+  s0 --> s4
+  s1 --> s7 : Index gateway
+  s7 --> s8
+  s8 --> s9 : Span
+  s9 --> s10
+  s10 --> s11 : Index probe
+  s12 --> s15 : Payment schema
+  s11 --> s17
+  s17 --> s18
+  s14 --> s20
+  s20 --> s21 : Report order
+  s17 --> s23
+  s18 --> s24
+  s22 --> s25
+  s20 --> s26
+  s26 --> s28 : Ledger
+  s27 --> s32
+  s27 --> s33
+  s33 --> s34
+  s32 --> s35 : Shard
+  s33 --> s37
+  s33 --> s39
+  s34 --> s40
+  s35 --> s41 : Report
+  s38 --> s42 : Worker
+  s42 --> s44 : Quota report
+  s39 --> s45
+  s41 --> s46 : Quota event
+  s43 --> s47
+  s43 --> s48
+  s44 --> s49 : Span stream
+  s48 --> s54
+  s52 --> s55
+  s54 --> s56
+  s52 --> s58
+  s58 --> s59 : Queue session
+  s55 --> s60
+  s55 --> s61
+  s61 --> s62 : Queue stream
+  s63 --> [*]

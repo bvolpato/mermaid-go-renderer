@@ -1,0 +1,12 @@
+css	c4/nightly-check/boundaries/generic-boundary	the file without fonts is the same: the style elements with the fonts differ, which real mmdc adds in an order that changes from run to run
+css	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	the file without fonts is the same: the style elements with the fonts differ, which real mmdc adds in an order that changes from run to run
+css	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+dark	c4/nightly-check/boundaries/generic-boundary	the layout differs
+dark	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	the layout differs
+dark	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+default	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+id	c4/nightly-check/boundaries/generic-boundary	the file without fonts is the same: the style elements with the fonts differ, which real mmdc adds in an order that changes from run to run
+id	flowchart/nightly-check/icon/01-should-render-registered-icons-on-theme-default	the file without fonts is the same: the style elements with the fonts differ, which real mmdc adds in an order that changes from run to run
+id	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+no-font-embed	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported
+transparent	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet	mmdg: KaTeX math in labels is not supported

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><rect width="100%" height="100%" fill="#ffffff"/>
+<g transform="translate(20 15)"><rect width="30" height="16" fill="#9370DB"/></g>
+<g transform="translate(70 15) rotate(20)"><rect width="30" height="16" fill="#9370DB"/></g>
+<g transform="translate(120 10) scale(1.5 0.75)"><rect width="30" height="16" fill="#ffcc00" stroke="#333"/></g>
+<g transform="matrix(1 0.2 -0.3 1 40 50)"><rect width="30" height="16" fill="#00aa66"/><circle cx="15" cy="8" r="6" fill="#fff"/></g>
+<g transform="translate(90 50) skewX(30)"><rect width="30" height="16" fill="#cc3366"/></g>
+<rect x="140" y="50" width="30" height="16" fill="#333" transform="rotate(45 155 58)"/>
+<rect x="20" y="85" width="24" height="24" fill="#ECECFF" stroke="#9370DB" style="transform: rotate(45deg) scale(0.8, 0.8)" transform-origin="32 97"/>
+<g transform="translate(70.4 84.6) scale(0.5)"><g transform="translate(10 10) rotate(-15)"><rect width="60" height="30" rx="5" fill="#ffffde" stroke="#aaaa33" stroke-width="2"/></g></g>
+<text x="0" y="0" transform="translate(150 105) rotate(-30)" font-family="Arial" font-size="12px" fill="#333">rotated</text>
+<text transform="translate(190 60) rotate(90)" font-family="Arial" font-size="14px" fill="#333">vertical</text></svg>

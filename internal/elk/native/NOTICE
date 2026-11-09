@@ -1,0 +1,27 @@
+The Go code in this directory and its subdirectories is a port of parts of
+the Eclipse Layout Kernel (ELK), version 0.9.1, as compiled into elkjs 0.9.3:
+
+  Eclipse Layout Kernel
+  https://github.com/eclipse/elk (tag v0.9.1, plus the change of pull request
+  955, which elkjs 0.9.3 includes)
+  Copyright (c) Kiel University and others.
+
+ELK is made available under the terms of the Eclipse Public License 2.0, which
+is available at http://www.eclipse.org/legal/epl-2.0 and in the file LICENSE
+in this directory.
+
+SPDX-License-Identifier: EPL-2.0
+
+The port is a derivative work of ELK. The files in this directory tree are
+made available under the Eclipse Public License 2.0. Each ported file names
+the ELK source file that it was ported from. The package gwt ports the parts
+of the Java runtime emulation of the GWT project (https://www.gwtproject.org,
+Apache License 2.0) that decide the results of elkjs. The file prop/enum.go
+ports java.util.EnumSet of the same runtime.
+
+The conditions of the Apache License 2.0 stay in force for the code that is
+ported from GWT. The file gwt/NOTICE has the notices of that code, and the
+file gwt/LICENSE-GWT.txt has the Apache License 2.0.
+
+The phase goldens in nativetest/testdata are records of the behavior of
+elkjs 0.9.3 (https://github.com/kieler/elkjs, EPL-2.0).

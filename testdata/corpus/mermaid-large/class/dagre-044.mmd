@@ -1,0 +1,225 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+  class C0 {
+    +metric0() bool
+  }
+  class C1 {
+    +index0() int
+    +index1() bool
+    +bool replica2
+    +span3() int
+  }
+  class C2 {
+  }
+  class C3 {
+  }
+  class C4 {
+  }
+  class C5 {
+    +user0(id) int
+    +probe1(id) int
+    +string replica2
+  }
+  class C6 {
+  }
+  class C7 {
+    +bool span0
+    +bool session1
+    +string worker2
+  }
+  class C8 {
+  }
+  class C9 {
+    +bool router0
+    +worker1() bool
+    +ledger2() void
+    +quota3() void
+  }
+  class C10 {
+    +bool quota0
+    +string index1
+  }
+  class C11 {
+    +audit0() void
+    +List~int~ invoice1
+  }
+  class C12 {
+    +index0(id) void
+    +bool policy1
+  }
+  class C13 {
+    +index0() bool
+    +policy1(id) void
+  }
+  class C14 {
+    +gateway0(id) int
+    +metric1(id) bool
+    +span2(id) void
+  }
+  class C15 {
+    +List~int~ router0
+  }
+  class C16 {
+    +payment0(id) int
+    +lease1() void
+    +ledger2(id) int
+  }
+  class C17 {
+    +List~int~ bucket0
+    +session1(id) void
+    +probe2(id) bool
+    +report3() void
+  }
+  class C18 {
+    +ledger0() void
+    +bool router1
+    +invoice2() bool
+    +string session3
+  }
+  class C19 {
+    +payment0(id) void
+    +bool order1
+    +session2() int
+    +int trace3
+  }
+  class C20 {
+    +string invoice0
+    +gateway1(id) bool
+    +bool stream2
+    +List~int~ policy3
+  }
+  class C21 {
+  }
+  class C22 {
+    +session0(id) bool
+    +invoice1() void
+    +string probe2
+    +bucket3() void
+  }
+  class C23 {
+    +lease0(id) int
+    +string token1
+    +stream2() void
+    +string gateway3
+  }
+  class C24 {
+    +bool user0
+    +gateway1() int
+    +invoice2(id) bool
+  }
+  class C25 {
+    +worker0() int
+    +string index1
+    +bool report2
+  }
+  class C26 {
+    +bool bucket0
+    +cache1(id) void
+    +event2() bool
+    +List~int~ shard3
+  }
+  class C27 {
+    +List~int~ lease0
+    +token1() bool
+    +int policy2
+  }
+  class C28 {
+  }
+  class C29 {
+    +report0(id) void
+  }
+  class C30 {
+    +int queue0
+  }
+  class C31 {
+    +string payment0
+  }
+  class C32 {
+  }
+  class C33 {
+  }
+  class C34 {
+  }
+  class C35 {
+    +audit0(id) bool
+  }
+  class C36 {
+    +string probe0
+    +List~int~ alert1
+    +string invoice2
+    +span3(id) int
+  }
+  class C37 {
+    +report0() bool
+    +int span1
+    +int bucket2
+  }
+  class C38 {
+    +bool bucket0
+    +policy1() void
+    +bool replica2
+    +gateway3(id) void
+  }
+  class C39 {
+    +invoice0() int
+  }
+  class C40 {
+    +string span0
+  }
+  class C41 {
+    +worker0() int
+  }
+  class C42 {
+    +bool user0
+    +bool alert1
+  }
+  class C43 {
+  }
+  C0 ..> C1
+  C1 *-- C2
+  C1 o-- C3
+  C0 ..|> C4 : payment
+  C1 o-- C5
+  C6 *-- C7
+  C1 *-- C8
+  C3 ..> C9 : user
+  C9 ..|> C10
+  C8 ..> C11
+  C8 <|-- C12
+  C12 <|-- C13 : user
+  C9 ..> C14 : user
+  C11 o-- C16
+  C10 <|-- C17
+  C16 -- C19
+  C13 <|-- C20
+  C18 o-- C21
+  C18 o-- C22
+  C21 --> C23
+  C19 ..|> C24
+  C24 *-- C25
+  C19 o-- C26
+  C25 ..|> C27
+  C23 --> C28
+  C23 ..> C29
+  C24 o-- C30 : policy
+  C27 *-- C31
+  C29 --> C32 : token
+  C28 *-- C33
+  C34 <|-- C36
+  C33 ..|> C37 : stream
+  C35 --> C39
+  C39 ..|> C40 : lease
+  C35 *-- C41 : stream
+  C38 ..> C42
+  C41 --> C43 : invoice
+  C15 ..> C26
+  C42 <|-- C14
+  C34 --> C42
+  C29 <|-- C4
+  C21 ..|> C33
+  C19 ..> C27
+  C10 -- C35
+  C8 -- C1

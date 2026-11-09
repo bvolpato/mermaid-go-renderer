@@ -1,0 +1,45 @@
+Notice for internal/css
+
+Go files in this directory follow or name source files of Blink, the layout
+engine of Chromium. The license of each Blink file was read from the header
+of the file at the tag 156.0.8078.4 of
+https://chromium.googlesource.com/chromium/src, the version of the reference
+browser.
+
+  color.go   The parser and the printer of a color follow
+             css_parser_fast_paths.cc (BSD-3-Clause), color.cc
+             (BSD-2-Clause, with the copyright of Apple in the file) and
+             ui/gfx/color_conversions.cc (BSD-3-Clause).
+  cssom.go   The file reproduces how Chromium handles an inline style
+             through the CSSOM. It names no upstream file that it ports.
+             One comment names a function of css_property_value_set.cc
+             (LGPL-2.0-or-later). The serializer of the CSSOM in Blink is
+             style_property_serializer.cc and css_primitive_value.cc
+             (LGPL-2.0-or-later). The Go file does not say if it follows
+             those two files.
+
+  calc.go    The value of a CSS math function follows
+             css_math_expression_node.cc (BSD-3-Clause, with the copyright
+             of Google in the file).
+  content.go The parser of the property content and of a CSS string
+             follows css_tokenizer.cc, css_parser_idioms.cc and
+             longhands_custom.cc (BSD-3-Clause). SerializeString is the
+             algorithm "serialize a string" of the CSS Object Model
+             specification. Blink has that algorithm in css_markup.cc
+             (LGPL-2.0-or-later), which the Go file names and does not
+             follow. A probe recorded the strings that Chromium prints
+             (../browser/testdata/pagesheets-cases.json.gz).
+
+decl.go and range.go port no upstream file.
+
+NOTICE-Blink.txt in this directory has the first comment of each Blink file
+above that has its license terms in the file, with its copyright lines. The
+text of the GNU Library General Public License, version 2, is in
+../browser/LICENSE-LGPL-2.0.txt. The license of the Blink files that say
+"Use of this source code is governed by a BSD-style license" is in
+../font/LICENSE-Chromium.txt.
+
+The owner of the repository has not decided what to do with the code that
+follows the LGPL files. The options are in docs/LICENSE-AUDIT.md, finding
+F1. This notice states where the code comes from. It does not put the Go
+files under a license.

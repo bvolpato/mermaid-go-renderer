@@ -1,0 +1,15 @@
+flowchart TD
+  subgraph diagrams["e2e/diagrams/<diagram-type>/"]
+    direction LR
+    d_pr["pr-check/<br/>*.mmd fixtures"]
+    d_nightly["nightly-check/<br/>*.mmd fixtures"]
+    d_visual["visual-check/<br/>*.mmd fixtures"]
+  end
+  subgraph rendering["e2e/rendering/<diagram-type>/"]
+    direction LR
+    r_pr["pr-check/<br/>*.spec.ts"]
+    r_nightly["nightly-check/<br/>*.spec.ts"]
+    r_visual["visual-check/<br/>*.spec.ts"]
+  end
+  runner["e2e/rendering/mmd-snapshots.spec.ts<br/>(global fixture runner)"]
+  diagrams -->|discovered & rendered by| runner

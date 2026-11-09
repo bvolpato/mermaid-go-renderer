@@ -1,335 +1,216 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="mmdg logo — Go gopher mermaid" width="300"/>
+<img src="assets/logo.svg" alt="mmdg logo" width="260"/>
 
-# mmdg (`mermaid-go-renderer`)
+# mmdg
 
-**Fast native Mermaid rendering in Go. No browser, no Chromium.**
+**Mermaid diagrams in pure Go. No browser. The same SVG as mermaid, byte for byte.**
 
 [![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
-[![Release](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/release.yml)
-
-[Installation](#installation) | [CLI Usage](#cli-usage) | [Fidelity](#fidelity-mmdc-first) | [Performance](#performance) | [Library Usage](#library-usage) | [Release and Homebrew](#release-and-homebrew)
 
 </div>
 
-## Why this project
+`mmdg` is a Go library and a command-line tool that render [Mermaid](https://mermaid.js.org) diagrams to SVG and PNG. It is a port of mermaid 12.2.0: the same parsers, the same layout engines and the same markup, with text measurement that reproduces Chromium. It does not start a browser and it has no cgo.
 
-`mmdg` is a pure Go Mermaid renderer for SVG and PNG output.
+## Why
 
-- Native execution (no browser process)
-- Native SVG and PNG output (PNG rasterized in pure Go)
-- Usable both as a library and CLI
-- Supports Mermaid diagram families through native parsing and rendering
-- Focused on low startup latency for local workflows and CI pipelines
+Mermaid needs a browser. `mermaid-cli` starts headless Chromium for every run. That is slow, heavy in a container and hard to call from a Go service.
 
-## Inspiration
+A renderer without a browser can replace mermaid only if its output is the same. A diagram that looks similar is not enough, because a small difference in one text width moves nodes and edges. So this project has one measure: the SVG text must have the same bytes as the SVG that `mermaid.render()` returns in Chromium.
 
-This project is inspired by the Rust implementation [`1jehuang/mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer).
+## Result
 
-- **Original Mermaid CLI**: `mmdc` (`@mermaid-js/mermaid-cli`)
-- **Rust renderer**: `mmdr` (`mermaid-rs-renderer`)
-- **Go renderer**: `mmdg` (this repository)
+`mmdg` can replace two things, and each has its own proof.
+
+**`mermaid.render()` in a web page.** This is the default of the library.
+
+| Corpus | Diagrams | Pass | Byte-exact | Same error as mermaid |
+|---|---:|---:|---:|---:|
+| The end-to-end tests of mermaid | 2145 | 2141 (99.8%) | 2076 | 65 |
+| The examples of the mermaid documentation | 596 | 594 (99.7%) | 576 | 18 |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100%) | 70 | 0 |
+
+- "Pass" means byte-exact output, or an error for a diagram that mermaid also rejects.
+- The 6 diagrams that do not pass use KaTeX math, which is not supported.
+- The ports were developed against the first corpus only. The other two show that the result holds for diagrams that the code never saw.
+- Each corpus passes with the same counts against two references: Chromium 156 on Linux with the Liberation fonts, and Chromium 156 on macOS with the system fonts.
+
+**The `mmdc` command of mermaid-cli 12.** This is the default of the `mmdg` command. `mmdc` renders in a page of its own, with web fonts that a plain page has not (see [Pages](#pages)), and it writes the SVG as XML with the fonts embedded.
+
+| Corpus | Diagrams | Pass on Linux | Pass on macOS |
+|---|---:|---:|---:|
+| The end-to-end tests of mermaid | 2145 | 2140 (99.8%) | 2131 (99.3%) |
+| The examples of the mermaid documentation | 596 | 578 (97.0%) | 578 (97.0%) |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100%) | 70 (100%) |
+
+- "Pass" means that both files of `mmdc` have the same bytes: the file with the embedded fonts and the file of `--no-font-embed`. It also counts an error for a diagram that `mmdc` rejects.
+- The diagrams that do not pass use KaTeX math (6) or ZenUML (17), which `mmdc` renders with a plugin. Neither is supported.
+- On macOS, 9 more diagrams have one number that differs in its last digit, for example `182.4px` where `mmdc` writes `182.399px`.
+
+You can check this yourself. The repository has the SHA-256 of every reference SVG, and one test compares them:
+
+```sh
+go test -run TestCorpusParity .
+```
+
+The tables by diagram type are in [docs/PARITY.md](docs/PARITY.md), [docs/PARITY-DOCS.md](docs/PARITY-DOCS.md) and [docs/PARITY-LARGE.md](docs/PARITY-LARGE.md) for the Linux reference, and in [docs/PARITY-MACOS.md](docs/PARITY-MACOS.md) for the macOS reference. The tables for `mmdc` are in [docs/PARITY-MMDC.md](docs/PARITY-MMDC.md) and [docs/PARITY-MMDC-MACOS.md](docs/PARITY-MMDC-MACOS.md). [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) explains how the references are made and how you can make them again.
+
+The test also runs in a container with no fonts and no browser, because the default fonts are part of the module.
 
 ## Performance
 
-This README includes direct performance and fidelity benchmarking against Mermaid CLI (`mmdc`).
+| Measurement | mermaid in Chromium | mmdg | Ratio |
+|---|---:|---:|---:|
+| One render in a warm process, median of 2076 diagrams | 11.5 ms | 0.88 ms | 13x |
+| The same, 90th percentile | 25.8 ms | 2.55 ms | 10x |
+| Command-line run, flowchart to SVG (`mmdc` and `mmdg`) | 729 ms | 46.8 ms | 16x |
+| Command-line run, flowchart to PNG | 711 ms | 52.5 ms | 14x |
 
-Benchmark host:
+- The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
+- The last two rows compare whole processes. `mmdc` starts a browser in each run.
+- All numbers are from one machine. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.
 
-- Apple M4 Max
-- macOS darwin 25.1.0
-- Go 1.26.0
-- Date: 2026-02-26
+## Install
 
-## Fidelity (mmdc-first)
-
-`mmdg` fidelity is measured against **`mmdc` output as ground truth**.
-
-Approach:
-
-1. Render paired outputs for the same fixtures:
-   - `mmdc` -> `/tmp/{name}_mmdc.svg`
-   - `mmdg` -> `/tmp/{name}_mmdg.svg`
-2. Compute XML deltas (not only visual deltas) with:
-   - `python3 scripts/svg_xml_delta.py`
-3. Track three parity gates per fixture:
-   - `tag_delta`
-   - `attr_presence_delta`
-   - `text_delta`
-4. Prioritize fixtures with largest structural deltas first.
-
-Reproduce the full fidelity sweep:
-
-```bash
-./scripts/render_all_components_to_tmp.sh
-python3 scripts/svg_xml_delta.py
-```
-
-PNG conformance is tracked separately against `mmdc` PNG output and stored in
-`testdata/conformance/png_mismatch_baseline.json`.
-
-- `go test ./...` now validates that the PNG baseline covers every conformance fixture.
-- `./scripts/update_png_conformance_baseline.sh` refreshes the full PNG baseline with
-  the current `mmdc`/Node toolchain and writes that metadata into the baseline file.
-- `MMDG_PNG_CONFORMANCE=1 go test -run TestPNGConformanceAgainstMMDC -count=1 -v`
-  runs the PNG regression suite without updating the baseline.
-- `./scripts/report_png_parity_gaps.sh` runs the PNG sweep, parses the
-  `fixture=... png_mismatch=...` lines, and prints the remaining >`0.10`
-  backlog grouped by diagram family so parity work can be handled in order.
-
-Latest XML fidelity snapshot (`/tmp/svg_xml_delta_report.csv`):
-
-- Fixtures compared: **23**
-- Exact parity (`tag_delta=0`, `attr_presence_delta=0`, `text_delta=0`): **8 / 23**
-- Structural parity (`tag_delta=0`, `attr_presence_delta=0`): **8 / 23**
-
-Exact-parity fixtures:
-
-- `architecture_complex`, `block_complex`, `gantt_complex`, `mindmap_complex`
-- `radar_complex`, `sankey_complex`, `sequence_complex`, `treemap_complex`
-
-Current highest-delta fixtures (XML-first backlog):
-
-- `flowchart_complex` (`tag=55`, `attr=272`, `text=5`)
-- `gitgraph_complex` (`tag=24`, `attr=268`, `text=2`)
-- `c4_context_complex` (`tag=47`, `attr=181`, `text=23`)
-- `requirement_complex` (`tag=73`, `attr=149`, `text=18`)
-
-Method:
-
-- warm-up pass for each tool and fixture
-- repeated CLI runs (`mmdg`: 20, `mmdr`: 20, `mmdc`: 5)
-- measured wall-clock render command time
-
-### Renderer stack comparison
-
-| Tool | Role | Implementation | Runtime stack |
-|:--|:--|:--|:--|
-| `mmdc` | Original Mermaid CLI | JavaScript | Node.js + Puppeteer + headless Chromium |
-| `mmdr` | Rust version | Rust | Native binary |
-| `mmdg` | Our version | Go | Native binary |
-
-### CLI render benchmark (`mmdc` vs `mmdr` vs `mmdg`)
-
-| Diagram | `mmdc` avg | `mmdr` avg | `mmdg` avg | `mmdr` vs `mmdc` | `mmdg` vs `mmdc` |
-|:--|--:|--:|--:|--:|--:|
-| Flowchart | 2450.55 ms | 18.85 ms | 13.94 ms | 129.99x | 175.78x |
-| Sequence | 2356.64 ms | 32.60 ms | 15.56 ms | 72.30x | 151.46x |
-| Class | 2594.45 ms | 18.47 ms | 15.76 ms | 140.47x | 164.61x |
-| State | 2623.20 ms | 20.41 ms | 18.18 ms | 128.51x | 144.27x |
-
-Geometric mean speedup vs `mmdc`:
-
-- `mmdr` (Rust): **114.13x**
-- `mmdg` (Go): **158.58x**
-
-On this run, `mmdg` is faster than `mmdr` on these representative fixtures.
-
-### Library microbenchmarks (`go test -bench`)
-
-| Benchmark | Time | Memory | Allocs |
-|:--|--:|--:|--:|
-| Flowchart | 121,343 ns/op | 44,314 B/op | 418 |
-| Sequence | 54,838 ns/op | 46,253 B/op | 206 |
-| State | 158,538 ns/op | 62,489 B/op | 302 |
-| Class | 70,093 ns/op | 59,870 B/op | 249 |
-| Pie | 96,986 ns/op | 50,901 B/op | 390 |
-| XY Chart | 104,718 ns/op | 67,371 B/op | 535 |
-
-Reproduce library benchmarks:
-
-```bash
-go test -run ^$ -bench BenchmarkRender -benchmem ./...
-```
-
-## Installation
-
-### Homebrew (recommended)
-
-```bash
-brew tap bvolpato/tap
-brew install bvolpato/tap/mmdg
-mmdg --help
-```
-
-Upgrade later:
-
-```bash
-brew update
-brew upgrade mmdg
-```
-
-### Download prebuilt binary (GitHub Releases)
-
-Pick the archive for your OS/arch from:
-
-- `https://github.com/bvolpato/mermaid-go-renderer/releases/latest`
-
-Example (`darwin_arm64`):
-
-```bash
-VERSION="v0.2.0" # replace with the version you want
-curl -L "https://github.com/bvolpato/mermaid-go-renderer/releases/download/${VERSION}/mermaid-go-renderer_${VERSION#v}_darwin_arm64.tar.gz" -o mmdg.tar.gz
-tar -xzf mmdg.tar.gz
-chmod +x mmdg
-sudo mv mmdg /usr/local/bin/mmdg
-mmdg --help
-```
-
-If you have multiple `mmdg` binaries in `PATH`, check with:
-
-```bash
-which -a mmdg
-```
-
-### Build locally
-
-```bash
-git clone https://github.com/bvolpato/mermaid-go-renderer
-cd mermaid-go-renderer
-go build ./cmd/mmdg
-```
-
-### Install with `go install`
-
-```bash
+```sh
+go get github.com/bvolpato/mermaid-go-renderer
 go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
 ```
 
-## CLI Usage
+The module needs Go 1.27 or newer. A few case mappings and character classes come from the Unicode tables of the Go release, and Go 1.27 has the Unicode version of Chromium 156. With an older release, a label with one of the newest Unicode characters can differ from mermaid.
 
-Render a Mermaid file to SVG:
-
-```bash
-mmdg -i diagram.mmd -o out.svg -e svg
-```
-
-Render a Mermaid file to PNG:
-
-```bash
-mmdg -i diagram.mmd -o out.png -e png
-```
-
-Render from stdin:
-
-```bash
-echo 'flowchart LR; A-->B-->C' | mmdg -e svg
-```
-
-Render all Mermaid blocks from Markdown:
-
-```bash
-mmdg -i docs.md -o ./out -e svg
-```
-
-Useful flags:
-
-- `--nodeSpacing`
-- `--rankSpacing`
-- `--preferredAspectRatio` (`16:9`, `4/3`, `1.6`)
-- `--fastText`
-- `--timing`
-
-## Diagram support
-
-Current parser and renderer paths detect and handle Mermaid families including:
-
-- Flowchart, Sequence, Class, State, ER, Pie
-- Mindmap, Journey, Timeline, Gantt, Git Graph
-- XY Chart, Quadrant
-- Requirement, C4, Sankey, ZenUML, Block, Packet, Kanban, Architecture, Radar, Treemap
-
-## Library Usage
-
-Add the dependency:
-
-```bash
-go get github.com/bvolpato/mermaid-go-renderer@latest
-```
-
-Simple API:
+## Use the library
 
 ```go
-package main
+import mermaid "github.com/bvolpato/mermaid-go-renderer"
 
-import (
-	"fmt"
+svg, err := mermaid.Render("flowchart LR\n  A[Start] --> B{Done?}\n  B -->|yes| C[Stop]")
 
-	mermaid "github.com/bvolpato/mermaid-go-renderer"
+png, err := mermaid.RenderPNG(src, mermaid.WithScale(2))
+```
+
+Config works as in mermaid. Front matter and directives in the diagram text apply, and a site config stands for the argument of `mermaid.initialize`:
+
+```go
+svg, err := mermaid.Render(src,
+	mermaid.WithConfigJSON([]byte(`{"theme": "dark", "look": "classic"}`)),
+	mermaid.WithID("diagram-1"),
 )
-
-func main() {
-	svg, err := mermaid.Render("flowchart LR\nA[Start] --> B{Decision}\nB --> C[Done]")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(svg)
-}
 ```
 
-Write PNG directly from Go:
+| Option | Effect |
+|---|---|
+| `WithConfigJSON`, `WithConfig`, `WithTheme` | The site config of mermaid. |
+| `WithID` | The id of the `svg` element. The default is `my-svg`, as in mermaid-cli. |
+| `WithViewportWidth` | The width of the page that the layout assumes. The default is 800 px. |
+| `WithTime`, `WithRandomSeed` | The clock and the random numbers. Both have fixed defaults. |
+| `WithSystemFonts`, `WithFontDirs` | The fonts that measure text. See below. |
+| `WithPage`, `WithFontEmbed` | The web page that the render reproduces, and the embedded fonts of `StandaloneSVG`. See [Pages](#pages). |
+| `WithImageSize` | The natural size of images that a diagram names by URL. |
+| `WithScale`, `WithBackground`, `WithBackgroundColor` | The pixel density and the background of PNG output. `WithBackgroundColor` takes a CSS color and also applies to `StandaloneSVG`. |
+
+For a service:
+
+- `Render` is safe for concurrent use. A test renders the corpus from many goroutines with the race detector.
+- The result depends only on the source and the options. The clock and the random numbers are fixed unless you set them.
+- `RenderContext` stops when its context is done. Use a deadline for input that you do not trust.
+- A defect in the renderer returns as an `*InternalError`. It does not stop your program.
+- `StandaloneSVG` turns the result into a file that an image viewer or an XML parser reads. The string that `Render` returns is HTML markup, as in mermaid: a `<br>` in a label has no end tag.
+- The renderer never reads from the network. An image in a label needs `WithImageSize`, or a data URL.
+
+## Use the command line
+
+`mmdg` takes the options of `mmdc` (mermaid-cli 12, and the options that mermaid-cli 11 had):
+
+```sh
+mmdg -i diagram.mmd -o diagram.svg
+mmdg -i diagram.mmd -o diagram.png -s 2
+mmdg -i README.md -o out.svg                    # one file for each mermaid block
+mmdg -i README.md -o README.out.md -a images    # Markdown with images in place of the blocks
+cat diagram.mmd | mmdg -i - -o - -e svg > diagram.svg
+```
+
+It writes the files that `mmdc` writes: the diagram is laid out with the web fonts of the page of `mmdc`, the SVG is XML with the background color and the embedded fonts, and a PNG has the size of the screenshot of `mmdc`. The messages and the exit codes are those of `mmdc`.
+
+- `--no-font-embed` writes the SVG without the font data, as in `mmdc`.
+- `--page plain` renders as mermaid does in a page without the web fonts.
+
+[docs/CLI.md](docs/CLI.md) has every option, what was compared with real `mmdc` runs, and what differs. PDF output and icon packs are not supported.
+
+## Fonts and reproducible output
+
+Mermaid measures text to lay out a diagram, so the fonts decide the result.
+
+By default `mmdg` measures with fonts that are part of the module: Liberation Sans, Serif and Mono, which have the metrics of Arial, Times New Roman and Courier New. It applies the rules of Chromium on Linux. It reads no font file, so it gives the same SVG on a laptop and in a container that has no fonts. The reference for this mode is mermaid in Chromium on Linux with only the Liberation fonts installed.
+
+- `WithFontDirs` adds font files for text that the Liberation fonts have no glyphs for, such as Chinese, Japanese, Korean and emoji.
+- `WithSystemFonts` measures with the fonts of the machine, by the rules of Chromium on that operating system. The result then matches mermaid in a browser on the same machine. It is verified on macOS.
+
+## Pages
+
+The page that mermaid runs in also decides the result. In mermaid 12 the default theme of flowcharts, class diagrams, sequence diagrams and other types names the font `Recursive Variable`. A plain web page has no such font, so Chromium falls back to Arial. The page of `mmdc` loads the font, with Open Sans and Font Awesome, so the same diagram has another layout there.
+
+| Page | Fonts of the page | Who uses it |
+|---|---|---|
+| `PagePlain` | none | The library by default. It gives what `mermaid.render()` returns in a page that has only mermaid. |
+| `PageMermaidCLI` | Recursive Variable, Open Sans, Font Awesome | The `mmdg` command by default. It gives what `mmdc` writes. An icon such as `fa:fa-car` shows, and the layout `tidy-tree` is available. |
+
+The fonts of `PageMermaidCLI` are part of the module. To get the file of `mmdc` from the library:
 
 ```go
-package main
-
-import (
-	mermaid "github.com/bvolpato/mermaid-go-renderer"
+svg, err := mermaid.Render(src, mermaid.WithPage(mermaid.PageMermaidCLI))
+file, err := mermaid.StandaloneSVG(svg,
+	mermaid.WithPage(mermaid.PageMermaidCLI),
+	mermaid.WithBackgroundColor("white"),
+	mermaid.WithFontEmbed(true),
 )
-
-func main() {
-	svg, err := mermaid.RenderWithOptions("flowchart LR\nA-->B", mermaid.DefaultRenderOptions())
-	if err != nil {
-		panic(err)
-	}
-	if err := mermaid.WriteOutputPNG(svg, "out.png"); err != nil {
-		panic(err)
-	}
-}
 ```
 
-Pipeline API:
+## Diagram types
 
-```go
-parsed, _ := mermaid.ParseMermaid("flowchart LR\nA-->B")
-layout := mermaid.ComputeLayout(&parsed.Graph, mermaid.ModernTheme(), mermaid.DefaultLayoutConfig())
-svg := mermaid.RenderSVG(layout, mermaid.ModernTheme(), mermaid.DefaultLayoutConfig())
+All diagram types of mermaid 12.2.0 render: flowchart, sequence, class, state, entity relationship, requirement, gantt, pie, quadrant, xychart, gitGraph, journey, timeline, mindmap, C4, sankey, block, packet, radar, treemap, kanban, architecture, venn, ishikawa, cynefin, wardley, treeView, usecase, swimlane, agentflow, railroad (four syntaxes), eventmodeling and info.
+
+All layouts are supported: dagre, ELK, cose-bilkent, fcose and swimlanes, and `tidy-tree` in the page of `mmdc`. All looks (`classic`, `neo`, `handDrawn`) and all themes are supported.
+
+Not supported:
+
+- KaTeX math in labels (`$$...$$`). Mermaid lets the browser lay out MathML.
+- The `zenuml` diagram, which is an external plugin of mermaid. `mmdc` renders it. `mmdg` does not.
+- `securityLevel: sandbox`, which renders into an iframe.
+- Click callbacks. They need a live page and do not change the SVG.
+
+## How it works
+
+Each package under `internal/` is a line-by-line port of the code that produces the result in the browser, and each has tests that compare it with that code on recorded inputs, bit for bit. The main parts:
+
+- The diagram code of mermaid and its parsers.
+- The layout engines: dagre, the layered algorithm of Eclipse ELK, and cytoscape for mindmap and architecture.
+- A small browser engine for measurement: DOM, CSS cascade, font matching, HarfBuzz shaping with the arithmetic of Blink, the float geometry of Skia.
+- The JavaScript semantics that decide bits: number formatting, object key order, the sort of V8, and `Math` functions with the results of Chromium.
+- A rasterizer for PNG output that ports the software renderer of Skia.
+
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the details.
+
+## Development
+
+```sh
+go test ./...                          # package tests against recorded goldens
+go test -run TestCorpusParity .        # the corpus against the reference hashes
+go run ./cmd/parity                    # the corpus against reference SVG files, with the first difference
+go run ./tools/fmacheck ./internal/... # no fused multiply-add in ported code
 ```
 
-## Architecture
+The reference SVG files come from `tools/reference/oracle.mjs`, which runs mermaid 12.2.0 in headless Chromium, and from `tools/reference/oracle-linux.mjs`, which does the same in a Linux container. Only these tools need node and a browser. The library and its tests do not.
 
-Native rendering pipeline:
+## Licenses
 
-```
-.mmd -> parser -> IR graph -> layout -> SVG renderer
-```
+The original code of this repository is under the MIT license. See [LICENSE](LICENSE).
 
-No browser process is spawned.
+The MIT license does not replace the licenses of the code that was ported. The code is a port of mermaid and of the libraries and browser code that produce its output, so most packages are derivative works and keep the terms of their source:
 
-## Testing
+- Most sources are under MIT, ISC, BSD or Apache-2.0 terms: mermaid, d3, dagre, cytoscape, roughjs, DOMPurify (taken under Apache-2.0), Skia, V8 and most of Chromium.
+- `internal/elk` contains elkjs and a port of the layered algorithm of Eclipse ELK, which are under EPL-2.0.
+- Parts of `internal/browser`, `internal/raster`, `internal/dom` and `internal/css` follow SVG, layout and CSS source files of Blink that are under LGPL-2.0-or-later. Every render uses this code. A program that contains this module and is given to others must meet the conditions of the LGPL for these files.
+- The embedded Liberation fonts are under the SIL Open Font License 1.1.
 
-```bash
-go test ./...
-go test -race ./...
-go vet ./...
-go build ./...
-```
-
-## Release and Homebrew
-
-GoReleaser and CI are configured:
-
-- `.goreleaser.yaml` (schema version 2)
-- `.github/workflows/ci.yml`
-- `.github/workflows/release.yml`
-
-Release workflow on tag (`v*`) does:
-
-- cross-platform binary builds
-- archives + checksums
-- GitHub Release publishing
-- Homebrew formula updates in `bvolpato/homebrew-tap`
-
-Required GitHub secret:
-
-- `HOMEBREW_TAP_GITHUB_TOKEN` (token with write access to the tap repository)
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) has the copyright lines and the license texts. [docs/PROVENANCE.md](docs/PROVENANCE.md) says which package comes from which source. [docs/LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md) has the findings of the audit, the decisions that were made and the decisions that are open.

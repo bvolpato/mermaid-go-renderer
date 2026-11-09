@@ -1,0 +1,7384 @@
+{
+ "cases": [
+  {
+   "name": "pathbounds-timeline-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(200, 50)\"><rect width=\"190\" height=\"67.8\"/></g><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/><rect id=\"b\" x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/></g><rect x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"200\" y=\"50\" width=\"10\" height=\"10\"/><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"295\" y2=\"423.4\"/></g><rect x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><path id=\"l\" d=\"M295,117.8L295,423.4\"/><rect id=\"b\" x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"300\" y2=\"423.4\"/></g><rect x=\"200\" y=\"-11\" width=\"10\" height=\"10\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(10.5, 20.25)\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"300\" y2=\"423.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-timeline-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"scale(1.5)\"><line id=\"l\" x1=\"295\" y1=\"117.8\" x2=\"300\" y2=\"423.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(44.8, -1)\"><polyline id=\"l\" points=\"-232.1,1089 4.34,9.8\"/></g><rect x=\"168.6\" y=\"41.4\" width=\"158.3\" height=\"57\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-17.5, 588.45)\"><path id=\"l\" d=\"M865.725,-278.7Q1090.7,14.7 0.309,257.12C-0.2,111 0,89.365 328.8,47\"/></g><rect x=\"124\" y=\"18\" width=\"3.16\" height=\"455.961\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(13.56, 0.7)\"><path id=\"l\" d=\"M1.6,6.1Q148.46,798 149.19,0.82C73.9,1.6 106,2.429 156.9,1\"/></g><rect x=\"-17.9\" y=\"5.7\" width=\"23\" height=\"0.194\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"-158.6,88.57 1,12.204\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"14.5\" y1=\"4.4\" x2=\"-2.244\" y2=\"82.819\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.5,1.27L15.3,-140.078H771.8L303.2,0.2V6.6Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-118.6\" y=\"0\" width=\"0.57\" height=\"0.1\"/><g id=\"b\"><line id=\"l\" x1=\"31\" y1=\"510.8\" x2=\"134.5\" y2=\"154.101\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"62.5\" y1=\"-0.3\" x2=\"10.5\" y2=\"6.77\"/></g><rect x=\"82.7\" y=\"21.4\" width=\"1098.348\" height=\"1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M15.788,45.207Q501.6,868.7 -2,0.1C38.5,36.829 611,1287.617 129,0.8\"/></g><rect x=\"1699.9\" y=\"-2.4\" width=\"0.6\" height=\"0.652\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M45.6,1.3Q-4.1,65.9 -10.009,4.8C374,-232.7 88.9,154 1.3,65.3\"/></g><rect x=\"661.7\" y=\"0.3\" width=\"110.21\" height=\"0.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"29\" y=\"1\" width=\"1216.02\" height=\"1.37\"/><g id=\"b\"><path id=\"l\" d=\"M13,811.06Q436.7,1.21 9.1,0.77C14.52,1042.5 896.9,3.8 -152.4,3.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"2,140.402 -7,768.8 63.89,-0.1 103,-2 96.86,-289.2\"/><rect x=\"1061\" y=\"162.8\" width=\"16.9\" height=\"122.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"14.81\" y1=\"889.5\" x2=\"-9.5\" y2=\"1.6\"/></g><rect x=\"15.1\" y=\"-73.8\" width=\"102\" height=\"81.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1683.8,147.1 3.2,14.5 119.16,732.957 488.89,1.1\"/></g><rect x=\"1087.3\" y=\"9\" width=\"12.9\" height=\"0.1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"-2.612,124.07 307.226,-0.2 326.3,-0.07 57.73,-300\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-0.1,1038.6H299.1Z\"/><rect x=\"1540.26\" y=\"16\" width=\"615.987\" height=\"1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.4,6.9Q23.679,132 27.22,0C71.7,-12 0.5,52.77 1021.6,1380\"/><rect x=\"-239\" y=\"13\" width=\"1258.71\" height=\"0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-1.969,8.61L-0.1,-134.72L4.64,539L1461.957,1.2V113\"/></g><rect x=\"57\" y=\"78.44\" width=\"168.557\" height=\"146\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(705.96, 428.4)\"><path id=\"l\" d=\"M1649.78,167.7Q360.4,162.2 46.8,19C0.4,-25.7 1037.2,42.834 -14.1,722.8\"/></g><rect x=\"2.57\" y=\"-14.6\" width=\"1.106\" height=\"137.514\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M556.019,64.5Q168.453,7.09 3,0.426C12.4,3.494 136.8,-240.1 1136.2,1624\"/></g><rect x=\"0.6\" y=\"95.35\" width=\"141\" height=\"686.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-45,876.78V-177V129.6H663.7H0.8Z\"/></g><rect x=\"270\" y=\"776.6\" width=\"1.7\" height=\"12.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"405.1,89.14 2,732.4 -269.2,1078.94 -4.903,-21.6 8.3,1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"167.8\" y1=\"1144.1\" x2=\"1.15\" y2=\"94.9\"/><rect x=\"62.9\" y=\"1405.32\" width=\"7.3\" height=\"1354.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"903.5\" y1=\"111.177\" x2=\"1.6\" y2=\"0.16\"/></g><rect x=\"61\" y=\"-105.2\" width=\"103.1\" height=\"0.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-251.3\" y=\"350.149\" width=\"883.8\" height=\"12.88\"/><g id=\"b\"><polyline id=\"l\" points=\"508.1,750.71 11.2,0.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"0.8,4 1025.3,121.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-36",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-25.69,3.9H96.3L-7.3,147.1V104.3\"/></g><rect x=\"561.069\" y=\"23.188\" width=\"13.05\" height=\"1469.43\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-37",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1081\" y1=\"1072.1\" x2=\"120.763\" y2=\"-0.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-38",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"8.4\" y=\"308\" width=\"55.8\" height=\"140.3\"/><g id=\"b\"><path id=\"l\" d=\"M10.5,103.22Q0.1,326.8 1636.6,1.062C7.292,15.1 125.903,1599.77 2.38,180.78\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-39",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(463.461, 43.73)\"><polyline id=\"l\" points=\"68.6,66 144.572,350 633,8.03 0,949.7 1.208,119.568\"/></g><rect x=\"1484\" y=\"29.707\" width=\"16.16\" height=\"32.72\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-40",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1038\" y=\"0.159\" width=\"96\" height=\"96.889\"/><g id=\"b\"><path id=\"l\" d=\"M684.39,631L50,0H873.8V166.4Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"166.5\" y1=\"12.6\" x2=\"17.1\" y2=\"110.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-42",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"842.1,1116.186 -9.9,16.9 5,-0.2 109.7,-234.895\"/></g><rect x=\"1.517\" y=\"604\" width=\"2.9\" height=\"830\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-43",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1589.3,-31.87V0H110.8L149.4,1.503l41,443.7\"/><rect x=\"0.9\" y=\"52.4\" width=\"1437\" height=\"7.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-44",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"516\" y=\"91.057\" width=\"3.7\" height=\"1\"/><g id=\"b\"><line id=\"l\" x1=\"28.5\" y1=\"-0.1\" x2=\"1.1\" y2=\"139.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-45",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"45.2\" y=\"8.8\" width=\"87.34\" height=\"720.5\"/><g id=\"b\"><line id=\"l\" x1=\"1.7\" y1=\"13.8\" x2=\"15.81\" y2=\"-0.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-46",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.4\" y1=\"481.896\" x2=\"107.4\" y2=\"0.212\"/></g><rect x=\"16.3\" y=\"621\" width=\"111.877\" height=\"39.28\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-47",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"674\" y=\"164.6\" width=\"1.3\" height=\"55\"/><g id=\"b\"><path id=\"l\" d=\"M757.424,114L-150.2,-1.8L1.008,159.2V23.5Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-48",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1519.3\" y=\"81.271\" width=\"151.38\" height=\"0.9\"/><g id=\"b\"><line id=\"l\" x1=\"13.3\" y1=\"835.4\" x2=\"1.1\" y2=\"15.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-49",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.3\" y1=\"50.7\" x2=\"-22.503\" y2=\"26.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-50",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(12.3, 231)\"><line id=\"l\" x1=\"196.824\" y1=\"0\" x2=\"1\" y2=\"64.7\"/></g><rect x=\"41.7\" y=\"538.454\" width=\"1464.9\" height=\"16.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-51",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M98.95,379.4V1563.898V137l45,731.5Z\"/></g><rect x=\"606\" y=\"-2.2\" width=\"75.1\" height=\"35.97\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-52",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-63.83,0.3L166.28,-8l357.3,900.08H-207.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-53",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.57,1692V49.2L792.3,111.1l78.5,2.037l0.87,77.1\"/><rect x=\"368\" y=\"15.12\" width=\"345\" height=\"19.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-54",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"824.1\" y1=\"14.9\" x2=\"85.181\" y2=\"76.2\"/><rect x=\"480.2\" y=\"-88.1\" width=\"133.7\" height=\"35\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-55",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(138, 30.1)\"><polyline id=\"l\" points=\"-195.1,22.7 16.3,98.8 -29.92,367.094 2.19,482.901 1554.7,55.15\"/></g><rect x=\"11\" y=\"21.71\" width=\"168.9\" height=\"51\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-56",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-92.1\" y1=\"1.336\" x2=\"56.3\" y2=\"1375.2\"/><rect x=\"4.68\" y=\"161\" width=\"1382.44\" height=\"22.88\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-57",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1533.466,11 -18.114,9.14 1248.976,1.3 19.4,160\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-58",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1628.51,-28.8 0.9,37.7\"/><rect x=\"-7.92\" y=\"-3.9\" width=\"7.288\" height=\"818.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"60\" y=\"14.1\" width=\"9.4\" height=\"9.8\"/><g id=\"b\"><path id=\"l\" d=\"M142.6,-17H1193.3V690.4l13.1,50.1Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-60",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(5.909, 2.3)\"><polyline id=\"l\" points=\"778.4,88.14 1.007,65.8 546.6,1138.2\"/></g><rect x=\"1.1\" y=\"1463.5\" width=\"12\" height=\"13\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-61",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M89.47,1053.75Q84,1.6 9.1,1.651C753,7 396.7,13.6 -5.26,136.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1181.4\" y=\"1263.5\" width=\"670\" height=\"5.8\"/><g id=\"b\"><polygon id=\"l\" points=\"2.316,72.2 4.71,280.8 10.2,0.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-63",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"482.5,11.26 249.6,439\"/><rect x=\"-13.62\" y=\"1\" width=\"876.356\" height=\"57.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-64",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"-2.46,15.35 4.5,148.553 118.6,41 -44.7,274.6 150,152.3\"/></g><rect x=\"65.9\" y=\"1475.2\" width=\"981.8\" height=\"1.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-65",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"131\" y1=\"161.144\" x2=\"29.368\" y2=\"1642\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-66",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"807.3,-1.3 62.6,152\"/></g><rect x=\"1.39\" y=\"-0.07\" width=\"6\" height=\"158\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-67",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1.48, 1)\"><path id=\"l\" d=\"M221.4,106l29,80Z\"/></g><rect x=\"-0.113\" y=\"11.1\" width=\"0.3\" height=\"0.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-68",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1433.4\" y1=\"0.1\" x2=\"12.53\" y2=\"115\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-69",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1.4\" y1=\"0.6\" x2=\"569.9\" y2=\"-90.808\"/></g><rect x=\"0.2\" y=\"756.3\" width=\"0.1\" height=\"809.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-70",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M32.1,154V981H97.16\"/><rect x=\"0.42\" y=\"0.5\" width=\"27.9\" height=\"850\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-71",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"929.5\" y1=\"12.5\" x2=\"-159.6\" y2=\"-270.414\"/><rect x=\"1.217\" y=\"498.5\" width=\"1.037\" height=\"0.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-72",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1.2, 1172.7)\"><path id=\"l\" d=\"M48.6,22.5Q6.4,989.4 14.4,14.7C82.29,-12.08 102.96,14 113.59,1.2\"/></g><rect x=\"57.58\" y=\"1.014\" width=\"1125.254\" height=\"1307.151\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-73",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M96.6,-3.73Q0.9,15 73,914.9C117.69,0.5 111.92,1 -101.106,974.15\"/><rect x=\"101.7\" y=\"9.248\" width=\"133\" height=\"1.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-74",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"65.6,1.83 -169.4,1.076 594.7,0.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-75",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"6.5,1 3.56,12.81 71.7,-224.6 806.8,153.879\"/></g><rect x=\"1355.33\" y=\"5.8\" width=\"0.2\" height=\"552.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-76",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M7.5,911.9l0.8,-28.7l132.539,7.5H707.4H10.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-77",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"1147.7,0 1214.4,1258.8 77.1,54.5\"/></g><rect x=\"15.589\" y=\"0.39\" width=\"149.7\" height=\"28.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-78",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1636.6, 94)\"><line id=\"l\" x1=\"-0.86\" y1=\"327.8\" x2=\"10.029\" y2=\"123.06\"/></g><rect x=\"21.3\" y=\"1604.369\" width=\"23\" height=\"102.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-79",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"635,5.286 1678.28,132.5 48.7,-0.2\"/></g><rect x=\"1\" y=\"1359.8\" width=\"2.215\" height=\"114.894\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-80",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.8, 1320.291)\"><line id=\"l\" x1=\"65.44\" y1=\"13.806\" x2=\"10\" y2=\"1.55\"/></g><rect x=\"69.98\" y=\"-1\" width=\"1672.293\" height=\"2.17\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-81",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"27.8\" y1=\"29\" x2=\"-2.8\" y2=\"941\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-82",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M8.3,-188.1Q0.264,150.4 1345.2,164C4.9,16.76 1481.9,2 470.2,-192.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-83",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M112.65,62.1L16.255,1.273H153.573Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-84",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"158\" y1=\"54.6\" x2=\"695.9\" y2=\"794.95\"/></g><rect x=\"1500\" y=\"1555.467\" width=\"1407.805\" height=\"47.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-85",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(10.73, 66.045)\"><line id=\"l\" x1=\"0\" y1=\"1465.795\" x2=\"3.7\" y2=\"1621.312\"/></g><rect x=\"653.6\" y=\"-95.9\" width=\"411.6\" height=\"476\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-86",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"-10,1098.3 106,99.85\"/><rect x=\"772.2\" y=\"122.7\" width=\"1351.8\" height=\"74\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-87",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1584.4,117.912l8.9,403.1Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-88",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.405,17.3Q88.067,200.7 1657,0.2C576.414,16.5 464.39,1574.2 90.65,91.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-89",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"0,150.2 13.273,166.1 0.5,670\"/><rect x=\"164.79\" y=\"2.79\" width=\"104.8\" height=\"0.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-90",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"15.1\" y1=\"623.4\" x2=\"0.568\" y2=\"1201.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-91",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0.4\" width=\"2\" height=\"24.589\"/><g id=\"b\"><polyline id=\"l\" points=\"511.1,-2 54.3,4.784\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-92",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"32.9\" y=\"107.316\" width=\"20.72\" height=\"78.2\"/><g id=\"b\"><polyline id=\"l\" points=\"14.43,118.8 567,0.3 1461.947,137.5 0,118.84 7.5,1698.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-93",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"21.6\" y1=\"1\" x2=\"0\" y2=\"7.55\"/></g><rect x=\"58.4\" y=\"298.84\" width=\"0\" height=\"1677.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-94",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"-176,220 168,33.14 53.4,745 156.211,66.1\"/><rect x=\"327.8\" y=\"134\" width=\"298.96\" height=\"781.234\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-95",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M14.07,1.4L-282.55,137.6H-111V1013.6l11,-16\"/></g><rect x=\"116.168\" y=\"-150.135\" width=\"3.383\" height=\"244.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-96",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"64.03\" y=\"1610.5\" width=\"121.9\" height=\"15.2\"/><g id=\"b\"><line id=\"l\" x1=\"114.4\" y1=\"9.8\" x2=\"0\" y2=\"33.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-97",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1,-19.5H0.28V3.07l0.674,4l-156.093,1468Z\"/></g><rect x=\"1543.3\" y=\"0.498\" width=\"227.07\" height=\"25.001\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-98",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"2.8\" y=\"1438.4\" width=\"59\" height=\"295.2\"/><g id=\"b\"><polyline id=\"l\" points=\"1,80.9 3.7,2 377.11,1421.8 32,14.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-99",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M327,853.775l159.95,1632.3H167.51Z\"/><rect x=\"16.1\" y=\"367.32\" width=\"2.2\" height=\"817.35\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-100",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"518.3,0.31 17.09,138 1316.4,110.823 4.4,21.9\"/></g><rect x=\"0\" y=\"54.66\" width=\"367\" height=\"13\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-101",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1287.248\" y1=\"11.917\" x2=\"0\" y2=\"-291\"/><rect x=\"535\" y=\"1409.11\" width=\"21.98\" height=\"61.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-102",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"656.346\" y1=\"1175.77\" x2=\"20.1\" y2=\"927.5\"/></g><rect x=\"10.02\" y=\"0\" width=\"6.323\" height=\"249\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-103",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"9.243\" y=\"461.9\" width=\"101\" height=\"2.6\"/><g id=\"b\"><polygon id=\"l\" points=\"1074.6,-60 0,162.163 1,-21.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-104",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.2\" y=\"136.8\" width=\"1637.99\" height=\"0.401\"/><g id=\"b\"><polyline id=\"l\" points=\"894.63,11.42 119.126,58.2 7.1,157 1.3,67.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-105",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-7.6,839.3Q1,1491.865 -174.6,1131.5C3.8,1491 -208.89,-0.9 48.7,-21.4\"/><rect x=\"1.56\" y=\"93.9\" width=\"28.6\" height=\"972.487\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-106",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1.32,-28.52 11.4,96.81 444,129.7 92.3,15 6.78,71.34\"/><rect x=\"54.3\" y=\"5.06\" width=\"6\" height=\"1355\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-107",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"7.9,133.6 70.3,1606.99 -26.38,-14.387 972.5,4.2 15.6,500.4\"/><rect x=\"1.6\" y=\"845.47\" width=\"79.6\" height=\"41.48\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-108",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"539,897.02 56.6,-214.553 141,1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-109",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M477.1,0.624l380.9,5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-110",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"167.4\" y1=\"-29.597\" x2=\"107.5\" y2=\"80.39\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-111",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"1686.7,0 13.561,1 1.4,158.6 119.81,107.58\"/></g><rect x=\"772.6\" y=\"-79.39\" width=\"12\" height=\"12.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-112",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"10\" y=\"-0.1\" width=\"0.52\" height=\"726.3\"/><g id=\"b\"><polygon id=\"l\" points=\"-177.44,0.2 1203,1361.6 102.6,9.035\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-113",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M58.91,1122.7Q5.7,161.3 0.2,1568.7C1306.948,-2 -79.5,-145.7 0.1,287.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-114",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"224\" width=\"804\" height=\"1\"/><g id=\"b\"><line id=\"l\" x1=\"-2.7\" y1=\"1.7\" x2=\"84.7\" y2=\"16.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-115",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(36, 301.8)\"><line id=\"l\" x1=\"10.9\" y1=\"-208\" x2=\"14.194\" y2=\"1086.622\"/></g><rect x=\"317\" y=\"692.5\" width=\"326\" height=\"37.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-116",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.33\" y=\"1661.8\" width=\"137.7\" height=\"83.4\"/><g id=\"b\"><polyline id=\"l\" points=\"140,63 15,12.158 988.971,-2.5 0.4,88.5 106.4,-0.28\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-117",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"0,133.7 -5.981,64.683\"/><rect x=\"45.7\" y=\"24.66\" width=\"0.502\" height=\"4.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-118",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"4.62,70 570.8,1476.949 1603.51,65.74 1.11,0.6\"/></g><rect x=\"4.625\" y=\"-9.43\" width=\"387.679\" height=\"895.21\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-119",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(75.7, 1.6)\"><line id=\"l\" x1=\"-14.8\" y1=\"465\" x2=\"0.9\" y2=\"125.4\"/></g><rect x=\"0.5\" y=\"1.3\" width=\"17.5\" height=\"78.563\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-120",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"151.9,1.2 6.32,2\"/></g><rect x=\"1.433\" y=\"523\" width=\"18.971\" height=\"0.448\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-121",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M93.72,3L0.2,767l680.29,6.43H155.7Z\"/><rect x=\"356.641\" y=\"558.2\" width=\"109.892\" height=\"1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-122",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(719.6, 72.1)\"><line id=\"l\" x1=\"929.9\" y1=\"134.39\" x2=\"91\" y2=\"352.363\"/></g><rect x=\"26\" y=\"1\" width=\"0.66\" height=\"106\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-123",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"16.6\" y1=\"0.5\" x2=\"1171.1\" y2=\"-0.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-124",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.2,176Q77.81,59.68 1.153,1.42C1431,121.043 0.548,1.671 1477.95,-0.318\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-125",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-5, -2.3)\"><polygon id=\"l\" points=\"6,46.1 1286.046,47.5\"/></g><rect x=\"-1.3\" y=\"2.75\" width=\"10\" height=\"396.93\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-126",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"91.1,11.9 124.4,-5.369 7.714,209 615,-1.5\"/><rect x=\"1292\" y=\"347.2\" width=\"13.7\" height=\"152\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-127",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M6.134,123.533V21\"/></g><rect x=\"12.7\" y=\"195.959\" width=\"23\" height=\"11.186\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-128",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1.3, 117.9)\"><polygon id=\"l\" points=\"146.8,15 637.5,5.867 13,108.08 1666.9,1190.073\"/></g><rect x=\"1.211\" y=\"319.11\" width=\"1023.4\" height=\"0.64\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-129",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"18.489\" y1=\"-0.26\" x2=\"695.954\" y2=\"47.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-130",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"81.73\" y1=\"806.7\" x2=\"-18.5\" y2=\"6\"/><rect x=\"-15.64\" y=\"108.28\" width=\"108.6\" height=\"13.852\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-131",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"1,1.1 -31.91,-26\"/><rect x=\"1\" y=\"-11\" width=\"292.2\" height=\"1.639\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-132",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"179.4\" y1=\"-10\" x2=\"52\" y2=\"-24\"/><rect x=\"-6.9\" y=\"79\" width=\"1466.63\" height=\"106.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-133",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"2,60.5 1,0.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-134",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"365.1,4.852 -0.2,77\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-135",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"842\" y=\"7.4\" width=\"1311.34\" height=\"0\"/><g id=\"b\"><path id=\"l\" d=\"M670.49,166V5.07L32.9,68L42.2,1185Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-136",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(837.2, 121.817)\"><path id=\"l\" d=\"M142,37.32Q0.5,132.6 124,12.86C2.3,144 1384.3,469.56 -5.99,1453.5\"/></g><rect x=\"95.3\" y=\"1\" width=\"5\" height=\"463.1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-137",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"36.9,8.1 705.92,815.3 316.433,16.693\"/></g><rect x=\"499.3\" y=\"1.5\" width=\"4.57\" height=\"0.758\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-138",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-1.54, 431)\"><polygon id=\"l\" points=\"-114.3,1611.9 1202,1699 15.8,-0.2 117.6,7.9 403.8,-22\"/></g><rect x=\"0.79\" y=\"4.9\" width=\"17\" height=\"0\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-139",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"12.4\" y1=\"161\" x2=\"14.95\" y2=\"10.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-140",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1261.3,67.125V80.7Z\"/><rect x=\"0\" y=\"217.1\" width=\"54\" height=\"1.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-141",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-92.33, -2.6)\"><path id=\"l\" d=\"M382.9,-0.2V9\"/></g><rect x=\"113.1\" y=\"126.6\" width=\"1\" height=\"159\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-142",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0,80.1L60,158.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-143",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"896.08\" y=\"9.76\" width=\"1\" height=\"204\"/><g id=\"b\"><path id=\"l\" d=\"M-9.7,0.653Q12,117.7 1359.65,82C-0.06,15.5 912.5,52.7 76.6,0.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-144",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0.5,0.57Q-2,1297.869 1008.59,1005C-25.417,919 49.4,1354 2.049,-0.25\"/><rect x=\"11.6\" y=\"-140.1\" width=\"146.5\" height=\"1.34\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-145",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"47\" y=\"39.135\" width=\"984.5\" height=\"1.1\"/><g id=\"b\"><polyline id=\"l\" points=\"1461.2,-77.06 11.4,75 1.6,-10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-146",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(713.37, 35.6)\"><line id=\"l\" x1=\"112.23\" y1=\"1.4\" x2=\"159.7\" y2=\"1370.632\"/></g><rect x=\"9.7\" y=\"162\" width=\"50.65\" height=\"748.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-147",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1536.9\" y=\"-85.5\" width=\"202.8\" height=\"7.83\"/><g id=\"b\"><line id=\"l\" x1=\"0.12\" y1=\"13.5\" x2=\"918\" y2=\"-267.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-148",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"42\" y=\"-251.5\" width=\"1.1\" height=\"836.431\"/><g id=\"b\"><polyline id=\"l\" points=\"1,1.686 1,86.45 169.6,7.838 80.99,6.393\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-149",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"3\" y1=\"356.8\" x2=\"63.5\" y2=\"3.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-150",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"-0.262,99.09 0.7,-137.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-151",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"135,-158.3 129,286\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-152",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"100.904,1290.22 1.36,1 -29.2,0.4 1215.2,756.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-153",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"0,-0.8 0.8,896.96 58.74,70.6\"/></g><rect x=\"-1.9\" y=\"47.275\" width=\"35.5\" height=\"0.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-154",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-80.4,0.7Q968.916,1.29 0.96,-0.91C139,0.9 649,-12.46 1,211.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-155",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"65.28\" y=\"-288.291\" width=\"18.6\" height=\"8.16\"/><g id=\"b\"><path id=\"l\" d=\"M103.4,125.269V15.647L1381.3,469l350.418,88.923V1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-156",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"-0.055,-0.13 2.7,494.7 16.9,-6.3 2.3,1\"/><rect x=\"94.3\" y=\"-27.23\" width=\"1.353\" height=\"1.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-157",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M87,0.6Q401.43,3.893 161,71.4C1554,56.4 1.6,97.6 143.744,17\"/><rect x=\"0.3\" y=\"69.9\" width=\"101.06\" height=\"0.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-158",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1360,65.8 0.09,128.7 1102,104.73 117.7,45.4 108.7,62.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-159",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"67.7\" y=\"0.6\" width=\"0.1\" height=\"455.6\"/><g id=\"b\"><path id=\"l\" d=\"M510,0.984L1283,178.8l-1,26.46\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-160",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.7\" y1=\"136.6\" x2=\"139.16\" y2=\"-2.4\"/><rect x=\"16.7\" y=\"0.517\" width=\"0.1\" height=\"791.81\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-161",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-15.093,0.1L9.289,47.6H151.6V149.6l1283.819,0.4Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-162",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"105.785,134.228 149.084,13\"/></g><rect x=\"916.1\" y=\"-24.7\" width=\"14.7\" height=\"144.43\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-163",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"84.4,60.309 86,3.2 -277.9,162.6 61.842,1 0.1,882.1\"/></g><rect x=\"93.7\" y=\"-23.436\" width=\"1495.77\" height=\"6.797\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-164",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"32\" y1=\"10.114\" x2=\"23.9\" y2=\"99.7\"/></g><rect x=\"12.6\" y=\"106.149\" width=\"30.09\" height=\"120.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-165",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M67.8,-8.037Q1182.88,1362.78 33,74.7C0.547,805.3 1,38 -0.22,4.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-166",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1310.218\" y1=\"-1\" x2=\"144.2\" y2=\"0.4\"/><rect x=\"8.1\" y=\"6.94\" width=\"127.5\" height=\"3.031\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-167",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-0.191\" y1=\"73.63\" x2=\"-28.091\" y2=\"150.4\"/><rect x=\"1.2\" y=\"3.2\" width=\"0.16\" height=\"105.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-168",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"364\" y1=\"14.8\" x2=\"-2.9\" y2=\"-1.89\"/><rect x=\"-2.703\" y=\"12.468\" width=\"22.9\" height=\"15.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-169",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"0.71,0.82 1.5,8 1184.4,-0.08\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-170",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0.001,-0.244H2l155.6,419.18H4.1H158.04\"/></g><rect x=\"-9.1\" y=\"36.2\" width=\"1.3\" height=\"206.64\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-171",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1651.2\" y1=\"91.3\" x2=\"15.2\" y2=\"140.812\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-172",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(72.7, -2)\"><line id=\"l\" x1=\"108.8\" y1=\"1\" x2=\"167.3\" y2=\"148.3\"/></g><rect x=\"1586.7\" y=\"1.3\" width=\"16.3\" height=\"0.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-173",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(13.9, 14.9)\"><line id=\"l\" x1=\"122.7\" y1=\"0\" x2=\"-179\" y2=\"0.243\"/></g><rect x=\"0\" y=\"-23\" width=\"58.94\" height=\"0.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-174",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1340.4, -1.9)\"><path id=\"l\" d=\"M0.7,1Q961.7,0.3 205.441,71.7C-14.8,-25.4 110,0 -110.7,1357.3\"/></g><rect x=\"-21.2\" y=\"6.317\" width=\"1104\" height=\"9.8\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-175",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"53.6\" y1=\"108.7\" x2=\"-12.6\" y2=\"23.8\"/></g><rect x=\"145\" y=\"39.7\" width=\"123.1\" height=\"777\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-176",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"4.6\" y=\"8\" width=\"1507.667\" height=\"56\"/><g id=\"b\"><polyline id=\"l\" points=\"81.87,971.6 1.06,16.2 -0.02,-26.26\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-177",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M98.918,2Q-0.1,115.9 864.8,46.1C108.5,87.2 10.9,86.1 854.1,-0.2\"/><rect x=\"243\" y=\"6.57\" width=\"1\" height=\"4.618\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-178",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"118,-243.26 0.753,125.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-179",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-278.29\" y1=\"120.636\" x2=\"2.9\" y2=\"-18.03\"/><rect x=\"-183\" y=\"-46.23\" width=\"436.6\" height=\"3.41\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-180",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"9.56\" y1=\"-19.81\" x2=\"159.6\" y2=\"5.6\"/><rect x=\"1297.3\" y=\"936.8\" width=\"1.5\" height=\"404.54\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-181",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"12.17,8.49 0.5,0.8 964.669,827 5.441,152 1,929.3\"/></g><rect x=\"34.97\" y=\"1\" width=\"17.96\" height=\"0\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-182",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"9.556\" y1=\"45.8\" x2=\"11\" y2=\"1.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-183",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-19.2\" y=\"1.2\" width=\"1.627\" height=\"8.97\"/><g id=\"b\"><path id=\"l\" d=\"M53.836,22.674Q8,2.2 79.1,133.51C0.5,159.3 506.6,-105.6 125.868,49.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-184",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-208.6\" y1=\"422\" x2=\"-0.2\" y2=\"563.6\"/></g><rect x=\"-92.722\" y=\"4.87\" width=\"1078.7\" height=\"26.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-185",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"126.9\" y1=\"117\" x2=\"94\" y2=\"11.7\"/></g><rect x=\"51.4\" y=\"723.9\" width=\"1.2\" height=\"1.82\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-186",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"14.573\" y=\"402.39\" width=\"158\" height=\"133.5\"/><g id=\"b\"><path id=\"l\" d=\"M641.16,-171.898H0L6.6,0.4V-26.1l89.9,1311.2Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-187",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M15,-0.2Q42.11,118.743 768,103.4C5.3,85 28.9,65.7 47,136.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-188",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.344, 1260)\"><polyline id=\"l\" points=\"-0.3,3.259 3.6,-169.54 1.3,23.6 11,503\"/></g><rect x=\"845.287\" y=\"106.51\" width=\"1.5\" height=\"757.434\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-189",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"599.31,0.9 113,1358.477\"/><rect x=\"167\" y=\"166.2\" width=\"880.1\" height=\"73.561\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-190",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-18, 159.6)\"><line id=\"l\" x1=\"127.8\" y1=\"221.2\" x2=\"0.86\" y2=\"-292.8\"/></g><rect x=\"-0.07\" y=\"-20.6\" width=\"156.1\" height=\"87.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-191",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"139,118.89 25.7,101.742\"/></g><rect x=\"164.4\" y=\"164.78\" width=\"9.7\" height=\"739.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-192",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.4\" y1=\"158.63\" x2=\"13.889\" y2=\"200.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-193",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"162.2,0.864 207.55,-2.2 0.4,998.63\"/><rect x=\"15.457\" y=\"64.572\" width=\"77\" height=\"0.134\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-194",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-0.2\" y1=\"1254\" x2=\"1.6\" y2=\"-10\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-195",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(980.4, 1.37)\"><polygon id=\"l\" points=\"54.967,1 1,130.6 1213,1.4\"/></g><rect x=\"13\" y=\"134.89\" width=\"3.3\" height=\"0\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-196",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-11.458, 50.4)\"><path id=\"l\" d=\"M38.9,0Q-1.63,14.5 150,156.037C1538.8,2.201 -64.82,1 841.496,901.5\"/></g><rect x=\"1.5\" y=\"226.5\" width=\"8\" height=\"7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-197",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(11.67, 115)\"><polyline id=\"l\" points=\"118.12,-9.9 1.2,1.4 53.061,27.3\"/></g><rect x=\"88.3\" y=\"3.9\" width=\"87.2\" height=\"15\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-198",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"7\" y1=\"1203.028\" x2=\"0.37\" y2=\"271\"/><rect x=\"1113\" y=\"4.8\" width=\"1\" height=\"13.08\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-199",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"810.7\" y1=\"-20.82\" x2=\"130.46\" y2=\"814.1\"/><rect x=\"1326.5\" y=\"3\" width=\"104.8\" height=\"1.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-200",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"32.42\" y=\"-19.485\" width=\"0.11\" height=\"0.46\"/><g id=\"b\"><line id=\"l\" x1=\"98\" y1=\"6.97\" x2=\"14.384\" y2=\"350.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-201",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1253.9\" y=\"615.3\" width=\"4.36\" height=\"1162\"/><g id=\"b\"><path id=\"l\" d=\"M1.2,-6.2Q-160.9,133.59 520.9,76.95C-17.72,1228.863 15.279,908.63 5.63,1411\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-202",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M499.1,9Q2.34,1083.1 50.1,15.4C430.9,11.681 1050,168.687 959.309,16\"/><rect x=\"46\" y=\"148.412\" width=\"119.4\" height=\"1.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-203",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M767.367,12L0,160H-3V0L1.1,1186.4Z\"/></g><rect x=\"2\" y=\"6.9\" width=\"30.5\" height=\"894\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-204",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(67.03, 15.9)\"><polygon id=\"l\" points=\"320.821,1629.341 1.6,741 165.261,16.3 1.143,-9.82\"/></g><rect x=\"9\" y=\"0.1\" width=\"13.097\" height=\"13.908\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-205",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1236.2,-0.15L0.335,42.1Z\"/></g><rect x=\"290.82\" y=\"-0.1\" width=\"119.13\" height=\"433.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-206",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"204\" y1=\"825.347\" x2=\"52.53\" y2=\"9\"/><rect x=\"88\" y=\"21\" width=\"166.7\" height=\"1443.959\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-207",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-29.641\" y=\"894.6\" width=\"38.2\" height=\"0.2\"/><g id=\"b\"><path id=\"l\" d=\"M10.4,-5l1.3,-1.515H-9l0,110.3L-1.5,102.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-208",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"-26.6,1.69 -0.289,-2.33 5.5,5.5 13,603.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-209",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0, 8.44)\"><line id=\"l\" x1=\"116.2\" y1=\"1.2\" x2=\"-240.4\" y2=\"6.7\"/></g><rect x=\"3\" y=\"-2.8\" width=\"0.144\" height=\"1.88\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-210",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.19\" y=\"1.6\" width=\"1634.34\" height=\"17.64\"/><g id=\"b\"><polygon id=\"l\" points=\"436.9,0 110.83,1.4 100,17.7 62.333,159.519\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-211",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-28.1\" y=\"323.7\" width=\"3\" height=\"122.5\"/><g id=\"b\"><polyline id=\"l\" points=\"-1.87,-13.5 82.8,1653.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-212",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-185.4, -171.2)\"><path id=\"l\" d=\"M64,0.32Q796.7,69.14 165.906,54.8C2.069,56.9 -7.1,80.7 95.82,-20\"/></g><rect x=\"-0.408\" y=\"0.67\" width=\"0.884\" height=\"26.8\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-213",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M30.1,1643.85Q11.1,126.345 87.886,-8.3C1021,-17.174 150.84,1387.4 859,1165\"/></g><rect x=\"4.15\" y=\"0.6\" width=\"14.227\" height=\"71.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-214",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"930.63\" y=\"33.9\" width=\"14.3\" height=\"168.9\"/><g id=\"b\"><line id=\"l\" x1=\"55\" y1=\"59\" x2=\"978.86\" y2=\"15.43\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-215",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M550.1,-1V-12.04L1228.7,6.9l1.18,157.866Z\"/></g><rect x=\"9\" y=\"141\" width=\"83.8\" height=\"452\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-216",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1358,-25.76l0.5,1.7\"/><rect x=\"33.2\" y=\"133.8\" width=\"13.9\" height=\"2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-217",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(17.5, 6.3)\"><line id=\"l\" x1=\"426.6\" y1=\"1090\" x2=\"14.85\" y2=\"-121\"/></g><rect x=\"-3\" y=\"-0.2\" width=\"741.4\" height=\"2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-218",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"78.51\" y1=\"10.328\" x2=\"538.9\" y2=\"-147.304\"/><rect x=\"-2.28\" y=\"1327.36\" width=\"627.3\" height=\"645.03\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-219",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M5.2,702.545l0.4,34Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-220",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"8.3\" y1=\"0.114\" x2=\"12\" y2=\"-84.376\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-221",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(66, -177)\"><path id=\"l\" d=\"M10.2,10.3Q1162.6,130.4 332.89,4.8C619.6,143.02 10,-6 89.837,1377\"/></g><rect x=\"6.9\" y=\"-11.13\" width=\"160.6\" height=\"14.8\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-222",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"49.9,0 1.4,169.6 42,147.88\"/></g><rect x=\"1400.8\" y=\"227.61\" width=\"6\" height=\"1.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-223",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1493,225.6Q14.3,687.1 1387.9,4.8C15.5,704.6 1485.092,160.95 -1.414,6.34\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-224",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1519.94\" y=\"1\" width=\"84.6\" height=\"243\"/><g id=\"b\"><line id=\"l\" x1=\"151.4\" y1=\"-5.103\" x2=\"16.2\" y2=\"0.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-225",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"811.6,131.802 16.858,1303.38 136.3,146.1 849.1,119.8\"/></g><rect x=\"1237.404\" y=\"-0.91\" width=\"4.3\" height=\"1618.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-226",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"454.35,123.8 6,11.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-227",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"4.5,94 0.3,1.6 1411.8,-0.797\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-228",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"117.5,150.86 -62,86 0.7,146.4 326.602,13\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-229",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1509.5,108Q1.1,1291.965 383.66,766.76C1051.831,11.121 14,7 90,910.57\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-230",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1.2,547.293l980.699,141.736H1088.9\"/></g><rect x=\"16.516\" y=\"0.995\" width=\"1574\" height=\"766\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-231",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"60.5,533 563.3,559.6 24,657.5 1536.771,1.183\"/></g><rect x=\"172\" y=\"979.335\" width=\"13.6\" height=\"0\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-232",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.1\" y=\"138\" width=\"193.826\" height=\"2.3\"/><g id=\"b\"><polygon id=\"l\" points=\"7.5,6 5.2,132.6 258.9,804.9 0.79,19.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-233",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"0.005,1.2 1.7,618.5\"/></g><rect x=\"10.2\" y=\"1517\" width=\"416.6\" height=\"1598\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-234",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"14\" y=\"929.739\" width=\"105.6\" height=\"8.99\"/><g id=\"b\"><polyline id=\"l\" points=\"29,499.045 1399,76.8 -25.57,0.897 82.1,1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-235",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1624.5, -62.524)\"><polygon id=\"l\" points=\"-29.023,2.1 0.885,96 128,595.8\"/></g><rect x=\"1058.1\" y=\"21.6\" width=\"1\" height=\"1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-236",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1337.2,11 0,134.998\"/></g><rect x=\"97.08\" y=\"13.644\" width=\"0.5\" height=\"1646\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-237",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1152,433.65 76,-289.572 63.1,98.6 44,0.75\"/></g><rect x=\"2.564\" y=\"133\" width=\"30.6\" height=\"8.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-238",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"8.8\" y1=\"1674.53\" x2=\"918.4\" y2=\"13.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-239",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.2, 984.4)\"><path id=\"l\" d=\"M58,156Q84.1,-27.42 85.854,135.4C932,1.277 1634.999,29.8 1374.84,1\"/></g><rect x=\"48.351\" y=\"36.884\" width=\"16.4\" height=\"132.1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-240",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"9.287,0.6 9.2,220.17 44.9,159.07 32,4.2\"/><rect x=\"1225.4\" y=\"-190.1\" width=\"1131.01\" height=\"122.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-241",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"27,1.37 832.3,13.4 1105.5,1324\"/><rect x=\"0.468\" y=\"7\" width=\"113.9\" height=\"44.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-242",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(28.019, 1)\"><path id=\"l\" d=\"M46.899,162.494V113.68V1510.1V429.9Z\"/></g><rect x=\"0.1\" y=\"279\" width=\"0.4\" height=\"11.49\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-243",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-217.28\" y1=\"41.7\" x2=\"90.5\" y2=\"153\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-244",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"474.02\" y1=\"-29\" x2=\"24\" y2=\"711.14\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-245",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-1.907\" y=\"1.25\" width=\"5.45\" height=\"0.2\"/><g id=\"b\"><polygon id=\"l\" points=\"231.02,47.4 12.86,70.423 129.3,16.889 2,51.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-246",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"3,198 3.144,0.434\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-247",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-0.003, 130)\"><polygon id=\"l\" points=\"112.7,786.636 8.522,-0.078\"/></g><rect x=\"0\" y=\"192.48\" width=\"14.9\" height=\"128\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-248",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"89.339\" y1=\"169.9\" x2=\"676.5\" y2=\"15.5\"/><rect x=\"13.6\" y=\"1058.63\" width=\"10.951\" height=\"154.86\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-249",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.8, 0)\"><polygon id=\"l\" points=\"-57.4,0.972 548.8,87 11.3,774 0.2,22.9 18,-17.17\"/></g><rect x=\"324.17\" y=\"10.6\" width=\"20.9\" height=\"1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-250",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1286,745.9Q90.592,745.9 16,204C-19.829,1652.821 115.3,1.5 52.3,84.69\"/><rect x=\"-26.3\" y=\"0.4\" width=\"2.76\" height=\"65.09\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-251",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M172.3,132.48Q609,1541.8 -2.943,0.7C0.7,-1 142.961,1.1 111,1691.7\"/><rect x=\"86\" y=\"105\" width=\"80\" height=\"3.21\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-252",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M16.4,57.9Q90,0.2 0.1,526.9C1.289,79.8 1.6,1.672 -0.282,575.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-253",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-23\" y=\"1.67\" width=\"49.815\" height=\"0.2\"/><g id=\"b\"><polygon id=\"l\" points=\"1094,-22 -6.3,1391.7 27.3,78.1 1109.8,-0.3 14.6,-18.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-254",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(143, 399.8)\"><line id=\"l\" x1=\"72.555\" y1=\"205.2\" x2=\"20.3\" y2=\"15.3\"/></g><rect x=\"0.223\" y=\"9.3\" width=\"0.4\" height=\"15.152\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-255",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-40, 1489.87)\"><polyline id=\"l\" points=\"-13.272,37.15 -0.151,-0.3 1.2,0.81\"/></g><rect x=\"1.45\" y=\"466.8\" width=\"502.1\" height=\"127.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-256",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M69,11.8H1V36.6V0\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-257",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M151.9,-23.73H156.12H158.1Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-258",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1631.5\" y1=\"74.82\" x2=\"-8\" y2=\"1370\"/></g><rect x=\"169\" y=\"542\" width=\"117.668\" height=\"32.84\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-259",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1.6\" y=\"1.5\" width=\"20.4\" height=\"195.5\"/><g id=\"b\"><polygon id=\"l\" points=\"22,537.057 1.388,-1.162 107.5,0.18\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-260",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"46.2\" width=\"1.1\" height=\"11\"/><g id=\"b\"><polyline id=\"l\" points=\"1179.662,16 1041,149.248 1413,0.97\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-261",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.69\" y=\"0\" width=\"164.56\" height=\"1624.5\"/><g id=\"b\"><path id=\"l\" d=\"M13,1.02Q15,253.33 4.82,158C-218.4,8.643 1574.035,204.5 74.1,2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-262",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"104.4\" y1=\"1050\" x2=\"9\" y2=\"1618.63\"/><rect x=\"99.36\" y=\"3.4\" width=\"234\" height=\"1420.32\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-263",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.86, 580.17)\"><path id=\"l\" d=\"M62.04,-239.2V1462.2l4.7,127.63Z\"/></g><rect x=\"1510.5\" y=\"89.84\" width=\"722.5\" height=\"1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-264",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(974, 82)\"><polygon id=\"l\" points=\"9.8,9.44 251.9,-113.666 1168.52,144.76 0.219,0\"/></g><rect x=\"1292.61\" y=\"0.3\" width=\"1114\" height=\"5.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-265",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.466\" y=\"0.4\" width=\"201.3\" height=\"671.6\"/><g id=\"b\"><line id=\"l\" x1=\"0.9\" y1=\"10.1\" x2=\"78.5\" y2=\"39.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-266",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M163.9,238.826Q395,731.108 1317.1,107.2C1610,122.94 307.25,680.795 -125,1\"/><rect x=\"6.6\" y=\"1359\" width=\"161.3\" height=\"8.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-267",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"94.711\" y=\"28.828\" width=\"1600.3\" height=\"0.1\"/><g id=\"b\"><line id=\"l\" x1=\"3.6\" y1=\"224.397\" x2=\"1392.662\" y2=\"12.63\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-268",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"167.5\" y1=\"75.2\" x2=\"811.9\" y2=\"9\"/><rect x=\"-138.001\" y=\"461\" width=\"179\" height=\"165\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-269",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0, 649)\"><line id=\"l\" x1=\"0.6\" y1=\"1134.104\" x2=\"-0.2\" y2=\"0.9\"/></g><rect x=\"2\" y=\"20\" width=\"0\" height=\"1611.82\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-270",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"0.688,1.3 -65.6,12\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-271",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"17\" y=\"-43.66\" width=\"15.232\" height=\"56.495\"/><g id=\"b\"><polygon id=\"l\" points=\"1241.9,90.5 333.2,0.9 9.3,-18.4 0.36,14.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-272",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-2.8\" y=\"10.7\" width=\"90.8\" height=\"50.4\"/><g id=\"b\"><line id=\"l\" x1=\"152.7\" y1=\"415.8\" x2=\"-0.4\" y2=\"-0.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-273",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1595, 0.622)\"><polyline id=\"l\" points=\"-19.2,-5.564 0.038,-65.38 -221.978,1042\"/></g><rect x=\"122.8\" y=\"16\" width=\"99.9\" height=\"135.06\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-274",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"884.2,113.1 27.59,5.3 0,4.4\"/></g><rect x=\"269.47\" y=\"6\" width=\"7.597\" height=\"1319.031\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-275",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"46.89\" y=\"1.37\" width=\"7.08\" height=\"1056.604\"/><g id=\"b\"><polyline id=\"l\" points=\"0.2,99.15 -108,99.1 836.2,8.6 700.6,-1.3 1.61,96.876\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-276",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(7.2, 111)\"><polygon id=\"l\" points=\"89.465,135.6 0.9,-256.446\"/></g><rect x=\"-126.32\" y=\"35.891\" width=\"271\" height=\"62.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-277",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"15.3\" y=\"0.88\" width=\"777.2\" height=\"33.894\"/><g id=\"b\"><path id=\"l\" d=\"M-24,-7.3Q-11.8,126.7 129.4,-0.9C1.4,165.1 668,63.35 1.5,163.47\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-278",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M113.99,145Q5.399,43.5 2.6,49.33C1.4,1.5 137,1197.73 811.087,1481.4\"/><rect x=\"137.3\" y=\"1634.8\" width=\"1.7\" height=\"683\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-279",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M4.7,1Q39.7,6.59 2,34.282C1111.9,166.7 84.9,33 1437.2,-0.12\"/></g><rect x=\"-28.432\" y=\"-16.2\" width=\"1399.243\" height=\"1.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-280",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"1295.5,947.25 78.517,14\"/><rect x=\"154.2\" y=\"12.79\" width=\"166.2\" height=\"1591.645\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-281",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"9.1\" y1=\"623.5\" x2=\"1.6\" y2=\"9.4\"/></g><rect x=\"14\" y=\"-0.1\" width=\"88.9\" height=\"145.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-282",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M147.76,289.5Q0,16.924 0.985,654C99.39,-29 1.48,9.325 5.56,45.9\"/></g><rect x=\"949.9\" y=\"1579.976\" width=\"2.02\" height=\"88.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-283",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"8.4,53.9 14.8,1.46 8.829,18.14 1046.55,-14.2\"/></g><rect x=\"16.8\" y=\"113.41\" width=\"1029.2\" height=\"138.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-284",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"105.36\" y1=\"937.8\" x2=\"0.432\" y2=\"11.61\"/></g><rect x=\"67\" y=\"1273.5\" width=\"8.8\" height=\"879.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-285",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"167.4\" y1=\"-1.08\" x2=\"0.52\" y2=\"38.756\"/><rect x=\"122.5\" y=\"162.45\" width=\"128\" height=\"1101.93\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-286",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M156.749,104.8Q-3,76.8 36.8,1.2C-29.03,-59.8 0.9,33.6 892,14.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-287",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1.6\" y=\"167.6\" width=\"1.959\" height=\"80.995\"/><g id=\"b\"><line id=\"l\" x1=\"-98.07\" y1=\"4.28\" x2=\"55\" y2=\"1315\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-288",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"117.744\" y=\"165\" width=\"28.4\" height=\"80.03\"/><g id=\"b\"><polyline id=\"l\" points=\"9.56,140.3 1,628.6 -2,601.3 0.2,0 1275.9,1513.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-289",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(10, 669.5)\"><path id=\"l\" d=\"M31.4,124.98Q85.57,166.5 -0.039,-0.2C756.6,0.27 -0.2,162.4 40.3,0.2\"/></g><rect x=\"0.8\" y=\"163.4\" width=\"7\" height=\"2.8\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-290",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-0.27\" y=\"469.2\" width=\"42.2\" height=\"1341.1\"/><g id=\"b\"><polygon id=\"l\" points=\"86.346,0 -152,56.563 158.7,-17.266\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-291",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-0.02\" y1=\"2.7\" x2=\"109.929\" y2=\"9.97\"/><rect x=\"100.1\" y=\"432.3\" width=\"121.924\" height=\"14.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-292",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(93.063, 0)\"><polyline id=\"l\" points=\"0.552,45.4 14.3,0 44.5,1638.72\"/></g><rect x=\"61.8\" y=\"112.8\" width=\"47.03\" height=\"1116.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-293",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-1.927\" y1=\"3.83\" x2=\"355.7\" y2=\"14.8\"/><rect x=\"0.8\" y=\"0.1\" width=\"5.314\" height=\"1.245\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-294",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1484.08,93.21l62,1.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-295",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M85.9,14.5Q95.4,0 5.53,152.8C64.8,4.6 0,676.2 1145,0.5\"/><rect x=\"14.73\" y=\"4.5\" width=\"253.637\" height=\"0.03\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-296",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M519.37,63.7Q-18.219,23.01 157.4,27.549C2,1337.96 10.228,244 -2.3,0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-297",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M63.686,7.982H278.7H1448L167.57,-25.8l10.2,1.2Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-298",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(269.14, 1.31)\"><path id=\"l\" d=\"M135.3,138.54H99.2V1H11.3Z\"/></g><rect x=\"26.9\" y=\"152.3\" width=\"121.9\" height=\"145.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-299",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M275,134.952Q-0.3,1458.53 947.152,1415C-29,16.9 -248,6 1531.8,37.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-300",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1541.29,116.6 0.02,0.9 1,0\"/></g><rect x=\"815.95\" y=\"52.6\" width=\"54.789\" height=\"0.729\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-301",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"801\" y=\"1.6\" width=\"152\" height=\"158.4\"/><g id=\"b\"><path id=\"l\" d=\"M160.3,73.565H278.4Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-302",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"4.4,834.7 1294,1629.8 1.3,0.718 -7,17 951,1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-303",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M782.6,-35.747L132,1006.83l169.5,148.9Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-304",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"288.812\" y=\"114.5\" width=\"1142.3\" height=\"513.3\"/><g id=\"b\"><line id=\"l\" x1=\"1\" y1=\"155.21\" x2=\"1350.4\" y2=\"1253\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-305",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"53.5\" y=\"132.878\" width=\"1616\" height=\"1.6\"/><g id=\"b\"><line id=\"l\" x1=\"8.4\" y1=\"621\" x2=\"25.059\" y2=\"87.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-306",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1598,752Q84.69,153.7 33,1525C764.1,0 0.2,3.28 792.435,111.4\"/><rect x=\"7.3\" y=\"1661.277\" width=\"6.7\" height=\"1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-307",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M144.63,39Q1355.412,74.6 63,476.7C1507.5,1155.1 81.6,759.466 570.8,-0.149\"/></g><rect x=\"632.359\" y=\"603.8\" width=\"22.5\" height=\"144.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-308",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M14.43,121.93Q722.9,865.45 -1.2,44C182.03,963.18 223.7,0.4 1524.616,1361.45\"/></g><rect x=\"760\" y=\"1\" width=\"138.6\" height=\"1539.12\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-309",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1453,76.424Q287,-21.479 635.07,32.7C0.4,1 1407.016,567.9 2,0.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-310",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M515.5,866.6Q56,33.901 92,16C20,0.4 104.7,145.85 143.339,110.319\"/><rect x=\"77.61\" y=\"54.4\" width=\"5.93\" height=\"1192\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-311",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M245.9,-8.56L514.2,1278L8.2,1387.2l78,550.949\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-312",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"6.8\" y=\"626.7\" width=\"77.5\" height=\"109.97\"/><g id=\"b\"><path id=\"l\" d=\"M119.85,1082.61L-88.2,1577.8H1437.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-313",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"45,0.09 0.24,-0.3 0.8,1539.4 1567.7,137.5 0.879,1.224\"/></g><rect x=\"175.3\" y=\"-8\" width=\"0\" height=\"0.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-314",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0.23,117.968Q1536.166,0.5 -189.8,3C6,98.8 -45.4,3.5 133.6,1.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-315",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1181.8,67H58.648l3.2,901H54.9Z\"/><rect x=\"602\" y=\"148.8\" width=\"4.6\" height=\"7.72\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-316",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.8\" y1=\"-10.8\" x2=\"145.6\" y2=\"0.6\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-317",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1469.2\" y1=\"62.325\" x2=\"40\" y2=\"1\"/></g><rect x=\"5.6\" y=\"1.4\" width=\"1.5\" height=\"649.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-318",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-2.836, 952.8)\"><polygon id=\"l\" points=\"11.659,71.3 0.62,55.6 111.9,-11.843 -7.2,14.2\"/></g><rect x=\"1421.9\" y=\"1427\" width=\"382.47\" height=\"0.57\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-319",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1569.606\" y1=\"29.2\" x2=\"130.07\" y2=\"-83.1\"/><rect x=\"954.8\" y=\"760.4\" width=\"113\" height=\"0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-320",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"620.54,0.35 1588,68.124 1192.5,-5.57 24.59,12.336\"/><rect x=\"-58.68\" y=\"0.528\" width=\"10.3\" height=\"16\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-321",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1.4, 581)\"><path id=\"l\" d=\"M61,1219.9Q2.2,0.895 -18,26.1C465.26,1561.3 18,-109.2 1517.6,61.3\"/></g><rect x=\"3\" y=\"0.6\" width=\"2.3\" height=\"0.2\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-322",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1.181\" y=\"1\" width=\"110.5\" height=\"0.59\"/><g id=\"b\"><polyline id=\"l\" points=\"-26.5,169.3 1116.435,55.7 1190,-27 4.87,1284.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-323",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0.28,1.6Q84.5,1.2 5,443.7C1.1,1576.8 -298.6,1.5 169.81,86.81\"/></g><rect x=\"1.107\" y=\"1341.47\" width=\"18.3\" height=\"0.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-324",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-0.9, 38.4)\"><path id=\"l\" d=\"M6.2,-125Q1,60 1398,1.41C20.6,73.75 -1.4,0.1 1417,25\"/></g><rect x=\"166.03\" y=\"37.2\" width=\"998\" height=\"812.62\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-325",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1533.8\" y=\"443.2\" width=\"396\" height=\"485.52\"/><g id=\"b\"><line id=\"l\" x1=\"-44\" y1=\"1.1\" x2=\"127\" y2=\"703.19\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-326",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M84,80.6V19\"/><rect x=\"1696.4\" y=\"121.89\" width=\"1.295\" height=\"99\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-327",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M377.22,97.984Q-2,1663 143.3,0.6C1666,1.6 436.7,0.8 114.161,2.119\"/></g><rect x=\"108.2\" y=\"10\" width=\"1643.192\" height=\"69.489\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-328",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0.8,-15.69Q16.057,0.7 166.262,0.57C1611.8,1306 13.3,136 7.362,881.38\"/></g><rect x=\"151.26\" y=\"-261.11\" width=\"1.305\" height=\"16.31\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-329",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"1093.5,101 1270.702,0.3 1371.514,160.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-330",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.061\" y1=\"-0.148\" x2=\"-8.7\" y2=\"1.679\"/><rect x=\"-0.089\" y=\"1247\" width=\"14.9\" height=\"0.9\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-331",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1\" y=\"-2.6\" width=\"1.36\" height=\"50.35\"/><g id=\"b\"><polyline id=\"l\" points=\"1006,756.5 157.471,143.3 16.18,11.2 -0.82,0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-332",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"78.9\" y=\"9\" width=\"165.6\" height=\"11.1\"/><g id=\"b\"><line id=\"l\" x1=\"-13.9\" y1=\"63.126\" x2=\"1408\" y2=\"1382.12\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-333",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.6\" y1=\"-12.261\" x2=\"-0.1\" y2=\"1\"/></g><rect x=\"28.3\" y=\"147\" width=\"11.811\" height=\"4.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-334",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-0.091\" y1=\"1660\" x2=\"4.4\" y2=\"147\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-335",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"15.8\" y1=\"27.81\" x2=\"9\" y2=\"-2.61\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-336",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1181.5\" y=\"120.1\" width=\"344.345\" height=\"0.01\"/><g id=\"b\"><line id=\"l\" x1=\"148.3\" y1=\"294\" x2=\"900.4\" y2=\"1514.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-337",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"95.69,9.62 144.9,1012.941 16,90.5 1.3,79.4 150.26,138.2\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-338",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1337, 1)\"><line id=\"l\" x1=\"549.3\" y1=\"19.894\" x2=\"1\" y2=\"-227\"/></g><rect x=\"3.627\" y=\"1.3\" width=\"26.1\" height=\"0.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-339",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"77\" y=\"1.7\" width=\"1.71\" height=\"135.9\"/><g id=\"b\"><line id=\"l\" x1=\"-19.1\" y1=\"942.986\" x2=\"165.8\" y2=\"192.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-340",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-11.7,1604.6l874.23,0.33\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-341",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"127.9\" y=\"59.7\" width=\"3.32\" height=\"18\"/><g id=\"b\"><polyline id=\"l\" points=\"93,828.7 -43.2,1047 1413.51,586.7 130.5,1024.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-342",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M139.7,783.127H698V92.1l117,-297.5l52.039,1515.69Z\"/></g><rect x=\"13.4\" y=\"697.057\" width=\"21.8\" height=\"935.708\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-343",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M44,-37.1L11,22.774Z\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-344",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(406.6, 96.6)\"><path id=\"l\" d=\"M-0.67,-1.51V-38.837Z\"/></g><rect x=\"1421.5\" y=\"0.4\" width=\"1.04\" height=\"26.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-345",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"437.39\" y1=\"4.6\" x2=\"3.44\" y2=\"4.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-346",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1\" y1=\"692.6\" x2=\"1.2\" y2=\"-1.992\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-347",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"-191.3\" y=\"883\" width=\"160\" height=\"0.8\"/><g id=\"b\"><polyline id=\"l\" points=\"1144,1056.7 715,0.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-348",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"176.51\" y1=\"3.7\" x2=\"192.4\" y2=\"128.272\"/><rect x=\"9.3\" y=\"-2.2\" width=\"0.96\" height=\"649\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-349",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1035\" y=\"323.2\" width=\"74.2\" height=\"1497\"/><g id=\"b\"><line id=\"l\" x1=\"15.947\" y1=\"-247\" x2=\"0.7\" y2=\"733\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-350",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-2.447,0.164Q42.9,16.078 1419.772,1.2C0,0.9 41.021,87.37 171.96,21.46\"/></g><rect x=\"145.6\" y=\"8\" width=\"3\" height=\"143.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-351",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M-86.1,-172Q-0.232,1151.2 23.7,1645C1523.645,-1.12 7.41,69.6 -7.7,9\"/><rect x=\"1669.6\" y=\"0.53\" width=\"0.18\" height=\"751\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-352",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(63.908, 1.4)\"><polygon id=\"l\" points=\"15,1253.73 6.1,-0.12 2.645,28.221 -0.1,-105.2 -0.09,841.26\"/></g><rect x=\"88.1\" y=\"162\" width=\"16.96\" height=\"0.59\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-353",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1300.77\" y=\"104.8\" width=\"1405.1\" height=\"8.04\"/><g id=\"b\"><line id=\"l\" x1=\"-1\" y1=\"-1.151\" x2=\"665.472\" y2=\"1.42\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-354",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(132.9, 1434)\"><polyline id=\"l\" points=\"902.728,1.694 -0.04,514 0.3,55\"/></g><rect x=\"1126.5\" y=\"434.902\" width=\"0.1\" height=\"968.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-355",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1139.6,-3.9Q867,80 939.77,0.85C-61.1,11 669,15 -128.81,0.167\"/></g><rect x=\"0.71\" y=\"131.3\" width=\"2\" height=\"108.92\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-356",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"3.7,12 96.8,1697.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-357",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.9\" y=\"153.5\" width=\"0.516\" height=\"40.697\"/><g id=\"b\"><line id=\"l\" x1=\"348.7\" y1=\"1000.6\" x2=\"898\" y2=\"1323.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-358",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1.6\" y=\"7.3\" width=\"1.1\" height=\"301.41\"/><g id=\"b\"><line id=\"l\" x1=\"0.3\" y1=\"1278.2\" x2=\"26.8\" y2=\"23.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-359",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M636,763.5Q1345.4,-7.6 156.4,85C164.9,463.3 1211.371,-182.7 63,6\"/></g><rect x=\"174.4\" y=\"844.4\" width=\"62.7\" height=\"0\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-360",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"48.752\" y1=\"0.31\" x2=\"1.1\" y2=\"48\"/></g><rect x=\"1072\" y=\"1293\" width=\"491.268\" height=\"1029.83\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-361",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.9\" y=\"1.695\" width=\"0.5\" height=\"5\"/><g id=\"b\"><line id=\"l\" x1=\"82.7\" y1=\"112.27\" x2=\"2.65\" y2=\"130.607\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-362",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"8.69\" y=\"97.1\" width=\"9.8\" height=\"24.6\"/><g id=\"b\"><line id=\"l\" x1=\"165\" y1=\"626.3\" x2=\"-0.1\" y2=\"1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-363",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M0,1209.6Q161.09,11.6 475,20.3C906,79.8 301.6,15 131.15,664.7\"/></g><rect x=\"91.64\" y=\"6\" width=\"881\" height=\"69\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-364",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"186,1019.8 455.1,138.25 11,0.3 -6.62,3.1\"/></g><rect x=\"-64\" y=\"161\" width=\"2.1\" height=\"0.26\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-365",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"2.4,13.11 1.524,1387.7\"/></g><rect x=\"0.9\" y=\"153.1\" width=\"216.5\" height=\"805.625\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-366",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M157.1,76H47.2l-25.3,1090.2l1177.4,1509.447V15\"/><rect x=\"215.815\" y=\"1.24\" width=\"537\" height=\"109.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-367",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1019.3, 1253)\"><line id=\"l\" x1=\"0\" y1=\"121.7\" x2=\"47.176\" y2=\"312.6\"/></g><rect x=\"18.4\" y=\"0.62\" width=\"160.194\" height=\"12.9\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-368",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(0.803, -2.52)\"><line id=\"l\" x1=\"114.7\" y1=\"1482.2\" x2=\"125.29\" y2=\"35\"/></g><rect x=\"158.3\" y=\"2\" width=\"1.125\" height=\"2.66\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-369",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(-184.92, 14.6)\"><polygon id=\"l\" points=\"15.8,0.8 1063.26,37.1 879.5,151.65\"/></g><rect x=\"1.648\" y=\"78.4\" width=\"0.95\" height=\"8.681\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-370",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polygon id=\"l\" points=\"1241,149.88 11.29,-1 -0.1,1454.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-371",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"1.4\" y1=\"6.5\" x2=\"54\" y2=\"745\"/></g><rect x=\"6.9\" y=\"155.2\" width=\"0.7\" height=\"15.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-372",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"112.2\" y1=\"88\" x2=\"1.19\" y2=\"0.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-373",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M9.9,5.8Q56.4,111.61 139,66.8C5.84,0 5.9,594.2 233.5,-5.8\"/></g><rect x=\"1574.13\" y=\"38.01\" width=\"0.2\" height=\"4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-374",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(6.11, 0.9)\"><polygon id=\"l\" points=\"1419.101,3.1 10.36,0.9 -17.2,102.7 1553.6,12.56 1107.7,137.31\"/></g><rect x=\"402.1\" y=\"117.8\" width=\"2\" height=\"1036.3\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-375",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1176\" y=\"1048.6\" width=\"1529\" height=\"63\"/><g id=\"b\"><polyline id=\"l\" points=\"673.5,580.35 14,16.08 16.6,-2.8 1.12,9.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-376",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M841.156,0l1514.94,57.981H-48.8V-26.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-377",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"137,-13.7 804.769,1692.751 724.14,758.53 156.503,0.123 733,169\"/><rect x=\"159.5\" y=\"1563.635\" width=\"169.1\" height=\"1290.671\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-378",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(79, 410.9)\"><path id=\"l\" d=\"M-0.21,137.401Q97.2,-290.7 40,-23.6C85.7,0.2 71.193,1 990.65,-19.26\"/></g><rect x=\"-91\" y=\"1530\" width=\"85.9\" height=\"572.75\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-379",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.55\" y1=\"482.25\" x2=\"1.5\" y2=\"1182.53\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-380",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M142.408,10.9L165,-0.1H120.49L538.9,-2.1L718.94,108.566Z\"/><rect x=\"15.2\" y=\"15.463\" width=\"251.2\" height=\"71\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-381",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"5\" y1=\"128.2\" x2=\"1389\" y2=\"-1.7\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-382",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"9.834\" y1=\"8\" x2=\"346\" y2=\"-1.216\"/></g><rect x=\"-176.9\" y=\"1.5\" width=\"1432.6\" height=\"91.8\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-383",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"89.2,996.23 1.615,41.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-384",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(164.2, 34.017)\"><polyline id=\"l\" points=\"1.42,34.6 -2,932 582.1,49.8\"/></g><rect x=\"0\" y=\"99.1\" width=\"57.37\" height=\"442.1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-385",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><polyline id=\"l\" points=\"0.4,12 156.2,1250.1 0,43\"/></g><rect x=\"742.8\" y=\"24.6\" width=\"0.1\" height=\"73.24\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-386",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1581.3, 814.4)\"><polygon id=\"l\" points=\"1429,0.3 100,277.3 42.903,13.39 37.4,1.48 8.9,0\"/></g><rect x=\"-20\" y=\"1075.4\" width=\"1289.35\" height=\"9.6\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-387",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M1440,99.3L149.125,-0.3V52.1Z\"/><rect x=\"23.6\" y=\"1.2\" width=\"390\" height=\"0.1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-388",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M718.3,37.1Q0.649,-1.1 104.932,-108.9C626.6,-152.5 73,669.1 10,16.5\"/><rect x=\"6.695\" y=\"0.33\" width=\"1279.6\" height=\"718\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-389",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(518.5, 777.4)\"><path id=\"l\" d=\"M148.99,1382.98l876.96,160.5V37V1.07\"/></g><rect x=\"-78.82\" y=\"734\" width=\"78.8\" height=\"1\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-390",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1172.7, 153.2)\"><path id=\"l\" d=\"M1415.7,426.161Q-12.6,1443.604 10,-116C-16.09,0.5 144.05,66.2 -1.4,710\"/></g><rect x=\"0.5\" y=\"105.86\" width=\"0.331\" height=\"19\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-391",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"29\" y1=\"360.7\" x2=\"262\" y2=\"0.1\"/></g><rect x=\"-26.6\" y=\"494.5\" width=\"461.3\" height=\"938\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polyline-392",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"95\" y=\"63\" width=\"1318\" height=\"169.3\"/><g id=\"b\"><polyline id=\"l\" points=\"536.11,0 12.5,27 121,522.34\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-393",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.332\" y1=\"1.7\" x2=\"-173.2\" y2=\"130.4\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-394",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1304, 5)\"><path id=\"l\" d=\"M84,0.2V9.1\"/></g><rect x=\"401.324\" y=\"17.1\" width=\"118.9\" height=\"907.4\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-395",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"644\" y=\"0.01\" width=\"2\" height=\"11.299\"/><g id=\"b\"><line id=\"l\" x1=\"2\" y1=\"119\" x2=\"6\" y2=\"752.8\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-396",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1675.5, -94.182)\"><path id=\"l\" d=\"M363.13,17L5.98,770V1065.78Z\"/></g><rect x=\"0.6\" y=\"-248.9\" width=\"3.605\" height=\"194.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-397",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1.3, -0.2)\"><path id=\"l\" d=\"M22.2,11.3H1082.2L49.345,15.9Z\"/></g><rect x=\"833.124\" y=\"-14.17\" width=\"16.431\" height=\"292\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-398",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M164.9,-0.1V1106.39H1338.42Z\"/><rect x=\"-12.1\" y=\"1438.36\" width=\"164.4\" height=\"0\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-399",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M653.09,-0.06V710H310.9L1106.6,777.36\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-400",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><path id=\"l\" d=\"M153.73,-1.2Q0.7,196.9 0.109,1606.8C148.8,1.3 16,1646 -2.333,123.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-401",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(8.98, 10.6)\"><line id=\"l\" x1=\"143.54\" y1=\"-0.1\" x2=\"23.5\" y2=\"716\"/></g><rect x=\"1363.862\" y=\"879.47\" width=\"0.99\" height=\"171.7\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-402",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"3.773\" y1=\"737.505\" x2=\"546.627\" y2=\"-9.5\"/><rect x=\"6.067\" y=\"373.3\" width=\"0.9\" height=\"124\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-403",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"68.577\" y=\"1059\" width=\"5\" height=\"9.189\"/><g id=\"b\"><polygon id=\"l\" points=\"1081.8,0.2 -4.5,109.9 62,17 381.4,106\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-404",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"10.46\" y=\"54.215\" width=\"0.1\" height=\"1.294\"/><g id=\"b\"><path id=\"l\" d=\"M20,123Q-5.1,-264.1 16.51,0.6C396.2,26.7 1219.1,64.3 -2.368,0.5\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-curve-405",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(1, 1227.98)\"><path id=\"l\" d=\"M48.4,110.2Q0.16,-0.082 -4.51,3C201,920.589 146.9,1196 5.2,591.6\"/></g><rect x=\"31.5\" y=\"6.118\" width=\"535.5\" height=\"54.5\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-path-406",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\" transform=\"translate(7.169, 1685.1)\"><path id=\"l\" d=\"M0.369,8.5H100.4L1576.2,0V1225.1\"/></g><rect x=\"1698.116\" y=\"-8\" width=\"142\" height=\"63.002\"/></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-407",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"0.4\" y1=\"118.8\" x2=\"13\" y2=\"148.8\"/><rect x=\"104.179\" y=\"-275\" width=\"150.442\" height=\"1\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-polygon-408",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"128.829\" y=\"80.9\" width=\"910.6\" height=\"0.76\"/><g id=\"b\"><polygon id=\"l\" points=\"2.1,133.7 55.9,118.2 1374.655,708 4.647,1663\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "pathbounds-line-409",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"b\"><line id=\"l\" x1=\"-0.26\" y1=\"1442.9\" x2=\"1.4\" y2=\"0.3\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    },
+    {
+     "sel": "#l",
+     "op": "bbox"
+    },
+    {
+     "sel": "#b",
+     "op": "bbox"
+    }
+   ]
+  }
+ ]
+}

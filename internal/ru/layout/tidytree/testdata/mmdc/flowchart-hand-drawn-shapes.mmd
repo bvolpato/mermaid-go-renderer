@@ -1,0 +1,12 @@
+---
+config:
+  layout: tidy-tree
+  look: handDrawn
+---
+flowchart TD
+  A((Circle)) --> B@{ shape: lightning-bolt }
+  A --> C@{ shape: filled-circle }
+  A --> D[(Database)]
+  B --> E{{Hexagon}}
+  C --> F@{ shape: fork }
+  D --> G([Stadium])

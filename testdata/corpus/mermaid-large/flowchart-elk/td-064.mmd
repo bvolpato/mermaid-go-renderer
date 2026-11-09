@@ -1,0 +1,145 @@
+flowchart TD
+  n0[Batch audit]
+  n1{{Index probe}}
+  n2[[Ledger]]
+  n3(Event probe)
+  n4((Probe session))
+  n5(Router bucket trace)
+  n6([Router bucket])
+  n7[[Batch stream cache]]
+  n8(Audit token cache)
+  n9[[Trace gateway user]]
+  n10[/Bucket trace/]
+  n11[/Bucket payment replica/]
+  n12((Stream gateway))
+  n13[Shard]
+  n14((User report))
+  n15[[Index span]]
+  n16{Probe}
+  n17{{Alert replica}}
+  n18(User)
+  n19[[Session]]
+  n20(Worker cache order)
+  n21[Trace cache payment]
+  n22{{Invoice}}
+  n23([Probe gateway])
+  n24[[Replica audit worker]]
+  n25[(Payment index queue)]
+  n26[(Queue stream)]
+  n27((User))
+  n28((Session span))
+  n29[(Probe policy)]
+  n30{Alert metric trace}
+  n31[Replica stream worker]
+  n32(Probe ledger)
+  n33(Alert)
+  n34{{Queue policy}}
+  n35{{Policy}}
+  n36[Worker alert report]
+  n37[(Probe span gateway)]
+  n38[Bucket]
+  n39([Audit])
+  n40[(Alert stream metric)]
+  n41[(Lease shard user)]
+  n42{{Session trace bucket}}
+  n43(Index payment)
+  n44((Quota token gateway))
+  n45((Alert))
+  n46[Span alert audit]
+  n47{{Gateway user}}
+  n48(Shard replica schema)
+  n49[[Alert]]
+  n50[[Alert]]
+  n51[[Replica replica]]
+  n52((Index trace))
+  n53((Probe payment cache))
+  n54[(Probe ledger lease)]
+  n55[Audit]
+  n56[/Session schema report/]
+  n57[(Payment)]
+  n58(Quota alert cache)
+  n59[/Batch lease/]
+  n60{Index}
+  n61[Report]
+  n62[Gateway]
+  n63[Stream]
+  n0 --> n1
+  n0 --> n2
+  n1 --- n3
+  n0 --x n4
+  n3 --- n5
+  n1 --> n6
+  n2 --o|Trace| n7
+  n0 -.->|Worker bucket| n8
+  n1 ---|Event| n9
+  n9 --> n10
+  n8 --> n11
+  n7 ==> n12
+  n11 ==> n13
+  n12 --- n14
+  n14 -.-> n15
+  n14 --o|Schema| n16
+  n10 -.-> n17
+  n17 --o n18
+  n18 --x|Audit queue| n19
+  n17 --o n20
+  n13 -->|Alert ledger| n21
+  n19 ==> n22
+  n19 --o n23
+  n21 ---|Audit| n24
+  n16 --- n25
+  n17 -.-> n26
+  n20 -.-> n27
+  n21 ==> n28
+  n28 --- n29
+  n27 -.-> n30
+  n29 --- n31
+  n27 --o n32
+  n30 -.-> n33
+  n31 --> n34
+  n32 -.-> n35
+  n33 --> n36
+  n32 -.->|Payment| n37
+  n37 --> n38
+  n34 --o n39
+  n31 --o|Payment| n40
+  n34 -.->|Trace worker| n41
+  n41 --o|Trace| n42
+  n38 --o|Policy shard| n43
+  n36 -.->|Invoice| n45
+  n40 -.-> n46
+  n46 ==> n47
+  n43 ==> n48
+  n43 --- n49
+  n46 --o n50
+  n49 --> n51
+  n46 --- n53
+  n45 -->|Batch| n54
+  n47 --> n55
+  n47 ==> n56
+  n51 ==> n57
+  n53 --- n58
+  n51 ==> n59
+  n59 --o n60
+  n56 -.-> n61
+  n61 --x n62
+  n59 --- n63
+  n24 --o n5
+  n11 --o n42
+  n45 --o n51
+  n23 --> n9
+  n21 --- n31
+  n29 ==> n16
+  n13 --> n3
+  n54 --- n19
+  n52 --o n10
+  n25 --> n28
+  n34 --- n15
+  n44 ==> n61
+  n44 --- n4
+  n26 ==> n15
+  n59 --o n20
+  n34 --o n13
+  n60 --> n47
+  n58 --> n52
+  n6 --- n13

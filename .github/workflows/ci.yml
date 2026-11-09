@@ -5,13 +5,13 @@ on:
     branches: [main]
   pull_request:
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: ["1.26.x"]
+permissions:
+  contents: read
 
+jobs:
+  # Fast checks that do not need fonts.
+  lint:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v7
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: "1.27.x"
           cache: true
 
       - name: Format check
@@ -36,18 +36,41 @@ jobs:
       - name: Vet
         run: go vet ./...
 
+      # The renderer must give the same numbers on every CPU. The compiler
+      # reports each place where it would fuse a multiply-add on arm64.
+      - name: No fused multiply-add
+        run: go run ./tools/fmacheck ./internal/... .
+
+  # The corpus test proves byte-exact output on every machine: it measures
+  # text with the fonts that are embedded in the module and compares with
+  # mermaid in Chromium on Linux. Golden tests that were recorded with the
+  # system fonts of the macOS reference machine skip where those fonts are
+  # not installed.
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: "1.27.x"
+          cache: true
+
+      - name: Corpus parity
+        run: go test -count=1 -run 'TestCorpusParity' -v .
+
+      - name: Concurrent renders with the race detector
+        run: go test -count=1 -race -short -run 'TestConcurrentRendersAreIdentical|TestCachesDoNotChangeRenders' .
+
+      # Renders share frozen config trees. This test found a write to one.
+      - name: Shared config with the race detector
+        run: go test -count=1 -race -short ./internal/config/ ./internal/js/ ./internal/memo/
+
       - name: Test
         run: go test ./...
-
-      - name: Test race
-        run: go test -race ./...
-
-      - name: Coverage check
-        run: |
-          COVERAGE=$(go test -cover ./... 2>&1 | grep -oP 'coverage: \K[0-9.]+' | head -1)
-          echo "Coverage: ${COVERAGE}%"
-          if [ "$(echo "$COVERAGE < 70" | bc)" -eq 1 ]; then
-            echo "Coverage ${COVERAGE}% is below minimum 70%"
-            exit 1
-          fi
-

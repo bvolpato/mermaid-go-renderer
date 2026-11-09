@@ -1,0 +1,91 @@
+flowchart TD
+  n0([Schema user])
+  n1{Router payment bucket}
+  n2[[Alert bucket cache]]
+  n3{{Index worker}}
+  n4(Metric)
+  n5{Trace user}
+  n6{{Schema bucket}}
+  n7{{Quota}}
+  n8{{Index worker}}
+  n9[[Gateway index]]
+  n10[Payment]
+  n11([Worker order shard])
+  n12[(Trace)]
+  n13[Gateway trace]
+  n14(Probe lease report)
+  n15[/Span session index/]
+  n16{{Batch shard}}
+  n17{Ledger policy session}
+  n18[Index]
+  n19{Worker}
+  n20([Session payment user])
+  n21{Replica token session}
+  n22((Queue session))
+  n23[(Schema bucket alert)]
+  n24{{Trace schema alert}}
+  n25{Span alert}
+  n26((Shard metric))
+  n27[(Index)]
+  n28[(Stream index)]
+  n29{{Lease}}
+  n30[(Span ledger metric)]
+  n31{{Queue}}
+  n32{Replica}
+  n33((Worker))
+  n34[User trace]
+  n35{Payment bucket router}
+  n36[/Report/]
+  n37([Cache])
+  n38[(Stream)]
+  n39{{Bucket}}
+  n0 --- n1
+  n1 ==> n2
+  n1 ==>|Stream| n3
+  n2 -.-> n4
+  n0 --> n5
+  n5 ==> n6
+  n2 --o|Worker| n7
+  n4 -.->|Worker worker| n8
+  n5 -.-> n9
+  n5 --- n10
+  n7 --x n11
+  n3 --> n12
+  n9 --- n13
+  n13 --- n14
+  n12 --- n15
+  n9 --x n16
+  n15 -.->|Ledger order| n17
+  n12 -.-> n18
+  n18 -->|Session| n19
+  n12 -.-> n20
+  n20 --x n21
+  n13 ==> n22
+  n14 --o|User user| n23
+  n19 ==> n24
+  n20 --> n26
+  n20 --x n27
+  n25 -->|Ledger| n28
+  n22 -.-> n29
+  n25 -.-> n30
+  n26 --x|Event| n31
+  n23 --> n32
+  n29 -.-> n33
+  n31 --o n34
+  n33 ==> n35
+  n27 --x n36
+  n36 -->|Probe| n37
+  n34 --x n38
+  n38 -.->|Policy policy| n39
+  n13 --> n25
+  n10 --> n16
+  n14 -.-> n33
+  n35 --o n10
+  n16 --o n10
+  n5 -.-> n6
+  n0 --x n9
+  n5 --> n19
+  n21 --- n33
+  n11 -.-> n5
+  n9 -.-> n5
+  n8 -.-> n38

@@ -1,0 +1,99 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+  subgraph g0 [Order report]
+    n0(Gateway policy order)
+    n4{{Router shard}}
+    n8{{Lease}}
+    n13{{Trace}}
+    n14{{Span router router}}
+    n20[(User span index)]
+    n30[Order alert]
+    n31((Batch session audit))
+    n37([Queue])
+  end
+  subgraph g1 [Policy schema]
+    n1([Order queue quota])
+    n5(Span trace quota)
+    n12((Quota))
+    n16([Stream probe])
+    n18([Event schema])
+    n21((Session index))
+    n25([Stream probe])
+    n28[/Queue schema cache/]
+    n29[[Token]]
+    n35{Order}
+  end
+  subgraph g2 [Audit]
+    n2{Index order}
+    n3[/Worker/]
+    n22[(Bucket index)]
+    n24((Report order))
+    n32[[Probe replica]]
+    n38[[Invoice]]
+  end
+  n6((Order index))
+  n7([Alert gateway worker])
+  n9(Schema)
+  n10[/Trace/]
+  n11[(Order)]
+  n15((Token queue event))
+  n17([Alert payment router])
+  n19[[Report alert user]]
+  n23[Queue session]
+  n26(Report)
+  n27{Batch span router}
+  n33((Span stream))
+  n34([Span quota])
+  n36([Trace])
+  n39((Probe queue payment))
+  n0 -->|Audit| n1
+  n0 -.-> n2
+  n1 --- n3
+  n0 -.->|Token trace| n4
+  n3 --o n5
+  n1 --o n6
+  n1 --- n7
+  n4 -.->|Lease| n8
+  n6 -.-> n10
+  n8 --x n11
+  n7 --> n12
+  n8 --x n13
+  n10 --o n14
+  n9 ==> n15
+  n11 --o n16
+  n13 ==> n17
+  n12 ==>|Alert index| n18
+  n15 --> n19
+  n18 ==> n20
+  n13 --- n21
+  n19 --o n23
+  n18 --> n24
+  n20 --- n25
+  n21 -.-> n26
+  n21 --> n27
+  n26 ==> n28
+  n23 ---|Alert cache| n29
+  n29 --o n31
+  n25 --o n32
+  n29 ==>|Stream| n33
+  n33 --o n34
+  n30 --o n35
+  n35 --x n36
+  n32 --x n37
+  n31 --x n38
+  n38 -.->|Gateway schema| n39
+  n35 -.-> n29
+  n7 -.-> n28
+  n17 --> n27
+  n13 --o n30
+  n2 -.-> n10
+  n32 --> n13
+  n17 -.-> n19
+  n27 --- n2
+  n22 ==> n10
+  n26 --o n33
+  n6 --> n3
+  n9 --- n34

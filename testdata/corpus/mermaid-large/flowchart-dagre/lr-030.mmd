@@ -1,0 +1,76 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+  subgraph g0 [Ledger]
+    n0([Queue gateway])
+    n2{{Session span event}}
+    n5{{Lease ledger}}
+    n9{Queue lease}
+    n15((Report))
+    n17[/Quota/]
+    n26(Ledger shard report)
+    n28[(Shard bucket)]
+  end
+  subgraph g1 [Invoice]
+    n1([Bucket payment])
+    n10((Router session))
+    n11[/Index schema/]
+    n19{Shard event order}
+    n21(Payment event token)
+    n24[/Token probe/]
+    n29[[Schema metric]]
+  end
+  n3([Quota metric quota])
+  n4[Queue policy]
+  n6[[Ledger]]
+  n7((Index))
+  n8{{User policy batch}}
+  n12[(Probe audit stream)]
+  n13{{Trace stream ledger}}
+  n14(Event ledger)
+  n16((Gateway quota))
+  n18[Report]
+  n20[[Ledger event]]
+  n22(Event)
+  n23[/Probe cache/]
+  n25(Probe)
+  n27{Metric payment}
+  n0 --- n1
+  n0 --> n2
+  n1 --> n3
+  n2 --o n4
+  n1 -.-> n5
+  n1 --> n6
+  n5 --- n7
+  n0 --x n8
+  n3 -.-> n10
+  n6 ==> n11
+  n6 ==> n12
+  n10 --o|Audit bucket| n13
+  n6 -.-> n14
+  n13 --- n15
+  n14 --x n16
+  n15 --> n17
+  n10 --- n18
+  n18 --x n19
+  n13 --o n20
+  n12 -.-> n21
+  n18 --> n22
+  n18 --- n23
+  n23 -->|Trace stream| n24
+  n19 --x n25
+  n19 --> n26
+  n26 ---|Bucket span| n27
+  n25 --x n28
+  n24 -.-> n29
+  n15 ==> n14
+  n10 ==> n15
+  n0 --x n4
+  n19 --> n7
+  n28 -.-> n17
+  n22 --- n16
+  n6 --o n12
+  n3 --- n19
+  n23 --- n20

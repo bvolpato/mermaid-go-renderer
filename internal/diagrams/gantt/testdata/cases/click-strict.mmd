@@ -1,0 +1,12 @@
+gantt
+  dateFormat YYYY-MM-DD
+  section Clicks
+  Link task :cl1, 2024-01-01, 3d
+  Invoke task :cl2, after cl1, 3d
+  Both :cl3, after cl2, 2d
+  Plain :cl4, after cl3, 2d
+  click cl1 href "https://example.com/a?b=c"
+  click cl2 call myFunc("x", 2)
+  click cl3 call other() href "javascript:alert(1)"
+  click cl1,cl4 href "HTTP://Example.COM/path with space"
+  click missing href "https://nowhere.example"

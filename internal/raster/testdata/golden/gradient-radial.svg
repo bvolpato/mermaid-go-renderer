@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120"><defs>
+<radialGradient id="a"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#9370DB"/></radialGradient>
+<radialGradient id="b" cx="0.3" cy="0.3" r="0.6"><stop offset="0" stop-color="#ffff00"/><stop offset="0.5" stop-color="#ff0000"/><stop offset="1" stop-color="#000000"/></radialGradient>
+<radialGradient id="c" r="0.25" spreadMethod="repeat"><stop offset="0" stop-color="#00aaff"/><stop offset="1" stop-color="#003355"/></radialGradient>
+<radialGradient id="d" gradientUnits="userSpaceOnUse" cx="160" cy="90" r="30"><stop offset="0" stop-color="#000000" stop-opacity="0.8"/><stop offset="1" stop-color="#000000" stop-opacity="0"/></radialGradient>
+<radialGradient id="e" r="0.25" spreadMethod="reflect"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#228822"/></radialGradient>
+</defs><rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="8" y="8" width="54" height="54" fill="url(#a)"/>
+<rect x="70" y="8" width="80" height="40" fill="url(#b)"/>
+<circle cx="175" cy="30" r="20" fill="url(#c)"/>
+<rect x="8" y="70" width="90" height="42" fill="url(#e)"/>
+<rect x="120" y="55" width="72" height="60" fill="url(#d)"/></svg>

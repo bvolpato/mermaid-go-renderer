@@ -1,0 +1,34 @@
+Notice for internal/dom
+
+Go files in this directory follow or name source files of Blink, the layout
+engine of Chromium. The license of each Blink file was read from the header
+of the file at the tag 156.0.8078.4 of
+https://chromium.googlesource.com/chromium/src, the version of the reference
+browser.
+
+  xml.go             A port of markup_accumulator.cc and markup_formatter.cc
+                     (BSD-2-Clause, with the copyright of Apple and Google
+                     in the files).
+  node.go            One function follows a function of element.cc
+                     (LGPL-2.0-or-later). The file also ports parts of
+                     d3-selection 3.0.0 (ISC).
+  purify_support.go  Two functions follow functions of element.cc
+                     (LGPL-2.0-or-later). The node iterator follows the DOM
+                     standard. The class of Blink for it is in
+                     node_iterator.cc (LGPL-2.0-or-later). The Go file does
+                     not say that it follows that Blink file.
+  selector.go        One comment names a rule of selector_checker.cc
+                     (LGPL-2.0-or-later).
+  style.go           A port of the method selection.style of d3-selection
+                     3.0.0 (ISC).
+
+parse.go and serialize.go port no upstream file.
+
+NOTICE-Blink.txt in this directory has the first comment of each of these
+Blink files, with its copyright lines. The text of the GNU Library General
+Public License, version 2, is in ../browser/LICENSE-LGPL-2.0.txt.
+
+The owner of the repository has not decided what to do with the code that
+follows the LGPL files. The options are in docs/LICENSE-AUDIT.md, finding
+F1. This notice states where the code comes from. It does not put the Go
+files under a license.

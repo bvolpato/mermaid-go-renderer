@@ -5,16 +5,19 @@ project_name: mermaid-go-renderer
 before:
   hooks:
     - go mod tidy
-    - go test ./...
 
 builds:
   - id: mmdg
     main: ./cmd/mmdg
     binary: mmdg
     env:
-      - CGO_ENABLED=1
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
     goos:
       - darwin
+      - linux
+      - windows
     goarch:
       - amd64
       - arm64
@@ -26,6 +29,15 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
+    # The files that go into each archive with the binary. The binary has
+    # code of other projects, and THIRD_PARTY_NOTICES.md has their notices
+    # and their license texts. LICENSE is the MIT license of the original
+    # code of the repository.
+    files:
+      - "LICENSE*"
+      - "README*"
+      - "CHANGELOG*"
+      - "THIRD_PARTY_NOTICES.md"
 
 checksum:
   name_template: checksums.txt
@@ -46,7 +58,10 @@ brews:
     directory: Formula
     homepage: "https://github.com/bvolpato/mermaid-go-renderer"
     description: "Native Mermaid renderer in Go without browser/chromium"
-    license: "MIT"
+    # The formula has no license field. The repository is under MIT, but the
+    # binary also contains code under other licenses (EPL-2.0, LGPL, Apache-2.0,
+    # BSD, ISC, OFL and more). A value of the field must be an SPDX expression
+    # that is true for the binary. See docs/LICENSE-AUDIT.md, finding F9.
     test: |
       (testpath/"diagram.mmd").write("flowchart LR\nA --> B\n")
       system "#{bin}/mmdg", "-i", testpath/"diagram.mmd", "-o", testpath/"out.svg", "-e", "svg"

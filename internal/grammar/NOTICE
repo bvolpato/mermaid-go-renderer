@@ -1,0 +1,80 @@
+Notice for internal/grammar
+
+Each subdirectory of this directory has the parse tables and the lexer rules
+of one jison grammar of mermaid 12.2.0, and a file actions.js.txt. The
+script tools/reference/gen-jison.mjs writes these files. It runs jison
+0.4.18 on the grammar files of mermaid.
+
+  tables.go, lexactions_gen.go
+      The tables that jison makes from the grammar, as Go data.
+  actions.js.txt
+      The JavaScript of the semantic actions and the lexer actions of the
+      grammar, copied from the grammar file of mermaid. The 19 files with
+      this name are text for the reader. No program reads them.
+  lexactions_manual.go
+      A Go port of lexer actions of the grammar.
+
+The grammar files are code of mermaid (https://github.com/mermaid-js/mermaid).
+The license of mermaid, from the file LICENSE of the npm package mermaid
+12.2.0:
+
+  The MIT License (MIT)
+
+  Copyright (c) 2014 - 2022 Knut Sveidqvist
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+The tables have the form that jison generates (http://jison.org). The
+license of jison, from the section License of the file README.md of the npm
+package jison 0.4.18:
+
+  Copyright (c) 2009-2014 Zachary Carter
+
+   Permission is hereby granted, free of
+  charge, to any person  obtaining a
+  copy of this software and associated
+  documentation  files (the "Software"),
+  to deal in the Software without
+  restriction, including without
+  limitation the rights to use,  copy,
+  modify, merge, publish, distribute,
+  sublicense, and/or sell  copies of the
+  Software, and to permit persons to
+  whom the  Software is furnished to do
+  so, subject to the following
+  conditions:
+
+   The above copyright notice and this
+  permission notice shall be  included
+  in all copies or substantial portions
+  of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS",
+  WITHOUT WARRANTY OF ANY KIND,  EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED
+  TO THE WARRANTIES  OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT  HOLDERS BE
+  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY,  WHETHER IN AN ACTION OF
+  CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR  OTHER DEALINGS
+  IN THE SOFTWARE.

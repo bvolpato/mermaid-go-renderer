@@ -1,0 +1,21 @@
+---
+config:
+  look: handDrawn
+  handDrawnSeed: 5
+---
+venn-beta
+  title Styled sketch
+  set A["Apples"]
+    text "a"
+  set B["Bananas"]
+  set C
+  union A,B["AB"]
+    text "ab"["Shared"]
+  union B,C
+  union A,B,C
+  style A fill:#ff6b6b, stroke:#990000, stroke-width:4, color:#330000
+  style B fill:#4ecdc4, fill-opacity:0.6
+  style A,B fill:#ffe66d, color:#0000ff
+  style A,B,C fill:#00ff00
+  style a color:#ff00ff
+  style ab color:rgb(1, 2, 3)

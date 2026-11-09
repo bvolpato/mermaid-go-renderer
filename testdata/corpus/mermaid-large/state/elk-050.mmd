@@ -1,0 +1,60 @@
+stateDiagram-v2
+  [*] --> s0
+  state Group0 {
+    s4 --> s16
+    s16 --> s17
+    s17 --> s22
+    s22 --> s31 : token
+    s31 --> s32
+    s32 --> s33 : session
+    s33 --> s36
+    s36 --> s47 : event
+  }
+  state Group1 {
+    s0 --> s2
+    s2 --> s5
+    s5 --> s11
+    s11 --> s46
+  }
+  state Group2 {
+    s20 --> s38
+    s38 --> s42
+    s42 --> s48 : order
+    s48 --> s49
+  }
+  state Group3 {
+    s9 --> s19
+    s19 --> s29 : stream
+    s29 --> s35
+    s35 --> s40
+  }
+  s0 --> s1 : Payment router
+  s1 --> s2 : Schema
+  s1 --> s3 : Trace
+  s2 --> s5 : Batch event
+  s1 --> s6
+  s5 --> s7
+  s3 --> s9
+  s4 --> s10 : Replica
+  s10 --> s12
+  s10 --> s16
+  s13 --> s18
+  s14 --> s19
+  s18 --> s22
+  s18 --> s23
+  s18 --> s24 : Ledger replica
+  s24 --> s27
+  s24 --> s29
+  s30 --> s32
+  s27 --> s33 : Payment policy
+  s31 --> s34
+  s31 --> s35
+  s34 --> s36
+  s37 --> s39
+  s36 --> s40
+  s37 --> s43 : Batch quota
+  s40 --> s45
+  s42 --> s46
+  s46 --> s47
+  s44 --> s48
+  s49 --> [*]

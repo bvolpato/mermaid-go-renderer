@@ -1,0 +1,97 @@
+---
+config:
+  layout: dagre
+---
+erDiagram
+  E0 {
+    float router_0 PK
+    string audit_1
+    string lease_2
+    string invoice_3
+  }
+  E1 {
+    int order_0 PK
+    int ledger_1
+    string bucket_2
+  }
+  E2 {
+    date worker_0 PK
+    int lease_1
+  }
+  E3 {
+    date ledger_0 PK
+    float lease_1
+    date index_2
+    float lease_3
+    float lease_4
+  }
+  E4 {
+    date index_0 PK
+    int audit_1
+    int event_2
+    float router_3
+    date span_4
+  }
+  E5 {
+    date user_0 PK
+    date replica_1
+  }
+  E6 {
+    date schema_0 PK
+    date alert_1 FK
+  }
+  E7 {
+    float invoice_0 PK
+    date quota_1
+  }
+  E8 {
+    float lease_0 PK
+    date queue_1 FK
+    date session_2
+    int event_3
+    string batch_4
+  }
+  E9 {
+    float index_0 PK
+    date span_1
+    string invoice_2
+  }
+  E10 {
+    float bucket_0 PK
+    float shard_1
+    date cache_2
+  }
+  E11 {
+    int router_0 PK
+  }
+  E12 {
+    string audit_0 PK
+    date index_1 FK
+    float shard_2 FK
+  }
+  E13 {
+    float gateway_0 PK
+    int schema_1
+    int cache_2
+  }
+  E14 {
+    float metric_0 PK
+    string stream_1 FK
+    date probe_2
+    int stream_3 FK
+  }
+  E0 ||--|{ E1 : user
+  E1 }|..|{ E2 : shard
+  E0 }|..|{ E3 : audit
+  E3 |o--o| E4 : worker
+  E3 |o--o| E5 : batch
+  E3 }o--o{ E6 : router
+  E1 ||--o{ E7 : schema
+  E6 ||--|| E8 : replica
+  E8 }|..|{ E9 : span
+  E6 }o--o{ E10 : router
+  E9 }|..|{ E11 : event
+  E11 }o--o{ E12 : shard
+  E11 ||--o{ E13 : bucket
+  E9 }|..|{ E14 : schema
+  E9 }o--o{ E3 : replica

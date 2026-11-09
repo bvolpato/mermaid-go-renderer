@@ -1,0 +1,12 @@
+---
+config:
+  layout: tidy-tree
+  look: handDrawn
+---
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER {
+    string name
+    string email
+  }
+  ORDER ||--|{ LINE-ITEM : contains

@@ -1,0 +1,122 @@
+flowchart LR
+  n0(Token event)
+  n1(Event quota)
+  n2{{Quota order}}
+  n3(Order gateway index)
+  n4[/Bucket audit stream/]
+  n5{Cache replica}
+  n6[/Schema replica/]
+  n7{Event trace probe}
+  n8((Batch))
+  n9{{Policy router invoice}}
+  n10[Trace probe]
+  n11((Order stream))
+  n12[Event]
+  n13(Session queue)
+  n14(Gateway order)
+  n15{{Event probe lease}}
+  n16{{Alert gateway user}}
+  n17((Trace batch invoice))
+  n18{Trace alert}
+  n19([Shard])
+  n20[(Probe invoice)]
+  n21([Token token stream])
+  n22(Metric replica)
+  n23[(Schema)]
+  n24([Shard index router])
+  n25{Index}
+  n26[/Audit metric worker/]
+  n27[Probe span probe]
+  n28(Audit span trace)
+  n29[(Lease)]
+  n30[(Ledger)]
+  n31[[Span shard]]
+  n32[(Lease user policy)]
+  n33[Router policy]
+  n34[(Quota span)]
+  n35(Ledger session)
+  n36((Audit user lease))
+  n37([Probe])
+  n38{{Quota}}
+  n39[[Replica batch trace]]
+  n40((Ledger queue))
+  n41[(Trace ledger)]
+  n42([Schema])
+  n43(Invoice probe probe)
+  n44[[Stream user invoice]]
+  n45((Metric user))
+  n46[(Metric)]
+  n47[Trace gateway bucket]
+  n48[[Worker batch schema]]
+  n49[Payment]
+  n50{{Queue}}
+  n51[/Cache worker/]
+  n52[Report batch]
+  n53([Replica index])
+  n54{Alert shard cache}
+  n0 --> n1
+  n1 --> n2
+  n2 --> n3
+  n2 --o|Payment shard| n4
+  n0 --o|Order| n5
+  n1 --- n6
+  n0 ==>|Session queue| n7
+  n7 --o n8
+  n4 --x n9
+  n4 --> n11
+  n5 --> n12
+  n7 --x n13
+  n12 -.-> n14
+  n12 ==> n15
+  n8 --x n16
+  n8 --> n17
+  n11 --> n18
+  n18 -.->|Gateway session| n19
+  n19 --> n20
+  n18 -.->|Schema span| n21
+  n16 --> n22
+  n16 --- n23
+  n21 -.-> n25
+  n19 -->|Trace schema| n26
+  n25 --x n27
+  n22 --- n28
+  n26 --o|Quota session| n29
+  n23 --- n30
+  n24 -->|Batch| n31
+  n26 -.->|Report| n32
+  n28 ==> n33
+  n26 -.-> n34
+  n34 --> n35
+  n29 -->|Router| n36
+  n32 --x n37
+  n37 --x n38
+  n37 --o n39
+  n36 --o n40
+  n39 --> n41
+  n39 --> n42
+  n37 -.->|Quota| n43
+  n39 -.->|Ledger| n44
+  n37 -.->|Payment| n45
+  n38 --> n46
+  n45 --x|Stream| n47
+  n39 -.-> n48
+  n42 ==> n49
+  n46 -.-> n51
+  n47 --x n52
+  n52 --o n53
+  n47 --> n54
+  n9 --> n49
+  n8 --- n53
+  n9 -.-> n10
+  n52 --> n30
+  n11 --x n13
+  n5 -.-> n27
+  n44 ==> n16
+  n32 ==> n30
+  n19 -.-> n46
+  n42 -.-> n38
+  n31 --x n48
+  n51 --- n48
+  n27 --o n17
+  n8 --x n25
+  n42 --> n31

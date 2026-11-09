@@ -1,0 +1,2266 @@
+{
+ "cases": [
+  {
+   "name": "emptytext-alone-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"> </text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"> </text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\">\n</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\">\n</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\">\n</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\">\n</text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\">\n</text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" x=\"5\" y=\"7\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"5\" y=\"7\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" x=\"5\" y=\"7\"></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" x=\"5\" y=\"7\"></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" x=\"5\" y=\"7\"></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><!-- c --></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><!-- c --></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><!-- c --></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><!-- c --></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><!-- c --></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><title>t</title></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><title>t</title></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><title>t</title></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><title>t</title></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><title>t</title></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><desc>t</desc></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><desc>t</desc></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><desc>t</desc></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><desc>t</desc></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><desc>t</desc></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><g></g></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><g></g></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><g></g></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><g></g></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><g></g></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><rect width=\"5\" height=\"5\"/></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><rect width=\"5\" height=\"5\"/></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><rect width=\"5\" height=\"5\"/></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><rect width=\"5\" height=\"5\"/></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><rect width=\"5\" height=\"5\"/></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan style=\"display:none\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan style=\"display:none\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan style=\"display:none\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan style=\"display:none\">abc</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan style=\"display:none\">abc</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\">abc</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan style=\"display:none\">abc</tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-10",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\">abc</tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan style=\"display:none\"><tspan style=\"display:inline\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan style=\"display:none\"><tspan style=\"display:inline\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\"><tspan style=\"display:inline\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan style=\"display:none\"><tspan style=\"display:inline\"></tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-11",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan style=\"display:none\"><tspan style=\"display:inline\"></tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><a style=\"display:none\"><tspan></tspan></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><a style=\"display:none\"><tspan></tspan></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><a style=\"display:none\"><tspan></tspan></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><a style=\"display:none\"><tspan></tspan></a></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-12",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><a style=\"display:none\"><tspan></tspan></a></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" style=\"display:none\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" style=\"display:none\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" style=\"display:none\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" style=\"display:none\">abc</text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-13",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" style=\"display:none\">abc</text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" style=\"display:none\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" style=\"display:none\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" style=\"display:none\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" style=\"display:none\"><tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-14",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" style=\"display:none\"><tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-15",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan> </tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan> </tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan>\n  </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan>\n  </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan>\n  </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan>\n  </tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-17",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan>\n  </tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-18",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" y=\"-10.1\"><tspan class=\"text-outer-tspan\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" y=\"-10.1\"><tspan class=\"text-outer-tspan\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" y=\"-10.1\"><tspan class=\"text-outer-tspan\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" y=\"-10.1\"><tspan class=\"text-outer-tspan\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-19",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" y=\"-10.1\"><tspan class=\"text-outer-tspan\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan x=\"3\" y=\"4\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan x=\"3\" y=\"4\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"3\" y=\"4\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan x=\"3\" y=\"4\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-20",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"3\" y=\"4\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" x=\"3\" y=\"4\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"3\" y=\"4\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" x=\"3\" y=\"4\"><tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" x=\"3\" y=\"4\"><tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-21",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" x=\"3\" y=\"4\"><tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan dx=\"5\" dy=\"6\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan dx=\"5\" dy=\"6\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan dx=\"5\" dy=\"6\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan dx=\"5\" dy=\"6\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-22",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan dx=\"5\" dy=\"6\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan><tspan></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan><tspan></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan><tspan></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan><tspan></tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-23",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan><tspan></tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan x=\"3\" y=\"4\"><tspan font-style=\"normal\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan x=\"3\" y=\"4\"><tspan font-style=\"normal\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"3\" y=\"4\"><tspan font-style=\"normal\"></tspan></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan x=\"3\" y=\"4\"><tspan font-style=\"normal\"></tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-24",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"3\" y=\"4\"><tspan font-style=\"normal\"></tspan></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan><title>t</title></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan><title>t</title></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan><title>t</title></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan><title>t</title></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan><title>t</title></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan visibility=\"hidden\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan visibility=\"hidden\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan visibility=\"hidden\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan visibility=\"hidden\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan visibility=\"hidden\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" text-anchor=\"middle\"><tspan text-anchor=\"middle\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" text-anchor=\"middle\"><tspan text-anchor=\"middle\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" text-anchor=\"middle\"><tspan text-anchor=\"middle\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" text-anchor=\"middle\"><tspan text-anchor=\"middle\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-27",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" text-anchor=\"middle\"><tspan text-anchor=\"middle\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan> </tspan><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan> </tspan><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan> </tspan><tspan> </tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan> </tspan><tspan> </tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-28",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan> </tspan><tspan> </tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" x=\"9\" y=\"9\"> <tspan></tspan> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" x=\"9\" y=\"9\"> <tspan></tspan> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\" x=\"9\" y=\"9\"> <tspan></tspan> </text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\" x=\"9\" y=\"9\"> <tspan></tspan> </text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-29",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\" x=\"9\" y=\"9\"> <tspan></tspan> </text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><a></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><a></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><a></a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><a></a></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><a></a></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><a href=\"#\"> </a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><a href=\"#\"> </a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><a href=\"#\"> </a></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><a href=\"#\"> </a></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-31",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><a href=\"#\"> </a></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><textPath href=\"#p\"></textPath></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><textPath href=\"#p\"></textPath></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><textPath href=\"#p\"></textPath></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><textPath href=\"#p\"></textPath></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-32",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><textPath href=\"#p\"></textPath></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\">abc</text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\">abc</text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-33",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\">abc</text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan x=\"0\" y=\"1em\"></tspan><tspan x=\"0\" y=\"2em\">ab</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan x=\"0\" y=\"1em\"></tspan><tspan x=\"0\" y=\"2em\">ab</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"1em\"></tspan><tspan x=\"0\" y=\"2em\">ab</tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan x=\"0\" y=\"1em\"></tspan><tspan x=\"0\" y=\"2em\">ab</tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-34",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"1em\"></tspan><tspan x=\"0\" y=\"2em\">ab</tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-alone-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\"><tspan x=\"0\" y=\"1em\">ab</tspan><tspan x=\"0\" y=\"3em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    },
+    {
+     "sel": "#my-svg",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-rect-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\"><tspan x=\"0\" y=\"1em\">ab</tspan><tspan x=\"0\" y=\"3em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-moved-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"1em\">ab</tspan><tspan x=\"0\" y=\"3em\"></tspan></text></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#x",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-nested-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/><g transform=\"translate(-50, -60)\"><rect class=\"background\"/><text id=\"x\"><tspan x=\"0\" y=\"1em\">ab</tspan><tspan x=\"0\" y=\"3em\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-first-35",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\"><text id=\"x\" transform=\"translate(100, 200)\"><tspan x=\"0\" y=\"1em\">ab</tspan><tspan x=\"0\" y=\"3em\"></tspan></text><rect x=\"10\" y=\"20\" width=\"30\" height=\"40\"/></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-title-only",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\" class=\"label\"><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 0, 0)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"><tspan font-style=\"normal\" class=\"text-inner-tspan\" font-weight=\"normal\">State</tspan></tspan></text></g><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 18.25, 28)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-descr-only",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\" class=\"label\"><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 18.25, 0)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 0, 9)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"><tspan font-style=\"normal\" class=\"text-inner-tspan\" font-weight=\"normal\">State</tspan></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  },
+  {
+   "name": "emptytext-both-empty",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><path id=\"p\" d=\"M0,0L100,0\"/></defs><g id=\"t\" class=\"label\"><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 0, 0)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g><g><rect class=\"background\" style=\"stroke: none\"></rect><text y=\"-10.1\" transform=\"translate( 0, 9)\"><tspan class=\"text-outer-tspan title-row\" x=\"0\" y=\"-0.1em\" dy=\"1.1em\"></tspan></text></g></g></svg>",
+   "queries": [
+    {
+     "sel": "#t",
+     "op": "bbox"
+    }
+   ]
+  }
+ ]
+}

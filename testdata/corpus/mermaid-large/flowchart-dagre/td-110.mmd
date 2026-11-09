@@ -1,0 +1,250 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  subgraph g0 [Invoice index]
+    n0[/Queue report/]
+    n2[/Quota gateway/]
+    n3{{Span event}}
+    n4(Alert bucket gateway)
+    n8[(Invoice)]
+    n12{{Token trace}}
+    n15(Bucket ledger router)
+    n16[/Shard session lease/]
+    n21[(Batch)]
+    n22((Trace gateway cache))
+    n28[[Gateway span metric]]
+    n36(User)
+    n37(Queue replica)
+    n40(Index)
+    n43([Probe event])
+    n46{Index event}
+    n49[[Token session]]
+    n50(Lease)
+    n51{{Replica token index}}
+    n55[/Alert token audit/]
+    n72[Worker stream payment]
+    n74[[Batch schema]]
+    n81[(User probe)]
+    n91[Probe ledger]
+    n92[[Trace]]
+    n96((Cache))
+    n97[(Payment)]
+    n103(Invoice)
+    n105[(Index quota)]
+  end
+  subgraph g1 [Metric]
+    n6[(Payment ledger)]
+    n7{{Audit}}
+    n13[(Stream schema worker)]
+    n14((Cache))
+    n17[Batch audit batch]
+    n19[[Token]]
+    n20(User)
+    n23([Bucket span])
+    n32[Trace]
+    n34{{Shard policy}}
+    n35[(Lease)]
+    n39{{Event gateway}}
+    n41[Worker lease event]
+    n48(Quota)
+    n52[/Alert user report/]
+    n53[Router alert]
+    n54[(Cache batch)]
+    n57{Batch token}
+    n58[(Session)]
+    n59([Cache session])
+    n60{{Bucket user}}
+    n63[[Trace]]
+    n65[(Order policy batch)]
+    n67{{Probe invoice invoice}}
+    n69[/Router invoice lease/]
+    n70[[Schema gateway]]
+    n71[(Stream)]
+    n73(Invoice probe probe)
+    n78[[Order quota]]
+    n79([Trace user ledger])
+    n80[(Shard policy quota)]
+    n82((Probe))
+    n87[Metric]
+    n93[[Trace alert bucket]]
+    n95{Replica}
+    n99{Event invoice}
+    n100(Stream)
+    n101([User gateway])
+    n102[Order queue]
+    n107{{Bucket}}
+    n108([Queue event])
+    n109{Stream alert}
+  end
+  n1[User event]
+  n5[(Shard)]
+  n9[Policy]
+  n10{{Span router span}}
+  n11[/Policy/]
+  n18[/Stream invoice/]
+  n24[/Span/]
+  n25(Queue)
+  n26{Stream span}
+  n27[(Probe)]
+  n29[Payment bucket]
+  n30([Cache gateway lease])
+  n31{User alert}
+  n33{Report order}
+  n38{{Cache}}
+  n42((Payment gateway))
+  n44([Policy alert event])
+  n45([Index trace])
+  n47{Batch ledger policy}
+  n56[/Shard replica probe/]
+  n61{Session}
+  n62(Report)
+  n64[Payment event user]
+  n66{Queue}
+  n68((Session))
+  n75[Trace]
+  n76{{Token router}}
+  n77{Span index policy}
+  n83([Metric quota])
+  n84[(Batch bucket)]
+  n85[/Queue/]
+  n86([Shard invoice])
+  n88([Order])
+  n89{Token worker lease}
+  n90((Alert))
+  n94[[Report]]
+  n98{{Bucket report alert}}
+  n104((Report))
+  n106{{Gateway}}
+  n0 --x n1
+  n1 --> n2
+  n2 ==> n3
+  n0 -.->|Worker| n4
+  n2 --- n5
+  n1 --- n6
+  n4 --- n7
+  n2 --x n8
+  n1 --o n9
+  n6 --- n10
+  n6 --> n11
+  n5 ==> n12
+  n5 --- n13
+  n13 --x|Invoice| n14
+  n7 ==> n16
+  n15 --x n17
+  n10 -.-> n18
+  n10 --o n19
+  n18 --x n20
+  n18 --o n21
+  n18 --x n22
+  n18 --> n23
+  n16 -->|Shard| n24
+  n24 ==> n25
+  n21 --> n26
+  n21 --o n27
+  n22 --> n28
+  n27 --- n29
+  n23 --> n30
+  n29 --o n31
+  n28 -.-> n32
+  n28 -->|Invoice policy| n33
+  n27 ==> n35
+  n30 --- n36
+  n30 ==> n37
+  n37 -.-> n38
+  n36 --x n40
+  n40 --o|User invoice| n41
+  n41 ==> n42
+  n42 --x n43
+  n41 --o|Session shard| n44
+  n37 --- n45
+  n38 ==> n46
+  n45 -.-> n47
+  n40 --x n48
+  n45 --x n49
+  n47 ---|Bucket order| n51
+  n47 --x n52
+  n51 -->|Session| n53
+  n52 --o n54
+  n49 --x|Probe| n56
+  n52 --x|Schema| n57
+  n56 -.-> n58
+  n57 ==>|User invoice| n59
+  n58 --o n60
+  n53 --o|Audit queue| n61
+  n59 --- n62
+  n62 --x n63
+  n55 --- n64
+  n56 --o|Queue user| n65
+  n62 --o n66
+  n60 --- n67
+  n62 --x|Audit session| n68
+  n62 --x n69
+  n63 --o n70
+  n66 ==>|Order schema| n71
+  n69 --o n72
+  n65 ==> n73
+  n74 -.-> n75
+  n75 ==> n76
+  n70 ==> n77
+  n71 --o n78
+  n77 --o n79
+  n72 ---|Queue cache| n80
+  n72 ==> n81
+  n81 --- n82
+  n80 -.-> n83
+  n81 -->|Payment quota| n84
+  n77 ==>|Gateway gateway| n85
+  n80 ==> n86
+  n84 ==> n87
+  n87 --- n88
+  n86 --- n89
+  n88 --> n90
+  n84 ==> n91
+  n85 ==> n92
+  n85 ==>|Cache quota| n93
+  n93 ==> n94
+  n91 ==> n95
+  n89 --o n96
+  n91 --x n97
+  n91 --> n98
+  n90 -.-> n99
+  n98 --> n100
+  n97 --o n101
+  n101 -.-> n103
+  n96 --o n104
+  n96 ==> n105
+  n104 --o n106
+  n103 ==>|Trace session| n107
+  n106 ---|Span| n109
+  n23 --o n77
+  n52 --x n83
+  n38 --- n78
+  n12 --o n3
+  n52 --- n51
+  n100 ==> n19
+  n61 --> n72
+  n31 --- n54
+  n34 --o n103
+  n3 --> n72
+  n27 -.-> n3
+  n51 --- n103
+  n18 --o n46
+  n61 -.-> n65
+  n44 --x n35
+  n58 --> n32
+  n45 --- n80
+  n10 -.-> n76
+  n74 --- n56
+  n58 ==> n71
+  n19 --> n40
+  n87 ==> n28
+  n83 --x n76
+  n68 ==> n36
+  n44 --x n79
+  n105 --- n104
+  n10 --- n65
+  n30 ==> n90
+  n9 --> n32
+  n83 --> n33

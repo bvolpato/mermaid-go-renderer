@@ -1,0 +1,10 @@
+---
+config:
+  layout: tidy-tree
+---
+stateDiagram-v2
+  [*] --> Active
+  state Active {
+    Idle --> Busy
+  }
+  Active --> Done

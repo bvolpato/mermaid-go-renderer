@@ -1,0 +1,100 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  subgraph g0 [Token bucket]
+    n5{Trace}
+    n14([Worker])
+    n16(Quota index)
+    n19([Replica worker])
+    n24{User token}
+    n30([Token lease cache])
+    n34{Queue report alert}
+  end
+  subgraph g1 [Bucket session]
+    n0{Queue report}
+    n12[(Trace session report)]
+    n17{Index batch policy}
+    n21[Cache token token]
+    n22[Metric schema batch]
+    n28(Policy stream session)
+    n29((Invoice))
+    n36[Probe]
+  end
+  subgraph g2 [Session]
+    n4(Token)
+    n6[[Bucket]]
+    n9((Quota router))
+    n10[/Invoice gateway stream/]
+    n13([Order])
+    n18(Payment)
+    n27[[Shard token]]
+    n32[Audit ledger]
+    n35[(Event)]
+    n37(Queue)
+  end
+  n1{Gateway alert order}
+  n2[/Alert invoice/]
+  n3((Replica))
+  n7(Token stream)
+  n8[Order cache router]
+  n11{{Probe payment router}}
+  n15[[Probe span]]
+  n20([Shard bucket])
+  n23[[Order payment]]
+  n25[(Index)]
+  n26([Audit quota order])
+  n31[/Schema/]
+  n33[[Stream shard metric]]
+  n38{{Ledger}}
+  n39(Stream token quota)
+  n0 --o n1
+  n0 --> n2
+  n1 --> n3
+  n2 --o n4
+  n3 --- n5
+  n0 --x|Event| n6
+  n1 --o n7
+  n3 ==> n8
+  n0 --- n9
+  n8 --o n10
+  n10 ==> n11
+  n7 --> n12
+  n10 --x|Token token| n13
+  n10 --o n14
+  n7 --> n15
+  n9 -->|Audit router| n16
+  n16 --o|Batch| n17
+  n13 -.-> n18
+  n14 -->|Session| n19
+  n19 --- n20
+  n18 --x|Shard| n21
+  n21 --> n22
+  n21 ---|Invoice| n23
+  n20 ==> n24
+  n17 ==>|Report| n25
+  n21 --x n27
+  n25 --o n28
+  n21 --- n29
+  n23 -.-> n30
+  n29 --x n31
+  n29 ==> n32
+  n32 ==> n33
+  n26 --> n34
+  n32 ==> n35
+  n31 --> n36
+  n36 --x n39
+  n24 --- n20
+  n12 --x n20
+  n6 --- n3
+  n7 --> n6
+  n2 --o n10
+  n18 --x n14
+  n31 --- n29
+  n8 ==> n26
+  n10 --o n30
+  n0 --o n2
+  n24 --x n2
+  n30 --o n35
+  g0 --> g2

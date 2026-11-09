@@ -1,0 +1,137 @@
+{
+ "files/fontawesome-free/webfonts/fa-brands-400.woff2": {
+  "sfnt": "9cc9d74acacb3bf6d704d8fb5d21fa18fa73bffe1c5da61d81ce0840540bf71e",
+  "size": 190856,
+  "woff2": "ff66d1cfb67dbe3da432bbe36572cabfa4eef0e591303c2cba111474ba1d15bc"
+ },
+ "files/fontawesome-free/webfonts/fa-regular-400.woff2": {
+  "sfnt": "13bffd456f65e338e6035d6f29cc2411f9692853e56f7f946655450266ada72e",
+  "size": 48996,
+  "woff2": "f4722d10b9e1b41eefe3b51a026312ee1970edb7782f94b0080d3d475945734c"
+ },
+ "files/fontawesome-free/webfonts/fa-solid-900.woff2": {
+  "sfnt": "bf6ce7953ae3c9b68d4948d6c5985580ff2af8ea37cef902ea5c37d6842f2f6d",
+  "size": 327308,
+  "woff2": "24e5fae26b41c08b2df81c91669f5aaae71d81a84a4713fc56b5c621b78dd456"
+ },
+ "files/open-sans/files/open-sans-cyrillic-400-italic.woff2": {
+  "sfnt": "ffcd9b47c66250c59fbc740d052f536f87c27ea8d9437fe9677412bfbd873cb0",
+  "size": 23732,
+  "woff2": "d7ab06ae7d40d3a1a3ef2d7e25290b910894603583b23703d453d2b398c72d39"
+ },
+ "files/open-sans/files/open-sans-cyrillic-400-normal.woff2": {
+  "sfnt": "0b048efeb21b23908a08e3c0bd4f06d042f400b987f6749ecfe3daa9f009ba18",
+  "size": 20864,
+  "woff2": "dbb0be746ac930892a1f0303d33f4cca4520120d2699ecadf34efeb6dd52a7f4"
+ },
+ "files/open-sans/files/open-sans-cyrillic-ext-400-italic.woff2": {
+  "sfnt": "c98dddd9b160cfd97aa363c6a10affd481212605bccabd27d69d91397d3dde65",
+  "size": 36856,
+  "woff2": "66fb62103049d4b7c723ae37d814ded2aeda84724cdc475b360a16e52a50bb2c"
+ },
+ "files/open-sans/files/open-sans-cyrillic-ext-400-normal.woff2": {
+  "sfnt": "eb7ee90b923b2e7fa34f5f3fd56f5e4823f979828b6320f1b05f885b778a5aa0",
+  "size": 34696,
+  "woff2": "d18e67d924951d195e8687eff9260216064559f973924228741117811dec185f"
+ },
+ "files/open-sans/files/open-sans-greek-400-italic.woff2": {
+  "sfnt": "6c8cebcb940c53928a96de9a4c06a46ab6edfb62b4b8faaafad9160188ba2a7c",
+  "size": 17384,
+  "woff2": "8e3f6326dde9e50a71de3f3e28190cb129595bbb8a41afc728ab37596694676f"
+ },
+ "files/open-sans/files/open-sans-greek-400-normal.woff2": {
+  "sfnt": "c3cef786ff37d285056fd57e12979f960cd72b2c1c8962fc9f2a5b93ea10bd9f",
+  "size": 16676,
+  "woff2": "8e22e3852c3c18cd2a96393c07d072af4f9db1432825c5c19101ef7adb3dfcc9"
+ },
+ "files/open-sans/files/open-sans-greek-ext-400-italic.woff2": {
+  "sfnt": "5eb5eaa389feee6eeb81d70db2d4ef586dad595617590c248ddaf93cc89d75f9",
+  "size": 7164,
+  "woff2": "08d07cd8ea2be68aac2ee5929252e5a19c37cfb18cd8190d2e52e59f0788af37"
+ },
+ "files/open-sans/files/open-sans-greek-ext-400-normal.woff2": {
+  "sfnt": "fa9c0c114013768fb00f62ebd87c6a428b488cd7ae5dcafcfdf08032f4104eae",
+  "size": 6988,
+  "woff2": "944d5844f65414cc5b896678ccf898a41f1cfb5f5f942d41fcf669b52e266d25"
+ },
+ "files/open-sans/files/open-sans-hebrew-400-italic.woff2": {
+  "sfnt": "15e157a31fafda49bc948c7e5cdd191b34f25138af0af09b49d7e607d52c512b",
+  "size": 15712,
+  "woff2": "ee106272c33814600c7c8c4f27ab83412f43c5eb109a7bbe420bd263e8a61f6e"
+ },
+ "files/open-sans/files/open-sans-hebrew-400-normal.woff2": {
+  "sfnt": "b1065671cacaafd6f1611d0c0626c4bf3b4ce3fc72beb978da681db374e380a1",
+  "size": 15312,
+  "woff2": "953b3b71db3d794626aee2d0b6d5b22d130ac650de0f0b1aea2fcbc8fa7f989b"
+ },
+ "files/open-sans/files/open-sans-latin-400-italic.woff2": {
+  "sfnt": "560878c8733e72f9ecefdc014cc1cde808a87cb8b49475211c669c21062098e0",
+  "size": 36376,
+  "woff2": "3b50909a098195a8a3fda73fe29c260724e6f9ca624dd750cb8af7cb0c9198e2"
+ },
+ "files/open-sans/files/open-sans-latin-400-normal.woff2": {
+  "sfnt": "c1472fc0d5441557a01c33a9e652c23ba6d864d179c1ef6dba24ab6caa201a93",
+  "size": 35316,
+  "woff2": "0e44026ad31376af1b56593cd4acb4f353f8e8789c51759e18f64578e4ef296a"
+ },
+ "files/open-sans/files/open-sans-latin-ext-400-italic.woff2": {
+  "sfnt": "4e81103e73c8dda5bf98c278d15058df782b840aa7aff41d054bb5cf5ae3c1e1",
+  "size": 31648,
+  "woff2": "3d170f2d0c2e691f9631ca0f4c25149b13ec57fdaa62120867f9f41bd2492b50"
+ },
+ "files/open-sans/files/open-sans-latin-ext-400-normal.woff2": {
+  "sfnt": "317067b5867784576bdbc550c6a57905a923715eda956f925d13e80021fae051",
+  "size": 30684,
+  "woff2": "c260ffc9d1acb022e1037cb8ffc8baa8fe8c44c2ae74429d3231c7ce6d2b7f21"
+ },
+ "files/open-sans/files/open-sans-math-400-italic.woff2": {
+  "sfnt": "04dee21c59d3116c927ae377b159c3c7fb3bab1ac358890953f39983c3bf29df",
+  "size": 38192,
+  "woff2": "ce0acf7624f78c0bf8abd157843f58e7048e63ff221805f97efbde89a35318d9"
+ },
+ "files/open-sans/files/open-sans-math-400-normal.woff2": {
+  "sfnt": "30079748f2fe6b1fd3d9a214fee052b36f090f23e87138197f467763a3520186",
+  "size": 36076,
+  "woff2": "3604db99ff4f144a968229d8b168ba4c58b6ff34f791f9ea38750931d4934eef"
+ },
+ "files/open-sans/files/open-sans-symbols-400-italic.woff2": {
+  "sfnt": "185ae17989e5841e111f9449d95eda22111263ad7246c133813d83bcc166d2e1",
+  "size": 19932,
+  "woff2": "5b5b43a62d9a0c26e5b484c2b10adf1d97c6f36b28deb0f04fbf9b95f732d0d4"
+ },
+ "files/open-sans/files/open-sans-symbols-400-normal.woff2": {
+  "sfnt": "f60f2df3bc66c91d593dd08372580f0513daef4b9618270ca2eeaa1fe8a69c98",
+  "size": 19888,
+  "woff2": "c6c1ab23bf9b597a33167d2dccb714a5ca66f1dd7b9ba0d789b0319da16482ee"
+ },
+ "files/open-sans/files/open-sans-vietnamese-400-italic.woff2": {
+  "sfnt": "0670a59237ca39c36949e8f074c4d8d7df7db38a72f99a89c7f89665f62942e5",
+  "size": 18588,
+  "woff2": "4a96583e5f8881a6bcaf5eb1ed3179d2869da06fb4dad71770d4dd31648e49ad"
+ },
+ "files/open-sans/files/open-sans-vietnamese-400-normal.woff2": {
+  "sfnt": "09c748e8e9f959a95ecdc6970c8fd2fbb51b8cb05db78ff18895049f7d811e36",
+  "size": 18200,
+  "woff2": "e65e991fc802db5131f7744e688ec3a07825827e708ee6b9319aece650bf61c0"
+ },
+ "files/recursive/files/recursive-cyrillic-ext-wght-normal.woff2": {
+  "sfnt": "dc4c2f32078748e6be1bc82206f76c667322d57e2befd559d6a9b0caf1fddf9b",
+  "size": 4308,
+  "woff2": "94f26ade6ab31a0337aa7475f3d246e5a82b3407af43e087a57f13acccc39a85"
+ },
+ "files/recursive/files/recursive-latin-ext-wght-normal.woff2": {
+  "sfnt": "6e594f747f819c9c1cdb34800f52668701944d89d5264e669e8385764a145c8a",
+  "size": 139392,
+  "woff2": "b5b3cc47612e4468d0ed071e315ea8466deda9457685df42f0ec1208f12ebcb4"
+ },
+ "files/recursive/files/recursive-latin-wght-normal.woff2": {
+  "sfnt": "9995d3b4189bd1ebf8cf2151392a58ae9eaa7dd7199946bff7f559a522033103",
+  "size": 115376,
+  "woff2": "91bd1462a6351f893fe240c2c2579e0e68689c2e010311862ce04e6df9332153"
+ },
+ "files/recursive/files/recursive-vietnamese-wght-normal.woff2": {
+  "sfnt": "b1df1f09b53acf8cff52ff69ca1b771c8a823a74a6e8c3cf9fc7403267ee87dd",
+  "size": 29216,
+  "woff2": "03c95d53559d4912a0f625776cc9d5c7157eed03047643cedd0aba1c6e5a61fb"
+ }
+}

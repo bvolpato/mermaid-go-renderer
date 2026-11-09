@@ -1,0 +1,24 @@
+---
+config:
+  gantt:
+    barHeight: 30
+    barGap: 10
+    topPadding: 70
+    leftPadding: 120
+    rightPadding: 40
+    gridLineStartPadding: 50
+    fontSize: 14
+    sectionFontSize: 16
+    titleTopMargin: 40
+    useMaxWidth: false
+---
+gantt
+  dateFormat YYYY-MM-DD
+  title Custom sizes
+  section First section
+  A task :a, 2024-01-01, 6d
+  Another task :active, after a, 4d
+  section Second
+  Critical :crit, 2024-01-03, 5d
+  Marker :vert, 2024-01-06, 0d
+  Milestone :milestone, 2024-01-08, 0d

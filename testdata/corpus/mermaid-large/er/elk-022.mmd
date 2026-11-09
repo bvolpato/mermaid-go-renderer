@@ -1,0 +1,131 @@
+erDiagram
+  E0 {
+    int user_0 PK
+    string trace_1
+    date event_2
+    date report_3
+    string worker_4 FK
+  }
+  E1 {
+    int event_0 PK
+    float token_1
+  }
+  E2 {
+    string policy_0 PK
+    string user_1
+    int worker_2
+  }
+  E3 {
+    float stream_0 PK
+    date schema_1
+    float policy_2
+  }
+  E4 {
+    date stream_0 PK
+  }
+  E5 {
+    string session_0 PK
+  }
+  E6 {
+    float user_0 PK
+    int token_1
+  }
+  E7 {
+    string schema_0 PK
+    date bucket_1
+  }
+  E8 {
+    string quota_0 PK
+    float order_1
+    int shard_2
+    string worker_3 FK
+    float batch_4
+  }
+  E9 {
+    int payment_0 PK
+    float lease_1 FK
+    string router_2 FK
+    int ledger_3
+    string metric_4 FK
+  }
+  E10 {
+    string shard_0 PK
+    date token_1
+    float schema_2
+    string router_3 FK
+    string trace_4
+  }
+  E11 {
+    int lease_0 PK
+    date index_1
+    date queue_2
+  }
+  E12 {
+    float worker_0 PK
+  }
+  E13 {
+    int invoice_0 PK
+    string invoice_1
+    int metric_2
+  }
+  E14 {
+    date probe_0 PK
+    int schema_1
+    date queue_2
+    string trace_3
+  }
+  E15 {
+    float quota_0 PK
+  }
+  E16 {
+    float worker_0 PK
+  }
+  E17 {
+    int bucket_0 PK
+    int batch_1
+    date alert_2
+  }
+  E18 {
+    date token_0 PK
+    date batch_1
+    date span_2
+    float bucket_3
+    date bucket_4
+  }
+  E19 {
+    string span_0 PK
+    int cache_1 FK
+  }
+  E20 {
+    int report_0 PK
+    float span_1
+    date replica_2
+    int queue_3
+  }
+  E21 {
+    float quota_0 PK
+    string probe_1
+    date probe_2
+  }
+  E0 ||--|| E1 : report
+  E1 |o--o| E2 : trace
+  E1 ||--|| E3 : policy
+  E2 ||--|{ E4 : router
+  E1 }|..|{ E5 : report
+  E4 }o--o{ E7 : audit
+  E3 ||--|{ E8 : shard
+  E3 }o--o{ E9 : alert
+  E6 ||--o{ E10 : queue
+  E9 ||--o{ E11 : trace
+  E7 |o--o| E12 : stream
+  E7 ||--|| E13 : event
+  E13 ||--o{ E14 : stream
+  E11 }|..|{ E15 : index
+  E14 }o--o{ E16 : metric
+  E15 |o--o| E17 : order
+  E17 }o--o{ E18 : order
+  E17 }o--o{ E20 : worker
+  E19 }o--o{ E21 : user
+  E16 ||--o{ E2 : quota
+  E19 ||--|| E3 : metric
+  E18 }|..|{ E16 : schema

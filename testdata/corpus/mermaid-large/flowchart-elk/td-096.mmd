@@ -1,0 +1,226 @@
+flowchart TD
+  subgraph g0 [Trace audit]
+    n29{Router quota}
+    n32[Bucket]
+    n51[Index]
+    n56[Metric token]
+    n63[[Lease cache]]
+    n66[Token bucket alert]
+    n76[(Worker bucket audit)]
+    n92{{Alert}}
+  end
+  subgraph g1 [Worker]
+    n13[[Payment router]]
+    n15{{Invoice}}
+    n19{{Span}}
+    n21[User trace]
+    n36[(Queue bucket span)]
+    n41[Event router router]
+    n45{{Token span queue}}
+    n48(Bucket)
+    n53[[Alert audit lease]]
+    n83([User payment])
+    n87[/Replica/]
+    n88[(Probe batch)]
+  end
+  subgraph g2 [Token user]
+    n10([Token probe])
+    n25[[Invoice]]
+    n43((Token index worker))
+    n49{Lease}
+    n52[Metric index]
+    n58{Span}
+    n64{{Metric replica}}
+  end
+  subgraph g3 [Report router]
+    n2{{Replica}}
+    n8[Audit cache lease]
+    n18((Span quota))
+    n26[/Router payment/]
+    n39{{Invoice}}
+    n42[[Queue probe]]
+    n44(Schema user token)
+    n71{Order report}
+    n85((Lease))
+    n90{{Order shard worker}}
+  end
+  subgraph g4 [Trace batch]
+    n3[(Quota)]
+    n7{{Schema token}}
+    n17[[Order]]
+    n38[[Token session router]]
+    n46{Queue token lease}
+    n50{Token}
+    n59{Event}
+    n60[(Schema ledger schema)]
+    n74[(Replica)]
+    n82[Event lease alert]
+    n84(Lease)
+  end
+  subgraph g5 [Batch session]
+    n0[(Span token)]
+    n1((Bucket gateway))
+    n14((Trace))
+    n20{Policy queue event}
+    n22[(Queue)]
+    n91[[Audit]]
+    n93([Cache ledger])
+  end
+  n4([Index index])
+  n5{{Probe}}
+  n6((Audit index worker))
+  n9[[Cache session invoice]]
+  n11((Index probe span))
+  n12{{Batch}}
+  n16(User)
+  n23{Bucket}
+  n24[Router]
+  n27((Batch metric))
+  n28(Trace)
+  n30((Router stream))
+  n31((Schema policy))
+  n33[/Ledger quota/]
+  n34{{Queue ledger}}
+  n35[/Worker probe/]
+  n37[Bucket]
+  n40[/Probe worker/]
+  n47[/Token worker gateway/]
+  n54{Invoice replica}
+  n55[Report event]
+  n57[[Batch]]
+  n61[/Order/]
+  n62[[Metric payment]]
+  n65((Metric router stream))
+  n67((Payment payment user))
+  n68([Gateway cache session])
+  n69{{Trace queue payment}}
+  n70{Quota}
+  n72([Order worker report])
+  n73(Router probe)
+  n75[(Batch user alert)]
+  n77[[Report]]
+  n78[/Lease/]
+  n79[[Token probe]]
+  n80[Worker user]
+  n81{Stream}
+  n86((Bucket lease order))
+  n89{{Span}}
+  n94([Invoice worker session])
+  n95[User index metric]
+  n0 --- n1
+  n0 -.-> n2
+  n2 --o n3
+  n3 -.-> n4
+  n2 --x n5
+  n5 --x n6
+  n0 --o|Index session| n7
+  n0 --o n8
+  n7 --> n9
+  n5 -.-> n10
+  n10 --x|Probe order| n11
+  n3 --x n12
+  n5 --> n13
+  n11 --o|Index| n14
+  n12 ==> n15
+  n14 --- n16
+  n14 --o n17
+  n13 --- n18
+  n15 --- n19
+  n17 --- n20
+  n21 ==>|Index payment| n22
+  n16 --> n23
+  n21 ---|Shard worker| n24
+  n24 --- n25
+  n23 -.-> n26
+  n19 --o|Metric| n27
+  n25 --x|Cache| n28
+  n22 --> n29
+  n24 --- n30
+  n27 --o n31
+  n26 --- n32
+  n26 --x n33
+  n32 --- n34
+  n34 --x|Router| n35
+  n33 --- n36
+  n30 ==> n37
+  n36 --x|Session| n38
+  n31 --x n39
+  n35 --x n40
+  n36 -.-> n41
+  n36 --o n42
+  n38 -.-> n43
+  n36 ==> n44
+  n43 --o n45
+  n41 --> n47
+  n40 --> n48
+  n44 -.-> n49
+  n49 --> n50
+  n48 --o n51
+  n49 --x n52
+  n52 --> n53
+  n46 --o n54
+  n46 --- n55
+  n47 --> n56
+  n48 ==> n57
+  n56 ==> n58
+  n52 --x|Report queue| n59
+  n57 --- n60
+  n54 --> n61
+  n61 --x n62
+  n60 --> n63
+  n62 -.-> n64
+  n62 -.->|Audit quota| n65
+  n60 --x n67
+  n59 --> n68
+  n60 --> n69
+  n63 ---|Shard audit| n70
+  n62 --> n71
+  n63 -.-> n72
+  n70 -.-> n73
+  n71 --x n74
+  n67 --o|Queue payment| n75
+  n69 -.-> n76
+  n70 --> n77
+  n71 --> n78
+  n75 ==> n81
+  n74 -.-> n82
+  n77 --x n83
+  n75 --- n84
+  n78 --o n85
+  n78 -.-> n86
+  n79 --o n87
+  n82 --o n89
+  n89 --x|Audit probe| n90
+  n87 --o n91
+  n90 --x n92
+  n84 -.-> n93
+  n90 ==> n94
+  n94 --x n95
+  n2 --- n56
+  n19 --- n88
+  n80 --- n18
+  n25 ==> n21
+  n26 ==> n14
+  n91 -.-> n66
+  n77 --x n81
+  n88 --- n75
+  n69 --x n29
+  n92 -.-> n48
+  n9 ==> n87
+  n16 --- n22
+  n54 --x n44
+  n31 ==> n95
+  n93 --x n54
+  n44 --x n6
+  n8 --- n91
+  n18 --> n48
+  n17 ==> n16
+  n74 --x n16
+  n26 --> n60
+  n27 ==> n47
+  n8 --x n17
+  n36 --> n70
+  n81 --x n60
+  n53 --x n41
+  n56 --- n4
+  n18 --- n83

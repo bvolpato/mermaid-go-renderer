@@ -1,0 +1,3652 @@
+{
+ "cases": [
+  {
+   "name": "maxwidth-0-866.6x666.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 866.6px;\" viewBox=\"0 0 866.6 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-1-777.7x555.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 777.7px;\" viewBox=\"0 0 777.7 555.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-2-866.6x680",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 866.6px;\" viewBox=\"0 0 866.6 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-3-880x666.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 880px;\" viewBox=\"0 0 880 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-4-800.3x600",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 800.3px;\" viewBox=\"0 0 800.3 600\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-5-870.1x670.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 870.1px;\" viewBox=\"0 0 870.1 670.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-6-1000.7x432.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1000.7px;\" viewBox=\"0 0 1000.7 432.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-7-433.3x333.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 433.3px;\" viewBox=\"0 0 433.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-8-880x680",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 880px;\" viewBox=\"0 0 880 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-9-866.5x666.25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 866.5px;\" viewBox=\"0 0 866.5 666.25\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-10-640.015625x480.984375",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 640.015625px;\" viewBox=\"0 0 640.015625 480.984375\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-11-333.3x333.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 333.3px;\" viewBox=\"0 0 333.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-12-1000.1x1000.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1000.1px;\" viewBox=\"0 0 1000.1 1000.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-13-1618.034x1000",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1618.034px;\" viewBox=\"0 0 1618.034 1000\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-14-987.1x610.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 987.1px;\" viewBox=\"0 0 987.1 610.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-15-610.1x987.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 610.1px;\" viewBox=\"0 0 610.1 987.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-16-1.6180339x1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1.6180339px;\" viewBox=\"0 0 1.6180339 1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-17-0.3x0.2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 0.3px;\" viewBox=\"0 0 0.3 0.2\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-18-3.3x7.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 3.3px;\" viewBox=\"0 0 3.3 7.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-19-123456.7x7.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 123456.7px;\" viewBox=\"0 0 123456.7 7.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-20-7.1x12345.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 7.1px;\" viewBox=\"0 0 7.1 12345.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-21-1000000.3x999999.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1000000.3px;\" viewBox=\"0 0 1000000.3 999999.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-22-100.01x100.02",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 100.01px;\" viewBox=\"0 0 100.01 100.02\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-23-50.5x0.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 50.5px;\" viewBox=\"0 0 50.5 0.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-24-91.63x142.471",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 91.63px;\" viewBox=\"0 0 91.63 142.471\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-25-716.797538x149.272",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 716.797538px;\" viewBox=\"0 0 716.797538 149.272\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-26-1424.605092x1083.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1424.605092px;\" viewBox=\"0 0 1424.605092 1083.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-27-925.8x593.830016",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 925.8px;\" viewBox=\"0 0 925.8 593.830016\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-28-1396.0x863.69",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1396.0px;\" viewBox=\"0 0 1396.0 863.69\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-29-1373.5x512.62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1373.5px;\" viewBox=\"0 0 1373.5 512.62\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-30-143.00x60.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 143.00px;\" viewBox=\"0 0 143.00 60.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-31-647.486x1141.30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 647.486px;\" viewBox=\"0 0 647.486 1141.30\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-32-942.139989x252.461",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 942.139989px;\" viewBox=\"0 0 942.139989 252.461\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-33-488.759332x325.815",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 488.759332px;\" viewBox=\"0 0 488.759332 325.815\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-34-439.74x343.092",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 439.74px;\" viewBox=\"0 0 439.74 343.092\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-35-1205.5x894.0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1205.5px;\" viewBox=\"0 0 1205.5 894.0\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-36-119.171x695.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 119.171px;\" viewBox=\"0 0 119.171 695.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-37-1414.0x249.26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1414.0px;\" viewBox=\"0 0 1414.0 249.26\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-38-1055.5x420.243415",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1055.5px;\" viewBox=\"0 0 1055.5 420.243415\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-39-812.1x600.59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 812.1px;\" viewBox=\"0 0 812.1 600.59\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-40-847.9x437.56",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 847.9px;\" viewBox=\"0 0 847.9 437.56\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-41-584.9x346.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 584.9px;\" viewBox=\"0 0 584.9 346.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-42-175.9x178.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 175.9px;\" viewBox=\"0 0 175.9 178.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-43-541.9x224.913528",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 541.9px;\" viewBox=\"0 0 541.9 224.913528\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-44-1357.5x705.017",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1357.5px;\" viewBox=\"0 0 1357.5 705.017\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-45-1293.886644x192.626",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1293.886644px;\" viewBox=\"0 0 1293.886644 192.626\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-46-1380.262x818.740321",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1380.262px;\" viewBox=\"0 0 1380.262 818.740321\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-47-287.141586x1008.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 287.141586px;\" viewBox=\"0 0 287.141586 1008.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-48-795.525x1028.753647",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 795.525px;\" viewBox=\"0 0 795.525 1028.753647\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-49-92.514x217.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 92.514px;\" viewBox=\"0 0 92.514 217.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-50-451.267957x339.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 451.267957px;\" viewBox=\"0 0 451.267957 339.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-51-1467.49x1001.898",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1467.49px;\" viewBox=\"0 0 1467.49 1001.898\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-52-392.437170x804.472489",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 392.437170px;\" viewBox=\"0 0 392.437170 804.472489\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-53-551.93x617.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 551.93px;\" viewBox=\"0 0 551.93 617.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-54-915.706x644.905795",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 915.706px;\" viewBox=\"0 0 915.706 644.905795\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-55-693.7x57.89",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 693.7px;\" viewBox=\"0 0 693.7 57.89\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-56-250.861877x338.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 250.861877px;\" viewBox=\"0 0 250.861877 338.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-57-888.275x582.75",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 888.275px;\" viewBox=\"0 0 888.275 582.75\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-58-124.646267x656.447",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 124.646267px;\" viewBox=\"0 0 124.646267 656.447\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-59-412.45x656.9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 412.45px;\" viewBox=\"0 0 412.45 656.9\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-60-148.37x688.890",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 148.37px;\" viewBox=\"0 0 148.37 688.890\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-61-1119.539x336.582691",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1119.539px;\" viewBox=\"0 0 1119.539 336.582691\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-62-980.6x1138.8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 980.6px;\" viewBox=\"0 0 980.6 1138.8\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-63-1122.9x1033.59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1122.9px;\" viewBox=\"0 0 1122.9 1033.59\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-64-810.8x330.16",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 810.8px;\" viewBox=\"0 0 810.8 330.16\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-65-767.4x1074.8",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 767.4px;\" viewBox=\"0 0 767.4 1074.8\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-66-1005.98x920.379389",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1005.98px;\" viewBox=\"0 0 1005.98 920.379389\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-67-257.0x772.9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 257.0px;\" viewBox=\"0 0 257.0 772.9\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-68-532.0x225.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 532.0px;\" viewBox=\"0 0 532.0 225.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-69-141.45x405.000596",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 141.45px;\" viewBox=\"0 0 141.45 405.000596\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-70-985.5x1098.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 985.5px;\" viewBox=\"0 0 985.5 1098.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-71-1144.21x1112.073644",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1144.21px;\" viewBox=\"0 0 1144.21 1112.073644\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-72-955.570x408.73",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 955.570px;\" viewBox=\"0 0 955.570 408.73\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-73-1426.241x154.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1426.241px;\" viewBox=\"0 0 1426.241 154.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-74-1040.404481x1160.62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1040.404481px;\" viewBox=\"0 0 1040.404481 1160.62\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-75-1104.7x120.413",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1104.7px;\" viewBox=\"0 0 1104.7 120.413\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-76-945.996x311.481",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 945.996px;\" viewBox=\"0 0 945.996 311.481\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-77-877.6x999.00",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 877.6px;\" viewBox=\"0 0 877.6 999.00\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-78-603.99x202.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 603.99px;\" viewBox=\"0 0 603.99 202.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-79-178.2x600.913",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 178.2px;\" viewBox=\"0 0 178.2 600.913\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-80-132.653x173.92",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 132.653px;\" viewBox=\"0 0 132.653 173.92\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-81-734.8x918.4",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 734.8px;\" viewBox=\"0 0 734.8 918.4\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-82-639.760042x1000.48",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 639.760042px;\" viewBox=\"0 0 639.760042 1000.48\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-83-68.8x887.048",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 68.8px;\" viewBox=\"0 0 68.8 887.048\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-84-495.68x468.315897",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 495.68px;\" viewBox=\"0 0 495.68 468.315897\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-85-1250.201x76.551",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1250.201px;\" viewBox=\"0 0 1250.201 76.551\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-86-319.093078x963.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 319.093078px;\" viewBox=\"0 0 319.093078 963.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-87-414.222409x673.83",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 414.222409px;\" viewBox=\"0 0 414.222409 673.83\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-88-464.6x137.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 464.6px;\" viewBox=\"0 0 464.6 137.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-89-1471.0x714.386556",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1471.0px;\" viewBox=\"0 0 1471.0 714.386556\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-90-1002.169917x1086.863",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1002.169917px;\" viewBox=\"0 0 1002.169917 1086.863\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-91-1021.7x620.2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1021.7px;\" viewBox=\"0 0 1021.7 620.2\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-92-1219.82x110.445",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1219.82px;\" viewBox=\"0 0 1219.82 110.445\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-93-774.328580x440.01",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 774.328580px;\" viewBox=\"0 0 774.328580 440.01\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-94-1419.1x620.9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1419.1px;\" viewBox=\"0 0 1419.1 620.9\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-95-784.5x646.0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 784.5px;\" viewBox=\"0 0 784.5 646.0\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-96-1313.7x397.428",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1313.7px;\" viewBox=\"0 0 1313.7 397.428\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-97-176.466x637.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 176.466px;\" viewBox=\"0 0 176.466 637.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-98-1353.01x654.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1353.01px;\" viewBox=\"0 0 1353.01 654.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-99-951.7x755.767731",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 951.7px;\" viewBox=\"0 0 951.7 755.767731\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-100-144.228x722.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 144.228px;\" viewBox=\"0 0 144.228 722.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-101-1189.033x142.736137",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1189.033px;\" viewBox=\"0 0 1189.033 142.736137\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-102-1043.6x1086.9",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1043.6px;\" viewBox=\"0 0 1043.6 1086.9\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-103-1006.2x293.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1006.2px;\" viewBox=\"0 0 1006.2 293.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-104-1372.740733x1073.805",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1372.740733px;\" viewBox=\"0 0 1372.740733 1073.805\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-105-188.777931x210.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 188.777931px;\" viewBox=\"0 0 188.777931 210.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-106-821.204x1035.637",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 821.204px;\" viewBox=\"0 0 821.204 1035.637\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-107-1492.3x1122.642039",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1492.3px;\" viewBox=\"0 0 1492.3 1122.642039\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-108-687.783x956.719509",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 687.783px;\" viewBox=\"0 0 687.783 956.719509\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-109-872.4x278.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 872.4px;\" viewBox=\"0 0 872.4 278.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-110-340.52x155.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 340.52px;\" viewBox=\"0 0 340.52 155.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-111-1482.8x1046.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1482.8px;\" viewBox=\"0 0 1482.8 1046.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-112-917.7x1086.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 917.7px;\" viewBox=\"0 0 917.7 1086.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-113-325.1x481.0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 325.1px;\" viewBox=\"0 0 325.1 481.0\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-114-636.62x519.551712",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 636.62px;\" viewBox=\"0 0 636.62 519.551712\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-115-211.3x484.41",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 211.3px;\" viewBox=\"0 0 211.3 484.41\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-116-195.97x1002.920134",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 195.97px;\" viewBox=\"0 0 195.97 1002.920134\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-117-856.3x1158.038",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 856.3px;\" viewBox=\"0 0 856.3 1158.038\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-118-1269.8x885.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1269.8px;\" viewBox=\"0 0 1269.8 885.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-119-1467.30x865.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1467.30px;\" viewBox=\"0 0 1467.30 865.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-120-610.545318x695.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 610.545318px;\" viewBox=\"0 0 610.545318 695.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-121-222.1x1155.180820",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 222.1px;\" viewBox=\"0 0 222.1 1155.180820\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-122-475.205x240.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 475.205px;\" viewBox=\"0 0 475.205 240.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-123-843.3x104.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 843.3px;\" viewBox=\"0 0 843.3 104.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-124-598.21x311.00",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 598.21px;\" viewBox=\"0 0 598.21 311.00\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-125-830.5x1194.342947",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 830.5px;\" viewBox=\"0 0 830.5 1194.342947\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-126-396.399x809.005515",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 396.399px;\" viewBox=\"0 0 396.399 809.005515\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-127-492.201200x175.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 492.201200px;\" viewBox=\"0 0 492.201200 175.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-128-922.7x302.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 922.7px;\" viewBox=\"0 0 922.7 302.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-129-682.092546x409.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 682.092546px;\" viewBox=\"0 0 682.092546 409.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-130-1121.477x918.0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 1121.477px;\" viewBox=\"0 0 1121.477 918.0\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-131-394.2x1105.688",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 394.2px;\" viewBox=\"0 0 394.2 1105.688\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-132-687.60x479.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 687.60px;\" viewBox=\"0 0 687.60 479.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "maxwidth-133-119.40x174.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width: 119.40px;\" viewBox=\"0 0 119.40 174.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Feature discovery</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-866.6x666.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 866.6 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-777.7x555.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 777.7 555.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-866.6x680",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 866.6 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-880x666.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 880 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-800.3x600",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800.3 600\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-870.1x670.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 870.1 670.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1000.7x432.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000.7 432.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-433.3x333.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 433.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-880x680",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 880 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-866.5x666.25",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 866.5 666.25\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-640.015625x480.984375",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640.015625 480.984375\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-333.3x333.3",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 333.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1000.1x1000.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000.1 1000.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1618.034x1000",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1618.034 1000\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-987.1x610.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 987.1 610.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-610.1x987.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 610.1 987.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1.6180339x1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1.6180339 1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-0.3x0.2",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 0.3 0.2\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "full-3.3x7.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 3.3 7.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-123456.7x7.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 123456.7 7.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-7.1x12345.6",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 7.1 12345.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1000000.3x999999.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000000.3 999999.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-100.01x100.02",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100.01 100.02\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-50.5x0.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50.5 0.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-91.63x142.471",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91.63 142.471\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-716.797538x149.272",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 716.797538 149.272\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1424.605092x1083.7",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1424.605092 1083.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-925.8x593.830016",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 925.8 593.830016\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1396.0x863.69",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1396.0 863.69\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1373.5x512.62",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1373.5 512.62\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-143.00x60.1",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 143.00 60.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-647.486x1141.30",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 647.486 1141.30\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-942.139989x252.461",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 942.139989 252.461\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-488.759332x325.815",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 488.759332 325.815\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-439.74x343.092",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 439.74 343.092\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1205.5x894.0",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1205.5 894.0\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-119.171x695.5",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 119.171 695.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1414.0x249.26",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1414.0 249.26\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-1055.5x420.243415",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1055.5 420.243415\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "full-812.1x600.59",
+   "html": "<svg id=\"my-svg\" width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 812.1 600.59\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">Hello world</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-866.6x666.6",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 80%;\" viewBox=\"-10.5 20.25 866.6 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-777.7x555.5",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 777.7 555.5\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-866.6x680",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 866.6 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-880x666.6",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 880 666.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-800.3x600",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 33.3%;\" viewBox=\"-10.5 20.25 800.3 600\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-870.1x670.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 870.1 670.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1000.7x432.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 33.3%;\" viewBox=\"-10.5 20.25 1000.7 432.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-433.3x333.3",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 433.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-880x680",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 880 680\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-866.5x666.25",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 866.5 666.25\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-640.015625x480.984375",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 640.015625 480.984375\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-333.3x333.3",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 80%;\" viewBox=\"-10.5 20.25 333.3 333.3\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1000.1x1000.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 1000.1 1000.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1618.034x1000",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 1618.034 1000\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-987.1x610.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 987.1 610.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-610.1x987.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 80%;\" viewBox=\"-10.5 20.25 610.1 987.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1.6180339x1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 80%;\" viewBox=\"-10.5 20.25 1.6180339 1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-0.3x0.2",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 33.3%;\" viewBox=\"-10.5 20.25 0.3 0.2\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    }
+   ]
+  },
+  {
+   "name": "fixed-3.3x7.7",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 3.3 7.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-123456.7x7.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 123456.7 7.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-7.1x12345.6",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 7.1 12345.6\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1000000.3x999999.7",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 1000000.3 999999.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-100.01x100.02",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 100.01 100.02\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-50.5x0.1",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 50.5 0.1\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-91.63x142.471",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 33.3%;\" viewBox=\"-10.5 20.25 91.63 142.471\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-716.797538x149.272",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 716.797538 149.272\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1424.605092x1083.7",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 300px;\" viewBox=\"-10.5 20.25 1424.605092 1083.7\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-925.8x593.830016",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 80%;\" viewBox=\"-10.5 20.25 925.8 593.830016\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1396.0x863.69",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 33.3%;\" viewBox=\"-10.5 20.25 1396.0 863.69\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  },
+  {
+   "name": "fixed-1373.5x512.62",
+   "html": "<svg id=\"my-svg\" xmlns=\"http://www.w3.org/2000/svg\" style=\"width: 517.3px;\" viewBox=\"-10.5 20.25 1373.5 512.62\"><text id=\"t\" style=\"font-size:12px;font-family:arial\">a</text></svg>",
+   "queries": [
+    {
+     "sel": "#my-svg",
+     "op": "rect"
+    },
+    {
+     "sel": "#t",
+     "op": "bbox"
+    },
+    {
+     "sel": "#t",
+     "op": "textlen"
+    }
+   ]
+  }
+ ]
+}

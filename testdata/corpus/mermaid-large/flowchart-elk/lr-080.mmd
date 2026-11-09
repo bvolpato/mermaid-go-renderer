@@ -1,0 +1,190 @@
+flowchart LR
+  subgraph g0 [Bucket]
+    n1[[Report]]
+    n6{Session}
+    n24[/Bucket/]
+    n25((Stream))
+    n41{{Span report invoice}}
+    n46[Trace]
+    n49([Batch])
+    n76[/Gateway/]
+  end
+  subgraph g1 [Bucket]
+    n4[(Queue)]
+    n16[Probe payment]
+    n26[Span cache]
+    n32(Batch cache)
+    n39[(Alert)]
+    n54(Metric)
+    n64[Schema token session]
+    n79{{User span session}}
+  end
+  subgraph g2 [Trace batch]
+    n2[/User payment batch/]
+    n3[(Router lease)]
+    n11[(Lease invoice)]
+    n34{{Policy index payment}}
+    n35{User batch}
+    n36[[Quota worker]]
+    n43(Audit span event)
+    n56[/Token alert/]
+    n70[/Audit event/]
+    n77[[Batch]]
+  end
+  subgraph g3 [Report lease]
+    n5{Trace router}
+    n12([Bucket])
+    n14(Shard)
+    n23(Event alert audit)
+    n30{Quota}
+    n38[[Gateway schema]]
+    n42{{Report}}
+    n48[Schema]
+    n55[(Cache queue)]
+  end
+  subgraph g4 [Probe]
+    n8[Worker user report]
+    n15{Queue}
+    n17[Bucket user]
+    n21[Gateway]
+    n31((Schema policy))
+    n33(Ledger)
+    n40([Session])
+    n44[[Invoice]]
+    n50((Batch ledger))
+    n61(Span payment bucket)
+    n62[[Queue]]
+    n67((Span))
+    n68(Ledger payment)
+    n71{Quota alert}
+    n74[Token queue batch]
+  end
+  n0[Quota]
+  n7[(Span)]
+  n9((Router quota))
+  n10[/Token quota quota/]
+  n13{{Event}}
+  n18(Replica index order)
+  n19([Lease index user])
+  n20[[User worker span]]
+  n22([Worker replica])
+  n27([Stream])
+  n28([Schema token])
+  n29[Order]
+  n37([Payment])
+  n45[Session]
+  n47[/Replica/]
+  n51[/Stream/]
+  n52[(Invoice probe session)]
+  n53((Report))
+  n57(Gateway audit invoice)
+  n58((Metric stream))
+  n59(Worker)
+  n60{{User audit}}
+  n63([Report])
+  n65((Trace))
+  n66(Session lease shard)
+  n69[Payment order probe]
+  n72[Schema index]
+  n73([Event router])
+  n75{{Trace}}
+  n78{{Report lease queue}}
+  n0 ==> n1
+  n1 --o n2
+  n2 ---|Shard bucket| n3
+  n2 --o n4
+  n3 -->|Payment| n5
+  n0 --- n6
+  n3 ==> n7
+  n2 --> n8
+  n2 ---|Order shard| n9
+  n9 --x n10
+  n9 --x n11
+  n7 ==>|Schema| n12
+  n11 -.->|Worker| n13
+  n12 -.-> n14
+  n10 -->|Metric| n15
+  n15 ==>|Schema order| n16
+  n12 --o n17
+  n12 --o n18
+  n17 ---|Report span| n19
+  n19 --> n20
+  n18 -->|Queue| n21
+  n16 --x|Lease span| n22
+  n15 ==>|Index| n23
+  n22 -.-> n24
+  n24 --- n25
+  n21 --x n26
+  n19 --o|Bucket replica| n28
+  n25 ==> n29
+  n28 -.-> n30
+  n30 --- n31
+  n29 ==>|Ledger queue| n34
+  n26 --x n35
+  n28 ==>|Probe shard| n36
+  n31 --> n37
+  n29 --o n38
+  n31 ==>|Queue event| n39
+  n36 --> n40
+  n36 --> n41
+  n40 --o n42
+  n42 -->|Probe| n43
+  n36 --x n44
+  n41 -->|Event| n45
+  n45 --o n46
+  n46 --- n47
+  n47 --o n48
+  n42 --x n49
+  n49 --- n50
+  n46 --o n51
+  n46 --o n52
+  n46 --x|Worker ledger| n53
+  n48 --x n54
+  n49 --> n55
+  n53 --- n57
+  n49 -.-> n58
+  n57 --x n59
+  n57 -.-> n60
+  n60 -.-> n61
+  n53 --- n62
+  n60 --x n63
+  n56 ---|Policy| n65
+  n63 --> n66
+  n66 -.-> n67
+  n64 --o n68
+  n67 --> n69
+  n67 --- n70
+  n69 --o|Session invoice| n71
+  n68 --> n72
+  n67 ==> n73
+  n65 -.-> n74
+  n66 --o n75
+  n74 -.-> n76
+  n76 --x n77
+  n77 --o n78
+  n78 -.-> n79
+  n10 --x n12
+  n74 --o n59
+  n12 --- n62
+  n61 --- n36
+  n29 --x n61
+  n17 --- n32
+  n23 --> n74
+  n44 ==> n19
+  n34 -.-> n62
+  n41 ==> n2
+  n36 -.-> n18
+  n52 ==> n66
+  n23 --x n29
+  n0 --o n8
+  n45 --- n36
+  n73 --> n47
+  n7 -.-> n71
+  n65 --- n13
+  n72 --x n21
+  n66 --x n60
+  n38 --> n60
+  n64 -.-> n75
+  n31 ==> n66
+  n77 ==> n52
+  g0 --> g4

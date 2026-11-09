@@ -1,0 +1,150 @@
+---
+config:
+  layout: dagre
+---
+erDiagram
+  E0 {
+    float order_0 PK
+    float quota_1
+    float batch_2
+  }
+  E1 {
+    string policy_0 PK
+    date ledger_1
+    string gateway_2 FK
+    float audit_3
+    int session_4 FK
+  }
+  E2 {
+    float shard_0 PK
+    float replica_1 FK
+    float report_2
+    string bucket_3 FK
+  }
+  E3 {
+    string worker_0 PK
+    string schema_1
+    float payment_2
+  }
+  E4 {
+    string user_0 PK
+    string batch_1 FK
+    float probe_2
+    string lease_3
+  }
+  E5 {
+    string alert_0 PK
+    date batch_1
+    float alert_2
+    date report_3
+    date payment_4
+  }
+  E6 {
+    float payment_0 PK
+    int worker_1
+    float bucket_2
+    float index_3
+    string policy_4
+  }
+  E7 {
+    string stream_0 PK
+    int order_1
+  }
+  E8 {
+    date token_0 PK
+    string event_1 FK
+    float replica_2
+    date event_3 FK
+    string user_4
+  }
+  E9 {
+    float replica_0 PK
+    string order_1
+    int event_2
+  }
+  E10 {
+    float quota_0 PK
+    date payment_1 FK
+    date policy_2
+    int queue_3 FK
+  }
+  E11 {
+    float user_0 PK
+    date payment_1
+  }
+  E12 {
+    float span_0 PK
+    date report_1 FK
+    float index_2
+    int trace_3
+  }
+  E13 {
+    int token_0 PK
+    float span_1 FK
+    int queue_2
+    float user_3
+  }
+  E14 {
+    int index_0 PK
+    int audit_1
+  }
+  E15 {
+    string gateway_0 PK
+    float audit_1
+    date shard_2 FK
+    float replica_3
+    string replica_4
+  }
+  E16 {
+    int gateway_0 PK
+    float span_1
+    date report_2
+    int worker_3
+    int invoice_4
+  }
+  E17 {
+    date order_0 PK
+  }
+  E18 {
+    date trace_0 PK
+    date index_1
+    string stream_2
+  }
+  E19 {
+    string gateway_0 PK
+    date trace_1 FK
+    float metric_2
+    int session_3
+  }
+  E20 {
+    float payment_0 PK
+  }
+  E21 {
+    date span_0 PK
+    string order_1
+    int audit_2 FK
+    string order_3
+    int payment_4 FK
+  }
+  E0 |o--o| E1 : metric
+  E1 |o--o| E2 : lease
+  E1 }|..|{ E3 : batch
+  E1 ||--|| E4 : index
+  E3 }o--o{ E5 : queue
+  E5 ||--|| E6 : queue
+  E4 }|..|{ E7 : gateway
+  E6 ||--|{ E8 : event
+  E6 ||--|{ E9 : replica
+  E7 ||--o{ E11 : session
+  E10 ||--|| E12 : ledger
+  E11 }o--o{ E13 : replica
+  E13 ||--|| E14 : payment
+  E12 }|..|{ E16 : quota
+  E15 ||--|{ E17 : ledger
+  E14 ||--o{ E18 : order
+  E15 ||--|| E19 : bucket
+  E18 ||--|{ E20 : worker
+  E15 |o--o| E21 : token
+  E5 ||--|{ E12 : batch
+  E21 }o--o{ E20 : lease
+  E18 ||--o{ E3 : stream
