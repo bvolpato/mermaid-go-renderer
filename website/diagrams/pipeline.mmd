@@ -1,0 +1,8 @@
+flowchart LR
+  src[/Mermaid text/] --> parse[Parser]
+  parse --> draw[Diagram code]
+  draw --> layout{{Layout engines}}
+  layout --> svg[/SVG/]
+  svg -.-> png[/PNG/]
+  engine[[Measurement engine]] -.-> draw
+  engine -.-> layout

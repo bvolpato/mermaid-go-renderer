@@ -1,16 +1,40 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="mmdg logo" width="260"/>
+<img src="assets/logo.svg" alt="mmdg logo" width="280"/>
 
 # mmdg
 
 **Mermaid diagrams in pure Go. No browser. The same SVG as mermaid, byte for byte.**
 
 [![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/bvolpato/mermaid-go-renderer.svg)](https://pkg.go.dev/github.com/bvolpato/mermaid-go-renderer)
+[![Release](https://img.shields.io/github/v/release/bvolpato/mermaid-go-renderer)](https://github.com/bvolpato/mermaid-go-renderer/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0d9488)](LICENSE)
+
+[Website](https://bvolpato.github.io/mermaid-go-renderer/) · [Playground](https://bvolpato.github.io/mermaid-go-renderer/#play) · [Command line](docs/CLI.md) · [Architecture](docs/ARCHITECTURE.md)
 
 </div>
 
 `mmdg` is a Go library and a command-line tool that render [Mermaid](https://mermaid.js.org) diagrams to SVG and PNG. It is a port of mermaid 12.2.0: the same parsers, the same layout engines and the same markup, with text measurement that reproduces Chromium. It does not start a browser and it has no cgo.
+
+<p align="center">
+  <img src="docs/assets/gallery-flowchart.png" alt="A flowchart that mmdg rendered" width="860">
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/speed-dark.svg">
+    <img src="docs/assets/speed-light.svg" alt="mmdg is 13 times faster than mermaid in a warm Chromium page, and 16 times faster than mmdc as a command" width="860">
+  </picture>
+</p>
+
+```go
+svg, err := mermaid.Render("flowchart LR\n  A[Start] --> B{Done?}\n  B -->|yes| C[Stop]")
+```
+
+```sh
+mmdg -i diagram.mmd -o diagram.svg
+```
 
 ## Why
 
@@ -19,6 +43,13 @@ Mermaid needs a browser. `mermaid-cli` starts headless Chromium for every run. T
 A renderer without a browser can replace mermaid only if its output is the same. A diagram that looks similar is not enough, because a small difference in one text width moves nodes and edges. So this project has one measure: the SVG text must have the same bytes as the SVG that `mermaid.render()` returns in Chromium.
 
 ## Result
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/parity-dark.svg">
+    <img src="docs/assets/parity-light.svg" alt="One square for each of the 2145 diagrams of the end-to-end tests of mermaid. 2141 give the output of mermaid, byte for byte." width="860">
+  </picture>
+</p>
 
 `mmdg` can replace two things, and each has its own proof.
 
@@ -69,6 +100,27 @@ The test also runs in a container with no fonts and no browser, because the defa
 - The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
 - The last two rows compare whole processes. `mmdc` starts a browser in each run.
 - All numbers are from one machine. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.
+
+## Gallery
+
+`mmdg` rendered these images, with the fonts that mermaid-cli uses. The [website](https://bvolpato.github.io/mermaid-go-renderer/#gallery) has more, and a playground that runs the renderer in your browser.
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/assets/gallery-sequence.png" alt="Sequence diagram" width="420"></td>
+    <td align="center"><img src="docs/assets/gallery-mindmap.png" alt="Mindmap" width="420"></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/assets/gallery-class.png" alt="Class diagram" width="420"></td>
+    <td align="center"><img src="docs/assets/gallery-gantt.png" alt="Gantt chart" width="420"></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/assets/gallery-state.png" alt="State diagram" width="200"></td>
+    <td align="center"><img src="docs/assets/gallery-gitgraph.png" alt="Git graph" width="420"></td>
+  </tr>
+</table>
+
+The sources are in [website/diagrams](website/diagrams). `go run ./tools/sitegen -readme docs/assets` makes the images again.
 
 ## Install
 
@@ -146,6 +198,8 @@ By default `mmdg` measures with fonts that are part of the module: Liberation Sa
 - `WithFontDirs` adds font files for text that the Liberation fonts have no glyphs for, such as Chinese, Japanese, Korean and emoji.
 - `WithSystemFonts` measures with the fonts of the machine, by the rules of Chromium on that operating system. The result then matches mermaid in a browser on the same machine. It is verified on macOS.
 
+An SVG of mermaid has HTML labels in boxes of a fixed width, which is the width that the renderer measured. A viewer on another platform, or without the font, can measure a label a little wider, and the label then wraps. This is the same for an SVG that mermaid or `mmdc` made on another machine. When you do not know the viewers, use PNG output, or set `htmlLabels: false` in the config.
+
 ## Pages
 
 The page that mermaid runs in also decides the result. In mermaid 12 the default theme of flowcharts, class diagrams, sequence diagrams and other types names the font `Recursive Variable`. A plain web page has no such font, so Chromium falls back to Arial. The page of `mmdc` loads the font, with Open Sans and Font Awesome, so the same diagram has another layout there.
@@ -199,6 +253,8 @@ go test -run TestCorpusParity .        # the corpus against the reference hashes
 go run ./cmd/parity                    # the corpus against reference SVG files, with the first difference
 go run ./tools/fmacheck ./internal/... # no fused multiply-add in ported code
 ```
+
+The website is in `website`. `go run ./tools/sitegen -out dist` builds it, with the corpus comparison, the gallery and the WebAssembly playground. A push to `main` publishes it.
 
 The reference SVG files come from `tools/reference/oracle.mjs`, which runs mermaid 12.2.0 in headless Chromium, and from `tools/reference/oracle-linux.mjs`, which does the same in a Linux container. Only these tools need node and a browser. The library and its tests do not.
 

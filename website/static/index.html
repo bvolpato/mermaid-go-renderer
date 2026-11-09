@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mmdg: Mermaid diagrams in pure Go, without a browser</title>
+<meta name="description" content="mmdg renders Mermaid diagrams to SVG and PNG in pure Go. It returns the same bytes as mermaid in Chromium, {{round .Warm.Ratio}} times faster, with no browser.">
+<meta property="og:title" content="mmdg: Mermaid diagrams in pure Go">
+<meta property="og:description" content="The same SVG as mermaid, byte for byte. No browser, no Node, no cgo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bvolpato.github.io/mermaid-go-renderer/">
+<meta name="theme-color" content="#06283a">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/recursive/index.css">
+<link rel="stylesheet" href="fonts/open-sans/400.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="depth" aria-hidden="true">
+  <div class="depth-track"><div class="depth-fill" id="depth-fill"></div></div>
+  <div class="depth-read"><span id="depth-value">0</span> m</div>
+</div>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top"><img src="logo.svg" alt="" width="42" height="30"><span>mmdg</span></a>
+  <nav aria-label="Sections">
+    <a href="#proof">Proof</a>
+    <a href="#speed">Speed</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#play">Playground</a>
+    <a href="#use">Use it</a>
+  </nav>
+  <a class="btn btn-ghost nav-gh" href="https://github.com/bvolpato/mermaid-go-renderer">GitHub</a>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">A Go port of mermaid {{.Version}}</p>
+      <h1>Mermaid diagrams,<br><span class="accent">without the browser.</span></h1>
+      <p class="lead">mmdg renders Mermaid to SVG and PNG in pure Go. It returns the same bytes as mermaid in Chromium, so you can swap one for the other. No headless browser, no Node, no cgo.</p>
+      <div class="install" role="group" aria-label="Install command">
+        <code id="install-cmd">go get github.com/bvolpato/mermaid-go-renderer</code>
+        <button class="copy" data-copy="#install-cmd" type="button">Copy</button>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="#proof">See the proof</a>
+        <a class="btn btn-ghost" href="#play">Try it in this page</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="glow"></div>
+      <img class="mascot" src="logo.svg" alt="" width="630" height="450">
+    </div>
+  </div>
+
+  <div class="wrap">
+    <dl class="kpis">
+      <div class="kpi">
+        <dt>Same bytes as mermaid</dt>
+        <dd>{{(index .Plain.Corpora 0).Pass}}<small> of {{(index .Plain.Corpora 0).Total}}</small></dd>
+        <p>diagrams of mermaid's own test suite</p>
+      </div>
+      <div class="kpi">
+        <dt>Warm render</dt>
+        <dd>{{round .Warm.Ratio}}<span class="x">×</span><small> faster</small></dd>
+        <p>{{ms .Warm.Mmdg}} ms against {{ms .Warm.Mermaid}} ms in Chromium</p>
+      </div>
+      <div class="kpi">
+        <dt>Command line</dt>
+        <dd>{{.CLIRatio}}<span class="x">×</span><small> faster</small></dd>
+        <p>than mmdc, which starts a browser</p>
+      </div>
+      <div class="kpi">
+        <dt>Browsers needed</dt>
+        <dd>0</dd>
+        <p>one static binary, or one Go import</p>
+      </div>
+    </dl>
+  </div>
+
+  <svg class="waves" viewBox="0 0 2880 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="wave w1" d="M0 80 C 240 20 480 140 720 80 S 1200 20 1440 80 S 1920 140 2160 80 S 2640 20 2880 80 V160 H0Z"/>
+    <path class="wave w2" d="M0 100 C 240 150 480 50 720 100 S 1200 150 1440 100 S 1920 50 2160 100 S 2640 150 2880 100 V160 H0Z"/>
+    <path class="wave w3" d="M0 120 C 240 90 480 150 720 120 S 1200 90 1440 120 S 1920 150 2160 120 S 2640 90 2880 120 V160 H0Z"/>
+  </svg>
+</section>
+
+<section class="band" id="proof">
+  <div class="wrap">
+    <p class="eyebrow"><span>01</span> Proof</p>
+    <h2>The same bytes, not a look-alike</h2>
+    <p class="lead">A label that is one pixel wider moves a node, and then an edge. So the only useful measure is the output itself. Each square is one diagram of mermaid's own test suite. mmdg renders it, and the SHA-256 of the result is compared with the output of mermaid in Chromium 156.</p>
+
+    <div class="proof-grid">
+      <div class="panel grid-panel">
+        <div class="panel-head">
+          <div class="seg" role="tablist" aria-label="Reference">
+            <button role="tab" aria-selected="true" data-set="plain" type="button">mermaid.render()</button>
+            <button role="tab" aria-selected="false" data-set="mmdc" type="button">mmdc 12</button>
+          </div>
+          <p class="panel-note" id="set-note">{{.Plain.Note}}</p>
+        </div>
+        <div class="unit-wrap">
+          <canvas id="unit-grid" role="img" aria-label="One square for each of the {{(index .Plain.Corpora 0).Total}} diagrams. {{(index .Plain.Corpora 0).Exact}} have the same bytes as the reference."></canvas>
+          <div class="tip" id="unit-tip" role="status"></div>
+        </div>
+        <ul class="legend" id="unit-legend">
+          <li><i class="sw sw-exact"></i>Same bytes <b data-k="exact">{{(index .Plain.Corpora 0).Exact}}</b></li>
+          <li><i class="sw sw-error"></i>Same error as the reference <b data-k="sameError">{{(index .Plain.Corpora 0).SameError}}</b></li>
+          <li><i class="sw sw-other"></i>Not supported <b data-k="other">{{(index .Plain.Corpora 0).Other}}</b></li>
+        </ul>
+      </div>
+
+      <div class="proof-side">
+        <div class="tiles" id="corpus-tiles">
+          {{range .Plain.Corpora}}<div class="tile">
+            <p class="tile-label">{{.Label}}</p>
+            <p class="tile-value">{{.Pass}}<small> of {{.Total}}</small></p>
+            <div class="meter" role="img" aria-label="{{percent .Pass .Total}} percent pass"><span style="width:{{percent .Pass .Total}}%"></span></div>
+          </div>{{end}}
+        </div>
+        <p class="fine">The first corpus was used to develop the port. The other two were never seen by the code, and they pass at the same rate. What does not pass uses KaTeX math or ZenUML.</p>
+        <div class="install" role="group" aria-label="Test command">
+          <code id="test-cmd">go test -run TestCorpusParity .</code>
+          <button class="copy" data-copy="#test-cmd" type="button">Copy</button>
+        </div>
+        <p class="fine">The test needs no browser, no Node and no system fonts. The repository has the hash of every reference file.</p>
+      </div>
+    </div>
+
+    <details class="table-view">
+      <summary>View as a table</summary>
+      <table>
+        <thead><tr><th>Reference</th><th>Corpus</th><th class="n">Diagrams</th><th class="n">Same bytes</th><th class="n">Same error</th><th class="n">Not supported</th></tr></thead>
+        <tbody>
+        {{range .Parity.Sets}}{{$set := .}}{{range .Corpora}}<tr><td>{{$set.Label}}</td><td>{{.Label}}</td><td class="n">{{.Total}}</td><td class="n">{{.Exact}}</td><td class="n">{{.SameError}}</td><td class="n">{{.Other}}</td></tr>
+        {{end}}{{end}}
+        </tbody>
+      </table>
+    </details>
+  </div>
+</section>
+
+<section class="band" id="speed">
+  <div class="wrap">
+    <p class="eyebrow"><span>02</span> Speed</p>
+    <h2>Milliseconds, because nothing has to start</h2>
+    <p class="lead">mermaid needs a page to measure text, so every tool around it carries a browser. mmdg has its own measurement engine. A render is a function call.</p>
+
+    <div class="race-grid">
+      <article class="panel race">
+        <p class="tile-label">One render in a warm process</p>
+        <p class="hero-num">{{round .Warm.Ratio}}<span class="x">×</span><small> faster</small></p>
+        <div class="bars" data-unit="ms">
+          <div class="bar-row"><span class="bar-name">mermaid in Chromium</span><span class="bar-track"><i class="bar gray" style="--w:100%" tabindex="0" data-tip="mermaid.render() in a warm Chromium page: {{ms .Warm.Mermaid}} ms, median of {{.Perf.Diagrams}} diagrams"></i></span><span class="bar-val">{{ms .Warm.Mermaid}} ms</span></div>
+          <div class="bar-row"><span class="bar-name strong">mmdg</span><span class="bar-track"><i class="bar aqua" style="--w:calc(100% * {{.Warm.Mmdg}} / {{.Warm.Mermaid}})" tabindex="0" data-tip="mermaid.Render in a warm Go process: {{ms .Warm.Mmdg}} ms, median of {{.Perf.Diagrams}} diagrams"></i></span><span class="bar-val">{{ms .Warm.Mmdg}} ms</span></div>
+        </div>
+        <p class="fine">Median of {{.Perf.Diagrams}} diagrams. Both sides are warm: a Chromium page that stays open, and a Go process that stays running.</p>
+      </article>
+      <article class="panel race">
+        <p class="tile-label">Command-line run, flowchart to SVG</p>
+        <p class="hero-num">{{.CLIRatio}}<span class="x">×</span><small> faster</small></p>
+        <div class="bars" data-unit="ms">
+          <div class="bar-row"><span class="bar-name">mmdc</span><span class="bar-track"><i class="bar gray" style="--w:100%" tabindex="0" data-tip="mmdc, one process with its browser: {{ms .CLI.Mmdc}} ms"></i></span><span class="bar-val">{{ms .CLI.Mmdc}} ms</span></div>
+          <div class="bar-row"><span class="bar-name strong">mmdg</span><span class="bar-track"><i class="bar aqua" style="--w:calc(100% * {{.CLI.Mmdg}} / {{.CLI.Mmdc}})" tabindex="0" data-tip="mmdg, one process: {{ms .CLI.Mmdg}} ms"></i></span><span class="bar-val">{{ms .CLI.Mmdg}} ms</span></div>
+        </div>
+        <p class="fine">Whole processes, same input and same output file. mmdc starts a browser in each run.</p>
+      </article>
+    </div>
+
+    <article class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>Warm render time by diagram type</h3>
+          <p class="panel-note">Median time of one render, in milliseconds, on a logarithmic axis. Each row is one diagram type of the corpus.</p>
+        </div>
+        <ul class="legend">
+          <li><i class="dot dot-gray"></i>mermaid in Chromium</li>
+          <li><i class="dot dot-aqua"></i>mmdg</li>
+        </ul>
+      </div>
+      <div class="dumbbell-wrap">
+        <svg id="dumbbell" role="img" aria-label="Median render time by diagram type, mermaid in Chromium against mmdg"></svg>
+        <div class="tip" id="dumbbell-tip" role="status"></div>
+      </div>
+      <details class="table-view">
+        <summary>View as a table</summary>
+        <table>
+          <thead><tr><th>Diagram type</th><th class="n">Diagrams</th><th class="n">mermaid, ms</th><th class="n">mmdg, ms</th></tr></thead>
+          <tbody>
+          {{range .Perf.Types}}<tr><td>{{.Type}}</td><td class="n">{{.Diagrams}}</td><td class="n">{{ms .Mermaid}}</td><td class="n">{{ms .Mmdg}}</td></tr>
+          {{end}}
+          </tbody>
+        </table>
+      </details>
+    </article>
+    <p class="fine center">All numbers are from one machine, with mermaid {{.Version}} in Chromium {{.Perf.Chromium}}. <a href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/docs/PERFORMANCE.md">How they were measured</a>.</p>
+  </div>
+</section>
+
+<section class="band" id="gallery">
+  <div class="wrap">
+    <p class="eyebrow"><span>03</span> Gallery</p>
+    <h2>Every diagram type of mermaid 12</h2>
+    <p class="lead">mmdg rendered these when this page was built. Flowchart, sequence, class, state, ER, gantt, pie, mindmap, git graph, timeline, C4, sankey, architecture and twenty more, with every look and theme.</p>
+    <div class="gallery">
+      {{range .Gallery}}<figure class="card">
+        <div class="paper">{{.SVG}}</div>
+        <figcaption>
+          <div><strong>{{.Title}}</strong><span>{{.Note}}</span></div>
+          <button class="btn-mini" type="button" data-play="{{.File}}">Open in playground</button>
+        </figcaption>
+      </figure>
+      {{end}}
+    </div>
+  </div>
+</section>
+
+<section class="band" id="play">
+  <div class="wrap">
+    <p class="eyebrow"><span>04</span> Playground</p>
+    <h2>Run it in this page</h2>
+    <p class="lead">The renderer also compiles to WebAssembly. Load it and edit the diagram. The SVG comes from the same Go code, in your browser. Nothing is sent to a server.</p>
+    <div class="panel play">
+      <div class="play-bar">
+        <label>Example
+          <select id="play-example">
+            {{range .Gallery}}<option value="{{.File}}">{{.Title}}</option>
+            {{end}}
+          </select>
+        </label>
+        <label>Page
+          <select id="play-page">
+            <option value="mermaid-cli">mermaid-cli (web fonts)</option>
+            <option value="plain">plain</option>
+          </select>
+        </label>
+        <span class="play-status" id="play-status" role="status">The renderer is not loaded.</span>
+        <button class="btn btn-primary" id="play-load" type="button">Load the renderer{{if .WasmMB}} ({{.WasmMB}} MB){{end}}</button>
+      </div>
+      <div class="play-split">
+        <textarea id="play-src" spellcheck="false" aria-label="Mermaid source">{{escape (index .Gallery 0).Source}}</textarea>
+        <div class="paper play-out" id="play-out">{{(index .Gallery 0).SVG}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="inside">
+  <div class="wrap">
+    <p class="eyebrow"><span>05</span> Inside</p>
+    <h2>A port, line by line</h2>
+    <p class="lead">Nothing here approximates mermaid. Each package follows the code that produces the result in the browser, with the same order of operations, and has tests that compare it with that code on recorded inputs, bit for bit.</p>
+    <div class="paper pipeline">{{.Pipeline.SVG}}</div>
+    <div class="features">
+      <article><h3>The diagram code</h3><p>The parsers, the databases and the renderers of mermaid {{.Version}}, for every diagram type, look and theme.</p></article>
+      <article><h3>A small browser engine</h3><p>DOM, CSS cascade, font matching, HarfBuzz shaping with the arithmetic of Blink, and the float geometry of Skia. It answers the size questions that mermaid asks a page.</p></article>
+      <article><h3>Native layout engines</h3><p>dagre, the layered algorithm of Eclipse ELK, cose-bilkent and fcose of cytoscape, swimlanes and tidy-tree. Each returns the bits of the original.</p></article>
+      <article><h3>JavaScript semantics</h3><p>Number formatting, object key order, the sort of V8, the order of promises, and Math functions with the results of Chromium.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="use">
+  <div class="wrap">
+    <p class="eyebrow"><span>06</span> Use it</p>
+    <h2>One import, or one binary</h2>
+    <div class="code-grid">
+      <article class="panel code">
+        <header><span>Go</span><button class="copy" data-copy="#code-go" type="button">Copy</button></header>
+<pre><code id="code-go"><span class="tk-k">import</span> mermaid <span class="tk-s">"github.com/bvolpato/mermaid-go-renderer"</span>
+
+svg, err := mermaid.Render(<span class="tk-s">`flowchart LR
+  A[Start] --> B{Done?}
+  B -->|yes| C[Stop]`</span>)
+
+png, err := mermaid.RenderPNG(src, mermaid.WithScale(<span class="tk-n">2</span>))</code></pre>
+        <p class="fine">Safe for concurrent use. The output depends only on the source and the options. It needs Go 1.27.</p>
+      </article>
+      <article class="panel code">
+        <header><span>Command line</span><button class="copy" data-copy="#code-cli" type="button">Copy</button></header>
+<pre><code id="code-cli">go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
+
+mmdg -i diagram.mmd -o diagram.svg
+mmdg -i diagram.mmd -o diagram.png -s <span class="tk-n">2</span>
+mmdg -i README.md -o README.out.md -a images</code></pre>
+        <p class="fine">The options, the messages and the exit codes are those of mmdc, so it fits into scripts that call mmdc today.</p>
+      </article>
+    </div>
+    <div class="actions center">
+      <a class="btn btn-primary" href="https://github.com/bvolpato/mermaid-go-renderer">Get it on GitHub</a>
+      <a class="btn btn-ghost" href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/docs/ARCHITECTURE.md">Read the architecture</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p><strong>mmdg</strong> is under the MIT license. Ported code keeps the terms of its source: see the <a href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/THIRD_PARTY_NOTICES.md">notices</a>.</p>
+    <p>Mermaid is the work of Knut Sveidqvist and its contributors. This project is not affiliated with it. Not supported yet: KaTeX math, ZenUML and PDF output.</p>
+  </div>
+</footer>
+
+<script type="application/json" id="parity-data">{{.ParityJSON}}</script>
+<script type="application/json" id="perf-data">{{.PerfJSON}}</script>
+<script type="application/json" id="gallery-data">{{.GalleryJSON}}</script>
+<script src="app.js" defer></script>
+</body>
+</html>

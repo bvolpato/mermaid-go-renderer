@@ -1,0 +1,13 @@
+stateDiagram-v2
+  [*] --> Queued
+  Queued --> Rendering : worker free
+  Rendering --> Done : SVG ready
+  Rendering --> Failed : parse error
+  Failed --> Queued : retry
+  Done --> [*]
+  state Rendering {
+    [*] --> Parse
+    Parse --> Layout
+    Layout --> Draw
+    Draw --> [*]
+  }

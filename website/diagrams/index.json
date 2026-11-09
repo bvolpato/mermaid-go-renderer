@@ -1,0 +1,14 @@
+[
+  {"file": "flowchart", "title": "Flowchart", "note": "Decisions, a database and rounded ends."},
+  {"file": "sequence", "title": "Sequence diagram", "note": "Actors, numbered messages and a note."},
+  {"file": "class", "title": "Class diagram", "note": "Interfaces, members and relations."},
+  {"file": "state", "title": "State diagram", "note": "A composite state inside a lifecycle."},
+  {"file": "er", "title": "Entity relationship", "note": "Tables with keys and cardinality."},
+  {"file": "gantt", "title": "Gantt chart", "note": "Sections, dependencies and a milestone."},
+  {"file": "mindmap", "title": "Mindmap", "note": "Laid out by a native port of cose-bilkent."},
+  {"file": "gitgraph", "title": "Git graph", "note": "Branches, a merge and a tag."},
+  {"file": "timeline", "title": "Timeline", "note": "Periods with their events."},
+  {"file": "quadrant", "title": "Quadrant chart", "note": "Points on two axes."},
+  {"file": "pie", "title": "Pie chart", "note": "With the values in the legend."},
+  {"file": "xychart", "title": "XY chart", "note": "Bars and a line on one axis."}
+]

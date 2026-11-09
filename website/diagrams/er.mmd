@@ -1,0 +1,24 @@
+erDiagram
+  TEAM ||--o{ SERVICE : owns
+  AUTHOR ||--o{ DIAGRAM : writes
+  SERVICE ||--o{ DIAGRAM : documents
+  DIAGRAM ||--|{ REVISION : has
+  TEAM {
+    string name PK
+    string channel
+  }
+  AUTHOR {
+    string login PK
+  }
+  SERVICE {
+    string id PK
+    string tier
+  }
+  DIAGRAM {
+    string id PK
+    string type
+  }
+  REVISION {
+    int number PK
+    date created
+  }
