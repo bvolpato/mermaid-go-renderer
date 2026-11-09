@@ -77,6 +77,8 @@ go get github.com/bvolpato/mermaid-go-renderer
 go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
 ```
 
+The module needs Go 1.27 or newer. A few case mappings and character classes come from the Unicode tables of the Go release, and Go 1.27 has the Unicode version of Chromium 156. With an older release, a label with one of the newest Unicode characters can differ from mermaid.
+
 ## Use the library
 
 ```go

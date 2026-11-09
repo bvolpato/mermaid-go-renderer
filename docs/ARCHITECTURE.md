@@ -55,6 +55,7 @@ What the page of mermaid-cli adds to the engine:
 - Objects that list their keys as JavaScript does: integer-like keys first, then insertion order. `Map` and `Set` with insertion order.
 - The sort of V8, because some comparators of upstream code are not consistent.
 - The `Math` functions with the bits of Chromium (`internal/js/crmath`). Go's `math` package differs in the last bit for 1% to 48% of arguments, depending on the function.
+- Case mappings and the character classes of regular expressions come from the Unicode tables of the Go release. Go 1.27 has the Unicode version of Chromium 156, so the module needs Go 1.27. A Go release with a newer Unicode version can differ for characters that Chromium 156 does not know. The tests of `internal/js` and `internal/marked` show that.
 - Go on arm64 fuses `x*y + z` into one instruction, which rounds one time. JavaScript does not. Ported code writes `float64(x*y) + z`, and `tools/fmacheck` asks the compiler for every place where it would fuse.
 
 `internal/render/async.go` reproduces the order in which a browser runs `Promise.all`, `await` and `fastdom.measure`. The order decides which shape gets which numbers of `Math.random`, so it shows in the output.
