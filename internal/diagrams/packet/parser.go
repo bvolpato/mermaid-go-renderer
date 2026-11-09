@@ -99,15 +99,19 @@ func getNextFittingBlock(block Block, rowBits float64) (Block, *Block, error) {
 
 	rowEnd := rowBits - 1
 	rowStart := rowBits
-	return Block{
+	// The two blocks have names, because gofmt of Go 1.26 and of Go 1.27
+	// indent two composite literals in one return statement differently.
+	first := Block{
 		Start: block.Start,
 		End:   rowEnd,
 		Label: block.Label,
 		Bits:  rowEnd - block.Start,
-	}, &Block{
+	}
+	rest := &Block{
 		Start: rowStart,
 		End:   block.End,
 		Label: block.Label,
 		Bits:  block.End - rowStart,
-	}, nil
+	}
+	return first, rest, nil
 }
