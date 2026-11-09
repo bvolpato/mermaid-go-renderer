@@ -162,13 +162,13 @@ The reference SVG files come from `tools/reference/oracle.mjs`, which runs merma
 
 ## Licenses
 
-This repository has no license file of its own yet. The owner has to choose one.
+The original code of this repository is under the MIT license. See [LICENSE](LICENSE).
 
-The code is a port of mermaid and of the libraries and browser code that produce its output, so most packages are derivative works and keep the terms of their source:
+The MIT license does not replace the licenses of the code that was ported. The code is a port of mermaid and of the libraries and browser code that produce its output, so most packages are derivative works and keep the terms of their source:
 
-- Most sources are under MIT, ISC, BSD or Apache-2.0 terms: mermaid, d3, dagre, cytoscape, roughjs, DOMPurify, Skia, V8 and most of Chromium.
+- Most sources are under MIT, ISC, BSD or Apache-2.0 terms: mermaid, d3, dagre, cytoscape, roughjs, DOMPurify (taken under Apache-2.0), Skia, V8 and most of Chromium.
 - `internal/elk` contains elkjs and a port of the layered algorithm of Eclipse ELK, which are under EPL-2.0.
-- Parts of `internal/browser`, `internal/raster`, `internal/dom` and `internal/css` follow SVG, layout and CSS source files of Blink that are under LGPL-2.0-or-later. Every render uses this code.
+- Parts of `internal/browser`, `internal/raster`, `internal/dom` and `internal/css` follow SVG, layout and CSS source files of Blink that are under LGPL-2.0-or-later. Every render uses this code. A program that contains this module and is given to others must meet the conditions of the LGPL for these files.
 - The embedded Liberation fonts are under the SIL Open Font License 1.1.
 
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) has the copyright lines and the license texts. [docs/PROVENANCE.md](docs/PROVENANCE.md) says which package comes from which source. [docs/LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md) has the findings of the audit and the decisions that are open.
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) has the copyright lines and the license texts. [docs/PROVENANCE.md](docs/PROVENANCE.md) says which package comes from which source. [docs/LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md) has the findings of the audit, the decisions that were made and the decisions that are open.

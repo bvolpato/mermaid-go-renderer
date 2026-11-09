@@ -9,11 +9,11 @@
 // internal/dom lists those cases by cause.
 //
 // Ported from dompurify 3.4.12, src/purify.ts (MPL-2.0 OR Apache-2.0).
-// DOMPurify gives a choice of the two licenses. The owner of this repository
-// has not chosen which of them the port uses (finding F5 of
-// docs/LICENSE-AUDIT.md). The files of this package are changed versions of
-// the files of DOMPurify: they are Go translations. NOTICE in this directory
-// has the copyright line, and the two license texts are next to it.
+// DOMPurify gives a choice of the two licenses. This port takes DOMPurify
+// under the Apache License 2.0 (finding F5 of docs/LICENSE-AUDIT.md). The
+// files of this package are changed versions of the files of DOMPurify: they
+// are Go translations. NOTICE in this directory has the copyright line, and
+// LICENSE-Apache-2.0.txt has the license text.
 //
 // The port covers the path of sanitize for a string input with the text/html
 // parser. It does not cover: a DOM node as input (IN_PLACE), the

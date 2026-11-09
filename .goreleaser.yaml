@@ -31,8 +31,8 @@ archives:
         formats: [zip]
     # The files that go into each archive with the binary. The binary has
     # code of other projects, and THIRD_PARTY_NOTICES.md has their notices
-    # and their license texts. The repository has no license file yet. The
-    # pattern LICENSE* adds that file when the owner adds it.
+    # and their license texts. LICENSE is the MIT license of the original
+    # code of the repository.
     files:
       - "LICENSE*"
       - "README*"
@@ -58,10 +58,10 @@ brews:
     directory: Formula
     homepage: "https://github.com/bvolpato/mermaid-go-renderer"
     description: "Native Mermaid renderer in Go without browser/chromium"
-    # The formula has no license field. The repository has no license yet.
-    # The owner must set the field to an SPDX expression that is true for the
-    # binary: the license of the repository AND the licenses of the code that
-    # the binary contains. See docs/LICENSE-AUDIT.md, finding F9.
+    # The formula has no license field. The repository is under MIT, but the
+    # binary also contains code under other licenses (EPL-2.0, LGPL, Apache-2.0,
+    # BSD, ISC, OFL and more). A value of the field must be an SPDX expression
+    # that is true for the binary. See docs/LICENSE-AUDIT.md, finding F9.
     test: |
       (testpath/"diagram.mmd").write("flowchart LR\nA --> B\n")
       system "#{bin}/mmdg", "-i", testpath/"diagram.mmd", "-o", testpath/"out.svg", "-e", "svg"

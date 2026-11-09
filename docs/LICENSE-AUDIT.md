@@ -8,9 +8,25 @@ This document is not legal advice. It says what was found in the files, and what
 
 A fix pass on 2026-11-09 applied the mechanical fixes of this audit on the same branch. Its counts are those of the working tree at commit `c21c3ec`. Each finding has a paragraph that starts with `State on 2026-11-09:`. It says what is fixed now and what remains for the owner. The section "What the fix pass of 2026-11-09 changed" lists the changes. The fix pass made no decision for the owner.
 
+## Decisions after the audit
+
+This section is newer than the findings. The findings below have the text of the audit, with a note where a decision changed their state.
+
+| Date | Decision | Findings |
+|---|---|---|
+| 2026-11-09 | The owner chose the MIT license for the repository. The file `LICENSE` in the root has its text. It covers the original code. Ported code keeps the terms of its source, as the section "If the owner chooses MIT or Apache-2.0" says. | F9 |
+| 2026-11-09 | The port of DOMPurify is taken under the Apache License 2.0. This follows from the MIT choice (see the same section). `internal/purify` and THIRD_PARTY_NOTICES.md say so, and the text of the MPL is no longer in the repository. | F5 |
+| 2026-11-09 | The history of the branch `rewrite/mermaid-parity` is not published. The published branch `bvolpato/mermaid-12-port` has the tree as one commit on top of `main`, so the commits of F2 and F3 are not on GitHub. | F2, F3 |
+
+Still open:
+
+- F1. The Go files that follow LGPL files of Blink are in the tree, with headers and notices that name their sources. The MIT license of the repository does not apply to them. The owner has not chosen between the four options of F1.
+- The second point of F3 (the form of one expression in `linux_libm_tanh.go`), and F14, F15 and the other findings whose state says "Open".
+- The Homebrew formula has no license field (F9), because no short SPDX expression is true for the binary.
+
 ## Summary
 
-The repository has no license file yet. Before it is published, the owner must decide four things.
+The audit found no license file. Its text follows. Before the repository was published, the owner had to decide four things.
 
 1. What to do with the Go code that follows source files of Blink that have the GNU Library General Public License (finding F1). This is the only copyleft code that every render uses.
 2. If the history of the branch is published. Old commits have code that was written from the machine code of a closed-source library of Apple, and one file that says it is a port of glibc (findings F2 and F3). The working tree has neither now.
@@ -20,14 +36,14 @@ The repository has no license file yet. Before it is published, the owner must d
 | ID | Finding | Seriousness | Decision or work | State on 2026-11-09 |
 |---|---|---|---|---|
 | F1 | `internal/browser` and `internal/raster` follow Blink files that are LGPL-2.0-or-later | high | Decision of the owner | The headers and the notice files say which Go file follows which Blink file, with the license of each. The decision is open |
-| F2 | Code written from the machine code of `libsystem_m` of Apple. Deleted from the tree in `41d617f`. It is in 23 commits of the branch | high for the history, low for the tree | Decision about the history | The comments are fixed. The decision about the history is open |
-| F3 | glibc: one file in 4 old commits says `Ported from glibc 2.39`. One expression in `linux_libm_tanh.go` has the form of glibc | medium | Decision about the history. Check of one function | No change. Open |
+| F2 | Code written from the machine code of `libsystem_m` of Apple. Deleted from the tree in `41d617f`. It is in 23 commits of the branch | high for the history, low for the tree | Decision about the history | The comments are fixed. The history is not published (see "Decisions after the audit") |
+| F3 | glibc: one file in 4 old commits says `Ported from glibc 2.39`. One expression in `linux_libm_tanh.go` has the form of glibc | medium | Decision about the history. Check of one function | The history is not published. The check of the function is open |
 | F4 | EPL-2.0 covers `internal/elk/native`, the embedded elkjs worker and the glue in `internal/elk/engine.go` | medium | Mark `internal/elk`. Tell users | `internal/elk/engine.go` is marked. `internal/elk` has the license text and a notice. The README does not tell users yet |
-| F5 | DOMPurify is `MPL-2.0 OR Apache-2.0`. The port does not say which one it uses | medium | Decision of the owner | The port and the notices file say that the choice is open. Both license texts are in `internal/purify`. Open |
+| F5 | DOMPurify is `MPL-2.0 OR Apache-2.0`. The port does not say which one it uses | medium | Decision of the owner | Decided: Apache-2.0. The port and the notices file say so |
 | F6 | The conditions of the Apache License 2.0 are not met in the files that port chevrotain, GWT, LLVM libc and emoji-segmenter | medium | Add notices | The notices are in the Go files. A copy of the license is in each directory |
 | F7 | `internal/elk/native/NOTICE` puts the ports of GWT code under EPL-2.0, with no Apache text next to them | low | Add the text | `LICENSE-GWT.txt` and a notice are in `internal/elk/native/gwt` |
 | F8 | Notices that must stay in the file are missing: fdlibm in `hyp.go`, Python in `sort_dagre.go`, the copyright lines of Blink files with BSD terms | medium | Add notices | The notices are in the files |
-| F9 | No license file. The release configuration says MIT and does not put notices in the archives | medium | Decision of the owner | The archives get `THIRD_PARTY_NOTICES.md`. The formula has no license claim. The choice of the license is open |
+| F9 | No license file. The release configuration says MIT and does not put notices in the archives | medium | Decision of the owner | Decided: MIT, in `LICENSE`. The archives get `LICENSE` and `THIRD_PARTY_NOTICES.md`. The formula has no license claim |
 | F10 | Embedded files contain code of other projects with no notice next to them | low | Add notices | Notices are next to the elkjs worker, the cytoscape bundle and the grammar files |
 | F11 | The sources that prove the provenance are not in git | low | Document how to get them | License texts of nine projects are in git now. The rest is open |
 | F12 | Three ports followed a newer version than the mermaid 12.2.0 bundle contains | fixed for parity, low for licenses | Done on 2026-11-09: the ports follow the bundle versions | The notices file names the bundle versions now |
