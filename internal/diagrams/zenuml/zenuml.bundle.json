@@ -1,0 +1,1631 @@
+{
+ "plugin": {
+  "package": "@mermaid-js/mermaid-zenuml",
+  "version": "1.0.1",
+  "file": "dist/mermaid-zenuml.esm.mjs"
+ },
+ "core": {
+  "package": "@zenuml/core",
+  "version": "3.49.2",
+  "entry": "src/svg/renderToSvg.ts (renderToSvg)"
+ },
+ "packages": {
+  "antlr4": "4.11.0",
+  "marked": "4.3.0"
+ },
+ "esbuild": "0.28.2",
+ "bundle": {
+  "bytes": 405595,
+  "sha256": "16ed3ce9b267f79cea53fdcd019341db0e7c2b462efd41579fa71c8511e62347",
+  "gzipBytes": 103401
+ },
+ "bytesInBundle": {
+  "antlr4 (runtime)": 107659,
+  "generated lexer and parser": 149521,
+  "marked": 37199,
+  "icons (src/assets)": 34611,
+  "@zenuml/core (other)": 75939
+ },
+ "stubs": [
+  "pino",
+  "fs",
+  "react"
+ ],
+ "patches": [
+  {
+   "name": "class name of BraceBlockContext",
+   "group": "build",
+   "file": "src/parser/index.js",
+   "reason": "getComment compares this.constructor.name with \"BraceBlockContext\". In the build that the plugin ships the class has the name \"is\", so the comparison is false for every context. The patch writes that result."
+  },
+  {
+   "name": "reset of the width cache",
+   "group": "reuse",
+   "file": "src/utils/RenderingCache.ts",
+   "reason": "The module keeps measured widths for the life of the page, and mmdc renders one diagram in a page. resetCache empties the module, so that a runtime that renders a second diagram starts as a new page does."
+  },
+  {
+   "name": "two-stage parse",
+   "group": "speed",
+   "file": "src/parser/index.js",
+   "reason": "The parser first runs with the prediction mode SLL. ANTLR guarantees that an SLL parse that reports no syntax error returns the parse tree of the default mode LL. When the SLL parse reports a syntax error, the text is parsed again in the default mode, as upstream does. The grammar needs full-context prediction for most statements, which the default mode computes again for every statement and SLL keeps in its DFA."
+  }
+ ],
+ "modules": [
+  {
+   "file": "node_modules/antlr4/src/antlr4/BufferedTokenStream.js",
+   "bytes": 9805,
+   "sha256": "49de0ff8810a5508357a0ec7aba04aec613de1469fbe8e973c963c1e0646ad33",
+   "bytesInBundle": 2992,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/CharStreams.js",
+   "bytes": 2217,
+   "sha256": "90c690da5ddadedf7f83ab0bb864175f9709b65df28488a149509d5772614a3b",
+   "bytesInBundle": 435,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/CommonToken.js",
+   "bytes": 2665,
+   "sha256": "82400eb1e1458036072671ff6a30dd41662700e74c786b05188937dd17146971",
+   "bytesInBundle": 1016,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/CommonTokenFactory.js",
+   "bytes": 2141,
+   "sha256": "4faa0696f3a8937d7e8b50a3e3910316bab1bd805743f1e812caf3c7377b83e4",
+   "bytesInBundle": 313,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/CommonTokenStream.js",
+   "bytes": 2956,
+   "sha256": "6f9202f1bb589ef6848804f3fd9cd01a998fc0b7ad6ccdb54e07c2210d45c498",
+   "bytesInBundle": 684,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/FileStream.js",
+   "bytes": 602,
+   "sha256": "904a2ea2ce8e7b27262d1c115b38543a472db9a7db60c2184fa7d6f687e2857f",
+   "bytesInBundle": 102,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/InputStream.js",
+   "bytes": 2897,
+   "sha256": "8458cd94e1d5cb414f7637d692c92a0ba71d1569bb9d3e43085c740d8556b52e",
+   "bytesInBundle": 1081,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/Lexer.js",
+   "bytes": 9358,
+   "sha256": "d08f68a2d4654b83b0dc5b692c9e0f74043240a08aab86e3da589d45fd339ade",
+   "bytesInBundle": 3777,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/Parser.js",
+   "bytes": 21993,
+   "sha256": "6380d23e8401b96c744fdb3dd97da72eb832dc1e09214a2c31a7369615cb7913",
+   "bytesInBundle": 5965,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/Recognizer.js",
+   "bytes": 5000,
+   "sha256": "b7fb1c4d7de1b396dbe6ec5789f4999b0755fbefd80fa1ae993596f866f185ca",
+   "bytesInBundle": 1807,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/Token.js",
+   "bytes": 1735,
+   "sha256": "4866c6014d119035d941c3968b1520d09cb77dd6536f76d04076cf1267223669",
+   "bytesInBundle": 412,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/TokenStream.js",
+   "bytes": 311,
+   "sha256": "c6902b8c201a33ef91505c6423074c8a8184b2cc0fd32811dec5047f0f9c3fda",
+   "bytesInBundle": 15,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/TraceListener.js",
+   "bytes": 861,
+   "sha256": "c05cc42adc3b6d1fab904a4e3c2c9bdc7a9e38034928867d360f6cdcad4119d4",
+   "bytesInBundle": 407,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerAction.js",
+   "bytes": 858,
+   "sha256": "1aee8a395c3d75efc738721ba6fa5c7bbf928d38683adb94ba8303cf661fd4d3",
+   "bytesInBundle": 211,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerChannelAction.js",
+   "bytes": 1394,
+   "sha256": "9e696ccbcd6351a91ebc24ada0237fa983384155b8902748c0681c0c5624965d",
+   "bytesInBundle": 284,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerCustomAction.js",
+   "bytes": 2092,
+   "sha256": "7dcdee4e27c820b2f28c240eb570e6cdf2580cac411c3a7c9e4826ba022d7674",
+   "bytesInBundle": 369,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerIndexedCustomAction.js",
+   "bytes": 2212,
+   "sha256": "b187546587ed5e629d61749254d9bf61e768485027f4cd09da6be86208962c0b",
+   "bytesInBundle": 317,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerModeAction.js",
+   "bytes": 1180,
+   "sha256": "bb7c84212c8000b8c2005cbdb60cc3db675e7e8343fd7785d6fe04da8ea01e29",
+   "bytesInBundle": 257,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerMoreAction.js",
+   "bytes": 934,
+   "sha256": "f831e844228c78757ce98359bdaf170b61987cb4027a69c51547cc3af8fe492a",
+   "bytesInBundle": 117,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerPopModeAction.js",
+   "bytes": 961,
+   "sha256": "c7dac84b1e4a8c3dda9cccda641adf04db382fc05aa6573a45809d9273d2561f",
+   "bytesInBundle": 127,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerPushModeAction.js",
+   "bytes": 1213,
+   "sha256": "66154e2ee741f4743edf394bc57c99cc2ee8cabc1e9443d556e8b12174fce03b",
+   "bytesInBundle": 270,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerSkipAction.js",
+   "bytes": 910,
+   "sha256": "422f5f98f63c3ee3ab1b305750eecbbc5da9fb3293a3342fb07b50f09ce941a9",
+   "bytesInBundle": 117,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/action/LexerTypeAction.js",
+   "bytes": 1044,
+   "sha256": "511f1840555f3520285a50463262135d0f2841441b10faaf3494fce234410ac5",
+   "bytesInBundle": 256,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATN.js",
+   "bytes": 5690,
+   "sha256": "1cb6c04b00e2d40d250db437a8ecea13dd3843fc32fae1ff03c3a3dffebb82dd",
+   "bytesInBundle": 1390,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNConfig.js",
+   "bytes": 5242,
+   "sha256": "bdf0fabb63f878c505a2cf5a6cc56870a4e5a72310ccb145c1637e121673372b",
+   "bytesInBundle": 1950,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNConfigSet.js",
+   "bytes": 7213,
+   "sha256": "a015d7627072e3cff3dc99dcd285eefba6ec3dda779b81fc2ead401478027d27",
+   "bytesInBundle": 2757,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNDeserializationOptions.js",
+   "bytes": 660,
+   "sha256": "92a8416e71342b830e13648ceccd48c3f29d938fe0acfb2fa3b005a8441a6e10",
+   "bytesInBundle": 241,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNDeserializer.js",
+   "bytes": 23900,
+   "sha256": "4afc22cc00c790075d7d0cc171406d778848a929bcdd65a4c89e66a4bc3be27f",
+   "bytesInBundle": 8594,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNSimulator.js",
+   "bytes": 2323,
+   "sha256": "746afdc4ad83b551160db968a053698736db323dd9a8488344070074ec590e93",
+   "bytesInBundle": 231,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ATNType.js",
+   "bytes": 310,
+   "sha256": "4afd98733e5d37c0c5cd68c8b7706f901a42644d7b24cf86f59726904509b54d",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/AbstractPredicateTransition.js",
+   "bytes": 395,
+   "sha256": "a310d61158ff08310f4eacc5be6752ae604b4f6bf40a89d60b31d774b39c893f",
+   "bytesInBundle": 49,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/LL1Analyzer.js",
+   "bytes": 8632,
+   "sha256": "abadbc4d67003c266339430536dee69b532aa3b580fa3b21d021de7717bee97a",
+   "bytesInBundle": 1581,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/LexerATNConfig.js",
+   "bytes": 1717,
+   "sha256": "c25459af4234aafbf38c757d9c4a24e41cfe3b33af3b51c95c6cf70e21a61fbc",
+   "bytesInBundle": 837,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/LexerATNSimulator.js",
+   "bytes": 27090,
+   "sha256": "a9dc1bc05fc85b46fc9d6bfdee007bdc2da4396f044c7abd1d2112aefe7f6b2d",
+   "bytesInBundle": 6643,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/LexerActionExecutor.js",
+   "bytes": 6455,
+   "sha256": "dea01405bb68727db7c8042bb920a485d4461f2d1008f241533af53bc56225e9",
+   "bytesInBundle": 1119,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/LexerActionType.js",
+   "bytes": 779,
+   "sha256": "d8e34fcc316242d48841a78c122be813561373d3767f5b0bf6103dee50bae48a",
+   "bytesInBundle": 78,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/OrderedATNConfigSet.js",
+   "bytes": 454,
+   "sha256": "fdb43f5f1df5c423dce3fa6be98f2e7feae7adc80f435de01512fc2b7b8ca9a5",
+   "bytesInBundle": 73,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/ParserATNSimulator.js",
+   "bytes": 79605,
+   "sha256": "55a0196e93bd9cbcb480bcebf541a5ee57d292e46e683bc47dc561c46f20cf5d",
+   "bytesInBundle": 16725,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/PrecedencePredicate.js",
+   "bytes": 1377,
+   "sha256": "83718ede4f066f40a64358a064acfc3259a0b035b5859160b57e8529b90e90aa",
+   "bytesInBundle": 445,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/Predicate.js",
+   "bytes": 1560,
+   "sha256": "e333f52c5ad4a39a449d5780917b5c6d7655941b174b5d6262670dfa841b87e8",
+   "bytesInBundle": 547,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/PredictionContextCache.js",
+   "bytes": 1280,
+   "sha256": "dafaac9c2969012ac68739a683f8bb5132891e81cd887e4623f4df9e7b9e6bc1",
+   "bytesInBundle": 232,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/PredictionMode.js",
+   "bytes": 24559,
+   "sha256": "d15e3a0fa501c880c4f582763a164c0dce9bb31b4fe24c0ef66c13c45c91e277",
+   "bytesInBundle": 2088,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/SemanticContext.js",
+   "bytes": 8008,
+   "sha256": "e7eba11f7c7a7ebec55aee507d5b3a8a77331bbe1a29acc5f62a151419a89457",
+   "bytesInBundle": 2378,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/atn/index.js",
+   "bytes": 538,
+   "sha256": "1fc632243042a7170e8d888bed96618860c19f9de0dce8c582cd113dc2de56c7",
+   "bytesInBundle": 95,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/ArrayPredictionContext.js",
+   "bytes": 2575,
+   "sha256": "e1637ce3c6b2d476472f102e98d1a0c773b6f093cd69766056cccb037194f94d",
+   "bytesInBundle": 751,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/EmptyPredictionContext.js",
+   "bytes": 836,
+   "sha256": "ca52211fc0e8355783019ea69c0b50c3bf917ad861dc1c3d1b456f2e7b42910c",
+   "bytesInBundle": 221,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/ParserRuleContext.js",
+   "bytes": 5579,
+   "sha256": "25109773021c18828fa2e9656e39709ef14b6b4c29c5977479d1cdba3845a370",
+   "bytesInBundle": 1804,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/PredictionContext.js",
+   "bytes": 1898,
+   "sha256": "4cfcae67383fe5f9147ab24c1b2b1992d37130aca01e80243ca314dac9a69e37",
+   "bytesInBundle": 339,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/PredictionContextUtils.js",
+   "bytes": 16387,
+   "sha256": "e0be9fe6bcd4c7ee5afc4f9af11bd21983eb49c337095fcabe8863dcd528dc16",
+   "bytesInBundle": 3264,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/RuleContext.js",
+   "bytes": 4911,
+   "sha256": "fe218cb6c721c122bc41bee57feb8b48b750fd91c003fba3a3ff7da7885ab6dd",
+   "bytesInBundle": 863,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/context/SingletonPredictionContext.js",
+   "bytes": 2264,
+   "sha256": "4829f7a1ab2190cd15a84c1b9ae7f8c98908ea96f340c235da4201a4dc44d711",
+   "bytesInBundle": 700,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/DFA.js",
+   "bytes": 4838,
+   "sha256": "0bddeeb8b4413fabd3ade2b3645881fb3a08d66746972798f1f312158a232b76",
+   "bytesInBundle": 1113,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/DFASerializer.js",
+   "bytes": 2215,
+   "sha256": "60455256e963b6fde8628d73814d05d50c25baaff85c8c1a126b64eec135cb4b",
+   "bytesInBundle": 876,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/DFAState.js",
+   "bytes": 5000,
+   "sha256": "05e75241267c0325b3d33889e8dc32741b421bdca51ef72793a350cda9bd6abe",
+   "bytesInBundle": 698,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/LexerDFASerializer.js",
+   "bytes": 463,
+   "sha256": "954d77df56e16da0adcaf9b799c6af442fd221786e26825205526d46b6ceae66",
+   "bytesInBundle": 108,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/PredPrediction.js",
+   "bytes": 473,
+   "sha256": "d20cd1bff3d75b8805dd55e6c72954101a30e6e72b072bb60eda53ab93022e90",
+   "bytesInBundle": 104,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/dfa/index.js",
+   "bytes": 458,
+   "sha256": "cc23628a2ce0a9a301bd02dcb6fa11da6d40aed079a8bbba4d8d857bb3bd308e",
+   "bytesInBundle": 73,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/BailErrorStrategy.js",
+   "bytes": 2713,
+   "sha256": "9e63410ec313dc519892773aeabe6383ab9b5abcbdd30dcd51c78fa4d521b034",
+   "bytesInBundle": 185,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/ConsoleErrorListener.js",
+   "bytes": 955,
+   "sha256": "ecbcf559d0bf3486f349edb4bd050b31b7365003f6b2b68fb9f1b5acfa4aaeed",
+   "bytesInBundle": 129,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/DefaultErrorStrategy.js",
+   "bytes": 28671,
+   "sha256": "506d64199a9e0e397a2e9240bec93f850d11b57b08fbbce331d26fd421faab4e",
+   "bytesInBundle": 4621,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/DiagnosticErrorListener.js",
+   "bytes": 3824,
+   "sha256": "16975fe2e63a4d2eebb70e98222bd779cda9919a2b2a55ff97f49711dc4fac0d",
+   "bytesInBundle": 1033,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/ErrorListener.js",
+   "bytes": 795,
+   "sha256": "547d217235022a78fd783facc59b14cb573f232556433f0c61ea759ad322d2f1",
+   "bytesInBundle": 154,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/ErrorStrategy.js",
+   "bytes": 457,
+   "sha256": "abbac078009fd7c0336a7528bdfcb59ce670a6d6a9512d0879746137d13457dd",
+   "bytesInBundle": 106,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/FailedPredicateException.js",
+   "bytes": 1542,
+   "sha256": "21eacb76a43125d36e77a66d81135fbd7b9f038dbf4beb29271bb7ce10a503be",
+   "bytesInBundle": 415,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/InputMismatchException.js",
+   "bytes": 696,
+   "sha256": "43e6df530dd1cde523945b7a6336b5020d17976824caaaacf5dc72b9170a8e8e",
+   "bytesInBundle": 150,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/LexerNoViableAltException.js",
+   "bytes": 897,
+   "sha256": "93b3d1701809513328dbfacb39e0886694420f1b21b79d3fd1c871283300d6bd",
+   "bytesInBundle": 310,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/NoViableAltException.js",
+   "bytes": 1578,
+   "sha256": "38bec5bc7ef25134c07b2767928d47a19024a30e60e9340d5c1d63020267afb2",
+   "bytesInBundle": 246,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/ParseCancellationException.js",
+   "bytes": 388,
+   "sha256": "0a5db0e4f3561ee3c6acd919e6a630602fcc600abbc9b55346d9d437b33bf2ab",
+   "bytesInBundle": 85,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/ProxyErrorListener.js",
+   "bytes": 1358,
+   "sha256": "e58f13a35a07113a9c1a147ab2463d01603d98becb7888ca5a0f1b6cf3617b40",
+   "bytesInBundle": 477,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/RecognitionException.js",
+   "bytes": 2442,
+   "sha256": "12effec77c4e06dd2ecc6d12a89341575fa6fc1086c672618c1d9b353dadd65a",
+   "bytesInBundle": 476,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/error/index.js",
+   "bytes": 993,
+   "sha256": "5bd8621a1b6a8dbbca589ea8e66495502e6eb1d4fc3cec7c998ba7667cfc9df9",
+   "bytesInBundle": 229,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/index.js",
+   "bytes": 1434,
+   "sha256": "82e65e0c2d00d457632ae3067045de57a69e38eac221f61751da159cff30af4e",
+   "bytesInBundle": 249,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/AltDict.js",
+   "bytes": 563,
+   "sha256": "7348838937a683ff20eaeb7503669c681c302e03c9118a01d2605eff6abe4356",
+   "bytesInBundle": 204,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/BitSet.js",
+   "bytes": 1108,
+   "sha256": "702c8a4595e0fc44e5384bb90744f0ec4b33c75593a299a773da63071c9393d6",
+   "bytesInBundle": 463,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/HashCode.js",
+   "bytes": 2104,
+   "sha256": "1495e8cf23c9c76b1ecd2add50d1278eda64f2668b6da81c56d6135a749f5025",
+   "bytesInBundle": 745,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/HashMap.js",
+   "bytes": 2782,
+   "sha256": "2ab56754af01d75cd48987fae7b093cb24865b9b0952ace0e4f7996640dea857",
+   "bytesInBundle": 1115,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/HashSet.js",
+   "bytes": 2051,
+   "sha256": "89bda728b941077f71a9cb396a924dbf56dd1ee8a5dc9549c58cf0cc804fe898",
+   "bytesInBundle": 745,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/Interval.js",
+   "bytes": 847,
+   "sha256": "db5cc8c7c77cba602446ff2d175e3d2a43223fe650140dc1da06b2ffed562bdc",
+   "bytesInBundle": 337,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/misc/IntervalSet.js",
+   "bytes": 7041,
+   "sha256": "4b7523eda543c22d2190af0322c988a06636d313317d7144b951f5da3b534e2f",
+   "bytesInBundle": 3332,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/polyfills/codepointat.js",
+   "bytes": 1923,
+   "sha256": "24abc448627005c567fa46477a0ef7fa2c8923d52f8a8446277e3ffa1ae16492",
+   "bytesInBundle": 519,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/polyfills/fromcodepoint.js",
+   "bytes": 2199,
+   "sha256": "4fadce57e908646c37ad6cd31d23c0da15110172a6a82aef8c2bd391ab1bd0b0",
+   "bytesInBundle": 599,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/ATNState.js",
+   "bytes": 4151,
+   "sha256": "ff2b0fd3221eba11f6b53640f7380bb5bf9bb604f0f4bc8fb3b9388815a4d62c",
+   "bytesInBundle": 1033,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/BasicBlockStartState.js",
+   "bytes": 485,
+   "sha256": "30a145bc7ad11a8ff579a51406506605b1026f8b3d2f583dab9b7ccfeb5232f5",
+   "bytesInBundle": 89,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/BasicState.js",
+   "bytes": 389,
+   "sha256": "c5b023dded689e447d7aaa978bf1d3d534ae46646fa99d7fe345534ec2441c23",
+   "bytesInBundle": 70,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/BlockEndState.js",
+   "bytes": 508,
+   "sha256": "e7870a1b721e004fb96b454effb18c1e3c6976c186bebc61daa74111b66dda20",
+   "bytesInBundle": 107,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/BlockStartState.js",
+   "bytes": 474,
+   "sha256": "478dd90d6c6434c24bec2c772a4c72d9ed4b8df1166a6bbf04a7ed9460fd3018",
+   "bytesInBundle": 79,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/DecisionState.js",
+   "bytes": 432,
+   "sha256": "937661dd2be1eaed0e8addd5bcb21f72462ed44baa6f6888a57052e0095a823f",
+   "bytesInBundle": 94,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/LoopEndState.js",
+   "bytes": 491,
+   "sha256": "276a7acadffee3fd2d53d7165f4ed7023abffbd6257356058d2e69e5b4abac8d",
+   "bytesInBundle": 109,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/PlusBlockStartState.js",
+   "bytes": 802,
+   "sha256": "f4b824c8aebe1125b52ca6e142d818dcd9a5b223550da4d91e42bcc92d92ca92",
+   "bytesInBundle": 118,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/PlusLoopbackState.js",
+   "bytes": 628,
+   "sha256": "bfd0d6197367a50dd2e4e53a5055c9f617c0db2eaa7c7e80fc8e5696987e468e",
+   "bytesInBundle": 92,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/RuleStartState.js",
+   "bytes": 489,
+   "sha256": "5f177a988f071899ff72acd78334cace2f706a40e6a91fdec53b9d09fadd9794",
+   "bytesInBundle": 132,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/RuleStopState.js",
+   "bytes": 660,
+   "sha256": "d10b09595fc9c16351b864cc0f16ab1ee8bae4f1b0fd3472626d9f1e85b05f7b",
+   "bytesInBundle": 86,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/StarBlockStartState.js",
+   "bytes": 537,
+   "sha256": "de25fab68e1f8beb4143b650f622a524a83990332718ce7ea8141c34386710fd",
+   "bytesInBundle": 94,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/StarLoopEntryState.js",
+   "bytes": 660,
+   "sha256": "059e76d2cedecd4d632a931535da0b7a48a695a0bc8722a7147dfcbf7bc18616",
+   "bytesInBundle": 148,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/StarLoopbackState.js",
+   "bytes": 426,
+   "sha256": "c83911f56b75244531b8eb02a1df0834b76344e2b108aa6ef9b3deeef2fd79c1",
+   "bytesInBundle": 91,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/state/TokensStartState.js",
+   "bytes": 553,
+   "sha256": "253c070c82157d6cb070b5f44587131a4c5389405228dee19b840ccac207abd5",
+   "bytesInBundle": 89,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/ActionTransition.js",
+   "bytes": 884,
+   "sha256": "f5e33be02c0be0abd900f5de9a4c6ec586a6f5a4bd475a86dc01588e57fe5344",
+   "bytesInBundle": 278,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/AtomTransition.js",
+   "bytes": 883,
+   "sha256": "f49c6706cbcbb8157515a177adc141173123ce30ff401173de403cccccade221",
+   "bytesInBundle": 247,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/EpsilonTransition.js",
+   "bytes": 685,
+   "sha256": "d6708e8902357477af2f42dbb8b650389998a719a51ba44e42e46fbfb5cf6301",
+   "bytesInBundle": 186,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/NotSetTransition.js",
+   "bytes": 749,
+   "sha256": "1984342529aa7bd1404edfde30897ec2b63b82c5770160259655fd333f3114c2",
+   "bytesInBundle": 181,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/PrecedencePredicateTransition.js",
+   "bytes": 920,
+   "sha256": "b0ead94e6ccbed9091332dd3fa6226cd7f707c339c6d8778e47b5594655be8ff",
+   "bytesInBundle": 237,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/PredicateTransition.js",
+   "bytes": 1066,
+   "sha256": "73574a9ace627b82339e28e1d9e20f1b5a36dfa7643c6080fb42aff087694232",
+   "bytesInBundle": 328,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/RangeTransition.js",
+   "bytes": 948,
+   "sha256": "ddeb7705a14c9b5e895e7ddd9f1a7bd8b53482addbbe60a77a22066f833fd450",
+   "bytesInBundle": 349,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/RuleTransition.js",
+   "bytes": 819,
+   "sha256": "1877ab528855f048040faef3f9556c7a7dd9085feb9c6f8ea53d547c2106194c",
+   "bytesInBundle": 181,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/SetTransition.js",
+   "bytes": 916,
+   "sha256": "535745db7e099e4f843946cdf4ff6d7f846ee11fff35846651514312295ece33",
+   "bytesInBundle": 240,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/Transition.js",
+   "bytes": 2285,
+   "sha256": "c31d3256d39e1043cbe0233417f44f03d03aa28230c1cd13a061aef0f05360f4",
+   "bytesInBundle": 655,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/transition/WildcardTransition.js",
+   "bytes": 602,
+   "sha256": "e8443f2293399e62c5848bf29eb5ef839550293c57fc064ccc58e014cd47bba6",
+   "bytesInBundle": 137,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ErrorNode.js",
+   "bytes": 316,
+   "sha256": "de51b085c5d7e86d665eea36c307bc5f61f57a07cc466375b6d954734054d6b9",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ErrorNodeImpl.js",
+   "bytes": 819,
+   "sha256": "14a7b2f5a28f3fd21bbef571209e6f733af9e8ab9c63adf5f421a2235656ce90",
+   "bytesInBundle": 113,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ParseTree.js",
+   "bytes": 310,
+   "sha256": "c26c9324b2e647f12537654ad60bcd5966650101a0fadd8bcfe50ac40a9d935a",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ParseTreeListener.js",
+   "bytes": 389,
+   "sha256": "5938d4e00a0a142cf54227e4e4d718cc74ea32699dc992ca29b374c34c09219b",
+   "bytesInBundle": 89,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ParseTreeVisitor.js",
+   "bytes": 711,
+   "sha256": "a1f3db8a04ddb8e3c1c3b35932cbcf8e9ff5bdb3aac846b3f5d31e8efc18ad61",
+   "bytesInBundle": 210,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/ParseTreeWalker.js",
+   "bytes": 2383,
+   "sha256": "81b5bef623d951421f9a116e2dde85bfa681b6eed69ba2629646d73787311d43",
+   "bytesInBundle": 430,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/RuleNode.js",
+   "bytes": 395,
+   "sha256": "0ff8c7cf601d2e470d860aa4524a9479abc8c3d29ac9bdcbb4fea485e0a945e4",
+   "bytesInBundle": 95,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/SyntaxTree.js",
+   "bytes": 293,
+   "sha256": "f89578fd5344e6a34155e8b39c60cf173228c214b2674631529714b41e05d90b",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/TerminalNode.js",
+   "bytes": 310,
+   "sha256": "8c2fb2ada11650e7a68597009aeb51ec2de32e4fd3084009a963749b93d2d6d0",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/TerminalNodeImpl.js",
+   "bytes": 1287,
+   "sha256": "b2e0448609edfb0d3735e2c189aaf6261e5c9feba46c7efb96efa8877324944d",
+   "bytesInBundle": 485,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/Tree.js",
+   "bytes": 385,
+   "sha256": "07d2fe14a73b276bd43260f1d3f5472c7709197b1eb7288f8ba30f5eec426d27",
+   "bytesInBundle": 15,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/Trees.js",
+   "bytes": 4382,
+   "sha256": "9a253ebd47713e9a7173755f6326d2b53dc74cd19351f00f8a2080dc988a385e",
+   "bytesInBundle": 1445,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/tree/index.js",
+   "bytes": 646,
+   "sha256": "aa01a2c685831ec3b118c237b76ac02d99d1a50d254e7f73f3c858395c033e84",
+   "bytesInBundle": 119,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/DoubleDict.js",
+   "bytes": 777,
+   "sha256": "bedb2e381d95de506624f587380cdfe17c5e636b237c293d324971f7450bb28f",
+   "bytesInBundle": 288,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/arrayToString.js",
+   "bytes": 393,
+   "sha256": "2ef07baf1e2d6aead724025094fed4fdfe4463794244ff7ddaaad93d8b1ec2e4",
+   "bytesInBundle": 75,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/equalArrays.js",
+   "bytes": 607,
+   "sha256": "08b38d659dfef8024fea11e02e999bb1308006db997fe73e14ebd3f322c5dec0",
+   "bytesInBundle": 212,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/escapeWhitespace.js",
+   "bytes": 453,
+   "sha256": "11ab562fea53251f400aaec8379150a0de78598c737e81dcc29bb02dfc19584b",
+   "bytesInBundle": 121,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/index.js",
+   "bytes": 303,
+   "sha256": "96ee9cb96f6124f0765f89c9dadac47419edc628b56f04aef554dd6704eab572",
+   "bytesInBundle": 26,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/standardEqualsFunction.js",
+   "bytes": 306,
+   "sha256": "5c126b908451bbdf274b9a87eb597aadcac4dc163600bf50a372591fe25688ce",
+   "bytesInBundle": 44,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/standardHashCodeFunction.js",
+   "bytes": 303,
+   "sha256": "70045493fb0bf886810fcc5d2f77d11ee71e85cea932c86780cef8ae582d7f62",
+   "bytesInBundle": 40,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/stringHashCode.js",
+   "bytes": 2177,
+   "sha256": "14510a85e432ee1728bacec8d8f664b268f9903d670d02561d5e17858b03f7b2",
+   "bytesInBundle": 1010,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/antlr4/src/antlr4/utils/valueToString.js",
+   "bytes": 294,
+   "sha256": "09fff7c1701af79d6e4c4adcb774d48a6c6e2fe8adc19fa82967971601172bd0",
+   "bytesInBundle": 40,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "node_modules/marked/lib/marked.esm.js",
+   "bytes": 79710,
+   "sha256": "8da585ba07277fbed079acafdb08da48bb190d25406d043328ddcbaed8146d74",
+   "bytesInBundle": 37199,
+   "sameAsNodeModules": true
+  },
+  {
+   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg",
+   "bytes": 2769,
+   "sha256": "62041f079e67a5025dcdcbc2ac0204303773399757dfcd741086354e349386c2",
+   "bytesInBundle": 2724,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg",
+   "bytes": 1946,
+   "sha256": "482332448f6c9c0f1bf16bd45f6bf97a2bb1a92352992d12508f90382b06ed52",
+   "bytesInBundle": 1901,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg",
+   "bytes": 1853,
+   "sha256": "7a2d53b24427db534bea82f64486473b6caeddf0b0ffe5488d56160f3be44d08",
+   "bytesInBundle": 1807,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_Amazon-EC2_Instance_48.svg",
+   "bytes": 1219,
+   "sha256": "916ca76ab49f9c73178611a3b85137b97d5f8bced3aac3017ebbf78c919bdc1e",
+   "bytesInBundle": 1173,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg",
+   "bytes": 2350,
+   "sha256": "c55f54be491073a2fb7d18f7001bc21d633c745185ec3acb6fa86e9ada18b185",
+   "bytesInBundle": 2305,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/Azure_Public_Service_Icons/Icons/Compute/10029-icon-service-Function-Apps.svg",
+   "bytes": 1836,
+   "sha256": "1b456538807834a9f1ea7d80d8c52b8bd3773dd992a0f3808c4b792e5da8cace",
+   "bytesInBundle": 1757,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/Robustness_Diagram_Boundary.svg",
+   "bytes": 772,
+   "sha256": "52b23b0281f4943a9dbfe13307ab3db674b3717ad1629011197e3b7da7e3f58f",
+   "bytesInBundle": 729,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/Robustness_Diagram_Control.svg",
+   "bytes": 1109,
+   "sha256": "b58a7d5e3631b9c059ccfb1dde284da9b3e17ef7278965b7c491a4f0d96f4359",
+   "bytesInBundle": 1068,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/Robustness_Diagram_Entity.svg",
+   "bytes": 1090,
+   "sha256": "3f9fda9718e878ddc5e178cb948d7d158d9205410097bde6a9c4440dfc9520b7",
+   "bytesInBundle": 1049,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/actor.svg",
+   "bytes": 804,
+   "sha256": "85b03bc941f1aa8c71d0891e81b0196314fc57cb6f994bc7fc6208d32ba342c5",
+   "bytesInBundle": 773,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/assets/database.svg",
+   "bytes": 19353,
+   "sha256": "399cd1f770c08413221ff3561206c87964ce22ef24b2691c2458575a249eda93",
+   "bytesInBundle": 19325,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/components/Comment/Comment.ts",
+   "bytes": 3808,
+   "sha256": "9ef1b34ebf080da1ff8366c1301fe6ee17522bd946e233c42bd66a4d28e22174",
+   "bytesInBundle": 1180,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/emoji/builtinEmojis.ts",
+   "bytes": 2292,
+   "sha256": "db40c5b5bbdabfa75cc23183bc33932b92130eebb709d0e9a37979a43df0d0c5",
+   "bytesInBundle": 1479,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/emoji/resolveEmoji.ts",
+   "bytes": 2173,
+   "sha256": "3b46b78f46b33bc9bdae7760ebece90638c24528052b9b4e5bb168e1304032ba",
+   "bytesInBundle": 636,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/generated-parser/sequenceLexer.js",
+   "bytes": 50899,
+   "sha256": "353910ad26dc5bbfc96a90ab6ac5319a6db22aa1e58184bc0eb492d08075e40d",
+   "bytesInBundle": 46255,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/generated-parser/sequenceParser.js",
+   "bytes": 189664,
+   "sha256": "4ba2e378d04e4bf3398873d5cd857bbb62c1eb30a676fc3db4e1dda164b5f60b",
+   "bytesInBundle": 100300,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/generated-parser/sequenceParserListener.js",
+   "bytes": 14293,
+   "sha256": "20b925ecafa638178453909802b45b3bef07394bba3235ba2f9e84114a7076fa",
+   "bytesInBundle": 2966,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/logger/logger.ts",
+   "bytes": 2147,
+   "sha256": "479233483457f88594167ca921b7f00283420cb2bc468fb86bc3d8cd6d6cfe2a",
+   "bytesInBundle": 591,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/AncestorPath.ts",
+   "bytes": 564,
+   "sha256": "b7ff30037a143de15997d94eb35ace6227a6fc95ae97f2091d29aa75079ecc95",
+   "bytesInBundle": 167,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/ChildFragmentDetecotr.js",
+   "bytes": 1603,
+   "sha256": "5a1e7bfb4f304727592f293403fa80bcfea4b647fb46617e8135cfa7c6d35d73",
+   "bytesInBundle": 723,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Divider/DividerContext.ts",
+   "bytes": 618,
+   "sha256": "c585a8be6bb0f8bb3e488078fe69fbb34448b58d5bd04c1bc6f96d59d1e343c1",
+   "bytesInBundle": 219,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/FrameBuilder.ts",
+   "bytes": 2787,
+   "sha256": "52e44e0646231f2e6c38dd9c61932ee2e28e11ba1f2c672f2f955744165ec822",
+   "bytesInBundle": 1267,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/From.ts",
+   "bytes": 2440,
+   "sha256": "a72abd6781f736ecbd90cd6fa278605f04e50433916af9ca382e822ecb8dc450",
+   "bytesInBundle": 1048,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/IsCurrent.js",
+   "bytes": 826,
+   "sha256": "085df088095bc9ef6721da2e68b87dd983c4c32965ce4ef0b7d06efd924c5217",
+   "bytesInBundle": 385,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/MessageCollector.ts",
+   "bytes": 1988,
+   "sha256": "a623bc872acda2702ad60e2034cc1d04704b8fbd264cedb9c8bf37629cfd7498",
+   "bytesInBundle": 775,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Messages/Assignment.ts",
+   "bytes": 2532,
+   "sha256": "5b8afef04bb60037f1f5756cd49309d6129eb2c55e687e2733ef16eb7128361e",
+   "bytesInBundle": 779,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Messages/MessageContext.ts",
+   "bytes": 920,
+   "sha256": "c578756649c4d0f374f8a6a5ab34537b129eefcd43063629221fa0c4de0454bd",
+   "bytesInBundle": 419,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/OrderedParticipants.ts",
+   "bytes": 2220,
+   "sha256": "89fbf2843ef588ca8176674c2a7dcabef4b817ad057cd471650e1ec760475103",
+   "bytesInBundle": 643,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Origin.js",
+   "bytes": 1219,
+   "sha256": "6446af628b958813e915e4f4a639d1bcb947f9aee91cb75a50c3b62e9fde7291",
+   "bytesInBundle": 471,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/OwnableMessage.ts",
+   "bytes": 234,
+   "sha256": "f35598fe0a53465c72917e2464acb975cba017d5c5ed78ad6db3cfea3c1150d7",
+   "bytesInBundle": 0,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Owner.js",
+   "bytes": 2640,
+   "sha256": "1789fffa72477a08986126e6cfc66360579e8aac25067148576c499d54217c53",
+   "bytesInBundle": 1426,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/Participants.ts",
+   "bytes": 4246,
+   "sha256": "782a7fdbf7e1c38a951204c8222624e4270b253f7e128f2c7c626b19af452665",
+   "bytesInBundle": 1888,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/ProgContext.js",
+   "bytes": 1433,
+   "sha256": "0c65075649f94b32ba8bdb17c0576c4dda023e6c46b7830015db68cd39350cca",
+   "bytesInBundle": 118,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/RefContext.ts",
+   "bytes": 409,
+   "sha256": "82f9b4bc992ca3cec1abfd659c2e50982e1ab49aafd8bab71df9ac3e5e93ddb7",
+   "bytesInBundle": 151,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/RetContext.js",
+   "bytes": 1581,
+   "sha256": "cb53330ef1788df00659069bd3ab3f83c9a144cf16b84977bb4772952163acaa",
+   "bytesInBundle": 810,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/SignatureText.ts",
+   "bytes": 3329,
+   "sha256": "e0eb453e0073c911584831bc679c80fa1293fc38bafb42839f742317c29af16c",
+   "bytesInBundle": 1403,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/TitleContext.js",
+   "bytes": 335,
+   "sha256": "7d33a4d4fabef5d43746358f21d950618ec2115e6cb3a6e6f31c041617a30de0",
+   "bytesInBundle": 128,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/ToCollector.js",
+   "bytes": 5304,
+   "sha256": "16fbe8faddddfa2aca6fbbd2e70b4aba79ba87eb5027b98fb7e0a41506a25a84",
+   "bytesInBundle": 2188,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/index.js",
+   "bytes": 3485,
+   "sha256": "6115d95c3790918c2e2050d229e5c48fa9ba309ac47baefdc110d0a38fdad7f6",
+   "bytesInBundle": 1449,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/key/Key.ts",
+   "bytes": 153,
+   "sha256": "bf358007d1a424c5582227c81fa187af68f0c9ceb218ea05806d41caf6cfc2cb",
+   "bytesInBundle": 92,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/parser/utils/cloest-ancestor/ClosestAncestor.ts",
+   "bytes": 907,
+   "sha256": "b394325ef374adf2aef702a83cc35f4c263df49b5da2377302f0459ebbbfe10c",
+   "bytesInBundle": 431,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/Constants.ts",
+   "bytes": 1387,
+   "sha256": "3dc7bad46f17c885ebb0c89ef81917a3775fdded94da750358094e9149ab8090",
+   "bytesInBundle": 0,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/Coordinate.ts",
+   "bytes": 136,
+   "sha256": "35d0a5614bbf8597395f5f2b335edc8aa0ec2838178c86d7242dc980e2e415bd",
+   "bytesInBundle": 0,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/Coordinates.ts",
+   "bytes": 6075,
+   "sha256": "c41c425ff4297c1fcac1a3ee70c03f5678ce71ac4bc5d95b1cc5234564b67884",
+   "bytesInBundle": 2117,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/FrameBorder.ts",
+   "bytes": 974,
+   "sha256": "99fb2218455a3e748d3f2208431da0e5348b2821fa07aad5c89800574c1937af",
+   "bytesInBundle": 291,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/LocalParticipants.ts",
+   "bytes": 493,
+   "sha256": "394d6453611594e468f2af2b8c861013ef9fbc282cdd68f2e9c659d670ac842d",
+   "bytesInBundle": 60,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/VerticalCoordinates.ts",
+   "bytes": 2519,
+   "sha256": "cc69c673bb4eed114855a617dd4f3ab02c14f1b2d3d49026faac0c528338f1b5",
+   "bytesInBundle": 770,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/WidthProviderFunc.ts",
+   "bytes": 6705,
+   "sha256": "489b25ddd03c05823122a7c33c28282f9c98783827cffd7d3ba882029c1dcd19",
+   "bytesInBundle": 1832,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/david/DavidEisenstat.ts",
+   "bytes": 3592,
+   "sha256": "ef0bfafeaf443898f006c2f2986aafca6fbc96f849781a900d377b01058e1c49",
+   "bytesInBundle": 1262,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/LayoutMetrics.ts",
+   "bytes": 520,
+   "sha256": "63be494597bbc8d9fb4640dfd900770a837f5e0f97bd5514ac79373dc4e013dc",
+   "bytesInBundle": 91,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/MarkdownMeasurer.ts",
+   "bytes": 747,
+   "sha256": "4b25edf7e94d50e2bd61f2c5c67369fe6531f7b08bcfb9622d791b7580714475",
+   "bytesInBundle": 160,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/StatementIdentifier.ts",
+   "bytes": 193,
+   "sha256": "5b98b0c39087a901d74e963ff3709efccff415d256f563a9b11385139d664850",
+   "bytesInBundle": 67,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/AsyncMessageStatementVM.ts",
+   "bytes": 1022,
+   "sha256": "b1fd1abfd05b2f16534280dfc546974a8aa11738c2404c0c5349840326ffe1de",
+   "bytesInBundle": 320,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/BlockVM.ts",
+   "bytes": 1530,
+   "sha256": "61a1390b7470f9a3534df0be05fae1f0d6b15cbebcbdff10f5147f5f311ed39f",
+   "bytesInBundle": 374,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/CreationStatementVM.ts",
+   "bytes": 1785,
+   "sha256": "9211b8587b893b43929c615cee1d2f8ca0fcdce415cd179833c8cf52fc0273a1",
+   "bytesInBundle": 518,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/DividerStatementVM.ts",
+   "bytes": 314,
+   "sha256": "052387c7fcd294bd541e37abb59e13bab9b9593248d5fa446a21bc462a7d40fc",
+   "bytesInBundle": 91,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/EmptyStatementVM.ts",
+   "bytes": 309,
+   "sha256": "e7bddb0c2eee8afb77495dc246b532cf5a772c566de4e9da66ff1029034282c8",
+   "bytesInBundle": 88,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentAltVM.ts",
+   "bytes": 2255,
+   "sha256": "c6fe3813323b2a555e0022fea81cbd6c7b6ce71309f4c7dad162f1f6fb4d1a6a",
+   "bytesInBundle": 593,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentCriticalVM.ts",
+   "bytes": 171,
+   "sha256": "4886461ccca15c558d2be6d353b1a8a1c42da7c92a8925a408c31da1639b954a",
+   "bytesInBundle": 41,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentLoopVM.ts",
+   "bytes": 163,
+   "sha256": "ba9c09ab2e8a9d5321ebd342a5a9fe76ca4d5073d2bd62fe840e918d53f04dbb",
+   "bytesInBundle": 37,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentOptVM.ts",
+   "bytes": 161,
+   "sha256": "90e38c853aac6259c0bc674d241dc3002ffab4f50f96b65791c38e14472a7261",
+   "bytesInBundle": 36,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentParVM.ts",
+   "bytes": 161,
+   "sha256": "cd74366d62c7d96a7c146d93754dbabf314c722447a16333e3ebf99198ba681a",
+   "bytesInBundle": 36,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentRefVM.ts",
+   "bytes": 565,
+   "sha256": "396ca403d7d83538775cd91a989a8e6dc8f05f1960cebc2385d39576d4317927",
+   "bytesInBundle": 230,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentSectionVM.ts",
+   "bytes": 169,
+   "sha256": "9cae0c5c6dee52c01cea7d585dda4d7a83ce4c07800479b6b3c3f1a0f7ef70b5",
+   "bytesInBundle": 40,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentSingleBlockVM.ts",
+   "bytes": 1225,
+   "sha256": "e2b50373cc1d6a706275e3dd86bf7010e3af449d50ff1e3bd669c9d2f11c8643",
+   "bytesInBundle": 449,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentTryCatchVM.ts",
+   "bytes": 1774,
+   "sha256": "3d8d8692b41990632fa84e5a30806b4aa9bf26bd455ba58f5c948a747fb3e4f3",
+   "bytesInBundle": 608,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/FragmentVM.ts",
+   "bytes": 573,
+   "sha256": "7e44f2bd1e8cdc147a516ca95ff37b721d51e4583c72172419306d0f106fb8c7",
+   "bytesInBundle": 248,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/NodeVM.ts",
+   "bytes": 588,
+   "sha256": "50f3bb9ab581ccda5e05c2be21ae07947c6b7ea9dac4251989f6d0270a25b41d",
+   "bytesInBundle": 147,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/ReturnStatementVM.ts",
+   "bytes": 2724,
+   "sha256": "8a3e5a05907e2392aaaf9bf0f12c52eb0dd84bedb5c2f28a2d5406937605361f",
+   "bytesInBundle": 633,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/StatementVM.ts",
+   "bytes": 2865,
+   "sha256": "d52451e700b22cc8da3f77b0fcd213a7d3ff840e5ac9fc800171b1559b76aca4",
+   "bytesInBundle": 959,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/SyncMessageStatementVM.ts",
+   "bytes": 1496,
+   "sha256": "f64fca6b441bc66b8b60c878428acb7909bd93d5cf916344e91fed4a3513aabf",
+   "bytesInBundle": 466,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/positioning/vertical/vm/createStatementVM.ts",
+   "bytes": 2511,
+   "sha256": "c36cbcc2237628fc36d99b912ed95b5606f1e420224f0233544bd59980ae6f74",
+   "bytesInBundle": 563,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/buildFragmentGeometry.ts",
+   "bytes": 12023,
+   "sha256": "7d681b394563ecee28ad55ed4c5674e576f63f6f2e4c12c8d39555587ee1a54e",
+   "bytesInBundle": 3045,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/buildGeometry.ts",
+   "bytes": 8947,
+   "sha256": "f73a916895b5972c3a97b5be22fe281f94d9d8bce6ba78a8c0b3f48f994dd127",
+   "bytesInBundle": 1770,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/buildParticipantGeometry.ts",
+   "bytes": 7707,
+   "sha256": "b12d82e9423658693b6bdd1d4189b69a1e67d44af755d14450b13559d5de8022",
+   "bytesInBundle": 1202,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/buildStatementGeometry.ts",
+   "bytes": 26071,
+   "sha256": "30afc8cf61570f959140dd6508e044b7d115ef3920030846909af64de9717524",
+   "bytesInBundle": 4460,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/comment.ts",
+   "bytes": 2880,
+   "sha256": "de16149e5f49bce9c09e0093836425e28b3810df1e53c607db8aaf968ef5efc1",
+   "bytesInBundle": 1034,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/creation.ts",
+   "bytes": 3017,
+   "sha256": "a1c688b5ee4337547bd58cf4f52ee203ec9d76188a9aaf3ae7f088498782ab07",
+   "bytesInBundle": 991,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/divider.ts",
+   "bytes": 1649,
+   "sha256": "3e9f86d1d0807237a32f2b447013cdaa0fe7c1dddc8869b0d2ac2d57a7b5f830",
+   "bytesInBundle": 574,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/fragment.ts",
+   "bytes": 12540,
+   "sha256": "73c805092b4107fb966b2c7eed66b30d86f35ba1a188f62c5ecc957138859508",
+   "bytesInBundle": 7662,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/group.ts",
+   "bytes": 2236,
+   "sha256": "61cbdf369008427067d744e021b9b0fb6039ef9ef1c1003fc2d92d6678a1874f",
+   "bytesInBundle": 518,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/lifeline.ts",
+   "bytes": 432,
+   "sha256": "c98f3d9105b0fd148cb424a43d92ec086131cfd96c3cd3a28dd7ea91c5f031f8",
+   "bytesInBundle": 227,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/message.ts",
+   "bytes": 5721,
+   "sha256": "1de2823789560677c5b81017e1c2adfa68ba34897f2bdabdc852265279827c85",
+   "bytesInBundle": 1981,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/occurrence.ts",
+   "bytes": 666,
+   "sha256": "eaf7d6c138bcedc853d28bb54a193a0a44b52428d43fbbc87d0f2df28447f4a3",
+   "bytesInBundle": 170,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/participant.ts",
+   "bytes": 12082,
+   "sha256": "67f32c0aadef4b0da557935ae2595159663fdb56f212860e0a99d95a4039479e",
+   "bytesInBundle": 2583,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/return.ts",
+   "bytes": 3692,
+   "sha256": "05f5a2406579a60250c11baf96b228a4049808698ae79ab771bc540d5b3b346a",
+   "bytesInBundle": 1413,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/components/svgUtils.ts",
+   "bytes": 439,
+   "sha256": "fbaba6510021a2a265fdce0b034a8c93a99dff1d35b9d5e6d2030169072df8e7",
+   "bytesInBundle": 194,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/computeReturnDebt.ts",
+   "bytes": 10174,
+   "sha256": "cddc59011ea1c75c7e15b2e5a05f5cf451140ba93531f12410ec2047132f1a3b",
+   "bytesInBundle": 1389,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/icons.ts",
+   "bytes": 3442,
+   "sha256": "67004203b0c73d2c2ab4d183fca32e7d160979423b70e09dcb00ff198442fcc9",
+   "bytesInBundle": 837,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/renderToSvg.ts",
+   "bytes": 9477,
+   "sha256": "5563a02c96212f97a5d0446aa54bec2f947afb092ea25a62d404737606eee156",
+   "bytesInBundle": 4396,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/svgConstants.ts",
+   "bytes": 3093,
+   "sha256": "de6f20bee9f0a8bcd828329f5ec7797881ed29cca5c16d2a5912847a844daec2",
+   "bytesInBundle": 243,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/svg/walkStatements.ts",
+   "bytes": 13495,
+   "sha256": "43fbfcf7515b14602734c060f79b109df94e123f685b64a4bae8480db05317ad",
+   "bytesInBundle": 4749,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/utils/RenderingCache.ts",
+   "bytes": 538,
+   "sha256": "379f64be71dfbb203a1f05c49c88a8388aa7a07954ab62bd4962dd0ad8250e86",
+   "bytesInBundle": 202,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/utils/StringUtil.ts",
+   "bytes": 965,
+   "sha256": "c1143f4a04b9552096ddf00da44cc3633c1986d5f765e20264a77634b19b9da4",
+   "bytesInBundle": 169,
+   "sameAsNodeModules": null
+  },
+  {
+   "file": "src/utils/messageStyling.ts",
+   "bytes": 3110,
+   "sha256": "18a7d331dcae2877340fe43d30b6023713bc11748a25bb1a154c53097f7e8c95",
+   "bytesInBundle": 2137,
+   "sameAsNodeModules": null
+  }
+ ]
+}
