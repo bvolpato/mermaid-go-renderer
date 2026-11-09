@@ -35,6 +35,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"runtime/debug"
 	"strings"
 	"sync"
 	"time"
@@ -47,6 +48,21 @@ import (
 
 // version is set by the release build.
 var version = "dev"
+
+// buildVersion returns the version of the command. A release build sets
+// it. A build of "go install module@version" has the version of the module
+// in its build information.
+func buildVersion() string {
+	if version != "dev" {
+		return version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok {
+		if v := info.Main.Version; v != "" && v != "(devel)" {
+			return strings.TrimPrefix(v, "v")
+		}
+	}
+	return version
+}
 
 func main() {
 	if err := run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr); err != nil {
@@ -470,7 +486,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 		return nil
 	}
 	if c.version {
-		fmt.Fprintf(stdout, "mmdg %s (mermaid %s)\n", version, mermaid.MermaidVersion)
+		fmt.Fprintf(stdout, "mmdg %s (mermaid %s)\n", buildVersion(), mermaid.MermaidVersion)
 		return nil
 	}
 	warn := func(message string) { fmt.Fprintf(stderr, "\n%s\n\n", message) }
