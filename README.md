@@ -20,6 +20,10 @@ A renderer without a browser can replace mermaid only if its output is the same.
 
 ## Result
 
+`mmdg` can replace two things, and each has its own proof.
+
+**`mermaid.render()` in a web page.** This is the default of the library.
+
 | Corpus | Diagrams | Pass | Byte-exact | Same error as mermaid |
 |---|---:|---:|---:|---:|
 | The end-to-end tests of mermaid | 2145 | 2141 (99.8%) | 2076 | 65 |
@@ -31,13 +35,25 @@ A renderer without a browser can replace mermaid only if its output is the same.
 - The ports were developed against the first corpus only. The other two show that the result holds for diagrams that the code never saw.
 - Each corpus passes with the same counts against two references: Chromium 156 on Linux with the Liberation fonts, and Chromium 156 on macOS with the system fonts.
 
+**The `mmdc` command of mermaid-cli 12.** This is the default of the `mmdg` command. `mmdc` renders in a page of its own, with web fonts that a plain page has not (see [Pages](#pages)), and it writes the SVG as XML with the fonts embedded.
+
+| Corpus | Diagrams | Pass on Linux | Pass on macOS |
+|---|---:|---:|---:|
+| The end-to-end tests of mermaid | 2145 | 2140 (99.8%) | 2131 (99.3%) |
+| The examples of the mermaid documentation | 596 | 578 (97.0%) | 578 (97.0%) |
+| Generated large diagrams, 15 to 150 nodes | 70 | 70 (100%) | 70 (100%) |
+
+- "Pass" means that both files of `mmdc` have the same bytes: the file with the embedded fonts and the file of `--no-font-embed`. It also counts an error for a diagram that `mmdc` rejects.
+- The diagrams that do not pass use KaTeX math (6) or ZenUML (17), which `mmdc` renders with a plugin. Neither is supported.
+- On macOS, 9 more diagrams have one number that differs in its last digit, for example `182.4px` where `mmdc` writes `182.399px`.
+
 You can check this yourself. The repository has the SHA-256 of every reference SVG, and one test compares them:
 
 ```sh
 go test -run TestCorpusParity .
 ```
 
-The tables by diagram type are in [docs/PARITY.md](docs/PARITY.md), [docs/PARITY-DOCS.md](docs/PARITY-DOCS.md) and [docs/PARITY-LARGE.md](docs/PARITY-LARGE.md) for the Linux reference, and in [docs/PARITY-MACOS.md](docs/PARITY-MACOS.md) for the macOS reference. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) explains how the references are made and how you can make them again.
+The tables by diagram type are in [docs/PARITY.md](docs/PARITY.md), [docs/PARITY-DOCS.md](docs/PARITY-DOCS.md) and [docs/PARITY-LARGE.md](docs/PARITY-LARGE.md) for the Linux reference, and in [docs/PARITY-MACOS.md](docs/PARITY-MACOS.md) for the macOS reference. The tables for `mmdc` are in [docs/PARITY-MMDC.md](docs/PARITY-MMDC.md) and [docs/PARITY-MMDC-MACOS.md](docs/PARITY-MMDC-MACOS.md). [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) explains how the references are made and how you can make them again.
 
 The test also runs in a container with no fonts and no browser, because the default fonts are part of the module.
 
@@ -87,6 +103,7 @@ svg, err := mermaid.Render(src,
 | `WithViewportWidth` | The width of the page that the layout assumes. The default is 800 px. |
 | `WithTime`, `WithRandomSeed` | The clock and the random numbers. Both have fixed defaults. |
 | `WithSystemFonts`, `WithFontDirs` | The fonts that measure text. See below. |
+| `WithPage`, `WithFontEmbed` | The web page that the render reproduces, and the embedded fonts of `StandaloneSVG`. See [Pages](#pages). |
 | `WithImageSize` | The natural size of images that a diagram names by URL. |
 | `WithScale`, `WithBackground`, `WithBackgroundColor` | The pixel density and the background of PNG output. `WithBackgroundColor` takes a CSS color and also applies to `StandaloneSVG`. |
 
@@ -111,7 +128,10 @@ mmdg -i README.md -o README.out.md -a images    # Markdown with images in place 
 cat diagram.mmd | mmdg -i - -o - -e svg > diagram.svg
 ```
 
-It writes the files that `mmdc` writes: the SVG as `XMLSerializer` prints it, with the background color, and a PNG with the size of the screenshot of `mmdc`. The messages and the exit codes are those of `mmdc`.
+It writes the files that `mmdc` writes: the diagram is laid out with the web fonts of the page of `mmdc`, the SVG is XML with the background color and the embedded fonts, and a PNG has the size of the screenshot of `mmdc`. The messages and the exit codes are those of `mmdc`.
+
+- `--no-font-embed` writes the SVG without the font data, as in `mmdc`.
+- `--page plain` renders as mermaid does in a page without the web fonts.
 
 [docs/CLI.md](docs/CLI.md) has every option, what was compared with real `mmdc` runs, and what differs. PDF output and icon packs are not supported.
 
@@ -124,16 +144,36 @@ By default `mmdg` measures with fonts that are part of the module: Liberation Sa
 - `WithFontDirs` adds font files for text that the Liberation fonts have no glyphs for, such as Chinese, Japanese, Korean and emoji.
 - `WithSystemFonts` measures with the fonts of the machine, by the rules of Chromium on that operating system. The result then matches mermaid in a browser on the same machine. It is verified on macOS.
 
+## Pages
+
+The page that mermaid runs in also decides the result. In mermaid 12 the default theme of flowcharts, class diagrams, sequence diagrams and other types names the font `Recursive Variable`. A plain web page has no such font, so Chromium falls back to Arial. The page of `mmdc` loads the font, with Open Sans and Font Awesome, so the same diagram has another layout there.
+
+| Page | Fonts of the page | Who uses it |
+|---|---|---|
+| `PagePlain` | none | The library by default. It gives what `mermaid.render()` returns in a page that has only mermaid. |
+| `PageMermaidCLI` | Recursive Variable, Open Sans, Font Awesome | The `mmdg` command by default. It gives what `mmdc` writes. An icon such as `fa:fa-car` shows, and the layout `tidy-tree` is available. |
+
+The fonts of `PageMermaidCLI` are part of the module. To get the file of `mmdc` from the library:
+
+```go
+svg, err := mermaid.Render(src, mermaid.WithPage(mermaid.PageMermaidCLI))
+file, err := mermaid.StandaloneSVG(svg,
+	mermaid.WithPage(mermaid.PageMermaidCLI),
+	mermaid.WithBackgroundColor("white"),
+	mermaid.WithFontEmbed(true),
+)
+```
+
 ## Diagram types
 
 All diagram types of mermaid 12.2.0 render: flowchart, sequence, class, state, entity relationship, requirement, gantt, pie, quadrant, xychart, gitGraph, journey, timeline, mindmap, C4, sankey, block, packet, radar, treemap, kanban, architecture, venn, ishikawa, cynefin, wardley, treeView, usecase, swimlane, agentflow, railroad (four syntaxes), eventmodeling and info.
 
-All layouts are supported: dagre, ELK, cose-bilkent, fcose and swimlanes. All looks (`classic`, `neo`, `handDrawn`) and all themes are supported.
+All layouts are supported: dagre, ELK, cose-bilkent, fcose and swimlanes, and `tidy-tree` in the page of `mmdc`. All looks (`classic`, `neo`, `handDrawn`) and all themes are supported.
 
 Not supported:
 
 - KaTeX math in labels (`$$...$$`). Mermaid lets the browser lay out MathML.
-- The `zenuml` diagram, which is an external plugin of mermaid.
+- The `zenuml` diagram, which is an external plugin of mermaid. `mmdc` renders it. `mmdg` does not.
 - `securityLevel: sandbox`, which renders into an iframe.
 - Click callbacks. They need a live page and do not change the SVG.
 

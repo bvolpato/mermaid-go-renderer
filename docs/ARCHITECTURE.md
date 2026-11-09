@@ -33,6 +33,20 @@ Mermaid measures text and shapes in the browser while it draws. The sizes decide
 
 Each rule in these packages comes from the Chromium source and has a probe: a set of cases that ran in Chromium, stored under `testdata/`, with a test that replays them.
 
+## Pages
+
+The page that mermaid runs in decides the fonts and the style sheets, so it is part of the input. There are two pages.
+
+- The plain page has only mermaid. This is the default of the library (`PagePlain`).
+- The page of mermaid-cli (`PageMermaidCLI`) is what `mmdc` 12 builds before it renders: it adds the style sheets of Font Awesome and the `@font-face` rules of Recursive Variable and Open Sans to the head, and loads every font. It also registers the layout `tidy-tree`. This is the default of the `mmdg` command.
+
+What the page of mermaid-cli adds to the engine:
+
+- `internal/webfonts` has the style sheets and the WOFF2 files, as embedded data.
+- `font.Library.WithWebFonts` puts the `@font-face` rules in front of the fonts of the machine: the choice of a face by `unicode-range`, the variable font at the weight of the text, and the rules of Chromium for a web font on each platform. `internal/font/webfontdata` has the fonts decoded to sfnt.
+- `dom.Document.PageSheets` has the text of the style sheets of the head. The cascade of `internal/browser` reads them before the style elements of the body.
+- `internal/mmdc` has the steps of `mmdc` after the render: the background, the embedded fonts, the XML serialization and the size of the screenshot.
+
 ## JavaScript semantics in Go
 
 `internal/js` has what JavaScript does and Go does differently.
@@ -50,6 +64,7 @@ Each rule in these packages comes from the Chromium source and has a probe: a se
 - `internal/dagre` and `internal/graphlib` are ports of dagre-d3-es.
 - `internal/elk/native` is a port of the layered algorithm of Eclipse ELK, with the semantics of the GWT build that elkjs ships. It returns the same bytes as elkjs. `internal/elk` also embeds elkjs and runs it in the JavaScript interpreter goja for graphs that the port does not cover: other ELK algorithms and rare options.
 - `internal/cytoscape/native` is a port of the cose-bilkent and fcose layouts of cytoscape, for mindmap and architecture diagrams. It returns the same bytes as the JavaScript. `internal/cytoscape` also embeds the genuine cytoscape code and runs it in goja for a graph that the port does not cover.
+- `internal/ru/layout/tidytree` is a port of `@mermaid-js/layout-tidy-tree`, which mermaid-cli registers. It is used for `layout: tidy-tree` when the page is the page of mermaid-cli. A plain page has no such layout, and mermaid falls back to another one.
 - The environment variables `MMDG_ELK` and `MMDG_CYTOSCAPE` select the engine: `native` (the default), `goja`, or `check`, which runs both and reports a difference.
 - `internal/ru` is the unified renderer of mermaid (`rendering-util`): shapes, clusters, edges, markers, labels and the layout glue for dagre, ELK, cose-bilkent and swimlanes.
 - `internal/d3` has the d3 modules that the charts use. `internal/rough` is roughjs, for the hand-drawn look. `internal/venn` is the layout of venn diagrams.
@@ -73,6 +88,8 @@ There are two reference environments, and each corpus has a manifest for both.
 | Chromium 156 on Linux in the Playwright image, with only the Liberation fonts installed (`tools/reference/oracle-linux.mjs --fonts liberation`) | The fonts that are embedded in the module, which is the default | On every machine, also in a container with no fonts |
 | Chromium 156 on macOS (`tools/reference/oracle.mjs`) | The system fonts (`WithSystemFonts`) | On a Mac whose fonts are those of the reference machine. On other machines the test skips these manifests. |
 
+The page of mermaid-cli has its own references. `tools/reference/mmdc-oracle.mjs` runs the function `renderMermaid` of mermaid-cli 12.0.0, which the `mmdc` command calls, with the same fixed clock and seed, and records both files that `mmdc` writes: the SVG with the embedded fonts and the SVG of `--no-font-embed`. The manifests `testdata/reference/*-mmdc*.json` have their hashes for both environments, and `TestCorpusParity` compares them. A file `*.passing.txt` lists the diagrams that pass. The test fails when a listed diagram stops passing.
+
 There are three corpora under `testdata/corpus`.
 
 | Corpus | Diagrams | Source |
@@ -92,7 +109,7 @@ Renders share bounded caches (`internal/memo`) of values that depend only on the
 ## What is not ported
 
 - KaTeX math in labels. Mermaid lets the browser lay out MathML, which needs a MathML layout engine.
-- The `zenuml` diagram, which is an external plugin of mermaid.
+- The `zenuml` diagram, which is an external plugin of mermaid. `mmdc` registers the plugin and renders it.
 - `securityLevel: sandbox`, which renders into an iframe.
 - Click callbacks and tooltips that need a live page. They do not change the SVG.
 

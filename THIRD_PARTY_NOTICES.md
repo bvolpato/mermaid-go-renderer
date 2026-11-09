@@ -34,7 +34,9 @@ The Go files in the column "Where in this repository" are translations of the up
 | Project | Version | Home page | License (SPDX) | Copyright lines | Where in this repository | License text in section 7 | Source of the lines and the text | Notes |
 |---|---|---|---|---|---|---|---|---|
 | mermaid | 12.2.0 | https://github.com/mermaid-js/mermaid | MIT | Copyright (c) 2014 - 2022 Knut Sveidqvist | `internal/diagrams`, `internal/ru`, `internal/render`, `internal/config`, `internal/styles`, `internal/theme`, `internal/utils`, `internal/sanitize`, `internal/markdown`, `internal/svgdraw`, `internal/grammar`, `internal/langium`, `testdata/corpus` | MIT | N: `tools/reference/node_modules/mermaid/LICENSE` | `internal/grammar/NOTICE` has a copy of the license, for the grammar tables and the files `actions.js.txt`. |
-| @mermaid-js/mermaid-cli | 12.0.0 | https://github.com/mermaid-js/mermaid-cli | MIT | Copyright (c) 2017-2026 Tyler Long, Mindaugas Laganeckas, Alois Klink | `internal/mmdc/page.go` | MIT | N: `tools/reference/node_modules/@mermaid-js/mermaid-cli/LICENSE` |  |
+| @mermaid-js/mermaid-cli | 12.0.0 | https://github.com/mermaid-js/mermaid-cli | MIT | Copyright (c) 2017-2026 Tyler Long, Mindaugas Laganeckas, Alois Klink | `internal/mmdc` (`page.go`, `fontembed.go`, `tokenizecss.go`), `cmd/mmdg/main.go` | MIT | N: `tools/reference/node_modules/@mermaid-js/mermaid-cli/LICENSE` |  |
+| @mermaid-js/layout-tidy-tree | 1.0.1 | https://github.com/mermaid-js/mermaid | MIT | Copyright (c) 2014 - 2022 Knut Sveidqvist | `internal/ru/layout/tidytree` (`layout.go`, `render.go`) | MIT | N: `tools/reference/node_modules/@mermaid-js/layout-tidy-tree/LICENSE` | mermaid-cli registers this layout. The port is used for the page of mermaid-cli. |
+| non-layered-tidy-tree-layout | 2.0.2 | https://github.com/stetrevor/non-layered-tidy-tree-layout | MIT | copyright line not found locally | `internal/ru/layout/tidytree` (`algorithm.go`, `helpers.go`) | MIT | The source map of `@mermaid-js/layout-tidy-tree` 1.0.1 names the package and the version. The npm registry gives the license `MIT` and the author Michael Wong | The package is bundled into `@mermaid-js/layout-tidy-tree`. It is not installed as a package of its own, so no license file of it is local. |
 | @mermaid-js/parser | 2.0.1 | https://github.com/mermaid-js/mermaid/tree/develop/packages/mermaid/parser/#readme | MIT | Copyright (c) 2023 Yokozuna59 | `internal/langium`, the grammar files of the Langium diagrams in `internal/diagrams` | MIT | N: `tools/reference/node_modules/@mermaid-js/parser/LICENSE` | The package is `packages/parser` of the mermaid repository. |
 | dagre-d3-es | 7.0.14 | https://github.com/tbo47/dagre-es | MIT | Original dagre-d3 copyright: Copyright (c) 2013 Chris Pettitt<br>Original dagre copyright: Copyright (c) 2012-2014 Chris Pettitt<br>Original graphlib copyright: Copyright (c) 2012-2014 Chris Pettitt<br>Copyright (c) 2022-2024 Thibaut Lassalle, David Newell, Alois Klink, Sidharth Vinod and dagre-es contributors | `internal/dagre`, `internal/graphlib` | MIT | N: `tools/reference/node_modules/dagre-d3-es/LICENSE.md` | The license file also has the copyright lines of dagre, dagre-d3 and graphlib. |
 | lodash-es | 4.18.1 | https://lodash.com/custom-builds | MIT | Copyright OpenJS Foundation and other contributors <https://openjsf.org/><br>Based on Underscore.js, copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/> | `internal/dagre/lodash.go`, `internal/dagre/state.go`. Also inside `internal/cytoscape/cytoscape.bundle.js` | lodash | N: `tools/reference/node_modules/lodash-es/LICENSE` | The license file waives the copyright of sample code in the documentation under CC0. No sample code is in this repository. `internal/cytoscape/NOTICE` has a copy of the license file, for the functions of lodash inside cytoscape. |
@@ -125,6 +127,9 @@ Two sources have no license that allows a copy. No file of the working tree has 
 | cytoscape-fcose | 2.2.0 | https://github.com/iVis-at-Bilkent/cytoscape.js-fcose | MIT | Copyright (c) 2018 - present, iVis-at-Bilkent. | `internal/cytoscape/cytoscape.bundle.js` | MIT | R: `internal/cytoscape/LICENSES.txt` |  |
 | Code inside cytoscape and layout-base |  |  | MIT (Promises/A+ thenable, jQuery event code, bezier and spring functions, lodash, heap). Apache-2.0 (JamaJS, in layout-base 2.0.1) | Copyright (c) 2013-2014 Ralf S. Engelschall (http://engelschall.com)<br>Bezier curve function generator. Copyright Gaetan Renaudeau. MIT License: http://en.wikipedia.org/wiki/MIT_License<br>Runge-Kutta spring physics function generator. Adapted from Framer.js, copyright Koen Bok. MIT License: http://en.wikipedia.org/wiki/MIT_License | `internal/cytoscape/cytoscape.bundle.js` | see `internal/cytoscape/LICENSES.txt` | R: `internal/cytoscape/LICENSES.txt`, last section. R: `internal/cytoscape/NOTICE` for lodash and heap | `LICENSES.txt` has the notices that the files contain. The build of cytoscape contains functions of lodash and heap without a notice. `internal/cytoscape/NOTICE` has the license files of the two packages. The license file of heap 0.2.7 (F: https://unpkg.com/heap@0.2.7/LICENSE) has the MIT text and no copyright line. The file `package.json` of heap names the author: Xueqiao Xu. |
 | Liberation fonts | 2.1.5 | https://github.com/liberationfonts/liberation-fonts | OFL-1.1 | Digitized data copyright (c) 2010 Google Corporation with Reserved Font Arimo, Tinos and Cousine.<br>Copyright (c) 2012 Red Hat, Inc. with Reserved Font Name Liberation. | `internal/font/liberation/*.ttf.gz` | OFL-1.1 | R: `internal/font/liberation/LICENSE` | The fonts have Reserved Font Names: Liberation, Arimo, Tinos and Cousine. The OFL does not let a changed version keep these names. |
+| Recursive (`@fontsource-variable/recursive`) | 5.3.0 | https://fontsource.org/fonts/recursive | OFL-1.1 | Copyright 2019 The Recursive Project Authors (github.com/arrowtype/recursive) | `internal/webfonts/files/recursive`: `index.css` and 4 WOFF2 files. The rules of `index.css` are also in `internal/mmdc/cssom.json.gz` | OFL-1.1, Recursive | R: `internal/webfonts/files/recursive/LICENSE` | A web font of the page of mermaid-cli 12. `package.json` of the package says `OFL-1.1`. An SVG that `mmdg` writes with embedded fonts has the license text and the font data, as an SVG of mermaid-cli has. |
+| Open Sans (`@fontsource/open-sans`) | 5.3.0 | https://fontsource.org/fonts/open-sans | OFL-1.1 | Copyright 2020 The Open Sans Project Authors (https://github.com/googlefonts/opensans) | `internal/webfonts/files/open-sans`: `400.css`, `400-italic.css` and 20 WOFF2 files. The rules of the style sheets are also in `internal/mmdc/cssom.json.gz` | OFL-1.1, Open Sans | R: `internal/webfonts/files/open-sans/LICENSE` | A web font of the page of mermaid-cli 12. `package.json` of the package says `OFL-1.1`. |
+| Font Awesome Free (`@fortawesome/fontawesome-free`) | 7.3.1 | https://fontawesome.com | OFL-1.1 (the font files). MIT (the style sheets). `package.json` says `(CC-BY-4.0 AND OFL-1.1 AND MIT)` | Copyright (c) 2026 Fonticons, Inc. (https://fontawesome.com) with Reserved Font Name: "Font Awesome".<br>Copyright 2026 Fonticons, Inc. | `internal/webfonts/files/fontawesome-free`: `css/brands.css`, `css/regular.css`, `css/solid.css`, `css/fontawesome.css` and 3 WOFF2 files under `webfonts`. The rules of the style sheets are also in `internal/mmdc/cssom.json.gz` | Font Awesome Free | R: `internal/webfonts/files/fontawesome-free/LICENSE.txt` | Web fonts and style sheets of the page of mermaid-cli 12. The license file gives three licenses. CC BY 4.0 is for the icons that the package has as SVG and JS files: no such file is in this repository. OFL-1.1 is for the font files, with the Reserved Font Name "Font Awesome". MIT is for all other files, which are the style sheets here. The file asks to keep the attribution comments of the files: the style sheets are unchanged. The brand icons are trademarks of their owners. The text of CC BY 4.0 is not in the license file, which gives its URL: https://creativecommons.org/licenses/by/4.0/. |
 
 The embedded file `internal/elk/elkjs/elk-worker.min.js` is in section 1.3, in the rows of elkjs and of the code inside the worker.
 
@@ -176,6 +181,7 @@ These files are in the repository. The Go compiler does not put them in a progra
 ### Projects with no copyright line in a local file
 
 - jison-lex (0.3.4)
+- non-layered-tidy-tree-layout (2.0.2). The npm registry names the author Michael Wong
 - chevrotain (13.2.0). Its source files have no copyright line
 - Eclipse EMF and Xtext (compiled code inside the elkjs worker). Their notice files have no copyright line
 - heap (inside cytoscape). Its license file has no copyright line
@@ -2340,6 +2346,390 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER
 DEALINGS IN THE FONT SOFTWARE.
+```
+
+### OFL-1.1, Recursive
+
+The license file of the package `@fontsource-variable/recursive` (SIL Open Font License 1.1).
+
+Used for: Recursive, `@fontsource-variable/recursive` 5.3.0.
+
+Taken from (the repository): `internal/webfonts/files/recursive/LICENSE`.
+
+```text
+Copyright 2019 The Recursive Project Authors (github.com/arrowtype/recursive)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+```
+
+### OFL-1.1, Open Sans
+
+The license file of the package `@fontsource/open-sans` (SIL Open Font License 1.1).
+
+Used for: Open Sans, `@fontsource/open-sans` 5.3.0.
+
+Taken from (the repository): `internal/webfonts/files/open-sans/LICENSE`.
+
+```text
+Copyright 2020 The Open Sans Project Authors (https://github.com/googlefonts/opensans) OpenSans-Italic[wdth,wght].ttf: Copyright 2020 The Open Sans Project Authors (https://github.com/googlefonts/opensans)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+```
+
+### Font Awesome Free
+
+The license file of the package `@fortawesome/fontawesome-free`. It has the SIL Open Font License 1.1 for the fonts, the MIT license for the code, and it names CC BY 4.0 for the icons.
+
+Used for: Font Awesome Free 7.3.1.
+
+Taken from (the repository): `internal/webfonts/files/fontawesome-free/LICENSE.txt`.
+
+```text
+Fonticons, Inc. (https://fontawesome.com)
+
+--------------------------------------------------------------------------------
+
+Font Awesome Free License
+
+Font Awesome Free is free, open source, and GPL friendly. You can use it for
+commercial projects, open source projects, or really almost whatever you want.
+Full Font Awesome Free license: https://fontawesome.com/license/free.
+
+--------------------------------------------------------------------------------
+
+# Icons: CC BY 4.0 License (https://creativecommons.org/licenses/by/4.0/)
+
+The Font Awesome Free download is licensed under a Creative Commons
+Attribution 4.0 International License and applies to all icons packaged
+as SVG and JS file types.
+
+--------------------------------------------------------------------------------
+
+# Fonts: SIL OFL 1.1 License
+
+In the Font Awesome Free download, the SIL OFL license applies to all icons
+packaged as web and desktop font files.
+
+Copyright (c) 2026 Fonticons, Inc. (https://fontawesome.com)
+with Reserved Font Name: "Font Awesome".
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+SIL OPEN FONT LICENSE
+Version 1.1 - 26 February 2007
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting — in part or in whole — any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+# Code: MIT License (https://opensource.org/licenses/MIT)
+
+In the Font Awesome Free download, the MIT license applies to all non-font and
+non-icon files.
+
+Copyright 2026 Fonticons, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+# Attribution
+
+Attribution is required by MIT, SIL OFL, and CC BY licenses. Downloaded Font
+Awesome Free files already contain embedded comments with sufficient
+attribution, so you shouldn't need to do anything additional when using these
+files normally.
+
+We've kept attribution comments terse, so we ask that you do not actively work
+to remove them from files, especially code. They're a great way for folks to
+learn about Font Awesome.
+
+--------------------------------------------------------------------------------
+
+# Brand Icons
+
+All brand icons are trademarks of their respective owners. The use of these
+trademarks does not indicate endorsement of the trademark holder by Font
+Awesome, nor vice versa. **Please do not use brand logos for any purpose except
+to represent the company, product, or service to which they refer.**
 ```
 
 ### Unicode-3.0

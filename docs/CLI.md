@@ -1,6 +1,6 @@
 # The mmdg command
 
-`mmdg` renders Mermaid diagrams to SVG and PNG files. It takes the options of mermaid-cli (`mmdc`) and writes files with the content of the files that `mmdc` writes. It does not start a browser.
+`mmdg` renders Mermaid diagrams to SVG and PNG files. It takes the options of mermaid-cli (`mmdc`) and writes files with the content of the files that `mmdc` writes. It does not start a browser. By default it reproduces the web page of `mmdc`, which has web fonts that a plain page has not.
 
 The options follow mermaid-cli 12.0.0. That is the newest version that npm accepted when this document was written, and it asks for mermaid `^12.0.0`. The source of mermaid-cli 12.2.0 differs from it in one line of the help text.
 
@@ -51,6 +51,18 @@ Use a mermaid config file and a theme.
 mmdg -i diagram.mmd -o diagram.svg -c mermaid.json -t dark
 ```
 
+Write a small SVG, without the fonts of the page.
+
+```sh
+mmdg -i diagram.mmd -o diagram.svg --no-font-embed
+```
+
+Render as a web site with only mermaid renders, without the web fonts of `mmdc`.
+
+```sh
+mmdg -i diagram.mmd -o diagram.svg --page plain
+```
+
 Measure text with the fonts of this machine, as a browser on this machine does.
 
 ```sh
@@ -81,7 +93,7 @@ mmdg -i diagram.mmd -o diagram.svg --fontDir /usr/share/fonts/noto
 | `-j`, `--jobs` | number | The number of diagrams of a Markdown input that render at the same time. The default is half of the CPUs. |
 | `-q`, `--quiet` | | Do not print the messages about the progress. |
 | `-p`, `--puppeteerConfigFile` | file | Accepted and not read. `mmdg` uses no browser. |
-| `--no-font-embed` | | Accepted. `mmdg` never embeds fonts. See [Fonts of the page of mmdc](#fonts-of-the-page-of-mmdc). |
+| `--no-font-embed` | | Do not embed the fonts of the page into an SVG. By default an SVG has the fonts of the page that the diagram uses, as a second `style` element. See [The page of mmdc](#the-page-of-mmdc). |
 | `--pdf-paper-format` | name | Accepted. PDF output is not supported. |
 | `--iconPacks`, `--iconPacksNamesAndUrls` | names | Not supported. `mmdg` stops with an error. |
 | `-V`, `--version` | | Print the version of `mmdg` and the version of mermaid that it ports. |
@@ -101,7 +113,8 @@ mermaid-cli 12 removed these options. `mmdg` accepts them, so that scripts for m
 
 | Option | Value | Effect |
 | --- | --- | --- |
-| `--fonts` | `embedded`, `system` | The fonts that measure the text. `embedded` is the default: the Liberation fonts that are part of `mmdg`, with the rules of Chromium on Linux. The output is then the same on every machine. `system` uses the fonts of this machine, with the rules of Chromium on this operating system. |
+| `--page` | `mermaid-cli`, `plain` | The web page that the render reproduces. `mermaid-cli` is the default: the page of `mmdc`, which has the web fonts Recursive Variable, Open Sans and Font Awesome and their style sheets. `plain` is a page with only mermaid, which is what `mermaid.render()` gives on a web site that loads no such fonts. See [The page of mmdc](#the-page-of-mmdc). |
+| `--fonts` | `embedded`, `system` | The fonts that stand for the fonts of the machine. `embedded` is the default: the Liberation fonts that are part of `mmdg`, with the rules of Chromium on Linux. The output is then the same on every machine. `system` uses the fonts of this machine, with the rules of Chromium on this operating system. |
 | `--fontDir` | directory | A directory with more font files for `--fonts embedded`. Repeat the option for more directories. |
 | `--imageSizes` | file | A JSON file with the size of the images that diagrams name by URL: `{"https://example.com/a.png": [40, 30]}`. `mmdg` never reads from the network. Without a size, an image counts as an image that failed to load. |
 | `--timeout` | duration | The longest time for one diagram, for example `30s`. The default is no limit. |
@@ -121,56 +134,76 @@ A Markdown input cannot go to stdout.
 
 When a diagram has an error, `mmdg` prints the message of the error. `mmdc` prints the same message with a JavaScript stack.
 
+## The page of mmdc
+
+`mmdc` renders a diagram in a web page of its own. Before it calls mermaid, it adds 8 style sheets to the page and loads every font that they name: Recursive Variable, Open Sans, Font Awesome Free and the fonts of KaTeX. A plain web page has none of them.
+
+The fonts change the layout. In mermaid 12 the default theme of flowcharts, class diagrams, sequence diagrams and other types names Recursive Variable, and several diagram types name Open Sans. In a plain page Chromium falls back to Arial. In the page of `mmdc` it measures the text with the web font. A label with a Font Awesome icon, such as `fa:fa-car`, has the size of the icon in the page of `mmdc` and no size in a plain page.
+
+`mmdg` has the same fonts and style sheets as embedded data, except KaTeX. With `--page mermaid-cli`, which is the default, it measures and paints with them. With `--page plain` it renders as mermaid does in a page without them.
+
+`mmdc` also registers the layout `tidy-tree` of the package `@mermaid-js/layout-tidy-tree`. `mmdg` has a port of it for `--page mermaid-cli`. In a plain page mermaid has no such layout, and a diagram with `layout: tidy-tree` gets the default layout of its type.
+
+After the render, `mmdc` puts the fonts that the diagram uses into the SVG file: for each style sheet of the page that has a used font, or a rule for an element of the diagram, it adds one `style` element with the license of the font package, the rules of the style sheet and the font data. `mmdg` does the same. A flowchart with the default theme is then about 170 kB larger. `--no-font-embed` writes the SVG without the fonts, as the same option of `mmdc` does.
+
 ## What is the same as mmdc
 
-These points were compared with real `mmdc` 12.0.0 runs on macOS. The tests in `cmd/mmdg` repeat the comparison from recorded results.
+### The .svg files of the corpus
 
-- The SVG file. `mmdc` does not write the string that `mermaid.render()` returns. It puts the SVG into its page, sets the background color on the `svg` element, and writes the element with `XMLSerializer`. `mmdg` does the same steps. For all 2080 reference SVGs of the mermaid test corpus, the result is byte for byte what Chromium returns for these steps. This was checked with the background `white`, the background `transparent`, `--size`, and without a background.
+The reference is the code of `mmdc` 12.0.0 itself, with mermaid 12.2.0: the function `renderMermaid`, which the `mmdc` command calls for each diagram, in Chromium 156. `tools/reference/mmdc-oracle.mjs` runs it for every diagram of three corpora and records both `.svg` files: the file with the fonts and the file of `--no-font-embed`. The test `TestCorpusParity` compares the files of this module with them, byte for byte.
+
+The table has the result for Chromium on Linux with only the Liberation fonts as system fonts, which is what `--fonts embedded` reproduces. [PARITY-MMDC.md](PARITY-MMDC.md) has the tables for each diagram type.
+
+| Corpus | Diagrams | Both files are the files of mmdc | mmdc fails, and mmdg fails too | Different | Not supported |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| The end-to-end tests of mermaid | 2145 | 2076 | 64 | 0 | 5 |
+| The examples of the mermaid documentation | 596 | 576 | 2 | 0 | 18 |
+| Large generated diagrams | 70 | 70 | 0 | 0 | 0 |
+
+The diagrams that do not pass are of two kinds: KaTeX math and ZenUML. See [What differs from mmdc](#what-differs-from-mmdc).
+
+With `--fonts system` on macOS, the reference is Chromium on macOS with its system fonts. There 2131 of 2145, 578 of 596 and 70 of 70 diagrams pass. 9 diagrams of the first corpus have one number that differs in its last digit, for example `max-width: 182.4px` where `mmdc` writes `182.399px`. [PARITY-MMDC-MACOS.md](PARITY-MMDC-MACOS.md) has the tables.
+
+The reference makes `mmdc` repeatable in four points, where the `mmdc` command is not: the random numbers have a fixed seed, the clock shows a fixed time, the time zone is UTC, and the style sheets of the page have the order of the source of `mmdc`. `mmdg` has the same seed. Give `--now 2026-01-15T12:00:00Z` for the same time.
+
+### The mmdc command
+
+These points were compared with runs of the real `mmdc` command on macOS. The tests in `cmd/mmdg` repeat the comparison from recorded results.
+
+- The steps after the render. `mmdc` does not write the string that `mermaid.render()` returns. It puts the SVG into its page, sets the background color on the `svg` element, and writes the element with `XMLSerializer`. For all 2080 reference SVGs of the mermaid test corpus, the result of `mmdg` is byte for byte what Chromium returns for these steps. This was checked with the background `white`, the background `transparent`, `--size`, and without a background.
 - The size of a PNG. `mmdc` takes a screenshot of the `svg` element in a page that is 800 px wide. The diagram is not wider than 784 px. `mmdc` then makes the page as large as the diagram before it takes the screenshot, and the body has a margin of 8 px. A diagram with `width="100%"`, which is what mermaid makes, becomes 8 px narrower in an image of the first size. The image shows a strip of background at the right and at the bottom. `mmdg` makes the same image size and the same diagram size. The sizes were compared for 20 cases: 6 diagrams, the scales 1.25, 1.5, 2 and 3, `--size 300`, and two backgrounds.
 - The exit code and the text on stderr for 16 wrong command lines, and the names of the output files for 9 command lines.
 - The Markdown output, with the escapes of the alt text and of the title.
-
-### SVG files of a sample of the corpus
-
-`mmdc` rendered 92 diagrams of the mermaid test corpus, from 33 of its directories, with six sets of options. The table shows how many files of `mmdg --fonts system` are byte for byte the files of `mmdc`, and why the other files differ.
-
-| Options of mmdc | Same bytes | mmdc embedded fonts | Fonts of the page | Sequence diagram | KaTeX math |
-| --- | --- | --- | --- | --- | --- |
-| none | 74 | 14 | 0 | 3 | 1 |
-| `--no-font-embed` | 77 | 0 | 11 | 3 | 1 |
-| `-b transparent` | 74 | 14 | 0 | 3 | 1 |
-| `-C style.css` | 74 | 14 | 0 | 3 | 1 |
-| `-I diagram` | 74 | 14 | 0 | 3 | 1 |
-| `-t dark` | 76 | 10 | 2 | 3 | 1 |
-
-Every file that differs belongs to a diagram that uses a font of the page of `mmdc`, to a sequence diagram, or to a diagram with KaTeX math, which `mmdg` does not render. The next section explains the fonts. Of the 92 diagrams, 75 name no font and no style sheet of the page of `mmdc`. 72 of these are the same in every set of options. The other 3 are the sequence diagrams.
-
-The sample has no gantt chart, no diagram that draws random numbers and no diagram with an image from the network. `mmdc` gives another result for these in each run or on each machine.
+- The embedded fonts. For 15 small diagrams that use Recursive Variable, Open Sans, the three fonts of Font Awesome, or none of them, the added `style` elements of `mmdg` are those of `mmdc`, character for character.
+- A sample of 92 diagrams of the corpus, from 33 of its directories, that the `mmdc` command rendered with six sets of options. With `--fonts system` on the same machine, 89 to 91 of the 92 files of `mmdg` are the files of `mmdc`, for each set. 1 diagram has KaTeX math, 2 diagrams have another layout with `-t dark`, and for 2 diagrams only the order of the embedded `style` elements differs in two of the sets.
 
 ## What differs from mmdc
 
-### Fonts of the page of mmdc
+### Diagrams that mmdg does not render as mmdc does
 
-The page of `mmdc` loads web fonts and style sheets that a plain page has not: Recursive Variable, Open Sans, Font Awesome and KaTeX. `mmdg` has none of them. It measures text as mermaid does in a page without these fonts, and falls back to the next font of the diagram, which is Arial or the default sans-serif font.
+- **KaTeX math.** `mmdg` does not render math in a label (`$$...$$`). It stops with an error. The corpora have 6 such diagrams.
+- **ZenUML.** `mmdc` registers the external diagram type `zenuml`. `mmdg` has no port of it and stops with an error, as mermaid does in a plain page. The corpora have 17 such diagrams.
 
-This changes the layout of a diagram that names one of the fonts. In mermaid 12, the default theme of several diagram types, such as flowcharts and sequence diagrams, names Recursive Variable. The config of a sequence diagram names Open Sans for the names of its actors in every theme. In one comparison with `-t default`, the sequence diagram of `mmdc` was 6 px lower than the diagram of `mmdg`. The fonts of the page are the probable cause. A label with a Font Awesome icon has the width of the icon in `mmdc`, and no width in `mmdg`. The themes `default`, `dark`, `forest`, `neutral` and `base` name fonts of the machine for most diagram types, so `-t default` gives the layout of `mmdc` for those types.
+### The order of the style sheets
 
-`mmdc` also embeds the fonts that a diagram uses into the SVG file, as a second `style` element with the font data. `mmdg` does not. Its SVG is then the SVG of `mmdc --no-font-embed`, when the layout is the same.
+`mmdc` adds the 8 style sheets to its page from calls that run at the same time. Their order in the page changes from run to run. The order decides the order of the embedded `style` elements when a diagram uses fonts of two or more style sheets, for example a diagram with a Font Awesome icon, or a diagram with Open Sans, which has one style sheet for normal text and one for italic text. Two runs of `mmdc` can then write two different files. `mmdg` always uses the order of the list in the source of `mmdc`. In one test, `mmdc` rendered 4 diagrams, and each of the 4 pages had another order.
+
+### The scale and the SVG
+
+`mmdc` renders with the device scale factor of `--scale`, also for an SVG. `mmdg` lays out the diagram at scale 1 for every scale. In a sample of 71 diagrams, the SVG of `mmdc --scale 2` was the SVG of scale 1 for 69. The other 2 are gantt charts with section titles of several lines. The image sizes of PNG output that were compared agree.
 
 ### Other differences
 
-- KaTeX math in a label is not supported. `mmdg` stops with an error for such a diagram.
 - PDF output is not supported. `mmdg` has no PDF writer. It stops with an error for `-o file.pdf` and for `-e pdf`.
 - Icon packs are not supported. `--iconPacks` and `--iconPacksNamesAndUrls` stop with an error. A diagram that names an icon of a pack shows the icon for an unknown icon.
 - `--backgroundColor` reads these forms of a CSS color: a name, a hex color, `rgb()`, `rgba()`, `hsl()` and `hsla()`. A hex color can come without the `#`, as in Chromium. Other forms that Chromium reads, such as `hwb()`, `lab()` and `color-mix()`, have no effect.
 - A PNG background that is not a color, such as a gradient, has no effect. `mmdc` paints it on the page around the diagram.
 - `mmdg` rounds the size of a PNG to whole pixels for a scale that is not a whole number. The cases that were compared with `mmdc` agree. Sizes with a fraction below one half were not compared.
-- `mmdc` renders with the device scale factor of `--scale`. `mmdg` lays out the diagram at scale 1 for every scale. The image sizes that were compared agree.
 - Random numbers have a fixed seed in `mmdg`. A diagram that draws random numbers, for example for the hand-drawn look, is the same in each run. In `mmdc` it differs between runs.
 - `--version` prints the version of `mmdg`, not a version of mermaid-cli.
 
 ## What was not compared with mmdc
 
 - The pixels of a PNG. Only the size of the image was compared, and the position of the diagram in it for one diagram.
-- `--scale` with SVG output, `--width`, and `--artefacts` together with `--size`.
-- Diagrams that show the current time, such as a gantt chart with a today marker.
+- `--width`, and `--artefacts` together with `--size`.
+- The corpus with other options than the defaults in the page of `mmdc`: `--theme`, `--cssFile`, `--svgId` and `--configFile` were compared only on the sample of 92 diagrams.
