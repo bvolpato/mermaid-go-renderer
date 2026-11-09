@@ -50,9 +50,10 @@ var mathExceptions = map[string]map[string]int{
 	"arm64":       {},
 	"arm64/nofma": {},
 	// On amd64, math.Log10 of a subnormal number is wrong by about 13
-	// decimal orders (for example log10(1e-321) gives about -308). All
-	// cases here have a step that is subnormal, such as ticks(0, 1e-320, 10).
-	"amd64": {"nice": 6, "tickIncrement": 9, "tickStep": 15, "ticks": 15},
+	// decimal orders (for example log10(1e-321) gives about -308). The
+	// port does not call it: Math.log10 comes from internal/js/crmath, which
+	// returns the bits of Chromium on every CPU. So no case differs.
+	"amd64": {},
 }
 
 // TestAgainstD3 compares with values that tools/reference/gen-d3-array.mjs
