@@ -69,6 +69,7 @@ export const WEBFONT_SHEETS = [
   'recursive/index.css',
   'open-sans/400.css',
   'open-sans/400-italic.css',
+  'katex/dist/katex.css',
 ];
 
 export async function addWebFonts(page) {

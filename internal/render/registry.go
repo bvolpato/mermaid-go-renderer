@@ -43,6 +43,9 @@ type Definition struct {
 	Parse func(ctx *Context, db DB, text string) error
 	// Draw renders the diagram into ctx.SVG.
 	Draw func(ctx *Context, db DB, text string) error
+	// DrawUnencoded passes the cleaned source to Draw. ZenUML parses while
+	// drawing and must not receive the entities prepared for parser.parse.
+	DrawUnencoded bool
 	// Classes is renderer.getClasses: the classDefs that become CSS rules.
 	Classes func(ctx *Context, db DB, text string) *js.Map[string, *ClassDef]
 }

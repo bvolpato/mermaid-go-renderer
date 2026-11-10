@@ -51,7 +51,21 @@ const cases = {
   'class': 'classDiagram\n  class Animal {\n    +int age\n    +eat()\n  }\n',
   'pie': 'pie title Pets\n  "Dogs" : 386\n  "Cats" : 85\n',
   'c4': 'C4Context\n  title System Context\n  Person(customer, "Customer", "A customer")\n  System(system, "System", "The system")\n  Rel(customer, system, "Uses")\n',
+  // The legacy HTML path selects KaTeX font families as well as CSS.
+  'katex-legacy': '---\nconfig:\n  forceLegacyMathML: true\n---\nflowchart LR\n  A["$$\\frac{\\mathbb{R}+\\mathcal{C}+\\mathfrak{F}+\\mathscr{S}+\\mathsf{T}+\\mathtt{U}+\\boldsymbol{v}}{\\Bigg(\\sqrt{x}\\Bigg)}$$"]\n',
 };
+
+// Keep the real math fixtures in this focused embedder test. The input
+// SVG comes from Chromium, so the test does not need Go math layout.
+for (const corpus of ['mermaid-e2e/katex/pr-check', 'mermaid-docs/config']) {
+  const sourceDir = path.join(repoRoot, 'testdata/corpus', corpus);
+  for (const file of fs.readdirSync(sourceDir).sort()) {
+    if (!file.endsWith('.mmd') || (corpus.endsWith('/config') && !file.startsWith('config-math-'))) {
+      continue;
+    }
+    cases[`katex-${path.basename(file, '.mmd')}`] = fs.readFileSync(path.join(sourceDir, file), 'utf8');
+  }
+}
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mmdc-embed-'));
 const files = Object.entries(cases).map(([name, source]) => {

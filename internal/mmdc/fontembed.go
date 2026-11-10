@@ -1,4 +1,4 @@
-// Ported from mermaid-cli 12.0.0, src/browser/fontEmbedder.js.
+// Ported from mermaid-cli 12.0.0, src/browser/fontEmbedder.js (MIT).
 
 package mmdc
 
@@ -34,9 +34,10 @@ import (
 // rule.cssText is the text that Chromium writes for a rule, not the text
 // of the file. The style sheets are fixed files (internal/webfonts), so
 // the rules are a record from Chromium: cssom.json.gz, which
-// tools/reference/gen-mmdc-sheets.mjs writes. The page of mmdc also has
-// the style sheet of KaTeX. It is not in the record, because this module
-// does not render math.
+// tools/reference/gen-mmdc-sheets.mjs writes. Native MathML labels match
+// the KaTeX style rules but use no KaTeX font families, so mmdc embeds
+// the stylesheet without its @font-face rules. The HTML fallback uses
+// those families and embeds their WOFF2 files as well.
 
 //go:embed cssom.json.gz
 var cssomData []byte

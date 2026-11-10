@@ -28,6 +28,7 @@ import (
 	"strings"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
+	"github.com/bvolpato/mermaid-go-renderer/internal/pdf"
 )
 
 // paintWithEffects applies the effects of an element around paint. st is
@@ -50,6 +51,15 @@ func (p *painter) paintWithEffects(n *dom.Node, st *svgStyle, ctm Affine, paint 
 		clipID = parseURLRef(v)
 	}
 	filter := p.resolveFilter(n)
+	if p.vector != nil {
+		if len(filter) > 0 && p.vector.shadow == nil {
+			ops, source := filter, paint
+			paint = func(st *svgStyle, ctm Affine) {
+				p.paintVectorFiltered(n, st, ctm, ops, source)
+			}
+		}
+		filter = nil
+	}
 
 	// isolate asks for the layer of an isolation group (scanEffects).
 	isolate := p.isolated[n]
@@ -201,6 +211,9 @@ func (p *painter) hasGroupingProperty(n *dom.Node) bool {
 // a rectangle rounds to whole pixels. Another one becomes a region of the
 // pixels whose centers are inside. It reports false when nothing is left.
 func (p *painter) clipRectNonAA(dev *device, r Rect, ctm Affine) bool {
+	if p.vector != nil {
+		return p.clipRectAA(dev, r, ctm)
+	}
 	m := deviceMatrix(ctm)
 	if m.rectStaysRect() {
 		ir := m.mapRect(r).round()
@@ -394,6 +407,14 @@ func (p *painter) applyClipPath(n *dom.Node, id string, ctm Affine) bool {
 	}
 	if len(paths) == 1 {
 		return p.clipPathAA(dev, &paths[0])
+	}
+	if p.vector != nil {
+		shapes := make([]pdf.ClipShape, 0, len(paths))
+		for i := range paths {
+			shapes = append(shapes, pdf.ClipShape{Path: pdfPath(&paths[i]), EvenOdd: paths[i].fill == fillEvenOdd})
+		}
+		p.vector.doc.ClipUnion(shapes)
+		return true
 	}
 	// Blink unites the shapes with path operations. Here the coverage of
 	// the shapes accumulates in one mask.

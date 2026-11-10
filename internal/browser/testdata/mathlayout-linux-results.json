@@ -1,0 +1,662 @@
+[
+ {
+  "name": "mathlayout-16-token-mi-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 12.453125,
+    "height": 8
+   },
+   {
+    "tag": "math",
+    "width": 12.453125,
+    "height": 8
+   },
+   {
+    "tag": "math",
+    "width": 12.453125,
+    "height": 8
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mi-abc",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 22.203125,
+    "height": 12
+   },
+   {
+    "tag": "math",
+    "width": 22.203125,
+    "height": 12
+   },
+   {
+    "tag": "math",
+    "width": 22.203125,
+    "height": 12
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mn-number",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 24,
+    "height": 11
+   },
+   {
+    "tag": "math",
+    "width": 24,
+    "height": 11
+   },
+   {
+    "tag": "math",
+    "width": 24,
+    "height": 11
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mo-operator",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 16.125,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 16.125,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 16.125,
+    "height": 10
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-row-a-plus-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 41.03125,
+    "height": 12
+   },
+   {
+    "tag": "math",
+    "width": 41.03125,
+    "height": 12
+   },
+   {
+    "tag": "math",
+    "width": 41.03125,
+    "height": 12
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-superscript-x-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 21.140625,
+    "height": 14.34375
+   },
+   {
+    "tag": "math",
+    "width": 21.140625,
+    "height": 14.34375
+   },
+   {
+    "tag": "math",
+    "width": 21.140625,
+    "height": 14.34375
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-subscript-x-i",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 24.296875,
+    "height": 11.671875
+   },
+   {
+    "tag": "math",
+    "width": 24.296875,
+    "height": 11.671875
+   },
+   {
+    "tag": "math",
+    "width": 24.296875,
+    "height": 11.671875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-subsuperscript-x-i-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 24.296875,
+    "height": 18.015625
+   },
+   {
+    "tag": "math",
+    "width": 24.296875,
+    "height": 18.015625
+   },
+   {
+    "tag": "math",
+    "width": 24.296875,
+    "height": 18.015625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-fraction-a-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 14.453125,
+    "height": 25.46875
+   },
+   {
+    "tag": "math",
+    "width": 14.453125,
+    "height": 25.46875
+   },
+   {
+    "tag": "math",
+    "width": 14.453125,
+    "height": 25.46875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-sqrt-x-plus-1",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 45.359375,
+    "height": 15.171875
+   },
+   {
+    "tag": "math",
+    "width": 45.359375,
+    "height": 15.171875
+   },
+   {
+    "tag": "math",
+    "width": 45.359375,
+    "height": 15.171875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-cube-root-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 25.671875,
+    "height": 14.78125
+   },
+   {
+    "tag": "math",
+    "width": 25.671875,
+    "height": 14.78125
+   },
+   {
+    "tag": "math",
+    "width": 25.671875,
+    "height": 14.78125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-sum-limits",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 44.8125,
+    "height": 27
+   },
+   {
+    "tag": "math",
+    "width": 44.8125,
+    "height": 27
+   },
+   {
+    "tag": "math",
+    "width": 44.8125,
+    "height": 27
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-matrix-2x2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 61.125,
+    "height": 38.6875
+   },
+   {
+    "tag": "math",
+    "width": 61.125,
+    "height": 38.6875
+   },
+   {
+    "tag": "math",
+    "width": 61.125,
+    "height": 38.6875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-semantics-annotation",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 36.578125,
+    "height": 11
+   },
+   {
+    "tag": "math",
+    "width": 36.578125,
+    "height": 11
+   },
+   {
+    "tag": "math",
+    "width": 36.578125,
+    "height": 11
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-mspace",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 40.90625,
+    "height": 16
+   },
+   {
+    "tag": "math",
+    "width": 40.90625,
+    "height": 16
+   },
+   {
+    "tag": "math",
+    "width": 40.90625,
+    "height": 16
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-adjacent-math-mixed-text",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 164.796875,
+    "height": 25.46875
+   },
+   {
+    "tag": "math",
+    "width": 12.453125,
+    "height": 8
+   },
+   {
+    "tag": "math",
+    "width": 14.453125,
+    "height": 25.46875
+   },
+   {
+    "tag": "math",
+    "width": 60.5,
+    "height": 8
+   },
+   {
+    "tag": "math",
+    "width": 60.5,
+    "height": 25.46875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mi-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 10.890625,
+    "height": 7
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 7
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 7
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mi-abc",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 19.4375,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 19.4375,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 19.4375,
+    "height": 10
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mn-number",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 21,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 21,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 21,
+    "height": 10
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mo-operator",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 14.125,
+    "height": 9
+   },
+   {
+    "tag": "math",
+    "width": 14.125,
+    "height": 9
+   },
+   {
+    "tag": "math",
+    "width": 14.125,
+    "height": 9
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-row-a-plus-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 35.90625,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 35.90625,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 35.90625,
+    "height": 10
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-superscript-x-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 17.859375,
+    "height": 13.421875
+   },
+   {
+    "tag": "math",
+    "width": 17.859375,
+    "height": 13.421875
+   },
+   {
+    "tag": "math",
+    "width": 17.859375,
+    "height": 13.421875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-subscript-x-i",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 20.609375,
+    "height": 10.203125
+   },
+   {
+    "tag": "math",
+    "width": 20.609375,
+    "height": 10.203125
+   },
+   {
+    "tag": "math",
+    "width": 20.609375,
+    "height": 10.203125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-subsuperscript-x-i-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 20.609375,
+    "height": 16.625
+   },
+   {
+    "tag": "math",
+    "width": 20.609375,
+    "height": 16.625
+   },
+   {
+    "tag": "math",
+    "width": 20.609375,
+    "height": 16.625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-fraction-a-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 12.890625,
+    "height": 21.75
+   },
+   {
+    "tag": "math",
+    "width": 12.890625,
+    "height": 21.75
+   },
+   {
+    "tag": "math",
+    "width": 12.890625,
+    "height": 21.75
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-sqrt-x-plus-1",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 39.6875,
+    "height": 13.625
+   },
+   {
+    "tag": "math",
+    "width": 39.6875,
+    "height": 13.625
+   },
+   {
+    "tag": "math",
+    "width": 39.6875,
+    "height": 13.625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-cube-root-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 22.4375,
+    "height": 12.671875
+   },
+   {
+    "tag": "math",
+    "width": 22.4375,
+    "height": 12.671875
+   },
+   {
+    "tag": "math",
+    "width": 22.4375,
+    "height": 12.671875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-sum-limits",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 39.375,
+    "height": 24
+   },
+   {
+    "tag": "math",
+    "width": 39.375,
+    "height": 24
+   },
+   {
+    "tag": "math",
+    "width": 39.375,
+    "height": 24
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-matrix-2x2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 53.46875,
+    "height": 32.8125
+   },
+   {
+    "tag": "math",
+    "width": 53.46875,
+    "height": 32.8125
+   },
+   {
+    "tag": "math",
+    "width": 53.46875,
+    "height": 32.8125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-semantics-annotation",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 32.015625,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 32.015625,
+    "height": 10
+   },
+   {
+    "tag": "math",
+    "width": 32.015625,
+    "height": 10
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-mspace",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 35.78125,
+    "height": 13.5
+   },
+   {
+    "tag": "math",
+    "width": 35.78125,
+    "height": 13.5
+   },
+   {
+    "tag": "math",
+    "width": 35.78125,
+    "height": 13.5
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-adjacent-math-mixed-text",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 144.4375,
+    "height": 21.75
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 7
+   },
+   {
+    "tag": "math",
+    "width": 12.890625,
+    "height": 21.75
+   },
+   {
+    "tag": "math",
+    "width": 52.9375,
+    "height": 7
+   },
+   {
+    "tag": "math",
+    "width": 52.9375,
+    "height": 21.75
+   }
+  ]
+ }
+]

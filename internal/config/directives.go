@@ -45,7 +45,8 @@ type directive struct {
 // the middle of a scan leaves lastIndex where it is, and the next scan starts
 // there. The index counts runes.
 type directiveScan struct {
-	lastIndex int
+	lastIndex  int
+	includeZen bool
 }
 
 // group returns capture group n of a match and whether it took part.
@@ -155,7 +156,7 @@ func (scan *directiveScan) detectInit(text string) (any, error) {
 		return nil, nil
 	}
 
-	typ, err := DetectType(text, nil)
+	typ, err := detect(text, nil, scan.includeZen)
 	if err != nil {
 		return nil, err
 	}

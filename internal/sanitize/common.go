@@ -2,7 +2,7 @@
 //
 // Ported from mermaid 12.2.0, packages/mermaid/src/diagrams/common/common.ts,
 // with evaluate and getEffectiveHtmlLabels from packages/mermaid/src/config.ts
-// (MIT). The KaTeX rendering functions of common.ts are not ported.
+// (MIT). The KaTeX rendering functions of common.ts are in internal/ru.
 //
 // common.ts keeps one DOMPurify instance and one flag at module level: the
 // hooks of setupDompurifyHooks are installed by the first removeScript call

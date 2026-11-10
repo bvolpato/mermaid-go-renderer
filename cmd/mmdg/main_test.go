@@ -106,8 +106,8 @@ func TestOptions(t *testing.T) {
 		{name: "page plain", args: []string{"-i", "d.mmd", "-o", "o.svg", "--page", "plain"}, file: "o.svg", lacks: []string{"</style><style>", "base64"}},
 		{name: "page plain as PNG", args: []string{"-i", "d.mmd", "-o", "o.png", "--page=plain"}, file: "o.png", contains: []string{"\x89PNG"}},
 
-		{name: "pdf", args: []string{"-i", "d.mmd", "-o", "o.pdf"}, wantErr: "PDF output is not supported"},
-		{name: "pdf by the format option", args: []string{"-i", "d.mmd", "-e", "pdf"}, wantErr: "PDF output is not supported"},
+		{name: "pdf", args: []string{"-i", "d.mmd", "-o", "o.pdf"}, file: "o.pdf", contains: []string{"%PDF-"}},
+		{name: "pdf by the format option", args: []string{"-i", "d.mmd", "-e", "pdf", "--pdf-paper-format", "Letter"}, file: "d.mmd.pdf", contains: []string{"%PDF-"}},
 		{name: "icon packs", args: []string{"-i", "d.mmd", "--iconPacks", "@iconify-json/logos", "@iconify-json/mdi", "-q"}, wantErr: "Icon packs are not supported"},
 		{name: "icon packs by url", args: []string{"-i", "d.mmd", "--iconPacksNamesAndUrls", "azure#file:///tmp/icons.json"}, wantErr: "Icon packs are not supported"},
 		{name: "missing value", args: []string{"-i", "d.mmd", "-o"}, wantErr: "option '-o, --output <output>' argument missing"},

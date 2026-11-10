@@ -15,16 +15,51 @@
  },
  "esbuild": "0.28.2",
  "bundle": {
-  "bytes": 405595,
-  "sha256": "16ed3ce9b267f79cea53fdcd019341db0e7c2b462efd41579fa71c8511e62347",
-  "gzipBytes": 103401
+  "bytes": 393936,
+  "sha256": "f77e1a1c16733b1b7ded172098c53096caff699e98d670e02280625f6a2c24f3",
+  "gzipBytes": 99616
  },
  "bytesInBundle": {
   "antlr4 (runtime)": 107659,
   "generated lexer and parser": 149521,
   "marked": 37199,
-  "icons (src/assets)": 34611,
-  "@zenuml/core (other)": 75939
+  "icons (src/assets)": 22944,
+  "@zenuml/core (other)": 75947
+ },
+ "excludedAssets": {
+  "reason": "Distribution terms for the AWS and Azure artwork are not confirmed.",
+  "items": [
+   {
+    "provider": "AWS",
+    "participantType": "ec2",
+    "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_Amazon-EC2_Instance_48.svg"
+   },
+   {
+    "provider": "AWS",
+    "participantType": "iam",
+    "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg"
+   },
+   {
+    "provider": "AWS",
+    "participantType": "lambda",
+    "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg"
+   },
+   {
+    "provider": "AWS",
+    "participantType": "sns",
+    "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg"
+   },
+   {
+    "provider": "AWS",
+    "participantType": "sqs",
+    "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg"
+   },
+   {
+    "provider": "Azure",
+    "participantType": "azurefunction",
+    "file": "src/assets/Azure_Public_Service_Icons/Icons/Compute/10029-icon-service-Function-Apps.svg"
+   }
+  ]
  },
  "stubs": [
   "pino",
@@ -32,6 +67,24 @@
   "react"
  ],
  "patches": [
+  {
+   "name": "omit AWS and Azure participant artwork imports",
+   "group": "license",
+   "file": "src/svg/icons.ts",
+   "reason": "The distribution terms for these six vendor artwork files are not confirmed. The participant renderer shows a labeled box when getIcon has no matching icon."
+  },
+  {
+   "name": "omit AWS and Azure participant artwork mappings",
+   "group": "license",
+   "file": "src/svg/icons.ts",
+   "reason": "Without these mappings, AWS and Azure participant types use the existing plain-box and text-label path."
+  },
+  {
+   "name": "remove reserved space for omitted vendor artwork",
+   "group": "license",
+   "file": "src/parser/OrderedParticipants.ts",
+   "reason": "The six participant types have no icon in this bundle, so they must not reserve the icon column width."
+  },
   {
    "name": "class name of BraceBlockContext",
    "group": "build",
@@ -963,48 +1016,6 @@
    "sameAsNodeModules": true
   },
   {
-   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg",
-   "bytes": 2769,
-   "sha256": "62041f079e67a5025dcdcbc2ac0204303773399757dfcd741086354e349386c2",
-   "bytesInBundle": 2724,
-   "sameAsNodeModules": null
-  },
-  {
-   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg",
-   "bytes": 1946,
-   "sha256": "482332448f6c9c0f1bf16bd45f6bf97a2bb1a92352992d12508f90382b06ed52",
-   "bytesInBundle": 1901,
-   "sameAsNodeModules": null
-  },
-  {
-   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg",
-   "bytes": 1853,
-   "sha256": "7a2d53b24427db534bea82f64486473b6caeddf0b0ffe5488d56160f3be44d08",
-   "bytesInBundle": 1807,
-   "sameAsNodeModules": null
-  },
-  {
-   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_Amazon-EC2_Instance_48.svg",
-   "bytes": 1219,
-   "sha256": "916ca76ab49f9c73178611a3b85137b97d5f8bced3aac3017ebbf78c919bdc1e",
-   "bytesInBundle": 1173,
-   "sameAsNodeModules": null
-  },
-  {
-   "file": "src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg",
-   "bytes": 2350,
-   "sha256": "c55f54be491073a2fb7d18f7001bc21d633c745185ec3acb6fa86e9ada18b185",
-   "bytesInBundle": 2305,
-   "sameAsNodeModules": null
-  },
-  {
-   "file": "src/assets/Azure_Public_Service_Icons/Icons/Compute/10029-icon-service-Function-Apps.svg",
-   "bytes": 1836,
-   "sha256": "1b456538807834a9f1ea7d80d8c52b8bd3773dd992a0f3808c4b792e5da8cace",
-   "bytesInBundle": 1757,
-   "sameAsNodeModules": null
-  },
-  {
    "file": "src/assets/Robustness_Diagram_Boundary.svg",
    "bytes": 772,
    "sha256": "52b23b0281f4943a9dbfe13307ab3db674b3717ad1629011197e3b7da7e3f58f",
@@ -1155,7 +1166,7 @@
    "file": "src/parser/OrderedParticipants.ts",
    "bytes": 2220,
    "sha256": "89fbf2843ef588ca8176674c2a7dcabef4b817ad057cd471650e1ec760475103",
-   "bytesInBundle": 643,
+   "bytesInBundle": 730,
    "sameAsNodeModules": null
   },
   {
@@ -1582,7 +1593,7 @@
    "file": "src/svg/icons.ts",
    "bytes": 3442,
    "sha256": "67004203b0c73d2c2ab4d183fca32e7d160979423b70e09dcb00ff198442fcc9",
-   "bytesInBundle": 837,
+   "bytesInBundle": 758,
    "sameAsNodeModules": null
   },
   {

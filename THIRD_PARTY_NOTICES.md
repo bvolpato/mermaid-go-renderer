@@ -35,6 +35,7 @@ The Go files in the column "Where in this repository" are translations of the up
 |---|---|---|---|---|---|---|---|---|
 | mermaid | 12.2.0 | https://github.com/mermaid-js/mermaid | MIT | Copyright (c) 2014 - 2022 Knut Sveidqvist | `internal/diagrams`, `internal/ru`, `internal/render`, `internal/config`, `internal/styles`, `internal/theme`, `internal/utils`, `internal/sanitize`, `internal/markdown`, `internal/svgdraw`, `internal/grammar`, `internal/langium`, `testdata/corpus` | MIT | N: `tools/reference/node_modules/mermaid/LICENSE` | `internal/grammar/NOTICE` has a copy of the license, for the grammar tables and the files `actions.js.txt`. |
 | @mermaid-js/mermaid-cli | 12.0.0 | https://github.com/mermaid-js/mermaid-cli | MIT | Copyright (c) 2017-2026 Tyler Long, Mindaugas Laganeckas, Alois Klink | `internal/mmdc` (`page.go`, `fontembed.go`, `tokenizecss.go`), `cmd/mmdg/main.go` | MIT | N: `tools/reference/node_modules/@mermaid-js/mermaid-cli/LICENSE` |  |
+| @mermaid-js/mermaid-zenuml | 1.0.1 | https://github.com/mermaid-js/mermaid | MIT | Copyright (c) 2014 - 2022 Knut Sveidqvist | `internal/diagrams/zenuml/zenuml.go` | MIT | N: `tools/reference/node_modules/@mermaid-js/mermaid-zenuml/LICENSE` | The Go renderer is a port of `src/zenumlRenderer.ts`. The plugin's JavaScript renderer is not in the Go bundle. |
 | @mermaid-js/layout-tidy-tree | 1.0.1 | https://github.com/mermaid-js/mermaid | MIT | Copyright (c) 2014 - 2022 Knut Sveidqvist | `internal/ru/layout/tidytree` (`layout.go`, `render.go`) | MIT | N: `tools/reference/node_modules/@mermaid-js/layout-tidy-tree/LICENSE` | mermaid-cli registers this layout. The port is used for the page of mermaid-cli. |
 | non-layered-tidy-tree-layout | 2.0.2 | https://github.com/stetrevor/non-layered-tidy-tree-layout | MIT | copyright line not found locally | `internal/ru/layout/tidytree` (`algorithm.go`, `helpers.go`) | MIT | The source map of `@mermaid-js/layout-tidy-tree` 1.0.1 names the package and the version. The npm registry gives the license `MIT` and the author Michael Wong | The package is bundled into `@mermaid-js/layout-tidy-tree`. It is not installed as a package of its own, so no license file of it is local. |
 | @mermaid-js/parser | 2.0.1 | https://github.com/mermaid-js/mermaid/tree/develop/packages/mermaid/parser/#readme | MIT | Copyright (c) 2023 Yokozuna59 | `internal/langium`, the grammar files of the Langium diagrams in `internal/diagrams` | MIT | N: `tools/reference/node_modules/@mermaid-js/parser/LICENSE` | The package is `packages/parser` of the mermaid repository. |
@@ -78,7 +79,7 @@ The Go files in the column "Where in this repository" are translations of the up
 | chevrotain | 13.2.0 | https://chevrotain.io/docs/ | Apache-2.0 | copyright line not found locally | `internal/diagrams/usecase/chevrotain.go`, `lexer.go`, `grammar_gen.go`, `internal/langium/lexer.go`, `internal/langium/parser.go` | Apache-2.0 | R: `internal/diagrams/usecase/LICENSE-chevrotain.txt` and `internal/langium/LICENSE-chevrotain.txt`, copies of N: `tools/reference/node_modules/chevrotain/LICENSE.txt` | The package has the license text, no copyright line and no `NOTICE` file. Its source files have no copyright line. The Go files say that they are changed versions. |
 | DOMPurify | 3.4.12 | https://github.com/cure53/DOMPurify | MPL-2.0 OR Apache-2.0 | (c) Cure53 and other contributors | `internal/purify` | Apache-2.0 | R: `internal/purify/LICENSE-Apache-2.0.txt`, a copy of N: `tools/reference/node_modules/dompurify/LICENSE` (dompurify 3.4.17) | The upstream license is a choice of two. This port takes DOMPurify under the Apache License 2.0 (finding F5 of the audit), which fits the MIT license of the repository. `internal/purify/NOTICE` says the same. The copyright line is from the banner of DOMPurify 3.4.12 in the mermaid bundle. |
 
-The mermaid bundle also contains these packages. No code of them is in this repository: katex, uuid, fastdom, chevrotain-allstar, vscode-jsonrpc, vscode-languageserver-protocol, vscode-languageserver-textdocument, vscode-languageserver-types, and the d3 modules that the table does not list.
+The mermaid bundle also contains these packages. No code of them is in this repository: uuid, fastdom, chevrotain-allstar, vscode-jsonrpc, vscode-languageserver-protocol, vscode-languageserver-textdocument, vscode-languageserver-types, and the d3 modules that the table does not list.
 
 ### 1.2 Chromium, Skia, V8 and the C libraries
 
@@ -116,10 +117,16 @@ Two sources have no license that allows a copy. No file of the working tree has 
 | GWT (the Java runtime emulation) | the version that elkjs 0.9.3 was compiled with. It is not stated | https://www.gwtproject.org | Apache-2.0 | Copyright 2007 Google Inc.<br>Copyright 2008 Google Inc.<br>Copyright 2009 Google Inc.<br>Copyright 2014 Google Inc. | `internal/elk/native/gwt`, `internal/elk/native/prop/enum.go`. Compiled GWT code is also in `internal/elk/elkjs/elk-worker.min.js` | Apache-2.0 | R: `internal/elk/native/gwt/LICENSE-GWT.txt`, a copy of F: https://www.apache.org/licenses/LICENSE-2.0.txt. R: `internal/elk/native/gwt/NOTICE`. F: the headers of 15 Java files under `user/super/com/google/gwt/emul/java` and `dev/core/super` on the main branch of https://github.com/gwtproject/gwt (commit `3e636995f379`) | `elk-worker.js` has no copyright lines. The lines are from the GWT source files on the main branch. Each Go file names its Java files and their lines, and says that it is a changed version. `java/util/Random.java` of GWT also has a header of the Apache Software Foundation, which names a `NOTICE` file. The root of the GWT repository has no file with that name. The license information of GWT is in `distro-source/core/src/COPYING`. |
 | Guava, Eclipse EMF, Xtext (compiled code inside the elkjs worker) | the versions that elkjs 0.9.3 was compiled with. `NOTICE.md` of ELK 0.9.1 names Guava 30.1.0 and 33.0.0 | https://github.com/google/guava, https://eclipse.dev/modeling/emf, https://eclipse.dev/Xtext | Apache-2.0 (Guava). EPL-2.0 (EMF, Xtext) | Copyright (C) 2007 The Guava Authors (the form of the notice in a source file of Guava). The notice files of EMF and of Xtext have no copyright line | `internal/elk/elkjs/elk-worker.min.js` only. No Go code ports them | Apache-2.0, EPL-2.0 | R: `internal/elk/elkjs/NOTICE`. U: `.upstream/elk-0.9.1/NOTICE.md`. F: `LICENSE` and `guava/src/com/google/common/collect/Lists.java` at the tag v33.0.0 of https://github.com/google/guava, and `LICENSE` and `NOTICE.md` on the default branches of https://github.com/eclipse-emf/org.eclipse.emf and https://github.com/eclipse-xtext/xtext | The worker file has class names of `com.google.common`, `org.eclipse.emf` and `org.eclipse.xtext`, and no notices. It does not state the versions. The notice files of EMF and of Xtext say: "All content is the property of the respective authors or their employers." |
 
-## 2. Files that are embedded unchanged
+## 2. Files that are embedded or bundled
 
 | Project | Version | Home page | License (SPDX) | Copyright lines | Where in this repository | License text in section 7 | Source of the lines and the text | Notes |
 |---|---|---|---|---|---|---|---|---|
+| KaTeX | 0.18.11 | https://katex.org | MIT | Copyright (c) 2013-2020 Khan Academy and other contributors | `internal/katex/katexjs/katex.mjs` | MIT | R: `internal/katex/katexjs/LICENSE`; `tools/reference/gen-katex.mjs` records upstream `dist/katex.mjs` 0.18.11 | The bundled module reports version 0.18.11 and has SHA-256 `b53ef659acd792006f80e32a0fbe16d84668306b2a58ce7fce052121745d5032`. The installed root development package is 0.18.10 and is not the source for this module. |
+| KaTeX stylesheet | 0.16.47, nested under `@mermaid-js/mermaid-cli` | https://katex.org | MIT | Copyright (c) 2013-2020 Khan Academy and other contributors | `internal/webfonts/files/katex/dist/katex.css` | MIT | R: `internal/webfonts/files/katex/LICENSE`, copied from N: `tools/reference/node_modules/@mermaid-js/mermaid-cli/node_modules/katex/LICENSE` | This CSS is from KaTeX 0.16.47. It is distinct from the JavaScript module at 0.18.10. |
+| KaTeX fonts | 0.16.47, nested under `@mermaid-js/mermaid-cli` | https://katex.org | OFL-1.1 | Copyright (c) 2009-2010 Design Science, Inc. (<www.mathjax.org>)<br>Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>) | `internal/webfonts/files/katex/dist/fonts/*.woff2`; generated `internal/font/webfontdata/files/katex/dist/fonts/*.sfnt.gz` | OFL-1.1 | R: `internal/webfonts/files/katex/fonts-OFL.txt`; font name IDs 13 and 14 in the 20 upstream TTF files | The Reserved Font Names are KaTeX_AMS, KaTeX_Caligraphic, KaTeX_Fraktur, KaTeX_Main, KaTeX_Math, KaTeX_SansSerif, KaTeX_Script, KaTeX_Size1, KaTeX_Size2, KaTeX_Size3, KaTeX_Size4 and KaTeX_Typewriter. The WOFF2 files are copied from KaTeX 0.16.47. The SFNT files are decoded from WOFF2 by `tools/reference/gen-webfonts-sfnt.py`. The OFL defines a font with a changed format as a Modified Version. The generated SFNT files keep the Reserved Font Names, so their distribution needs review under condition 3 of the OFL. |
+| @zenuml/core | 3.49.2 | https://github.com/mermaid-js/zenuml-core | MIT | Copyright (c) 2022 Peng Xiao | `internal/diagrams/zenuml/zenuml.bundle.js.gz` | MIT | `internal/diagrams/zenuml/LICENSES.txt`; F: https://raw.githubusercontent.com/mermaid-js/zenuml-core/v3.49.2/LICENSE | The generator extracts source-map files from `@mermaid-js/mermaid-zenuml` 1.0.1. `zenuml.bundle.json` records the module paths and hashes. The six AWS and Azure artwork files are omitted because their distribution terms are not confirmed. Participant types `ec2`, `iam`, `lambda`, `sns`, `sqs` and `azurefunction` render as plain labeled boxes. The parity corpus has no sample for these types. |
+| antlr4 | 4.11.0 | https://github.com/antlr/antlr4 | BSD-3-Clause | Copyright (c) 2012-2022 The ANTLR Project. All rights reserved. | `internal/diagrams/zenuml/zenuml.bundle.js.gz` | BSD-3-Clause, ANTLR | `internal/diagrams/zenuml/LICENSES.txt`; F: https://github.com/antlr/antlr4/blob/4.11.0/LICENSE.txt | The runtime source-map files match the installed 4.11.0 package. The generator checks the version and records the module hashes. |
+| marked | 4.3.0 | https://marked.js.org | MIT and BSD-3-Clause | Copyright (c) 2018+, MarkedJS (https://github.com/markedjs/)<br>Copyright (c) 2011-2018, Christopher Jeffrey (https://github.com/chjj/)<br>Copyright © 2004, John Gruber | `internal/diagrams/zenuml/zenuml.bundle.js.gz` | marked | `internal/diagrams/zenuml/LICENSES.txt`; N: `tools/reference/node_modules/@mermaid-js/mermaid-zenuml/node_modules/marked/LICENSE.md` | The license file includes the BSD terms for Markdown by John Gruber. The generator records the module path and hash. |
 | cytoscape | 3.34.0 | http://js.cytoscape.org | MIT | Copyright (c) 2016-2026, The Cytoscape Consortium. | `internal/cytoscape/cytoscape.bundle.js`. Ported in `internal/cytoscape/native` | MIT | R: `internal/cytoscape/LICENSES.txt` |  |
 | layout-base | 1.0.2 and 2.0.1 | https://github.com/iVis-at-Bilkent/layout-base#readme | MIT | Copyright (c) 2019 iVis@Bilkent | `internal/cytoscape/cytoscape.bundle.js`. Ported in `internal/cytoscape/native` | MIT | R: `internal/cytoscape/LICENSES.txt` |  |
 | cose-base | 1.0.3 and 2.2.0 | https://github.com/iVis-at-Bilkent/cose-base#readme | MIT | Copyright (c) 2019 - present, iVis@Bilkent. | `internal/cytoscape/cytoscape.bundle.js`. Ported in `internal/cytoscape/native` | MIT | R: `internal/cytoscape/LICENSES.txt` |  |
@@ -213,7 +220,7 @@ The fix pass of 2026-11-09 put these texts into the repository. They were in thi
 
 ### MIT
 
-Used for: mermaid 12.2.0, @mermaid-js/mermaid-cli 12.0.0, @mermaid-js/parser 2.0.1, dagre-d3-es 7.0.14, es-toolkit 1.45.1, khroma 2.1.0, stylis 4.3.6, roughjs 4.6.6, hachure-fill 0.5.2, path-data-parser 0.1.0, points-on-curve 0.2.0, points-on-path 0.2.1, dayjs 1.11.21, @upsetjs/venn.js 2.0.0, @iconify/utils 3.0.2, @braintree/sanitize-url 7.1.2, ts-dedent 2.2.0, jison 0.4.18, jison-lex 0.3.4, js-yaml 4.3.0, langium 4.4.0, Arm Optimized Routines v20.02, Arm Optimized Routines v23.01, skrifa, read-fonts, font-types (Fontations), cytoscape 3.34.0, layout-base 1.0.2 and 2.0.1, cose-base 1.0.3 and 2.2.0, cytoscape-cose-bilkent 4.1.0, cytoscape-fcose 2.2.0, github.com/dop251/goja, github.com/dlclark/regexp2 v1.12.0, github.com/dlclark/regexp2/v2 v2.11.0.
+Used for: mermaid 12.2.0, @mermaid-js/mermaid-cli 12.0.0, @mermaid-js/mermaid-zenuml 1.0.1, @zenuml/core 3.49.2, KaTeX 0.18.11, KaTeX stylesheet 0.16.47, @mermaid-js/parser 2.0.1, dagre-d3-es 7.0.14, es-toolkit 1.45.1, khroma 2.1.0, stylis 4.3.6, roughjs 4.6.6, hachure-fill 0.5.2, path-data-parser 0.1.0, points-on-curve 0.2.0, points-on-path 0.2.1, dayjs 1.11.21, @upsetjs/venn.js 2.0.0, @iconify/utils 3.0.2, @braintree/sanitize-url 7.1.2, ts-dedent 2.2.0, jison 0.4.18, jison-lex 0.3.4, js-yaml 4.3.0, langium 4.4.0, Arm Optimized Routines v20.02, Arm Optimized Routines v23.01, skrifa, read-fonts, font-types (Fontations), cytoscape 3.34.0, layout-base 1.0.2 and 2.0.1, cose-base 1.0.3 and 2.2.0, cytoscape-cose-bilkent 4.1.0, cytoscape-fcose 2.2.0, github.com/dop251/goja, github.com/dlclark/regexp2 v1.12.0, github.com/dlclark/regexp2/v2 v2.11.0.
 
 Taken from (`node_modules`, not in git): `tools/reference/node_modules/mermaid/LICENSE`.
 
@@ -301,7 +308,7 @@ terms above.
 
 The license file of marked.
 
-Used for: marked 16.3.0.
+Used for: marked 16.3.0 and marked 4.3.0.
 
 Taken from (`node_modules`, not in git): `tools/reference/node_modules/marked/LICENSE.md`.
 
@@ -2243,6 +2250,8 @@ Used for: Liberation fonts 2.1.5.
 
 Taken from (the repository): `internal/font/liberation/LICENSE`.
 
+The KaTeX fonts use the same OFL 1.1 terms. Their copyright lines and Reserved Font Names are in `internal/webfonts/files/katex/fonts-OFL.txt`. That notice applies to the copied WOFF2 files and the SFNT files generated from them. The generated SFNT files keep the Reserved Font Names after a format change, so their distribution needs review under condition 3 of the OFL.
+
 ```text
 Liberation Fonts 2.1.5
 Source: https://github.com/liberationfonts
@@ -2818,6 +2827,43 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
+
+### BSD-3-Clause, ANTLR
+
+Used for: antlr4 4.11.0 in `internal/diagrams/zenuml/zenuml.bundle.js.gz`.
+
+Taken from (upstream repository): `LICENSE.txt` at the tag 4.11.0 of https://github.com/antlr/antlr4.
+
+The copyright line is in the table above.
+
+```text
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+3. Neither the name of copyright holders nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 ### BSD-2-Clause

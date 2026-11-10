@@ -56,6 +56,43 @@ const outFile = option('--out');
 
 const PLUGIN_VERSION = '1.0.1';
 const CORE_VERSION = '3.49.2';
+const CORE_LICENSE_VERSION = '3.49.2';
+const ANTLR_LICENSE_VERSION = '4.11.0';
+const EXCLUDED_ASSETS = [
+  {
+    provider: 'AWS',
+    participantType: 'ec2',
+    file: 'src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_Amazon-EC2_Instance_48.svg',
+  },
+  {
+    provider: 'AWS',
+    participantType: 'iam',
+    file: 'src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg',
+  },
+  {
+    provider: 'AWS',
+    participantType: 'lambda',
+    file: 'src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg',
+  },
+  {
+    provider: 'AWS',
+    participantType: 'sns',
+    file: 'src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg',
+  },
+  {
+    provider: 'AWS',
+    participantType: 'sqs',
+    file: 'src/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg',
+  },
+  {
+    provider: 'Azure',
+    participantType: 'azurefunction',
+    file: 'src/assets/Azure_Public_Service_Icons/Icons/Compute/10029-icon-service-Function-Apps.svg',
+  },
+];
+if (CORE_VERSION !== CORE_LICENSE_VERSION) {
+  throw new Error(`update the @zenuml/core license text for ${CORE_VERSION}`);
+}
 
 const sha256 = (s) => crypto.createHash('sha256').update(s).digest('hex');
 
@@ -90,6 +127,11 @@ for (const name of fs.readdirSync(chunkDir).filter((f) => f.endsWith('.mjs.map')
 if (!files.has('src/svg/renderToSvg.ts')) {
   throw new Error('the source maps have no src/svg/renderToSvg.ts');
 }
+for (const asset of EXCLUDED_ASSETS) {
+  if (!files.has(asset.file)) {
+    throw new Error(`the source maps do not have the excluded ${asset.provider} asset ${asset.file}`);
+  }
+}
 
 // The class BraceBlockContext has another name in the build that the plugin
 // ships: the build of @zenuml/core renames it, and the build of the plugin
@@ -123,6 +165,52 @@ if (braceBlockName === 'BraceBlockContext') {
 // ---- patches ----
 
 const PATCHES = [
+  {
+    name: 'omit AWS and Azure participant artwork imports',
+    group: 'license',
+    file: 'src/svg/icons.ts',
+    reason:
+      'The distribution terms for these six vendor artwork files are not confirmed. ' +
+      'The participant renderer shows a labeled box when getIcon has no matching icon.',
+    old: `import Ec2Svg from "@/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_Amazon-EC2_Instance_48.svg?raw";
+import IamSvg from "@/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg?raw";
+import LambdaSvg from "@/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg?raw";
+import SnsSvg from "@/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg?raw";
+import SqsSvg from "@/assets/AWS-Asset-Package_02062024/Resource-Icons_01312024/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg?raw";
+import AzureFunctionSvg from "@/assets/Azure_Public_Service_Icons/Icons/Compute/10029-icon-service-Function-Apps.svg?raw";
+`,
+    new: '',
+  },
+  {
+    name: 'omit AWS and Azure participant artwork mappings',
+    group: 'license',
+    file: 'src/svg/icons.ts',
+    reason:
+      'Without these mappings, AWS and Azure participant types use the existing plain-box and text-label path.',
+    old: `  ec2: parseRawSvg(Ec2Svg),
+  lambda: parseRawSvg(LambdaSvg),
+  azurefunction: parseRawSvg(AzureFunctionSvg),
+  sqs: parseRawSvg(SqsSvg),
+  sns: parseRawSvg(SnsSvg),
+  iam: parseRawSvg(IamSvg),
+`,
+    new: '',
+  },
+  {
+    name: 'remove reserved space for omitted vendor artwork',
+    group: 'license',
+    file: 'src/parser/OrderedParticipants.ts',
+    reason:
+      'The six participant types have no icon in this bundle, so they must not reserve the icon column width.',
+    old: `  hasIcon(): boolean {
+    // Only participants with a defined type property have icons
+    return this.type !== undefined;
+  }`,
+    new: `  hasIcon(): boolean {
+    // The AWS and Azure types use the plain participant layout in this bundle.
+    return this.type !== undefined && !["ec2", "iam", "lambda", "sns", "sqs", "azurefunction"].includes(this.type.toLowerCase());
+  }`,
+  },
   {
     name: 'class name of BraceBlockContext',
     group: 'build',
@@ -354,6 +442,9 @@ const markedHeader = (files.get('node_modules/marked/lib/marked.esm.js').match(/
 if (runtimeVersion !== antlrVersion || markedHeader !== markedVersion) {
   throw new Error(`the build has antlr4 ${runtimeVersion} and marked ${markedHeader}; node_modules has ${antlrVersion} and ${markedVersion}`);
 }
+if (runtimeVersion !== ANTLR_LICENSE_VERSION) {
+  throw new Error(`update the antlr4 license text for ${runtimeVersion}`);
+}
 
 const modules = [];
 for (const [key, text] of [...built.used.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
@@ -371,6 +462,24 @@ for (const [key, text] of [...built.used.entries()].sort((a, b) => (a[0] < b[0] 
   });
 }
 const group = (prefix) => modules.filter((m) => m.file.startsWith(prefix)).reduce((n, m) => n + m.bytesInBundle, 0);
+const bundledAssets = modules.filter((m) => m.file.startsWith('src/assets/') && m.bytesInBundle > 0);
+const coreAssetFiles = new Set([
+  'src/assets/Robustness_Diagram_Boundary.svg',
+  'src/assets/Robustness_Diagram_Control.svg',
+  'src/assets/Robustness_Diagram_Entity.svg',
+  'src/assets/actor.svg',
+  'src/assets/database.svg',
+]);
+const coreAssets = bundledAssets.filter((m) => coreAssetFiles.has(m.file));
+const unclassifiedAssets = bundledAssets.filter((m) => !coreAssetFiles.has(m.file));
+if (unclassifiedAssets.length > 0) {
+  throw new Error(`classify the license terms for bundled assets: ${unclassifiedAssets.map((m) => m.file).join(', ')}`);
+}
+if (coreAssets.length !== coreAssetFiles.size) {
+  throw new Error(`the bundle has ${coreAssets.length} core icons, want ${coreAssetFiles.size}`);
+}
+const assetSources = (assets) =>
+  assets.map((m) => `- ${m.file} (source SHA-256 ${m.sha256})`).join('\n');
 const gz = gzip(built.text);
 const manifest = {
   plugin: { package: '@mermaid-js/mermaid-zenuml', version: PLUGIN_VERSION, file: 'dist/mermaid-zenuml.esm.mjs' },
@@ -385,6 +494,10 @@ const manifest = {
     'icons (src/assets)': group('src/assets/'),
     '@zenuml/core (other)': group('src/') - group('src/generated-parser/') - group('src/assets/'),
   },
+  excludedAssets: {
+    reason: 'Distribution terms for the AWS and Azure artwork are not confirmed.',
+    items: EXCLUDED_ASSETS,
+  },
   stubs: Object.keys(STUBS),
   patches: PATCHES.map((p) => ({ name: p.name, group: p.group, file: p.file, reason: p.reason })),
   modules,
@@ -394,6 +507,26 @@ const manifestText = JSON.stringify(manifest, null, 1) + '\n';
 // ---- licenses ----
 
 const rule = '-'.repeat(72);
+const coreLicense = `MIT License
+
+Copyright (c) 2022 Peng Xiao
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+`;
 const antlrLicense = `Copyright (c) 2012-2022 The ANTLR Project. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -427,23 +560,28 @@ const licenses = [
   {
     title: `@zenuml/core ${CORE_VERSION} (https://github.com/mermaid-js/zenuml-core)`,
     note:
-      'License: MIT. The text is the file LICENSE of the npm package @zenuml/core.\n' +
-      'The bundle has the icons that this package ships for the participant types\n' +
-      'actor, boundary, control, database, entity, EC2, Lambda, SQS, SNS, IAM and\n' +
-      'AzureFunction (src/assets). The last six are from the AWS Architecture Icons\n' +
-      'and the Azure Public Service Icons.',
-    text: fs.readFileSync(path.join(pluginDir, 'node_modules/@zenuml/core/LICENSE'), 'utf8'),
+      `License: MIT. The code comes from @zenuml/core ${CORE_VERSION} in the source maps of ` +
+      `@mermaid-js/mermaid-zenuml ${PLUGIN_VERSION}. The license text is the LICENSE file at ` +
+      `https://raw.githubusercontent.com/mermaid-js/zenuml-core/v${CORE_LICENSE_VERSION}/LICENSE. ` +
+      'The bundle source paths and hashes are in zenuml.bundle.json. The bundle includes these core icons:\n' +
+      assetSources(coreAssets) +
+      '\nThe bundle omits the six AWS and Azure artwork files listed in zenuml.bundle.json. Their participant ' +
+      'types render as plain boxes with text labels. The corpus has no AWS or Azure sample.',
+    text: coreLicense,
   },
   {
     title: `@mermaid-js/mermaid-zenuml ${PLUGIN_VERSION} (https://github.com/mermaid-js/mermaid)`,
-    note: 'License: MIT. renderer.go is a port of src/zenumlRenderer.ts of this package.\nThe text is the file LICENSE of the npm package.',
+    note:
+      'License: MIT. This license covers the Go port in internal/diagrams/zenuml/zenuml.go. ' +
+      'The plugin renderer code is not part of zenuml.bundle.js.gz. The text is the LICENSE file of the npm package.',
     text: fs.readFileSync(path.join(pluginDir, 'LICENSE'), 'utf8'),
   },
   {
     title: `antlr4 ${runtimeVersion} (https://github.com/antlr/antlr4)`,
     note:
-      'License: BSD-3-Clause. The npm package has no license file. The text is the\n' +
-      'file LICENSE.txt of the tag 4.11.0 of the repository.',
+      `License: BSD-3-Clause. The npm package has no license file. The text is the file ` +
+      `LICENSE.txt of the tag ${ANTLR_LICENSE_VERSION} of the repository ` +
+      `(https://github.com/antlr/antlr4/blob/${ANTLR_LICENSE_VERSION}/LICENSE.txt).`,
     text: antlrLicense,
   },
   {
@@ -453,9 +591,13 @@ const licenses = [
   },
 ];
 const licenseText =
-  'Licenses of the code in zenuml.bundle.js.gz\n\n' +
-  'The script tools/reference/gen-zenuml-bundle.mjs writes this file.\n\n' +
-  licenses.map((l) => `${rule}\n${l.title}\n${rule}\n\n${l.note}\n\n${l.text.trim()}\n`).join('\n');
+  'License notices for the ZenUML integration\n\n' +
+  'The script tools/reference/gen-zenuml-bundle.mjs writes this file.\n' +
+  'The source paths and hashes for zenuml.bundle.js.gz are in zenuml.bundle.json. That manifest also lists the six omitted AWS and Azure artwork files.\n' +
+  'The bundle uses @zenuml/core source-map files, the antlr4 runtime, and marked. The script replaces pino, fs, and react with local stubs. esbuild is a build tool and is not included in the bundle.\n\n' +
+  licenses
+    .map((l) => `${rule}\n${l.title}\n${rule}\n\n${l.note}${l.text.trim() ? `\n\n${l.text.trim()}` : ''}\n`)
+    .join('\n');
 
 // ---- write or check ----
 

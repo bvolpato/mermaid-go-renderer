@@ -97,6 +97,9 @@ type nodeStyle struct {
 	// when they are not known yet. They depend on what the cascade of the
 	// element depends on. See pseudo.go.
 	pseudo *pseudoBoxes
+	// Math presence depends on the subtree, not only on the cascade.
+	mathGen uint64
+	hasMath bool
 }
 
 // firstBytes is a set of bytes: the first bytes of the names of an index of
@@ -678,6 +681,9 @@ func (e *Engine) lookup(n *dom.Node, prop string) string {
 		if !inherits {
 			return ""
 		}
+		if prop == "visibility" && cur.NS == dom.NSMathML && cur.Tag == "mphantom" {
+			return "hidden"
+		}
 	}
 	return ""
 }
@@ -757,6 +763,9 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	inherit := func(v string) bool { return strings.EqualFold(v, "inherit") }
 
 	// User agent defaults for HTML elements.
+	if n.NS == dom.NSMathML {
+		e.mathStyleDefaults(n, &ts, parent)
+	}
 	if n.NS == dom.NSHTML {
 		switch {
 		case n.Tag == "b" || n.Tag == "strong":
@@ -1062,8 +1071,20 @@ func unitLength(f float64, unit string, emSize float64) (float64, bool) {
 
 // display returns the computed display of an element.
 func (e *Engine) display(n *dom.Node) string {
+	if n == nil {
+		return "inline"
+	}
+	if mathHidden(n) {
+		return "none"
+	}
 	if v, ok := e.declared(n, "display"); ok {
 		return strings.ToLower(strings.TrimSpace(v))
+	}
+	if n.NS == dom.NSMathML {
+		if n.Tag == "math" && !strings.EqualFold(n.AttrOr("display", ""), "block") {
+			return "inline-math"
+		}
+		return "block"
 	}
 	if n.NS == dom.NSHTML {
 		switch n.Tag {

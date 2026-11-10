@@ -153,6 +153,10 @@ func DetectorIDs() []string {
 //
 // The error is an UnknownDiagramError when no detector matches.
 func DetectType(text string, config *js.Obj[any]) (string, error) {
+	return detect(text, config, false)
+}
+
+func detect(text string, config *js.Obj[any], includeZen bool) (string, error) {
 	// A text without a fence has no front matter.
 	if strings.Contains(text, "---") {
 		runes := []rune(text)
@@ -168,6 +172,9 @@ func DetectType(text string, config *js.Obj[any]) (string, error) {
 			}
 			return d.id, nil
 		}
+	}
+	if includeZen && detectsZenUML(text) {
+		return "zenuml", nil
 	}
 
 	return "", unknownDiagramError("No diagram type detected matching given configuration for text: " + text)

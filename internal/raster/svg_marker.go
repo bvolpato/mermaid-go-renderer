@@ -242,6 +242,10 @@ func (p *painter) markerElement(id string) *dom.Node {
 
 // paintMarker is SVGShapePainter::PaintMarker.
 func (p *painter) paintMarker(marker *dom.Node, pos markerPosition, strokeWidth float32, ctm Affine) {
+	if p.vector != nil {
+		p.vector.doc.Save()
+		defer p.vector.doc.Restore()
+	}
 	if p.depth > maxDepth {
 		return
 	}

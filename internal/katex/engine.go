@@ -40,7 +40,15 @@ type patch struct {
 	new string
 }
 
-var patches = []patch{}
+var patches = []patch{
+	{
+		name: "lexer surrogate ranges",
+		old:  `[\uD800-\uDBFF][\uDC00-\uDFFF]`,
+		// regexp2 gives these two surrogate ranges the same internal key.
+		// The complement is the same low-surrogate set with a distinct key.
+		new: `[\uD800-\uDBFF][^\u0000-\uDBFF\uE000-\uFFFF]`,
+	},
+}
 
 // The script is an ES module, and goja has no modules. The module imports
 // nothing, and its only export statement is its last line. The script

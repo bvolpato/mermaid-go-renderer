@@ -11,7 +11,7 @@ import (
 // TestPageFontFaceRules checks the @font-face rules that the library reads
 // from the style sheets of internal/webfonts: the families, the segmented
 // faces and the ranges. The numbers are those of document.fonts in the
-// page of oracle.mjs --webfonts (27 font faces).
+// page of oracle.mjs --webfonts.
 func TestPageFontFaceRules(t *testing.T) {
 	set := pageWebFonts()
 	type want struct {
@@ -19,11 +19,27 @@ func TestPageFontFaceRules(t *testing.T) {
 		// Each segmented face: slope, weight range and number of rules.
 		sets [][4]float64
 	}
+	regular := [4]float64{0, 400, 400, 1}
+	bold := [4]float64{0, 700, 700, 1}
+	italic := [4]float64{italicSlope, 400, 400, 1}
+	boldItalic := [4]float64{italicSlope, 700, 700, 1}
 	wants := []want{
 		{"font awesome 7 brands", [][4]float64{{0, 400, 400, 1}}},
 		{"font awesome 7 free", [][4]float64{{0, 400, 400, 1}, {0, 900, 900, 1}}},
 		{"recursive variable", [][4]float64{{0, 300, 1000, 4}}},
 		{"open sans", [][4]float64{{0, 400, 400, 10}, {italicSlope, 400, 400, 10}}},
+		{"katex_ams", [][4]float64{regular}},
+		{"katex_caligraphic", [][4]float64{bold, regular}},
+		{"katex_fraktur", [][4]float64{bold, regular}},
+		{"katex_main", [][4]float64{bold, boldItalic, italic, regular}},
+		{"katex_math", [][4]float64{boldItalic, italic}},
+		{"katex_sansserif", [][4]float64{bold, italic, regular}},
+		{"katex_script", [][4]float64{regular}},
+		{"katex_size1", [][4]float64{regular}},
+		{"katex_size2", [][4]float64{regular}},
+		{"katex_size3", [][4]float64{regular}},
+		{"katex_size4", [][4]float64{regular}},
+		{"katex_typewriter", [][4]float64{regular}},
 	}
 	if len(set.families) != len(wants) {
 		t.Errorf("%d families, want %d", len(set.families), len(wants))
@@ -52,8 +68,8 @@ func TestPageFontFaceRules(t *testing.T) {
 			}
 		}
 	}
-	if rules != 27 {
-		t.Errorf("%d rules, want 27", rules)
+	if rules != 47 {
+		t.Errorf("%d rules, want 47", rules)
 	}
 
 	// The ranges of Recursive Variable: the rule of the Latin file comes

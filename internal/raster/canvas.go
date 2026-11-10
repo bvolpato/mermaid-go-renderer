@@ -75,6 +75,12 @@ func (c *canvas) putPixmap(pm *pixmap, dirty IRect) {
 // pixel geometry of such a layer, so its text has no LCD masks.
 func (c *canvas) pushLayer() *device {
 	cur := c.dev()
+	if c.dr.vector != nil {
+		c.dr.vector.doc.BeginGroup(1, false)
+		layer := &device{clip: cur.clip}
+		c.stack = append(c.stack, layer)
+		return layer
+	}
 	layer := &device{pm: c.getPixmap(), clip: cur.clip, aa: cur.aa}
 	c.stack = append(c.stack, layer)
 	return layer
@@ -87,6 +93,9 @@ func (c *canvas) pushLayer() *device {
 // below it. Text in the layer is then drawn over the pixels that are behind
 // it, which LCD masks need.
 func (c *canvas) pushLayerWithPrevious() *device {
+	if c.dr.vector != nil {
+		return c.pushLayer()
+	}
 	cur := c.dev()
 	layer := &device{pm: c.getPixmap(), clip: cur.clip, aa: cur.aa, lcd: c.stack[0].lcd, backdrop: cur}
 	c.stack = append(c.stack, layer)
@@ -105,6 +114,11 @@ func (c *canvas) popLayerRaw() *device {
 // popLayer composites the top layer into the device below it with an alpha
 // and a blend mode (SkCanvas::restore).
 func (c *canvas) popLayer(alpha float32, blend blendMode) {
+	if c.dr.vector != nil {
+		c.popLayerRaw()
+		c.dr.vector.doc.EndGroupWithOpacity(float64(alpha), blend == blendMultiply)
+		return
+	}
 	layer := c.popLayerRaw()
 	c.compositeLayer(c.dev(), layer.pm, layer.dirty, alpha, blend)
 	c.putPixmap(layer.pm, layer.dirty)

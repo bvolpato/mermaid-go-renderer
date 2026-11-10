@@ -112,8 +112,8 @@ func assignProperty(target any, key string, value any) error {
 	return typeError("Cannot create property '%s' on %s '%s'", key, js.TypeOf(target), js.ToString(target))
 }
 
-func processDirectives(code string) (string, any, error) {
-	scan := &directiveScan{}
+func processDirectives(code string, includeZen bool) (string, any, error) {
+	scan := &directiveScan{includeZen: includeZen}
 	initDirective, err := scan.detectInit(code)
 	if err != nil {
 		return "", nil, err
@@ -149,13 +149,17 @@ func processDirectives(code string) (string, any, error) {
 // valid YAML, and for a text that has an init directive and no known diagram
 // type.
 func PreprocessDiagram(code string) (*Preprocessed, error) {
+	return preprocessDiagram(code, false)
+}
+
+func preprocessDiagram(code string, includeZen bool) (*Preprocessed, error) {
 	rawCode := code
 	normalizedCode := cleanupText(code)
 	frontMatterResult, err := processFrontmatter(normalizedCode)
 	if err != nil {
 		return nil, err
 	}
-	text, directive, err := processDirectives(frontMatterResult.text)
+	text, directive, err := processDirectives(frontMatterResult.text, includeZen)
 	if err != nil {
 		return nil, err
 	}

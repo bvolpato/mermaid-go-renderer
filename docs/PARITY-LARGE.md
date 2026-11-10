@@ -7,16 +7,17 @@ The corpus `testdata/corpus/mermaid-large` has 70 diagrams from a seeded generat
 - **Byte-exact**: the SVG text has the same bytes as the SVG of mermaid.
 - **Same error**: mermaid fails on the diagram, and this package fails too.
 - **Different**: the diagram renders, and the SVG text differs.
-- **Not supported**: the diagram type, or a feature that the diagram uses, is not ported.
+- **Not supported**: the diagram type or a feature that the diagram uses is unavailable.
+- **Error**: rendering or comparison fails for another reason.
 
 Result: 70 of 70 diagrams pass (100.0%). 70 are byte-exact and 0 give the same error.
 
-| Diagram type | Diagrams | Byte-exact | Same error | Different | Not supported |
-|---|---:|---:|---:|---:|---:|
-| `flowchart-v2` | 38 | 38 | 0 | 0 | 0 |
-| `classDiagram` | 12 | 12 | 0 | 0 | 0 |
-| `er` | 10 | 10 | 0 | 0 | 0 |
-| `stateDiagram` | 10 | 10 | 0 | 0 | 0 |
-| **Total** | 70 | 70 | 0 | 0 | 0 |
+| Diagram type | Diagrams | Byte-exact | Same error | Different | Not supported | Error |
+|---|---:|---:|---:|---:|---:|---:|
+| `flowchart-v2` | 38 | 38 | 0 | 0 | 0 | 0 |
+| `classDiagram` | 12 | 12 | 0 | 0 | 0 | 0 |
+| `er` | 10 | 10 | 0 | 0 | 0 | 0 |
+| `stateDiagram` | 10 | 10 | 0 | 0 | 0 | 0 |
+| **Total** | 70 | 70 | 0 | 0 | 0 | 0 |
 
 The test `TestCorpusParity` makes the same comparison. It fails when a diagram that passed stops passing.

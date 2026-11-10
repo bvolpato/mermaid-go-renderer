@@ -575,6 +575,9 @@ func (e *Engine) ClientRect(n *dom.Node) dom.Rect {
 	}
 	fo := foreignObjectOf(n)
 	if fo == nil {
+		if r, ok := e.mathBodyClientRect(n); ok {
+			return r
+		}
 		return dom.Rect{}
 	}
 	quads, ok := e.htmlQuads(n)

@@ -52,8 +52,12 @@ type Resolved struct {
 // matter that is not valid YAML, for a text that has an init directive and no
 // known diagram type, and for a theme variable that is not a color.
 func Resolve(text string, site *js.Obj[any]) (*Resolved, error) {
+	return resolve(text, site, false)
+}
+
+func resolve(text string, site *js.Obj[any], includeZen bool) (*Resolved, error) {
 	if !memo.Enabled() {
-		return resolveState(text, site)
+		return resolveStateWithDetector(text, site, includeZen, nil)
 	}
 	// The key of the site config. It is empty for the config that most
 	// renders have: no site config.
@@ -62,7 +66,7 @@ func Resolve(text string, site *js.Obj[any]) (*Resolved, error) {
 	if site != nil {
 		enc.value(site, 1)
 		if !enc.ok {
-			return resolveState(text, site)
+			return resolveStateWithDetector(text, site, includeZen, nil)
 		}
 	}
 	it, err := initTemplateFor(site, enc.buf)
@@ -71,11 +75,11 @@ func Resolve(text string, site *js.Obj[any]) (*Resolved, error) {
 	}
 
 	// processAndSetConfigs: the text, then the config steps.
-	processed, err := PreprocessDiagram(text)
+	processed, err := preprocessDiagram(text, includeZen)
 	if err != nil {
 		return nil, err
 	}
-	diagramType, err := DetectType(processed.Code.Cleaned, nil)
+	diagramType, err := detect(processed.Code.Cleaned, nil, includeZen)
 	hasType := err == nil
 	if !hasType {
 		diagramType = ""
@@ -91,17 +95,20 @@ func Resolve(text string, site *js.Obj[any]) (*Resolved, error) {
 	enc.seen = enc.seen[:0]
 	enc.value(processed.Config, 1)
 	if !enc.ok {
-		return resolveState(text, site)
+		return resolveStateWithDetector(text, site, includeZen, processed)
 	}
 	t, ok := templates.GetBytes(enc.buf)
 	if !ok {
 		var plain bool
-		t, plain, err = it.build(diagramType, hasType, processed.Config)
+		// build freezes its directive. Keep the preprocessed config intact
+		// so that a state fallback can reuse it without preprocessing again.
+		directive := js.Clone(processed.Config).(*js.Obj[any])
+		t, plain, err = it.build(diagramType, hasType, directive)
 		if err != nil {
 			return nil, err
 		}
 		if !plain {
-			return resolveState(text, site)
+			return resolveStateWithDetector(text, site, includeZen, processed)
 		}
 		templates.Put(string(enc.buf), t)
 	}
@@ -123,6 +130,10 @@ func Resolve(text string, site *js.Obj[any]) (*Resolved, error) {
 // uses it for a config that it does not keep as a template, and the tests
 // compare it with Resolve.
 func resolveState(text string, site *js.Obj[any]) (*Resolved, error) {
+	return resolveStateWithDetector(text, site, false, nil)
+}
+
+func resolveStateWithDetector(text string, site *js.Obj[any], includeZen bool, processed *Preprocessed) (*Resolved, error) {
 	state, err := newBareState()
 	if err != nil {
 		return nil, err
@@ -130,7 +141,7 @@ func resolveState(text string, site *js.Obj[any]) (*Resolved, error) {
 	if err := state.Initialize(site); err != nil {
 		return nil, err
 	}
-	processed, diagramType, err := state.ProcessAndSetConfigs(text)
+	processed, diagramType, err := state.processAndSetConfigs(text, includeZen, processed)
 	if err != nil {
 		return nil, err
 	}

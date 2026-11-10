@@ -5,7 +5,7 @@
 // properties in `props`, when the case has them.
 //
 // Run it with the eval command of the browser oracle and --bare, or with
-// oracle-linux.mjs --fonts liberation. gen-browser-mathml-probe.mjs does
+// oracle-linux.mjs --fonts liberation. gen-browser-mathlayout-probe.mjs does
 // both.
 const container = document.getElementById('container');
 const out = [];
