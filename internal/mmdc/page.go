@@ -1,4 +1,5 @@
 // Ported from mermaid-cli 12.0.0, src/index.js (renderMermaid).
+// Checked against 12.2.0. The render steps and metadata are unchanged.
 
 // Package mmdc has what mermaid-cli (mmdc) does with a diagram in its page
 // after mermaid.render() returned it. The command mmdg and the function

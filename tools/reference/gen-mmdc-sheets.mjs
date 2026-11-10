@@ -11,6 +11,7 @@
 // For each style sheet of internal/webfonts.Sheets, in that order:
 //
 //   path    the path of the style sheet in internal/webfonts, without "files/"
+//   sha256  the SHA-256 of the source style sheet
 //   rules   for every rule of link.sheet.cssRules:
 //             kind      "font-face", "style" or "other"
 //             text      rule.cssText
@@ -23,6 +24,7 @@
 //
 // Usage (in tools/reference): node gen-mmdc-sheets.mjs
 import { execFileSync } from 'node:child_process';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -33,17 +35,26 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mmdc-sheets-'));
-const outFile = path.join(dir, 'sheets.json');
-execFileSync(process.execPath, ['oracle.mjs', 'eval', 'probes/mmdc-sheet-rules.js', '--bare', '--webfonts', '--out', outFile], {
-  cwd: here,
-  stdio: ['ignore', 'inherit', 'inherit'],
-});
-const probe = JSON.parse(fs.readFileSync(outFile, 'utf8'));
-const sheets = probe.sheets.map((sheet) => ({
-  path: new URL(sheet.href).pathname.replace(/^\//, ''),
-  rules: sheet.rules,
-}));
-const file = path.join(repoRoot, 'internal/mmdc/cssom.json.gz');
-fs.writeFileSync(file, zlib.gzipSync(JSON.stringify({ sheets }), { level: 9 }));
-const rules = sheets.reduce((n, s) => n + s.rules.length, 0);
-process.stderr.write(`wrote ${path.relative(repoRoot, file)}: ${sheets.length} style sheets, ${rules} rules, ${fs.statSync(file).size} bytes\n`);
+try {
+  const outFile = path.join(dir, 'sheets.json');
+  execFileSync(process.execPath, ['oracle.mjs', 'eval', 'probes/mmdc-sheet-rules.js', '--bare', '--webfonts', '--out', outFile], {
+    cwd: here,
+    stdio: ['ignore', 'inherit', 'inherit'],
+  });
+  const probe = JSON.parse(fs.readFileSync(outFile, 'utf8'));
+  const sheets = probe.sheets.map((sheet) => {
+    const sheetPath = new URL(sheet.href).pathname.replace(/^\//, '');
+    const source = fs.readFileSync(path.join(repoRoot, 'internal/webfonts/files', sheetPath));
+    return {
+      path: sheetPath,
+      sha256: crypto.createHash('sha256').update(source).digest('hex'),
+      rules: sheet.rules,
+    };
+  });
+  const file = path.join(repoRoot, 'internal/mmdc/cssom.json.gz');
+  fs.writeFileSync(file, zlib.gzipSync(JSON.stringify({ sheets }), { level: 9 }));
+  const rules = sheets.reduce((n, s) => n + s.rules.length, 0);
+  process.stderr.write(`wrote ${path.relative(repoRoot, file)}: ${sheets.length} style sheets, ${rules} rules, ${fs.statSync(file).size} bytes\n`);
+} finally {
+  fs.rmSync(dir, { recursive: true, force: true });
+}

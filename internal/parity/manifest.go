@@ -101,11 +101,11 @@ func BuildManifest(corpus, ref string) (*Manifest, error) {
 		if err := json.Unmarshal(data, &meta); err != nil {
 			return fmt.Errorf("%s: %w", base, err)
 		}
-		if m.Mermaid == "" {
-			m.Mermaid = meta.Mermaid
-		}
-		if m.Page == "" {
-			m.Page, m.MermaidCLI = meta.Page, meta.MermaidCLI
+		if len(m.Fixtures) == 0 {
+			m.Mermaid, m.Page, m.MermaidCLI = meta.Mermaid, meta.Page, meta.MermaidCLI
+		} else if m.Mermaid != meta.Mermaid || m.Page != meta.Page || m.MermaidCLI != meta.MermaidCLI {
+			return fmt.Errorf("%s: mixed references: Mermaid %q, page %q, CLI %q; expected %q, %q, %q",
+				base, meta.Mermaid, meta.Page, meta.MermaidCLI, m.Mermaid, m.Page, m.MermaidCLI)
 		}
 		entry := ManifestEntry{Type: meta.DiagramType}
 		if meta.Error != "" {

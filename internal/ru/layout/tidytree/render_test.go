@@ -49,7 +49,7 @@ func readMmdcCases(t *testing.T) []mmdcCase {
 	if err := json.NewDecoder(zr).Decode(&golden); err != nil {
 		t.Fatal(err)
 	}
-	if golden.Mermaid != "12.2.0" || golden.Mmdc != "12.0.0" {
+	if golden.Mermaid != "12.2.0" || golden.Mmdc != "12.2.0" {
 		t.Fatalf("the golden file is from mermaid %s and mermaid-cli %s", golden.Mermaid, golden.Mmdc)
 	}
 	if len(golden.Cases) < 41 {

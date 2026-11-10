@@ -116,6 +116,32 @@ func mermaidCLISheets(t *testing.T) []string {
 	return sheets
 }
 
+// TestPageSheetsMatchAssets checks that the CSSOM record uses the current
+// style sheets in the order that mermaid-cli loads them.
+func TestPageSheetsMatchAssets(t *testing.T) {
+	sheets, err := pageSheets()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(sheets) != len(webfonts.Sheets) {
+		t.Fatalf("%d recorded style sheets, want %d", len(sheets), len(webfonts.Sheets))
+	}
+	for i, asset := range webfonts.Sheets {
+		sheet := sheets[i]
+		if "files/"+sheet.Path != asset.Path {
+			t.Errorf("style sheet %d: %s, want %s", i, sheet.Path, asset.Path)
+		}
+		source, err := webfonts.FS.ReadFile(asset.Path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		sum := sha256.Sum256(source)
+		if hex.EncodeToString(sum[:]) != sheet.SHA256 {
+			t.Errorf("%s: CSSOM record is stale. Run tools/reference/gen-mmdc-sheets.mjs", asset.Path)
+		}
+	}
+}
+
 var fontPayload = regexp.MustCompile(`(data:[^;,"]*;base64,)([A-Za-z0-9+/=]+)`)
 
 // hashFonts replaces the base64 text of every font with "sha256:" and the

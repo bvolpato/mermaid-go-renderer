@@ -1,17 +1,17 @@
-// The asset list follows mermaid-cli 12.0.0, src/index.js (MIT).
+// The asset list follows mermaid-cli 12.2.0, src/index.js (MIT).
 
 // Package webfonts has the web fonts and the style sheets that mermaid-cli
 // 12 loads into its page before it renders a diagram. A plain web page has
 // none of them.
 //
-// The files are copies from the npm packages that mermaid-cli 12.0.0
+// The files are copies from the npm packages that mermaid-cli 12.2.0
 // depends on, with the directory layout of each package, so that a relative
 // url() of a style sheet finds its font file:
 //
 //	files/recursive          @fontsource-variable/recursive 5.3.0
 //	files/open-sans          @fontsource/open-sans 5.3.0
 //	files/fontawesome-free   @fortawesome/fontawesome-free 7.3.1
-//	files/katex              katex 0.16.47 (the dependency of mermaid-cli)
+//	files/katex              katex 0.18.10 (the dependency of mermaid-cli)
 //
 // Only the files that the page of mermaid-cli reads are here: the style
 // sheets of the Sheets list and the WOFF2 files that they name. The style

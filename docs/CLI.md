@@ -2,7 +2,7 @@
 
 `mmdg` renders Mermaid diagrams to SVG, PNG, and vector PDF files. It takes the options of mermaid-cli (`mmdc`) and writes SVG and PNG files in the formats that `mmdc` writes. It does not start a browser. By default it uses the `mmdc` page, which has web fonts and the ZenUML diagram type. A plain page does not register the ZenUML plugin.
 
-The options follow mermaid-cli 12.0.0. That is the newest version that npm accepted when this document was written, and it asks for mermaid `^12.0.0`. The source of mermaid-cli 12.2.0 differs from it in one line of the help text.
+The options follow mermaid-cli 12.2.0. The reference tools pin mermaid-cli 12.2.0 and Mermaid 12.2.0. Historical measurements below identify their earlier reference version separately.
 
 ## Usage
 
@@ -149,6 +149,8 @@ The fonts change the layout. In mermaid 12 the default theme of flowcharts, clas
 
 `mmdg` has the fonts and style sheets of the `mmdc` page as embedded data, including KaTeX styles. KaTeX math in labels renders on both `--page` modes, with the resulting MathML laid out by the browser engine. Some stretched delimiters, accents, and matrices differ from KaTeX's browser layout. Legacy KaTeX HTML sizing is approximate. With `--page mermaid-cli`, which is the default, the ZenUML diagram type is available. With `--page plain`, the external ZenUML plugin is not registered.
 
+The page assets follow mermaid-cli 12.2.0, which loads the KaTeX 0.18.10 style sheet and fonts. The math renderer runs the separate KaTeX 0.18.11 JavaScript embedded in Mermaid 12.2.0.
+
 `mmdc` also registers the `tidy-tree` layout from `@mermaid-js/layout-tidy-tree` and the external ZenUML diagram plugin. `mmdg` supports both on `--page mermaid-cli`. A plain page registers neither plugin, so Mermaid uses the default layout for `layout: tidy-tree` and rejects the ZenUML diagram type.
 
 After the render, `mmdc` puts the fonts that the diagram uses into the SVG file: for each style sheet of the page that has a used font, or a rule for an element of the diagram, it adds one `style` element with the license of the font package, the rules of the style sheet and the font data. `mmdg` does the same. A flowchart with the default theme is then about 170 kB larger. `--no-font-embed` writes the SVG without the fonts, as the same option of `mmdc` does.
@@ -157,7 +159,7 @@ After the render, `mmdc` puts the fonts that the diagram uses into the SVG file:
 
 ### The .svg files of the corpus
 
-The reference is the code of `mmdc` 12.0.0 itself, with mermaid 12.2.0: the function `renderMermaid`, which the `mmdc` command calls for each diagram, in Chromium 156. `tools/reference/mmdc-oracle.mjs` runs it for every diagram of three corpora and records both `.svg` files: the file with the fonts and the file of `--no-font-embed`. The test `TestCorpusParity` compares the files of this module with them, byte for byte.
+`tools/reference/mmdc-oracle.mjs` runs the function `renderMermaid` of mermaid-cli 12.2.0 with Mermaid 12.2.0 in Chromium 156. It records both `.svg` files: the file with the fonts and the file of `--no-font-embed`. The corpus tables target these mmdc 12.2.0 references. The test `TestCorpusParity` compares the files of this module with those recorded outputs, byte for byte. Each manifest records its generating version in `mermaidCLI`.
 
 The table has the result for Chromium on Linux with only the Liberation fonts as system fonts, which is what `--fonts embedded` reproduces. [PARITY-MMDC.md](PARITY-MMDC.md) has the tables for each diagram type.
 
@@ -177,7 +179,7 @@ The reference makes `mmdc` repeatable in four points, where the `mmdc` command i
 
 ### The mmdc command
 
-These points were compared with runs of the real `mmdc` command on macOS. The tests in `cmd/mmdg` repeat the comparison from recorded results.
+The tests in `cmd/mmdg` compare the command with recorded mmdc results. Fixture metadata identifies the reference version. The quantitative layout and option-sample measurements below were made with mmdc 12.0.0 on macOS before the reference tool upgrade to 12.2.0.
 
 - The steps after the render. `mmdc` does not write the string that `mermaid.render()` returns. It puts the SVG into its page, sets the background color on the `svg` element, and writes the element with `XMLSerializer`. For all 2080 reference SVGs of the mermaid test corpus, the result of `mmdg` is byte for byte what Chromium returns for these steps. This was checked with the background `white`, the background `transparent`, `--size`, and without a background.
 - The size of a PNG. `mmdc` takes a screenshot of the `svg` element in a page that is 800 px wide. The diagram is not wider than 784 px. `mmdc` then makes the page as large as the diagram before it takes the screenshot, and the body has a margin of 8 px. A diagram with `width="100%"`, which is what mermaid makes, becomes 8 px narrower in an image of the first size. The image shows a strip of background at the right and at the bottom. `mmdg` makes the same image size and the same diagram size. The sizes were compared for 20 cases: 6 diagrams, the scales 1.25, 1.5, 2 and 3, `--size 300`, and two backgrounds.

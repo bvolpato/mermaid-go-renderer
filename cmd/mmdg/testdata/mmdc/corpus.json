@@ -1,6 +1,6 @@
 {
  "mmdc": "12.0.0",
- "note": "hash is the first 16 hex digits of the SHA-256 of the .svg file of mmdc",
+ "note": "The hash is the first 16 hex digits of the SHA-256 of the .svg file of mmdc. A file-level oracle field records the versions of a refreshed case. Other files retain the top-level mmdc version.",
  "cssFile": ".node rect { fill: #fdd !important; }\n.messageText { fill: #00f; }\n",
  "fixtures": [
   {
@@ -517,8 +517,15 @@
      "fontEmbed": false
     },
     "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
-     "hash": "8a39dd69b7d6a4f0",
-     "fontEmbed": true
+     "hash": "c492c019af96f5c8",
+     "fontEmbed": true,
+     "oracle": {
+      "mmdc": "12.2.0",
+      "mermaid": "12.2.0",
+      "puppeteer": "25.16.0",
+      "playwright": "1.64.1",
+      "katex": "0.18.10"
+     }
     },
     "mindmap/nightly-check/square-shape": {
      "hash": "06bda990a3e55309",
@@ -1268,8 +1275,15 @@
      "fontEmbed": false
     },
     "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
-     "hash": "552c399e1f7b976b",
-     "fontEmbed": true
+     "hash": "1c35874ff577f1da",
+     "fontEmbed": true,
+     "oracle": {
+      "mmdc": "12.2.0",
+      "mermaid": "12.2.0",
+      "puppeteer": "25.16.0",
+      "playwright": "1.64.1",
+      "katex": "0.18.10"
+     }
     },
     "mindmap/nightly-check/square-shape": {
      "hash": "7da0b2bce0c57dbc",
@@ -1644,8 +1658,15 @@
      "fontEmbed": false
     },
     "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
-     "hash": "471da9ec4ef7b619",
-     "fontEmbed": true
+     "hash": "24cf1741651d70f8",
+     "fontEmbed": true,
+     "oracle": {
+      "mmdc": "12.2.0",
+      "mermaid": "12.2.0",
+      "puppeteer": "25.16.0",
+      "playwright": "1.64.1",
+      "katex": "0.18.10"
+     }
     },
     "mindmap/nightly-check/square-shape": {
      "hash": "3fa6477e3072d307",
@@ -2020,8 +2041,15 @@
      "fontEmbed": false
     },
     "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
-     "hash": "39bc075dc5f7c8c6",
-     "fontEmbed": true
+     "hash": "daecd92aef6f5721",
+     "fontEmbed": true,
+     "oracle": {
+      "mmdc": "12.2.0",
+      "mermaid": "12.2.0",
+      "puppeteer": "25.16.0",
+      "playwright": "1.64.1",
+      "katex": "0.18.10"
+     }
     },
     "mindmap/nightly-check/square-shape": {
      "hash": "596952249bc57dab",
@@ -2396,8 +2424,15 @@
      "fontEmbed": false
     },
     "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
-     "hash": "2ca3162d4f2a6de2",
-     "fontEmbed": true
+     "hash": "b4705c64caca7bb7",
+     "fontEmbed": true,
+     "oracle": {
+      "mmdc": "12.2.0",
+      "mermaid": "12.2.0",
+      "puppeteer": "25.16.0",
+      "playwright": "1.64.1",
+      "katex": "0.18.10"
+     }
     },
     "mindmap/nightly-check/square-shape": {
      "hash": "8a40525038ce7b9f",

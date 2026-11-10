@@ -8,7 +8,7 @@
 
 [![CI](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/bvolpato/mermaid-go-renderer/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/bvolpato/mermaid-go-renderer.svg)](https://pkg.go.dev/github.com/bvolpato/mermaid-go-renderer)
-[![Release](https://img.shields.io/github/v/release/bvolpato/mermaid-go-renderer)](https://github.com/bvolpato/mermaid-go-renderer/releases)
+[![Release](https://img.shields.io/github/v/release/bvolpato/mermaid-go-renderer)](https://github.com/bvolpato/mermaid-go-renderer/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0d9488)](LICENSE)
 
 [Website](https://bvolpato.github.io/mermaid-go-renderer/) · [Playground](https://bvolpato.github.io/mermaid-go-renderer/#play) · [Command line](docs/CLI.md) · [Architecture](docs/ARCHITECTURE.md)
@@ -102,7 +102,7 @@ The test also runs in a container with no fonts and no browser, because the defa
 
 - The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
 - The last two rows compare whole processes. `mmdc` starts a browser in each run.
-- All numbers are from one machine, measured on 2026-11-09. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.
+- The benchmark ran on 2026-11-09 with Mermaid 12.2.0 and mermaid-cli 12.0.0. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) gives the method and timings by diagram type.
 <!-- generated:performance end -->
 
 ## Gallery
@@ -134,12 +134,14 @@ The library:
 go get github.com/bvolpato/mermaid-go-renderer
 ```
 
-The command, with Go, with Homebrew, or as an archive from the [releases](https://github.com/bvolpato/mermaid-go-renderer/releases):
+Install the command with Go or Homebrew, or download a binary archive from the [latest release](https://github.com/bvolpato/mermaid-go-renderer/releases/latest):
 
 ```sh
 go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
 brew install bvolpato/tap/mmdg
 ```
+
+`mmdg --version` prints the installed mmdg version and its Mermaid version. The renderer follows Mermaid 12.2.0. The reference tools pin mermaid-cli 12.2.0 separately from the mmdg release version.
 
 The module needs Go 1.27 or newer. A few case mappings and character classes come from the Unicode tables of the Go release, and Go 1.27 has the Unicode version of Chromium 156. With an older release, a label with one of the newest Unicode characters can differ from mermaid.
 
@@ -229,6 +231,21 @@ The page that mermaid runs in also decides the result. In mermaid 12 the default
 | `PageMermaidCLI` | Recursive Variable, Open Sans, Font Awesome, KaTeX styles, and the ZenUML plugin | The `mmdg` command by default. It gives what `mmdc` writes. An icon such as `fa:fa-car` shows; the `tidy-tree` layout and ZenUML diagram type are available. |
 
 KaTeX math in `$$...$$` labels renders in both page modes. ZenUML is a diagram type available only on `PageMermaidCLI`, which registers the plugin used by `mmdc`. `PagePlain` does not register that plugin and follows Mermaid's plain-page behavior.
+
+For example, render a math label with either page mode:
+
+```mermaid
+flowchart LR
+  A["$$E = mc^2$$"] --> B["$$a^2 + b^2 = c^2$$"]
+```
+
+Use `PageMermaidCLI`, or the command's default page, for ZenUML. The [website gallery](https://bvolpato.github.io/mermaid-go-renderer/#gallery) has a rendered preview:
+
+```text
+zenuml
+  Client->API: Request
+  API->Database: Query
+```
 
 The fonts of `PageMermaidCLI` are part of the module. To get the file of `mmdc` from the library:
 

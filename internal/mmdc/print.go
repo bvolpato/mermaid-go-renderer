@@ -2,6 +2,7 @@
 // common/PDFOptions.ts (Apache-2.0), and Chromium 156 printing:
 // components/printing/browser/print_to_pdf/pdf_print_utils.cc (BSD-3-Clause)
 // and Blink core/frame/local_frame.cc (LGPL-2.0-or-later).
+// mermaid-cli 12.2.0 uses the same print options and Puppeteer version.
 package mmdc
 
 import (
