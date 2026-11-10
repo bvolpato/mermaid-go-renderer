@@ -1,7 +1,11 @@
 KaTeX fonts from katex 0.16.47
 
 Source: `tools/reference/node_modules/@mermaid-js/mermaid-cli/node_modules/katex/dist/fonts`.
-The KaTeX font files record the copyright and license notice in OpenType name ID 13 and the OFL URL in name ID 14. Each file records the Reserved Font Name for its font family.
+This notice covers the 20 WOFF2 files in `internal/webfonts/files/katex/dist/fonts` and the 20 SFNT files in `internal/font/webfontdata/files/katex/dist/fonts`.
+
+The source TTF files are from the same npm release. They record the copyright and license notice in OpenType name ID 13 and the OFL URL in name ID 14. Each file records the Reserved Font Name for its font family.
+
+`tools/reference/gen-webfonts-sfnt.py` gzip-compresses the original TTF files to create the SFNT assets. The SFNT data is unchanged and does not come from a WOFF2 conversion.
 
 Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
 Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
