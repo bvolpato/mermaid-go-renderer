@@ -3,12 +3,10 @@
 
 // Package webfontdata has the web fonts of internal/webfonts as sfnt files.
 //
-// A browser decodes a WOFF2 font before it reads the font. This module has
-// no Brotli decoder, so tools/reference/gen-webfonts-sfnt.py does that step
-// one time: each file here is the sfnt data of the WOFF2 file with the same
-// path in internal/webfonts, compressed with gzip. manifest.json has the
-// SHA-256 of each WOFF2 file and of its sfnt data. The test of this package
-// compares the manifest with both sets of files.
+// Each file here contains the sfnt font for the corresponding WOFF2 file
+// in internal/webfonts, compressed with gzip. tools/reference/gen-webfonts-sfnt.py
+// packs the original TTF files from KaTeX and decodes the other web fonts
+// from WOFF2. manifest.json records a SHA-256 hash for each format.
 //
 // The fonts have the licenses of internal/webfonts: the SIL Open Font
 // License 1.1 (see the license files in internal/webfonts/files).

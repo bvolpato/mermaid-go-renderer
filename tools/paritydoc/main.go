@@ -42,7 +42,7 @@ type row struct {
 // sources says where the diagrams of each corpus come from.
 var sources = map[string]string{
 	"mermaid-e2e":   "the end-to-end test suite of mermaid",
-	"mermaid-docs":  "the examples of the mermaid documentation, a corpus that no part of this package was developed against",
+	"mermaid-docs":  "the examples of the mermaid documentation",
 	"mermaid-large": "a seeded generator (tools/reference/gen-large-corpus.mjs): flowcharts, class, state and ER diagrams with 15 to 150 nodes",
 }
 
@@ -173,19 +173,21 @@ func section(b *strings.Builder, m *parity.Manifest, manifestPath, corpusRoot, s
 		b.WriteString("- **Without fonts only**: the file without fonts has the same bytes. The file with fonts differs.\n")
 		b.WriteString("- **Same error**: mermaid-cli fails on the diagram, and this package fails too.\n")
 		b.WriteString("- **Different**: the diagram renders, and the file without fonts differs.\n")
-		b.WriteString("- **Not supported**: the diagram type, or a feature that the diagram uses, is not ported.\n\n")
+		b.WriteString("- **Not supported**: the diagram type or a feature that the diagram uses is unavailable.\n")
+		b.WriteString("- **Error**: rendering or comparison fails for another reason.\n\n")
 		fmt.Fprintf(b, "Result: %d of %d diagrams pass (%.1f%%). %d are byte-exact and %d give the same error.\n\n", pass, total.n, 100*float64(pass)/float64(total.n), total.exact, total.agree)
-		b.WriteString("| Diagram type | Diagrams | Byte-exact | Without fonts only | Same error | Different | Not supported |\n")
-		b.WriteString("|---|---:|---:|---:|---:|---:|---:|\n")
+		b.WriteString("| Diagram type | Diagrams | Byte-exact | Without fonts only | Same error | Different | Not supported | Error |\n")
+		b.WriteString("|---|---:|---:|---:|---:|---:|---:|---:|\n")
 	} else {
 		fmt.Fprintf(b, "The corpus `%s` has %d diagrams from %s. Each diagram was rendered with mermaid %s in the reference environment `%s`, and the SHA-256 of the SVG that `mermaid.render()` returned is in `%s`. The table compares the output of this package with those hashes.\n\n", filepath.ToSlash(corpusDir), total.n, source, m.Mermaid, m.Environment, filepath.ToSlash(manifestPath))
 		b.WriteString("- **Byte-exact**: the SVG text has the same bytes as the SVG of mermaid.\n")
 		b.WriteString("- **Same error**: mermaid fails on the diagram, and this package fails too.\n")
 		b.WriteString("- **Different**: the diagram renders, and the SVG text differs.\n")
-		b.WriteString("- **Not supported**: the diagram type, or a feature that the diagram uses, is not ported.\n\n")
+		b.WriteString("- **Not supported**: the diagram type or a feature that the diagram uses is unavailable.\n")
+		b.WriteString("- **Error**: rendering or comparison fails for another reason.\n\n")
 		fmt.Fprintf(b, "Result: %d of %d diagrams pass (%.1f%%). %d are byte-exact and %d give the same error.\n\n", pass, total.n, 100*float64(pass)/float64(total.n), total.exact, total.agree)
-		b.WriteString("| Diagram type | Diagrams | Byte-exact | Same error | Different | Not supported |\n")
-		b.WriteString("|---|---:|---:|---:|---:|---:|\n")
+		b.WriteString("| Diagram type | Diagrams | Byte-exact | Same error | Different | Not supported | Error |\n")
+		b.WriteString("|---|---:|---:|---:|---:|---:|---:|\n")
 	}
 	line := func(r *row, bold bool) {
 		name := "`" + r.name + "`"
@@ -196,10 +198,10 @@ func section(b *strings.Builder, m *parity.Manifest, manifestPath, corpusRoot, s
 			name = "**" + name + "**"
 		}
 		if page {
-			fmt.Fprintf(b, "| %s | %d | %d | %d | %d | %d | %d |\n", name, r.n, r.exact, r.exactSVG, r.agree, r.different, r.unsupported+r.failed)
+			fmt.Fprintf(b, "| %s | %d | %d | %d | %d | %d | %d | %d |\n", name, r.n, r.exact, r.exactSVG, r.agree, r.different, r.unsupported, r.failed)
 			return
 		}
-		fmt.Fprintf(b, "| %s | %d | %d | %d | %d | %d |\n", name, r.n, r.exact, r.agree, r.different, r.unsupported+r.failed)
+		fmt.Fprintf(b, "| %s | %d | %d | %d | %d | %d | %d |\n", name, r.n, r.exact, r.agree, r.different, r.unsupported, r.failed)
 	}
 	for _, r := range list {
 		line(r, false)

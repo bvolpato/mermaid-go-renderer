@@ -1,4 +1,4 @@
-// Command mmdg renders Mermaid diagrams to SVG and PNG without a browser.
+// Command mmdg renders Mermaid diagrams to SVG, PNG and PDF without a browser.
 //
 // It takes the options of mermaid-cli (mmdc) and writes files with the
 // content of the files that mmdc writes, so that mmdg can replace mmdc in
@@ -6,6 +6,7 @@
 //
 //	mmdg -i diagram.mmd -o diagram.svg
 //	mmdg -i diagram.mmd -o diagram.png -s 2
+//	mmdg -i diagram.mmd -o diagram.pdf --pdf-paper-format A4
 //	mmdg -i README.md -o out.svg        # one file per mermaid block: out-1.svg, out-2.svg
 //	mmdg -i README.md -o README.out.md  # the markdown with images in place of the blocks
 //	cat diagram.mmd | mmdg -i - -o - -e svg > diagram.svg
@@ -100,7 +101,7 @@ type config struct {
 	theme, input, output, artefacts, outputFormat string
 	hasInput                                      bool
 	size, jobs                                    int
-	backgroundColor                               string
+	backgroundColor, pdfPaperFormat               string
 	configFile, cssFile, svgID                    string
 	scale                                         float64
 	quiet                                         bool
@@ -294,9 +295,9 @@ var options = []option{
 		set: func(c *config, v string) string { c.artefacts = v; return "" }},
 	{short: "j", long: "jobs", arg: "jobs", usage: "Number of diagrams of a Markdown input to render at the same time. The default is half of the CPUs.",
 		set: positiveInt(func(c *config, n int) { c.jobs = n })},
-	{short: "e", long: "outputFormat", arg: "format", usage: "Output format: svg, png or pdf. The default comes from the name of the output file. PDF is not supported.",
+	{short: "e", long: "outputFormat", arg: "format", usage: "Output format: svg, png or pdf. The default comes from the name of the output file.",
 		set: choice([]string{"svg", "png", "pdf"}, func(c *config, v string) { c.outputFormat = v })},
-	{short: "b", long: "backgroundColor", arg: "backgroundColor", usage: "Background color of an SVG or a PNG, as a CSS color: transparent, red, '#F0F0F0'. The default is white.",
+	{short: "b", long: "backgroundColor", arg: "backgroundColor", usage: "Background color of the diagram, as a CSS color: transparent, red, '#F0F0F0'. The default is white.",
 		set: func(c *config, v string) string { c.backgroundColor = v; return "" }},
 	{short: "c", long: "configFile", arg: "configFile", usage: "JSON file with the mermaid config: the argument of mermaid.initialize.",
 		set: func(c *config, v string) string { c.configFile = v; return "" }},
@@ -319,10 +320,10 @@ var options = []option{
 		set: positiveInt(func(c *config, n int) { c.width = n })},
 	{short: "H", long: "height", arg: "height", usage: "Height of the page in px, as in mermaid-cli 11. It is accepted and has no effect.",
 		set: positiveInt(func(*config, int) {})},
-	{short: "f", long: "pdfFit", usage: "Accepted for mermaid-cli 11. PDF is not supported.",
+	{short: "f", long: "pdfFit", usage: "Accepted for mermaid-cli 11. The page fits the diagram unless --pdf-paper-format is set.",
 		set: func(*config, string) string { return "" }},
-	{long: "pdf-paper-format", arg: "format", usage: "Accepted for mermaid-cli. PDF is not supported.",
-		set: choice(paperFormats, func(*config, string) {})},
+	{long: "pdf-paper-format", arg: "format", usage: "Paper size for PDF output: Letter, Legal, Tabloid, Ledger, or A0 through A6. By default the page fits the diagram.",
+		set: choice(paperFormats, func(c *config, v string) { c.pdfPaperFormat = v })},
 	{long: "no-font-embed", usage: "Do not embed the fonts of the page into an SVG. The file is smaller, and it shows other fonts on a machine that has not the fonts of the page.",
 		set: func(c *config, _ string) string { c.fontEmbed = false; return "" }},
 	{short: "p", long: "puppeteerConfigFile", arg: "puppeteerConfigFile", usage: "Accepted for mermaid-cli and not read. mmdg uses no browser.",
@@ -463,7 +464,7 @@ func parseArgs(args []string) (*config, error) {
 func printHelp(w io.Writer) {
 	fmt.Fprintln(w, "Usage: mmdg [options]")
 	fmt.Fprintln(w)
-	fmt.Fprintln(w, "Render Mermaid diagrams to SVG or PNG without a browser. The options are those of mermaid-cli (mmdc).")
+	fmt.Fprintln(w, "Render Mermaid diagrams to SVG, PNG or PDF without a browser. The options are those of mermaid-cli (mmdc).")
 	fmt.Fprintln(w)
 	fmt.Fprintln(w, "Options:")
 	width := 0
@@ -635,13 +636,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 	opts = append(opts, mermaid.WithTime(now, loc))
 
 	r := &renderer{
-		opts:      opts,
-		fontOpts:  fontOpts,
-		page:      mmdc.Options{Background: c.backgroundColor, SetBackground: true, Size: c.size, Fonts: fonts, PageSheets: pageSheets},
-		fontEmbed: c.fontEmbed,
-		viewport:  viewportWidth,
-		scale:     c.scale,
-		timeout:   c.timeout,
+		opts:           opts,
+		fontOpts:       fontOpts,
+		page:           mmdc.Options{Background: c.backgroundColor, SetBackground: true, Size: c.size, Fonts: fonts, PageSheets: pageSheets},
+		fontEmbed:      c.fontEmbed,
+		viewport:       viewportWidth,
+		pdfPaperFormat: c.pdfPaperFormat,
+		scale:          c.scale,
+		timeout:        c.timeout,
 	}
 	info := func(message string) {
 		if !quiet {
@@ -658,9 +660,6 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 	}
 	if !hasSuffix(outputFormat, "svg", "png", "pdf") {
 		return errors.New(`Error: Output format must be one of "svg", "png" or "pdf"`)
-	}
-	if strings.HasSuffix(outputFormat, "pdf") {
-		return errors.New("PDF output is not supported: mmdg has no PDF writer. Use the output format svg or png")
 	}
 	r.format = outputFormat
 
@@ -946,11 +945,11 @@ type renderer struct {
 	opts, fontOpts []mermaid.Option
 	page           mmdc.Options
 	// fontEmbed is true to embed the fonts of the page into an SVG.
-	fontEmbed bool
-	viewport  float64
-	scale     float64
-	format    string
-	timeout   time.Duration
+	fontEmbed              bool
+	viewport               float64
+	scale                  float64
+	format, pdfPaperFormat string
+	timeout                time.Duration
 }
 
 // rendered is an output file and the accessible text of its diagram.
@@ -978,7 +977,11 @@ func (r *renderer) render(definition string) (*rendered, error) {
 		return nil, err
 	}
 	out := &rendered{title: page.Title(), desc: page.Desc()}
-	if r.format == "png" {
+	switch r.format {
+	case "pdf":
+		out.data, err = page.PDF(r.viewport, r.pdfPaperFormat)
+		return out, err
+	case "png":
 		out.data, err = r.png(page)
 		return out, err
 	}

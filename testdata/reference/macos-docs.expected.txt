@@ -1,2 +1,2 @@
-error	config/config-math-01
-error	config/config-math-02
+different	config/config-math-01
+different	config/config-math-02

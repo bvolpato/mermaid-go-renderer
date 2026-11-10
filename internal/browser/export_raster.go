@@ -260,19 +260,34 @@ type RasterHTMLBox struct {
 	X, Y, W, H float64
 	Lines      []RasterHTMLLine
 	Children   []*RasterHTMLBox
+	// Math is present only on a MathML math root. Its coordinates are in
+	// the same foreignObject content space as the box.
+	Math *RasterMathBox
 }
 
 // RasterForeignObject returns the box tree of the HTML content of a
 // foreignObject after layout.
 func (e *Engine) RasterForeignObject(fo *dom.Node) []*RasterHTMLBox {
 	root := e.layoutForeignObject(fo)
-	var conv func(b *htmlBox) *RasterHTMLBox
-	conv = func(b *htmlBox) *RasterHTMLBox {
+	var conv func(b *htmlBox, mathRoot *RasterMathBox) *RasterHTMLBox
+	conv = func(b *htmlBox, mathRoot *RasterMathBox) *RasterHTMLBox {
 		o := root.origin[b]
 		// The conversions keep the compiler from fusing the product inside
 		// px into the sums below.
 		ox, oy := float64(o[0].px()), float64(o[1].px())
 		out := &RasterHTMLBox{Node: b.node, X: ox, Y: oy, W: b.w.px(), H: b.h.px()}
+		if isMathRoot(b.node) && b.math != nil && !b.math.synthetic {
+			mathRoot = &RasterMathBox{Owner: b.node, X: ox, Y: oy, Width: b.w.px(), Height: b.h.px()}
+			out.Math = mathRoot
+			for n := b.node.Parent; n != nil && n != fo; n = n.Parent {
+				if _, boxed := root.index[n]; !boxed {
+					mathRoot.InlineAncestors = append(mathRoot.InlineAncestors, n)
+				}
+			}
+		}
+		if mathRoot != nil && b.math != nil {
+			appendRasterMath(mathRoot, b, ox, oy)
+		}
 		for _, line := range b.lines {
 			rl := RasterHTMLLine{
 				X: ox + float64(line.x.px()), Y: oy + float64(line.y.px()),
@@ -294,13 +309,13 @@ func (e *Engine) RasterForeignObject(fo *dom.Node) []*RasterHTMLBox {
 			out.Lines = append(out.Lines, rl)
 		}
 		for _, c := range b.children {
-			out.Children = append(out.Children, conv(c))
+			out.Children = append(out.Children, conv(c, mathRoot))
 		}
 		return out
 	}
 	out := make([]*RasterHTMLBox, 0, len(root.boxes))
 	for _, b := range root.boxes {
-		out = append(out, conv(b))
+		out = append(out, conv(b, nil))
 	}
 	return out
 }

@@ -348,7 +348,13 @@ func TestCorpusAgainstMmdc(t *testing.T) {
 // embedDiffers lists the cases of TestEmbedAgainstMmdc whose files are not
 // the files of mmdc yet, with the reason. The test tells when one of them
 // passes.
-var embedDiffers = map[string]string{}
+var embedDiffers = map[string]string{
+	"katex-legacy": "legacy HTML math layout",
+	"katex-1-should-render-a-complex-katex-flowchart-no-htmllabels":         "MathML dimensions",
+	"katex-3-should-render-a-katex-flowchart-containing-set-theory-symbols": "MathML dimensions",
+	"katex-config-math-01": "MathML dimensions",
+	"katex-config-math-02": "math in mirrored sequence actors",
+}
 
 // TestEmbedAgainstMmdc renders small diagrams that use the fonts and the
 // style sheets of the page of mermaid-cli, and compares the two .svg files

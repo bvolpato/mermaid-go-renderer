@@ -48,6 +48,10 @@ type glyphRun struct {
 // of Skia: each glyph is a mask at an integer device position, chosen
 // among four horizontal subpixel offsets.
 func (p *painter) drawGlyphRun(run *glyphRun, paint *Paint, ctm Affine) {
+	if p.vector != nil {
+		p.drawVectorGlyphRun(run, paint, ctm)
+		return
+	}
 	m := deviceMatrix(ctm)
 	dev := p.cv.dev()
 	if shouldDrawAsPath(&m, run.fontSize) {
@@ -331,6 +335,10 @@ func tooBigForLCD(m *Matrix, textSize float32) bool {
 // outline at the canonical size of 64 px without hinting, under a scale of
 // the text size divided by 64.
 func (p *painter) drawGlyphRunAsPaths(run *glyphRun, paint *Paint, ctm Affine) {
+	if p.vector != nil {
+		p.drawVectorGlyphRun(run, paint, ctm)
+		return
+	}
 	const canonicalSize = 64
 	dev := p.cv.dev()
 	var advance float32
@@ -955,6 +963,7 @@ func (p *painter) paintHTMLBox(b *browser.RasterHTMLBox, ctm Affine, opacity flo
 	for _, c := range b.Children {
 		p.paintHTMLBox(c, ctm, opacity)
 	}
+	p.paintHTMLMathBox(b, ctm)
 }
 
 // paintInlineBackgrounds paints the backgrounds of the inline elements of

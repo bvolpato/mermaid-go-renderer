@@ -1,0 +1,662 @@
+[
+ {
+  "name": "mathlayout-16-token-mi-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 8.953125,
+    "height": 7.171875
+   },
+   {
+    "tag": "math",
+    "width": 8.953125,
+    "height": 7.171875
+   },
+   {
+    "tag": "math",
+    "width": 8.953125,
+    "height": 7.171875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mi-abc",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 22.203125,
+    "height": 11.046875
+   },
+   {
+    "tag": "math",
+    "width": 22.203125,
+    "height": 11.046875
+   },
+   {
+    "tag": "math",
+    "width": 22.203125,
+    "height": 11.046875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mn-number",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 24,
+    "height": 10.9375
+   },
+   {
+    "tag": "math",
+    "width": 24,
+    "height": 10.9375
+   },
+   {
+    "tag": "math",
+    "width": 24,
+    "height": 10.9375
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-token-mo-operator",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 16.125,
+    "height": 8.078125
+   },
+   {
+    "tag": "math",
+    "width": 16.125,
+    "height": 8.078125
+   },
+   {
+    "tag": "math",
+    "width": 16.125,
+    "height": 8.078125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-row-a-plus-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 33.3125,
+    "height": 11.046875
+   },
+   {
+    "tag": "math",
+    "width": 33.3125,
+    "height": 11.046875
+   },
+   {
+    "tag": "math",
+    "width": 33.3125,
+    "height": 11.046875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-superscript-x-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 17.640625,
+    "height": 14.8125
+   },
+   {
+    "tag": "math",
+    "width": 17.640625,
+    "height": 14.8125
+   },
+   {
+    "tag": "math",
+    "width": 17.640625,
+    "height": 14.8125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-subscript-x-i",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 15.078125,
+    "height": 10.75
+   },
+   {
+    "tag": "math",
+    "width": 15.078125,
+    "height": 10.75
+   },
+   {
+    "tag": "math",
+    "width": 15.078125,
+    "height": 10.75
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-subsuperscript-x-i-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 17.640625,
+    "height": 18.390625
+   },
+   {
+    "tag": "math",
+    "width": 17.640625,
+    "height": 18.390625
+   },
+   {
+    "tag": "math",
+    "width": 17.640625,
+    "height": 18.390625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-fraction-a-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 10.890625,
+    "height": 24.0625
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 24.0625
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 24.0625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-sqrt-x-plus-1",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 41.859375,
+    "height": 15.953125
+   },
+   {
+    "tag": "math",
+    "width": 41.859375,
+    "height": 15.953125
+   },
+   {
+    "tag": "math",
+    "width": 41.859375,
+    "height": 15.953125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-cube-root-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 22.171875,
+    "height": 15.953125
+   },
+   {
+    "tag": "math",
+    "width": 22.171875,
+    "height": 15.953125
+   },
+   {
+    "tag": "math",
+    "width": 22.171875,
+    "height": 15.953125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-sum-limits",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 35.59375,
+    "height": 25.484375
+   },
+   {
+    "tag": "math",
+    "width": 35.59375,
+    "height": 25.484375
+   },
+   {
+    "tag": "math",
+    "width": 35.59375,
+    "height": 25.484375
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-matrix-2x2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 54.015625,
+    "height": 36.421875
+   },
+   {
+    "tag": "math",
+    "width": 54.015625,
+    "height": 36.421875
+   },
+   {
+    "tag": "math",
+    "width": 54.015625,
+    "height": 36.421875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-semantics-annotation",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 33.078125,
+    "height": 10.734375
+   },
+   {
+    "tag": "math",
+    "width": 33.078125,
+    "height": 10.734375
+   },
+   {
+    "tag": "math",
+    "width": 33.078125,
+    "height": 10.734375
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-mspace",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 33.1875,
+    "height": 14.90625
+   },
+   {
+    "tag": "math",
+    "width": 33.1875,
+    "height": 14.90625
+   },
+   {
+    "tag": "math",
+    "width": 33.1875,
+    "height": 14.90625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-16-adjacent-math-mixed-text",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 157.734375,
+    "height": 24.0625
+   },
+   {
+    "tag": "math",
+    "width": 8.953125,
+    "height": 7.171875
+   },
+   {
+    "tag": "math",
+    "width": 10.890625,
+    "height": 24.0625
+   },
+   {
+    "tag": "math",
+    "width": 60.5,
+    "height": 7.171875
+   },
+   {
+    "tag": "math",
+    "width": 60.5,
+    "height": 24.0625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mi-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 7.828125,
+    "height": 6.28125
+   },
+   {
+    "tag": "math",
+    "width": 7.828125,
+    "height": 6.28125
+   },
+   {
+    "tag": "math",
+    "width": 7.828125,
+    "height": 6.28125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mi-abc",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 19.4375,
+    "height": 9.65625
+   },
+   {
+    "tag": "math",
+    "width": 19.4375,
+    "height": 9.65625
+   },
+   {
+    "tag": "math",
+    "width": 19.4375,
+    "height": 9.65625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mn-number",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 21,
+    "height": 9.5625
+   },
+   {
+    "tag": "math",
+    "width": 21,
+    "height": 9.5625
+   },
+   {
+    "tag": "math",
+    "width": 21,
+    "height": 9.5625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-token-mo-operator",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 14.125,
+    "height": 7.0625
+   },
+   {
+    "tag": "math",
+    "width": 14.125,
+    "height": 7.0625
+   },
+   {
+    "tag": "math",
+    "width": 14.125,
+    "height": 7.0625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-row-a-plus-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 29.171875,
+    "height": 9.65625
+   },
+   {
+    "tag": "math",
+    "width": 29.171875,
+    "height": 9.65625
+   },
+   {
+    "tag": "math",
+    "width": 29.171875,
+    "height": 9.65625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-superscript-x-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 14.796875,
+    "height": 12.96875
+   },
+   {
+    "tag": "math",
+    "width": 14.796875,
+    "height": 12.96875
+   },
+   {
+    "tag": "math",
+    "width": 14.796875,
+    "height": 12.96875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-subscript-x-i",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 12.5625,
+    "height": 9.421875
+   },
+   {
+    "tag": "math",
+    "width": 12.5625,
+    "height": 9.421875
+   },
+   {
+    "tag": "math",
+    "width": 12.5625,
+    "height": 9.421875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-subsuperscript-x-i-2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 14.796875,
+    "height": 16.109375
+   },
+   {
+    "tag": "math",
+    "width": 14.796875,
+    "height": 16.109375
+   },
+   {
+    "tag": "math",
+    "width": 14.796875,
+    "height": 16.109375
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-fraction-a-b",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 9.78125,
+    "height": 21.03125
+   },
+   {
+    "tag": "math",
+    "width": 9.78125,
+    "height": 21.03125
+   },
+   {
+    "tag": "math",
+    "width": 9.78125,
+    "height": 21.03125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-sqrt-x-plus-1",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 36.625,
+    "height": 13.96875
+   },
+   {
+    "tag": "math",
+    "width": 36.625,
+    "height": 13.96875
+   },
+   {
+    "tag": "math",
+    "width": 36.625,
+    "height": 13.96875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-cube-root-x",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 19.375,
+    "height": 13.96875
+   },
+   {
+    "tag": "math",
+    "width": 19.375,
+    "height": 13.96875
+   },
+   {
+    "tag": "math",
+    "width": 19.375,
+    "height": 13.96875
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-sum-limits",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 31.328125,
+    "height": 22.28125
+   },
+   {
+    "tag": "math",
+    "width": 31.328125,
+    "height": 22.28125
+   },
+   {
+    "tag": "math",
+    "width": 31.328125,
+    "height": 22.28125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-matrix-2x2",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 47.265625,
+    "height": 31.890625
+   },
+   {
+    "tag": "math",
+    "width": 47.265625,
+    "height": 31.890625
+   },
+   {
+    "tag": "math",
+    "width": 47.265625,
+    "height": 31.890625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-semantics-annotation",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 28.953125,
+    "height": 9.390625
+   },
+   {
+    "tag": "math",
+    "width": 28.953125,
+    "height": 9.390625
+   },
+   {
+    "tag": "math",
+    "width": 28.953125,
+    "height": 9.390625
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-mspace",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 29.046875,
+    "height": 13.03125
+   },
+   {
+    "tag": "math",
+    "width": 29.046875,
+    "height": 13.03125
+   },
+   {
+    "tag": "math",
+    "width": 29.046875,
+    "height": 13.03125
+   }
+  ]
+ },
+ {
+  "name": "mathlayout-14-adjacent-math-mixed-text",
+  "boxes": [
+   {
+    "tag": "div",
+    "width": 138.265625,
+    "height": 21.03125
+   },
+   {
+    "tag": "math",
+    "width": 7.828125,
+    "height": 6.28125
+   },
+   {
+    "tag": "math",
+    "width": 9.78125,
+    "height": 21.03125
+   },
+   {
+    "tag": "math",
+    "width": 52.9375,
+    "height": 6.28125
+   },
+   {
+    "tag": "math",
+    "width": 52.9375,
+    "height": 21.03125
+   }
+  ]
+ }
+]

@@ -43,12 +43,28 @@ func TestDetectType(t *testing.T) {
 	}
 }
 
-func TestUnsupportedIsTyped(t *testing.T) {
-	// zenuml is an external plugin of mermaid. It is not part of this port.
-	_, err := Render("zenuml\n  A->B: hi")
-	var unsupported *UnsupportedDiagramError
-	if err != nil && !errors.As(err, &unsupported) {
-		t.Logf("zenuml fails with: %v", err)
+func TestZenUMLPages(t *testing.T) {
+	source := "zenuml\n  A->B: hi"
+	if typ, err := DetectType(source); err == nil || typ != "" {
+		t.Fatalf("plain-page detection = %q, %v, want an error", typ, err)
+	}
+	if svg, err := Render(source); err == nil || svg != "" {
+		t.Fatalf("plain-page render returned %d bytes, %v, want an error", len(svg), err)
+	}
+	opts := []Option{WithPage(PageMermaidCLI)}
+	if typ, err := DetectType(source, opts...); err != nil || typ != "zenuml" {
+		t.Fatalf("CLI-page detection = %q, %v, want zenuml", typ, err)
+	}
+	result, err := RenderResult(source, opts...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Type != "zenuml" || !strings.Contains(result.SVG, `class="message-line"`) || !strings.Contains(result.SVG, ">hi</text>") {
+		t.Fatalf("CLI page did not render the ZenUML message: %s", result.SVG)
+	}
+	file, err := StandaloneSVG(result.SVG, append(opts, WithBackgroundColor("white"))...)
+	if err != nil || !strings.Contains(file, `aria-roledescription="zenuml"`) {
+		t.Fatalf("CLI SVG serialization: %v\n%s", err, file)
 	}
 }
 

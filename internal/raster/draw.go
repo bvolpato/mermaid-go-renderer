@@ -90,6 +90,7 @@ func (d *device) extend(r IRect) {
 // drawer holds the scratch state of drawing. It is not safe for concurrent
 // use.
 type drawer struct {
+	vector   *vectorPainter
 	aaa      aaaState
 	color    colorBlitter
 	rp       rpBlitter
@@ -178,6 +179,10 @@ func resScaleForStroking(m *Matrix) float32 {
 
 // drawPath is SkDraw::drawPath: path is in local space.
 func (dr *drawer) drawPath(dev *device, path *Path, origPaint *Paint, ctm *Matrix) {
+	if dr.vector != nil {
+		dr.vector.drawPath(dev, path, origPaint, ctm)
+		return
+	}
 	if dev.clip.isEmpty() || path.isEmpty() {
 		return
 	}
@@ -282,6 +287,12 @@ func (dr *drawer) drawDevPath(dev *device, path *Path, paint *Paint, doFill bool
 
 // drawRect is SkDraw::drawRect.
 func (dr *drawer) drawRect(dev *device, rect Rect, paint *Paint, ctm *Matrix) {
+	if dr.vector != nil {
+		path := NewPath()
+		path.AddRect(rect, 0)
+		dr.vector.drawPath(dev, path, paint, ctm)
+		return
+	}
 	if dev.clip.isEmpty() {
 		return
 	}

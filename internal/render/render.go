@@ -236,7 +236,11 @@ func Render(text string, opts Options) (res *Result, err error) {
 	}
 
 	// mermaid.initialize(site), then processAndSetConfigs(text).
-	resolved, err := config.Resolve(text, opts.Config)
+	resolve := config.Resolve
+	if opts.Page == PageMermaidCLI {
+		resolve = config.ResolveMermaidCLI
+	}
+	resolved, err := resolve(text, opts.Config)
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +284,11 @@ func Render(text string, opts Options) (res *Result, err error) {
 	firstChild := svg.FirstChild
 
 	// Diagram.fromText.
-	diagramType, err := config.DetectType(code.Cleaned, cfg)
+	detect := config.DetectType
+	if opts.Page == PageMermaidCLI {
+		detect = config.DetectTypeMermaidCLI
+	}
+	diagramType, err := detect(code.Cleaned, cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +345,11 @@ func Render(text string, opts Options) (res *Result, err error) {
 	svg.InsertBefore(style, firstChild)
 
 	ctx.CheckCanceled()
-	if err := def.Draw(ctx, db, textToParse); err != nil {
+	drawText := textToParse
+	if def.DrawUnencoded {
+		drawText = diagramText
+	}
+	if err := def.Draw(ctx, db, drawText); err != nil {
 		return nil, err
 	}
 	ctx.CheckCanceled()

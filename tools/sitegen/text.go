@@ -29,9 +29,6 @@ type listCounts struct {
 	Total     int
 	Exact     int // the same bytes as the reference
 	SameError int // the reference fails, and this module fails too
-	// NotPassing has the names of the other fixtures.
-	NotPassing []string
-	corpus     string
 }
 
 func (c listCounts) Pass() int { return c.Exact + c.SameError }
@@ -65,7 +62,7 @@ func countManifest(name string) (listCounts, error) {
 			listed[fixture] = status
 		}
 	}
-	c := listCounts{Total: len(m.Fixtures), corpus: m.Corpus}
+	c := listCounts{Total: len(m.Fixtures)}
 	for _, fixture := range m.Names() {
 		status, inList := listed[fixture]
 		pass := !inList
@@ -74,7 +71,7 @@ func countManifest(name string) (listCounts, error) {
 		}
 		switch {
 		case !pass:
-			c.NotPassing = append(c.NotPassing, fixture)
+			continue
 		case m.Fixtures[fixture].Error:
 			c.SameError++
 		default:
@@ -82,23 +79,6 @@ func countManifest(name string) (listCounts, error) {
 		}
 	}
 	return c, nil
-}
-
-// reasons counts why fixtures do not pass, by the feature that the source
-// of the fixture needs.
-func (c listCounts) reasons() (katex, zenuml, other int) {
-	for _, fixture := range c.NotPassing {
-		src, _ := os.ReadFile(filepath.Join("testdata", "corpus", c.corpus, filepath.FromSlash(fixture)+".mmd"))
-		switch {
-		case strings.Contains(string(src), "$$"):
-			katex++
-		case strings.Contains(string(src), "zenuml"):
-			zenuml++
-		default:
-			other++
-		}
-	}
-	return katex, zenuml, other
 }
 
 // corpora lists the three corpora with their manifest names and labels.
@@ -133,8 +113,6 @@ func generatedText(perf *perfdata.Data) (map[string]map[string]string, error) {
 		}
 		return n
 	}
-	notPassing := func(c listCounts) int { return len(c.NotPassing) }
-
 	warm, cli := perf.WarmMedian, perf.CLI.Rows[0]
 	cliRatio := cli.Mmdc / cli.Mmdg
 
@@ -163,18 +141,8 @@ func generatedText(perf *perfdata.Data) (map[string]map[string]string, error) {
 	for i, c := range linux {
 		fmt.Fprintf(&r, "| %s | %d | %d (%s) | %d | %d |\n", corpora[i].label, c.Total, c.Pass(), c.percent(), c.Exact, c.SameError)
 	}
-	r.WriteString("\n- \"Pass\" means byte-exact output, or an error for a diagram that mermaid also rejects: ZenUML, which needs a plugin, and two examples of the documentation that are not whole diagrams.\n")
-	katex, _, other := 0, 0, 0
-	for _, c := range linux {
-		k, z, o := c.reasons()
-		katex, other = katex+k, other+z+o
-	}
-	if other == 0 {
-		fmt.Fprintf(&r, "- The %d diagrams that do not pass use KaTeX math, which is not supported.\n", katex)
-	} else {
-		fmt.Fprintf(&r, "- %d diagrams do not pass. %d of them use KaTeX math, which is not supported.\n", katex+other, katex)
-	}
-	r.WriteString("- The ports were developed against the first corpus only. The other two show that the result holds for diagrams that the code never saw.\n")
+	r.WriteString("\n- \"Pass\" means byte-exact output, or matching errors when the reference also rejects a diagram.\n")
+	r.WriteString("- The corpora cover Mermaid's end-to-end tests, its documentation examples, and generated large diagrams.\n")
 	same := true
 	for i := range linux {
 		same = same && linux[i].Pass() == macos[i].Pass() && linux[i].Exact == macos[i].Exact
@@ -189,20 +157,10 @@ func generatedText(perf *perfdata.Data) (map[string]map[string]string, error) {
 	for i, c := range linuxCLI {
 		fmt.Fprintf(&r, "| %s | %d | %d (%s) | %d (%s) |\n", corpora[i].label, c.Total, c.Pass(), c.percent(), macosCLI[i].Pass(), macosCLI[i].percent())
 	}
-	r.WriteString("\n- \"Pass\" means that both files of `mmdc` have the same bytes: the file with the embedded fonts and the file of `--no-font-embed`. It also counts an error for a diagram that `mmdc` rejects.\n")
-	katex, zenuml := 0, 0
-	other = 0
-	for _, c := range linuxCLI {
-		k, z, o := c.reasons()
-		katex, zenuml, other = katex+k, zenuml+z, other+o
-	}
-	fmt.Fprintf(&r, "- The diagrams that do not pass use KaTeX math (%d) or ZenUML (%d), which `mmdc` renders with a plugin. Neither is supported.", katex, zenuml)
-	if other > 0 {
-		fmt.Fprintf(&r, " %d more diagrams differ.", other)
-	}
-	r.WriteString("\n")
-	if more := sum(macosCLI, notPassing) - sum(linuxCLI, notPassing); more > 0 {
-		fmt.Fprintf(&r, "- On macOS, %d more diagrams have one number that differs in its last digit, for example `182.4px` where `mmdc` writes `182.399px`.\n", more)
+	r.WriteString("\n- \"Pass\" means that both files of `mmdc` have the same bytes, or that both tools report an error for a diagram.\n")
+	otherOutcomes := func(c listCounts) int { return c.Total - c.Pass() }
+	if more := sum(macosCLI, otherOutcomes) - sum(linuxCLI, otherOutcomes); more > 0 {
+		fmt.Fprintf(&r, "- On macOS, %d more diagrams do not match both mmdc output files.\n", more)
 	}
 
 	// ---- README: the performance ----
@@ -226,15 +184,14 @@ func generatedText(perf *perfdata.Data) (map[string]map[string]string, error) {
 
 	// ---- docs/CLI.md: the corpus table ----
 	var c strings.Builder
-	c.WriteString("| Corpus | Diagrams | Both files are the files of mmdc | mmdc fails, and mmdg fails too | Different | Not supported |\n| --- | ---: | ---: | ---: | ---: | ---: |\n")
+	c.WriteString("| Corpus | Diagrams | Pass | Other outcomes |\n| --- | ---: | ---: | ---: |\n")
 	for i, counts := range linuxCLI {
-		k, z, o := counts.reasons()
-		fmt.Fprintf(&c, "| %s | %d | %d | %d | %d | %d |\n", corpora[i].label, counts.Total, counts.Exact, counts.SameError, o, k+z)
+		fmt.Fprintf(&c, "| %s | %d | %d | %d |\n", corpora[i].label, counts.Total, counts.Pass(), counts.Total-counts.Pass())
 	}
-	c.WriteString("\nThe diagrams that do not pass use KaTeX math or ZenUML. See [What differs from mmdc](#what-differs-from-mmdc).\n\n")
+	c.WriteString("\nPass requires both mmdc output files to match, or both tools to return an error. Other outcomes include partial matches and different output. See [What differs from mmdc](#what-differs-from-mmdc).\n\n")
 	fmt.Fprintf(&c, "With `--fonts system` on macOS, the reference is Chromium on macOS with its system fonts. There %d of %d, %d of %d and %d of %d diagrams pass.", macosCLI[0].Pass(), macosCLI[0].Total, macosCLI[1].Pass(), macosCLI[1].Total, macosCLI[2].Pass(), macosCLI[2].Total)
-	if more := len(macosCLI[0].NotPassing) - len(linuxCLI[0].NotPassing); more > 0 {
-		fmt.Fprintf(&c, " %d diagrams of the first corpus have one number that differs in its last digit, for example `max-width: 182.4px` where `mmdc` writes `182.399px`.", more)
+	if more := macosCLI[0].Total - macosCLI[0].Pass() - (linuxCLI[0].Total - linuxCLI[0].Pass()); more > 0 {
+		fmt.Fprintf(&c, " %d more diagrams of the first corpus do not match both output files.", more)
 	}
 	c.WriteString(" [PARITY-MMDC-MACOS.md](PARITY-MMDC-MACOS.md) has the tables.\n")
 

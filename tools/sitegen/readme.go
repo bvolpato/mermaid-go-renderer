@@ -26,7 +26,7 @@ type chartTheme struct {
 	muted     string
 	accent    string // the mark of mmdg, and "same bytes"
 	blue      string // "same error"
-	orange    string // "not supported"
+	orange    string // a result that does not match the reference
 	gray      string // the mark of the thing that mmdg is compared with
 	hairline  string
 }
@@ -148,14 +148,14 @@ func parityChart(th chartTheme, par *parityData) string {
 	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" width="%.0f" height="%.0f" viewBox="0 0 %.1f %.1f" role="img" font-family="%s">`, width, height, width, height, chartFont)
 	fmt.Fprintf(&b, `<title>%d of the %d diagrams of the end-to-end tests of mermaid pass: %d have the same bytes as mermaid, and %d fail with the error of mermaid</title>`, res.Pass(), res.Total, res.Exact, res.SameError)
 	fmt.Fprintf(&b, `<text x="0" y="18" font-size="11" letter-spacing="0.8" font-weight="600" fill="%s">EVERY SQUARE IS ONE DIAGRAM OF THE TEST SUITE OF MERMAID</text>`, th.muted)
-	fmt.Fprintf(&b, `<text x="0" y="50" font-size="26" font-weight="700" fill="%s">%d of %d<tspan font-size="15" font-weight="500" fill="%s" dx="8">give the output of mermaid in Chromium, byte for byte</tspan></text>`, th.primary, res.Pass(), res.Total, th.secondary)
+	fmt.Fprintf(&b, `<text x="0" y="50" font-size="26" font-weight="700" fill="%s">%d of %d<tspan font-size="15" font-weight="500" fill="%s" dx="8">give the output of mermaid in Chromium, byte for byte</tspan></text>`, th.primary, res.Exact, res.Total, th.secondary)
 	legend := []struct {
 		fill, label string
 		n           int
 	}{
 		{th.accent, "Same bytes", res.Exact},
 		{th.blue, "Same error as mermaid", res.SameError},
-		{th.orange, "Not supported (KaTeX math)", res.Other},
+		{th.orange, "Other result", res.Other},
 	}
 	x := 0.0
 	for _, l := range legend {

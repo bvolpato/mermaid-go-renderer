@@ -4,12 +4,12 @@ This document explains how the renderer is built and why. Read it before you cha
 
 ## The goal decides the design
 
-The goal is the same SVG text that `mermaid.render()` returns in Chromium, byte for byte. A renderer that only looks similar cannot replace mermaid in a pipeline, because every small difference in a text width or a rounding step moves nodes and edges.
+For SVG output, the goal is the same text that `mermaid.render()` returns in Chromium, byte for byte. A renderer that only looks similar cannot replace mermaid in a pipeline, because every small difference in a text width or a rounding step moves nodes and edges. PDF output follows the print layout of mermaid-cli and uses a separate vector writer.
 
 Two rules follow from that goal.
 
-1. **Port, do not write again.** Each package is a line-by-line port of the JavaScript, Java or C++ code that produces the result in the browser. It keeps the same algorithm, the same order of operations, the same iteration order and the same floating-point expressions. Each ported file names its source in the first comment.
-2. **Prove each part against the real code.** Each package has tests that compare it with the code it ports, on recorded inputs and outputs. The comparison is exact: numbers are compared by their bits and strings by their bytes.
+1. **Follow upstream behavior.** Many packages are line-by-line ports of the JavaScript, Java or C++ code that produces browser output. Other parts run bundled JavaScript or use original Go code. Ported files name their sources in the first comment.
+2. **Compare with recorded results.** Tests compare renderer behavior with upstream code on recorded inputs and outputs. Exact comparisons use the same bits for numbers and the same bytes for strings; some original features have focused tests for their own contracts.
 
 ## What a render does
 
@@ -19,8 +19,9 @@ Two rules follow from that goal.
 2. `internal/render` builds the page that mermaid builds in a browser: `body > div#container > div > svg > g`. The page is a small DOM (`internal/dom`).
 3. The package of the diagram type (`internal/diagrams/<type>`) parses the text into its database. Grammars that mermaid writes in jison run on the tables that jison generates (`internal/grammar`, `internal/jison`). Grammars that mermaid writes in Langium have hand-written parsers on a shared lexer (`internal/langium`).
 4. `internal/styles` and `internal/theme` produce the style sheet. `internal/stylis` compiles it, as mermaid does.
-5. The diagram draws into the DOM. It appends elements, sets attributes and asks for sizes (`getBBox`, `getBoundingClientRect`, `getComputedTextLength`), exactly where the upstream code does.
-6. `internal/render` serializes the SVG and passes it through `internal/purify`, the port of DOMPurify.
+5. KaTeX turns math labels into MathML. The browser engine lays out MathML, including its tables, accents and stretchy operators.
+6. The diagram draws into the DOM. It appends elements, sets attributes and asks for sizes (`getBBox`, `getBoundingClientRect`, `getComputedTextLength`), exactly where the upstream code does.
+7. `internal/render` serializes the SVG and passes it through `internal/purify`, the port of DOMPurify.
 
 ## The measurement engine
 
@@ -37,15 +38,16 @@ Each rule in these packages comes from the Chromium source and has a probe: a se
 
 The page that mermaid runs in decides the fonts and the style sheets, so it is part of the input. There are two pages.
 
-- The plain page has only mermaid. This is the default of the library (`PagePlain`).
-- The page of mermaid-cli (`PageMermaidCLI`) is what `mmdc` 12 builds before it renders: it adds the style sheets of Font Awesome and the `@font-face` rules of Recursive Variable and Open Sans to the head, and loads every font. It also registers the layout `tidy-tree`. This is the default of the `mmdg` command.
+- The plain page has only mermaid. This is the default of the library (`PagePlain`). KaTeX math works on both page modes.
+- The page of mermaid-cli (`PageMermaidCLI`) is what `mmdc` 12 builds before it renders: it adds the style sheets of Font Awesome, KaTeX, Recursive Variable and Open Sans to the head, and loads every font. It also registers the `tidy-tree` layout and the ZenUML diagram plugin. This is the default of the `mmdg` command.
 
 What the page of mermaid-cli adds to the engine:
 
 - `internal/webfonts` has the style sheets and the WOFF2 files, as embedded data.
+- `internal/diagrams/zenuml` runs the bundled ZenUML renderer when `PageMermaidCLI` registers that diagram type. The plain page does not register it.
 - `font.Library.WithWebFonts` puts the `@font-face` rules in front of the fonts of the machine: the choice of a face by `unicode-range`, the variable font at the weight of the text, and the rules of Chromium for a web font on each platform. `internal/font/webfontdata` has the fonts decoded to sfnt.
 - `dom.Document.PageSheets` has the text of the style sheets of the head. The cascade of `internal/browser` reads them before the style elements of the body.
-- `internal/mmdc` has the steps of `mmdc` after the render: the background, the embedded fonts, the XML serialization and the size of the screenshot.
+- `internal/mmdc` has the steps of `mmdc` after the render: the background, embedded fonts, XML serialization, screenshot geometry, and PDF print layout.
 
 ## JavaScript semantics in Go
 
@@ -74,6 +76,12 @@ What the page of mermaid-cli adds to the engine:
 
 `internal/raster` paints the SVG into a bitmap. It ports the parts of Skia that Chromium uses in software rendering: the analytic anti-aliasing scan converter, the stroker and the blitters. It gets text and HTML layout from `internal/browser`.
 
+## PDF output
+
+`RenderPDF` renders Mermaid source and sends its SVG through the print layout in `internal/mmdc`. `SVGToPDF` converts an existing SVG. `WithPDFPaperFormat` selects Letter, Legal, Tabloid, Ledger, or ISO A0 through A6 paper; without it, the page fits the diagram. `internal/pdf` is an original Go vector writer, not an upstream port.
+
+The PDF writer uses vector paths and TrueType fonts or Type 3 glyph subsets where possible. It outlines unsupported fonts. Drop shadows are flat silhouettes. It omits other filter graphs and image elements, including data URLs. Some contextual glyphs and ligatures may not extract as their original text.
+
 ## How parity is proven
 
 `tools/reference/oracle.mjs` runs mermaid 12.2.0 in headless Chromium and writes the string that `mermaid.render()` returns for each diagram of a corpus. The page has a fixed clock, a seeded `Math.random` and a fixed viewport, and the Go renderer uses the same values by default.
@@ -95,9 +103,11 @@ There are three corpora under `testdata/corpus`.
 
 | Corpus | Diagrams | Source |
 |---|---:|---|
-| `mermaid-e2e` | 2145 | The end-to-end tests of mermaid. The ports were developed against it. |
-| `mermaid-docs` | 596 | The examples of the mermaid documentation. No port was developed against it. |
+| `mermaid-e2e` | 2145 | The end-to-end test fixtures of mermaid. |
+| `mermaid-docs` | 596 | Examples from the mermaid documentation. |
 | `mermaid-large` | 70 | Generated diagrams with 15 to 150 nodes, for the layout paths that small graphs do not reach. |
+
+All three corpora are included in the current parity checks. The manifests record their reference outputs and the passing lists; the documentation and generated large-graph corpora are not held out from renderer development.
 
 The fixtures of `mermaid-e2e` are the `.mmd` files of the tests of mermaid. A test does not give the text of its file to mermaid directly. Its page puts the text into an element as HTML, and `mermaid.run()` reads it back, decodes the HTML entities and removes the indentation. 64 fixtures need these steps to be valid: a class or usecase diagram that writes `<<interface>>` as `&lt;&lt;interface&gt;&gt;`, and two diagrams with an indented front matter. `tools/reference/gen-run-text.mjs` runs the steps in Chromium, with the functions of mermaid, and these 64 fixtures have the text that mermaid gets in its own test.
 
@@ -109,10 +119,10 @@ Renders share bounded caches (`internal/memo`) of values that depend only on the
 
 `RenderContext` stops a render when its context is done. A panic in the renderer returns as an `InternalError`.
 
-## What is not ported
+## Known limits
 
-- KaTeX math in labels. Mermaid lets the browser lay out MathML, which needs a MathML layout engine.
-- The `zenuml` diagram, which is an external plugin of mermaid. `mmdc` registers the plugin and renders it.
+- Stretched KaTeX delimiters, accents and matrices can differ from browser layout. Legacy KaTeX HTML sizing is approximate.
+- Icon packs are not supported.
 - `securityLevel: sandbox`, which renders into an iframe.
 - Click callbacks and tooltips that need a live page. They do not change the SVG.
 

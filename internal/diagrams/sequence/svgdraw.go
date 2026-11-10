@@ -1490,10 +1490,11 @@ func (r *renderer) drawLoop(elem *dom.Node, loopModel *loopModel, labelText stri
 	txt.fontWeight = fontWeight
 	txt.wrap = true
 
-	if sanitize.HasKatex(txt.text) {
-		return errKatex
+	placement := &mathPlacement{startx, stopx, starty}
+	textElem, err := r.drawTextOrKatex(g, txt, placement)
+	if err != nil {
+		return err
 	}
-	textElem := drawText(g, txt)
 
 	for idx, item := range loopModel.sectionTitles {
 		if item.message != "" {
@@ -1510,15 +1511,18 @@ func (r *renderer) drawLoop(elem *dom.Node, loopModel *loopModel, labelText stri
 			txt.wrap = loopModel.wrap
 
 			if sanitize.HasKatex(txt.text) {
-				return errKatex
+				loopModel.starty.set(loopModel.sections[idx].y)
+				placement.starty = loopModel.sections[idx].y
 			}
-			drawText(g, txt)
+			if _, err := r.drawTextOrKatex(g, txt, placement); err != nil {
+				return err
+			}
 			sectionHeight := sumHeights(textElem)
 			loopModel.sections[idx].height += sectionHeight - (boxMargin + boxTextMargin)
 		}
 	}
 
-	loopModel.height = js.Round(stopy - starty)
+	loopModel.height = js.Round(stopy - loopModel.starty.nan())
 	return nil
 }
 
@@ -1682,7 +1686,7 @@ func setTextAttrs(toText *dom.Node, fromTextAttrsDict []textAttr) {
 // drawTextCandidate is _drawTextCandidateFunc(conf, hasKatex(content))(...).
 func (r *renderer) drawTextCandidate(content string, g *dom.Node, x, y, width, height float64, textAttrs []textAttr) error {
 	if sanitize.HasKatex(content) {
-		return errKatex
+		return r.byKatex(content, g, x, y, width, height, textAttrs)
 	}
 	r.byTextPlacement(content, g, x, y, width, height, textAttrs)
 	return nil

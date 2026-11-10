@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mmdg: Mermaid diagrams in pure Go, without a browser</title>
-<meta name="description" content="mmdg renders Mermaid diagrams to SVG and PNG in pure Go. It returns the same bytes as mermaid in Chromium, {{round .Warm.Ratio}} times faster, with no browser.">
+<meta name="description" content="mmdg renders Mermaid diagrams to SVG, PNG, and vector PDF in pure Go. KaTeX math works on both page modes; ZenUML is available on the mermaid-cli page.">
 <meta property="og:title" content="mmdg: Mermaid diagrams in pure Go">
-<meta property="og:description" content="The same SVG as mermaid, byte for byte. No browser, no Node, no cgo.">
+<meta property="og:description" content="mmdg renders Mermaid to SVG, PNG, and vector PDF in pure Go. KaTeX math works on both page modes; ZenUML is available on the mermaid-cli page.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bvolpato.github.io/mermaid-go-renderer/">
 <meta name="theme-color" content="#06283a">
@@ -42,7 +42,7 @@
     <div class="hero-copy">
       <p class="eyebrow">A Go port of mermaid {{.Version}}</p>
       <h1>Mermaid diagrams,<br><span class="accent">without the browser.</span></h1>
-      <p class="lead">mmdg renders Mermaid to SVG and PNG in pure Go. It returns the same bytes as mermaid in Chromium, so you can swap one for the other. No headless browser, no Node, no cgo.</p>
+      <p class="lead">mmdg renders Mermaid to SVG, PNG, and vector PDF in pure Go. Compare its SVG output with mermaid in Chromium below. KaTeX math works on both page modes. ZenUML is available on the mermaid-cli page. No headless browser, no Node, no cgo.</p>
       <div class="install" role="group" aria-label="Install command">
         <code id="install-cmd">go get github.com/bvolpato/mermaid-go-renderer</code>
         <button class="copy" data-copy="#install-cmd" type="button">Copy</button>
@@ -112,7 +112,7 @@
         <ul class="legend" id="unit-legend">
           <li><i class="sw sw-exact"></i>Same bytes <b data-k="exact">{{(index .Plain.Corpora 0).Exact}}</b></li>
           <li><i class="sw sw-error"></i>Same error as the reference <b data-k="sameError">{{(index .Plain.Corpora 0).SameError}}</b></li>
-          <li><i class="sw sw-other"></i>Not supported <b data-k="other">{{(index .Plain.Corpora 0).Other}}</b></li>
+          <li><i class="sw sw-other"></i>Other result <b data-k="other">{{(index .Plain.Corpora 0).Other}}</b></li>
         </ul>
       </div>
 
@@ -124,7 +124,7 @@
             <div class="meter" role="img" aria-label="{{percent .Pass .Total}} percent pass"><span style="width:{{percent .Pass .Total}}%"></span></div>
           </div>{{end}}
         </div>
-        <p class="fine">The first corpus was used to develop the port. The other two were never seen by the code, and they pass at the same rate. What does not pass uses KaTeX math or ZenUML.</p>
+        <p class="fine">These results compare the current renderer with the recorded reference manifests. KaTeX math renders in diagram labels. ZenUML is available when the page is set to mermaid-cli.</p>
         <div class="install" role="group" aria-label="Test command">
           <code id="test-cmd">go test -run TestCorpusParity .</code>
           <button class="copy" data-copy="#test-cmd" type="button">Copy</button>
@@ -136,7 +136,7 @@
     <details class="table-view">
       <summary>View as a table</summary>
       <table>
-        <thead><tr><th>Reference</th><th>Corpus</th><th class="n">Diagrams</th><th class="n">Same bytes</th><th class="n">Same error</th><th class="n">Not supported</th></tr></thead>
+        <thead><tr><th>Reference</th><th>Corpus</th><th class="n">Diagrams</th><th class="n">Same bytes</th><th class="n">Same error</th><th class="n">Other result</th></tr></thead>
         <tbody>
         {{range .Parity.Sets}}{{$set := .}}{{range .Corpora}}<tr><td>{{$set.Label}}</td><td>{{.Label}}</td><td class="n">{{.Total}}</td><td class="n">{{.Exact}}</td><td class="n">{{.SameError}}</td><td class="n">{{.Other}}</td></tr>
         {{end}}{{end}}
@@ -236,7 +236,7 @@
         </label>
         <label>Page
           <select id="play-page">
-            <option value="mermaid-cli">mermaid-cli (web fonts)</option>
+            <option value="mermaid-cli">mermaid-cli (ZenUML diagram type, web fonts)</option>
             <option value="plain">plain</option>
           </select>
         </label>
@@ -254,8 +254,8 @@
 <section class="band" id="inside">
   <div class="wrap">
     <p class="eyebrow"><span>05</span> Inside</p>
-    <h2>A port, line by line</h2>
-    <p class="lead">Nothing here approximates mermaid. Each package follows the code that produces the result in the browser, with the same order of operations, and has tests that compare it with that code on recorded inputs, bit for bit.</p>
+    <h2>How the renderer works</h2>
+    <p class="lead">The renderer combines Go ports of Mermaid and browser code with bundled JavaScript for KaTeX and ZenUML and an original vector PDF writer. Tests compare renderer output with recorded results from upstream code. Some features and output paths have documented limits.</p>
     <div class="paper pipeline">{{.Pipeline.SVG}}</div>
     <div class="features">
       <article><h3>The diagram code</h3><p>The parsers, the databases and the renderers of mermaid {{.Version}}, for every diagram type, look and theme.</p></article>
@@ -275,12 +275,15 @@
         <header><span>Go</span><button class="copy" data-copy="#code-go" type="button">Copy</button></header>
 <pre><code id="code-go"><span class="tk-k">import</span> mermaid <span class="tk-s">"github.com/bvolpato/mermaid-go-renderer"</span>
 
-svg, err := mermaid.Render(<span class="tk-s">`flowchart LR
+src := <span class="tk-s">`flowchart LR
   A[Start] --> B{Done?}
-  B -->|yes| C[Stop]`</span>)
+  B -->|yes| C[Stop]`</span>
+svg, err := mermaid.Render(src)
 
-png, err := mermaid.RenderPNG(src, mermaid.WithScale(<span class="tk-n">2</span>))</code></pre>
-        <p class="fine">Safe for concurrent use. The output depends only on the source and the options. It needs Go 1.27.</p>
+png, err := mermaid.RenderPNG(src, mermaid.WithScale(<span class="tk-n">2</span>))
+pdf, err := mermaid.RenderPDF(src, mermaid.WithPDFPaperFormat(<span class="tk-s">"A4"</span>))
+pdfFromSVG, err := mermaid.SVGToPDF(svg)</code></pre>
+        <p class="fine">RenderPDF creates a PDF from Mermaid source. SVGToPDF converts an existing SVG. WithPDFPaperFormat selects a fixed page size. Without it, the page fits the diagram. PDF uses vector paths and TrueType fonts or Type 3 glyph subsets where possible. Unsupported fonts are outlined, and some contextual glyphs or ligatures may not extract as the original text. Drop shadows are flat silhouettes. Other filter graphs and image elements, including data URLs, are omitted. It needs Go 1.27.</p>
       </article>
       <article class="panel code">
         <header><span>Command line</span><button class="copy" data-copy="#code-cli" type="button">Copy</button></header>
@@ -288,8 +291,9 @@ png, err := mermaid.RenderPNG(src, mermaid.WithScale(<span class="tk-n">2</span>
 
 mmdg -i diagram.mmd -o diagram.svg
 mmdg -i diagram.mmd -o diagram.png -s <span class="tk-n">2</span>
+mmdg -i diagram.mmd -e pdf -o diagram.pdf --pdf-paper-format A4
 mmdg -i README.md -o README.out.md -a images</code></pre>
-        <p class="fine">The options, the messages and the exit codes are those of mmdc, so it fits into scripts that call mmdc today.</p>
+        <p class="fine">Use <code>--pdf-paper-format</code> to select a fixed page size. Without it, the PDF page fits the diagram. The <code>-f</code> flag remains accepted for compatibility.</p>
       </article>
     </div>
     <div class="actions center">
@@ -304,7 +308,7 @@ mmdg -i README.md -o README.out.md -a images</code></pre>
 <footer>
   <div class="wrap foot">
     <p><strong>mmdg</strong> is under the MIT license. Ported code keeps the terms of its source: see the <a href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/THIRD_PARTY_NOTICES.md">notices</a>.</p>
-    <p>Mermaid is the work of Knut Sveidqvist and its contributors. This project is not affiliated with it. Not supported yet: KaTeX math, ZenUML and PDF output.</p>
+    <p>Mermaid is the work of Knut Sveidqvist and its contributors. This project is not affiliated with it.</p>
   </div>
 </footer>
 

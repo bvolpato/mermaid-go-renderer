@@ -28,10 +28,6 @@ type renderer struct {
 	actorCnt int
 }
 
-// errKatex reports a text with KaTeX delimiters. The KaTeX rendering of
-// common.ts is not ported.
-var errKatex = errors.New("sequence: a text with $$ math needs KaTeX, which is not supported")
-
 // pageLocation is window.location of the page of the reference renderer.
 var pageLocation = sanitize.Location{Protocol: "about:", Host: "", Pathname: "blank", Search: ""}
 
@@ -96,10 +92,10 @@ func (r *renderer) drawNote(elem *dom.Node, noteModel *noteModel, id string) err
 	textObj.textMargin = conf.noteMargin
 	textObj.valign = "center"
 
-	if sanitize.HasKatex(textObj.text) {
-		return errKatex
+	textElem, err := r.drawTextOrKatex(g, textObj, nil)
+	if err != nil {
+		return err
 	}
-	textElem := drawText(g, textObj)
 
 	textHeight := sumHeights(textElem)
 
@@ -200,17 +196,17 @@ func (r *renderer) boundMessage(msgModel *msgModel) (float64, error) {
 	bounds.bumpVerticalPos(10)
 	startx, stopx, message := msgModel.startx, msgModel.stopx, msgModel.message
 	lines := float64(len(sanitize.SplitBreaks(message)))
-	if sanitize.HasKatex(message) {
-		return 0, errKatex
-	}
-	textDims, err := r.calculateTextDimensions(message, conf.messageFont())
+	isKatexMsg := sanitize.HasKatex(message)
+	textDims, err := r.calculateLabelDimensions(message, conf.messageFont())
 	if err != nil {
 		return 0, err
 	}
 
-	lineHeight := textDims.Height / lines
-	msgModel.height += lineHeight
-	bounds.bumpVerticalPos(lineHeight)
+	if !isKatexMsg {
+		lineHeight := textDims.Height / lines
+		msgModel.height += lineHeight
+		bounds.bumpVerticalPos(lineHeight)
+	}
 
 	var lineStartY float64
 	totalOffset := textDims.Height - 10
@@ -268,10 +264,9 @@ func (r *renderer) drawMessage(diagram *dom.Node, msgModel *msgModel, lineStartY
 	textObj.textMargin = conf.wrapPadding
 	textObj.tspan = false
 
-	if sanitize.HasKatex(textObj.text) {
-		return errKatex
+	if _, err := r.drawTextOrKatex(diagram, textObj, &mathPlacement{startx, stopx, lineStartY}); err != nil {
+		return err
 	}
-	drawText(diagram, textObj)
 
 	textWidth := textDims.Width
 
@@ -1267,10 +1262,13 @@ func (r *renderer) getMaxMessageWidthPerActor(actors *js.Map[string, *actor], me
 				return nil, err
 			}
 		}
+		var messageDimensions utils.TextDimensions
+		var err error
 		if sanitize.HasKatex(wrappedMessage) {
-			return nil, errKatex
+			messageDimensions, err = r.calculateLabelDimensions(msg.message, textFont)
+		} else {
+			messageDimensions, err = r.calculateTextDimensions(wrappedMessage, textFont)
 		}
-		messageDimensions, err := r.calculateTextDimensions(wrappedMessage, textFont)
 		if err != nil {
 			return nil, err
 		}
@@ -1353,10 +1351,7 @@ func (r *renderer) calculateActorMargins(actors *js.Map[string, *actor], actorTo
 			}
 			actor.description = wrapped
 		}
-		if sanitize.HasKatex(actor.description) {
-			return 0, errKatex
-		}
-		actDims, err := r.calculateTextDimensions(actor.description, conf.actorFont())
+		actDims, err := r.calculateLabelDimensions(actor.description, conf.actorFont())
 		if err != nil {
 			return 0, err
 		}
@@ -1462,18 +1457,15 @@ func (r *renderer) buildNoteModel(msg *message, actors *js.Map[string, *actor]) 
 	stopx := toActor.x
 	shouldWrap := msg.wrap && msg.message != ""
 
-	if sanitize.HasKatex(msg.message) {
-		return nil, errKatex
-	}
 	text := msg.message
-	if shouldWrap {
+	if shouldWrap && !sanitize.HasKatex(msg.message) {
 		var err error
 		text, err = r.wrapLabel(msg.message, conf.width, conf.noteFont())
 		if err != nil {
 			return nil, err
 		}
 	}
-	textDimensions, err := r.calculateTextDimensions(text, conf.noteFont())
+	textDimensions, err := r.calculateLabelDimensions(text, conf.noteFont())
 	if err != nil {
 		return nil, err
 	}

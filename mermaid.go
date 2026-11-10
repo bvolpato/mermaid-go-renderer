@@ -59,9 +59,10 @@ type options struct {
 	background    string
 	hasBackground bool
 	// page is the page of WithPage, and fontEmbed is WithFontEmbed.
-	page      Page
-	fontEmbed bool
-	err       error
+	page           Page
+	fontEmbed      bool
+	pdfPaperFormat string
+	err            error
 }
 
 // Page is the kind of web page that a render reproduces. Mermaid measures
@@ -84,7 +85,7 @@ const (
 
 // WithPage selects the kind of web page that the render reproduces. Give
 // the same page to Render and to the functions that read its result
-// (StandaloneSVG, SVGToPNG).
+// (StandaloneSVG, SVGToPNG, SVGToPDF).
 func WithPage(p Page) Option {
 	return func(o *options) { o.page = p }
 }
@@ -495,7 +496,11 @@ func DetectType(source string, opts ...Option) (string, error) {
 	if o.err != nil {
 		return "", o.err
 	}
-	resolved, err := config.Resolve(source, o.render.Config)
+	resolve := config.Resolve
+	if o.page == PageMermaidCLI {
+		resolve = config.ResolveMermaidCLI
+	}
+	resolved, err := resolve(source, o.render.Config)
 	if err != nil {
 		return "", err
 	}

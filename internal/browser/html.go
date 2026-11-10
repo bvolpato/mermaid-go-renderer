@@ -42,6 +42,7 @@ type htmlBox struct {
 	lines      []*htmlLine
 	children   []*htmlBox
 	style      *textStyle
+	math       *mathBoxData
 }
 
 type htmlLine struct {
@@ -406,6 +407,11 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 			}
 		case dom.ElementNode:
 			if e.display(n) == "none" || e.isOutOfFlow(n) {
+				return
+			}
+			if isMathRoot(n) {
+				items = append(items, e.newMathInlineItem(n, avail))
+				cs.atStart, cs.prevSpace = false, false
 				return
 			}
 			if n.NS == dom.NSHTML && n.Tag == "br" {
@@ -1004,6 +1010,12 @@ func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu)
 // intrinsicWidths returns the min-content and max-content widths of the
 // content box of a block container.
 func (e *Engine) intrinsicWidths(n *dom.Node) (minW, maxW lu) {
+	if e.isMathFlex(n) {
+		b := e.layoutMathFlex(n, luInfinite)
+		ts := e.textStyleOf(n)
+		w := b.w - e.edges(n, "padding", "", ts, luInfinite).horizontal() - e.borderEdges(n, ts).horizontal()
+		return w, w
+	}
 	for _, fc := range e.flowChildren(n) {
 		if fc.block != nil {
 			cmin, cmax := e.outerIntrinsic(fc.block)
@@ -1029,6 +1041,10 @@ func hasContent(items []*inlineItem) bool {
 // outerIntrinsic is the intrinsic width of a block-level child including
 // its padding, border and margins.
 func (e *Engine) outerIntrinsic(n *dom.Node) (minW, maxW lu) {
+	if isMathRoot(n) {
+		b := e.layoutMath(n)
+		return b.w, b.w
+	}
 	if isImage(n) {
 		return e.replacedIntrinsic(n)
 	}
@@ -1061,6 +1077,20 @@ func (e *Engine) lookupDeclared(n *dom.Node, prop string) string {
 // layoutBlock lays out a block-level element whose containing block has the
 // given content width. The box is positioned at (0, 0); the caller moves it.
 func (e *Engine) layoutBlock(n *dom.Node, avail lu) *htmlBox {
+	if isMathRoot(n) {
+		b := e.layoutMath(n)
+		if e.display(n) == "block" && avail < luInfinite {
+			shift := max(0, (avail-b.w)/2)
+			for _, c := range b.children {
+				c.x += shift
+			}
+			b.w = max(0, avail)
+		}
+		return b
+	}
+	if e.isMathFlex(n) {
+		return e.layoutMathFlex(n, avail)
+	}
 	if isImage(n) {
 		return e.layoutReplacedBlock(n, avail)
 	}
@@ -1284,7 +1314,9 @@ func (e *Engine) layoutForeignObject(fo *dom.Node) *htmlRootLayout {
 	}
 	var register func(b *htmlBox, ox, oy lu)
 	register = func(b *htmlBox, ox, oy lu) {
-		root.index[b.node] = b
+		if b.node != nil && (b.math == nil || !b.math.synthetic) {
+			root.index[b.node] = b
+		}
 		root.origin[b] = [2]lu{ox + b.x, oy + b.y}
 		for _, c := range b.children {
 			register(c, ox+b.x, oy+b.y)

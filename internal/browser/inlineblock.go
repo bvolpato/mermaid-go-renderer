@@ -58,6 +58,9 @@ func isAtomicInlineDisplay(d string) bool {
 // inline box on a line that the engine lays out: a line of an HTML block,
 // and not a line of the foreignObject.
 func (e *Engine) isAtomicInline(n *dom.Node, d string) bool {
+	if isMathRoot(n) && (d == "inline-math" || d == "inline math") {
+		return true
+	}
 	if !isAtomicInlineDisplay(d) {
 		return false
 	}
@@ -145,6 +148,9 @@ func (e *Engine) forcesBaselineSynthesis(n *dom.Node) bool {
 // the inline-block baseline algorithm). The second result is false for a
 // block with no baseline.
 func (e *Engine) lastBaseline(b *htmlBox) (lu, bool) {
+	if b.math != nil {
+		return b.math.ascent, true
+	}
 	var baseline, top lu
 	found := false
 	// The lines and the child blocks are in the flow from top to bottom:

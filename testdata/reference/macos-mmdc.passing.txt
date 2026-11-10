@@ -1284,6 +1284,8 @@ pass	kanban/pr-check/6-should-handle-assignments
 pass	kanban/pr-check/6-should-handle-the-height-of-a-section-with-a-wrapping-node-in-the-middle
 pass	kanban/pr-check/7-should-handle-external-tickets
 pass	kanban/pr-check/8-should-handle-assignments-prioritization-and-tickets-ids-in-the-same-item
+pass	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet
+pass	katex/pr-check/4-should-render-consecutive-latex-equations-separated-by-text
 pass	mindmap/nightly-check/a-root-with-a-shape
 pass	mindmap/nightly-check/a-root-with-an-icon
 pass	mindmap/nightly-check/a-root-with-wrapping-text-and-a-shape
@@ -2129,3 +2131,4 @@ pass	xychart/pr-check/should-render-horizontal-bar-chart-with-labels
 pass	xychart/pr-check/should-render-multiple-bar-plots-vertically-with-labels-correctly
 pass	xychart/pr-check/should-render-negative-and-decimal-values-with-correct-labels-for-horizontal-xy-chart
 pass	xychart/pr-check/should-render-vertical-bar-chart-with-labels
+pass	zenuml/pr-check/basic-zen-uml-diagram

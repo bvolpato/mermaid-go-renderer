@@ -14,7 +14,9 @@ has the SHA-256 of each WOFF2 file and of its sfnt file. A test of the Go
 package compares the manifest with the embedded files, so a change of a
 WOFF2 file without a new run of this script fails.
 
-The WOFF2 files are not changed.
+KaTeX ships the same fonts as TTF files in its npm package. For these
+fonts the script packs the original TTF bytes, without a format conversion.
+Install the pinned tools/reference dependencies before running this script.
 
 Run:
 
@@ -32,6 +34,7 @@ from fontTools.ttLib import TTFont
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "internal" / "webfonts" / "files"
 DST = ROOT / "internal" / "font" / "webfontdata" / "files"
+KATEX = ROOT / "tools/reference/node_modules/@mermaid-js/mermaid-cli/node_modules/katex"
 
 
 def decode(woff2: bytes) -> bytes:
@@ -61,7 +64,13 @@ def main() -> None:
     for path in sorted(SRC.rglob("*.woff2")):
         rel = path.relative_to(SRC).as_posix()
         woff2 = path.read_bytes()
-        sfnt = decode(woff2)
+        if rel.startswith("katex/"):
+            original = KATEX / rel.removeprefix("katex/")
+            if original.read_bytes() != woff2:
+                raise ValueError(f"{rel} differs from the mermaid-cli dependency")
+            sfnt = original.with_suffix(".ttf").read_bytes()
+        else:
+            sfnt = decode(woff2)
         target = DST / (rel[: -len(".woff2")] + ".sfnt.gz")
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(pack(sfnt))

@@ -4,7 +4,6 @@
 package ru
 
 import (
-	"errors"
 	"math"
 	"regexp"
 	"strings"
@@ -18,9 +17,6 @@ import (
 
 // maxSafeSizeForWidth: nobody creates labels wider than 16384 px.
 const maxSafeSizeForWidth = 16384
-
-// ErrKatex reports a label with KaTeX math, which this port does not render.
-var ErrKatex = errors.New("KaTeX math in labels is not supported")
 
 func applyStyle(node *dom.Node, style string) {
 	if style != "" {
@@ -41,10 +37,16 @@ func addHtmlSpan(ctx *render.Context, element *dom.Node, node htmlSpanNode, widt
 	fo.Attr("height", js.Str(js.Min(float64(10*width), maxSafeSizeForWidth))+"px")
 
 	div := fo.Append("xhtml:div")
+	var sanitizedLabel string
 	if sanitize.HasKatex(node.label) {
-		return nil, ErrKatex
+		var err error
+		sanitizedLabel, err = RenderKatexSanitized(ctx, sanitize.LineBreakRegex.ReplaceAllString(node.label, "\n"))
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		sanitizedLabel = ctx.SanitizeText(node.label)
 	}
-	sanitizedLabel := ctx.SanitizeText(node.label)
 	labelClass := "edgeLabel"
 	if node.isNode {
 		labelClass = "nodeLabel"

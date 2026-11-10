@@ -105,7 +105,7 @@
   const statusText = {
     e: 'Same bytes as the reference',
     s: 'The reference fails, and mmdg fails too',
-    x: 'Not supported',
+    x: 'Does not match the reference',
   };
 
   const currentSet = () => parity.sets.find((s) => s.id === gridState.set);
@@ -329,6 +329,7 @@
   let ready = false;
   let pending = 0;
   let timer = 0;
+  let katexStylesheet = null;
 
   const setStatus = (text, error = false) => {
     status.textContent = text;
@@ -337,6 +338,7 @@
 
   function render() {
     if (!ready) return;
+    katexStylesheet.disabled = page.value !== 'mermaid-cli';
     pending++;
     worker.postMessage({ id: pending, src: src.value, page: page.value });
   }
@@ -352,6 +354,11 @@
       link.href = `fonts/fontawesome-free/css/${sheet}.css`;
       document.head.append(link);
     }
+    katexStylesheet = document.createElement('link');
+    katexStylesheet.rel = 'stylesheet';
+    katexStylesheet.href = 'fonts/katex/dist/katex.css';
+    katexStylesheet.disabled = page.value !== 'mermaid-cli';
+    document.head.append(katexStylesheet);
     worker = new Worker('play-worker.js');
     worker.addEventListener('message', ({ data }) => {
       if (data.type === 'progress') {

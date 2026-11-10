@@ -73,7 +73,14 @@ func (s *State) Initialize(userOptions *js.Obj[any]) error {
 // matches. Upstream leaves the global defaults in charge then, and the parse
 // step raises the real error.
 func (s *State) ProcessAndSetConfigs(text string) (*Preprocessed, string, error) {
-	processed, err := PreprocessDiagram(text)
+	return s.processAndSetConfigs(text, false, nil)
+}
+
+func (s *State) processAndSetConfigs(text string, includeZen bool, processed *Preprocessed) (*Preprocessed, string, error) {
+	var err error
+	if processed == nil {
+		processed, err = preprocessDiagram(text, includeZen)
+	}
 	if err != nil {
 		return nil, "", err
 	}
@@ -84,7 +91,7 @@ func (s *State) ProcessAndSetConfigs(text string) (*Preprocessed, string, error)
 	// defaults. Upstream passes a copy of the config to detectType. The only
 	// detector that uses it writes to that copy, which nothing reads, so the
 	// copy is left out here.
-	diagramType, err := DetectType(processed.Code.Cleaned, nil)
+	diagramType, err := detect(processed.Code.Cleaned, nil, includeZen)
 	if err != nil {
 		if err := s.LeaveDiagramConfigScope(); err != nil {
 			return nil, "", err

@@ -14,6 +14,106 @@
   "size": 327308,
   "woff2": "24e5fae26b41c08b2df81c91669f5aaae71d81a84a4713fc56b5c621b78dd456"
  },
+ "files/katex/dist/fonts/KaTeX_AMS-Regular.woff2": {
+  "sfnt": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+  "size": 63632,
+  "woff2": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+ },
+ "files/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2": {
+  "sfnt": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+  "size": 12368,
+  "woff2": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+ },
+ "files/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2": {
+  "sfnt": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+  "size": 12344,
+  "woff2": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+ },
+ "files/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2": {
+  "sfnt": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+  "size": 19584,
+  "woff2": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+ },
+ "files/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2": {
+  "sfnt": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+  "size": 19572,
+  "woff2": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+ },
+ "files/katex/dist/fonts/KaTeX_Main-Bold.woff2": {
+  "sfnt": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+  "size": 51336,
+  "woff2": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+ },
+ "files/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2": {
+  "sfnt": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+  "size": 32968,
+  "woff2": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+ },
+ "files/katex/dist/fonts/KaTeX_Main-Italic.woff2": {
+  "sfnt": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+  "size": 33580,
+  "woff2": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+ },
+ "files/katex/dist/fonts/KaTeX_Main-Regular.woff2": {
+  "sfnt": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+  "size": 53580,
+  "woff2": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+ },
+ "files/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2": {
+  "sfnt": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+  "size": 31196,
+  "woff2": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+ },
+ "files/katex/dist/fonts/KaTeX_Math-Italic.woff2": {
+  "sfnt": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+  "size": 31308,
+  "woff2": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+ },
+ "files/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2": {
+  "sfnt": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+  "size": 24504,
+  "woff2": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+ },
+ "files/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2": {
+  "sfnt": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+  "size": 22364,
+  "woff2": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+ },
+ "files/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2": {
+  "sfnt": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+  "size": 19436,
+  "woff2": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+ },
+ "files/katex/dist/fonts/KaTeX_Script-Regular.woff2": {
+  "sfnt": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+  "size": 16648,
+  "woff2": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+ },
+ "files/katex/dist/fonts/KaTeX_Size1-Regular.woff2": {
+  "sfnt": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+  "size": 12228,
+  "woff2": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+ },
+ "files/katex/dist/fonts/KaTeX_Size2-Regular.woff2": {
+  "sfnt": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+  "size": 11508,
+  "woff2": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+ },
+ "files/katex/dist/fonts/KaTeX_Size3-Regular.woff2": {
+  "sfnt": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+  "size": 7588,
+  "woff2": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995"
+ },
+ "files/katex/dist/fonts/KaTeX_Size4-Regular.woff2": {
+  "sfnt": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+  "size": 10364,
+  "woff2": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+ },
+ "files/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2": {
+  "sfnt": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+  "size": 27556,
+  "woff2": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+ },
  "files/open-sans/files/open-sans-cyrillic-400-italic.woff2": {
   "sfnt": "ffcd9b47c66250c59fbc740d052f536f87c27ea8d9437fe9677412bfbd873cb0",
   "size": 23732,

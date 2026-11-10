@@ -378,7 +378,7 @@ func fixtureStatus(m *parity.Manifest, name string) (byte, string) {
 	case ref.Error && err != nil:
 		return statusSameError, ""
 	case err != nil:
-		return statusOther, notSupported(string(src), err)
+		return statusOther, renderErrorReason(err)
 	case ref.Error:
 		return statusOther, "the reference fails, and mmdg renders"
 	}
@@ -404,15 +404,11 @@ func fixtureStatus(m *parity.Manifest, name string) (byte, string) {
 	return statusExact, ""
 }
 
-// notSupported names the feature that a fixture needs and this module has
-// not.
-func notSupported(src string, err error) string {
+// renderErrorReason distinguishes an unavailable diagram type from other errors.
+func renderErrorReason(err error) string {
 	var unsupported *mermaid.UnsupportedDiagramError
-	switch {
-	case strings.Contains(src, "$$"):
-		return "KaTeX math is not supported"
-	case errors.As(err, &unsupported), strings.Contains(src, "zenuml"):
-		return "the ZenUML diagram is not supported"
+	if errors.As(err, &unsupported) {
+		return fmt.Sprintf("diagram type %q is not supported", unsupported.Type)
 	}
 	return "mmdg fails: " + err.Error()
 }

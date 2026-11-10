@@ -102,11 +102,12 @@ type contextPaints struct {
 }
 
 type painter struct {
-	eng   *browser.Engine
-	doc   *dom.Document
-	cv    *canvas
-	scale float64
-	ids   map[string]*dom.Node
+	vector *vectorPainter
+	eng    *browser.Engine
+	doc    *dom.Document
+	cv     *canvas
+	scale  float64
+	ids    map[string]*dom.Node
 
 	// viewport is the size of the nearest svg viewport in user units, for
 	// percentages.
@@ -170,6 +171,10 @@ func (p *painter) indexIDs(n *dom.Node) {
 
 // paintRoot paints the root svg element (SVGRootPainter).
 func (p *painter) paintRoot(root *dom.Node, sz svgRootSize) {
+	if p.vector != nil {
+		p.vector.doc.Save()
+		defer p.vector.doc.Restore()
+	}
 	p.ids = map[string]*dom.Node{}
 	p.indexIDs(p.doc.Body)
 	if p.eng.RasterDisplay(root) == "none" {
@@ -186,6 +191,9 @@ func (p *painter) paintRoot(root *dom.Node, sz svgRootSize) {
 	saved := dev.clip
 	dev.clip = clip
 	defer func() { dev.clip = saved }()
+	if p.vector != nil {
+		p.vector.doc.Clip(pdfRect(clip.toRect()), false)
+	}
 
 	// LayoutSVGRoot::BuildLocalToBorderBoxTransform: the content size is
 	// the box in CSS pixels, and the device scale comes on top.
@@ -244,6 +252,10 @@ const maxDepth = 256
 
 // paintElement paints one SVG element with the style of its parent.
 func (p *painter) paintElement(n *dom.Node, parent *svgStyle, ctm Affine) {
+	if p.vector != nil {
+		p.vector.doc.Save()
+		defer p.vector.doc.Restore()
+	}
 	if n.NS != dom.NSSVG || notRendered[n.Tag] {
 		return
 	}
@@ -1057,6 +1069,13 @@ func nearlyIntegral(x float32) bool {
 // the edges of the rectangle are nearly on whole pixels. It reports false
 // when nothing is left.
 func (p *painter) clipRectAA(dev *device, r Rect, ctm Affine) bool {
+	if p.vector != nil {
+		var path, transformed Path
+		path.AddRect(r, 0)
+		m := deviceMatrix(ctm)
+		path.transformInto(&transformed, &m)
+		return p.vector.clipPath(&transformed)
+	}
 	m := deviceMatrix(ctm)
 	var devPath Path
 	devPath.lastMoveIdx = -1
@@ -1092,6 +1111,9 @@ func (p *painter) clipRectAA(dev *device, r Rect, ctm Affine) bool {
 // anti-aliasing: the coverage of the path, inside the bounds of the clip,
 // multiplies the clip. It reports false when nothing is left.
 func (p *painter) clipPathAA(dev *device, devPath *Path) bool {
+	if p.vector != nil {
+		return p.vector.clipPath(devPath)
+	}
 	bounds := devPath.bounds().roundOut()
 	if !bounds.intersect(dev.clip) {
 		dev.clip = IRect{}

@@ -277,8 +277,12 @@ func TestPageRuleSetIsShared(t *testing.T) {
 	if again := pageRuleSetOf(append([]string(nil), sheets...)); again != first {
 		t.Error("the same sheets have two rule sets")
 	}
-	if len(first.universal) != 0 {
-		t.Errorf("%d rules of the page sheets are tried for every element", len(first.universal))
+	for _, rule := range first.universal {
+		// KaTeX uses descendant selectors such as ".katex *". The
+		// cascade checks the ancestor class before matching the selector.
+		if rule.ancestorClass == "" {
+			t.Error("a page rule requires selector matching for every element")
+		}
 	}
 	lib := font.Embedded()
 	want := ""

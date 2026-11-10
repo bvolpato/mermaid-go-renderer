@@ -1,4 +1,4 @@
-error	katex/pr-check/1-should-render-a-complex-katex-flowchart-no-htmllabels
-error	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet
-error	katex/pr-check/3-should-render-a-katex-flowchart-containing-set-theory-symbols
-error	katex/pr-check/4-should-render-consecutive-latex-equations-separated-by-text
+different	katex/pr-check/1-should-render-a-complex-katex-flowchart-no-htmllabels
+different	katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet
+different	katex/pr-check/3-should-render-a-katex-flowchart-containing-set-theory-symbols
+different	katex/pr-check/4-should-render-consecutive-latex-equations-separated-by-text
