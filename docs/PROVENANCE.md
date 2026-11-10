@@ -25,7 +25,7 @@ A mermaid path such as `diagrams/pie/pieDb.ts` is relative to `packages/mermaid/
 |---|---|---|
 | The first comment of each Go file | The upstream files that the file ports, and often the version and the license | yes |
 | The package comment of each Go package | The upstream project and its version | yes |
-| `tools/reference/package.json` | The pinned versions: mermaid 12.2.0, playwright 1.64.1, jison 0.4.18, @mermaid-js/mermaid-cli 12.0.0 | yes |
+| `tools/reference/package.json` | The pinned versions: mermaid 12.2.0, playwright 1.64.1, jison 0.4.18, @mermaid-js/mermaid-cli 12.2.0 | yes |
 | `tools/reference/node_modules/<package>/package.json` | The versions that npm installed. They are the newest versions that the ranges of mermaid allow, so some are newer than the versions in the mermaid bundle | no (`.gitignore`) |
 | `tools/reference/node_modules/mermaid/dist/mermaid.min.js.map` | The versions that the mermaid 12.2.0 bundle really contains, and their source text. The reference oracle (`tools/reference/oracle.mjs`) loads `mermaid.min.js` | no |
 | `tools/reference/node_modules/@mermaid-js/parser/dist/chunks/*/*.map` | The versions in the parser package: langium 4.4.0, chevrotain 13.2.0, chevrotain-allstar 0.5.0 | no |
@@ -89,7 +89,7 @@ The byte-exact reference is the output of `mermaid.min.js` of mermaid 12.2.0. Th
 | langium | 4.4.0 | not installed | 4.4.0 (`internal/langium`) | The source is in the source map only |
 | fastdom | 1.0.12, patched by mermaid | not installed | Not ported. `internal/render/async.go` reproduces the order of its callbacks | |
 | uuid | 14.0.0 | 14.0.3 | Not ported. `internal/diagrams/mindmap/db.go` has a constant in its place | |
-| katex | 0.18.11 | 0.18.10 (installed for development) | 0.18.11, embedded and run by `internal/katex` in goja | Not a Go port; the embedded script is from the mermaid bundle |
+| katex | 0.18.11 | 0.18.10 (the mermaid-cli page dependency) | 0.18.11, embedded and run by `internal/katex` in goja; 0.18.10 styles and fonts for the mermaid-cli page | Not a Go port; the embedded script is from the mermaid bundle, and the page assets follow mermaid-cli |
 
 `node tools/reference/extract-bundled-source.mjs list` (run it in `tools/reference`) reads the source maps and prints this comparison for every bundled package: the two versions, and how many bundled files have the same text in `node_modules`. `extract` writes the bundled source of a package to `.upstream/bundled`, and `diff` compares it file by file. `tools/reference/use-bundled.mjs` makes the golden generators load stylis, d3-format and es-toolkit from that bundled source. On 2026-11-09 the script showed these facts for the rows above that say "Not compared": all 13 bundled files of @iconify/utils differ, 3 of the 5 bundled files of DOMPurify differ, and the bundled files of marked are TypeScript sources that the npm package does not have. The golden files of those three ports come from the bundled code (the mermaid ESM chunks, in Chromium or in Node.js). The files of d3-array 2.12.1 with the functions that d3-sankey uses (`max.js`, `min.js`, `sum.js`) have the same text in d3-array 3.2.4.
 
@@ -97,11 +97,15 @@ These libraries have the same version in the bundle and in `node_modules`, and e
 
 ## Feature implementations
 
-KaTeX math uses the embedded `dist/katex.mjs` from KaTeX 0.18.11 in `internal/katex/katexjs`. Its SHA-256 is `b53ef659acd792006f80e32a0fbe16d84668306b2a58ce7fce052121745d5032`. The Go package runs it in goja and calls it as mermaid does. The installed development package is KaTeX 0.18.10 and is separate from this embedded source. `internal/ru/katex.go` sends the generated MathML to the browser layout engine; sequence diagrams also have specialized label placement in `internal/diagrams/sequence/katex.go`. The KaTeX style sheet and font files used by the mermaid-cli page come from KaTeX 0.16.47 in `internal/webfonts/files/katex`.
+KaTeX math uses the embedded `dist/katex.mjs` from KaTeX 0.18.11 in `internal/katex/katexjs`. Its SHA-256 is `b53ef659acd792006f80e32a0fbe16d84668306b2a58ce7fce052121745d5032`. The Go package runs it in goja and calls it as mermaid does. `internal/ru/katex.go` sends the generated MathML to the browser layout engine. Sequence diagrams also have specialized label placement in `internal/diagrams/sequence/katex.go`.
+
+The page assets follow mermaid-cli 12.2.0, whose installed KaTeX dependency is 0.18.10. `tools/reference/gen-mmdc-katex-assets.mjs` resolves KaTeX from mermaid-cli and copies its style sheet, MIT license, and WOFF2 fonts to `internal/webfonts/files/katex`. The gzip-compressed SFNT files under `internal/font/webfontdata/files/katex` preserve the original TTF bytes of that release. The separate font notice is `internal/webfonts/files/katex/fonts-OFL.txt`. These page assets are distinct from the embedded KaTeX 0.18.11 JavaScript.
 
 The `PageMermaidCLI` page registers the ZenUML diagram plugin. `internal/config/zenuml.go` follows the detector in `@mermaid-js/mermaid-zenuml` 1.0.1. `internal/diagrams/zenuml` runs the embedded `@zenuml/core` 3.49.2 renderer in goja. `PagePlain` does not register this plugin. The bundle's terms are recorded in `internal/diagrams/zenuml/LICENSES.txt`.
 
-PDF printing follows the page setup of mermaid-cli 12.0.0 and its print layout: `internal/mmdc/print.go` names Puppeteer 25.16.0 and Chromium 156 sources. `internal/raster` maps SVG content to vector drawing operations. `internal/pdf` is an original Go writer for ISO 32000-1 PDF files; it does not port an upstream writer. The public API is in `pdf.go`, and the CLI options are in `cmd/mmdg`.
+PDF printing was first ported from the page setup and print layout of mermaid-cli 12.0.0. The current reference tool is 12.2.0. `internal/mmdc/print.go` also names Puppeteer 25.16.0 and Chromium 156 sources. `internal/raster` maps SVG content to vector drawing operations. `internal/pdf` is an original Go writer for ISO 32000-1 PDF files. It does not port an upstream writer. The public API is in `pdf.go`, and the CLI options are in `cmd/mmdg`.
+
+The corpus tables target mmdc 12.2.0. Each manifest records its generating version in `mermaidCLI`. Performance measurements are separate historical evidence. `docs/performance.json` retains the 2026-11-09 timings and identifies the measured mmdc version as 12.0.0 in `cli.mmdc`.
 
 The reference browser is Chromium 156.0.8078.4 (`browsers.json` of Playwright 1.64.1, and the user agent in `internal/purify/clobber_names.go`). Three headers in `internal/font` name Chromium 156.0.8078.80. The headers in `internal/raster` name the Skia branch `chrome/m156`, and the headers in `internal/font` name the Skia revision `aa789d9b`. `internal/js/crmath` names V8 15.6.75 and LLVM libc at revision `b8b28272d32b`.
 
@@ -116,7 +120,10 @@ The reference browser is Chromium 156.0.8078.4 (`browsers.json` of Playwright 1.
 | `internal/webfonts/files/recursive` (`index.css` and 4 WOFF2 files) | `@fontsource-variable/recursive` 5.3.0 | No. `tools/reference/node_modules` has the same bytes | `internal/webfonts/files/recursive/LICENSE` (OFL-1.1) |
 | `internal/webfonts/files/open-sans` (`400.css`, `400-italic.css` and 20 WOFF2 files) | `@fontsource/open-sans` 5.3.0 | No | `internal/webfonts/files/open-sans/LICENSE` (OFL-1.1) |
 | `internal/webfonts/files/fontawesome-free` (4 style sheets under `css` and 3 WOFF2 files under `webfonts`) | `@fortawesome/fontawesome-free` 7.3.1 | No | `internal/webfonts/files/fontawesome-free/LICENSE.txt` (OFL-1.1 for the fonts, MIT for the style sheets) |
-| `internal/mmdc/cssom.json.gz` | The rules of the 7 style sheets above, in the form that Chromium 156 gives them (`CSSRule.cssText`) | Recorded by `tools/reference/gen-mmdc-sheets.mjs` | The license files of the three packages above |
+| `internal/katex/katexjs/katex.mjs` | `dist/katex.mjs` from KaTeX 0.18.11 embedded in Mermaid 12.2.0 | No. The SHA-256 is recorded above | `internal/katex/katexjs/LICENSE` (MIT) |
+| `internal/webfonts/files/katex` | The KaTeX 0.18.10 style sheet and WOFF2 fonts resolved from mermaid-cli 12.2.0 | No. `tools/reference/gen-mmdc-katex-assets.mjs` copies the page assets | `internal/webfonts/files/katex/LICENSE` (MIT) and `fonts-OFL.txt` (OFL-1.1) |
+| `internal/font/webfontdata/files/katex/dist/fonts/*.sfnt.gz` | The original TTF files of KaTeX 0.18.10 | Compressed with gzip. The decompressed bytes are unchanged | `internal/webfonts/files/katex/fonts-OFL.txt` (OFL-1.1) |
+| `internal/mmdc/cssom.json.gz` | The rules of the 8 page style sheets, in the form that Chromium 156 gives them (`CSSRule.cssText`) | Recorded by `tools/reference/gen-mmdc-sheets.mjs` | The license files of the Fontsource, Font Awesome, and KaTeX packages above |
 | `internal/font/fontconfig-default.xml.gz` | The rule files of fontconfig 2.15.0 (`fonts.conf` and `conf.d` of the package fontconfig-config of Ubuntu 24.04) | Yes. `tools/reference/gen-fontconfig-default.mjs` keeps the `alias` and `match` elements and writes one file | `internal/font/LICENSE-fontconfig.txt` |
 | `internal/grammar/*/actions.js.txt` (19 files) | The JavaScript of the semantic actions and the lexer actions of the jison grammars of mermaid 12.2.0 | Extracted by `tools/reference/gen-jison.mjs` | `internal/grammar/NOTICE` (the licenses of mermaid and jison) |
 | `internal/config/default_config.json` | The default config of mermaid 12.2.0 | Generated by `tools/reference/gen-config.mjs` | None |
@@ -162,7 +169,7 @@ Each row is one Go package. The second column has the number of Go files that ar
 | Package | Go files / with `Ported from` | What it is | Upstream project and version | Upstream files that the headers name | License (SPDX) | How we know |
 |---|---|---|---|---|---|---|
 | `(root) github.com/bvolpato/mermaid-go-renderer` | 1 / 0 | Renders Mermaid diagrams to SVG, PNG, and PDF in pure Go. | original. The API follows `mermaid.render` and `mermaid.initialize` of mermaid 12.2.0; PDF printing follows mermaid-cli | none named | the license of this repository | package doc of `mermaid.go` and `pdf.go` |
-| `cmd/mmdg` | 1 / 0 | Renders Mermaid diagrams to SVG, PNG, and PDF without a browser. | mermaid-cli 12.0.0 (`src/index.js`, the functions `cli` and `run`): the options, messages, output names and Markdown output; PDF paper options follow mermaid-cli | `index.js` | MIT | package doc |
+| `cmd/mmdg` | 1 / 0 | Renders Mermaid diagrams to SVG, PNG, and PDF without a browser. | Originally mermaid-cli 12.0.0 (`src/index.js`, the functions `cli` and `run`): the options, messages, output names and Markdown output; the current reference tool is 12.2.0 | `index.js` | MIT | package doc; `tools/reference/package.json` pins the current tool |
 | `cmd/wasm` | 1 / 0 | The renderer as a WebAssembly module, for the playground of the website. | original | none named | the license of this repository | package doc |
 | `cmd/parity` | 1 / 0 | Compares this renderer with the reference output of upstream mermaid for every corpus fixture. | original | none named | the license of this repository | package doc |
 | `cmd/pixelparity` | 1 / 0 | Measures how close the pure Go rasterizer is to Chromium. | original | none named | the license of this repository | package doc |
@@ -412,8 +419,8 @@ Each row is one Go package. The second column has the number of Go files that ar
 
 | Package | Go files / with `Ported from` | What it is | Upstream project and version | Upstream files that the headers name | License (SPDX) | How we know |
 |---|---|---|---|---|---|---|
-| `internal/mmdc` | 3 / 3 | Reproduces mermaid-cli page output, including backgrounds, embedded fonts, SVG serialization, screenshot geometry, and PDF print layout. | mermaid-cli 12.0.0 (`src/index.js`, `renderMermaid`); Puppeteer 25.16.0 and Chromium 156 for PDF print geometry; `cssom.json.gz` records page style rules | `index.js`, `fontEmbedder.js`, `tokenizeCSS.js` | MIT (mermaid-cli). `cssom.json.gz` has the text of the style sheets of Font Awesome Free (MIT) and of the two Fontsource packages (OFL-1.1) | file headers. `tools/reference/package.json` pins the version |
-| `internal/webfonts` | 1 / 0 | Has the web fonts and style sheets that mermaid-cli 12 loads into its page, as embedded data. | Recursive, Open Sans and Font Awesome assets from mermaid-cli 12.0.0, plus the KaTeX 0.16.47 style sheet and font files; the package directory layout keeps relative font URLs working | none named | See package license files under `files/` and the companion notices | `webfonts.go`, and the license file of each package |
+| `internal/mmdc` | 3 / 3 | Reproduces mermaid-cli page output, including backgrounds, embedded fonts, SVG serialization, screenshot geometry, and PDF print layout. | Originally mermaid-cli 12.0.0 (`src/index.js`, `renderMermaid`); the current reference tool is 12.2.0. Puppeteer 25.16.0 and Chromium 156 for PDF print geometry; `cssom.json.gz` records page style rules | `index.js`, `fontEmbedder.js`, `tokenizeCSS.js` | MIT (mermaid-cli). `cssom.json.gz` has the style rules of Font Awesome Free and KaTeX (MIT) and of the two Fontsource packages (OFL-1.1) | file headers; `tools/reference/package.json` pins the current tool |
+| `internal/webfonts` | 1 / 0 | Has the web fonts and style sheets that mermaid-cli 12 loads into its page, as embedded data. | Recursive, Open Sans and Font Awesome assets used by mermaid-cli 12.2.0, plus the KaTeX 0.18.10 style sheet and font files; the package directory layout keeps relative font URLs working | none named | See package license files under `files/` and the companion notices | `webfonts.go`, and the license file of each package |
 
 ## Go module dependencies
 
@@ -433,4 +440,4 @@ These modules are not ported. The Go linker links them into a program that uses 
 | github.com/google/pprof | v0.0.0-20230207041349-798e818bf904 | indirect, through goja (`profile`) | Apache-2.0 |
 | The Go standard library | the version of the toolchain | every package | BSD-3-Clause |
 
-The scripts under `tools/reference` are original. They use mermaid 12.2.0, Playwright 1.64.1, jison 0.4.18 and mermaid-cli 12.0.0 from npm as development tools. These are not part of the Go module. Two scripts have fdlibm code with its notice: `elk-fdlibm.mjs` and `rough-fdlibm.mjs`.
+The scripts under `tools/reference` are original. They use mermaid 12.2.0, Playwright 1.64.1, jison 0.4.18 and mermaid-cli 12.2.0 from npm as development tools. These are not part of the Go module. Two scripts have fdlibm code with its notice: `elk-fdlibm.mjs` and `rough-fdlibm.mjs`.

@@ -4,7 +4,7 @@
  "environment": "chromium-156-linux-liberation",
  "fonts": "embedded",
  "page": "mermaid-cli",
- "mermaidCLI": "12.0.0",
+ "mermaidCLI": "12.2.0",
  "fixtures": {
   "community/community-contributing-01": {
    "type": "flowchart-v2",
@@ -181,13 +181,13 @@
    "type": "flowchart-v2",
    "sha256": "9efc464cb790c134b32cd6de5952436d1e5dc2a46415140033e80b23a5a5d855",
    "bytes": 36352,
-   "embedSha256": "f1ed870264a6914d093575cd8cfc9cbfc43d4eeb911d7f067e5f4265d78633ea"
+   "embedSha256": "8adb9a7db02ef8cac96ad98523ace44aa91dc23320570ecb81ced1ab482e79dc"
   },
   "config/config-math-02": {
    "type": "sequence",
    "sha256": "a1fbf5ab1a10227f21723978e06c5783abe4648daee5dffedb7bb48d7a0d9f55",
    "bytes": 24928,
-   "embedSha256": "c6e0aac2dd785cd1e4966e48f463c0c580fa149f2cf8f13332dbf2d81ff8ccac"
+   "embedSha256": "2205912f74cedea4dbe577cd2b4d70c25f36cef92be9e184839a84a9cb14ff48"
   },
   "config/config-theming-01": {
    "type": "flowchart-v2",

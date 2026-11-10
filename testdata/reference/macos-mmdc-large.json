@@ -5,7 +5,7 @@
  "fonts": "system",
  "fontFingerprint": "2f77e7cbfdf534aa",
  "page": "mermaid-cli",
- "mermaidCLI": "12.0.0",
+ "mermaidCLI": "12.2.0",
  "fixtures": {
   "class/dagre-020": {
    "type": "classDiagram",

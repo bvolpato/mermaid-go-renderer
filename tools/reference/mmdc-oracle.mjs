@@ -50,8 +50,25 @@ import fs from 'node:fs/promises';
 import fsSync from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+
+// The runner uses this contract to reject results from another install or
+// another version of this oracle. Resolve Mermaid from the CLI itself.
+export async function referenceContract() {
+  const cli = fileURLToPath(import.meta.resolve('@mermaid-js/mermaid-cli'));
+  const require = createRequire(cli);
+  const version = async (file) => JSON.parse(await fs.readFile(file, 'utf8')).version;
+  return {
+    mermaid: await version(require.resolve('mermaid/package.json')),
+    mmdc: await version(path.resolve(path.dirname(cli), '../package.json')),
+    puppeteer: await version(require.resolve('puppeteer/package.json')),
+    playwright: await version(path.join(HERE, 'node_modules/playwright/package.json')),
+    packageLockSha256: sha256(await fs.readFile(path.join(HERE, 'package-lock.json'))),
+    oracleSha256: sha256(await fs.readFile(fileURLToPath(import.meta.url))),
+  };
+}
 
 // The same values as oracle.mjs.
 const FIXED_TIME = '2026-01-15T12:00:00Z';
@@ -164,19 +181,45 @@ function browserExecutable() {
 // ---- lock: a copy of the code of oracle.mjs ----
 
 const LOCK_DIR = path.join(HERE, '.oracle.lock');
+const PID_FILE = path.join(LOCK_DIR, 'pid');
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function lockOwner() {
+  try {
+    return Number(await fs.readFile(PID_FILE, 'utf8'));
+  } catch {
+    return 0;
+  }
+}
+
 async function acquireLock() {
   for (;;) {
     try {
       await fs.mkdir(LOCK_DIR);
-      await fs.writeFile(path.join(LOCK_DIR, 'pid'), String(process.pid));
-      return;
+      await fs.writeFile(PID_FILE, String(process.pid));
+      await sleep(60);
+      if ((await lockOwner()) === process.pid) {
+        return;
+      }
+      continue;
     } catch {
       let stale = false;
       try {
-        const pid = Number(await fs.readFile(path.join(LOCK_DIR, 'pid'), 'utf8'));
+        const pid = Number(await fs.readFile(PID_FILE, 'utf8'));
         process.kill(pid, 0);
       } catch (e) {
-        stale = e.code === 'ESRCH' || e.code === 'ENOENT';
+        if (e.code === 'ESRCH') {
+          stale = true;
+        } else if (e.code === 'ENOENT') {
+          // mkdir and the PID write are separate operations. Give a new
+          // owner time to write its PID before treating the lock as stale.
+          await sleep(300);
+          try {
+            await fs.readFile(PID_FILE, 'utf8');
+          } catch (again) {
+            stale = again.code === 'ENOENT';
+          }
+        }
       }
       if (stale) {
         // Only one waiter can take the stale lock away: rename is atomic.
@@ -189,7 +232,7 @@ async function acquireLock() {
         }
         continue;
       }
-      await new Promise((resolve) => setTimeout(resolve, 250));
+      await sleep(250);
     }
   }
 }
@@ -366,10 +409,8 @@ async function renderOne(browser, state, text, opts, timeoutMs, fontEmbed) {
 async function cmdRender(browser, opts) {
   const files = await readList(opts);
   const timeoutMs = Number(opts.timeout || 60000);
-  const versions = {};
-  for (const name of ['mermaid', '@mermaid-js/mermaid-cli', 'puppeteer']) {
-    versions[name] = JSON.parse(await fs.readFile(path.join(HERE, 'node_modules', name, 'package.json'), 'utf8')).version;
-  }
+  const contract = await referenceContract();
+  const browserVersion = await browser.version();
   const state = {};
   instrument(browser, state, opts);
   let ok = 0;
@@ -380,10 +421,16 @@ async function cmdRender(browser, opts) {
     const result = await renderOne(browser, state, text, opts, timeoutMs, true);
     const svgFile = outPath(file, opts, '.svg');
     await fs.mkdir(path.dirname(svgFile), { recursive: true });
-    const meta = { source: file, mermaid: versions.mermaid, mmdc: versions['@mermaid-js/mermaid-cli'], page: 'mermaid-cli' };
-    if (result.error || state.plain === undefined) {
+    if (!result.error && state.plain === undefined) {
+      throw new Error(`oracle: mmdc did not serialize the svg element for ${file}`);
+    }
+    const meta = {
+      source: file, mermaid: contract.mermaid, mmdc: contract.mmdc, page: 'mermaid-cli',
+      contract, platform: process.platform, browserVersion, sourceSha256: sha256(text),
+    };
+    if (result.error) {
       failed++;
-      meta.error = result.error || 'oracle: mmdc did not serialize the svg element';
+      meta.error = result.error;
       await fs.rm(svgFile, { force: true });
     } else {
       ok++;
@@ -406,14 +453,14 @@ async function cmdRender(browser, opts) {
       meta.embedBytes = Buffer.byteLength(result.xml);
       meta.embedStyles = state.embedStyles.map(hashFonts);
       if (state.embedStyles.length === 0 && result.xml !== state.plain) {
-        meta.error = 'oracle: the file with fonts differs and has no added style element';
+        throw new Error(`oracle: the file with fonts differs and has no added style element for ${file}`);
       }
       const plain = state.plain;
       if (opts['check-embed']) {
         const again = await renderOne(browser, state, text, opts, timeoutMs, false);
         meta.checkEmbed = again.xml === plain;
         if (!meta.checkEmbed) {
-          process.stderr.write(`DIFF ${file}: fontEmbed: false gives another file\n`);
+          throw new Error(`oracle: fontEmbed: false gives another file for ${file}`);
         }
       }
       await fs.writeFile(svgFile, plain);
@@ -464,11 +511,13 @@ async function main() {
     if (browser) {
       await Promise.race([browser.close().catch(() => {}), new Promise((resolve) => setTimeout(resolve, 10000))]);
     }
-    if (!lockHeld) {
+    if (!lockHeld && (await lockOwner()) === process.pid) {
       await fs.rm(LOCK_DIR, { recursive: true, force: true });
     }
   }
 }
 
-await main();
-process.exit(0);
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
+  process.exit(0);
+}

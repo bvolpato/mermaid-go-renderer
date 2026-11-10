@@ -14,6 +14,9 @@ import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const pins = JSON.parse(await readFile(new URL('./package.json', import.meta.url), 'utf8'));
+const mermaid = pins.dependencies.mermaid;
+const mmdc = pins.devDependencies['@mermaid-js/mermaid-cli'];
 const referenceRoot = '.parity/ref-mmdc/linux';
 const outputPath = path.join(repoRoot, 'internal/diagrams/zenuml/testdata/golden.json.gz');
 const docsCases = Array.from({ length: 16 }, (_, index) => {
@@ -45,7 +48,7 @@ async function loadCase(caseId) {
   if (metadata.diagramType !== 'zenuml' || metadata.page !== 'mermaid-cli') {
     fail(metadataPath, 'expected a successful ZenUML mmdc reference');
   }
-  if (metadata.mermaid !== '12.2.0' || metadata.mmdc !== '12.0.0') {
+  if (metadata.mermaid !== mermaid || metadata.mmdc !== mmdc) {
     fail(metadataPath, 'unexpected Mermaid or mmdc version');
   }
   if (metadata.sha256 !== sha256(svg)) {
@@ -101,8 +104,8 @@ const cases = await Promise.all(caseIds.map(loadCase));
 const golden = {
   schemaVersion: 1,
   provenance: {
-    mermaid: '12.2.0',
-    mmdc: '12.0.0',
+    mermaid,
+    mmdc,
     page: 'mermaid-cli',
     referenceSet: referenceRoot,
     svgFormat: 'mmdc --no-font-embed',
@@ -126,6 +129,9 @@ const edgeCases = await Promise.all(['emoji', 'entities'].flatMap(name => ['linu
   const base = `.parity/zenuml-edge-${environment}/${name}`;
   const metadata = JSON.parse(await readFile(path.join(repoRoot, `${base}.json`), 'utf8'));
   const svg = await readFile(path.join(repoRoot, `${base}.svg`), 'utf8');
+  if (metadata.mermaid !== mermaid || metadata.mmdc !== mmdc) {
+    fail(base, 'unexpected Mermaid or mmdc version');
+  }
   if (metadata.source !== sourcePath || metadata.diagramType !== 'zenuml' || metadata.sha256 !== sha256(svg)) {
     fail(base, 'invalid edge-case reference');
   }

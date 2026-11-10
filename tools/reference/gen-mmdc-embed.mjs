@@ -68,40 +68,44 @@ for (const corpus of ['mermaid-e2e/katex/pr-check', 'mermaid-docs/config']) {
 }
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mmdc-embed-'));
-const files = Object.entries(cases).map(([name, source]) => {
-  const file = path.join(dir, `${name}.mmd`);
-  fs.writeFileSync(file, source);
-  return file;
-});
-execFileSync(process.execPath, ['mmdc-oracle.mjs', 'render', '--quiet', '--out', path.join(dir, 'out'), ...files], {
-  cwd: here,
-  stdio: ['ignore', 'inherit', 'inherit'],
-});
-// The same style text comes back in many cases: the file has each text one
-// time, and a case names its texts by their SHA-256.
-const styles = {};
-const golden = Object.entries(cases).map(([name, source]) => {
-  const meta = JSON.parse(fs.readFileSync(path.join(dir, 'out', `${name}.json`), 'utf8'));
-  if (meta.error) {
-    throw new Error(`${name}: ${meta.error}`);
+try {
+  const files = Object.entries(cases).map(([name, source]) => {
+    const file = path.join(dir, `${name}.mmd`);
+    fs.writeFileSync(file, source);
+    return file;
+  });
+  execFileSync(process.execPath, ['mmdc-oracle.mjs', 'render', '--quiet', '--check-embed', '--out', path.join(dir, 'out'), ...files], {
+    cwd: here,
+    stdio: ['ignore', 'inherit', 'inherit'],
+  });
+  // The same style text comes back in many cases: the file has each text one
+  // time, and a case names its texts by their SHA-256.
+  const styles = {};
+  const golden = Object.entries(cases).map(([name, source]) => {
+    const meta = JSON.parse(fs.readFileSync(path.join(dir, 'out', `${name}.json`), 'utf8'));
+    if (meta.error) {
+      throw new Error(`${name}: ${meta.error}`);
+    }
+    return {
+      name,
+      source,
+      svg: fs.readFileSync(path.join(dir, 'out', `${name}.svg`), 'utf8'),
+      sha256: meta.sha256,
+      embedSha256: meta.embedSha256,
+      embedStyles: meta.embedStyles.map((text) => {
+        const id = crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
+        styles[id] = text;
+        return id;
+      }),
+    };
+  });
+  const file = path.join(repoRoot, 'internal/mmdc/testdata/fontembed.json.gz');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, zlib.gzipSync(JSON.stringify({ styles, cases: golden }), { level: 9 }));
+  for (const c of golden) {
+    process.stderr.write(`${c.name}: ${c.embedStyles.length} style elements (${c.embedStyles.map((id) => styles[id].length).join(', ')})\n`);
   }
-  return {
-    name,
-    source,
-    svg: fs.readFileSync(path.join(dir, 'out', `${name}.svg`), 'utf8'),
-    sha256: meta.sha256,
-    embedSha256: meta.embedSha256,
-    embedStyles: meta.embedStyles.map((text) => {
-      const id = crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
-      styles[id] = text;
-      return id;
-    }),
-  };
-});
-const file = path.join(repoRoot, 'internal/mmdc/testdata/fontembed.json.gz');
-fs.mkdirSync(path.dirname(file), { recursive: true });
-fs.writeFileSync(file, zlib.gzipSync(JSON.stringify({ styles, cases: golden }), { level: 9 }));
-for (const c of golden) {
-  process.stderr.write(`${c.name}: ${c.embedStyles.length} style elements (${c.embedStyles.map((id) => styles[id].length).join(', ')})\n`);
+  process.stderr.write(`wrote ${path.relative(repoRoot, file)}: ${golden.length} cases, ${Object.keys(styles).length} style texts, ${fs.statSync(file).size} bytes\n`);
+} finally {
+  fs.rmSync(dir, { recursive: true, force: true });
 }
-process.stderr.write(`wrote ${path.relative(repoRoot, file)}: ${golden.length} cases, ${Object.keys(styles).length} style texts, ${fs.statSync(file).size} bytes\n`);

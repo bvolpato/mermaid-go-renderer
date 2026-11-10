@@ -1,4 +1,4 @@
-// Ported from mermaid-cli 12.0.0, src/browser/fontEmbedder.js (MIT).
+// Ported from mermaid-cli 12.2.0, src/browser/fontEmbedder.js (MIT).
 
 package mmdc
 
@@ -62,8 +62,10 @@ type sheetRule struct {
 type pageSheet struct {
 	// Path is the path of the style sheet in internal/webfonts, without
 	// "files/". It stands for link.href.
-	Path  string      `json:"path"`
-	Rules []sheetRule `json:"rules"`
+	Path string `json:"path"`
+	// SHA256 identifies the source style sheet used to record the rules.
+	SHA256 string      `json:"sha256"`
+	Rules  []sheetRule `json:"rules"`
 }
 
 // pageSheets returns the style sheets of the page in the order of the link

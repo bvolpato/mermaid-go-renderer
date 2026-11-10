@@ -1,4 +1,5 @@
 // The PDF output follows renderMermaid in mermaid-cli 12.0.0 (MIT).
+// The PDF options are unchanged in 12.2.0.
 package mmdc
 
 import "github.com/bvolpato/mermaid-go-renderer/internal/raster"

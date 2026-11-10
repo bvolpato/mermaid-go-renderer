@@ -49,6 +49,8 @@ What the page of mermaid-cli adds to the engine:
 - `dom.Document.PageSheets` has the text of the style sheets of the head. The cascade of `internal/browser` reads them before the style elements of the body.
 - `internal/mmdc` has the steps of `mmdc` after the render: the background, embedded fonts, XML serialization, screenshot geometry, and PDF print layout.
 
+The current reference tool is mermaid-cli 12.2.0. Its page loads KaTeX 0.18.10 styles and fonts. The math renderer uses the separate KaTeX 0.18.11 script embedded in Mermaid 12.2.0. [PROVENANCE.md](PROVENANCE.md) records these sources.
+
 ## JavaScript semantics in Go
 
 `internal/js` has what JavaScript does and Go does differently.
@@ -97,7 +99,7 @@ There are two reference environments, and each corpus has a manifest for both.
 | Chromium 156 on Linux in the Playwright image, with only the Liberation fonts installed (`tools/reference/oracle-linux.mjs --fonts liberation`) | The fonts that are embedded in the module, which is the default | On every machine, also in a container with no fonts |
 | Chromium 156 on macOS (`tools/reference/oracle.mjs`) | The system fonts (`WithSystemFonts`) | On a Mac whose fonts are those of the reference machine. On other machines the test skips these manifests. |
 
-The page of mermaid-cli has its own references. `tools/reference/mmdc-oracle.mjs` runs the function `renderMermaid` of mermaid-cli 12.0.0, which the `mmdc` command calls, with the same fixed clock and seed, and records both files that `mmdc` writes: the SVG with the embedded fonts and the SVG of `--no-font-embed`. The manifests `testdata/reference/*-mmdc*.json` have their hashes for both environments, and `TestCorpusParity` compares them. A file `*.passing.txt` lists the diagrams that pass. The test fails when a listed diagram stops passing.
+The page of mermaid-cli has its own references. `tools/reference/mmdc-oracle.mjs` runs the function `renderMermaid` of mermaid-cli 12.2.0, which the `mmdc` command calls, with the same fixed clock and seed. It records both files that `mmdc` writes: the SVG with the embedded fonts and the SVG of `--no-font-embed`. The manifests `testdata/reference/*-mmdc*.json` have their hashes for both environments, and their `mermaidCLI` field records the generating version. The published corpus tables target mmdc 12.2.0. `TestCorpusParity` compares the renderer with the manifests. A file `*.passing.txt` lists the diagrams that pass. The test fails when a listed diagram stops passing.
 
 There are three corpora under `testdata/corpus`.
 

@@ -5,7 +5,7 @@
  "fonts": "system",
  "fontFingerprint": "2f77e7cbfdf534aa",
  "page": "mermaid-cli",
- "mermaidCLI": "12.0.0",
+ "mermaidCLI": "12.2.0",
  "fixtures": {
   "community/community-contributing-01": {
    "type": "flowchart-v2",
@@ -182,13 +182,13 @@
    "type": "flowchart-v2",
    "sha256": "2f3e795c13c75ae3a52c2a30efc58add39a88b7a7d735a68b867eede2852380e",
    "bytes": 36464,
-   "embedSha256": "d15e8d74a975fb4e311a43572fd1f636a9dcf3f7c5f28cce4cb4658eb12ec3b5"
+   "embedSha256": "8b288b59b63120952f339f0e2a3637b78883bbc1a6ad7755438fade58ffe325b"
   },
   "config/config-math-02": {
    "type": "sequence",
    "sha256": "2510da594599d50fd1bb292670200a0dcf73debcb89c809b752b585deb8c8c82",
    "bytes": 24926,
-   "embedSha256": "a1f8edf3598c46fe203b31493189459a5ca062c81d546d76a98a3195d9ceeb36"
+   "embedSha256": "15968713f19d15125395c080422cbcb475692b1844d557b5629a0e6863a7a150"
   },
   "config/config-theming-01": {
    "type": "flowchart-v2",

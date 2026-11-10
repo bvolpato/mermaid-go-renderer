@@ -22,6 +22,7 @@ func main() {
 	ref := flag.String("ref", ".parity/ref/mermaid-e2e", "directory of reference .svg and .json files")
 	environment := flag.String("environment", "", "name of the reference environment, for example chromium-156-macos")
 	fonts := flag.String("fonts", "system", "fonts of the reference: system or embedded")
+	cliVersion := flag.String("mermaid-cli-version", "", "require this Mermaid CLI version")
 	out := flag.String("o", "", "manifest file to write")
 	flag.Parse()
 	if *out == "" || *environment == "" {
@@ -31,6 +32,10 @@ func main() {
 	m, err := parity.BuildManifest(*corpus, *ref)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if *cliVersion != "" && (m.Page != parity.PageMermaidCLI || m.MermaidCLI != *cliVersion) {
+		fmt.Fprintf(os.Stderr, "expected Mermaid CLI %s, got page %q and CLI %q\n", *cliVersion, m.Page, m.MermaidCLI)
 		os.Exit(1)
 	}
 	m.Environment = *environment

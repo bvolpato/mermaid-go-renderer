@@ -3,7 +3,7 @@
 //
 //   node gen-zenuml-bundle.mjs [--check] [--plain FILE] [--no-speed] [--out FILE]
 //
-// mmdc 12.0.0 loads dist/mermaid-zenuml.esm.mjs of @mermaid-js/mermaid-zenuml
+// mmdc 12.2.0 loads dist/mermaid-zenuml.esm.mjs of @mermaid-js/mermaid-zenuml
 // 1.0.1. That file contains @zenuml/core 3.49.2 as one minified module of
 // 2 MB, with React, the HTML renderer and 500 cloud icons. The draw function
 // of the plugin calls one function of it, renderToSvg, which uses a small

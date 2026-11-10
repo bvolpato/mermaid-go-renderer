@@ -4,7 +4,7 @@ This file is generated. Do not edit it. `tools/update-docs.sh` writes it with th
 
 ## chromium-156-macos, corpus `mermaid-e2e`
 
-The corpus `testdata/corpus/mermaid-e2e` has 2145 diagrams from the end-to-end test suite of mermaid. Each diagram was rendered with mermaid-cli 12.0.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
+The corpus `testdata/corpus/mermaid-e2e` has 2145 diagrams from the end-to-end test suite of mermaid. Each diagram was rendered with mermaid-cli 12.2.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
 
 - **Byte-exact**: both files have the same bytes as the files of mermaid-cli.
 - **Without fonts only**: the file without fonts has the same bytes. The file with fonts differs.
@@ -58,7 +58,7 @@ Result: 2134 of 2145 diagrams pass (99.5%). 2134 are byte-exact and 0 give the s
 
 ## chromium-156-macos, corpus `mermaid-docs`
 
-The corpus `testdata/corpus/mermaid-docs` has 596 diagrams from the examples of the mermaid documentation. Each diagram was rendered with mermaid-cli 12.0.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc-docs.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
+The corpus `testdata/corpus/mermaid-docs` has 596 diagrams from the examples of the mermaid documentation. Each diagram was rendered with mermaid-cli 12.2.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc-docs.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
 
 - **Byte-exact**: both files have the same bytes as the files of mermaid-cli.
 - **Without fonts only**: the file without fonts has the same bytes. The file with fonts differs.
@@ -112,7 +112,7 @@ Result: 594 of 596 diagrams pass (99.7%). 592 are byte-exact and 2 give the same
 
 ## chromium-156-macos, corpus `mermaid-large`
 
-The corpus `testdata/corpus/mermaid-large` has 70 diagrams from a seeded generator (tools/reference/gen-large-corpus.mjs): flowcharts, class, state and ER diagrams with 15 to 150 nodes. Each diagram was rendered with mermaid-cli 12.0.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc-large.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
+The corpus `testdata/corpus/mermaid-large` has 70 diagrams from a seeded generator (tools/reference/gen-large-corpus.mjs): flowcharts, class, state and ER diagrams with 15 to 150 nodes. Each diagram was rendered with mermaid-cli 12.2.0 and mermaid 12.2.0 in the reference environment `chromium-156-macos`. `testdata/reference/macos-mmdc-large.json` has the SHA-256 of the two `.svg` files that mermaid-cli writes for it: the file without the fonts of its page (`--no-font-embed`) and the file with them (the default). The table compares the output of this package in the page mode `mermaid-cli` with those hashes.
 
 - **Byte-exact**: both files have the same bytes as the files of mermaid-cli.
 - **Without fonts only**: the file without fonts has the same bytes. The file with fonts differs.

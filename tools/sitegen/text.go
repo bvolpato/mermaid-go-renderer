@@ -180,7 +180,7 @@ func generatedText(perf *perfdata.Data) (map[string]map[string]string, error) {
 	}
 	p.WriteString("\n- The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.\n")
 	p.WriteString("- The last two rows compare whole processes. `mmdc` starts a browser in each run.\n")
-	fmt.Fprintf(&p, "- All numbers are from one machine, measured on %s. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) has the numbers for each diagram type and says how they were measured.\n", perf.Measured)
+	fmt.Fprintf(&p, "- The benchmark ran on %s with Mermaid %s and mermaid-cli %s. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) gives the method and timings by diagram type.\n", perf.Measured, perf.Mermaid, perf.CLI.Mmdc)
 
 	// ---- docs/CLI.md: the corpus table ----
 	var c strings.Builder

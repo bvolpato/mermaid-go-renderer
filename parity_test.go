@@ -1,6 +1,7 @@
 package mermaid
 
 import (
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -35,6 +36,19 @@ func TestCorpusParity(t *testing.T) {
 	if len(manifests) == 0 {
 		t.Skip("no reference manifest")
 	}
+	// A dependency update must refresh the browser references before CI
+	// can treat them as evidence for the new mermaid-cli version.
+	var oracle struct {
+		DevDependencies map[string]string `json:"devDependencies"`
+	}
+	pins, err := os.ReadFile(filepath.Join("tools", "reference", "package.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(pins, &oracle); err != nil {
+		t.Fatal(err)
+	}
+	cliVersion := oracle.DevDependencies["@mermaid-js/mermaid-cli"]
 	for _, path := range manifests {
 		name := strings.TrimSuffix(filepath.Base(path), ".json")
 		t.Run(name, func(t *testing.T) {
@@ -47,6 +61,9 @@ func TestCorpusParity(t *testing.T) {
 			}
 			if m.Mermaid != MermaidVersion {
 				t.Fatalf("the manifest is for mermaid %s, this package ports %s", m.Mermaid, MermaidVersion)
+			}
+			if m.Page == parity.PageMermaidCLI && (cliVersion == "" || m.MermaidCLI != cliVersion) {
+				t.Fatalf("the manifest is for mermaid-cli %q, tools/reference pins %q; regenerate the CLI references", m.MermaidCLI, cliVersion)
 			}
 			if m.Fonts == "system" {
 				if fp := parity.SystemFontFingerprint(); fp != m.FontFingerprint {

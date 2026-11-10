@@ -18,7 +18,8 @@
 // See docs/CLI.md for every option and for the differences from mmdc.
 //
 // The handling of the options follows mermaid-cli 12.0.0, src/index.js
-// (cli and run).
+// (cli and run), checked against 12.2.0. The only change in index.js is
+// a help description. The defaults and output options are unchanged.
 package main
 
 import (

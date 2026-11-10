@@ -50,6 +50,7 @@
       <div class="actions">
         <a class="btn btn-primary" href="#proof">See the proof</a>
         <a class="btn btn-ghost" href="#play">Try it in this page</a>
+        <a class="btn btn-ghost" href="https://github.com/bvolpato/mermaid-go-renderer/releases/latest">Latest release</a>
       </div>
     </div>
     <div class="hero-art" aria-hidden="true">
@@ -169,7 +170,7 @@
           <div class="bar-row"><span class="bar-name">mmdc</span><span class="bar-track"><i class="bar gray" style="--w:100%" tabindex="0" data-tip="mmdc, one process with its browser: {{ms .CLI.Mmdc}} ms"></i></span><span class="bar-val">{{ms .CLI.Mmdc}} ms</span></div>
           <div class="bar-row"><span class="bar-name strong">mmdg</span><span class="bar-track"><i class="bar aqua" style="--w:calc(100% * {{.CLI.Mmdg}} / {{.CLI.Mmdc}})" tabindex="0" data-tip="mmdg, one process: {{ms .CLI.Mmdg}} ms"></i></span><span class="bar-val">{{ms .CLI.Mmdg}} ms</span></div>
         </div>
-        <p class="fine">Whole processes, same input and same output file. mmdc starts a browser in each run.</p>
+        <p class="fine">Whole processes, same input and same output file. The measured command was mmdc {{.Perf.CLI.Mmdc}}. It starts a browser in each run.</p>
       </article>
     </div>
 
@@ -199,7 +200,7 @@
         </table>
       </details>
     </article>
-    <p class="fine center">All numbers are from one machine, with mermaid {{.Version}} in Chromium {{.Perf.Chromium}}. <a href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/docs/PERFORMANCE.md">How they were measured</a>.</p>
+    <p class="fine center">Measured on {{.Perf.Measured}} on one machine, with mermaid {{.Perf.Mermaid}} in Chromium {{.Perf.Chromium}} and mmdc {{.Perf.CLI.Mmdc}} for the command-line comparison. <a href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/docs/PERFORMANCE.md">How they were measured</a>.</p>
   </div>
 </section>
 
@@ -207,7 +208,7 @@
   <div class="wrap">
     <p class="eyebrow"><span>03</span> Gallery</p>
     <h2>Every diagram type of mermaid 12</h2>
-    <p class="lead">mmdg rendered these when this page was built. Flowchart, sequence, class, state, ER, gantt, pie, mindmap, git graph, timeline, C4, sankey, architecture and twenty more, with every look and theme.</p>
+    <p class="lead">mmdg rendered these when this page was built. Try KaTeX math labels or a ZenUML diagram in the playground, alongside flowcharts, sequence diagrams, class diagrams, and more. Math labels work on both page modes. ZenUML uses the mermaid-cli page. The Go library and command also export vector PDF.</p>
     <div class="gallery">
       {{range .Gallery}}<figure class="card">
         <div class="paper">{{.SVG}}</div>
@@ -270,6 +271,7 @@
   <div class="wrap">
     <p class="eyebrow"><span>06</span> Use it</p>
     <h2>One import, or one binary</h2>
+    <p class="lead">Install the library with <code>go get github.com/bvolpato/mermaid-go-renderer</code>. Install the command with Go or Homebrew below, or download a binary archive from the <a href="https://github.com/bvolpato/mermaid-go-renderer/releases/latest">latest release</a>. The renderer follows Mermaid {{.Version}}. mmdg has its own release version. Run <code>mmdg --version</code> to check both versions.</p>
     <div class="code-grid">
       <article class="panel code">
         <header><span>Go</span><button class="copy" data-copy="#code-go" type="button">Copy</button></header>
@@ -288,6 +290,7 @@ pdfFromSVG, err := mermaid.SVGToPDF(svg)</code></pre>
       <article class="panel code">
         <header><span>Command line</span><button class="copy" data-copy="#code-cli" type="button">Copy</button></header>
 <pre><code id="code-cli">go install github.com/bvolpato/mermaid-go-renderer/cmd/mmdg@latest
+brew install bvolpato/tap/mmdg
 
 mmdg -i diagram.mmd -o diagram.svg
 mmdg -i diagram.mmd -o diagram.png -s <span class="tk-n">2</span>
@@ -297,7 +300,7 @@ mmdg -i README.md -o README.out.md -a images</code></pre>
       </article>
     </div>
     <div class="actions center">
-      <a class="btn btn-primary" href="https://github.com/bvolpato/mermaid-go-renderer">Get it on GitHub</a>
+      <a class="btn btn-primary" href="https://github.com/bvolpato/mermaid-go-renderer/releases/latest">Download the latest release</a>
       <a class="btn btn-ghost" href="https://github.com/bvolpato/mermaid-go-renderer/blob/main/docs/ARCHITECTURE.md">Read the architecture</a>
     </div>
   </div>

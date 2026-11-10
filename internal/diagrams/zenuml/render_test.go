@@ -1,5 +1,5 @@
 // Tests @mermaid-js/mermaid-zenuml 1.0.1, src/zenumlRenderer.ts (MIT),
-// against the SVG that mermaid-cli 12.0.0 writes in Chromium on Linux and macOS.
+// against the SVG that mermaid-cli 12.2.0 writes in Chromium on Linux and macOS.
 
 package zenuml
 

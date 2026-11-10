@@ -17,22 +17,48 @@
 // machine with other fonts.
 //
 // Usage (in tools/reference):
-//   node gen-mmdc-golden.mjs corpus | png | cli
+//   node gen-mmdc-golden.mjs corpus | png | cli [--out DIR] [--filter TEXT]
+//
+// Use --out to compare a new oracle with historical goldens before
+// replacing them. A version change alone does not invalidate a golden.
+// --filter selects corpus fixture names and requires --out.
 import { execFileSync } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
-const outDir = path.join(repoRoot, 'cmd/mmdg/testdata/mmdc');
+const [command, ...args] = process.argv.slice(2);
+const usage = () => {
+  process.stderr.write('usage: gen-mmdc-golden.mjs corpus | png | cli [--out DIR] [--filter TEXT (corpus only, requires --out)]\n');
+  process.exit(2);
+};
+if (!['corpus', 'png', 'cli'].includes(command)) usage();
+const values = new Map();
+for (let i = 0; i < args.length; i += 2) {
+  const flag = args[i];
+  if (!['--out', '--filter'].includes(flag) || !args[i + 1] || values.has(flag)) usage();
+  values.set(flag, args[i + 1]);
+}
+if (values.has('--filter') && (command !== 'corpus' || !values.has('--out'))) usage();
+const outDir = values.has('--out') ? path.resolve(values.get('--out')) : path.join(repoRoot, 'cmd/mmdg/testdata/mmdc');
 const corpusDir = path.join(repoRoot, 'testdata/corpus/mermaid-e2e');
 const refDir = path.join(repoRoot, '.parity/ref/mermaid-e2e');
-const mmdcVersion = JSON.parse(
-  fs.readFileSync(path.join(here, 'node_modules/@mermaid-js/mermaid-cli/package.json'), 'utf8')
-).version;
+const cli = fileURLToPath(import.meta.resolve('@mermaid-js/mermaid-cli'));
+const cliRequire = createRequire(cli);
+const versionFrom = (file) => JSON.parse(fs.readFileSync(file, 'utf8')).version;
+const packageVersion = (name) => versionFrom(cliRequire.resolve(`${name}/package.json`));
+const oracleVersions = {
+  mmdc: versionFrom(path.resolve(path.dirname(cli), '../package.json')),
+  mermaid: packageVersion('mermaid'),
+  puppeteer: packageVersion('puppeteer'),
+  playwright: packageVersion('playwright'),
+  katex: packageVersion('katex'),
+};
 
 const hash = (data) => crypto.createHash('sha256').update(data).digest('hex').slice(0, 16);
 
@@ -40,15 +66,19 @@ const hash = (data) => crypto.createHash('sha256').update(data).digest('hex').sl
 function mmdc(jobs) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mmdc-jobs-'));
   const results = [];
-  for (let i = 0; i < jobs.length; i += 6) {
-    const jobsFile = path.join(dir, `jobs-${i}.json`);
-    const resultsFile = path.join(dir, `results-${i}.json`);
-    fs.writeFileSync(jobsFile, JSON.stringify(jobs.slice(i, i + 6)));
-    execFileSync(process.execPath, ['mmdc-run.mjs', jobsFile, resultsFile], {
-      cwd: here,
-      stdio: ['ignore', 'inherit', 'inherit'],
-    });
-    results.push(...JSON.parse(fs.readFileSync(resultsFile, 'utf8')));
+  try {
+    for (let i = 0; i < jobs.length; i += 6) {
+      const jobsFile = path.join(dir, `jobs-${i}.json`);
+      const resultsFile = path.join(dir, `results-${i}.json`);
+      fs.writeFileSync(jobsFile, JSON.stringify(jobs.slice(i, i + 6)));
+      execFileSync(process.execPath, ['mmdc-run.mjs', jobsFile, resultsFile], {
+        cwd: here,
+        stdio: ['ignore', 'inherit', 'inherit'],
+      });
+      results.push(...JSON.parse(fs.readFileSync(resultsFile, 'utf8')));
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
   }
   return results;
 }
@@ -56,7 +86,7 @@ function mmdc(jobs) {
 function writeJSON(name, value) {
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, name), JSON.stringify(value, null, 1) + '\n');
-  process.stderr.write(`wrote cmd/mmdg/testdata/mmdc/${name}\n`);
+  process.stderr.write(`wrote ${path.relative(repoRoot, path.join(outDir, name))}\n`);
 }
 
 // ---- corpus ----
@@ -118,7 +148,8 @@ function selectFixtures() {
 }
 
 function genCorpus() {
-  const fixtures = selectFixtures();
+  const fixtures = selectFixtures().filter(f => !values.has('--filter') || f.name.includes(values.get('--filter')));
+  if (!fixtures.length) throw new Error('No corpus fixtures matched the filter');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mmdc-corpus-'));
   let markdown = '';
   for (const f of fixtures) {
@@ -148,7 +179,8 @@ function genCorpus() {
     sets[set.name] = { args: set.args, files };
   });
   writeJSON('corpus.json', {
-    mmdc: mmdcVersion,
+    ...oracleVersions,
+    ...(values.has('--filter') ? { filter: values.get('--filter') } : {}),
     note: 'hash is the first 16 hex digits of the SHA-256 of the .svg file of mmdc',
     cssFile: CSS_FILE,
     fixtures,
@@ -204,7 +236,7 @@ function genPNG() {
     }
     return { ...c, args: ['-t', 'default', ...c.args], ...pngSize(path.join(dir, `out-${i}.png`)) };
   });
-  writeJSON('png.json', { mmdc: mmdcVersion, diagrams: DIAGRAMS, cases });
+  writeJSON('png.json', { ...oracleVersions, diagrams: DIAGRAMS, cases });
 }
 
 // ---- cli ----
@@ -276,17 +308,13 @@ function genCLI() {
     }
     return out;
   });
-  writeJSON('cli.json', { mmdc: mmdcVersion, small: DIAGRAMS.small, markdown: MARKDOWN, cases });
+  writeJSON('cli.json', { ...oracleVersions, small: DIAGRAMS.small, markdown: MARKDOWN, cases });
 }
 
-const command = process.argv[2];
 if (command === 'corpus') {
   genCorpus();
 } else if (command === 'png') {
   genPNG();
 } else if (command === 'cli') {
   genCLI();
-} else {
-  process.stderr.write('usage: gen-mmdc-golden.mjs corpus | png | cli\n');
-  process.exit(2);
 }

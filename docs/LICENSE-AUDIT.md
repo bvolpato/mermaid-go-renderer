@@ -1,12 +1,12 @@
 # License audit
 
-This document has the findings of a provenance and license audit of this repository. The audit was made on 2026-11-09 on the branch `rewrite/mermaid-parity`, at commit `f6f6519` with uncommitted changes of other work. The branch is not published: it has no upstream, and no remote branch contains its commits.
+This document has the findings of a provenance and license audit of this repository. The audit was made on 2026-11-09 on the branch `rewrite/mermaid-parity`, at commit `f6f6519` with uncommitted changes of other work. At the time of the audit, the branch was not published: it had no upstream, and no remote branch contained its commits.
 
 The companion documents are [PROVENANCE.md](PROVENANCE.md), which says where each package comes from, and [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), which has the copyright lines and the license texts.
 
 This document is not legal advice. It says what was found in the files, and what the text of each license says. The decisions are for the owner of the repository. Each finding names them.
 
-A fix pass on 2026-11-09 applied the mechanical fixes of this audit on the same branch. Its counts are those of the working tree at commit `c21c3ec`. Each finding has a paragraph that starts with `State on 2026-11-09:`. It says what is fixed now and what remains for the owner. The section "What the fix pass of 2026-11-09 changed" lists the changes. The fix pass made no decision for the owner.
+A fix pass on 2026-11-09 applied the mechanical fixes of this audit on the same branch. Its counts are those of the working tree at commit `c21c3ec`. Each finding has a paragraph that starts with `State on 2026-11-09:`. It records the state at that snapshot. The section "What the fix pass of 2026-11-09 changed" lists the changes. The fix pass made no decision for the owner.
 
 ## Decisions after the audit
 

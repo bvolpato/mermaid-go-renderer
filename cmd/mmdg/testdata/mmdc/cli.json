@@ -1,5 +1,8 @@
 {
- "mmdc": "12.0.0",
+ "mmdc": "12.2.0",
+ "mermaid": "12.2.0",
+ "puppeteer": "25.16.0",
+ "playwright": "1.64.1",
  "small": "flowchart LR\n  A[Hello] --> B(World)\n",
  "markdown": "# Title\n\n```mermaid\nflowchart LR\n  accTitle: The \"title\" [x]\n  accDescr: A description [with] back\\slash\n  A --> B\n```\n\ntext\n\n  :::mermaid\npie title Pets\n  \"Dogs\" : 386\n  \"Cats\" : 85\n:::  \n\n```mermaid\ninfo\n```\nend\n",
  "cases": [
@@ -225,7 +228,7 @@
     "default"
    ],
    "code": 0,
-   "stdout": "Found 3 mermaid charts in Markdown input\n ✅ ./images/deep/art-3.png\n ✅ ./images/deep/art-2.png\n ✅ ./images/deep/art-1.png\n ✅ art.md\n",
+   "stdout": "Found 3 mermaid charts in Markdown input\n ✅ ./images/deep/art-2.png\n ✅ ./images/deep/art-3.png\n ✅ ./images/deep/art-1.png\n ✅ art.md\n",
    "stderr": "",
    "files": {
     "art.md": "# Title\n\n![A description \\[with\\] back\\\\slash](./images/deep/art-1.png \"The \\\"title\\\" [x]\")\n\ntext\n\n![diagram](./images/deep/art-2.png)\n\n![diagram](./images/deep/art-3.png)\nend\n"
@@ -327,5 +330,6 @@
    "stdoutHash": "eb748b39c856703c",
    "stderr": "\nNo output format specified, using svg. If you want to specify an output format and suppress this warning, please use `-e <format>.` \n\n"
   }
- ]
+ ],
+ "katex": "0.18.10"
 }

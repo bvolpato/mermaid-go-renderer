@@ -28,13 +28,13 @@ import hashlib
 import io
 import json
 import pathlib
+import subprocess
 
 from fontTools.ttLib import TTFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "internal" / "webfonts" / "files"
 DST = ROOT / "internal" / "font" / "webfontdata" / "files"
-KATEX = ROOT / "tools/reference/node_modules/@mermaid-js/mermaid-cli/node_modules/katex"
 
 
 def decode(woff2: bytes) -> bytes:
@@ -60,12 +60,18 @@ def pack(data: bytes) -> bytes:
 
 
 def main() -> None:
+    assets = json.loads(
+        subprocess.check_output(
+            ["node", str(ROOT / "tools/reference/mmdc-assets.mjs")], text=True
+        )
+    )
+    katex = pathlib.Path(assets["directory"])
     manifest = {}
     for path in sorted(SRC.rglob("*.woff2")):
         rel = path.relative_to(SRC).as_posix()
         woff2 = path.read_bytes()
         if rel.startswith("katex/"):
-            original = KATEX / rel.removeprefix("katex/")
+            original = katex / rel.removeprefix("katex/")
             if original.read_bytes() != woff2:
                 raise ValueError(f"{rel} differs from the mermaid-cli dependency")
             sfnt = original.with_suffix(".ttf").read_bytes()

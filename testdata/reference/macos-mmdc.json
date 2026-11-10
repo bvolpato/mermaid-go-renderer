@@ -5,7 +5,7 @@
  "fonts": "system",
  "fontFingerprint": "2f77e7cbfdf534aa",
  "page": "mermaid-cli",
- "mermaidCLI": "12.0.0",
+ "mermaidCLI": "12.2.0",
  "fixtures": {
   "agentflow/nightly-check/10-should-keep-a-global-scoped-node-outside-the-flow-container": {
    "type": "agentflow",
@@ -7363,25 +7363,25 @@
    "type": "flowchart-v2",
    "sha256": "41da2d95024626ef1f3b46ef4a0dec715c05c0218a66f356a62703de930990e9",
    "bytes": 38223,
-   "embedSha256": "81add7c4183b2177cc706a9f3fd6e339b97b80ceda2cfce888e3f74ae0e006cd"
+   "embedSha256": "2b28aca262e0c3605a55494e1e85555e20ebc88a9be7ce0259f6da213baccf09"
   },
   "katex/pr-check/2-should-render-a-katex-flowchart-containing-the-greek-alphabet": {
    "type": "flowchart-v2",
    "sha256": "c73641927c53f7cbb3e051c2dadf96802003b329b89e955e2cdca8b7d4a671cd",
    "bytes": 30546,
-   "embedSha256": "8a39dd69b7d6a4f06ee467807f745a15749dcf7b99ac3dbe1b4c2878a5bb0c9e"
+   "embedSha256": "c492c019af96f5c887aaa83c21990bca5a96524b723889e8b88c14627353fccd"
   },
   "katex/pr-check/3-should-render-a-katex-flowchart-containing-set-theory-symbols": {
    "type": "flowchart-v2",
    "sha256": "c3413afeb7d67c4a141457bc4f6a37a877fbe8bbed73d2bfca2fab6b409bb2a4",
    "bytes": 31179,
-   "embedSha256": "9042cbc664f8dfea1ffc2e540af95fd408ce49c76c1cf2b8ecf7921b0ed886e0"
+   "embedSha256": "aecf8dbcf79438bb405b36a98f6807a20f8d52d8a597a743fdc6f14af52c3851"
   },
   "katex/pr-check/4-should-render-consecutive-latex-equations-separated-by-text": {
    "type": "flowchart-v2",
    "sha256": "c3427561b209d5e9e9a98a5e23fffefe44faeac18375ee8d5a3660e8b5b7947e",
    "bytes": 32021,
-   "embedSha256": "c40aa391cc50fd358c4ad2e26964eadfcb95fec26507f2c94ab5875920e94393"
+   "embedSha256": "eede6071ccfc79251b43e6f467fb4dff156d345c8b1c00b2e1a9903d50d62af1"
   },
   "mindmap/nightly-check/a-root-with-a-shape": {
    "type": "mindmap",

@@ -1,4 +1,5 @@
-// Records mermaid-cli 12.0.0 src/index.js and Puppeteer 25.16.0 print geometry.
+// Records print geometry from the installed mermaid-cli and Puppeteer.
+// The historical print.json used mermaid-cli 12.0.0 and Puppeteer 25.16.0.
 // Run from the repository root: node internal/mmdc/testdata/print-oracle.mjs.
 // mmdc-run.mjs holds the oracle lock and launches one headless browser.
 import fs from 'node:fs/promises';
@@ -6,9 +7,18 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const reference = path.resolve(here, '../../../tools/reference');
+const cli = path.join(reference, 'node_modules/@mermaid-js/mermaid-cli/src/index.js');
+const cliRequire = createRequire(cli);
+const versionFrom = async file => JSON.parse(await fs.readFile(file, 'utf8')).version;
+const versions = {
+  mmdc: await versionFrom(path.resolve(path.dirname(cli), '../package.json')),
+  mermaid: await versionFrom(cliRequire.resolve('mermaid/package.json')),
+  puppeteer: await versionFrom(cliRequire.resolve('puppeteer/package.json')),
+};
 const scratch = await fs.mkdtemp(path.join(os.tmpdir(), 'mmdc-print-'));
 const hook = `
 import fs from 'node:fs/promises';
@@ -21,7 +31,7 @@ CdpPage.prototype.pdf = async function(options) {
   const result = await pdf.call(this, options);
   const sampleRect = await this.$eval('svg', svg => svg.getBoundingClientRect().toJSON());
   const sampleMedia = Buffer.from(result).toString('latin1').match(/\\/MediaBox\\s*\\[([^\\]]+)/)[1].trim().split(/\\s+/).map(Number);
-  const records = [{name: 'real mmdc flowchart', svg, size: 0, format: '', viewport: 800,
+  const records = [{...${JSON.stringify(versions)}, name: 'real mmdc flowchart', svg, size: 0, format: '', viewport: 800,
     width: Math.fround(sampleMedia[2])*96/72, height: Math.fround(sampleMedia[3])*96/72,
     box: sampleRect, pages: 1, mediaBox: sampleMedia, browser: await this.browser().version()}];
   const cases = [

@@ -4,7 +4,7 @@
  "environment": "chromium-156-linux-liberation",
  "fonts": "embedded",
  "page": "mermaid-cli",
- "mermaidCLI": "12.0.0",
+ "mermaidCLI": "12.2.0",
  "fixtures": {
   "class/dagre-020": {
    "type": "classDiagram",

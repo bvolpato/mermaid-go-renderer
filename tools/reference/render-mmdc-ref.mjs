@@ -10,8 +10,8 @@
 //
 // The script renders in batches (100 files by default, at most 150), one
 // browser per batch. Each batch takes the oracle lock and releases it, so
-// that other callers of the oracle get a turn. It skips a fixture that
-// already has a result, so a run that was stopped can be started again.
+// that other callers of the oracle get a turn. It skips a fixture only
+// when its source, toolchain, platform, and SVG hash match the result.
 // The script waits 3 seconds between batches (--pause MS), so that the
 // other callers get the lock. --force renders every fixture again, and --filter TEXT renders only the
 // fixtures whose path contains TEXT.
@@ -22,6 +22,8 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
+import { referenceContract } from './mmdc-oracle.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
@@ -37,6 +39,9 @@ if (platform !== 'linux' && platform !== 'macos') {
   process.stderr.write('usage: render-mmdc-ref.mjs --platform linux|macos [--corpus NAME] [--force] [--filter TEXT] [--batch N] [--max-batches N]\n');
   process.exit(2);
 }
+if (platform === 'macos' && process.platform !== 'darwin') {
+  throw new Error('macos references require a macOS host');
+}
 const corpusName = option('--corpus', 'mermaid-e2e');
 const corpus = `testdata/corpus/${corpusName}`;
 const out = `.parity/ref-mmdc/${platform}/${corpusName}`;
@@ -44,7 +49,12 @@ const filter = option('--filter', '');
 const batchSize = Math.min(150, Math.max(1, Number(option('--batch', 100))));
 const maxBatches = Number(option('--max-batches', Infinity));
 const pauseMs = Math.max(0, Number(option('--pause', 3000)));
+if (!Number.isInteger(batchSize) || !((Number.isInteger(maxBatches) && maxBatches >= 0) || maxBatches === Infinity) || !Number.isFinite(pauseMs)) {
+  throw new Error('batch, max-batches, and pause must be valid nonnegative numbers');
+}
 const workDir = path.join(root, '.parity/ref-mmdc/work');
+const contract = await referenceContract();
+const sha256 = (data) => crypto.createHash('sha256').update(data).digest('hex');
 
 function walk(dir, files) {
   for (const entry of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
@@ -60,7 +70,25 @@ function walk(dir, files) {
 
 const all = walk(corpus, []).sort().filter((file) => file.includes(filter));
 const resultOf = (file) => path.join(root, out, path.relative(corpus, file).replace(/\.mmd$/, '.json'));
-const isPending = (file) => !fs.existsSync(resultOf(file));
+const isPending = (file) => {
+  try {
+    const result = resultOf(file);
+    const meta = JSON.parse(fs.readFileSync(result, 'utf8'));
+    if (meta.page !== 'mermaid-cli' || meta.mermaid !== contract.mermaid || meta.mmdc !== contract.mmdc ||
+        meta.platform !== (platform === 'macos' ? 'darwin' : 'linux') ||
+        !Object.entries(contract).every(([key, value]) => meta.contract?.[key] === value) ||
+        meta.sourceSha256 !== sha256(fs.readFileSync(path.join(root, file))) || !meta.browserVersion) {
+      return true;
+    }
+    if (meta.error) {
+      return meta.error.startsWith('oracle:');
+    }
+    return !/^[a-f0-9]{64}$/.test(meta.embedSha256 || '') ||
+      sha256(fs.readFileSync(result.replace(/\.json$/, '.svg'))) !== meta.sha256;
+  } catch {
+    return true;
+  }
+};
 let pending = all.filter((file) => force || isPending(file));
 process.stderr.write(`${platform} ${corpusName}: ${all.length} fixtures, ${pending.length} to render\n`);
 
@@ -70,6 +98,7 @@ fs.mkdirSync(workDir, { recursive: true });
 // script gives up when two batches in a row render nothing.
 let idle = 0;
 let batchNumber = 0;
+const started = Date.now();
 while (pending.length > 0 && batchNumber < maxBatches) {
   const batch = pending.slice(0, batchSize);
   const list = path.join(workDir, `render-mmdc-ref-${process.pid}.list`);
@@ -96,6 +125,9 @@ while (pending.length > 0 && batchNumber < maxBatches) {
   process.stderr.write(`batch ${batchNumber}: ${done} of ${batch.length} fixtures in ${seconds}s, ${pending.length} left\n`);
   if (run.status !== 0) {
     process.stderr.write(`the oracle stopped with status ${run.status}\n`);
+    if (run.error || run.signal) {
+      process.stderr.write(`${run.error || run.signal}\n`);
+    }
   }
   idle = done === 0 ? idle + 1 : 0;
   if (idle >= 2) {
@@ -108,3 +140,4 @@ while (pending.length > 0 && batchNumber < maxBatches) {
     spawnSync(process.execPath, ['-e', `setTimeout(() => {}, ${pauseMs})`]);
   }
 }
+process.stderr.write(`${platform} ${corpusName}: ${all.length - pending.length} current results, ${pending.length} pending, ${((Date.now() - started) / 1000).toFixed(1)}s total\n`);
