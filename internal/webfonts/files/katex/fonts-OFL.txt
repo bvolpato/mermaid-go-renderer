@@ -1,4 +1,4 @@
-KaTeX fonts from katex 0.16.47
+KaTeX fonts from KaTeX 0.16.47
 
 Source: `tools/reference/node_modules/@mermaid-js/mermaid-cli/node_modules/katex/dist/fonts`.
 This notice covers the 20 WOFF2 files in `internal/webfonts/files/katex/dist/fonts` and the 20 SFNT files in `internal/font/webfontdata/files/katex/dist/fonts`.
