@@ -449,8 +449,13 @@ func writeSite(out string, gallery []galleryItem, perf *perfdata.Data, par *pari
 	if err != nil {
 		return err
 	}
-	if err := copyFile(filepath.Join("assets", "logo.svg"), filepath.Join(out, "logo.svg")); err != nil {
-		return err
+	for _, name := range []string{
+		"logo.svg", "logo.png", "icon.svg", "favicon.ico", "favicon-32.png",
+		"apple-touch-icon.png", "icon-192.png", "icon-512.png", "social-card.png",
+	} {
+		if err := copyFile(filepath.Join("assets", name), filepath.Join(out, name)); err != nil {
+			return err
+		}
 	}
 	// The web fonts and their style sheets, with the layout of the
 	// packages, so that the url() of a style sheet finds its font.

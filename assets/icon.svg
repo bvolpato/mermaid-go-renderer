@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">mmdg mermaid gopher</title>
+  <desc id="desc">A curious cyan Go gopher with a curled teal mermaid tail. Adapted from the Go gopher by Renée French, CC BY 4.0: https://go.dev/blog/gopher.</desc>
+  <style>.detail{display:none}.outline{stroke-width:16}</style>
+  <defs>
+    <path id="body" d="M393 184C450 122 557 99 644 130C690 147 723 183 742 237C766 295 766 366 742 420L716 480C702 520 724 564 756 583C795 609 836 579 847 536C798 511 751 463 783 383C829 393 859 422 882 460C903 430 949 413 1008 423C1016 517 960 548 890 546C866 645 802 716 724 745C639 779 546 753 463 704C378 655 339 581 328 500C312 438 308 353 321 291C330 249 358 211 393 184Z"/>
+    <clipPath id="body-clip"><use href="#body"/></clipPath>
+  </defs>
+  <g transform="translate(-160 -23.04) scale(.64)" stroke="#0b2a3a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <g class="outline">
+      <path fill="#69d7e2" d="M641 138C650 102 688 96 715 111C749 129 759 171 738 199L700 204Z"/>
+      <path fill="#0b2a3a" stroke="none" d="M675 151C683 132 703 131 715 145C726 158 723 177 710 186Z"/>
+      <path fill="#69d7e2" d="M333 289C294 282 279 249 293 213C307 175 350 154 378 180L406 209Z"/>
+      <path fill="#0b2a3a" stroke="none" d="M333 252C315 247 316 226 329 214C341 203 359 205 369 217L352 244Z"/>
+      <use href="#body" fill="#69d7e2" stroke="none"/>
+      <g clip-path="url(#body-clip)" stroke="none">
+        <path fill="#2aa198" d="M317 595C389 541 454 541 510 567C565 594 602 606 650 597C683 590 705 588 728 590C790 625 835 581 847 536L930 520L1040 800H300Z"/>
+        <path fill="#5eead4" d="M847 536C798 511 751 463 783 383C829 393 859 422 882 460C903 430 949 413 1008 423C1016 517 960 548 890 546Z"/>
+        <path class="detail" fill="#5eead4" d="M442 618C489 583 532 601 579 628C623 653 661 667 699 644C658 696 603 660 557 637C511 614 479 606 442 618Z"/>
+      </g>
+      <use href="#body" fill="none"/>
+      <g fill="#fff" stroke-width="9">
+        <ellipse cx="461" cy="267" rx="65" ry="74" transform="rotate(31 461 267)"/>
+        <ellipse cx="632" cy="230" rx="64" ry="71" transform="rotate(27 632 230)"/>
+      </g>
+      <g fill="#0b2a3a" stroke="none">
+        <ellipse cx="501" cy="250" rx="25" ry="27" transform="rotate(25 501 250)"/>
+        <ellipse cx="664" cy="215" rx="25" ry="27" transform="rotate(25 664 215)"/>
+      </g>
+      <g class="detail" fill="#fff" stroke="none">
+        <circle cx="511" cy="237" r="8"/>
+        <circle cx="674" cy="202" r="8"/>
+      </g>
+      <g fill="#fff" stroke-width="8">
+        <path d="M551 344L563 381C568 400 590 390 586 375L578 337Z"/>
+        <path d="M578 337L587 374C591 392 614 382 609 366L600 331Z"/>
+      </g>
+      <path fill="#f6d2a2" stroke-width="9" d="M521 328C523 307 543 295 563 297C579 282 602 289 619 307C637 325 626 346 608 341C595 334 586 343 568 351C542 363 515 354 521 328Z"/>
+      <ellipse cx="574" cy="295" rx="28" ry="18" transform="rotate(-17 574 295)" fill="#0b2a3a" stroke="none"/>
+      <g fill="#f6d2a2" stroke-width="10">
+        <path d="M350 441C368 431 384 443 377 460C372 473 352 497 338 503C319 513 303 502 307 484C310 467 330 450 350 441Z"/>
+        <path d="M690 447C708 454 728 478 732 494C738 514 721 525 706 516C687 504 673 482 672 464C670 449 677 440 690 447Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

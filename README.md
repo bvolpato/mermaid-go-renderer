@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="mmdg logo" width="280"/>
+<img src="assets/logo.svg" alt="mmdg mascot: the Go gopher with a mermaid tail" width="240" height="240"/>
 
 # mmdg
 
@@ -294,6 +294,8 @@ go run ./tools/fmacheck ./internal/... # no fused multiply-add in ported code
 
 The website is in `website`. `go run ./tools/sitegen -out dist` builds it, with the corpus comparison, the gallery and the WebAssembly playground. A push to `main` publishes it.
 
+`assets/logo.svg` is the source of the mascot. After editing it, run `go run ./tools/brandgen` to regenerate the PNG, browser icons, and social preview with the project's own renderer.
+
 The parity and performance numbers in the README, CLI document, and website come from repository data:
 
 | Data | What updates it |
@@ -308,6 +310,8 @@ The reference SVG files come from `tools/reference/oracle.mjs`, which runs merma
 ## Licenses
 
 The original code of this repository is under the MIT license. See [LICENSE](LICENSE).
+
+The mascot adapts the [Go gopher by Renée French](https://go.dev/blog/gopher), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), with a mermaid tail and a new pose.
 
 The MIT license does not replace the licenses of the code that was ported. The code is a port of mermaid and of the libraries and browser code that produce its output, so most packages are derivative works and keep the terms of their source:
 
