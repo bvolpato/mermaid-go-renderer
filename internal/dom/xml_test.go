@@ -86,9 +86,8 @@ func TestXMLFromTree(t *testing.T) {
 // builds another tree than Chromium. The serializer is not the cause:
 // TestXMLFromTree passes for them.
 var parserDivergences = map[string]string{
-	"empty/html-elements":    "golang.org/x/net/html drops what follows a template element in a fragment",
-	"comment/markup-inside":  "golang.org/x/net/html decodes character references in a comment",
-	"nested/html-breaks-out": "golang.org/x/net/html keeps an HTML start tag inside foreign content when it parses a fragment",
+	"empty/html-elements":   "golang.org/x/net/html drops what follows a template element in a fragment",
+	"comment/markup-inside": "golang.org/x/net/html decodes character references in a comment",
 }
 
 // TestXMLFromMarkup parses the markup as the innerHTML of a div, as
