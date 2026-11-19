@@ -11,5 +11,10 @@
     "@mermaid-js/mermaid-cli": "12.2.0",
     "esbuild": "0.28.2",
     "jison": "0.4.18"
+  },
+  "overrides": {
+    "nomnom": {
+      "underscore": "1.13.8"
+    }
   }
 }

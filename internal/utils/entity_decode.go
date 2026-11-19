@@ -27,12 +27,12 @@ func EntityDecode(text string) string {
 	text = strings.ReplaceAll(text, "%3B", ";")
 	// The two HTML parsers of Chromium do not agree on "&#x;", a
 	// hexadecimal reference without digits. The fast path parser of
-	// innerHTML reads it as U+FFFD, and so does golang.org/x/net/html. The
-	// full parser keeps the four characters. Chromium uses the full parser
+	// innerHTML reads it as U+FFFD. The full parser keeps the four
+	// characters, as does golang.org/x/net/html. Chromium uses the full parser
 	// when the fast path parser gives up on the text.
-	if (strings.Contains(text, "&#x;") || strings.Contains(text, "&#X;")) && !fastPathParsesText(text) {
-		text = strings.ReplaceAll(text, "&#x;", "&amp;#x;")
-		text = strings.ReplaceAll(text, "&#X;", "&amp;#X;")
+	if (strings.Contains(text, "&#x;") || strings.Contains(text, "&#X;")) && fastPathParsesText(text) {
+		text = strings.ReplaceAll(text, "&#x;", "\uFFFD")
+		text = strings.ReplaceAll(text, "&#X;", "\uFFFD")
 	}
 	decoder.HTML(text)
 

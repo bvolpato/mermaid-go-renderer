@@ -4,10 +4,10 @@ go 1.27.0
 
 require (
 	github.com/dlclark/regexp2 v1.12.0
-	github.com/dlclark/regexp2/v2 v2.11.0
+	github.com/dlclark/regexp2/v2 v2.13.0
 	github.com/dop251/goja v0.0.0-20261029234554-1329d889cf98
 	github.com/go-text/typesetting v0.3.5
-	golang.org/x/net v0.55.0
+	golang.org/x/net v0.62.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
