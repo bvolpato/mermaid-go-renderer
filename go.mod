@@ -6,7 +6,7 @@ require (
 	github.com/dlclark/regexp2/v2 v2.13.0
 	github.com/dop251/goja v0.0.0-20261029234554-1329d889cf98
 	github.com/go-text/typesetting v0.3.5
-	golang.org/x/text v0.43.0
+	golang.org/x/text v0.44.0
 )
 
 require (
