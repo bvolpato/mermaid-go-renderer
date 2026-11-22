@@ -66,10 +66,16 @@ const (
 var (
 	reRgbInteger  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgb\(` + reI + `,` + reI + `,` + reI + `\)$`) })
 	reRgbPercent  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgb\(` + reP + `,` + reP + `,` + reP + `\)$`) })
-	reRgbaInteger = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgba\(` + reI + `,` + reI + `,` + reI + `,` + reN + `\)$`) })
-	reRgbaPercent = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgba\(` + reP + `,` + reP + `,` + reP + `,` + reN + `\)$`) })
+	reRgbaInteger = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`^rgba\(` + reI + `,` + reI + `,` + reI + `,` + reN + `\)$`)
+	})
+	reRgbaPercent = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`^rgba\(` + reP + `,` + reP + `,` + reP + `,` + reN + `\)$`)
+	})
 	reHslPercent  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^hsl\(` + reN + `,` + reP + `,` + reP + `\)$`) })
-	reHslaPercent = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^hsla\(` + reN + `,` + reP + `,` + reP + `,` + reN + `\)$`) })
+	reHslaPercent = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`^hsla\(` + reN + `,` + reP + `,` + reP + `,` + reN + `\)$`)
+	})
 )
 
 func isLowerHex(s string) bool {
