@@ -1,6 +1,6 @@
 module github.com/bvolpato/mermaid-go-renderer
 
-go 1.27.0
+go 1.27
 
 require (
 	github.com/dlclark/regexp2/v2 v2.13.0
