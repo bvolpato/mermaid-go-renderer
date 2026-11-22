@@ -4,9 +4,8 @@ package gantt
 
 import (
 	"math"
+	"regexp"
 	"strings"
-
-	"github.com/dlclark/regexp2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/d3/axis"
 	"github.com/bvolpato/mermaid-go-renderer/internal/d3/scale"
@@ -63,7 +62,7 @@ func getMaxIntersections(tasks []*Task, orderOffset float64) float64 {
 
 const maxTickCount = 10000
 
-var reTickInterval = regexp2.MustCompile(`^([1-9]\d*)(millisecond|second|minute|hour|day|week|month)$`, regexp2.ECMAScript)
+var reTickInterval = regexp.MustCompile(`^([1-9][0-9]*)(millisecond|second|minute|hour|day|week|month)$`)
 
 // checkUnique is checkUnique: the values of the array without duplicates.
 func checkUnique(arr []string) []string {
@@ -743,19 +742,19 @@ func (d *drawer) makeGrid(theSidePad, theTopPad, _, h float64) {
 		// A value that is not a string becomes a string in exec.
 		tickIntervalText = js.ToString(conf.Get("tickInterval"))
 	}
-	resultTickInterval, _ := reTickInterval.FindStringMatch(tickIntervalText)
+	resultTickInterval := reTickInterval.FindStringSubmatch(tickIntervalText)
 
 	var every float64
 	var interval string
 	var estimatedTicks float64
 	customTicks := false
 	if resultTickInterval != nil {
-		every = js.ParseInt(resultTickInterval.GroupByNumber(1).String(), 10)
+		every = js.ParseInt(resultTickInterval[1], 10)
 		if math.IsNaN(every) || every <= 0 {
 			// Invalid tick interval value. Skipping custom tick interval.
 		} else {
 			customTicks = true
-			interval = resultTickInterval.GroupByNumber(2).String()
+			interval = resultTickInterval[2]
 
 			// Get the time domain to check tick count
 			domain := d.timeScale.DomainValues()

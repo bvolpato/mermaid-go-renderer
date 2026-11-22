@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/d3/internal/jsm"
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
@@ -63,14 +64,26 @@ const (
 )
 
 var (
-	reHex         = regexp.MustCompile(`^#([0-9a-f]{3,8})$`)
-	reRgbInteger  = regexp.MustCompile(`^rgb\(` + reI + `,` + reI + `,` + reI + `\)$`)
-	reRgbPercent  = regexp.MustCompile(`^rgb\(` + reP + `,` + reP + `,` + reP + `\)$`)
-	reRgbaInteger = regexp.MustCompile(`^rgba\(` + reI + `,` + reI + `,` + reI + `,` + reN + `\)$`)
-	reRgbaPercent = regexp.MustCompile(`^rgba\(` + reP + `,` + reP + `,` + reP + `,` + reN + `\)$`)
-	reHslPercent  = regexp.MustCompile(`^hsl\(` + reN + `,` + reP + `,` + reP + `\)$`)
-	reHslaPercent = regexp.MustCompile(`^hsla\(` + reN + `,` + reP + `,` + reP + `,` + reN + `\)$`)
+	reRgbInteger  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgb\(` + reI + `,` + reI + `,` + reI + `\)$`) })
+	reRgbPercent  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgb\(` + reP + `,` + reP + `,` + reP + `\)$`) })
+	reRgbaInteger = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgba\(` + reI + `,` + reI + `,` + reI + `,` + reN + `\)$`) })
+	reRgbaPercent = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^rgba\(` + reP + `,` + reP + `,` + reP + `,` + reN + `\)$`) })
+	reHslPercent  = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^hsl\(` + reN + `,` + reP + `,` + reP + `\)$`) })
+	reHslaPercent = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^hsla\(` + reN + `,` + reP + `,` + reP + `,` + reN + `\)$`) })
 )
+
+func isLowerHex(s string) bool {
+	if len(s) < 3 || len(s) > 8 {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
+			return false
+		}
+	}
+	return true
+}
 
 // toLowerCase is String.prototype.toLowerCase for the purpose of color
 // names. JavaScript maps U+0130 to "i" and a combining dot; Go maps it to "i".
@@ -85,9 +98,10 @@ func toLowerCase(s string) string {
 // color.
 func Parse(format string) Color {
 	format = toLowerCase(js.TrimSpace(format))
-	if m := reHex.FindStringSubmatch(format); m != nil {
-		l := len(m[1])
-		v, _ := strconv.ParseUint(m[1], 16, 64)
+	if len(format) >= 4 && format[0] == '#' && isLowerHex(format[1:]) {
+		hex := format[1:]
+		l := len(hex)
+		v, _ := strconv.ParseUint(hex, 16, 64)
 		n := js.ToInt32(float64(v))
 		switch l {
 		case 6: // #ff0000
@@ -101,23 +115,35 @@ func Parse(format string) Color {
 		}
 		return nil // invalid hex
 	}
-	if m := reRgbInteger.FindStringSubmatch(format); m != nil { // rgb(255, 0, 0)
-		return RGB{js.Number(m[1]), js.Number(m[2]), js.Number(m[3]), 1}
+	if strings.HasPrefix(format, "rgb(") {
+		if m := reRgbInteger().FindStringSubmatch(format); m != nil { // rgb(255, 0, 0)
+			return RGB{js.Number(m[1]), js.Number(m[2]), js.Number(m[3]), 1}
+		}
+		if m := reRgbPercent().FindStringSubmatch(format); m != nil { // rgb(100%, 0%, 0%)
+			return RGB{js.Number(m[1]) * 255 / 100, js.Number(m[2]) * 255 / 100, js.Number(m[3]) * 255 / 100, 1}
+		}
+		return nil
 	}
-	if m := reRgbPercent.FindStringSubmatch(format); m != nil { // rgb(100%, 0%, 0%)
-		return RGB{js.Number(m[1]) * 255 / 100, js.Number(m[2]) * 255 / 100, js.Number(m[3]) * 255 / 100, 1}
+	if strings.HasPrefix(format, "rgba(") {
+		if m := reRgbaInteger().FindStringSubmatch(format); m != nil { // rgba(255, 0, 0, 1)
+			return rgba(js.Number(m[1]), js.Number(m[2]), js.Number(m[3]), js.Number(m[4]))
+		}
+		if m := reRgbaPercent().FindStringSubmatch(format); m != nil { // rgb(100%, 0%, 0%, 1)
+			return rgba(js.Number(m[1])*255/100, js.Number(m[2])*255/100, js.Number(m[3])*255/100, js.Number(m[4]))
+		}
+		return nil
 	}
-	if m := reRgbaInteger.FindStringSubmatch(format); m != nil { // rgba(255, 0, 0, 1)
-		return rgba(js.Number(m[1]), js.Number(m[2]), js.Number(m[3]), js.Number(m[4]))
+	if strings.HasPrefix(format, "hsl(") {
+		if m := reHslPercent().FindStringSubmatch(format); m != nil { // hsl(120, 50%, 50%)
+			return hsla(js.Number(m[1]), js.Number(m[2])/100, js.Number(m[3])/100, 1)
+		}
+		return nil
 	}
-	if m := reRgbaPercent.FindStringSubmatch(format); m != nil { // rgb(100%, 0%, 0%, 1)
-		return rgba(js.Number(m[1])*255/100, js.Number(m[2])*255/100, js.Number(m[3])*255/100, js.Number(m[4]))
-	}
-	if m := reHslPercent.FindStringSubmatch(format); m != nil { // hsl(120, 50%, 50%)
-		return hsla(js.Number(m[1]), js.Number(m[2])/100, js.Number(m[3])/100, 1)
-	}
-	if m := reHslaPercent.FindStringSubmatch(format); m != nil { // hsla(120, 50%, 50%, 1)
-		return hsla(js.Number(m[1]), js.Number(m[2])/100, js.Number(m[3])/100, js.Number(m[4]))
+	if strings.HasPrefix(format, "hsla(") {
+		if m := reHslaPercent().FindStringSubmatch(format); m != nil { // hsla(120, 50%, 50%, 1)
+			return hsla(js.Number(m[1]), js.Number(m[2])/100, js.Number(m[3])/100, js.Number(m[4]))
+		}
+		return nil
 	}
 	if n, ok := named[format]; ok {
 		return rgbn(n)

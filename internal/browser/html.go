@@ -560,17 +560,19 @@ func (lb *lineBreaker) breakLines(avail lu) []*htmlLine {
 		cur = &htmlLine{}
 		last.ok = false
 	}
-	index := make(map[*inlineItem]int, len(lb.items))
-	for i, it := range lb.items {
-		if it != nil {
-			index[it] = i
+	itemIndex := func(target *inlineItem) int {
+		for i, it := range lb.items {
+			if it == target {
+				return i
+			}
 		}
+		return -1
 	}
 	// rewind cuts the current line at the last break opportunity.
 	rewind := func() {
 		frags := cur.frags[:0]
 		for _, f := range cur.frags {
-			switch i := index[f.item]; {
+			switch i := itemIndex(f.item); {
 			case i < last.idx, i == last.idx && f.hi <= last.lo:
 				frags = append(frags, f)
 			case i == last.idx && f.lo < last.lo:
@@ -586,7 +588,7 @@ func (lb *lineBreaker) breakLines(avail lu) []*htmlLine {
 		cur.frags = frags
 		marks := cur.marks[:0]
 		for _, m := range cur.marks {
-			if index[m.item] < last.idx {
+			if itemIndex(m.item) < last.idx {
 				marks = append(marks, m)
 			}
 		}

@@ -2,6 +2,7 @@ package dom
 
 import (
 	"strings"
+	"sync"
 	"unicode/utf8"
 )
 
@@ -111,16 +112,116 @@ var svgAttrNames = map[string]string{
 // near to that number. No diagram comes near to simpleMaxOpen.
 const simpleMaxOpen = 256
 
+// ParseArena holds reusable Node and Attr slabs for temporary documents
+// parsed by ParseHTMLDocumentPooled (such as inside DOMPurify when ReturnDOM
+// is false). Call Release when done with the document.
+type ParseArena struct {
+	nodeChunks [][]Node
+	attrChunks [][]Attr
+	nodeIdx    int
+	attrIdx    int
+	nodeOff    int
+	attrOff    int
+	stack      []*Node
+	formatting []*Node
+}
+
+var parseArenaPool = sync.Pool{New: func() any { return &ParseArena{} }}
+
+const maxPooledArenaChunks = 64
+
+func acquireParseArena() *ParseArena {
+	a := parseArenaPool.Get().(*ParseArena)
+	a.nodeIdx, a.attrIdx = 0, 0
+	a.nodeOff, a.attrOff = 0, 0
+	a.stack = a.stack[:0]
+	a.formatting = a.formatting[:0]
+	return a
+}
+
+// Release clears all node/attr references in the arena and returns it to the
+// pool. The HTMLDocument parsed with this arena must not be used after Release.
+func (a *ParseArena) Release() {
+	if a == nil {
+		return
+	}
+	for i := 0; i <= a.nodeIdx && i < len(a.nodeChunks); i++ {
+		end := len(a.nodeChunks[i])
+		if i == a.nodeIdx {
+			end = a.nodeOff
+		}
+		clear(a.nodeChunks[i][:end])
+	}
+	for i := 0; i <= a.attrIdx && i < len(a.attrChunks); i++ {
+		end := len(a.attrChunks[i])
+		if i == a.attrIdx {
+			end = a.attrOff
+		}
+		clear(a.attrChunks[i][:end])
+	}
+	clear(a.stack)
+	clear(a.formatting)
+	if len(a.nodeChunks) <= maxPooledArenaChunks && len(a.attrChunks) <= maxPooledArenaChunks {
+		parseArenaPool.Put(a)
+	}
+}
+
+func (a *ParseArena) allocNode(doc *Document) *Node {
+	if a.nodeIdx >= len(a.nodeChunks) {
+		sz := 16
+		if len(a.nodeChunks) > 0 {
+			sz = min(len(a.nodeChunks[len(a.nodeChunks)-1])*2, 256)
+		}
+		a.nodeChunks = append(a.nodeChunks, make([]Node, sz))
+		a.nodeOff = 0
+	}
+	chunk := a.nodeChunks[a.nodeIdx]
+	if a.nodeOff >= len(chunk) {
+		a.nodeIdx++
+		a.nodeOff = 0
+		return a.allocNode(doc)
+	}
+	n := &chunk[a.nodeOff]
+	a.nodeOff++
+	n.doc = doc
+	return n
+}
+
+func (a *ParseArena) allocAttrs(count int) []Attr {
+	for {
+		if a.attrIdx >= len(a.attrChunks) {
+			sz := max(count, 32)
+			if len(a.attrChunks) > 0 {
+				sz = max(count, min(len(a.attrChunks[len(a.attrChunks)-1])*2, 512))
+			}
+			a.attrChunks = append(a.attrChunks, make([]Attr, sz))
+			a.attrOff = 0
+		}
+		chunk := a.attrChunks[a.attrIdx]
+		if a.attrOff+count <= len(chunk) {
+			s := chunk[a.attrOff : a.attrOff : a.attrOff+count]
+			a.attrOff += count
+			return s
+		}
+		a.attrIdx++
+		a.attrOff = 0
+	}
+}
+
 // simpleParser is the state of one parseSimpleDocument.
 type simpleParser struct {
 	src string
 	pos int
 	doc *Document
+	// arena is non-nil when parsing into a pooled ParseArena.
+	arena *ParseArena
 	// stack has the open elements. The first one is the body.
 	stack []*Node
 	// nodes and attrs are the storage of the nodes of the document.
-	nodes []Node
-	attrs []Attr
+	nodes    []Node
+	attrs    []Attr
+	nodeSlab int
+	attrSlab int
 	// formatting has the formatting elements with two or more attributes
 	// that were read, to find two of them whose attributes differ only in
 	// the order. See startHTML.
@@ -128,8 +229,22 @@ type simpleParser struct {
 }
 
 func (p *simpleParser) newNode() *Node {
+	if p.arena != nil {
+		return p.arena.allocNode(p.doc)
+	}
 	if len(p.nodes) == 0 {
-		p.nodes = make([]Node, 32)
+		sz := p.nodeSlab
+		if sz == 0 {
+			if len(p.src) > 1024 {
+				sz = 64
+			} else {
+				sz = 8
+			}
+		} else if sz < 64 {
+			sz *= 2
+		}
+		p.nodeSlab = sz
+		p.nodes = make([]Node, sz)
 	}
 	n := &p.nodes[0]
 	p.nodes = p.nodes[1:]
@@ -159,17 +274,26 @@ func (p *simpleParser) add(n *Node) {
 // parseSimpleDocument is ParseHTMLDocument for simple markup. See the top
 // of this file.
 func parseSimpleDocument(markup string) (*HTMLDocument, bool) {
+	return parseSimpleDocumentWithArena(markup, nil)
+}
+
+func parseSimpleDocumentWithArena(markup string, arena *ParseArena) (*HTMLDocument, bool) {
 	// The full parser changes these: a carriage return becomes a line feed,
 	// and NUL and bytes that are not UTF-8 become other characters.
 	if strings.ContainsAny(markup, "\r\x00") || !utf8.ValidString(markup) {
 		return nil, false
 	}
 	d := &Document{}
-	p := &simpleParser{src: markup, doc: d}
+	p := &simpleParser{src: markup, doc: d, arena: arena}
 	root := p.element(NSHTML, "html")
 	head := p.element(NSHTML, "head")
 	body := p.element(NSHTML, "body")
-	p.stack = append(make([]*Node, 0, 16), root)
+	if arena != nil {
+		p.stack = append(arena.stack[:0], root)
+		p.formatting = arena.formatting[:0]
+	} else {
+		p.stack = append(make([]*Node, 0, 16), root)
+	}
 	p.add(head)
 	p.add(body)
 	p.stack[0] = body
@@ -183,16 +307,28 @@ func parseSimpleDocument(markup string) (*HTMLDocument, bool) {
 	}
 	if p.pos == len(markup) {
 		// No content: the full parser decides what the document is.
+		if arena != nil {
+			arena.stack = p.stack[:0]
+			arena.formatting = p.formatting[:0]
+		}
 		return nil, false
 	}
 	for p.pos < len(markup) {
 		if markup[p.pos] != '<' {
 			if !p.text() {
+				if arena != nil {
+					arena.stack = p.stack[:0]
+					arena.formatting = p.formatting[:0]
+				}
 				return nil, false
 			}
 			continue
 		}
 		if p.pos+1 >= len(markup) {
+			if arena != nil {
+				arena.stack = p.stack[:0]
+				arena.formatting = p.formatting[:0]
+			}
 			return nil, false
 		}
 		ok := false
@@ -203,12 +339,24 @@ func parseSimpleDocument(markup string) (*HTMLDocument, bool) {
 			ok = p.startTag()
 		}
 		if !ok {
+			if arena != nil {
+				arena.stack = p.stack[:0]
+				arena.formatting = p.formatting[:0]
+			}
 			return nil, false
 		}
 	}
 	if len(p.stack) != 1 {
 		// An element is still open. The full parser closes it.
+		if arena != nil {
+			arena.stack = p.stack[:0]
+			arena.formatting = p.formatting[:0]
+		}
 		return nil, false
+	}
+	if arena != nil {
+		arena.stack = p.stack
+		arena.formatting = p.formatting
 	}
 	d.Body = body
 	return &HTMLDocument{Document: d, Root: root, Body: body}, true
@@ -459,11 +607,26 @@ func (p *simpleParser) attributes(n *Node) (selfClosing, ok bool) {
 	}
 	count /= 2
 	if count > 0 {
-		if len(p.attrs) < count {
-			p.attrs = make([]Attr, max(count, 64))
+		if p.arena != nil {
+			n.Attrs = p.arena.allocAttrs(count)
+		} else {
+			if len(p.attrs) < count {
+				sz := p.attrSlab
+				if sz == 0 {
+					if len(src) > 1024 {
+						sz = 128
+					} else {
+						sz = 8
+					}
+				} else if sz < 128 {
+					sz *= 2
+				}
+				p.attrSlab = sz
+				p.attrs = make([]Attr, max(count, sz))
+			}
+			n.Attrs = p.attrs[:0:count]
+			p.attrs = p.attrs[count:]
 		}
-		n.Attrs = p.attrs[:0:count]
-		p.attrs = p.attrs[count:]
 	}
 	for {
 		if p.pos >= len(src) {

@@ -79,7 +79,7 @@ func initDiagram(ctx *render.Context, _ render.DB) {
 	conf.Set("flowchart", section)
 	// setConfig can fail only for a theme that the config state has
 	// accepted before, with the same directives.
-	_, _ = ctx.ConfigState.SetConfig(conf)
+	_ = ctx.ConfigState.SetConfigDiscard(conf)
 }
 
 // getClasses is getClasses(text, diagramObj) of the renderer: the class

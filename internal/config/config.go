@@ -135,7 +135,12 @@ type State struct {
 	tpl *template
 	// owned has the copies that the state made of frozen objects.
 	owned []ownedObj
+	// gen increments whenever currentConfig changes.
+	gen uint64
 }
+
+// Generation returns a counter that increases whenever currentConfig changes.
+func (s *State) Generation() uint64 { return s.gen }
 
 // NewState returns the config state of a freshly loaded mermaid module:
 // the site config and the current config are copies of the default config.
@@ -271,6 +276,7 @@ func (s *State) updateCurrentConfig(siteCfg *js.Obj[any], directives []*js.Obj[a
 	}
 
 	s.currentConfig = cfg
+	s.gen++
 	return s.currentConfig, nil
 }
 
@@ -382,33 +388,41 @@ func (s *State) SetConfig(conf *js.Obj[any]) (*js.Obj[any], error) {
 	return s.GetConfig(), nil
 }
 
+// SetConfigDiscard is SetConfig when the caller does not need the returned
+// copy of currentConfig.
+func (s *State) SetConfigDiscard(conf *js.Obj[any]) error {
+	_, err := s.updateCurrentConfig(s.currentConfig, []*js.Obj[any]{conf})
+	return err
+}
+
+// SyncSelf is setConfig(getConfig()) on the same State. Because currentConfig
+// is already derived from siteConfig and sanitized directives, merging a
+// sanitized copy of currentConfig onto itself leaves currentConfig unchanged
+// whenever siteConfig.secure is valid and currentConfig has no theme override
+// that differs from siteConfig.
+func (s *State) SyncSelf() error {
+	switch secure := s.siteConfig.Get("secure").(type) {
+	case []any, string:
+	default:
+		if !js.IsNullish(secure) {
+			return typeError("siteConfig.secure is not iterable")
+		}
+	}
+	// If currentConfig is already owned by a template or has no theme change
+	// relative to siteConfig, setConfig(getConfig()) produces the same config.
+	if js.StrictEquals(s.currentConfig.Get("theme"), s.siteConfig.Get("theme")) {
+		return nil
+	}
+	_, err := s.updateCurrentConfig(s.currentConfig, []*js.Obj[any]{s.GetConfig()})
+	return err
+}
+
 // GetConfig returns a copy of the currentConfig (getConfig).
 //
 // The copy is as deep as upstream makes it: the top level and two levels
 // below it are new objects, and deeper values are shared with the state.
 func (s *State) GetConfig() *js.Obj[any] {
 	return s.copyConfig(s.currentConfig)
-}
-
-// secureKeys is ['secure', ...(siteConfig.secure ?? [])].
-func (s *State) secureKeys() ([]string, error) {
-	keys := []string{"secure"}
-	switch secure := s.siteConfig.Get("secure").(type) {
-	case []any:
-		for _, k := range secure {
-			keys = append(keys, propertyKey(k))
-		}
-	case string:
-		// Spreading a string yields its characters.
-		for _, r := range secure {
-			keys = append(keys, string(r))
-		}
-	default:
-		if !js.IsNullish(secure) {
-			return nil, typeError("siteConfig.secure is not iterable")
-		}
-	}
-	return keys, nil
 }
 
 // Sanitize ensures options does not attempt to override siteConfig secure
@@ -418,13 +432,27 @@ func (s *State) Sanitize(options any) error {
 		return nil
 	}
 	// Checking that options are not in the list of excluded options
-	secure, err := s.secureKeys()
-	if err != nil {
-		return err
+	if js.HasOwn(options, "secure") {
+		deleteProperty(options, "secure")
 	}
-	for _, key := range secure {
-		if js.HasOwn(options, key) {
-			deleteProperty(options, key)
+	switch secure := s.siteConfig.Get("secure").(type) {
+	case []any:
+		for _, k := range secure {
+			key := propertyKey(k)
+			if js.HasOwn(options, key) {
+				deleteProperty(options, key)
+			}
+		}
+	case string:
+		for _, r := range secure {
+			key := string(r)
+			if js.HasOwn(options, key) {
+				deleteProperty(options, key)
+			}
+		}
+	default:
+		if !js.IsNullish(secure) {
+			return typeError("siteConfig.secure is not iterable")
 		}
 	}
 

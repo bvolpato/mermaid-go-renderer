@@ -33,6 +33,31 @@ func Str(x float64) string {
 	if x == math.Trunc(x) && math.Abs(x) < 1<<53 {
 		return strconv.FormatInt(int64(x), 10)
 	}
+	var outBuf [48]byte
+	return string(AppendNum(outBuf[:0], x))
+}
+
+// WriteNum writes Str(x) to sb without allocating an intermediate string.
+func WriteNum(sb *strings.Builder, x float64) {
+	var buf [48]byte
+	sb.Write(AppendNum(buf[:0], x))
+}
+
+// AppendNum appends Str(x) to dst and returns the extended slice.
+func AppendNum(out []byte, x float64) []byte {
+	switch {
+	case math.IsNaN(x):
+		return append(out, "NaN"...)
+	case x == 0:
+		return append(out, '0')
+	case math.IsInf(x, 1):
+		return append(out, "Infinity"...)
+	case math.IsInf(x, -1):
+		return append(out, "-Infinity"...)
+	}
+	if x == math.Trunc(x) && math.Abs(x) < 1<<53 {
+		return strconv.AppendInt(out, int64(x), 10)
+	}
 	var buf [32]byte
 	b := strconv.AppendFloat(buf[:0], math.Abs(x), 'e', -1, 64)
 	// b is "d.ddddde±xx" or "de±xx". Split it into digits and exponent.
@@ -60,10 +85,6 @@ func Str(x float64) string {
 	k := len(digits)
 	n := exp + 1 // the decimal point is after the first n digits
 
-	// The longest result has a sign, 21 digits and a point, or 17 digits
-	// and an exponent.
-	var outBuf [48]byte
-	out := outBuf[:0]
 	if x < 0 {
 		out = append(out, '-')
 	}
@@ -99,7 +120,7 @@ func Str(x float64) string {
 		}
 		out = strconv.AppendInt(out, int64(e), 10)
 	}
-	return string(out)
+	return out
 }
 
 // Round is Math.round: the nearest integer, and a tie goes toward +Infinity.

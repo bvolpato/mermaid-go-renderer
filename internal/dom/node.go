@@ -109,6 +109,52 @@ type Document struct {
 	// styleGen is the value of gen at the last change that can change the
 	// text of a style element of the document. See StyleGeneration.
 	styleGen uint64
+
+	// nodes and attrs are slab allocators for the nodes and attribute slices
+	// of this document.
+	nodes    []Node
+	attrs    []Attr
+	nodeSlab int
+	attrSlab int
+}
+
+func (d *Document) allocNode() *Node {
+	if d == nil {
+		return &Node{}
+	}
+	if len(d.nodes) == 0 {
+		sz := d.nodeSlab
+		if sz == 0 {
+			sz = 8
+		} else if sz < 64 {
+			sz *= 2
+		}
+		d.nodeSlab = sz
+		d.nodes = make([]Node, sz)
+	}
+	n := &d.nodes[0]
+	d.nodes = d.nodes[1:]
+	n.doc = d
+	return n
+}
+
+func (d *Document) allocAttrs(n int) []Attr {
+	if d == nil {
+		return make([]Attr, 0, n)
+	}
+	if len(d.attrs) < n {
+		sz := d.attrSlab
+		if sz == 0 {
+			sz = 16
+		} else if sz < 128 {
+			sz *= 2
+		}
+		d.attrSlab = sz
+		d.attrs = make([]Attr, max(n, sz))
+	}
+	s := d.attrs[:0:n]
+	d.attrs = d.attrs[n:]
+	return s
 }
 
 // NewDocument returns an HTML document that has an empty body.
@@ -207,6 +253,24 @@ func (n *Node) InlineStyleExact() (string, bool) {
 	return text, ok
 }
 
+// AppendInlineStyleDecls appends the parsed inline style declarations of n
+// (with exact numeric values) into dst, avoiding serialize+parse round-trips
+// when n already holds a valid parsed CSSOM styleBlock.
+func (n *Node) AppendInlineStyleDecls(dst []css.Decl) []css.Decl {
+	text, ok := n.InlineStyle()
+	if !ok || text == "" {
+		return dst
+	}
+	if n.styleBlock != nil && text == n.styleCanon {
+		for _, d := range n.styleBlock {
+			d.Value = css.ExactValue(d)
+			dst = append(dst, d)
+		}
+		return dst
+	}
+	return append(dst, css.ParseDeclarations(text)...)
+}
+
 // InlineStyle returns the text of the inline style, from the attribute or
 // from the pending CSSOM state. It does not create the attribute. The
 // layout engine reads the style with it, as the style engine of a browser
@@ -260,23 +324,31 @@ func (d *Document) CreateElementNS(ns, qname string) *Node {
 	if i := strings.IndexByte(qname, ':'); i >= 0 {
 		local = qname[i+1:]
 	}
-	return &Node{Type: ElementNode, NS: ns, Tag: local, doc: d}
+	n := d.allocNode()
+	n.Type, n.NS, n.Tag = ElementNode, ns, local
+	return n
 }
 
 // CreateElement is document.createElement in an HTML document: the element is
 // in the HTML namespace and the name is lowercased.
 func (d *Document) CreateElement(name string) *Node {
-	return &Node{Type: ElementNode, NS: NSHTML, Tag: strings.ToLower(name), doc: d}
+	n := d.allocNode()
+	n.Type, n.NS, n.Tag = ElementNode, NSHTML, lowerASCII(name)
+	return n
 }
 
 // CreateText is document.createTextNode.
 func (d *Document) CreateText(data string) *Node {
-	return &Node{Type: TextNode, Data: data, doc: d}
+	n := d.allocNode()
+	n.Type, n.Data = TextNode, data
+	return n
 }
 
 // CreateComment is document.createComment.
 func (d *Document) CreateComment(data string) *Node {
-	return &Node{Type: CommentNode, Data: data, doc: d}
+	n := d.allocNode()
+	n.Type, n.Data = CommentNode, data
+	return n
 }
 
 // d3Namespaces is the prefix table of d3-selection (namespaces.js).
@@ -489,7 +561,7 @@ func (n *Node) findAttr(space, local string) int {
 	// getAttribute matches the qualified name. In an HTML document the name
 	// is lowercased first for an HTML element.
 	if n.NS == NSHTML {
-		local = strings.ToLower(local)
+		local = lowerASCII(local)
 	}
 	for i := range n.Attrs {
 		a := &n.Attrs[i]
@@ -596,7 +668,10 @@ func (n *Node) setAttrNS(space, qname, value string) {
 			a.Prefix, a.Local = qname[:i], qname[i+1:]
 		}
 	} else if n.NS == NSHTML {
-		a.Local = strings.ToLower(qname)
+		a.Local = lowerASCII(qname)
+	}
+	if n.Attrs == nil && n.doc != nil {
+		n.Attrs = n.doc.allocAttrs(4)
 	}
 	n.Attrs = append(n.Attrs, a)
 	n.touch()

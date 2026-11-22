@@ -5,9 +5,10 @@ package config
 
 import (
 	"strings"
+	"sync"
 	"unicode/utf8"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -28,19 +29,25 @@ const (
 	reDot = `[^\n\r\u2028\u2029]`
 )
 
+var reReplacer = strings.NewReplacer(`\s`, reS, `\w`, reW, `<dot>`, reDot)
+
 func mustCompile(pattern string) *regexp2.Regexp {
-	pattern = strings.NewReplacer(`\s`, reS, `\w`, reW, `<dot>`, reDot).Replace(pattern)
-	return regexp2.MustCompile(pattern, regexp2.None)
+	pattern = reReplacer.Replace(pattern)
+	return regexp2.MustCompile(pattern)
 }
 
 // directiveRegex is
 // /%{2}{\s*(?:(\w+)\s*:|(\w+))\s*(?:(\w+)|((?:(?!}%{2}).|\r?\n)*))?\s*(?:}%{2})?/gi.
 // The i flag has no effect: the pattern has no letters.
-var directiveRegex = mustCompile(`%{2}\{\s*(?:(\w+)\s*:|(\w+))\s*(?:(\w+)|((?:(?!\}%{2})<dot>|\r?\n)*))?\s*(?:\}%{2})?`)
+var directiveRegex = sync.OnceValue(func() *regexp2.Regexp {
+	return mustCompile(`%{2}\{\s*(?:(\w+)\s*:|(\w+))\s*(?:(\w+)|((?:(?!\}%{2})<dot>|\r?\n)*))?\s*(?:\}%{2})?`)
+})
 
 // commentRegex is the pattern of cleanupComments: /^\s*%%(?!{)[^\n]+\n?/gm.
 // With the m flag, ^ matches after every JavaScript line terminator.
-var commentRegex = mustCompile(`(?:\A|(?<=[\n\r\u2028\u2029]))\s*%%(?!\{)[^\n]+\n?`)
+var commentRegex = sync.OnceValue(func() *regexp2.Regexp {
+	return mustCompile(`(?:\A|(?<=[\n\r\u2028\u2029]))\s*%%(?!\{)[^\n]+\n?`)
+})
 
 // The text that each pattern above needs: a text without it has no match.
 const (
@@ -51,13 +58,13 @@ const (
 // replaceAll is text.replace(re, "") for a global regular expression whose
 // matches are never empty. marker is a text that every match of re has: a
 // text without it stays as it is, and is not searched.
-func replaceAll(re *regexp2.Regexp, marker, text string) string {
+func replaceAll(re func() *regexp2.Regexp, marker, text string) string {
 	// The search below also replaces bytes that are not UTF-8, so only a
 	// text of valid UTF-8 can take the short way.
 	if !strings.Contains(text, marker) && utf8.ValidString(text) {
 		return text
 	}
-	return replaceAllSearch(re, text)
+	return replaceAllSearch(re(), text)
 }
 
 // replaceAllSearch is replaceAll by a search of the text.
@@ -70,9 +77,9 @@ func replaceAllSearch(re *regexp2.Regexp, text string) string {
 		if err != nil || m == nil {
 			break
 		}
-		sb.WriteString(string(runes[pos:m.Index]))
-		pos = m.Index + m.Length
-		if m.Length == 0 {
+		sb.WriteString(string(runes[pos:m.RuneIndex]))
+		pos = m.RuneIndex + m.RuneLength
+		if m.RuneLength == 0 {
 			if pos < len(runes) {
 				sb.WriteRune(runes[pos])
 			}

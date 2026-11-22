@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 )
 
 // regex is a compiled JavaScript regular expression.
@@ -425,7 +425,11 @@ func mustRegex(source, flags string) *regex {
 	if err != nil {
 		panic(err)
 	}
-	re, err := regexp2.Compile(pattern, regexp2.ECMAScript)
+	opts := regexp2.ECMAScript
+	if strings.ContainsRune(flags, 'u') {
+		opts |= regexp2.Unicode
+	}
+	re, err := regexp2.Compile(pattern, opts)
 	if err != nil {
 		panic(fmt.Errorf("marked: regex /%s/%s: %w", source, flags, err))
 	}
@@ -499,11 +503,11 @@ func replaceAll(r *regex, s []rune, repl func(m *regexp2.Match) []rune) []rune {
 		if out == nil {
 			out = make([]rune, 0, len(s))
 		}
-		out = append(out, s[last:m.Index]...)
+		out = append(out, s[last:m.RuneIndex]...)
 		out = append(out, repl(m)...)
-		last = m.Index + m.Length
+		last = m.RuneIndex + m.RuneLength
 		pos = last
-		if m.Length == 0 {
+		if m.RuneLength == 0 {
 			// AdvanceStringIndex after an empty match.
 			pos++
 		}
@@ -521,9 +525,9 @@ func replaceFirst(r *regex, s []rune, repl func(m *regexp2.Match) []rune) []rune
 		return s
 	}
 	out := make([]rune, 0, len(s))
-	out = append(out, s[:m.Index]...)
+	out = append(out, s[:m.RuneIndex]...)
 	out = append(out, repl(m)...)
-	return append(out, s[m.Index+m.Length:]...)
+	return append(out, s[m.RuneIndex+m.RuneLength:]...)
 }
 
 // ustring is a string as a regex with the u flag sees it.
@@ -614,10 +618,10 @@ func (r *regex) execU(u *ustring, lastIndex int) (umatch, bool) {
 }
 
 // index is the index property of the match.
-func (m umatch) index() int { return m.u.unitIndex(m.m.Index) }
+func (m umatch) index() int { return m.u.unitIndex(m.m.RuneIndex) }
 
 // end is the lastIndex of a regex with the g flag after the match.
-func (m umatch) end() int { return m.u.unitIndex(m.m.Index + m.m.Length) }
+func (m umatch) end() int { return m.u.unitIndex(m.m.RuneIndex + m.m.RuneLength) }
 
 // group returns capture group i as code units.
 func (m umatch) group(i int) (s []rune, ok bool) {
@@ -625,14 +629,14 @@ func (m umatch) group(i int) (s []rune, ok bool) {
 	if g == nil || len(g.Captures) == 0 {
 		return nil, false
 	}
-	return m.u.units[m.u.unitIndex(g.Index):m.u.unitIndex(g.Index+g.Length)], true
+	return m.u.units[m.u.unitIndex(g.RuneIndex):m.u.unitIndex(g.RuneIndex+g.RuneLength)], true
 }
 
 // firstLen is [...match[0]][0].length: the number of code units of the
 // first code point of the match.
 func (m umatch) firstLen() int {
-	if m.m.Length == 0 {
+	if m.m.RuneLength == 0 {
 		return 0
 	}
-	return m.u.unitIndex(m.m.Index+1) - m.u.unitIndex(m.m.Index)
+	return m.u.unitIndex(m.m.RuneIndex+1) - m.u.unitIndex(m.m.RuneIndex)
 }

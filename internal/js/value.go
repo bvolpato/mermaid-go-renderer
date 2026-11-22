@@ -547,10 +547,10 @@ func writeJSON(sb *strings.Builder, v any) {
 		if math.IsNaN(x) || math.IsInf(x, 0) {
 			sb.WriteString("null")
 		} else {
-			sb.WriteString(Str(x))
+			WriteNum(sb, x)
 		}
 	case int:
-		sb.WriteString(Str(float64(x)))
+		WriteNum(sb, float64(x))
 	case string:
 		writeJSONString(sb, x)
 	case []any:

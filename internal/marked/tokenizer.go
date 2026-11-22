@@ -6,7 +6,7 @@ package marked
 import (
 	"slices"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -66,7 +66,7 @@ func indentCodeCompensation(raw, text []rune, rules *rules) []rune {
 			continue
 		}
 
-		indentInNode := matchIndentInNode.Length
+		indentInNode := matchIndentInNode.RuneLength
 
 		if indentInNode >= len(indentToCode) {
 			nodes[i] = sliceFrom(node, len(indentToCode))
@@ -83,12 +83,12 @@ type tokenizer struct {
 
 func (t *tokenizer) space(src []rune) *Token {
 	cap := t.rules.block.newline.exec(src)
-	if cap != nil && cap.Length > 0 {
+	if cap != nil && cap.RuneLength > 0 {
 		return &Token{
 			Type:  "space",
 			Raw:   str(cap.Runes()),
 			shape: shapeRaw,
-			n:     cap.Length,
+			n:     cap.RuneLength,
 		}
 	}
 	return nil
@@ -104,7 +104,7 @@ func (t *tokenizer) code(src []rune) *Token {
 			CodeBlockStyle: "indented",
 			Text:           str(rtrim(text, '\n')),
 			shape:          shapeCodeIndent,
-			n:              cap.Length,
+			n:              cap.RuneLength,
 		}
 	}
 	return nil
@@ -186,7 +186,7 @@ func (t *tokenizer) heading(src []rune) *Token {
 			Text:   str(text),
 			Tokens: []*Token{},
 			shape:  shapeHeading,
-			n:      cap.Length,
+			n:      cap.RuneLength,
 		}
 		t.lexer.inline(token.Text, &token.Tokens)
 		return token
@@ -363,7 +363,7 @@ func (t *tokenizer) list(src []rune) *Token {
 			cap1, _ = group(cap, 1)
 			cap2, _ := group(cap, 2)
 			line := replaceFirst(t.rules.other.listReplaceTabs, firstLine(cap2), func(m *regexp2.Match) []rune {
-				return repeat(' ', 3*m.Length)
+				return repeat(' ', 3*m.RuneLength)
 			})
 			nextLine := firstLine(src)
 			blankLine := len(trim(line)) == 0
@@ -559,7 +559,7 @@ func (t *tokenizer) html(src []rune) *Token {
 			Pre:   pre,
 			Text:  raw,
 			shape: shapeHTMLBlock,
-			n:     cap.Length,
+			n:     cap.RuneLength,
 		}
 	}
 	return nil
@@ -597,7 +597,7 @@ func (t *tokenizer) def(src []rune) *Token {
 			Title:    str(title),
 			HasTitle: hasTitle,
 			shape:    shapeDef,
-			n:        cap.Length,
+			n:        cap.RuneLength,
 		}
 	}
 	return nil
@@ -631,7 +631,7 @@ func (t *tokenizer) table(src []rune) *Token {
 		Align:  []string{},
 		Rows:   [][]TableCell{},
 		shape:  shapeTable,
-		n:      cap.Length,
+		n:      cap.RuneLength,
 	}
 
 	if len(headers) != len(aligns) {
@@ -730,7 +730,7 @@ func (t *tokenizer) lheading(src []rune) *Token {
 			Text:   str(cap1),
 			Tokens: []*Token{},
 			shape:  shapeHeading,
-			n:      cap.Length,
+			n:      cap.RuneLength,
 		}
 		t.lexer.inline(token.Text, &token.Tokens)
 		return token
@@ -753,7 +753,7 @@ func (t *tokenizer) paragraph(src []rune) *Token {
 			Text:   str(text),
 			Tokens: []*Token{},
 			shape:  shapeTextTokens,
-			n:      cap.Length,
+			n:      cap.RuneLength,
 		}
 		t.lexer.inline(token.Text, &token.Tokens)
 		return token
@@ -771,7 +771,7 @@ func (t *tokenizer) text(src []rune) *Token {
 			Text:   raw,
 			Tokens: []*Token{},
 			shape:  shapeTextTokens,
-			n:      cap.Length,
+			n:      cap.RuneLength,
 		}
 		t.lexer.inline(token.Text, &token.Tokens)
 		return token
@@ -788,7 +788,7 @@ func (t *tokenizer) escape(src []rune) *Token {
 			Raw:   str(cap.Runes()),
 			Text:  str(cap1),
 			shape: shapeText,
-			n:     cap.Length,
+			n:     cap.RuneLength,
 		}
 	}
 	return nil
@@ -818,7 +818,7 @@ func (t *tokenizer) tag(src []rune) *Token {
 			Block:      false,
 			Text:       raw,
 			shape:      shapeHTMLInline,
-			n:          cap.Length,
+			n:          cap.RuneLength,
 		}
 	}
 	return nil
@@ -959,7 +959,7 @@ func (t *tokenizer) emStrong(src, maskedSrc []rune, prevChar []rune) *Token {
 	}
 	if len(nextChar) == 0 || len(prevChar) == 0 || punctuation {
 		// unicode Regex counts emoji as 1 char; spread into array for proper count (used multiple times below)
-		lLength := match.m.Length - 1
+		lLength := match.m.RuneLength - 1
 		delimTotal, midDelimTotal := lLength, 0
 
 		endReg := t.rules.inline.emStrongRDelimUnd
@@ -1071,7 +1071,7 @@ func (t *tokenizer) codespan(src []rune) *Token {
 			Raw:   str(cap.Runes()),
 			Text:  str(text),
 			shape: shapeText,
-			n:     cap.Length,
+			n:     cap.RuneLength,
 		}
 	}
 	return nil
@@ -1084,7 +1084,7 @@ func (t *tokenizer) br(src []rune) *Token {
 			Type:  "br",
 			Raw:   str(cap.Runes()),
 			shape: shapeRaw,
-			n:     cap.Length,
+			n:     cap.RuneLength,
 		}
 	}
 	return nil
@@ -1100,7 +1100,7 @@ func (t *tokenizer) del(src []rune) *Token {
 			Text:   str(cap2),
 			Tokens: t.lexer.inlineTokens(cap2, []*Token{}),
 			shape:  shapeTextTokens,
-			n:      cap.Length,
+			n:      cap.RuneLength,
 		}
 	}
 	return nil

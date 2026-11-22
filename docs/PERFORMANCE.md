@@ -2,17 +2,17 @@
 
 This file is generated. Do not edit it. `node tools/reference/bench.mjs` runs the measurement and writes this file and `docs/performance.json`, which has the same numbers for the website and the README.
 
-The numbers compare `mmdg` with mermaid 12.2.0 in Chromium 156.0.8078.4, for 2076 diagrams of the corpus `testdata/corpus/mermaid-e2e`: the diagrams that both sides rendered on the day of the measurement. Both ran on the same machine (darwin/arm64, 18 CPUs) on 2026-11-09, one diagram at a time. Times are in milliseconds.
+The numbers compare `mmdg` with mermaid 12.2.0 in Chromium 156.0.8078.4, for 2144 diagrams of the corpus `testdata/corpus/mermaid-e2e`: the diagrams that both sides rendered on the day of the measurement. Both ran on the same machine (darwin/arm64, 18 CPUs) on 2026-11-21, one diagram at a time. Times are in milliseconds.
 
 ## Summary
 
 | Measurement | mermaid in Chromium | mmdg | Ratio |
 |---|---:|---:|---:|
-| Warm render, median | 11.50 | 0.88 | 13x |
-| Warm render, 90th percentile | 25.80 | 2.55 | 10x |
-| Warm render, all diagrams, in seconds | 29.00 | 2.79 | 10x |
-| First render, median | 130.4 | 36.7 | 4x |
-| First render, 90th percentile | 189.5 | 79.0 | 2x |
+| Warm render, median | 13.80 | 1.00 | 14x |
+| Warm render, 90th percentile | 33.00 | 3.09 | 11x |
+| Warm render, all diagrams, in seconds | 38.84 | 3.29 | 12x |
+| First render, median | 132.3 | 31.4 | 4x |
+| First render, 90th percentile | 196.2 | 48.5 | 4x |
 
 What each measurement is:
 
@@ -27,55 +27,55 @@ The first-render comparison favors mermaid, because it leaves out the start of t
 
 | Diagram type | Diagrams | mermaid warm | mmdg warm | mmdg warm, 90th percentile | Warm ratio | mermaid first | mmdg first |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `flowchart-v2` | 404 | 13.90 | 1.34 | 3.93 | 10x | 163.8 | 32.1 |
-| `classDiagram` | 227 | 16.00 | 1.19 | 3.19 | 13x | 166.0 | 76.9 |
-| `er` | 206 | 13.50 | 1.59 | 3.39 | 8x | 158.1 | 33.6 |
-| `sequence` | 193 | 8.60 | 0.48 | 1.01 | 18x | 26.2 | 36.4 |
-| `requirement` | 170 | 13.30 | 1.06 | 2.51 | 13x | 135.9 | 42.6 |
-| `stateDiagram` | 144 | 21.00 | 1.06 | 2.42 | 20x | 164.4 | 34.7 |
-| `gitGraph` | 135 | 7.90 | 0.19 | 0.32 | 42x | 47.2 | 30.2 |
-| `block` | 58 | 9.40 | 0.39 | 0.95 | 24x | 40.5 | 76.8 |
-| `gantt` | 52 | 3.00 | 0.18 | 0.42 | 17x | 17.4 | 32.6 |
-| `xychart` | 48 | 3.80 | 0.25 | 0.38 | 15x | 18.3 | 73.9 |
-| `swimlane` | 46 | 21.70 | 2.47 | 19.73 | 9x | 73.4 | 34.0 |
-| `agentflow` | 38 | 13.80 | 1.48 | 3.50 | 9x | 197.8 | 77.7 |
-| `mindmap` | 33 | 13.90 | 0.55 | 5.61 | 25x | 47.8 | 36.1 |
-| `c4` | 32 | 3.90 | 0.68 | 1.68 | 6x | 28.5 | 80.5 |
-| `timeline` | 30 | 3.70 | 0.94 | 1.22 | 4x | 21.6 | 71.7 |
-| `usecase` | 28 | 12.30 | 1.26 | 1.92 | 10x | 153.4 | 76.8 |
-| `treemap` | 26 | 2.20 | 0.27 | 0.64 | 8x | 37.8 | 82.2 |
-| `pie` | 24 | 2.10 | 0.10 | 0.22 | 21x | 36.8 | 32.9 |
-| `venn` | 21 | 2.20 | 0.46 | 0.64 | 5x | 14.5 | 71.9 |
-| `architecture` | 20 | 14.30 | 1.20 | 3.00 | 12x | 131.8 | 76.0 |
-| `journey` | 18 | 4.80 | 0.26 | 0.52 | 18x | 16.9 | 34.0 |
-| `sankey` | 18 | 2.60 | 0.07 | 0.13 | 37x | 15.2 | 39.4 |
-| `treeView` | 15 | 1.70 | 0.12 | 0.21 | 14x | 44.8 | 70.9 |
-| `quadrantChart` | 14 | 4.10 | 0.12 | 0.24 | 34x | 11.7 | 27.4 |
-| `ishikawa` | 13 | 3.70 | 0.12 | 0.42 | 31x | 14.4 | 32.3 |
-| `cynefin` | 12 | 3.20 | 0.18 | 0.24 | 18x | 39.9 | 23.3 |
-| `kanban` | 11 | 4.10 | 0.22 | 0.29 | 19x | 18.5 | 31.5 |
-| `wardley` | 10 | 2.00 | 0.19 | 0.28 | 11x | 43.5 | 72.2 |
-| `eventmodeling` | 6 | 2.60 | 0.28 | 0.31 | 9x | 56.5 | 25.8 |
-| `packet` | 6 | 2.60 | 0.06 | 0.15 | 43x | 33.6 | 30.6 |
-| `radar` | 6 | 2.40 | 0.11 | 0.20 | 22x | 36.6 | 30.3 |
-| `railroad` | 5 | 6.00 | 0.26 | 0.47 | 23x | 41.9 | 28.4 |
-| `info` | 3 | 1.30 | 0.02 | 0.03 | 65x | 30.5 | 29.9 |
-| `railroadEbnf` | 2 | 6.20 | 0.24 | 0.24 | 26x | 44.2 | 29.8 |
-| `railroadAbnf` | 1 | 5.30 | 0.20 | 0.20 | 26x | 41.7 | 30.2 |
-| `railroadPeg` | 1 | 7.20 | 0.29 | 0.29 | 25x | 45.7 | 28.9 |
-| **All** | 2076 | 11.50 | 0.88 | 2.55 | 13x | 130.4 | 36.7 |
+| `flowchart-v2` | 408 | 16.30 | 1.31 | 3.66 | 12x | 163.5 | 32.3 |
+| `classDiagram` | 285 | 23.90 | 1.50 | 5.26 | 16x | 175.9 | 44.2 |
+| `er` | 206 | 15.20 | 1.52 | 3.24 | 10x | 158.1 | 35.2 |
+| `sequence` | 193 | 9.40 | 0.57 | 1.16 | 16x | 26.2 | 26.7 |
+| `requirement` | 172 | 16.50 | 1.32 | 3.02 | 12x | 135.9 | 34.9 |
+| `stateDiagram` | 144 | 21.70 | 1.28 | 2.57 | 17x | 164.4 | 28.6 |
+| `gitGraph` | 135 | 9.90 | 0.22 | 0.43 | 45x | 47.2 | 24.0 |
+| `block` | 58 | 15.70 | 0.45 | 1.12 | 35x | 40.5 | 26.3 |
+| `gantt` | 52 | 4.00 | 0.23 | 0.55 | 17x | 17.4 | 23.7 |
+| `xychart` | 48 | 4.90 | 0.35 | 0.54 | 14x | 18.3 | 25.0 |
+| `swimlane` | 46 | 29.40 | 2.88 | 24.29 | 10x | 73.4 | 30.7 |
+| `agentflow` | 38 | 17.90 | 1.48 | 2.91 | 12x | 197.8 | 29.2 |
+| `mindmap` | 33 | 15.40 | 0.61 | 7.76 | 25x | 47.8 | 35.6 |
+| `c4` | 32 | 6.60 | 0.69 | 1.69 | 10x | 28.5 | 34.9 |
+| `usecase` | 32 | 20.80 | 1.57 | 2.54 | 13x | 155.4 | 32.5 |
+| `timeline` | 30 | 5.90 | 1.16 | 1.35 | 5x | 21.6 | 31.7 |
+| `treemap` | 26 | 4.50 | 0.40 | 0.70 | 11x | 37.8 | 37.3 |
+| `pie` | 24 | 2.40 | 0.10 | 0.22 | 24x | 36.8 | 27.1 |
+| `venn` | 21 | 3.60 | 0.55 | 0.75 | 7x | 14.5 | 23.7 |
+| `architecture` | 20 | 18.00 | 1.23 | 3.31 | 15x | 131.8 | 24.1 |
+| `journey` | 18 | 5.00 | 0.24 | 0.54 | 21x | 16.9 | 28.7 |
+| `sankey` | 18 | 3.10 | 0.10 | 0.18 | 31x | 15.2 | 20.5 |
+| `treeView` | 15 | 2.90 | 0.14 | 0.32 | 21x | 44.8 | 28.3 |
+| `quadrantChart` | 14 | 4.70 | 0.15 | 0.29 | 31x | 11.7 | 18.5 |
+| `ishikawa` | 13 | 4.30 | 0.14 | 0.46 | 31x | 14.4 | 29.2 |
+| `cynefin` | 12 | 3.70 | 0.19 | 0.28 | 19x | 39.9 | 29.5 |
+| `kanban` | 11 | 5.40 | 0.22 | 0.27 | 25x | 18.5 | 29.7 |
+| `wardley` | 10 | 3.90 | 0.25 | 0.37 | 16x | 43.5 | 20.1 |
+| `eventmodeling` | 6 | 3.70 | 0.21 | 0.31 | 18x | 56.5 | 41.5 |
+| `packet` | 6 | 2.80 | 0.07 | 0.19 | 40x | 33.6 | 18.1 |
+| `radar` | 6 | 2.90 | 0.08 | 0.20 | 36x | 36.6 | 23.9 |
+| `railroad` | 5 | 6.30 | 0.25 | 0.50 | 25x | 41.9 | 24.6 |
+| `info` | 3 | 1.60 | 0.02 | 0.02 | 80x | 30.5 | 17.3 |
+| `railroadEbnf` | 2 | 6.80 | 0.21 | 0.21 | 32x | 44.2 | 24.3 |
+| `railroadAbnf` | 1 | 6.20 | 0.20 | 0.20 | 31x | 41.7 | 24.5 |
+| `railroadPeg` | 1 | 7.20 | 0.29 | 0.29 | 25x | 45.7 | 25.1 |
+| **All** | 2144 | 13.80 | 1.00 | 3.09 | 14x | 132.3 | 31.4 |
 
 The columns have the median of the diagrams of the type, except where the heading says otherwise.
 
 ## Command-line tools
 
-The table compares `mmdg` with `mmdc` (mermaid-cli 12.0.0). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the fastest of 9 runs, after 3 runs of each tool that do not count. `mmdc` starts a browser in each run.
+The table compares `mmdg` with `mmdc` (mermaid-cli 12.2.0). Each run is one new process that reads a diagram file and writes one output file. The time is the wall time of the process in milliseconds: the fastest of 9 runs, after 3 runs of each tool that do not count. `mmdc` starts a browser in each run.
 
 | Input | Output | mmdc | mmdg | Ratio |
 |---|---|---:|---:|---:|
-| Flowchart, 8 nodes | SVG | 729 | 46.8 | 16x |
-| Flowchart, 8 nodes | PNG | 711 | 52.5 | 14x |
-| Sequence diagram, 4 actors | SVG | 489 | 42.4 | 12x |
-| Sequence diagram, 4 actors | PNG | 538 | 53.1 | 10x |
-| Class diagram, 5 classes | SVG | 675 | 52.9 | 13x |
-| Class diagram, 5 classes | PNG | 810 | 49.9 | 16x |
+| Flowchart, 8 nodes | SVG | 1233 | 61.1 | 20x |
+| Flowchart, 8 nodes | PNG | 1302 | 65.5 | 20x |
+| Sequence diagram, 4 actors | SVG | 909 | 53.3 | 17x |
+| Sequence diagram, 4 actors | PNG | 922 | 68.1 | 14x |
+| Class diagram, 5 classes | SVG | 1215 | 74.7 | 16x |
+| Class diagram, 5 classes | PNG | 1267 | 64.4 | 20x |

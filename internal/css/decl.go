@@ -18,12 +18,52 @@ type Decl struct {
 	Raw string
 }
 
+func lowerASCII(s string) string {
+	for i := 0; i < len(s); i++ {
+		if c := s[i]; c >= 'A' && c <= 'Z' {
+			return strings.ToLower(s)
+		}
+	}
+	return s
+}
+
 // ParseDeclarations parses the content of a declaration block, such as the
 // value of a style attribute. Invalid pieces are skipped, as a browser does.
 // Values are kept as written, trimmed. Names are lowercased.
 func ParseDeclarations(text string) []Decl {
+	s := stripComments(text)
 	var out []Decl
-	for _, part := range splitTopLevel(stripComments(text), ';') {
+	depth := 0
+	var quote byte
+	start := 0
+	for i := 0; i <= len(s); i++ {
+		if i < len(s) {
+			c := s[i]
+			switch {
+			case quote != 0:
+				if c == '\\' {
+					i++
+				} else if c == quote {
+					quote = 0
+				}
+				continue
+			case c == '"' || c == '\'':
+				quote = c
+				continue
+			case c == '(' || c == '[' || c == '{':
+				depth++
+				continue
+			case c == ')' || c == ']' || c == '}':
+				if depth > 0 {
+					depth--
+				}
+				continue
+			case c != ';' || depth != 0:
+				continue
+			}
+		}
+		part := s[start:i]
+		start = i + 1
 		colon := indexTopLevel(part, ':')
 		if colon < 0 {
 			continue
@@ -35,11 +75,11 @@ func ParseDeclarations(text string) []Decl {
 		}
 		d := Decl{Name: name, Value: value}
 		if !strings.HasPrefix(name, "--") {
-			d.Name = strings.ToLower(name)
+			d.Name = lowerASCII(name)
 		}
-		if i := strings.LastIndexByte(value, '!'); i >= 0 && strings.EqualFold(strings.TrimSpace(value[i+1:]), "important") {
+		if idx := strings.LastIndexByte(value, '!'); idx >= 0 && strings.EqualFold(strings.TrimSpace(value[idx+1:]), "important") {
 			d.Important = true
-			d.Value = strings.TrimSpace(value[:i])
+			d.Value = strings.TrimSpace(value[:idx])
 			if d.Value == "" {
 				continue
 			}

@@ -5,9 +5,8 @@ package sequence
 
 import (
 	"errors"
+	"regexp"
 	"strings"
-
-	"github.com/dlclark/regexp2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 	"github.com/bvolpato/mermaid-go-renderer/internal/render"
@@ -497,43 +496,35 @@ func (d *db) enableSequenceNumbers()    { d.sequenceNumbersEnabled = true }
 func (d *db) disableSequenceNumbers()   { d.sequenceNumbersEnabled = false }
 func (d *db) showSequenceNumbers() bool { return d.sequenceNumbersEnabled }
 
-// The regular expressions of extractWrap and parseBoxData. They run on
-// regexp2 so that the classes \s and \w and the dot have the JavaScript
-// meaning.
+// The regular expressions of parseBoxData, with explicit JavaScript classes
+// for \s, \w and the dot.
 const (
-	reS   = `[\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]`
+	reS   = `[\t\n\v\f\r \x{00a0}\x{1680}\x{2000}-\x{200a}\x{2028}\x{2029}\x{202f}\x{205f}\x{3000}\x{feff}]`
 	reW   = `[A-Za-z0-9_]`
-	reDot = `[^\n\r\u2028\u2029]`
+	reDot = `[^\n\r\x{2028}\x{2029}]`
 )
 
-var (
-	reWrap    = regexp2.MustCompile(`^:?wrap:`, regexp2.None)
-	reNoWrap  = regexp2.MustCompile(`^:?nowrap:`, regexp2.None)
-	reAnyWrap = regexp2.MustCompile(`^:?(?:no)?wrap:`, regexp2.None)
-	// /^((?:rgba?|hsla?)\s*\(.*\)|\w*)(.*)$/
-	reBoxData = regexp2.MustCompile(`^((?:rgba?|hsla?)`+reS+`*\(`+reDot+`*\)|`+reW+`*)(`+reDot+`*)$`, regexp2.None)
-)
-
-func reTest(re *regexp2.Regexp, s string) bool {
-	ok, err := re.MatchString(s)
-	return err == nil && ok
-}
+// /^((?:rgba?|hsla?)\s*\(.*\)|\w*)(.*)$/
+var reBoxData = regexp.MustCompile(`^((?:rgba?|hsla?)` + reS + `*\(` + reDot + `*\)|` + reW + `*)(` + reDot + `*)$`)
 
 // extractWrap is extractWrap(text) for a defined text.
 func extractWrap(text string) parsedMessage {
 	text = js.TrimSpace(text)
 	var out parsedMessage
-	if reTest(reWrap, text) {
-		out.wrap, out.hasWrap = true, true
-	} else if reTest(reNoWrap, text) {
-		out.wrap, out.hasWrap = false, true
-	}
 	cleaned := text
-	if out.hasWrap {
-		// The match is ASCII, so its length in bytes is its length in the text.
-		if m, err := reAnyWrap.FindStringMatch(text); err == nil && m != nil {
-			cleaned = text[len(m.String()):]
-		}
+	switch {
+	case strings.HasPrefix(text, ":wrap:"):
+		out.wrap, out.hasWrap = true, true
+		cleaned = text[len(":wrap:"):]
+	case strings.HasPrefix(text, "wrap:"):
+		out.wrap, out.hasWrap = true, true
+		cleaned = text[len("wrap:"):]
+	case strings.HasPrefix(text, ":nowrap:"):
+		out.wrap, out.hasWrap = false, true
+		cleaned = text[len(":nowrap:"):]
+	case strings.HasPrefix(text, "nowrap:"):
+		out.wrap, out.hasWrap = false, true
+		cleaned = text[len("nowrap:"):]
 	}
 	out.text = js.TrimSpace(cleaned)
 	return out
@@ -566,12 +557,12 @@ func (d *db) parseMessage(str string) *parsedMessage {
 func (d *db) parseBoxData(str string) *boxData {
 	color := "transparent"
 	title, hasTitle := "", false
-	if m, err := reBoxData.FindStringMatch(str); err == nil && m != nil {
-		if g := m.GroupByNumber(1).String(); g != "" {
-			color = js.TrimSpace(g)
+	if m := reBoxData.FindStringSubmatch(str); m != nil {
+		if m[1] != "" {
+			color = js.TrimSpace(m[1])
 		}
-		if g := m.GroupByNumber(2).String(); g != "" {
-			title, hasTitle = js.TrimSpace(g), true
+		if m[2] != "" {
+			title, hasTitle = js.TrimSpace(m[2]), true
 		}
 	}
 

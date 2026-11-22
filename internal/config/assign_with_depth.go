@@ -31,6 +31,15 @@ func includes(arr []any, v any) bool {
 // object. The key __proto__ is skipped: the assignment would call the
 // prototype setter and add no property.
 func objectAssign(dst *js.Obj[any], src any) {
+	if s, ok := src.(*js.Obj[any]); ok && s != nil {
+		s.Each(func(k string, v any) {
+			if k == "__proto__" {
+				return
+			}
+			dst.Set(k, v)
+		})
+		return
+	}
 	keys, ok := js.OwnKeys(src)
 	if !ok {
 		return
@@ -101,11 +110,10 @@ func AssignWithDepth(dst, src any, depth int) any {
 			return dst
 		}
 		srcObj := src.(*js.Obj[any])
-		for _, key := range srcObj.Keys() {
-			srcValue := srcObj.Get(key)
+		srcObj.Each(func(key string, srcValue any) {
 			if typeofObject(srcValue) {
 				if isNull(srcValue) {
-					continue
+					return
 				}
 				if !dstObj.Has(key) {
 					dstObj.Set(key, nil)
@@ -123,7 +131,7 @@ func AssignWithDepth(dst, src any, depth int) any {
 			} else if !typeofObject(dstObj.Get(key)) {
 				dstObj.Set(key, srcValue)
 			}
-		}
+		})
 	}
 	return dst
 }

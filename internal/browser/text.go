@@ -202,21 +202,35 @@ func (e *Engine) shapeItems(items []*inlineItem, boundary func(i int) bool) {
 		group := items[start:end]
 		st := group[0].style
 		chain := e.chainOf(st)
-		total := 0
-		for _, it := range group {
-			total += len(it.runes)
+		var text []rune
+		var offsets []int
+		var smallOffsets [2]int
+		if len(group) == 1 {
+			text = group[0].runes
+			smallOffsets[0] = 0
+			smallOffsets[1] = len(text)
+			offsets = smallOffsets[:]
+		} else {
+			total := 0
+			for _, it := range group {
+				total += len(it.runes)
+			}
+			text = make([]rune, 0, total)
+			offsets = make([]int, len(group)+1)
+			for i, it := range group {
+				offsets[i] = len(text)
+				text = append(text, it.runes...)
+			}
+			offsets[len(group)] = len(text)
 		}
-		text := make([]rune, 0, total)
-		offsets := make([]int, len(group)+1)
-		for i, it := range group {
-			offsets[i] = len(text)
-			text = append(text, it.runes...)
-		}
-		offsets[len(group)] = len(text)
 		runs := chain.ShapeText(text, st.fontSize())
 		primary := chain.Primary()
 		for i, it := range group {
-			it.glyphs = it.glyphs[:0]
+			if cap(it.glyphs) < len(it.runes) {
+				it.glyphs = make([]itemGlyph, 0, len(it.runes))
+			} else {
+				it.glyphs = it.glyphs[:0]
+			}
 			if primary != nil {
 				it.metrics = primary.Metrics(st.fontSize())
 			}

@@ -130,11 +130,20 @@ func (a *Attr) serializedName() string {
 	return a.QName()
 }
 
+var (
+	textEscapeBytes = [256]bool{'&': true, '<': true, '>': true, 0xc2: true}
+	attrEscapeBytes = [256]bool{'&': true, '"': true, '<': true, '>': true, 0xc2: true}
+)
+
 func escapeText(sb *htmlWriter, s string) {
 	last := 0
 	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if !textEscapeBytes[c] {
+			continue
+		}
 		var rep string
-		switch s[i] {
+		switch c {
 		case '&':
 			rep = "&amp;"
 		case '<':
@@ -149,8 +158,6 @@ func escapeText(sb *htmlWriter, s string) {
 				last = i + 1
 			}
 			continue
-		default:
-			continue
 		}
 		sb.WriteString(s[last:i])
 		sb.WriteString(rep)
@@ -162,8 +169,12 @@ func escapeText(sb *htmlWriter, s string) {
 func escapeAttr(sb *htmlWriter, s string) {
 	last := 0
 	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if !attrEscapeBytes[c] {
+			continue
+		}
 		var rep string
-		switch s[i] {
+		switch c {
 		case '&':
 			rep = "&amp;"
 		case '"':
@@ -179,8 +190,6 @@ func escapeAttr(sb *htmlWriter, s string) {
 				i++
 				last = i + 1
 			}
-			continue
-		default:
 			continue
 		}
 		sb.WriteString(s[last:i])

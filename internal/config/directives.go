@@ -8,8 +8,9 @@ import (
 	"errors"
 	"regexp"
 	"strings"
+	"sync"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -21,8 +22,10 @@ import (
 //
 // where directiveWithoutOpen is
 // /\s*(?:(\w+)(?=:):|(\w+))\s*(?:(\w+)|((?:(?!}%{2}).|\r?\n)*))?\s*(?:}%{2})?/gi.
-var commentWithoutDirectives = mustCompile(
-	`[%]{2}(?![{]\s*(?:(\w+)(?=:):|(\w+))\s*(?:(\w+)|((?:(?!\}%{2})<dot>|\r?\n)*))?\s*(?:\}%{2})?)(?=[}][%]{2})<dot>*\n`)
+var commentWithoutDirectives = sync.OnceValue(func() *regexp2.Regexp {
+	return mustCompile(
+		`[%]{2}(?![{]\s*(?:(\w+)(?=:):|(\w+))\s*(?:(\w+)|((?:(?!\}%{2})<dot>|\r?\n)*))?\s*(?:\}%{2})?)(?=[}][%]{2})<dot>*\n`)
+})
 
 // initDirectiveType is /(?:init\b)|(?:initialize\b)/, the type that detectInit
 // looks for. The match is a search, so "reinit" matches too.
@@ -81,14 +84,14 @@ func (scan *directiveScan) detectDirective(text string, typeMatches func(string)
 			scan.lastIndex = 0
 			break
 		}
-		m, err := directiveRegex.FindRunesMatchStartingAt(runes, scan.lastIndex)
+		m, err := directiveRegex().FindRunesMatchStartingAt(runes, scan.lastIndex)
 		if err != nil || m == nil {
 			scan.lastIndex = 0
 			break
 		}
-		scan.lastIndex = m.Index + m.Length
+		scan.lastIndex = m.RuneIndex + m.RuneLength
 		// This is necessary to avoid infinite loops with zero-width matches
-		if m.Length == 0 {
+		if m.RuneLength == 0 {
 			scan.lastIndex++
 		}
 		g1, _ := group(m, 1)

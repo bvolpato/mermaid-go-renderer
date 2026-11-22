@@ -176,10 +176,10 @@ func TestInlineTextLen(t *testing.T) {
 			return ""
 		}
 		m := re.exec(s)
-		if m == nil || m.Index != 0 {
+		if m == nil || m.RuneIndex != 0 {
 			return "the text rule does not match " + string(s)
 		}
-		if got := inlineTextLen(s); got != m.Length {
+		if got := inlineTextLen(s); got != m.RuneLength {
 			return "inlineTextLen(" + string(s) + ") differs from the rule"
 		}
 		return ""

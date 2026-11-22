@@ -7,8 +7,8 @@ package dom
 import (
 	"strings"
 
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
+	"github.com/bvolpato/mermaid-go-renderer/internal/html"
+	"github.com/bvolpato/mermaid-go-renderer/internal/html/atom"
 )
 
 // This file connects the HTML parser of golang.org/x/net/html to the DOM.

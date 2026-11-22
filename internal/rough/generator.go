@@ -383,6 +383,7 @@ func (g *Generator) OpsToPath(drawing *OpSet, fixedDecimals any) string {
 		}
 	}
 	var sb strings.Builder
+	sb.Grow(len(drawing.Ops) * 48)
 	for _, item := range drawing.Ops {
 		data := item.Data
 		if digits >= 0 {
@@ -395,7 +396,7 @@ func (g *Generator) OpsToPath(drawing *OpSet, fixedDecimals any) string {
 		// num writes `${data[i]}`. A missing element prints as undefined.
 		num := func(i int) {
 			if i < len(data) {
-				sb.WriteString(js.Str(data[i]))
+				js.WriteNum(&sb, data[i])
 			} else {
 				sb.WriteString("undefined")
 			}

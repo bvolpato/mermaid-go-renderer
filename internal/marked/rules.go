@@ -13,7 +13,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 )
 
 // jsRegex is a JavaScript regular expression: its source and its flags.

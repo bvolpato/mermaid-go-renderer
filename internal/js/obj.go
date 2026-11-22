@@ -7,7 +7,10 @@ import (
 	"maps"
 	"slices"
 	"sort"
+	"sync/atomic"
 )
+
+var nextObjSourceID atomic.Uint64
 
 // Obj is a string-keyed map with the property order of a JavaScript object.
 // Keys that are array indices come first in ascending numeric order. All other
@@ -39,6 +42,18 @@ type Obj[V any] struct {
 	// it to see that the object changed under it.
 	gen   uint32
 	flags uint8
+	// srcID identifies the frozen template object this Obj was copied from
+	// and stays non-zero until this Obj is mutated.
+	srcID uint64
+}
+
+// SourceID returns a non-zero identifier when o is frozen or an unmodified
+// shallow copy of a frozen object.
+func (o *Obj[V]) SourceID() uint64 {
+	if o == nil {
+		return 0
+	}
+	return o.srcID
 }
 
 const (
@@ -52,7 +67,7 @@ const (
 
 // objSmall is the largest number of slots that an object searches with a
 // scan of its keys.
-const objSmall = 8
+const objSmall = 12
 
 // objExt is the part of an object that only some objects have.
 type objExt struct {
@@ -143,6 +158,7 @@ func (o *Obj[V]) Set(key string, v V) {
 	if o.flags&objFrozen != 0 {
 		panic("js: Set on a frozen object")
 	}
+	o.srcID = 0
 	if i := o.find(key); i >= 0 {
 		o.vals[i] = v
 		return
@@ -219,6 +235,7 @@ func (o *Obj[V]) Delete(key string) {
 	if o.flags&objFrozen != 0 {
 		panic("js: Delete on a frozen object")
 	}
+	o.srcID = 0
 	if o.flags&objSharedKeys != 0 {
 		o.ownKeys()
 	}
@@ -417,6 +434,7 @@ func (o *Obj[V]) copyInto(c *Obj[V], vals []V) {
 	c.vals = vals[:len(o.vals):len(o.vals)]
 	c.gen = 0
 	c.flags = objSharedKeys
+	c.srcID = o.srcID
 }
 
 // Freeze makes the object immutable: Set and Delete panic from now on. A
@@ -426,6 +444,9 @@ func (o *Obj[V]) copyInto(c *Obj[V], vals []V) {
 func (o *Obj[V]) Freeze() {
 	if o.flags&objFrozen != 0 {
 		return
+	}
+	if o.srcID == 0 {
+		o.srcID = nextObjSourceID.Add(1)
 	}
 	if e := o.ext; e != nil {
 		if o.flags&objSharedKeys != 0 {

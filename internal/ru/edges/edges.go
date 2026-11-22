@@ -770,19 +770,25 @@ func getPageLocation(ctx *render.Context) sanitize.Location {
 // pointsJSON is JSON.stringify(points) for points that have the properties
 // x and y. A NaN or an infinite number is null.
 func pointsJSON(points []ru.Point) string {
-	num := func(v float64) string {
-		if math.IsNaN(v) || math.IsInf(v, 0) {
-			return "null"
-		}
-		return js.Str(v)
-	}
 	var sb strings.Builder
+	sb.Grow(len(points)*28 + 2)
+	writeNum := func(v float64) {
+		if math.IsNaN(v) || math.IsInf(v, 0) {
+			sb.WriteString("null")
+			return
+		}
+		js.WriteNum(&sb, v)
+	}
 	sb.WriteByte('[')
 	for i, p := range points {
 		if i > 0 {
 			sb.WriteByte(',')
 		}
-		sb.WriteString(`{"x":` + num(p.X) + `,"y":` + num(p.Y) + `}`)
+		sb.WriteString(`{"x":`)
+		writeNum(p.X)
+		sb.WriteString(`,"y":`)
+		writeNum(p.Y)
+		sb.WriteByte('}')
 	}
 	sb.WriteByte(']')
 	return sb.String()
@@ -1171,6 +1177,13 @@ func GenerateRoundedPath(points []ru.Point, radius float64) string {
 	}
 
 	var path strings.Builder
+	path.Grow(len(points) * 32)
+	writeXY := func(prefix byte, x, y float64) {
+		path.WriteByte(prefix)
+		js.WriteNum(&path, x)
+		path.WriteByte(',')
+		js.WriteNum(&path, y)
+	}
 	size := len(points)
 	const epsilon = 1e-5
 
@@ -1179,10 +1192,10 @@ func GenerateRoundedPath(points []ru.Point, radius float64) string {
 
 		if i == 0 {
 			// Move to the first point
-			path.WriteString("M" + js.Str(currPoint.X) + "," + js.Str(currPoint.Y))
+			writeXY('M', currPoint.X, currPoint.Y)
 		} else if i == size-1 {
 			// Last point, draw a straight line to the final point
-			path.WriteString("L" + js.Str(currPoint.X) + "," + js.Str(currPoint.Y))
+			writeXY('L', currPoint.X, currPoint.Y)
 		} else {
 			prevPoint := points[i-1]
 			nextPoint := points[i+1]
@@ -1197,7 +1210,7 @@ func GenerateRoundedPath(points []ru.Point, radius float64) string {
 
 			// Prevent division by zero
 			if len1 < epsilon || len2 < epsilon {
-				path.WriteString("L" + js.Str(currPoint.X) + "," + js.Str(currPoint.Y))
+				writeXY('L', currPoint.X, currPoint.Y)
 				continue
 			}
 
@@ -1215,7 +1228,7 @@ func GenerateRoundedPath(points []ru.Point, radius float64) string {
 
 			// Skip rounding if the angle is too small or too close to 180 degrees
 			if angle < epsilon || math.Abs(math.Pi-angle) < epsilon {
-				path.WriteString("L" + js.Str(currPoint.X) + "," + js.Str(currPoint.Y))
+				writeXY('L', currPoint.X, currPoint.Y)
 				continue
 			}
 
@@ -1229,10 +1242,14 @@ func GenerateRoundedPath(points []ru.Point, radius float64) string {
 			endY := currPoint.Y + float64(ny2*cutLen)
 
 			// Draw the line to the start of the curve
-			path.WriteString("L" + js.Str(startX) + "," + js.Str(startY))
+			writeXY('L', startX, startY)
 
 			// Draw the quadratic Bezier curve
-			path.WriteString("Q" + js.Str(currPoint.X) + "," + js.Str(currPoint.Y) + " " + js.Str(endX) + "," + js.Str(endY))
+			writeXY('Q', currPoint.X, currPoint.Y)
+			path.WriteByte(' ')
+			js.WriteNum(&path, endX)
+			path.WriteByte(',')
+			js.WriteNum(&path, endY)
 		}
 	}
 

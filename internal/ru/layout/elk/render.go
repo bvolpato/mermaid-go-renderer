@@ -21,6 +21,7 @@ package elk
 import (
 	"context"
 	"math"
+	"reflect"
 	"regexp"
 	"strings"
 
@@ -712,9 +713,13 @@ func prepareLayoutForElk(data4Layout *ru.LayoutData, context *rugraph.RenderCont
 }
 
 // elkLayout is elk.layout. Tests replace it.
-var elkLayout = func(graphJSON []byte) ([]byte, error) {
+var elkLayout = elkLayoutDefault
+
+func elkLayoutDefault(graphJSON []byte) ([]byte, error) {
 	return elkjs.Layout(context.Background(), graphJSON)
 }
+
+var elkLayoutDefaultPtr = reflect.ValueOf(elkLayoutDefault).Pointer()
 
 // errLayoutLimit is the panic value for layout data on which upstream does
 // not end in a useful time. The entry points of the layout recover the
@@ -844,11 +849,13 @@ func syncHostConfig(elkContext *ElkLayoutContext) error {
 	if ctx == nil || ctx.ConfigState == nil {
 		return nil
 	}
-	// setConfig sanitizes its argument in place, so it gets a copy.
-	if _, err := ctx.ConfigState.SetConfig(ctx.ConfigState.GetConfig()); err != nil {
+	gen := ctx.ConfigState.Generation()
+	if err := ctx.ConfigState.SyncSelf(); err != nil {
 		return err
 	}
-	ctx.Config = ctx.ConfigState.GetConfig()
+	if ctx.ConfigState.Generation() != gen {
+		ctx.Config = ctx.ConfigState.GetConfig()
+	}
 	return nil
 }
 
@@ -1312,19 +1319,30 @@ func setIncludeChildrenPolicy(nodeDb map[string]*js.Obj[any], nodeId string, anc
 // continues after the microtask queue is empty.
 func runElkLayout(elkContext *ElkLayoutContext, layoutState *ElkLayoutState, data4Layout *ru.LayoutData) (*ElkLayoutResult, error) {
 	elkContext.awaitTimeout()
-	out, err := elkLayout([]byte(js.StringifyJSON(layoutState.elkGraph)))
-	if err != nil {
-		return nil, err
+	var root *js.Obj[any]
+	var err error
+	if reflect.ValueOf(elkLayout).Pointer() == elkLayoutDefaultPtr {
+		root, err = elkjs.LayoutObj(context.Background(), layoutState.elkGraph)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		out, lerr := elkLayout([]byte(js.StringifyJSON(layoutState.elkGraph)))
+		if lerr != nil {
+			return nil, lerr
+		}
+		parsed, perr := js.ParseJSON(out)
+		if perr != nil {
+			return nil, perr
+		}
+		root = js.AsObj(parsed)
 	}
-	graph, err := decodeElkResult(out, layoutState, func(index int) func(point P) P {
+	graph := decodeElkResultObj(root, layoutState, func(index int) func(point P) P {
 		if index < 0 || index >= len(data4Layout.Nodes) {
 			return nil
 		}
 		return data4Layout.Nodes[index].Intersect
 	})
-	if err != nil {
-		return nil, err
-	}
 	elkContext.await()
 	return graph, nil
 }
@@ -1340,7 +1358,10 @@ func decodeElkResult(out []byte, layoutState *ElkLayoutState, intersect func(ind
 	if err != nil {
 		return nil, err
 	}
-	root := js.AsObj(parsed)
+	return decodeElkResultObj(js.AsObj(parsed), layoutState, intersect), nil
+}
+
+func decodeElkResultObj(root *js.Obj[any], layoutState *ElkLayoutState, intersect func(index int) func(point P) P) *ElkLayoutResult {
 	graph := &ElkLayoutResult{}
 	layoutState.nodeDb = map[string]*NodeWithVertex{}
 
@@ -1433,7 +1454,7 @@ func decodeElkResult(out []byte, layoutState *ElkLayoutState, intersect func(ind
 			graph.Edges = append(graph.Edges, edge)
 		}
 	}
-	return graph, nil
+	return graph
 }
 
 // optNum is a number property: NaN when it is undefined or null.

@@ -21,7 +21,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"golang.org/x/net/idna"
+	"github.com/bvolpato/mermaid-go-renderer/internal/idna"
 )
 
 // eof is the EOF code point of the URL parser.

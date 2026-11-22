@@ -5,6 +5,7 @@ package purify
 import (
 	"regexp"
 	"strings"
+	"sync"
 	"unicode/utf8"
 )
 
@@ -42,55 +43,80 @@ func ciAlt(literals ...string) string {
 
 var (
 	// MUSTACHE_EXPR = /{{[\w\W]*|^[\w\W]*}}/g
-	mustacheExpr = regexp.MustCompile(`(?s)\{\{.*|^.*\}\}`)
+	mustacheExpr = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`(?s)\{\{.*|^.*\}\}`) })
 	// ERB_EXPR = /<%[\w\W]*|^[\w\W]*%>/g
-	erbExpr = regexp.MustCompile(`(?s)<%.*|^.*%>`)
+	erbExpr = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`(?s)<%.*|^.*%>`) })
 	// TMPLIT_EXPR = /\${[\w\W]*/g
-	tmplitExpr = regexp.MustCompile(`(?s)\$\{.*`)
+	tmplitExpr = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`(?s)\$\{.*`) })
 	// DATA_ATTR = /^data-[\-\w.\x{B7}-\x{FFFF}]+$/, with the escapes of Go. A character above U+FFFF is
 	// two UTF-16 code units in JavaScript, and both are in the class.
-	dataAttr = regexp.MustCompile(`^data-[\-\w.\x{B7}-\x{10FFFF}]+$`)
+	dataAttr = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^data-[\-\w.\x{B7}-\x{10FFFF}]+$`) })
 	// ARIA_ATTR = /^aria-[\-\w]+$/
-	ariaAttr = regexp.MustCompile(`^aria-[\-\w]+$`)
+	ariaAttr = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^aria-[\-\w]+$`) })
 	// IS_ALLOWED_URI =
 	// /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
-	isAllowedURI = regexp.MustCompile(`^(?:(?:(?:[fF]|[hH][tT])[tT][pP][sS]?|` +
-		ciAlt("mailto", "tel", "callto", "sms", "cid", "xmpp", "matrix") +
-		`):|[^a-zA-Z]|[a-zA-Z+.\-]+(?:[^a-zA-Z+.\-:]|$))`)
+	isAllowedURI = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`^(?:(?:(?:[fF]|[hH][tT])[tT][pP][sS]?|` +
+			ciAlt("mailto", "tel", "callto", "sms", "cid", "xmpp", "matrix") +
+			`):|[^a-zA-Z]|[a-zA-Z+.\-]+(?:[^a-zA-Z+.\-:]|$))`)
+	})
 	// IS_SCRIPT_OR_DATA = /^(?:\w+script|data):/i
-	isScriptOrData = regexp.MustCompile(`^(?:\w+` + ci("script") + `|` + ci("data") + `):`)
+	isScriptOrData = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`^(?:\w+` + ci("script") + `|` + ci("data") + `):`)
+	})
 	// DOCTYPE_NAME = /^html$/i
-	doctypeName = regexp.MustCompile(`^` + ci("html") + `$`)
+	doctypeName = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^` + ci("html") + `$`) })
 	// CUSTOM_ELEMENT = /^[a-z][.\w]*(-[.\w]+)+$/i
-	customElement = regexp.MustCompile(`^[a-zA-Z][.\w]*(-[.\w]+)+$`)
+	customElement = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`^[a-zA-Z][.\w]*(-[.\w]+)+$`) })
 	// ELEMENT_MARKUP_PROBE = /<[/\w!]/g
-	elementMarkupProbe = regexp.MustCompile(`<[/\w!]`)
+	elementMarkupProbe = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`<[/\w!]`) })
 	// COMMENT_MARKUP_PROBE = /<[/\w]/g
-	commentMarkupProbe = regexp.MustCompile(`<[/\w]`)
+	commentMarkupProbe = sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(`<[/\w]`) })
 	// FALLBACK_TAG_CLOSE = /<\/no(script|embed|frames)/i
-	fallbackTagClose = regexp.MustCompile(`</` + ci("no") + `(` + ciAlt("script", "embed", "frames") + `)`)
+	fallbackTagClose = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`</` + ci("no") + `(` + ciAlt("script", "embed", "frames") + `)`)
+	})
 	// The expression that _sanitizeAttributes applies to a value:
 	// /((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i
-	attrValueProbe = regexp.MustCompile(`((--!?|\])>)|</(` +
-		ciAlt("style", "script", "title", "xmp", "textarea", "noscript", "iframe", "noembed", "noframes") + `)`)
-	// The expression of _initDocument for leading white space: /^[\r\n\t ]+/
-	leadingWhitespace = regexp.MustCompile(`^[\r\n\t ]+`)
+	attrValueProbe = sync.OnceValue(func() *regexp.Regexp {
+		return regexp.MustCompile(`((--!?|\])>)|</(` +
+			ciAlt("style", "script", "title", "xmp", "textarea", "noscript", "iframe", "noembed", "noframes") + `)`)
+	})
 )
+
+func isAttrWhitespaceRune(r rune) bool {
+	switch {
+	case r <= 0x20, r == 0xA0, r == 0x1680, r == 0x180E, r == 0x205F, r == 0x3000:
+		return true
+	case r >= 0x2000 && r <= 0x2029:
+		return true
+	}
+	return false
+}
 
 // stripAttrWhitespace is value.replace(ATTR_WHITESPACE, "") with
 // ATTR_WHITESPACE: the code points U+0000 to U+0020, U+00A0, U+1680, U+180E,
 // U+2000 to U+2029, U+205F and U+3000.
 func stripAttrWhitespace(value string) string {
-	isWS := func(r rune) bool {
-		switch {
-		case r <= 0x20, r == 0xA0, r == 0x1680, r == 0x180E, r == 0x205F, r == 0x3000:
-			return true
-		case r >= 0x2000 && r <= 0x2029:
-			return true
+	hasWS := false
+	for i := 0; i < len(value); {
+		c := value[i]
+		if c < 0x80 {
+			if c <= 0x20 {
+				hasWS = true
+				break
+			}
+			i++
+			continue
 		}
-		return false
+		r, size := utf8.DecodeRuneInString(value[i:])
+		if size > 1 && isAttrWhitespaceRune(r) {
+			hasWS = true
+			break
+		}
+		i += size
 	}
-	if strings.IndexFunc(value, isWS) < 0 {
+	if !hasWS {
 		return value
 	}
 	var sb strings.Builder
@@ -106,7 +132,7 @@ func stripAttrWhitespace(value string) string {
 		}
 		// An invalid byte decodes with size 1 and is copied as is.
 		r, size := utf8.DecodeRuneInString(value[i:])
-		if size > 1 && isWS(r) {
+		if size > 1 && isAttrWhitespaceRune(r) {
 			i += size
 			continue
 		}
@@ -124,25 +150,52 @@ func stripAttrWhitespace(value string) string {
 // matchAttrValueProbe is attrValueProbe.MatchString(value). Every
 // alternative of the expression has a ">" or a "</".
 func matchAttrValueProbe(value string) bool {
-	if strings.IndexByte(value, '>') < 0 && !strings.Contains(value, "</") {
+	if strings.IndexByte(value, '>') < 0 && strings.IndexByte(value, '<') < 0 {
 		return false
 	}
-	return attrValueProbe.MatchString(value)
+	return attrValueProbe().MatchString(value)
 }
 
 // matchDataAttr is dataAttr.MatchString(name).
 func matchDataAttr(name string) bool {
-	return strings.HasPrefix(name, "data-") && dataAttr.MatchString(name)
+	if !strings.HasPrefix(name, "data-") || len(name) == 5 {
+		return false
+	}
+	for i := 5; i < len(name); {
+		c := name[i]
+		if c < 0x80 {
+			if c == '-' || c == '_' || c == '.' || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') {
+				i++
+				continue
+			}
+			return false
+		}
+		r, size := utf8.DecodeRuneInString(name[i:])
+		if r < 0xB7 {
+			return false
+		}
+		i += size
+	}
+	return true
 }
 
 // matchAriaAttr is ariaAttr.MatchString(name).
 func matchAriaAttr(name string) bool {
-	return strings.HasPrefix(name, "aria-") && ariaAttr.MatchString(name)
+	if !strings.HasPrefix(name, "aria-") || len(name) == 5 {
+		return false
+	}
+	for i := 5; i < len(name); i++ {
+		c := name[i]
+		if !(c == '-' || c == '_' || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+			return false
+		}
+	}
+	return true
 }
 
 // matchElementMarkupProbe is elementMarkupProbe.MatchString(text).
 func matchElementMarkupProbe(text string) bool {
-	return strings.IndexByte(text, '<') >= 0 && elementMarkupProbe.MatchString(text)
+	return strings.IndexByte(text, '<') >= 0 && elementMarkupProbe().MatchString(text)
 }
 
 // allowedSchemes are the schemes of IS_ALLOWED_URI.
@@ -186,4 +239,69 @@ func matchAllowedURI(value string) bool {
 		lower[k] = c
 	}
 	return allowedSchemes[string(lower[:i])]
+}
+
+// matchAllowedURISkipWS is matchAllowedURI(stripAttrWhitespace(value))
+// without allocating a stripped copy of value. It scans only the leading
+// scheme prefix (at most 7 non-whitespace bytes).
+func matchAllowedURISkipWS(value string) bool {
+	isAlpha := func(c byte) bool { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') }
+	// nextNonWS returns the next byte/rune that stripAttrWhitespace keeps,
+	// starting at index i, and the next index after it. ok is false at EOF.
+	nextByte := func(i int) (b byte, nonASCII bool, next int, ok bool) {
+		for i < len(value) {
+			c := value[i]
+			if c < 0x80 {
+				if c <= 0x20 {
+					i++
+					continue
+				}
+				return c, false, i + 1, true
+			}
+			r, size := utf8.DecodeRuneInString(value[i:])
+			if size > 1 && isAttrWhitespaceRune(r) {
+				i += size
+				continue
+			}
+			return 0, true, i + size, true
+		}
+		return 0, false, i, false
+	}
+
+	b, nonASCII, pos, ok := nextByte(0)
+	if !ok {
+		return false
+	}
+	if nonASCII || !isAlpha(b) {
+		return true
+	}
+	var lower [7]byte
+	if b >= 'A' && b <= 'Z' {
+		b += 'a' - 'A'
+	}
+	lower[0] = b
+	n := 1
+	for {
+		b, nonASCII, pos, ok = nextByte(pos)
+		if !ok {
+			return true
+		}
+		if nonASCII || (!isAlpha(b) && b != '+' && b != '.' && b != '-') {
+			break
+		}
+		if n < len(lower) {
+			if b >= 'A' && b <= 'Z' {
+				b += 'a' - 'A'
+			}
+			lower[n] = b
+		}
+		n++
+	}
+	if nonASCII || b != ':' {
+		return true
+	}
+	if n > 6 {
+		return false
+	}
+	return allowedSchemes[string(lower[:n])]
 }

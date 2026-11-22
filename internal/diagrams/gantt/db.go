@@ -5,9 +5,8 @@ package gantt
 import (
 	"errors"
 	"math"
+	"regexp"
 	"strings"
-
-	"github.com/dlclark/regexp2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/dayjs"
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
@@ -180,27 +179,12 @@ func (db *DB) GetDisplayMode() string { return db.displayMode }
 // GetDateFormat is getDateFormat.
 func (db *DB) GetDateFormat() string { return db.dateFormat }
 
-var reSpaceOrComma = regexp2.MustCompile(`[\s,]+`, regexp2.ECMAScript)
+const ganttSpace = `\t\n\v\f\r \x{00a0}\x{1680}\x{2000}-\x{200a}\x{2028}\x{2029}\x{202f}\x{205f}\x{3000}\x{feff}`
 
-// splitRegexp is String.prototype.split with a regular expression that has
-// no capture group.
-func splitRegexp(re *regexp2.Regexp, s string) []string {
-	var out []string
-	runes := []rune(s)
-	last := 0
-	m, _ := re.FindRunesMatch(runes)
-	for m != nil {
-		if m.Length > 0 {
-			out = append(out, string(runes[last:m.Index]))
-			last = m.Index + m.Length
-		}
-		m, _ = re.FindNextMatch(m)
-	}
-	return append(out, string(runes[last:]))
-}
+var reSpaceOrComma = regexp.MustCompile(`[` + ganttSpace + `,]+`)
 
 func mergeTokens(existing []string, txt string) []string {
-	tokens := splitRegexp(reSpaceOrComma, js.ToLowerCase(txt))
+	tokens := reSpaceOrComma.Split(js.ToLowerCase(txt), -1)
 	set := js.NewSet(existing...)
 	for _, t := range tokens {
 		if t != "" {
@@ -359,26 +343,32 @@ func (db *DB) fixTaskDates(startTime, endTime *dayjs.Dayjs, dateFormat string, e
 }
 
 var (
-	reDigits = regexp2.MustCompile(`^\d+$`, regexp2.ECMAScript)
-	reAfter  = regexp2.MustCompile(`^after\s+(?<ids>[\d\w- ]+)`, regexp2.ECMAScript)
-	reUntil  = regexp2.MustCompile(`^until\s+(?<ids>[\d\w- ]+)`, regexp2.ECMAScript)
+	reAfter = regexp.MustCompile(`^after[` + ganttSpace + `]+([0-9A-Za-z_ -]+)`)
+	reUntil = regexp.MustCompile(`^until[` + ganttSpace + `]+([0-9A-Za-z_ -]+)`)
 	// cspell:disable-next-line
-	reDuration = regexp2.MustCompile(`^(\d+(?:\.\d+)?)([Mdhmswy]|ms)$`, regexp2.ECMAScript)
+	reDuration = regexp.MustCompile(`^([0-9]+(?:\.[0-9]+)?)([Mdhmswy]|ms)$`)
 )
 
-func matchString(re *regexp2.Regexp, s string) bool {
-	ok, _ := re.MatchString(s)
-	return ok
+func isASCIIDigits(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		if s[i] < '0' || s[i] > '9' {
+			return false
+		}
+	}
+	return true
 }
 
 // referencedIDs returns the ids of an "after" or "until" statement, or ok
 // false when str is not such a statement.
-func referencedIDs(re *regexp2.Regexp, str string) (ids []string, ok bool) {
-	m, _ := re.FindStringMatch(str)
+func referencedIDs(re *regexp.Regexp, str string) (ids []string, ok bool) {
+	m := re.FindStringSubmatch(str)
 	if m == nil {
 		return nil, false
 	}
-	for _, id := range strings.Split(m.GroupByName("ids").String(), " ") {
+	for _, id := range strings.Split(m[1], " ") {
 		if id != "" {
 			ids = append(ids, id)
 		}
@@ -399,7 +389,7 @@ func (db *DB) getStartDate(dateFormat, str string) (Date, error) {
 	str = js.TrimSpace(str)
 
 	// Handle timestamp formats (x, X) with numeric strings
-	if trimmedFormat := js.TrimSpace(dateFormat); (trimmedFormat == "x" || trimmedFormat == "X") && matchString(reDigits, str) {
+	if trimmedFormat := js.TrimSpace(dateFormat); (trimmedFormat == "x" || trimmedFormat == "X") && isASCIIDigits(str) {
 		return dateOf(js.TimeClip(js.Number(str))), nil
 	}
 	// Test for after
@@ -445,9 +435,8 @@ func (db *DB) getStartDate(dateFormat, str string) (Date, error) {
 // ParseDuration is parseDuration: it parses a string into the arguments for
 // dayjs.add(). The value is NaN for a string that is not a duration.
 func ParseDuration(str string) (value float64, unit string) {
-	m, _ := reDuration.FindStringMatch(js.TrimSpace(str))
-	if m != nil {
-		return js.ParseFloat(m.GroupByNumber(1).String()), m.GroupByNumber(2).String()
+	if m := reDuration.FindStringSubmatch(js.TrimSpace(str)); m != nil {
+		return js.ParseFloat(m[1]), m[2]
 	}
 	// NaN means an invalid duration
 	return math.NaN(), "ms"
@@ -756,14 +745,6 @@ func (db *DB) SetClickEvent(ids string) {
 	db.SetClass(ids, "clickable")
 }
 
-var reTags = func() []*regexp2.Regexp {
-	out := make([]*regexp2.Regexp, len(tags))
-	for i, t := range tags {
-		out[i] = regexp2.MustCompile(`^\s*`+t+`\s*$`, regexp2.ECMAScript)
-	}
-	return out
-}()
-
 // getTaskTags is getTaskTags: it removes the tags at the start of the data
 // and sets them on the task. The error is the TypeError that upstream
 // throws when the tags use up all of the data.
@@ -771,11 +752,11 @@ func getTaskTags(data []string, task *taskInfo) ([]string, error) {
 	matchFound := true
 	for matchFound {
 		matchFound = false
-		for i, t := range tags {
+		for _, t := range tags {
 			if len(data) == 0 {
 				return nil, &typeError{"Cannot read properties of undefined (reading 'match')"}
 			}
-			if matchString(reTags[i], data[0]) {
+			if js.TrimSpace(data[0]) == t {
 				switch t {
 				case "active":
 					task.active = true

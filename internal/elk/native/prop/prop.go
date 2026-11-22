@@ -206,6 +206,7 @@ type entry struct {
 // value is an empty holder.
 type MapHolder struct {
 	entries []entry
+	inline  [4]entry
 }
 
 func (h *MapHolder) propertyMap() *MapHolder { return h }
@@ -223,6 +224,9 @@ func (h *MapHolder) put(k int32, v any) {
 	if i := h.find(k); i >= 0 {
 		h.entries[i].val = v
 		return
+	}
+	if h.entries == nil {
+		h.entries = h.inline[:0]
 	}
 	h.entries = append(h.entries, entry{k, v})
 }

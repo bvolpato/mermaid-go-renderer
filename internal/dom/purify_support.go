@@ -21,7 +21,7 @@ import (
 	"strings"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/css"
-	"golang.org/x/net/html"
+	"github.com/bvolpato/mermaid-go-renderer/internal/html"
 )
 
 // This file adds the DOM operations that the DOMPurify port (internal/purify)
@@ -416,6 +416,25 @@ func ParseHTMLDocument(markup string) (*HTMLDocument, error) {
 		simpleParserFull.Add(1)
 	}
 	return parseHTMLDocumentFull(markup)
+}
+
+// ParseHTMLDocumentPooled is ParseHTMLDocument backed by a pooled ParseArena
+// when the fast simple parser handles markup. The caller must call
+// arena.Release() when done using the document.
+func ParseHTMLDocumentPooled(markup string) (*HTMLDocument, *ParseArena, error) {
+	arena := acquireParseArena()
+	if doc, ok := parseSimpleDocumentWithArena(markup, arena); ok {
+		if checkSimpleParser {
+			checkSimpleDocument(markup, doc)
+		}
+		return doc, arena, nil
+	}
+	arena.Release()
+	if checkSimpleParser {
+		simpleParserFull.Add(1)
+	}
+	doc, err := parseHTMLDocumentFull(markup)
+	return doc, nil, err
 }
 
 // parseHTMLDocumentFull is ParseHTMLDocument by the parser of

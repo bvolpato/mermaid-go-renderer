@@ -4,6 +4,8 @@
 package jison
 
 import (
+	"sync"
+
 	"github.com/dlclark/regexp2/v2"
 )
 
@@ -16,20 +18,26 @@ import (
 // V8 does. regexp2 does not copy the slice, so that a test at a new position
 // costs no allocation.
 type ruleMatcher struct {
-	re    *regexp2.Regexp
-	first unitSet
+	pattern string
+	once    sync.Once
+	re      *regexp2.Regexp
+	err     error
+	first   unitSet
 }
 
 func newRuleMatcher(r *Rule) (*ruleMatcher, error) {
-	// The backtracking stack has no limit, as in V8. The generator prints
-	// every pattern in a small subset of the syntax, which regexp2 reads in
-	// the same way with and without the ECMAScript option. The option selects
-	// the ASCII meaning of \b.
-	re, err := regexp2.Compile("^(?:"+r.Pattern+")", regexp2.ECMAScript, regexp2.OptionMaxBacktrackingStackSize(-1))
-	if err != nil {
-		return nil, err
-	}
-	return &ruleMatcher{re: re, first: unitSet(r.First)}, nil
+	return &ruleMatcher{pattern: r.Pattern, first: unitSet(r.First)}, nil
+}
+
+func (m *ruleMatcher) compile() (*regexp2.Regexp, error) {
+	m.once.Do(func() {
+		// The backtracking stack has no limit, as in V8. The generator prints
+		// every pattern in a small subset of the syntax, which regexp2 reads in
+		// the same way with and without the ECMAScript option. The option selects
+		// the ASCII meaning of \b.
+		m.re, m.err = regexp2.Compile("^(?:"+m.pattern+")", regexp2.ECMAScript, regexp2.OptionMaxBacktrackingStackSize(-1))
+	})
+	return m.re, m.err
 }
 
 // matchSink receives the length of a match. A lexer owns one sink and one
@@ -51,8 +59,12 @@ func newMatchSink() *matchSink {
 // match returns the length in code units of the match of the rule at the
 // start of input, or -1 when the rule does not match.
 func (m *ruleMatcher) match(input []rune, sink *matchSink) (int, error) {
+	re, err := m.compile()
+	if err != nil {
+		return -1, err
+	}
 	sink.length = -1
-	if err := m.re.FindRunesMatches(input, 0, sink.yield); err != nil {
+	if err := re.FindRunesMatches(input, 0, sink.yield); err != nil {
 		return -1, err
 	}
 	return sink.length, nil

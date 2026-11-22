@@ -17,7 +17,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/d3/shape"
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"

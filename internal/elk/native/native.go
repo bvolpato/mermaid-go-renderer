@@ -16,6 +16,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"math"
 	"runtime"
 	"unicode/utf8"
 
@@ -57,6 +58,97 @@ type Hooks struct {
 	// layout of the run goes back to the ELK graph.
 	Imported func(elkGraph *elkgraph.Node, graph *lgraph.LGraph)
 	Final    func(elkGraph *elkgraph.Node, graph *lgraph.LGraph)
+}
+
+// LayoutObj lays out an ELK graph object in place and returns it, avoiding
+// JSON serialization and parsing when the object already matches the JSON
+// value model. When ok is false, root is unmodified and the caller should
+// fall back to Layout.
+func LayoutObj(root *js.Obj[any]) (*js.Obj[any], bool) {
+	if root == nil || !isDirectJSONObj(root) {
+		return nil, false
+	}
+	res, reason := runObj(root, nil)
+	if reason != "" {
+		return nil, false
+	}
+	return res, true
+}
+
+// isDirectJSONValue reports whether v has the same shape after
+// js.ParseJSON(js.StringifyJSON(v)), with no $H key and no lone surrogates.
+func isDirectJSONValue(v any) bool {
+	switch x := v.(type) {
+	case bool:
+		return true
+	case float64:
+		return !math.IsNaN(x) && !math.IsInf(x, 0) && (x != 0 || !math.Signbit(x))
+	case string:
+		return utf8.ValidString(x)
+	case *js.Obj[any]:
+		return x != nil && isDirectJSONObj(x)
+	case []any:
+		for _, e := range x {
+			if !isDirectJSONValue(e) {
+				return false
+			}
+		}
+		return true
+	default:
+		return v == js.Null
+	}
+}
+
+func isDirectJSONObj(o *js.Obj[any]) bool {
+	ok := true
+	o.Each(func(k string, v any) {
+		if !ok {
+			return
+		}
+		if k == "$H" || !utf8.ValidString(k) || !isDirectJSONValue(v) {
+			ok = false
+		}
+	})
+	return ok
+}
+
+func runObj(root *js.Obj[any], hooks *Hooks) (out *js.Obj[any], reason string) {
+	defer func() {
+		if r := recover(); r != nil {
+			out = nil
+			var bail *lgraph.BailError
+			if e, isErr := r.(error); isErr && errors.As(e, &bail) {
+				reason = bail.Reason
+				return
+			}
+			buf := make([]byte, 2048)
+			buf = buf[:runtime.Stack(buf, false)]
+			reason = fmt.Sprintf("panic: %v\n%s", r, buf)
+		}
+	}()
+
+	im := &elkgraph.Importer{}
+	rootNode, err := im.Import(root)
+	if err != nil {
+		return nil, err.Error()
+	}
+	if im.NodeCount() > maxNodes {
+		return nil, fmt.Sprintf("the graph has more than %d nodes", maxNodes)
+	}
+
+	ctx := lgraph.NewContext()
+	provider := layered.NewProvider(ctx)
+	if hooks != nil {
+		provider.ElkLayered().Observer = hooks.Step
+		provider.Imported = hooks.Imported
+		provider.Final = hooks.Final
+	}
+	e := &engine{provider: provider}
+	e.layout(rootNode, im.AllEdges)
+
+	root.Delete("logging")
+	im.TransferLayout()
+	return root, ""
 }
 
 // LayoutWithHooks is LayoutReason with observers. It is for tests.

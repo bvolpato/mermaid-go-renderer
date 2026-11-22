@@ -10,15 +10,17 @@ package utils
 import (
 	"strings"
 
-	"golang.org/x/net/html"
-
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
+	"github.com/bvolpato/mermaid-go-renderer/internal/html"
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
 
 // EntityDecode decodes HTML entities. Upstream sets the innerHTML of a
 // detached div and reads its textContent.
 func EntityDecode(text string) string {
+	if strings.IndexByte(text, '&') < 0 {
+		return text
+	}
 	decoder := dom.NewDocument().CreateElement("div")
 	// Escape HTML before decoding for HTML Entities
 	text = js.Escape(text)

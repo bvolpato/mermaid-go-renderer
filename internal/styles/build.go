@@ -9,6 +9,7 @@
 package styles
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
@@ -37,11 +38,87 @@ func Build(diagramType string, userStyles string, cfg *js.Obj[any], svgID string
 	return CreateUserStyles(cfg, diagramType, CreateCssStyles(cfg, nil, classDefRules), svgID)
 }
 
+// userStylesCache caches the finished compiled CSS for renders whose config
+// and themeVariables are unmodified copies of a frozen config template.
+var userStylesCache = memo.New[string](256)
+
+// styleReadsConfig lists the diagram types whose style functions inspect
+// o.config beyond themeVariables, theme and look.
+var styleReadsConfig = map[string]bool{
+	"c4": true, "cynefin": true, "gitGraph": true, "radar": true,
+	"railroad": true, "railroadAbnf": true, "railroadEbnf": true, "railroadPeg": true,
+	"requirement": true, "sequence": true, "timeline": true, "treemap": true,
+	"usecase": true, "wardley": true,
+}
+
+// configCacheKey returns a cache key when the inputs that CreateUserStyles
+// reads are unmodified copies of frozen template objects.
+func configCacheKey(config *js.Obj[any], graphType, userCSSstyles, svgID string) (string, bool) {
+	tv := js.AsObj(config.Get("themeVariables"))
+	if tv == nil || tv.SourceID() == 0 {
+		return "", false
+	}
+	var cfgID, secID uint64
+	if styleReadsConfig[graphType] {
+		cfgID = config.SourceID()
+		if cfgID == 0 {
+			return "", false
+		}
+		if sec := js.AsObj(config.Get(graphType)); sec != nil {
+			secID = sec.SourceID()
+			if secID == 0 {
+				return "", false
+			}
+		}
+	}
+	themeVal, themeOK := config.Get("theme").(string)
+	if !themeOK {
+		return "", false
+	}
+	lookVal, lookOK := config.Get("look").(string)
+	if !lookOK {
+		return "", false
+	}
+	var sb strings.Builder
+	sb.Grow(64 + len(themeVal) + len(lookVal) + len(graphType) + len(svgID) + len(userCSSstyles))
+	sb.WriteString(strconv.FormatUint(cfgID, 36))
+	sb.WriteByte('|')
+	sb.WriteString(strconv.FormatUint(tv.SourceID(), 36))
+	sb.WriteByte('|')
+	sb.WriteString(strconv.FormatUint(secID, 36))
+	sb.WriteByte('|')
+	sb.WriteString(themeVal)
+	sb.WriteByte('|')
+	sb.WriteString(lookVal)
+	sb.WriteByte('|')
+	sb.WriteString(graphType)
+	sb.WriteByte('|')
+	sb.WriteString(svgID)
+	sb.WriteByte('|')
+	sb.WriteString(userCSSstyles)
+	return sb.String(), true
+}
+
 // CreateUserStyles is createUserStyles of mermaidAPI.ts. userCSSstyles is the
 // result of createCssStyles.
 func CreateUserStyles(config *js.Obj[any], graphType string, userCSSstyles string, svgID string) (string, error) {
 	if config == nil {
 		config = js.NewObj[any]()
+	}
+	if key, ok := configCacheKey(config, graphType, userCSSstyles, svgID); ok {
+		if cached, hit := userStylesCache.Get(key); hit {
+			return cached, nil
+		}
+		opts := &options{base: obj(config.Get("themeVariables")), config: config}
+		opts.Set("theme", config.Get("theme"))
+		opts.Set("look", config.Get("look"))
+		allStyles, err := getStyles(graphType, userCSSstyles, opts, svgID)
+		if err != nil {
+			return "", err
+		}
+		css := compileCSS(svgID, allStyles)
+		userStylesCache.Put(key, css)
+		return css, nil
 	}
 	// { ...config.themeVariables, theme: config.theme, look: config.look }
 	opts := &options{base: obj(config.Get("themeVariables")), config: config}

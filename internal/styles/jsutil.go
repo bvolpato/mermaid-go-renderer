@@ -26,6 +26,15 @@ type options struct {
 	// over has the properties that were set after the spread, or nil.
 	over   *js.Obj[any]
 	config *js.Obj[any]
+	// theme, look and svgId are the three spread overrides that
+	// CreateUserStyles and getStyles set on every call. Keeping them as
+	// fields avoids allocating an Obj for the common read-only path.
+	hasTheme bool
+	theme    any
+	hasLook  bool
+	look     any
+	hasSvgID bool
+	svgID    any
 }
 
 // Get is options[key].
@@ -35,13 +44,47 @@ func (o *options) Get(key string) any {
 			return v
 		}
 	}
+	switch key {
+	case "svgId":
+		if o.hasSvgID {
+			return o.svgID
+		}
+	case "theme":
+		if o.hasTheme {
+			return o.theme
+		}
+	case "look":
+		if o.hasLook {
+			return o.look
+		}
+	}
 	return o.base.Get(key)
 }
 
 // Set is options[key] = v.
 func (o *options) Set(key string, v any) {
 	if o.over == nil {
+		switch key {
+		case "svgId":
+			o.hasSvgID, o.svgID = true, v
+			return
+		case "theme":
+			o.hasTheme, o.theme = true, v
+			return
+		case "look":
+			o.hasLook, o.look = true, v
+			return
+		}
 		o.over = js.NewObj[any]()
+		if o.hasTheme {
+			o.over.Set("theme", o.theme)
+		}
+		if o.hasLook {
+			o.over.Set("look", o.look)
+		}
+		if o.hasSvgID {
+			o.over.Set("svgId", o.svgID)
+		}
 	}
 	o.over.Set(key, v)
 }
@@ -49,11 +92,18 @@ func (o *options) Set(key string, v any) {
 // with returns { ...options, key: v }: a copy that has one more property.
 // A change of the copy does not change o.
 func (o *options) with(key string, v any) *options {
-	c := &options{base: o.base, over: js.NewObj[any](), config: o.config}
+	c := &options{
+		base:     o.base,
+		config:   o.config,
+		hasTheme: o.hasTheme, theme: o.theme,
+		hasLook: o.hasLook, look: o.look,
+		hasSvgID: o.hasSvgID, svgID: o.svgID,
+	}
 	if o.over != nil {
+		c.over = js.NewObj[any]()
 		o.over.Each(c.over.Set)
 	}
-	c.over.Set(key, v)
+	c.Set(key, v)
 	return c
 }
 
@@ -64,6 +114,16 @@ func (o *options) object() *js.Obj[any] {
 	o.base.Each(out.Set)
 	if o.over != nil {
 		o.over.Each(out.Set)
+	} else {
+		if o.hasTheme {
+			out.Set("theme", o.theme)
+		}
+		if o.hasLook {
+			out.Set("look", o.look)
+		}
+		if o.hasSvgID {
+			out.Set("svgId", o.svgID)
+		}
 	}
 	return out
 }

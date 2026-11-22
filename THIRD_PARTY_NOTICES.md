@@ -155,16 +155,14 @@ A program that uses this module contains these modules. Their notices must go wi
 | Project | Version | Home page | License (SPDX) | Copyright lines | Where in this repository | License text in section 7 | Source of the lines and the text | Notes |
 |---|---|---|---|---|---|---|---|---|
 | github.com/dop251/goja | v0.0.0-20261029234554-1329d889cf98 | https://pkg.go.dev/github.com/dop251/goja | MIT | Copyright (c) 2016 Dmitry Panov<br>Copyright (c) 2012 Robert Krimen | linked | MIT | G: `$GOMODCACHE/github.com/dop251/goja@v0.0.0-20261029234554-1329d889cf98/LICENSE` |  |
-| github.com/dlclark/regexp2 | v1.12.0 | https://pkg.go.dev/github.com/dlclark/regexp2 | MIT | Copyright (c) Doug Clark | linked | MIT | G: `$GOMODCACHE/github.com/dlclark/regexp2@v1.12.0/LICENSE` |  |
-| github.com/dlclark/regexp2/v2 | v2.11.0 | https://pkg.go.dev/github.com/dlclark/regexp2/v2 | MIT | Copyright (c) Doug Clark | linked | MIT | G: `$GOMODCACHE/github.com/dlclark/regexp2/v2@v2.11.0/LICENSE` |  |
-| golang.org/x/net | v0.55.0 | https://pkg.go.dev/golang.org/x/net | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/net@v0.55.0/LICENSE` | The module has a `PATENTS` file. |
+| github.com/dlclark/regexp2/v2 | v2.13.0 | https://pkg.go.dev/github.com/dlclark/regexp2/v2 | MIT | Copyright (c) Doug Clark | linked | MIT | G: `$GOMODCACHE/github.com/dlclark/regexp2/v2@v2.13.0/LICENSE` |  |
+| golang.org/x/net (`html`, `html/atom`, `idna`) | v0.62.0 | https://pkg.go.dev/golang.org/x/net | BSD-3-Clause | Copyright 2009 The Go Authors. | `internal/html`, `internal/idna` | BSD-3-Clause, text 5 | `internal/html/LICENSE`, `internal/idna/LICENSE` | Inlined subset (`html`, `html/atom`, and `idna` with Unicode 17.0 tables). |
 | golang.org/x/text | v0.43.0 | https://pkg.go.dev/golang.org/x/text | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/text@v0.43.0/LICENSE` | The module has a `PATENTS` file. |
 | golang.org/x/image | v0.47.0 | https://pkg.go.dev/golang.org/x/image | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/image@v0.47.0/LICENSE` | The module has a `PATENTS` file. |
 | github.com/go-sourcemap/sourcemap | v2.1.3+incompatible | https://pkg.go.dev/github.com/go-sourcemap/sourcemap | BSD-2-Clause | Copyright (c) 2016 The github.com/go-sourcemap/sourcemap Contributors. | linked | BSD-2-Clause | G: `$GOMODCACHE/github.com/go-sourcemap/sourcemap@v2.1.3+incompatible/LICENSE` |  |
 | github.com/dop251/goja, package `ftoa` | same | https://pkg.go.dev/github.com/dop251/goja/ftoa | a notice of Lucent Technologies, and BSD-3-Clause (V8) | Copyright (C) 1998, 1999 by Lucent Technologies | linked | Lucent | G: `$GOMODCACHE/github.com/dop251/goja@v0.0.0-20261029234554-1329d889cf98/ftoa/LICENSE_LUCENE` | `ftoa/internal/fast/LICENSE_V8` is the license of V8, in the row of V8 in section 1.2. |
 | github.com/go-text/typesetting | v0.3.5 | https://pkg.go.dev/github.com/go-text/typesetting | Unlicense OR BSD-3-Clause | Copyright 2021 The go-text authors | linked | go-text | G: `$GOMODCACHE/github.com/go-text/typesetting@v0.3.5/LICENSE` |  |
 | github.com/go-text/typesetting, package `harfbuzz` | v0.3.5 | https://pkg.go.dev/github.com/go-text/typesetting/harfbuzz | MIT, with the notices of HarfBuzz | Copyright (c) 2021 B. KUGLER<br>Copyright © 2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020  Google, Inc.<br>Copyright © 2018,2019,2020  Ebrahim Byagowi<br>Copyright © 2019,2020  Facebook, Inc.<br>Copyright © 2012  Mozilla Foundation<br>Copyright © 2011  Codethink Limited<br>Copyright © 2008,2010  Nokia Corporation and/or its subsidiary(-ies)<br>Copyright © 2009  Keith Stribley<br>Copyright © 2009  Martin Hosken and SIL International<br>Copyright © 2007  Chris Wilson<br>Copyright © 2006  Behdad Esfahbod<br>Copyright © 2005  David Turner<br>Copyright © 2004,2007,2008,2009,2010  Red Hat, Inc.<br>Copyright © 1998-2004  David Turner and Werner Lemberg | linked | go-text harfbuzz | G: `$GOMODCACHE/github.com/go-text/typesetting@v0.3.5/harfbuzz/LICENSE` |  |
-| gopkg.in/yaml.v3 | v3.0.1 | https://pkg.go.dev/gopkg.in/yaml.v3 | MIT AND Apache-2.0 | Copyright (c) 2006-2010 Kirill Simonov<br>Copyright (c) 2006-2011 Kirill Simonov<br>Copyright (c) 2011-2019 Canonical Ltd<br>Copyright 2011-2016 Canonical Ltd. | linked | yaml.v3 | G: `$GOMODCACHE/gopkg.in/yaml.v3@v3.0.1/LICENSE` | The module has a `NOTICE` file. It is in section 7 after the license file. |
 | github.com/google/pprof | v0.0.0-20230207041349-798e818bf904 | https://pkg.go.dev/github.com/google/pprof | Apache-2.0 | copyright line not found locally | linked through goja (package `profile`) | Apache-2.0 | G: `$GOMODCACHE/github.com/google/pprof@v0.0.0-20230207041349-798e818bf904/LICENSE` | The license file has no copyright line. The file `AUTHORS` of the module names Google Inc. |
 | The Go standard library and runtime | the version of the Go toolchain that builds the program | https://go.dev | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `LICENSE` of the Go distribution |  |
 
@@ -220,7 +218,7 @@ The fix pass of 2026-11-09 put these texts into the repository. They were in thi
 
 ### MIT
 
-Used for: mermaid 12.2.0, @mermaid-js/mermaid-cli 12.2.0, @mermaid-js/mermaid-zenuml 1.0.1, @zenuml/core 3.49.2, KaTeX 0.18.11, KaTeX stylesheet 0.18.10, @mermaid-js/parser 2.0.1, dagre-d3-es 7.0.14, es-toolkit 1.45.1, khroma 2.1.0, stylis 4.3.6, roughjs 4.6.6, hachure-fill 0.5.2, path-data-parser 0.1.0, points-on-curve 0.2.0, points-on-path 0.2.1, dayjs 1.11.21, @upsetjs/venn.js 2.0.0, @iconify/utils 3.0.2, @braintree/sanitize-url 7.1.2, ts-dedent 2.2.0, jison 0.4.18, jison-lex 0.3.4, js-yaml 4.3.0, langium 4.4.0, Arm Optimized Routines v20.02, Arm Optimized Routines v23.01, skrifa, read-fonts, font-types (Fontations), cytoscape 3.34.0, layout-base 1.0.2 and 2.0.1, cose-base 1.0.3 and 2.2.0, cytoscape-cose-bilkent 4.1.0, cytoscape-fcose 2.2.0, github.com/dop251/goja, github.com/dlclark/regexp2 v1.12.0, github.com/dlclark/regexp2/v2 v2.11.0.
+Used for: mermaid 12.2.0, @mermaid-js/mermaid-cli 12.2.0, @mermaid-js/mermaid-zenuml 1.0.1, @zenuml/core 3.49.2, KaTeX 0.18.11, KaTeX stylesheet 0.18.10, @mermaid-js/parser 2.0.1, dagre-d3-es 7.0.14, es-toolkit 1.45.1, khroma 2.1.0, stylis 4.3.6, roughjs 4.6.6, hachure-fill 0.5.2, path-data-parser 0.1.0, points-on-curve 0.2.0, points-on-path 0.2.1, dayjs 1.11.21, @upsetjs/venn.js 2.0.0, @iconify/utils 3.0.2, @braintree/sanitize-url 7.1.2, ts-dedent 2.2.0, jison 0.4.18, jison-lex 0.3.4, js-yaml 4.3.0, langium 4.4.0, Arm Optimized Routines v20.02, Arm Optimized Routines v23.01, skrifa, read-fonts, font-types (Fontations), cytoscape 3.34.0, layout-base 1.0.2 and 2.0.1, cose-base 1.0.3 and 2.2.0, cytoscape-cose-bilkent 4.1.0, cytoscape-fcose 2.2.0, github.com/dop251/goja, github.com/dlclark/regexp2/v2 v2.13.0.
 
 Taken from (`node_modules`, not in git): `tools/reference/node_modules/mermaid/LICENSE`.
 
@@ -2795,9 +2793,9 @@ SPDX-License-Identifier: Unicode-3.0
 
 ### BSD-3-Clause, text 5
 
-Used for: golang.org/x/net v0.55.0, golang.org/x/text v0.43.0, golang.org/x/image v0.47.0, The Go standard library and runtime.
+Used for: golang.org/x/net v0.62.0 (inlined `html`, `html/atom`, `idna` in `internal/html` and `internal/idna`), golang.org/x/text v0.43.0, golang.org/x/image v0.47.0, The Go standard library and runtime.
 
-Taken from (the Go module cache or the Go distribution): `$GOMODCACHE/golang.org/x/net@v0.55.0/LICENSE`.
+Taken from: `internal/html/LICENSE` (from `golang.org/x/net@v0.62.0/LICENSE`).
 
 The copyright lines of each project are in the tables above. They go in the place of the copyright line of this text.
 

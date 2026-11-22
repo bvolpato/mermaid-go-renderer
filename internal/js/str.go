@@ -4,7 +4,7 @@
 package js
 
 import (
-	"sort"
+	"slices"
 	"unicode/utf16"
 )
 
@@ -60,11 +60,26 @@ func CompareStrings(a, b string) int {
 
 // SortStrings is Array.prototype.sort with no comparator, for an array of strings.
 func SortStrings(s []string) {
-	sort.SliceStable(s, func(i, j int) bool { return CompareStrings(s[i], s[j]) < 0 })
+	if len(s) <= 1 {
+		return
+	}
+	slices.SortStableFunc(s, CompareStrings)
 }
 
 // SortFunc is Array.prototype.sort with a comparator. The sort is stable, as
 // it is in V8. The comparator returns a negative, zero or positive number.
 func SortFunc[T any](s []T, cmp func(a, b T) float64) {
-	sort.SliceStable(s, func(i, j int) bool { return cmp(s[i], s[j]) < 0 })
+	if len(s) <= 1 {
+		return
+	}
+	slices.SortStableFunc(s, func(a, b T) int {
+		d := cmp(a, b)
+		if d < 0 {
+			return -1
+		}
+		if d > 0 {
+			return 1
+		}
+		return 0
+	})
 }

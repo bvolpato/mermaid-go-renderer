@@ -31,9 +31,19 @@ type PDFPage struct {
 // Drop shadows use flat silhouettes. Other filters and external images are omitted.
 // Unsupported font faces use outlines.
 func RenderPDF(svg string, opts Options, page PDFPage) ([]byte, error) {
-	doc, err := dom.ParseBody(svg)
+	hdoc, arena, err := dom.ParseHTMLDocumentPooled(svg)
+	if arena != nil {
+		defer arena.Release()
+	}
 	if err != nil {
 		return nil, err
+	}
+	doc := hdoc.Document
+	if doc.Body == nil {
+		doc.Body = hdoc.Body
+	}
+	if doc.Body == nil {
+		return nil, errors.New("raster: no svg element")
 	}
 	doc.PageSheets = opts.PageSheets
 	eng := browser.NewWithFonts(opts.Fonts)

@@ -57,13 +57,6 @@ func TestYAML(t *testing.T) {
 	t.Logf("%d golden cases (%d from the corpus), %d failed (%d from the corpus), %d known divergences", len(g.Cases), g.CorpusCount, failed, failedCorpus, skipped)
 }
 
-// yamlKnownDivergences lists the documents for which gopkg.in/yaml.v3 and
-// js-yaml disagree, with the reason. None of them occurs in the corpus.
-var yamlKnownDivergences = map[string]string{
-	"a: ! 12":                               "yaml.v3 does not report the non-specific tag \"!\", which keeps a plain scalar a string in js-yaml",
-	"%YAML 1.2\n---\na: 1":                  "yaml.v3 accepts only %YAML 1.1; a directive cannot precede a document inside front matter anyway",
-	"%FOO bar\n---\na: 1":                   "yaml.v3 rejects an unknown directive; js-yaml warns and goes on",
-	"- [x\n- x]":                            "js-yaml rejects a flow collection that continues on a line that starts like a block entry; yaml.v3 reads it",
-	"- - \n- |+\n  x: y":                    "js-yaml rejects a block scalar that follows an empty entry of a nested sequence; yaml.v3 reads it",
-	"- -  - # c\n  - #x\n    -  \n    -  x": "js-yaml flattens nested sequences whose empty entries carry comments",
-}
+// yamlKnownDivergences is empty: the port of js-yaml agrees with upstream on
+// every golden case.
+var yamlKnownDivergences = map[string]string{}

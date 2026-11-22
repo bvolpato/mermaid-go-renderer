@@ -7,8 +7,7 @@ package dayjs
 import (
 	"errors"
 	"math"
-
-	"github.com/dlclark/regexp2"
+	"regexp"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -656,19 +655,19 @@ func (f *Factory) Parse(date, format string, strict bool) (*Dayjs, error) {
 }
 
 // regexParse is REGEX_PARSE of constant.js.
-var regexParse = regexp2.MustCompile(`^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$`, regexp2.ECMAScript)
+var regexParse = regexp.MustCompile(`^([0-9]{4})[-/]?([0-9]{1,2})?[-/]?([0-9]{0,2})[Tt\t\n\v\f\r \x{00a0}\x{1680}\x{2000}-\x{200a}\x{2028}\x{2029}\x{202f}\x{205f}\x{3000}\x{feff}]*([0-9]{1,2})?:?([0-9]{1,2})?:?([0-9]{1,2})?[.:]?([0-9]+)?$`)
 
 // FromString is dayjs(date) with a string and no format: parseDate.
 func (f *Factory) FromString(date string) *Dayjs {
 	// !/Z$/i.test(date)
 	if n := len(date); n == 0 || (date[n-1] != 'Z' && date[n-1] != 'z') {
-		if m, err := regexParse.FindStringMatch(date); err == nil && m != nil {
+		if idx := regexParse.FindStringSubmatchIndex(date); idx != nil {
 			group := func(i int) (string, bool) {
-				g := m.GroupByNumber(i)
-				if len(g.Captures) == 0 {
+				s, e := idx[i*2], idx[i*2+1]
+				if s < 0 {
 					return "", false
 				}
-				return g.String(), true
+				return date[s:e], true
 			}
 			// A missing or empty group is falsy.
 			numOr := func(i int, def float64) float64 {

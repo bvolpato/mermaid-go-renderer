@@ -105,6 +105,7 @@ type settings struct {
 	dataURITags                 set
 	uriSafeAttributes           set
 	allowedURI                  func(value string) bool
+	defaultAllowedURI           bool
 	allowedNamespaces           set
 	mathMLTextIntegrationPoints set
 	htmlIntegrationPoints       set
@@ -281,7 +282,8 @@ func (p *Purifier) parseConfigSlow(cfg *Config) error {
 	p.sanitizeNamedProps = cfg.SanitizeNamedProps
 	p.keepContent = cfg.KeepContent != False
 	p.allowedURI = cfg.AllowedURI
-	if p.allowedURI == nil {
+	p.defaultAllowedURI = p.allowedURI == nil
+	if p.defaultAllowedURI {
 		p.allowedURI = matchAllowedURI
 	}
 	if cfg.MathMLTextIntegrationPoints != nil {
@@ -604,17 +606,28 @@ func (p *Purifier) removeAttribute(name string, element *dom.Node) {
 // initDocument is _initDocument. It returns the node that sanitize walks: the
 // body element, or the html element for WHOLE_DOCUMENT. The result is nil for
 // a document that has no body.
-func (p *Purifier) initDocument(dirty string) (*dom.HTMLDocument, *dom.Node, error) {
+func (p *Purifier) initDocument(dirty string) (*dom.HTMLDocument, *dom.Node, *dom.ParseArena, error) {
 	leading := ""
 	if p.forceBody {
 		dirty = "<remove></remove>" + dirty
 	} else {
 		// If FORCE_BODY isn't used, leading whitespace needs to be preserved manually.
-		leading = leadingWhitespace.FindString(dirty)
+		i := 0
+		for i < len(dirty) && (dirty[i] == ' ' || dirty[i] == '\t' || dirty[i] == '\n' || dirty[i] == '\r') {
+			i++
+		}
+		leading = dirty[:i]
 	}
-	doc, err := dom.ParseHTMLDocument(dirty)
+	var doc *dom.HTMLDocument
+	var arena *dom.ParseArena
+	var err error
+	if !p.returnDOM {
+		doc, arena, err = dom.ParseHTMLDocumentPooled(dirty)
+	} else {
+		doc, err = dom.ParseHTMLDocument(dirty)
+	}
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	// body = doc.body || doc.documentElement. The body of a frameset document
 	// is the frameset element.
@@ -630,16 +643,16 @@ func (p *Purifier) initDocument(dirty string) (*dom.HTMLDocument, *dom.Node, err
 		body.InsertBefore(doc.Document.CreateText(leading), body.FirstChild)
 	}
 	if p.wholeDocument {
-		return doc, doc.Root, nil
+		return doc, doc.Root, arena, nil
 	}
-	return doc, doc.Body, nil
+	return doc, doc.Body, arena, nil
 }
 
 // stripTemplateExpressions is _stripTemplateExpressions.
 func stripTemplateExpressions(value string) string {
-	value = mustacheExpr.ReplaceAllLiteralString(value, " ")
-	value = erbExpr.ReplaceAllLiteralString(value, " ")
-	value = tmplitExpr.ReplaceAllLiteralString(value, " ")
+	value = mustacheExpr().ReplaceAllLiteralString(value, " ")
+	value = erbExpr().ReplaceAllLiteralString(value, " ")
+	value = tmplitExpr().ReplaceAllLiteralString(value, " ")
 	return value
 }
 
@@ -693,7 +706,7 @@ func (p *Purifier) isUnsafeNode(currentNode *dom.Node, tagName string) bool {
 	// Remove any occurrence of processing instructions: a parsed HTML document
 	// has none.
 	// Remove any kind of possibly harmful comments.
-	if p.safeForXML && currentNode.Type == dom.CommentNode && commentMarkupProbe.MatchString(currentNode.Data) {
+	if p.safeForXML && currentNode.Type == dom.CommentNode && commentMarkupProbe().MatchString(currentNode.Data) {
 		return true
 	}
 	return false
@@ -726,7 +739,7 @@ func readInnerHTML(n *dom.Node) string {
 
 // isBasicCustomElement is _isBasicCustomElement.
 func isBasicCustomElement(tagName string) bool {
-	return !reservedCustomElementNames[toLowerCase(tagName)] && customElement.MatchString(tagName)
+	return !reservedCustomElementNames[toLowerCase(tagName)] && customElement().MatchString(tagName)
 }
 
 // sanitizeDisallowedNode is _sanitizeDisallowedNode. It returns false when
@@ -799,7 +812,7 @@ func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
 	}
 	// Make sure that older browsers don't get fallback-tag mXSS.
 	if (tagName == "noscript" || tagName == "noembed" || tagName == "noframes") &&
-		fallbackTagClose.MatchString(innerHTML(currentNode)) {
+		fallbackTagClose().MatchString(innerHTML(currentNode)) {
 		p.mustRemove(currentNode)
 		return true
 	}
@@ -854,12 +867,12 @@ func (p *Purifier) isValidAttribute(lcTag, lcName, value string) bool {
 		}
 	} else if p.uriSafeAttributes[lcName] {
 		// This attribute is safe.
-	} else if p.allowedURI(stripAttrWhitespace(value)) {
+	} else if (p.defaultAllowedURI && matchAllowedURISkipWS(value)) || (!p.defaultAllowedURI && p.allowedURI(stripAttrWhitespace(value))) {
 		// This attribute is safe.
 	} else if (lcName == "src" || lcName == "xlink:href" || lcName == "href") && lcTag != "script" &&
 		strings.HasPrefix(value, "data:") && p.dataURITags[lcTag] {
 		// This attribute is safe.
-	} else if p.allowUnknownProtocols && !isScriptOrData.MatchString(stripAttrWhitespace(value)) {
+	} else if p.allowUnknownProtocols && !isScriptOrData().MatchString(stripAttrWhitespace(value)) {
 		// This attribute is safe.
 	} else if value != "" {
 		return false
@@ -892,8 +905,11 @@ func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
 	if currentNode.Type != dom.ElementNode || p.isClobbered(currentNode) {
 		return
 	}
-	hookEvent := &HookEvent{KeepAttr: true, AllowedAttributes: p.allowedAttr}
 	hasAttrHooks := len(p.hooks[UponSanitizeAttribute]) > 0
+	var hookEvent *HookEvent
+	if hasAttrHooks {
+		hookEvent = &HookEvent{KeepAttr: true, AllowedAttributes: p.allowedAttr}
+	}
 	l := len(currentNode.Attrs)
 	lcTag := toLowerCase(nodeName(currentNode))
 	// Go backwards over all attributes; safely remove bad ones.
@@ -911,15 +927,19 @@ func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
 		if name != "value" {
 			value = trimSpace(initValue)
 		}
+		keepAttr := true
+		forceKeepAttr := false
 		// Execute a hook if present.
-		hookEvent.AttrName = lcName
-		hookEvent.AttrValue = value
-		hookEvent.KeepAttr = true
-		hookEvent.ForceKeepAttr = false
 		if hasAttrHooks {
+			hookEvent.AttrName = lcName
+			hookEvent.AttrValue = value
+			hookEvent.KeepAttr = true
+			hookEvent.ForceKeepAttr = false
 			p.executeHooks(UponSanitizeAttribute, currentNode, hookEvent)
+			value = hookEvent.AttrValue
+			keepAttr = hookEvent.KeepAttr
+			forceKeepAttr = hookEvent.ForceKeepAttr
 		}
-		value = hookEvent.AttrValue
 		// Full DOM Clobbering protection via namespace isolation: prefix id
 		// and name attributes with user-content-.
 		if p.sanitizeNamedProps && (lcName == "id" || lcName == "name") &&
@@ -940,11 +960,11 @@ func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
 			continue
 		}
 		// Did the hooks approve of the attribute?
-		if hookEvent.ForceKeepAttr {
+		if forceKeepAttr {
 			continue
 		}
 		// Did the hooks approve of the attribute?
-		if !hookEvent.KeepAttr {
+		if !keepAttr {
 			p.removeAttribute(name, currentNode)
 			continue
 		}
@@ -1035,7 +1055,10 @@ func (p *Purifier) sanitize(dirty string, cfg *Config) (out string, node *dom.No
 		return dirty, nil, nil
 	}
 	// Initialize the document to work on.
-	doc, body, err := p.initDocument(dirty)
+	doc, body, arena, err := p.initDocument(dirty)
+	if arena != nil {
+		defer arena.Release()
+	}
 	if err != nil {
 		return "", nil, err
 	}
@@ -1079,7 +1102,7 @@ func (p *Purifier) sanitize(dirty string, cfg *Config) (out string, node *dom.No
 	}
 	// Serialize doctype if allowed.
 	if p.wholeDocument && p.allowedTags["!doctype"] && doc.HasDoctype && doc.DoctypeName != "" &&
-		doctypeName.MatchString(doc.DoctypeName) {
+		doctypeName().MatchString(doc.DoctypeName) {
 		serializedHTML = "<!DOCTYPE " + doc.DoctypeName + ">\n" + serializedHTML
 	}
 	// Sanitize final string template-safe.

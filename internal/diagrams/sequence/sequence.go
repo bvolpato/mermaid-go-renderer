@@ -47,9 +47,9 @@ func initDiagram(ctx *render.Context) {
 	seq.Set("wrap", wrap)
 	conf := js.NewObj[any]()
 	conf.Set("sequence", seq)
-	if _, err := ctx.ConfigState.SetConfig(conf); err == nil {
+	if cfg, err := ctx.ConfigState.SetConfig(conf); err == nil {
 		// The db reads the config during the parse, before the pipeline
 		// reads it again.
-		ctx.Config = ctx.ConfigState.GetConfig()
+		ctx.Config = cfg
 	}
 }

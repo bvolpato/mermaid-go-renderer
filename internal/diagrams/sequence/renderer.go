@@ -836,17 +836,27 @@ func isLineType(typ int) bool {
 // draw draws a sequenceDiagram in the svg of the render.
 func draw(ctx *render.Context, d *db) error {
 	r := &renderer{ctx: ctx, db: d, actorCnt: -1}
-	cfg := ctx.ConfigState.GetConfig()
+	cfg := ctx.Config
+	if cfg == nil {
+		cfg = ctx.ConfigState.GetConfig()
+	}
 	r.look = cfg.Get("look")
 	r.themeVariables = js.AsObj(cfg.Get("themeVariables"))
-	r.conf = &conf{obj: js.AsObj(cfg.Get("sequence"))}
+	var seqObj *js.Obj[any]
+	if raw := js.AsObj(cfg.Get("sequence")); raw != nil {
+		seqObj, _ = js.AssignNew(raw, 2)
+		if seqObj == nil {
+			seqObj = js.Clone(raw).(*js.Obj[any])
+		}
+	}
+	r.conf = &conf{obj: seqObj}
 	conf := r.conf
 	bounds := &r.bounds
 	bounds.conf = conf
 	id := ctx.ID
 	// bounds.init() calls setConf(getConfig()).
 	bounds.init()
-	if err := setConf(conf, ctx.ConfigState.GetConfig()); err != nil {
+	if err := setConf(conf, cfg); err != nil {
 		return err
 	}
 

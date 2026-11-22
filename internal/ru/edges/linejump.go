@@ -537,6 +537,8 @@ func CurveSupportsLineHops(curve string) bool {
 		curve == "stepAfter"
 }
 
+var atobWhitespaceReplacer = strings.NewReplacer(" ", "", "\t", "", "\n", "", "\f", "", "\r", "")
+
 // decodeDataPoints decodes the data-points attribute that InsertEdge sets.
 // It gives the exact point list that the rendered path was made from,
 // before the marker offsets. ok is false when the attribute does not hold
@@ -546,7 +548,10 @@ func decodeDataPoints(raw string, has bool) (pts []ru.Point, ok bool) {
 		return nil, false
 	}
 	// atob accepts unpadded input and ASCII white space.
-	cleaned := strings.NewReplacer(" ", "", "\t", "", "\n", "", "\f", "", "\r", "").Replace(raw)
+	cleaned := raw
+	if strings.ContainsAny(cleaned, " \t\n\f\r") {
+		cleaned = atobWhitespaceReplacer.Replace(cleaned)
+	}
 	cleaned = strings.TrimRight(cleaned, "=")
 	jsonBytes, err := base64.RawStdEncoding.DecodeString(cleaned)
 	if err != nil {

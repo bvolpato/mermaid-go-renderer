@@ -275,6 +275,32 @@ func Layout(ctx context.Context, graphJSON []byte) ([]byte, error) {
 	return defaultEngine.Layout(ctx, graphJSON)
 }
 
+// LayoutObj lays out an ELK graph object directly without JSON round-trips
+// when the native engine covers it, falling back to Layout otherwise.
+func LayoutObj(ctx context.Context, root *js.Obj[any]) (*js.Obj[any], error) {
+	return defaultEngine.LayoutObj(ctx, root)
+}
+
+// LayoutObj lays out an ELK graph object directly in ModeNative when the
+// Go port covers it.
+func (e *Engine) LayoutObj(ctx context.Context, root *js.Obj[any]) (*js.Obj[any], error) {
+	if e.opts.Mode == ModeNative && !e.opts.Fresh {
+		if out, ok := native.LayoutObj(root); ok {
+			e.count(true, true)
+			return out, nil
+		}
+	}
+	out, err := e.Layout(ctx, []byte(js.StringifyJSON(root)))
+	if err != nil {
+		return nil, err
+	}
+	parsed, err := js.ParseJSON(out)
+	if err != nil {
+		return nil, err
+	}
+	return js.AsObj(parsed), nil
+}
+
 // LayoutGraph is Layout followed by Decode.
 func LayoutGraph(ctx context.Context, graphJSON []byte) (*Node, error) {
 	return defaultEngine.LayoutGraph(ctx, graphJSON)

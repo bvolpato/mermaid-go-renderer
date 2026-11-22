@@ -35,11 +35,11 @@ func TestFastPaths(t *testing.T) {
 		fast   func(string) bool
 		regexp func(string) bool
 	}{
-		{"IS_ALLOWED_URI", matchAllowedURI, isAllowedURI.MatchString},
-		{"attribute value probe", matchAttrValueProbe, attrValueProbe.MatchString},
-		{"DATA_ATTR", matchDataAttr, dataAttr.MatchString},
-		{"ARIA_ATTR", matchAriaAttr, ariaAttr.MatchString},
-		{"ELEMENT_MARKUP_PROBE", matchElementMarkupProbe, elementMarkupProbe.MatchString},
+		{"IS_ALLOWED_URI", matchAllowedURI, isAllowedURI().MatchString},
+		{"attribute value probe", matchAttrValueProbe, attrValueProbe().MatchString},
+		{"DATA_ATTR", matchDataAttr, dataAttr().MatchString},
+		{"ARIA_ATTR", matchAriaAttr, ariaAttr().MatchString},
+		{"ELEMENT_MARKUP_PROBE", matchElementMarkupProbe, elementMarkupProbe().MatchString},
 	}
 	for _, c := range checks {
 		for _, v := range values {

@@ -62,9 +62,13 @@ type Engine struct {
 	rulesKey string
 	rulesGen uint64
 	rulesDoc *dom.Document
-	// classBuf is storage for the classes of the ancestors of the element
-	// of a cascade. See cascade.
-	classBuf []string
+	// classBuf, elemClassBuf, matchBuf and inlineBuf are reusable scratch
+	// storage for cascade. See style.go.
+	classBuf     []string
+	elemClassBuf []string
+	matchBuf     []matched
+	inlineBuf    []css.Decl
+	styleSlab    []nodeStyle
 	// page is the rule set of the style sheets of the page of pageDoc. See
 	// pagesheets.go.
 	page    *ruleSet
@@ -149,11 +153,16 @@ func parseCSSTransform(v string) affine {
 	return parseTransform(cssTransformText(v))
 }
 
+var cssTransformReplacer = strings.NewReplacer("px", "", "deg", "")
+
 // cssTransformText turns the value of the CSS transform property into the
 // form of the transform attribute. CSS functions take units: px and deg
 // are user units, so they go away.
 func cssTransformText(v string) string {
-	return strings.NewReplacer("px", "", "deg", "").Replace(v)
+	if !strings.Contains(v, "px") && !strings.Contains(v, "deg") {
+		return v
+	}
+	return cssTransformReplacer.Replace(v)
 }
 
 // individualTransforms returns the CSS properties translate, rotate and

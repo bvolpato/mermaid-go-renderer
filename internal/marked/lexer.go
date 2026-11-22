@@ -433,12 +433,12 @@ func (l *lexer) inlineTokens(src []rune, tokens []*Token) []*Token {
 			if match == nil {
 				break
 			}
-			lastIndex = match.Index + match.Length
+			lastIndex = match.RuneIndex + match.RuneLength
 			match0 := match.Runes()
 			key := slice(match0, lastIndexOf(match0, '[')+1, -1)
 			if _, ok := l.links[str(key)]; ok {
 				maskedSrc = concat(
-					maskedSrc[:match.Index],
+					maskedSrc[:match.RuneIndex],
 					[]rune{'['}, repeat('a', len(match0)-2), []rune{']'},
 					maskedSrc[lastIndex:],
 				)
@@ -468,10 +468,10 @@ func (l *lexer) inlineTokens(src []rune, tokens []*Token) []*Token {
 			if match == nil {
 				break
 			}
-			lastIndex = match.Index + match.Length
+			lastIndex = match.RuneIndex + match.RuneLength
 			maskedSrc = concat(
-				maskedSrc[:match.Index],
-				[]rune{'['}, repeat('a', match.Length-2), []rune{']'},
+				maskedSrc[:match.RuneIndex],
+				[]rune{'['}, repeat('a', match.RuneLength-2), []rune{']'},
 				maskedSrc[lastIndex:],
 			)
 		}

@@ -377,20 +377,53 @@ func bigCbrt(x float64, prec uint) *big.Float {
 	return y.SetMantExp(y, q)
 }
 
+var (
+	sinSlowMu    sync.RWMutex
+	sinSlowCache = map[uint64]float64{}
+	cosSlowMu    sync.RWMutex
+	cosSlowCache = map[uint64]float64{}
+)
+
 // sinSlow is the correctly rounded sine of a finite x that is not 0.
 func sinSlow(x float64) float64 {
-	return bigCompute(func(prec uint) *big.Float {
+	bits := math.Float64bits(x)
+	sinSlowMu.RLock()
+	if v, ok := sinSlowCache[bits]; ok {
+		sinSlowMu.RUnlock()
+		return v
+	}
+	sinSlowMu.RUnlock()
+	v := bigCompute(func(prec uint) *big.Float {
 		s, _ := bigSinCos(x, prec)
 		return s
 	})
+	sinSlowMu.Lock()
+	if len(sinSlowCache) < 1024 {
+		sinSlowCache[bits] = v
+	}
+	sinSlowMu.Unlock()
+	return v
 }
 
 // cosSlow is the correctly rounded cosine of a finite x that is not 0.
 func cosSlow(x float64) float64 {
-	return bigCompute(func(prec uint) *big.Float {
+	bits := math.Float64bits(math.Abs(x))
+	cosSlowMu.RLock()
+	if v, ok := cosSlowCache[bits]; ok {
+		cosSlowMu.RUnlock()
+		return v
+	}
+	cosSlowMu.RUnlock()
+	v := bigCompute(func(prec uint) *big.Float {
 		_, c := bigSinCos(x, prec)
 		return c
 	})
+	cosSlowMu.Lock()
+	if len(cosSlowCache) < 1024 {
+		cosSlowCache[bits] = v
+	}
+	cosSlowMu.Unlock()
+	return v
 }
 
 // tanSlow is the correctly rounded tangent of a finite x that is not 0.

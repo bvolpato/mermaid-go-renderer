@@ -3,10 +3,9 @@
 package class
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/dlclark/regexp2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 	"github.com/bvolpato/mermaid-go-renderer/internal/sanitize"
@@ -91,7 +90,7 @@ type ClassMember struct {
 func jsEscape(units ...rune) string {
 	var sb strings.Builder
 	for _, u := range units {
-		sb.WriteString(`\` + "u" + strconv.FormatInt(0x10000+int64(u), 16)[1:])
+		sb.WriteString(`\x{` + strconv.FormatInt(int64(u), 16) + `}`)
 	}
 	return sb.String()
 }
@@ -104,7 +103,7 @@ var (
 )
 
 // methodRegEx is /([#+~-])?(.+)\((.*)\)([\s$*])?(.*)([$*])?/.
-var methodRegEx = regexp2.MustCompile(`([#+~-])?(`+jsDot+`+)\((`+jsDot+`*)\)([`+jsSpace+`$*])?(`+jsDot+`*)([$*])?`, regexp2.None)
+var methodRegEx = regexp.MustCompile(`([#+~-])?(` + jsDot + `+)\((` + jsDot + `*)\)([` + jsSpace + `$*])?(` + jsDot + `*)([$*])?`)
 
 // isClassifier is /[$*]/.exec(s) as a boolean.
 func isClassifier(s string) bool {
@@ -160,17 +159,13 @@ func (m *ClassMember) parseMember(input string) error {
 	hasID := false
 
 	if m.MemberType == "method" {
-		match, err := methodRegEx.FindStringMatch(input)
-		if err != nil {
-			return err
-		}
-		if match != nil {
+		if idx := methodRegEx.FindStringSubmatchIndex(input); idx != nil {
 			group := func(i int) string {
-				g := match.GroupByNumber(i)
-				if g == nil || len(g.Captures) == 0 {
+				s, e := idx[i*2], idx[i*2+1]
+				if s < 0 {
 					return ""
 				}
-				return g.String()
+				return input[s:e]
 			}
 			detectedVisibility := js.TrimSpace(group(1))
 

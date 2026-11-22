@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dlclark/regexp2"
+	"github.com/dlclark/regexp2/v2"
 )
 
 // rulesExecGolden is rules_exec.json.gz. The generator is
@@ -63,7 +63,7 @@ func execAll(re *regex, unicode, htmlGroups bool, s []rune) string {
 		if k > 0 {
 			sb.WriteByte('|')
 		}
-		start, end := index(m.Index), index(m.Index+m.Length)
+		start, end := index(m.RuneIndex), index(m.RuneIndex+m.RuneLength)
 		sb.WriteString(strconv.Itoa(start))
 		sb.WriteByte(',')
 		sb.WriteString(strconv.Itoa(end - start))
@@ -72,7 +72,7 @@ func execAll(re *regex, unicode, htmlGroups bool, s []rune) string {
 			if len(g.Captures) == 0 {
 				return 0, 0, false
 			}
-			return index(g.Index), index(g.Index + g.Length), true
+			return index(g.RuneIndex), index(g.RuneIndex + g.RuneLength), true
 		}
 		first := 1
 		if htmlGroups {
@@ -159,7 +159,7 @@ func TestRuleMatches(t *testing.T) {
 			// agree with the engine on a match at the start.
 			if !unicode {
 				engine := re.execAt(s, 0)
-				if m := re.exec(s); (m != nil) != (engine != nil) || m != nil && (m.Index != engine.Index || m.Length != engine.Length) {
+				if m := re.exec(s); (m != nil) != (engine != nil) || m != nil && (m.RuneIndex != engine.RuneIndex || m.RuneLength != engine.RuneLength) {
 					got += " and exec differs from the engine"
 				}
 				if re.test(s) != (engine != nil) {

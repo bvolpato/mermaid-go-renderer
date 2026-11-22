@@ -112,6 +112,7 @@ func ReplaceObjects(o *Obj[any], fn func(v any) any) {
 	if o.flags&objFrozen != 0 {
 		panic("js: ReplaceObjects on a frozen object")
 	}
+	o.srcID = 0
 	for i, v := range o.vals {
 		switch x := v.(type) {
 		case *Obj[any]:

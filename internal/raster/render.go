@@ -36,6 +36,7 @@ import (
 	"io"
 	"math"
 	"strings"
+	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/browser"
 	"github.com/bvolpato/mermaid-go-renderer/internal/css"
@@ -69,9 +70,19 @@ type Options struct {
 // takes in a page at its natural size, with the edges rounded up to whole
 // CSS pixels, times the scale.
 func Render(svg string, opts Options) (*image.RGBA, error) {
-	doc, err := dom.ParseBody(svg)
+	hdoc, arena, err := dom.ParseHTMLDocumentPooled(svg)
+	if arena != nil {
+		defer arena.Release()
+	}
 	if err != nil {
 		return nil, err
+	}
+	doc := hdoc.Document
+	if doc.Body == nil {
+		doc.Body = hdoc.Body
+	}
+	if doc.Body == nil {
+		return nil, errors.New("raster: no svg element")
 	}
 	doc.PageSheets = opts.PageSheets
 	eng := browser.NewWithFonts(opts.Fonts)
@@ -113,9 +124,27 @@ func Render(svg string, opts Options) (*image.RGBA, error) {
 	return img, nil
 }
 
+type pngBufPool struct {
+	pool sync.Pool
+}
+
+func (p *pngBufPool) Get() *png.EncoderBuffer {
+	v := p.pool.Get()
+	if v == nil {
+		return nil
+	}
+	return v.(*png.EncoderBuffer)
+}
+
+func (p *pngBufPool) Put(b *png.EncoderBuffer) {
+	p.pool.Put(b)
+}
+
+var sharedPNGBufPool pngBufPool
+
 // EncodePNG writes the image as a PNG file.
 func EncodePNG(w io.Writer, img image.Image) error {
-	enc := png.Encoder{CompressionLevel: png.BestSpeed}
+	enc := png.Encoder{CompressionLevel: png.BestSpeed, BufferPool: &sharedPNGBufPool}
 	return enc.Encode(w, img)
 }
 

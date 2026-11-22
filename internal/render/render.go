@@ -299,10 +299,13 @@ func Render(text string, opts Options) (res *Result, err error) {
 	}
 	db := def.New(ctx)
 	if def.Init != nil {
+		gen := ctx.ConfigState.Generation()
 		def.Init(ctx, db)
 		// init can change the config with setConfig.
-		ctx.Config = ctx.ConfigState.GetConfig()
-		cfg = ctx.Config
+		if ctx.ConfigState.Generation() != gen {
+			ctx.Config = ctx.ConfigState.GetConfig()
+			cfg = ctx.Config
+		}
 	}
 	if resolved.Title != "" {
 		if ts, ok := db.(TitleSetter); ok {

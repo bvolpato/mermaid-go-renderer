@@ -71,6 +71,11 @@ type Face struct {
 	// to Times, Helvetica and Courier.
 	ascentHack bool
 
+	// xTightTop caches the tight top of glyph 'x' for macOS x-height.
+	xTightTopOnce sync.Once
+	xTightTop     float32
+	xTightTopOK   bool
+
 	// web has the state of a face of a web font, and is nil for a font of
 	// the system. See webfonts_face.go.
 	web *webFace
@@ -282,10 +287,13 @@ func (f *Face) xHeightPx(size, ascent float64) float64 {
 		}
 	}
 	if f.platform == PlatformDarwin {
-		if gid, ok := f.NominalGlyph('x'); ok {
-			if maxY, ok := f.tightTop(gid); ok {
-				return f32(float64(float64(maxY) * scale))
+		f.xTightTopOnce.Do(func() {
+			if gid, ok := f.NominalGlyph('x'); ok {
+				f.xTightTop, f.xTightTopOK = f.tightTop(gid)
 			}
+		})
+		if f.xTightTopOK {
+			return f32(float64(float64(f.xTightTop) * scale))
 		}
 	}
 	if f.xHeight > 0 {

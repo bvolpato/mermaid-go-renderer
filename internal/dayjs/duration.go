@@ -4,9 +4,8 @@ package dayjs
 
 import (
 	"math"
+	"regexp"
 	"strings"
-
-	"github.com/dlclark/regexp2"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -16,7 +15,7 @@ const (
 	millisecondsAMonth = millisecondsAYear / 12
 )
 
-var durationRegexParse = regexp2.MustCompile(`^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$`, regexp2.ECMAScript)
+var durationRegexParse = regexp.MustCompile(`^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$`)
 
 // unitToMS is unitToMS. The result is NaN for a name that is not a unit, as
 // the undefined of the lookup gives upstream.
@@ -89,16 +88,16 @@ func (f *Factory) DurationOf(input *js.Obj[float64]) *Duration {
 // whose value is NaN (undefined upstream).
 func (f *Factory) DurationISO(input string) *Duration {
 	d := &Duration{d: js.NewObj[float64](), ms: math.NaN()}
-	m, err := durationRegexParse.FindStringMatch(input)
-	if err != nil || m == nil {
+	idx := durationRegexParse.FindStringSubmatchIndex(input)
+	if idx == nil {
 		return d
 	}
 	names := []string{"years", "months", "weeks", "days", "hours", "minutes", "seconds"}
 	for i, name := range names {
-		g := m.GroupByNumber(i + 2)
+		s, e := idx[(i+2)*2], idx[(i+2)*2+1]
 		v := 0.0
-		if len(g.Captures) > 0 {
-			v = js.Number(g.String())
+		if s >= 0 {
+			v = js.Number(input[s:e])
 		}
 		d.d.Set(name, v)
 	}

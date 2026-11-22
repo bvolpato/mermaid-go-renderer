@@ -19,6 +19,8 @@ import (
 	"math"
 	"strconv"
 	"strings"
+
+	"github.com/bvolpato/mermaid-go-renderer/internal/memo"
 )
 
 // This file reproduces how Chromium handles an inline style through the
@@ -350,6 +352,8 @@ func SetProperty(block []Decl, name, value string, important bool, svg bool) ([]
 	return append(block, Decl{Name: name, Value: v, Important: important, Raw: value}), true
 }
 
+var colorSpaceReplacer = strings.NewReplacer(",", " , ", "(", " ( ", ")", " ) ", "/", " / ")
+
 // sameColorSpace reports whether two values with the same canonical text are
 // also equal as parsed values. Blink keeps the color space of a color: the
 // colors hsl(0, 100%, 50%) and #ff0000 both print as rgb(255, 0, 0), and
@@ -366,7 +370,7 @@ func sameColorSpace(a, b string) bool {
 		default:
 			return "", 0
 		}
-		return strings.Join(strings.Fields(strings.NewReplacer(",", " , ", "(", " ( ", ")", " ) ", "/", " / ").Replace(s)), ""), space
+		return strings.Join(strings.Fields(colorSpaceReplacer.Replace(s)), ""), space
 	}
 	textA, spaceA := compact(a)
 	textB, spaceB := compact(b)
@@ -385,8 +389,21 @@ func RemoveProperty(block []Decl, name string) ([]Decl, bool) {
 
 // SerializeInlineStyle is the cssText of a declaration block.
 func SerializeInlineStyle(block []Decl) string {
+	if len(block) == 0 {
+		return ""
+	}
+	n := len(block) - 1 // spaces between declarations
+	for i := range block {
+		d := &block[i]
+		n += len(d.Name) + 2 + len(d.Value) + 1 // ": " and ";"
+		if d.Important {
+			n += len(" !important")
+		}
+	}
 	var sb strings.Builder
-	for i, d := range block {
+	sb.Grow(n)
+	for i := range block {
+		d := &block[i]
 		if i > 0 {
 			sb.WriteByte(' ')
 		}
@@ -718,12 +735,25 @@ var genericFamilies = map[string]bool{
 	"math": true, "emoji": true, "fangsong": true,
 }
 
+type normFontResult struct {
+	v  string
+	ok bool
+}
+
+var (
+	splitFontFamilyCache     = memo.New[[]string](128)
+	normalizeFontFamilyCache = memo.New[normFontResult](128)
+)
+
 // SplitFontFamily returns the family names of a font-family value, without
 // quotes. Generic families are returned in lowercase. A quoted name that is
 // the keyword of a generic family, such as "serif", is a family name and
 // not the generic family: it keeps double quotes, so that the caller can
 // tell the two apart.
 func SplitFontFamily(value string) []string {
+	if cached, ok := splitFontFamilyCache.Get(value); ok {
+		return cached
+	}
 	var out []string
 	for _, part := range splitTopLevel(value, ',') {
 		part = strings.TrimSpace(part)
@@ -744,14 +774,19 @@ func SplitFontFamily(value string) []string {
 		}
 		out = append(out, name)
 	}
+	splitFontFamilyCache.Put(value, out)
 	return out
 }
 
 func normalizeFontFamily(value string) (string, bool) {
+	if cached, ok := normalizeFontFamilyCache.Get(value); ok {
+		return cached.v, cached.ok
+	}
 	var parts []string
 	for _, part := range splitTopLevel(value, ',') {
 		part = strings.TrimSpace(part)
 		if part == "" {
+			normalizeFontFamilyCache.Put(value, normFontResult{})
 			return "", false
 		}
 		if len(part) >= 2 && (part[0] == '"' || part[0] == '\'') && part[len(part)-1] == part[0] {
@@ -761,6 +796,7 @@ func normalizeFontFamily(value string) (string, bool) {
 		words := strings.Fields(part)
 		for _, w := range words {
 			if !isIdent(w) || (w[0] >= '0' && w[0] <= '9') {
+				normalizeFontFamilyCache.Put(value, normFontResult{})
 				return "", false
 			}
 		}
@@ -775,9 +811,12 @@ func normalizeFontFamily(value string) (string, bool) {
 		}
 	}
 	if len(parts) == 0 {
+		normalizeFontFamilyCache.Put(value, normFontResult{})
 		return "", false
 	}
-	return strings.Join(parts, ", "), true
+	res := strings.Join(parts, ", ")
+	normalizeFontFamilyCache.Put(value, normFontResult{res, true})
+	return res, true
 }
 
 func normalizeDashArray(value string) (string, bool) {

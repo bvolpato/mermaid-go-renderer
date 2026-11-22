@@ -21,9 +21,9 @@
 package browser
 
 import (
+	"cmp"
 	"math"
 	"slices"
-	"sort"
 	"strconv"
 	"strings"
 
@@ -259,7 +259,13 @@ func (e *Engine) styleOf(n *dom.Node) *nodeStyle {
 			return st
 		}
 	}
-	st = &nodeStyle{gen: gen, at: gen}
+	if len(e.styleSlab) == 0 {
+		e.styleSlab = make([]nodeStyle, 32)
+	}
+	st = &e.styleSlab[0]
+	e.styleSlab = e.styleSlab[1:]
+	st.gen = gen
+	st.at = gen
 	n.Cache = st
 	e.cascade(n, st)
 	return st
@@ -322,12 +328,21 @@ type matched struct {
 	important bool
 }
 
+func lowerASCII(s string) string {
+	for i := 0; i < len(s); i++ {
+		if c := s[i]; c >= 'A' && c <= 'Z' {
+			return strings.ToLower(s)
+		}
+	}
+	return s
+}
+
 func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
-	st.declared = map[string]string{}
 	if n.Type != dom.ElementNode {
 		return
 	}
 	if n.NS == pseudoNS {
+		st.declared = map[string]string{}
 		e.cascadePseudo(n, st)
 		return
 	}
@@ -336,6 +351,9 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 		for i := range n.Attrs {
 			a := &n.Attrs[i]
 			if a.NS == "" && presentationAttrs[a.Local] {
+				if st.declared == nil {
+					st.declared = make(map[string]string, 4)
+				}
 				if st.fromAttr == nil {
 					st.fromAttr = map[string]bool{}
 				}
@@ -349,7 +367,7 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	rs := e.collectRules(n.Document())
 	st.rules = rs
 	page := e.pageRules(n.Document())
-	var ms []matched
+	matchBase := len(e.matchBuf)
 	// The classes of the ancestors of n, collected for the first rule that
 	// needs one of them. Most rules of a style sheet of mermaid are for the
 	// descendants of an element with a class: a rule whose class no ancestor
@@ -374,12 +392,13 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 			}
 			for i := range r.decls {
 				d := &r.decls[i]
-				ms = append(ms, matched{decl: d, spec: r.sel.Specificity(), order: base + r.order, important: d.Important})
+				e.matchBuf = append(e.matchBuf, matched{decl: d, spec: r.sel.Specificity(), order: base + r.order, important: d.Important})
 			}
 		}
 	}
-	id, classes := n.ID(), n.ClassList()
-	tag := strings.ToLower(n.Tag)
+	id := n.ID()
+	classes := n.AppendClasses(e.elemClassBuf[:0])
+	tag := lowerASCII(n.Tag)
 	match := func(set *ruleSet, base int) {
 		if set.idFirst.has(id) {
 			try(set.byID[id], base)
@@ -405,102 +424,170 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	}
 	// Keep the storage for the next cascade.
 	e.classBuf = ancestorClasses[:0]
-	var inline []css.Decl
-	if v, ok := n.InlineStyleExact(); ok && v != "" {
-		inline = css.ParseDeclarations(v)
+	e.elemClassBuf = classes[:0]
+	inlineBase := len(e.inlineBuf)
+	e.inlineBuf = n.AppendInlineStyleDecls(e.inlineBuf)
+	inline := e.inlineBuf[inlineBase:]
+	ms := e.matchBuf[matchBase:]
+	if len(ms) > 0 || len(inline) > 0 || len(st.fromAttr) > 0 {
+		e.applyCascade(n, st, ms, inline)
 	}
-	e.applyCascade(n, st, ms, inline)
+	clear(e.inlineBuf[inlineBase:])
+	e.inlineBuf = e.inlineBuf[:inlineBase]
+	clear(e.matchBuf[matchBase:])
+	e.matchBuf = e.matchBuf[:matchBase]
+}
+
+// isShorthandOrSpecialDecl reports whether expandDecl does more than
+// st.declared[name] = value.
+func isShorthandOrSpecialDecl(name string) bool {
+	switch name {
+	case "font", "margin", "padding",
+		"margin-block", "padding-block", "margin-inline", "padding-inline",
+		"margin-block-start", "padding-block-start", "margin-block-end", "padding-block-end",
+		"margin-inline-start", "padding-inline-start", "margin-inline-end", "padding-inline-end",
+		"border", "border-top", "border-right", "border-bottom", "border-left",
+		"border-width", "border-style",
+		"border-top-width", "border-right-width", "border-bottom-width", "border-left-width",
+		"border-top-style", "border-right-style", "border-bottom-style", "border-left-style",
+		"background", "white-space":
+		return true
+	}
+	return false
 }
 
 // applyCascade sorts the declarations that matched an element and applies
 // them, with the declarations of the style attribute.
 func (e *Engine) applyCascade(n *dom.Node, st *nodeStyle, ms []matched, inline []css.Decl) {
-	sort.SliceStable(ms, func(i, j int) bool {
-		a, b := ms[i], ms[j]
-		if a.important != b.important {
-			return !a.important
-		}
-		if a.spec != b.spec {
-			return a.spec.Less(b.spec)
-		}
-		return a.order < b.order
-	})
-	// The cascade runs two times: first for the custom properties, then for
-	// the other properties, whose var() references read the custom
-	// properties of the element and of its ancestors.
-	custom := true
-	apply := func(d *css.Decl) {
-		if strings.HasPrefix(d.Name, "--") != custom {
-			return
-		}
-		value := d.Value
-		if !custom && hasVar(value) {
-			resolved, ok := e.resolveVars(n, value)
-			if !ok {
-				// Invalid at computed-value time: the property acts as unset.
-				for _, name := range longhandsOf(d.Name) {
-					st.declared[name] = unsetValue
-					delete(st.fromAttr, name)
+	if len(ms) > 1 {
+		slices.SortStableFunc(ms, func(a, b matched) int {
+			if a.important != b.important {
+				if !a.important {
+					return -1
 				}
-				return
+				return 1
 			}
-			value = resolved
-		}
-		if d.Name == "content" {
-			// The CSS parser of a browser drops a declaration whose value
-			// is not valid, and an earlier declaration then wins. With a
-			// var() reference the declaration is invalid at computed-value
-			// time, and the property acts as unset.
-			if _, ok := css.ParseContent(value); !ok {
-				if value != d.Value {
-					st.declared[d.Name] = unsetValue
+			if a.spec != b.spec {
+				if a.spec.Less(b.spec) {
+					return -1
 				}
-				return
+				return 1
 			}
-		}
-		expandDecl(d.Name, value, func(name, value string) {
-			st.declared[name] = value
-			delete(st.fromAttr, name)
+			return cmp.Compare(a.order, b.order)
 		})
 	}
+	if st.declared == nil {
+		st.declared = make(map[string]string, len(ms)+len(inline))
+	}
+	hasCustom := false
 	firstImportant := len(ms)
 	for i := range ms {
-		if ms[i].important {
+		if !hasCustom && strings.HasPrefix(ms[i].decl.Name, "--") {
+			hasCustom = true
+		}
+		if firstImportant == len(ms) && ms[i].important {
 			firstImportant = i
-			break
+		}
+	}
+	if !hasCustom {
+		for i := range inline {
+			if strings.HasPrefix(inline[i].Name, "--") {
+				hasCustom = true
+				break
+			}
 		}
 	}
 	// 3. The style attribute, then !important rules, then inline !important.
-	for _, custom = range []bool{true, false} {
-		if !custom {
-			// A presentation attribute can have var() references too.
-			for name := range st.fromAttr {
-				if value := st.declared[name]; hasVar(value) {
-					resolved, ok := e.resolveVars(n, value)
-					if !ok {
-						resolved = unsetValue
-					}
-					st.declared[name] = resolved
-				}
-			}
-		}
+	if hasCustom {
 		for i := 0; i < firstImportant; i++ {
-			apply(ms[i].decl)
+			e.applyCascadeDecl(n, st, ms[i].decl, true)
 		}
 		for i := range inline {
 			if !inline[i].Important {
-				apply(&inline[i])
+				e.applyCascadeDecl(n, st, &inline[i], true)
 			}
 		}
 		for i := firstImportant; i < len(ms); i++ {
-			apply(ms[i].decl)
+			e.applyCascadeDecl(n, st, ms[i].decl, true)
 		}
 		for i := range inline {
 			if inline[i].Important {
-				apply(&inline[i])
+				e.applyCascadeDecl(n, st, &inline[i], true)
 			}
 		}
 	}
+	// A presentation attribute can have var() references too.
+	for name := range st.fromAttr {
+		if value := st.declared[name]; hasVar(value) {
+			resolved, ok := e.resolveVars(n, value)
+			if !ok {
+				resolved = unsetValue
+			}
+			st.declared[name] = resolved
+		}
+	}
+	for i := 0; i < firstImportant; i++ {
+		e.applyCascadeDecl(n, st, ms[i].decl, false)
+	}
+	for i := range inline {
+		if !inline[i].Important {
+			e.applyCascadeDecl(n, st, &inline[i], false)
+		}
+	}
+	for i := firstImportant; i < len(ms); i++ {
+		e.applyCascadeDecl(n, st, ms[i].decl, false)
+	}
+	for i := range inline {
+		if inline[i].Important {
+			e.applyCascadeDecl(n, st, &inline[i], false)
+		}
+	}
+}
+
+func (e *Engine) applyCascadeDecl(n *dom.Node, st *nodeStyle, d *css.Decl, custom bool) {
+	if strings.HasPrefix(d.Name, "--") != custom {
+		return
+	}
+	value := d.Value
+	if !custom && hasVar(value) {
+		resolved, ok := e.resolveVars(n, value)
+		if !ok {
+			// Invalid at computed-value time: the property acts as unset.
+			for _, name := range longhandsOf(d.Name) {
+				st.declared[name] = unsetValue
+				if st.fromAttr != nil {
+					delete(st.fromAttr, name)
+				}
+			}
+			return
+		}
+		value = resolved
+	}
+	if d.Name == "content" {
+		// The CSS parser of a browser drops a declaration whose value
+		// is not valid, and an earlier declaration then wins. With a
+		// var() reference the declaration is invalid at computed-value
+		// time, and the property acts as unset.
+		if _, ok := css.ParseContent(value); !ok {
+			if value != d.Value {
+				st.declared[d.Name] = unsetValue
+			}
+			return
+		}
+	}
+	if !isShorthandOrSpecialDecl(d.Name) {
+		st.declared[d.Name] = value
+		if st.fromAttr != nil {
+			delete(st.fromAttr, d.Name)
+		}
+		return
+	}
+	expandDecl(d.Name, value, func(name, val string) {
+		st.declared[name] = val
+		if st.fromAttr != nil {
+			delete(st.fromAttr, name)
+		}
+	})
 }
 
 // expandDecl expands the shorthands that layout reads.
@@ -652,19 +739,32 @@ func expandFontShorthand(value string, set func(name, value string)) {
 	}
 }
 
+func isCSSResetKeyword(v string) bool {
+	switch len(v) {
+	case 5:
+		return strings.EqualFold(v, "unset")
+	case 6:
+		return strings.EqualFold(v, "revert")
+	case 7:
+		return strings.EqualFold(v, "initial")
+	}
+	return false
+}
+
+func declVal(m map[string]string, prop string) (string, bool) {
+	v, ok := m[prop]
+	if ok && isCSSResetKeyword(v) {
+		return "", false
+	}
+	return v, ok
+}
+
 // declared returns the cascaded value of a property on the element itself.
 func (e *Engine) declared(n *dom.Node, prop string) (string, bool) {
 	if n == nil || n.Type != dom.ElementNode {
 		return "", false
 	}
-	v, ok := e.styleOf(n).declared[prop]
-	if ok {
-		lower := strings.ToLower(v)
-		if lower == "initial" || lower == "unset" || lower == "revert" {
-			return "", false
-		}
-	}
-	return v, ok
+	return declVal(e.styleOf(n).declared, prop)
 }
 
 // lookup returns the value of a property with inheritance, or "" when no
@@ -747,6 +847,22 @@ var uaItalic = map[string]bool{"i": true, "em": true, "cite": true, "var": true,
 var uaMono = map[string]bool{"code": true, "kbd": true, "samp": true, "tt": true, "pre": true}
 var uaHeadingSize = map[string]float64{"h1": 2, "h2": 1.5, "h3": 1.17, "h4": 1, "h5": 0.83, "h6": 0.67}
 
+var uaTextTags = map[string]bool{
+	"b": true, "strong": true, "th": true, "h1": true, "h2": true, "h3": true, "h4": true, "h5": true, "h6": true,
+	"i": true, "em": true, "cite": true, "var": true, "dfn": true, "address": true,
+	"code": true, "kbd": true, "samp": true, "tt": true, "pre": true,
+	"small": true, "sub": true, "sup": true, "center": true,
+}
+
+func hasXMLSpacePreserve(n *dom.Node) bool {
+	for i := range n.Attrs {
+		if a := &n.Attrs[i]; a.NS == dom.NSXML && a.Local == "space" {
+			return a.Value == "preserve"
+		}
+	}
+	return false
+}
+
 // textStyleOf resolves the inherited text properties of an element.
 func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	if n == nil || n.Type != dom.ElementNode {
@@ -758,9 +874,14 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 		return st.text
 	}
 	parent := e.textStyleOf(n.Parent)
+	decls := st.declared
+	if len(decls) == 0 && n.NS != dom.NSMathML && (n.NS != dom.NSHTML || !uaTextTags[n.Tag]) && !hasXMLSpacePreserve(n) {
+		st.text = parent
+		return parent
+	}
 	ts := *parent
 	ts.chain = nil
-	inherit := func(v string) bool { return strings.EqualFold(v, "inherit") }
+	inherit := func(v string) bool { return len(v) == 7 && strings.EqualFold(v, "inherit") }
 
 	// User agent defaults for HTML elements.
 	if n.NS == dom.NSMathML {
@@ -800,10 +921,10 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	}
 
 	fromAttr := st.fromAttr
-	if v, ok := e.declared(n, "font-family"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "font-family"); ok && !inherit(v) {
 		ts.families = css.SplitFontFamily(v)
 	}
-	if v, ok := e.declared(n, "font-size"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "font-size"); ok && !inherit(v) {
 		if f, ok := exValue(v); ok {
 			// The ex of font-size is the x-height of the font of the
 			// parent. The computed font size is a float32.
@@ -828,14 +949,14 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	// A change between monospace and another family scales a size that is
 	// not absolute. See fontmono.go.
 	genericFamilyChange(&ts, parent)
-	if v, ok := e.declared(n, "font-weight"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "font-weight"); ok && !inherit(v) {
 		ts.weight = resolveFontWeight(v, parent.weight)
 	}
-	if v, ok := e.declared(n, "font-style"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "font-style"); ok && !inherit(v) {
 		lower := strings.ToLower(v)
 		ts.italic = lower == "italic" || strings.HasPrefix(lower, "oblique")
 	}
-	if v, ok := e.declared(n, "line-height"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "line-height"); ok && !inherit(v) {
 		lower := strings.ToLower(strings.TrimSpace(v))
 		switch {
 		case lower == "normal":
@@ -870,32 +991,41 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	} else if ts.lhKind == lhLength && parent.lhKind == lhLength {
 		ts.lhValue = parent.lhValue
 	}
-	if v, ok := e.declared(n, "white-space"); ok && !inherit(v) {
-		ts.whiteSpace = strings.ToLower(strings.TrimSpace(v))
+	wsVal, hasWS := declVal(decls, "white-space")
+	if hasWS && !inherit(wsVal) {
+		ts.whiteSpace = strings.ToLower(strings.TrimSpace(wsVal))
 	}
-	if v, ok := n.GetAttr("xml:space"); ok && v == "preserve" {
-		if _, declared := e.declared(n, "white-space"); !declared {
-			ts.whiteSpace = "pre"
-		}
+	if !hasWS && hasXMLSpacePreserve(n) {
+		ts.whiteSpace = "pre"
 	}
-	if v, ok := e.declared(n, "letter-spacing"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "letter-spacing"); ok && !inherit(v) {
 		if strings.EqualFold(v, "normal") {
 			ts.letterSpacing = 0
 		} else if px, ok := e.cssLength(v, &ts, fromAttr["letter-spacing"]); ok {
 			ts.letterSpacing = px
 		}
 	}
-	if v, ok := e.declared(n, "text-anchor"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "text-anchor"); ok && !inherit(v) {
 		ts.textAnchor = strings.ToLower(strings.TrimSpace(v))
 	}
-	if v, ok := e.declared(n, "text-align"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "text-align"); ok && !inherit(v) {
 		ts.textAlign = strings.ToLower(strings.TrimSpace(v))
 	}
-	if v, ok := e.declared(n, "text-transform"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "text-transform"); ok && !inherit(v) {
 		ts.textTransform = strings.ToLower(strings.TrimSpace(v))
 	}
-	if v, ok := e.declared(n, "visibility"); ok && !inherit(v) {
+	if v, ok := declVal(decls, "visibility"); ok && !inherit(v) {
 		ts.visibility = strings.ToLower(strings.TrimSpace(v))
+	}
+	if ts.size == parent.size && ts.weight == parent.weight && ts.italic == parent.italic &&
+		ts.lhKind == parent.lhKind && ts.lhValue == parent.lhValue &&
+		ts.whiteSpace == parent.whiteSpace && ts.letterSpacing == parent.letterSpacing &&
+		ts.textAnchor == parent.textAnchor && ts.textAlign == parent.textAlign &&
+		ts.textTransform == parent.textTransform && ts.visibility == parent.visibility &&
+		ts.sizeKeyword == parent.sizeKeyword && ts.sizeAbsolute == parent.sizeAbsolute &&
+		slices.Equal(ts.families, parent.families) {
+		st.text = parent
+		return parent
 	}
 	st.text = &ts
 	return st.text

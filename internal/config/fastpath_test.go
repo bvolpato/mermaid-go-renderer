@@ -50,7 +50,7 @@ func detectTypeByPatterns(text string) (string, error) {
 	if frontMatter, ok := matchFrontMatter(runes); ok {
 		text = string(runes[frontMatter.length:])
 	}
-	text = stripAnyCommentsScan(replaceAllSearch(directiveRegex, text))
+	text = stripAnyCommentsScan(replaceAllSearch(directiveRegex(), text))
 	for _, d := range detectors {
 		var match bool
 		switch {
@@ -78,13 +78,13 @@ func TestFastPathsAgainstSearch(t *testing.T) {
 	types := map[string]int{}
 	for i := 0; i < 100000; i++ {
 		text := randomText(rng, parts)
-		if got, want := replaceAll(directiveRegex, directiveMarker, text), replaceAllSearch(directiveRegex, text); got != want {
+		if got, want := replaceAll(directiveRegex, directiveMarker, text), replaceAllSearch(directiveRegex(), text); got != want {
 			t.Fatalf("replaceAll(directiveRegex, %q) = %q, want %q", text, got, want)
 		}
-		if got, want := replaceAll(commentRegex, commentMarker, text), replaceAllSearch(commentRegex, text); got != want {
+		if got, want := replaceAll(commentRegex, commentMarker, text), replaceAllSearch(commentRegex(), text); got != want {
 			t.Fatalf("replaceAll(commentRegex, %q) = %q, want %q", text, got, want)
 		}
-		if got, want := replaceAll(commentWithoutDirectives, commentMarker, text), replaceAllSearch(commentWithoutDirectives, text); got != want {
+		if got, want := replaceAll(commentWithoutDirectives, commentMarker, text), replaceAllSearch(commentWithoutDirectives(), text); got != want {
 			t.Fatalf("replaceAll(commentWithoutDirectives, %q) = %q, want %q", text, got, want)
 		}
 		if got, want := stripAnyComments(text), stripAnyCommentsScan(text); got != want {
@@ -127,7 +127,7 @@ func TestDirectiveScanAgainstSearch(t *testing.T) {
 	rng := rand.New(rand.NewSource(2))
 	// search is detectDirective before it tested for the marker.
 	search := func(scan *directiveScan, text string, typeMatches func(string) bool) ([]directive, bool) {
-		text = strings.ReplaceAll(replaceAllSearch(commentWithoutDirectives, js.TrimSpace(text)), "'", `"`)
+		text = strings.ReplaceAll(replaceAllSearch(commentWithoutDirectives(), js.TrimSpace(text)), "'", `"`)
 		runes := []rune(text)
 		var result []directive
 		for {
@@ -135,13 +135,13 @@ func TestDirectiveScanAgainstSearch(t *testing.T) {
 				scan.lastIndex = 0
 				break
 			}
-			m, err := directiveRegex.FindRunesMatchStartingAt(runes, scan.lastIndex)
+			m, err := directiveRegex().FindRunesMatchStartingAt(runes, scan.lastIndex)
 			if err != nil || m == nil {
 				scan.lastIndex = 0
 				break
 			}
-			scan.lastIndex = m.Index + m.Length
-			if m.Length == 0 {
+			scan.lastIndex = m.RuneIndex + m.RuneLength
+			if m.RuneLength == 0 {
 				scan.lastIndex++
 			}
 			g1, _ := group(m, 1)

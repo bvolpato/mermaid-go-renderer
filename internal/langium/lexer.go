@@ -67,6 +67,7 @@ type TokenType struct {
 	LongerAlt []*TokenType
 
 	literal []rune
+	pattern string
 	re      *regexp2.Regexp
 }
 
@@ -129,6 +130,30 @@ type Lexer struct {
 	Grammar string
 	types   []*TokenType
 	byName  map[string]*TokenType
+
+	compileOnce sync.Once
+	compileErr  error
+}
+
+func (l *Lexer) ensureCompiled() {
+	l.compileOnce.Do(func() {
+		for _, t := range l.types {
+			if t.pattern == "" {
+				continue
+			}
+			// \G anchors the match at the start offset, as the sticky flag
+			// does. The backtracking stack has no limit, as in V8.
+			re, err := regexp2.Compile(`\G(?:`+t.pattern+`)`, regexp2.None, regexp2.OptionMaxBacktrackingStackSize(-1))
+			if err != nil {
+				l.compileErr = fmt.Errorf("langium: grammar %s, token %s: %w", l.Grammar, t.Name, err)
+				return
+			}
+			t.re = re
+		}
+	})
+	if l.compileErr != nil {
+		panic(l.compileErr)
+	}
 }
 
 var (
@@ -160,17 +185,9 @@ func NewLexer(grammar string) (*Lexer, error) {
 	}
 	l := &Lexer{Grammar: grammar, byName: map[string]*TokenType{}}
 	for i, spec := range specs {
-		t := &TokenType{Name: spec.name, Index: i, Group: spec.group, Literal: spec.literal, Source: spec.source}
+		t := &TokenType{Name: spec.name, Index: i, Group: spec.group, Literal: spec.literal, Source: spec.source, pattern: spec.pattern}
 		if spec.pattern == "" {
 			t.literal = js.UTF16Units(spec.literal)
-		} else {
-			// \G anchors the match at the start offset, as the sticky flag
-			// does. The backtracking stack has no limit, as in V8.
-			re, err := regexp2.Compile(`\G(?:`+spec.pattern+`)`, regexp2.None, regexp2.OptionMaxBacktrackingStackSize(-1))
-			if err != nil {
-				return nil, fmt.Errorf("langium: grammar %s, token %s: %w", grammar, spec.name, err)
-			}
-			t.re = re
 		}
 		l.types = append(l.types, t)
 		l.byName[t.Name] = t
@@ -228,6 +245,7 @@ func lineTerminators(image []rune) (count, last int) {
 // Tokenize is DefaultLexer.tokenize: Lexer.tokenizeInternal of Chevrotain
 // with one mode and with error recovery.
 func (l *Lexer) Tokenize(text string) *LexResult {
+	l.ensureCompiled()
 	units := js.UTF16Units(text)
 	orgLength := len(units)
 	result := &LexResult{}

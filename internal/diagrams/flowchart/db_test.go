@@ -750,9 +750,7 @@ var (
 // knownDivergences are the texts of the golden file for which this port
 // has another result than upstream, each with the cause. The test fails
 // when such a text agrees: remove it then.
-var knownDivergences = map[string]string{
-	"flowchart TD\nA@{ : }\n": "the YAML parser of internal/config rejects a flow mapping with an empty key; js-yaml reads { null: null }",
-}
+var knownDivergences = map[string]string{}
 
 // runGolden parses every case of the golden file, one time, and compares it
 // with the dump of upstream.
