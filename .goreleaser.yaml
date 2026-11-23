@@ -38,6 +38,8 @@ archives:
       - "README*"
       - "CHANGELOG*"
       - "THIRD_PARTY_NOTICES.md"
+      - "internal/html/LICENSE"
+      - "internal/idna/LICENSE"
       - "internal/katex/katexjs/LICENSE"
       - "internal/diagrams/zenuml/LICENSES.txt"
       - "internal/webfonts/files/katex/fonts-OFL.txt"

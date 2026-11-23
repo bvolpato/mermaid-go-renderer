@@ -433,7 +433,7 @@ These modules are not ported. The Go linker links them into a program that uses 
 | github.com/dop251/goja | v0.0.0-20261029234554-1329d889cf98 | `internal/elk`, `internal/cytoscape`, `internal/katex`, `internal/diagrams/zenuml` (JavaScript runtimes for bundled upstream code) | MIT. The package `ftoa` has code with a notice of Lucent Technologies (`ftoa/LICENSE_LUCENE`) and code of V8 (BSD-3-Clause, `ftoa/internal/fast/LICENSE_V8`) |
 | github.com/dlclark/regexp2/v2 | v2.13.0 | `internal/config`, `internal/jison`, `internal/langium`, `internal/marked`, `internal/utils`, and `goja` | MIT |
 | github.com/go-text/typesetting | v0.3.5 | `internal/font`, `internal/markdown`, `internal/pdf`, `internal/raster` (a Go port of HarfBuzz, font parsing, text segmentation) | Unlicense OR BSD-3-Clause. The package `harfbuzz` is MIT with the notices of HarfBuzz |
-| golang.org/x/text | v0.43.0 | `internal/idna` and `goja` | BSD-3-Clause |
+| golang.org/x/text | v0.44.0 | `internal/idna` and `goja` | BSD-3-Clause |
 | golang.org/x/image | v0.47.0 | indirect, through go-text/typesetting | BSD-3-Clause |
 | github.com/go-sourcemap/sourcemap | v2.1.3+incompatible | indirect, through goja | BSD-2-Clause |
 | github.com/google/pprof | v0.0.0-20230207041349-798e818bf904 | indirect, through goja (`profile`) | Apache-2.0 |

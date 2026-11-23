@@ -157,7 +157,7 @@ A program that uses this module contains these modules. Their notices must go wi
 | github.com/dop251/goja | v0.0.0-20261029234554-1329d889cf98 | https://pkg.go.dev/github.com/dop251/goja | MIT | Copyright (c) 2016 Dmitry Panov<br>Copyright (c) 2012 Robert Krimen | linked | MIT | G: `$GOMODCACHE/github.com/dop251/goja@v0.0.0-20261029234554-1329d889cf98/LICENSE` |  |
 | github.com/dlclark/regexp2/v2 | v2.13.0 | https://pkg.go.dev/github.com/dlclark/regexp2/v2 | MIT | Copyright (c) Doug Clark | linked | MIT | G: `$GOMODCACHE/github.com/dlclark/regexp2/v2@v2.13.0/LICENSE` |  |
 | golang.org/x/net (`html`, `html/atom`, `idna`) | v0.62.0 | https://pkg.go.dev/golang.org/x/net | BSD-3-Clause | Copyright 2009 The Go Authors. | `internal/html`, `internal/idna` | BSD-3-Clause, text 5 | `internal/html/LICENSE`, `internal/idna/LICENSE` | Inlined subset (`html`, `html/atom`, and `idna` with Unicode 17.0 tables). |
-| golang.org/x/text | v0.43.0 | https://pkg.go.dev/golang.org/x/text | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/text@v0.43.0/LICENSE` | The module has a `PATENTS` file. |
+| golang.org/x/text | v0.44.0 | https://pkg.go.dev/golang.org/x/text | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/text@v0.44.0/LICENSE` | The module has a `PATENTS` file. |
 | golang.org/x/image | v0.47.0 | https://pkg.go.dev/golang.org/x/image | BSD-3-Clause | Copyright 2009 The Go Authors. | linked | BSD-3-Clause, text 5 | G: `$GOMODCACHE/golang.org/x/image@v0.47.0/LICENSE` | The module has a `PATENTS` file. |
 | github.com/go-sourcemap/sourcemap | v2.1.3+incompatible | https://pkg.go.dev/github.com/go-sourcemap/sourcemap | BSD-2-Clause | Copyright (c) 2016 The github.com/go-sourcemap/sourcemap Contributors. | linked | BSD-2-Clause | G: `$GOMODCACHE/github.com/go-sourcemap/sourcemap@v2.1.3+incompatible/LICENSE` |  |
 | github.com/dop251/goja, package `ftoa` | same | https://pkg.go.dev/github.com/dop251/goja/ftoa | a notice of Lucent Technologies, and BSD-3-Clause (V8) | Copyright (C) 1998, 1999 by Lucent Technologies | linked | Lucent | G: `$GOMODCACHE/github.com/dop251/goja@v0.0.0-20261029234554-1329d889cf98/ftoa/LICENSE_LUCENE` | `ftoa/internal/fast/LICENSE_V8` is the license of V8, in the row of V8 in section 1.2. |
@@ -2793,7 +2793,7 @@ SPDX-License-Identifier: Unicode-3.0
 
 ### BSD-3-Clause, text 5
 
-Used for: golang.org/x/net v0.62.0 (inlined `html`, `html/atom`, `idna` in `internal/html` and `internal/idna`), golang.org/x/text v0.43.0, golang.org/x/image v0.47.0, The Go standard library and runtime.
+Used for: golang.org/x/net v0.62.0 (inlined `html`, `html/atom`, `idna` in `internal/html` and `internal/idna`), golang.org/x/text v0.44.0, golang.org/x/image v0.47.0, The Go standard library and runtime.
 
 Taken from: `internal/html/LICENSE` (from `golang.org/x/net@v0.62.0/LICENSE`).
 
