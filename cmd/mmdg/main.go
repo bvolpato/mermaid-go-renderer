@@ -31,7 +31,6 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"image/png"
 	"io"
 	"math"
 	"os"
@@ -45,6 +44,7 @@ import (
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
 	"github.com/bvolpato/mermaid-go-renderer/internal/mmdc"
+	"github.com/bvolpato/mermaid-go-renderer/internal/raster"
 	"github.com/bvolpato/mermaid-go-renderer/internal/render"
 )
 
@@ -977,6 +977,7 @@ func (r *renderer) render(definition string) (*rendered, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer page.Close()
 	out := &rendered{title: page.Title(), desc: page.Desc()}
 	switch r.format {
 	case "pdf":
@@ -1008,30 +1009,33 @@ func (r *renderer) png(page *mmdc.Page) ([]byte, error) {
 	if shot.Transparent {
 		background = color.Transparent
 	}
-	opts := append([]mermaid.Option{mermaid.WithScale(r.scale), mermaid.WithBackground(background)}, r.fontOpts...)
-	data, err := mermaid.SVGToPNG(shot.SVG, opts...)
-	if err != nil {
-		return nil, err
-	}
-	diagram, err := png.Decode(bytes.NewReader(data))
-	if err != nil {
-		return nil, err
+	rasterOpts := raster.Options{
+		Scale:      r.scale,
+		Fonts:      r.page.Fonts,
+		Background: background,
+		PageSheets: r.page.PageSheets,
 	}
 	width := int(math.Round(float64(shot.Width) * r.scale))
 	height := int(math.Round(float64(shot.Height) * r.scale))
 	x := int(math.Round(shot.Box.X * r.scale))
 	y := int(math.Round(shot.Box.Y * r.scale))
+	diagram, err := raster.Render(shot.SVG, rasterOpts)
+	if err != nil {
+		return nil, err
+	}
+	var img *image.RGBA
 	if x == 0 && y == 0 && diagram.Bounds().Dx() == width && diagram.Bounds().Dy() == height {
-		return data, nil
+		img = diagram
+	} else {
+		// The page shows around the diagram.
+		img = image.NewRGBA(image.Rect(0, 0, width, height))
+		if !shot.Transparent {
+			draw.Draw(img, img.Bounds(), image.NewUniform(shot.Page), image.Point{}, draw.Src)
+		}
+		draw.Draw(img, diagram.Bounds().Sub(diagram.Bounds().Min).Add(image.Pt(x, y)), diagram, diagram.Bounds().Min, draw.Src)
 	}
-	// The page shows around the diagram.
-	canvas := image.NewNRGBA(image.Rect(0, 0, width, height))
-	if !shot.Transparent {
-		draw.Draw(canvas, canvas.Bounds(), image.NewUniform(shot.Page), image.Point{}, draw.Src)
-	}
-	draw.Draw(canvas, diagram.Bounds().Sub(diagram.Bounds().Min).Add(image.Pt(x, y)), diagram, diagram.Bounds().Min, draw.Src)
 	var buf bytes.Buffer
-	if err := png.Encode(&buf, canvas); err != nil {
+	if err := raster.EncodePNG(&buf, img); err != nil {
 		return nil, err
 	}
 	return buf.Bytes(), nil

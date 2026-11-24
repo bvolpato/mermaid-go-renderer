@@ -85,7 +85,8 @@ func Render(svg string, opts Options) (*image.RGBA, error) {
 		return nil, errors.New("raster: no svg element")
 	}
 	doc.PageSheets = opts.PageSheets
-	eng := browser.NewWithFonts(opts.Fonts)
+	eng := browser.AcquireWithFonts(opts.Fonts)
+	defer eng.Release()
 	// The page of the screenshot: 16000 CSS pixels wide, without margins.
 	eng.ViewportWidth = pageWidth
 	eng.BodyMargin = 0
@@ -142,8 +143,69 @@ func (p *pngBufPool) Put(b *png.EncoderBuffer) {
 
 var sharedPNGBufPool pngBufPool
 
+// RenderPNG parses markup, paints the first svg element, and encodes it as PNG
+// directly while recycling the raster bitmap back to the pool.
+func RenderPNG(w io.Writer, svg string, opts Options) error {
+	hdoc, arena, err := dom.ParseHTMLDocumentPooled(svg)
+	if arena != nil {
+		defer arena.Release()
+	}
+	if err != nil {
+		return err
+	}
+	doc := hdoc.Document
+	if doc.Body == nil {
+		doc.Body = hdoc.Body
+	}
+	if doc.Body == nil {
+		return errors.New("raster: no svg element")
+	}
+	doc.PageSheets = opts.PageSheets
+	eng := browser.AcquireWithFonts(opts.Fonts)
+	defer eng.Release()
+	eng.ViewportWidth = pageWidth
+	eng.BodyMargin = 0
+	doc.Engine = eng
+	var root *dom.Node
+	for c := doc.Body.FirstChild; c != nil; c = c.Next {
+		if c.Type == dom.ElementNode && c.NS == dom.NSSVG && c.Tag == "svg" {
+			root = c
+			break
+		}
+	}
+	if root == nil {
+		return errors.New("raster: no svg element")
+	}
+	scale := opts.Scale
+	if !(scale > 0) {
+		scale = 1
+	}
+	sz := rootSize(eng, root)
+	pngW := int(math.Round(float64(sz.cssW) * scale))
+	pngH := int(math.Round(float64(sz.cssH) * scale))
+	if pngW <= 0 || pngH <= 0 {
+		return errors.New("raster: empty svg")
+	}
+	const maxPixels = 1 << 28
+	if int64(pngW)*int64(pngH) > maxPixels {
+		return errors.New("raster: svg too large")
+	}
+	p := newPooledPainter(eng, doc, pngW, pngH, scale)
+	p.fillBackground(opts.Background)
+	p.paintRoot(root, sz)
+	base := p.cv.stack[0].pm
+	img := &image.RGBA{Pix: base.pix, Stride: base.stride, Rect: image.Rect(0, 0, base.w, base.h)}
+	err = encodeFastRGBA(w, img, !p.cv.mayBeTransparent)
+	p.cv.putPixmap(base, base.bounds())
+	p.cv.release()
+	return err
+}
+
 // EncodePNG writes the image as a PNG file.
 func EncodePNG(w io.Writer, img image.Image) error {
+	if rgba, ok := img.(*image.RGBA); ok {
+		return encodeFastRGBA(w, rgba, false)
+	}
 	enc := png.Encoder{CompressionLevel: png.BestSpeed, BufferPool: &sharedPNGBufPool}
 	return enc.Encode(w, img)
 }

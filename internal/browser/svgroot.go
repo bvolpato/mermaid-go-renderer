@@ -200,7 +200,8 @@ func (e *Engine) svgRootBoxOf(svg *dom.Node) svgRootBox {
 	ts := e.textStyleOf(svg)
 	available := luFromFloat(float32(e.ContainerWidth()))
 
-	vb := parseNumberList(svg.AttrOr("viewBox", ""))
+	var vbBuf [4]float32
+	vb := appendNumberList(vbBuf[:0], svg.AttrOr("viewBox", ""))
 	hasViewBox := len(vb) == 4 && vb[2] > 0 && vb[3] > 0
 
 	// The natural sizes.

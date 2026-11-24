@@ -7,7 +7,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"maps"
 	"math"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -160,6 +162,63 @@ func Clone(v any) any {
 		}
 		return out
 	case *Obj[any]:
+		if x == nil {
+			return x
+		}
+		if x.flags&objDeepFrozen != 0 {
+			return newCOWClone(x)
+		}
+		if x.cowDepth > 0 {
+			if x.flags&objSharedVals != 0 {
+				// Untouched COW wrapper over a frozen source: copying the
+				// header preserves identical lazy semantics without mutating x.
+				return &Obj[any]{
+					keys:     x.keys,
+					vals:     x.vals,
+					index:    x.index,
+					ext:      x.ext,
+					flags:    x.flags,
+					cowDepth: x.cowDepth,
+					srcID:    x.srcID,
+				}
+			}
+			// Partially mutated COW object: preserve lazy frozen children.
+			var out *Obj[any]
+			if x.flags&objSharedKeys != 0 && (x.ext == nil || !x.ext.idxDirt) {
+				out = &Obj[any]{
+					keys:     x.keys,
+					vals:     slices.Clone(x.vals),
+					index:    x.index,
+					ext:      x.ext,
+					flags:    objSharedKeys | (x.flags & objCOWClone),
+					cowDepth: x.cowDepth,
+				}
+			} else {
+				out = &Obj[any]{
+					keys:     slices.Clone(x.keys),
+					vals:     slices.Clone(x.vals),
+					flags:    x.flags & objCOWClone,
+					cowDepth: x.cowDepth,
+				}
+				if x.index != nil {
+					out.index = maps.Clone(x.index)
+				}
+				if x.ext != nil {
+					out.ext = x.ext.clone()
+				}
+			}
+			for i, e := range out.vals {
+				switch c := e.(type) {
+				case []any:
+					out.vals[i] = Clone(c)
+				case *Obj[any]:
+					if c != nil && c.flags&objFrozen == 0 {
+						out.vals[i] = Clone(c)
+					}
+				}
+			}
+			return out
+		}
 		// The copy has the slots of x, so its properties have the order of
 		// x. Clone does not write to x: other goroutines can read x.
 		out := x.copyOwned()
@@ -184,35 +243,54 @@ func Clone(v any) any {
 // read at this moment: a config shares its deep values with the config that
 // it comes from. FreezeValue writes nothing to such a part.
 func FreezeValue(v any) any {
+	out, _ := freezeValue(v)
+	return out
+}
+
+func freezeValue(v any) (any, bool) {
 	switch x := v.(type) {
 	case []any:
+		deep := true
 		for i, e := range x {
 			switch e := e.(type) {
 			case *Obj[any]:
-				FreezeValue(e)
+				_, d := freezeValue(e)
+				deep = deep && d
 			case []any:
 				// The element changes only when the array had spare
 				// capacity, so it was not frozen before.
-				if frozen := FreezeValue(e).([]any); cap(frozen) != cap(e) {
+				fv, d := freezeValue(e)
+				deep = deep && d
+				if frozen := fv.([]any); cap(frozen) != cap(e) {
 					x[i] = frozen
 				}
 			}
 		}
-		return x[:len(x):len(x)]
+		return x[:len(x):len(x)], deep
 	case *Obj[any]:
-		if x == nil || x.Frozen() {
-			return v
+		if x == nil {
+			return v, true
+		}
+		if x.Frozen() {
+			return v, x.flags&objDeepFrozen != 0
 		}
 		// Freeze first: it removes the deleted slots.
 		x.Freeze()
+		deep := true
 		for i, e := range x.vals {
 			switch e.(type) {
 			case []any, *Obj[any]:
-				x.vals[i] = FreezeValue(e)
+				fv, d := freezeValue(e)
+				x.vals[i] = fv
+				deep = deep && d
 			}
 		}
+		if deep {
+			x.flags |= objDeepFrozen
+		}
+		return v, deep
 	}
-	return v
+	return v, true
 }
 
 // ParseJSON is JSON.parse. Objects keep the key order of a JavaScript object.

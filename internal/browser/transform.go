@@ -240,7 +240,8 @@ func parseTransformListOrigin(s string, ox, oy float32) affine {
 		if closeIdx < open {
 			return identity
 		}
-		args := parseNumberList(s[open+1 : closeIdx])
+		var argsBuf [8]float32
+		args := appendNumberList(argsBuf[:0], s[open+1:closeIdx])
 		arg := func(i int) float32 {
 			if i < len(args) {
 				return args[i]

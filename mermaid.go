@@ -405,12 +405,8 @@ func SVGToPNG(svg string, opts ...Option) (png []byte, err error) {
 	// The rasterizer paints with the fonts that laid out the diagram.
 	o.raster.Fonts = o.fontLibrary()
 	o.raster.PageSheets = render.PageSheets(render.Page(o.page))
-	img, err := raster.Render(svg, o.raster)
-	if err != nil {
-		return nil, err
-	}
 	var buf bytes.Buffer
-	if err := raster.EncodePNG(&buf, img); err != nil {
+	if err := raster.RenderPNG(&buf, svg, o.raster); err != nil {
 		return nil, err
 	}
 	return buf.Bytes(), nil
@@ -478,6 +474,7 @@ func StandaloneSVG(svg string, opts ...Option) (out string, err error) {
 	if err != nil {
 		return "", fmt.Errorf("mermaid: %w", err)
 	}
+	defer page.Close()
 	if o.fontEmbed {
 		if err := page.EmbedFonts(); err != nil {
 			return "", fmt.Errorf("mermaid: %w", err)

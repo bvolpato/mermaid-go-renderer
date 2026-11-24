@@ -40,8 +40,9 @@ type Obj[V any] struct {
 	ext *objExt
 	// gen changes when a property is deleted or the slots move. Each uses
 	// it to see that the object changed under it.
-	gen   uint32
-	flags uint8
+	gen      uint32
+	flags    uint8
+	cowDepth uint8
 	// srcID identifies the frozen template object this Obj was copied from
 	// and stays non-zero until this Obj is mutated.
 	srcID uint64
@@ -63,6 +64,15 @@ const (
 	// keys of another object. The object copies them before it adds or
 	// deletes a key.
 	objSharedKeys
+	// objSharedVals marks an object whose vals slice is shared read-only with
+	// a frozen object. Any write or lazy child materialization calls ownVals.
+	objSharedVals
+	// objDeepFrozen marks a frozen object whose descendant objects and arrays
+	// are also frozen (set by FreezeValue).
+	objDeepFrozen
+	// objCOWClone marks a lazy copy-on-write clone (js.Clone semantics: no
+	// assignWithDepth array deduplication, deep clone of slices on access).
+	objCOWClone
 )
 
 // objSmall is the largest number of slots that an object searches with a
@@ -135,10 +145,91 @@ func (o *Obj[V]) Has(key string) bool {
 	return o.find(key) >= 0
 }
 
+// ownVals gives a copy-on-write object its own vals slice. When cowDepth > 0,
+// any []any elements are cloned with assignWithDepth deduplication semantics
+// (or deep Clone semantics when objCOWClone is set).
+func (o *Obj[V]) ownVals() {
+	if o.flags&objSharedVals == 0 {
+		return
+	}
+	vals := make([]V, len(o.vals))
+	copy(vals, o.vals)
+	if o.cowDepth > 0 {
+		if o.flags&objCOWClone != 0 {
+			for i := range vals {
+				if arr, ok := any(vals[i]).([]any); ok {
+					vals[i] = any(Clone(arr)).(V)
+				}
+			}
+		} else {
+			for i := range vals {
+				if arr, ok := any(vals[i]).([]any); ok {
+					out := make([]any, 0, len(arr))
+					for _, e := range arr {
+						if !arrayIncludes(out, e) {
+							out = append(out, e)
+						}
+					}
+					vals[i] = any(out[:len(out):len(out)]).(V)
+				}
+			}
+		}
+	}
+	o.vals = vals
+	o.flags &^= objSharedVals
+}
+
+// readSlotCOW lazily materializes a copy-on-write child object or slice.
+func (o *Obj[V]) readSlotCOW(i int) V {
+	v := o.vals[i]
+	switch x := any(v).(type) {
+	case *Obj[any]:
+		if x != nil && x.flags&objFrozen != 0 {
+			if o.flags&objSharedVals != 0 {
+				o.ownVals()
+			}
+			var child *Obj[any]
+			if o.flags&objCOWClone != 0 {
+				child = newCOWClone(x)
+			} else {
+				child = NewCOW(x, o.cowDepth-1)
+			}
+			o.vals[i] = any(child).(V)
+			return o.vals[i]
+		}
+	case []any:
+		if o.flags&objSharedVals != 0 {
+			o.ownVals()
+			return o.vals[i]
+		}
+	}
+	return v
+}
+
+// materializeCOW resolves all lazy copy-on-write children on o.
+func (o *Obj[V]) materializeCOW() {
+	if o.cowDepth == 0 {
+		return
+	}
+	for i := range o.vals {
+		if o.ext != nil && o.ext.isDead(i) {
+			continue
+		}
+		_ = o.readSlotCOW(i)
+	}
+	if o.flags&objSharedVals != 0 {
+		o.ownVals()
+	}
+	o.cowDepth = 0
+}
+
 // Get returns the value for key, or the zero value.
 func (o *Obj[V]) Get(key string) V {
 	if i := o.find(key); i >= 0 {
-		return o.vals[i]
+		if o.cowDepth == 0 {
+			return o.vals[i]
+		}
+		return o.readSlotCOW(i)
 	}
 	var zero V
 	return zero
@@ -147,7 +238,10 @@ func (o *Obj[V]) Get(key string) V {
 // Lookup returns the value for key and whether the key exists.
 func (o *Obj[V]) Lookup(key string) (V, bool) {
 	if i := o.find(key); i >= 0 {
-		return o.vals[i], true
+		if o.cowDepth == 0 {
+			return o.vals[i], true
+		}
+		return o.readSlotCOW(i), true
 	}
 	var zero V
 	return zero, false
@@ -159,6 +253,9 @@ func (o *Obj[V]) Set(key string, v V) {
 		panic("js: Set on a frozen object")
 	}
 	o.srcID = 0
+	if o.flags&objSharedVals != 0 {
+		o.ownVals()
+	}
 	if i := o.find(key); i >= 0 {
 		o.vals[i] = v
 		return
@@ -170,6 +267,9 @@ func (o *Obj[V]) Set(key string, v V) {
 func (o *Obj[V]) add(key string, v V) {
 	if o.flags&objSharedKeys != 0 {
 		o.ownKeys()
+	}
+	if o.flags&objSharedVals != 0 {
+		o.ownVals()
 	}
 	slot := len(o.keys)
 	if cap(o.keys) == 0 {
@@ -239,6 +339,9 @@ func (o *Obj[V]) Delete(key string) {
 	if o.flags&objSharedKeys != 0 {
 		o.ownKeys()
 	}
+	if o.flags&objSharedVals != 0 {
+		o.ownVals()
+	}
 	o.gen++
 	var zero V
 	o.vals[slot] = zero
@@ -292,6 +395,7 @@ func (o *Obj[V]) compact() {
 		vals = append(vals, o.vals[i])
 	}
 	o.keys, o.vals = keys, vals
+	o.flags &^= objSharedVals
 	// idx is now in the order of the slots. A sorted idx stays sorted.
 	e.idx = idx
 	if !e.idxDirt {
@@ -351,6 +455,9 @@ func (o *Obj[V]) Keys() []string {
 
 // Values returns the values in JavaScript enumeration order.
 func (o *Obj[V]) Values() []V {
+	if o.cowDepth > 0 {
+		o.materializeCOW()
+	}
 	if o.plain() {
 		vals := make([]V, len(o.vals))
 		copy(vals, o.vals)
@@ -370,7 +477,11 @@ func (o *Obj[V]) Each(fn func(key string, v V)) {
 	if !o.plain() {
 		for _, k := range o.Keys() {
 			if i := o.find(k); i >= 0 {
-				fn(k, o.vals[i])
+				if o.cowDepth == 0 {
+					fn(k, o.vals[i])
+				} else {
+					fn(k, o.readSlotCOW(i))
+				}
 			}
 		}
 		return
@@ -379,13 +490,21 @@ func (o *Obj[V]) Each(fn func(key string, v V)) {
 	// does not change in place, so the slice is the key set of this moment.
 	keys := o.keys
 	gen := o.gen
+	if o.cowDepth == 0 {
+		for i, k := range keys {
+			if o.gen == gen {
+				fn(k, o.vals[i])
+			} else if j := o.find(k); j >= 0 {
+				fn(k, o.vals[j])
+			}
+		}
+		return
+	}
 	for i, k := range keys {
 		if o.gen == gen {
-			// No property was deleted since the start: the slot is still
-			// the slot of the key.
-			fn(k, o.vals[i])
+			fn(k, o.readSlotCOW(i))
 		} else if j := o.find(k); j >= 0 {
-			fn(k, o.vals[j])
+			fn(k, o.readSlotCOW(j))
 		}
 	}
 }
@@ -397,16 +516,32 @@ func (o *Obj[V]) Each(fn func(key string, v V)) {
 // Copy marks an object that is not frozen as shared. So an object that many
 // goroutines read must be frozen before they copy it.
 func (o *Obj[V]) Copy() *Obj[V] {
+	if o.cowDepth > 0 {
+		o.materializeCOW()
+	}
 	c := &Obj[V]{}
 	o.copyInto(c, make([]V, len(o.vals)))
 	return c
 }
 
 // copyOwned is Copy for an object that other goroutines may read and that
-// is not frozen: it does not write to o, and the copy has its own keys.
+// is not frozen: it does not write to o, and the copy has its own keys
+// unless o already shares immutable keys.
 func (o *Obj[V]) copyOwned() *Obj[V] {
 	if o.flags&objFrozen != 0 {
 		return o.Copy()
+	}
+	if o.cowDepth > 0 {
+		o.materializeCOW()
+	}
+	if o.flags&objSharedKeys != 0 && (o.ext == nil || !o.ext.idxDirt) {
+		return &Obj[V]{
+			keys:  o.keys,
+			vals:  slices.Clone(o.vals),
+			index: o.index,
+			ext:   o.ext,
+			flags: objSharedKeys,
+		}
 	}
 	c := &Obj[V]{keys: slices.Clone(o.keys), vals: slices.Clone(o.vals)}
 	if o.index != nil {
@@ -422,6 +557,9 @@ func (o *Obj[V]) copyOwned() *Obj[V] {
 // the number of slots of o.
 func (o *Obj[V]) copyInto(c *Obj[V], vals []V) {
 	if o.flags&objFrozen == 0 {
+		if o.cowDepth > 0 {
+			o.materializeCOW()
+		}
 		// Readers of a shared ext must not sort it.
 		if e := o.ext; e != nil && e.idxDirt {
 			sortIdx(e.idx)
@@ -434,6 +572,7 @@ func (o *Obj[V]) copyInto(c *Obj[V], vals []V) {
 	c.vals = vals[:len(o.vals):len(o.vals)]
 	c.gen = 0
 	c.flags = objSharedKeys
+	c.cowDepth = 0
 	c.srcID = o.srcID
 }
 
@@ -444,6 +583,9 @@ func (o *Obj[V]) copyInto(c *Obj[V], vals []V) {
 func (o *Obj[V]) Freeze() {
 	if o.flags&objFrozen != 0 {
 		return
+	}
+	if o.cowDepth > 0 {
+		o.materializeCOW()
 	}
 	if o.srcID == 0 {
 		o.srcID = nextObjSourceID.Add(1)

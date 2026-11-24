@@ -149,7 +149,56 @@ func ToFixed(x float64, digits int) string {
 	}
 	neg := x < 0
 	ax := math.Abs(x)
-	// The exact decimal expansion of a float64 has at most 1074 fraction digits.
+
+	// Fast path: format to digits+2 places with strconv. Because AppendFloat
+	// rounds to nearest with error <= 0.5 * 10^-(digits+2), any trailing two
+	// digits other than "50" cannot straddle an exact half-way tie at digits:
+	//   <= "49" => exact value <= ...495 < ...500 (strictly rounds down)
+	//   >= "51" => exact value >= ...505 > ...500 (strictly rounds up)
+	// Only "50" can be near a tie and falls back to exact big.Float expansion.
+	var buf [64]byte
+	b := strconv.AppendFloat(buf[:0], ax, 'f', digits+2, 64)
+	n := len(b)
+	d1, d2 := b[n-2], b[n-1]
+	if d1 != '5' || d2 != '0' {
+		roundUp := d1 >= '5'
+		// Keep up to the digits-th fractional digit (drop the 2 guard digits,
+		// plus the '.' when digits == 0).
+		end := n - 2
+		if digits == 0 {
+			end-- // drop '.'
+		}
+		var outBuf [64]byte
+		out := outBuf[:0]
+		if neg && x != 0 {
+			out = append(out, '-')
+		}
+		start := len(out)
+		out = append(out, b[:end]...)
+		if roundUp {
+			i := len(out) - 1
+			for ; i >= start; i-- {
+				if out[i] == '.' {
+					continue
+				}
+				if out[i] == '9' {
+					out[i] = '0'
+					continue
+				}
+				out[i]++
+				break
+			}
+			if i < start {
+				out = append(out, 0)
+				copy(out[start+1:], out[start:])
+				out[start] = '1'
+			}
+		}
+		return string(out)
+	}
+
+	// Slow path (near exact half-way tie): exact decimal expansion of float64
+	// has at most 1074 fraction digits.
 	exact := new(big.Float).SetPrec(2048).SetFloat64(ax).Text('f', 1080)
 	dot := strings.IndexByte(exact, '.')
 	intPart, frac := exact[:dot], exact[dot+1:]

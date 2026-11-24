@@ -53,23 +53,35 @@ const iteratorShow = dom.ShowElement | dom.ShowComment | dom.ShowText
 
 // Purifier is a DOMPurify instance.
 type Purifier struct {
-	hooks  map[HookPoint][]hookEntry
-	nextID HookID
+	hooks    [numHookPoints][]hookEntry
+	hookMask uint16
+	nextID   HookID
 
 	// The variables of the closure of createDOMPurify that _parseConfig sets.
 	settings
 
+	// configVal holds the per-call copy of Config without a heap allocation.
+	configVal Config
+
 	// SET_CONFIG and the sets that setConfig saved.
-	setConfig            bool
-	setConfigAllowedTags set
-	setConfigAllowedAttr set
-	setConfigTagsShared  bool
-	setConfigAttrShared  bool
+	setConfig              bool
+	setConfigAllowedTags   set
+	setConfigAllowedAttr   set
+	setConfigTagsShared    bool
+	setConfigAttrShared    bool
+	setConfigSupersetTags  bool
+	setConfigSupersetAttrs bool
 
 	// iterators are the active NodeIterators. A browser updates them when a
 	// node is removed. Here forceRemove does it.
 	iterators []*dom.NodeIterator
 }
+
+const (
+	nsBitHTML uint8 = 1 << iota
+	nsBitSVG
+	nsBitMathML
+)
 
 // settings has the variables that _parseConfig sets from a configuration.
 // They are a function of the configuration alone, so parseConfig keeps the
@@ -83,6 +95,11 @@ type settings struct {
 	// sets that other Purifiers share and none may change.
 	tagsShared                  bool
 	attrShared                  bool
+	supersetDefaultTags         bool
+	supersetDefaultAttrs        bool
+	stdURISafeOnly              bool
+	onlyStdNS                   bool
+	nsMask                      uint8
 	customElementHandling       CustomElementHandling
 	forbidTags                  set
 	forbidAttr                  set
@@ -114,7 +131,76 @@ type settings struct {
 
 // New returns a DOMPurify instance with no hooks, as createDOMPurify() does.
 func New() *Purifier {
-	return &Purifier{hooks: map[HookPoint][]hookEntry{}}
+	return &Purifier{}
+}
+
+// Reset clears hooks, configuration, and transient state so p can be reused.
+func (p *Purifier) Reset() {
+	if p.hookMask != 0 {
+		for i := range p.hooks {
+			clear(p.hooks[i])
+			p.hooks[i] = p.hooks[i][:0]
+		}
+		p.hookMask = 0
+	}
+	p.nextID = 0
+	p.settings = settings{}
+	p.configVal = Config{}
+	p.setConfig = false
+	p.setConfigAllowedTags = nil
+	p.setConfigAllowedAttr = nil
+	p.setConfigTagsShared = false
+	p.setConfigAttrShared = false
+	p.setConfigSupersetTags = false
+	p.setConfigSupersetAttrs = false
+	clear(p.iterators)
+	p.iterators = p.iterators[:0]
+}
+
+// SanitizeBodyInPlace sanitizes an already-constructed body element in place
+// and returns its serialized innerHTML, avoiding a serialize-and-reparse cycle.
+func (p *Purifier) SanitizeBodyInPlace(body *dom.Node, cfg Config) (out string, err error) {
+	cfg.ReturnDOM, cfg.ReturnDOMFragment = false, false
+	defer func() {
+		if r := recover(); r != nil {
+			a, ok := r.(abort)
+			if !ok {
+				panic(r)
+			}
+			out, err = "", a.err
+		}
+	}()
+	if p.setConfig {
+		p.allowedTags, p.tagsShared, p.supersetDefaultTags = p.setConfigAllowedTags, p.setConfigTagsShared, p.setConfigSupersetTags
+		p.allowedAttr, p.attrShared, p.supersetDefaultAttrs = p.setConfigAllowedAttr, p.setConfigAttrShared, p.setConfigSupersetAttrs
+	} else if err := p.parseConfig(&cfg); err != nil {
+		return "", err
+	}
+	if p.hookMask&(1<<hookUponSanitizeElement|1<<hookUponSanitizeAttribute) != 0 {
+		p.allowedTags, p.tagsShared, p.supersetDefaultTags = p.allowedTags.clone(), false, false
+	}
+	if p.hookMask&(1<<hookUponSanitizeAttribute) != 0 {
+		p.allowedAttr, p.attrShared, p.supersetDefaultAttrs = p.allowedAttr.clone(), false, false
+	}
+	if body == nil {
+		return "", nil
+	}
+	nodeIterator := dom.NewNodeIterator(body, iteratorShow)
+	p.iterators = append(p.iterators[:0], nodeIterator)
+	defer func() { p.iterators = p.iterators[:0] }()
+	for currentNode := nodeIterator.NextNode(); currentNode != nil; currentNode = nodeIterator.NextNode() {
+		lcTag := toLowerCase(nodeName(currentNode))
+		p.sanitizeElements(currentNode, body, lcTag)
+		p.sanitizeAttributes(currentNode, lcTag)
+		if currentNode.IsTemplate() {
+			p.sanitizeShadowDOM(currentNode)
+		}
+	}
+	serializedHTML := body.InnerHTMLInert()
+	if p.safeForTemplates {
+		serializedHTML = stripTemplateExpressions(serializedHTML)
+	}
+	return serializedHTML, nil
 }
 
 // Sanitize is DOMPurify.sanitize(dirty, cfg) on a new instance that has no
@@ -164,6 +250,8 @@ func (p *Purifier) SetConfig(cfg Config) error {
 	p.setConfigAllowedAttr = p.allowedAttr
 	p.setConfigTagsShared = p.tagsShared
 	p.setConfigAttrShared = p.attrShared
+	p.setConfigSupersetTags = p.supersetDefaultTags
+	p.setConfigSupersetAttrs = p.supersetDefaultAttrs
 	return nil
 }
 
@@ -224,10 +312,10 @@ func (p *Purifier) parseConfig(cfg *Config) error {
 	if hasKey {
 		if kept, ok := parsedConfigs.GetBytes(key); ok {
 			p.settings = *kept
-			if len(p.hooks) > 0 {
+			if p.hookMask != 0 {
 				// A hook gets the configuration and can change it.
-				c := *cfg
-				p.config = &c
+				p.configVal = *cfg
+				p.config = &p.configVal
 			}
 			return nil
 		}
@@ -259,10 +347,29 @@ func (p *Purifier) parseConfigSlow(cfg *Config) error {
 
 	p.allowedTags = resolveSetOption(cfg.AllowedTags, defaultAllowedTags, lower, nil)
 	p.tagsShared = cfg.AllowedTags == nil
+	p.supersetDefaultTags = cfg.AllowedTags == nil && cfg.UseProfiles == nil
 	p.allowedAttr = resolveSetOption(cfg.AllowedAttr, defaultAllowedAttr, lower, nil)
 	p.attrShared = cfg.AllowedAttr == nil
+	p.supersetDefaultAttrs = cfg.AllowedAttr == nil && cfg.UseProfiles == nil
 	p.allowedNamespaces = resolveSetOption(cfg.AllowedNamespaces, defaultAllowedNamespaces, false, nil)
+	p.onlyStdNS, p.nsMask = true, 0
+	for ns, ok := range p.allowedNamespaces {
+		if !ok {
+			continue
+		}
+		switch ns {
+		case htmlNamespace:
+			p.nsMask |= nsBitHTML
+		case svgNamespace:
+			p.nsMask |= nsBitSVG
+		case mathMLNamespace:
+			p.nsMask |= nsBitMathML
+		default:
+			p.onlyStdNS = false
+		}
+	}
 	p.uriSafeAttributes = resolveSetOption(cfg.AddURISafeAttr, defaultURISafeAttributes, lower, defaultURISafeAttributes)
+	p.stdURISafeOnly = cfg.AddURISafeAttr == nil
 	p.dataURITags = resolveSetOption(cfg.AddDataURITags, defaultDataURITags, lower, defaultDataURITags)
 	p.forbidContents = resolveSetOption(cfg.ForbidContents, defaultForbidContents, lower, nil)
 	p.forbidTags = resolveSetOption(cfg.ForbidTags, set{}, lower, nil)
@@ -381,8 +488,8 @@ func (p *Purifier) parseConfigSlow(cfg *Config) error {
 		delete(p.forbidTags, "tbody")
 	}
 
-	c := *cfg
-	p.config = &c
+	p.configVal = *cfg
+	p.config = &p.configVal
 	return nil
 }
 
@@ -484,6 +591,79 @@ type parentInfo struct {
 	tagName      string // in lowercase
 }
 
+func isCommonSVGTag(tag string) bool {
+	switch tag {
+	case "g", "path", "rect", "text", "tspan", "line", "circle", "polygon",
+		"polyline", "ellipse", "svg", "defs", "marker", "style", "foreignobject",
+		"clippath", "lineargradient", "radialgradient", "stop", "filter",
+		"fedropshadow", "fegaussianblur", "feoffset", "fecomposite", "femerge",
+		"femergenode", "feflood", "title", "desc", "a", "image", "mask",
+		"pattern", "symbol", "textpath", "switch", "metadata":
+		return true
+	}
+	return false
+}
+
+func isCommonDefaultTag(tag string) bool {
+	switch tag {
+	case "#text", "g", "path", "rect", "text", "tspan", "line", "circle",
+		"polygon", "polyline", "ellipse", "svg", "defs", "marker", "style",
+		"div", "span", "p", "br", "a", "b", "i", "strong", "em", "code",
+		"small", "sub", "sup", "u", "s", "ul", "ol", "li", "table", "tr",
+		"td", "th", "tbody", "thead", "img", "hr", "h1", "h2", "h3", "h4",
+		"clippath", "lineargradient", "radialgradient", "stop", "filter",
+		"fedropshadow", "title", "desc", "image", "mask", "pattern", "symbol":
+		return true
+	}
+	return false
+}
+
+func isCommonDefaultAttr(attr string) bool {
+	switch attr {
+	case "class", "id", "style", "d", "transform", "x", "y", "width", "height",
+		"rx", "ry", "fill", "stroke", "cx", "cy", "r", "x1", "y1", "x2", "y2",
+		"points", "viewbox", "marker-end", "marker-start", "marker-mid", "xmlns",
+		"text-anchor", "dominant-baseline", "alignment-baseline", "dy", "dx",
+		"font-size", "font-family", "font-weight", "font-style", "stroke-width",
+		"stroke-dasharray", "stroke-linecap", "stroke-linejoin", "stroke-opacity",
+		"fill-opacity", "fill-rule", "opacity", "refx", "refy", "markerwidth",
+		"markerheight", "orient", "markerunits", "offset", "stop-color",
+		"stop-opacity", "role", "clip-path", "filter", "visibility", "href",
+		"xlink:href", "xmlns:xlink", "xml:space", "preserveaspectratio", "title",
+		"type", "name", "value", "color", "display", "overflow", "label":
+		return true
+	}
+	return false
+}
+
+func isDefaultURISafeAttr(attr string) bool {
+	switch attr {
+	case "alt", "class", "for", "id", "label", "name", "pattern",
+		"placeholder", "role", "summary", "title", "value", "style", "xmlns":
+		return true
+	}
+	return false
+}
+
+func isCommonSVGAndHTML(tag string) bool {
+	switch tag {
+	case "title", "style", "font", "a", "script":
+		return true
+	}
+	return false
+}
+
+func couldBeClobberingName(v string) bool {
+	if len(v) == 0 {
+		return false
+	}
+	// None of clobberingNames contain '-' or end with an ASCII digit.
+	if last := v[len(v)-1]; last >= '0' && last <= '9' {
+		return false
+	}
+	return strings.IndexByte(v, '-') < 0
+}
+
 // checkSvgNamespace is _checkSvgNamespace.
 func (p *Purifier) checkSvgNamespace(tagName string, parent parentInfo) bool {
 	// The only way to switch from HTML namespace to SVG is via <svg>. If it
@@ -497,7 +677,7 @@ func (p *Purifier) checkSvgNamespace(tagName string, parent parentInfo) bool {
 		return tagName == "svg" && (parent.tagName == "annotation-xml" || p.mathMLTextIntegrationPoints[parent.tagName])
 	}
 	// We only allow elements that are defined in the SVG spec.
-	return allSVGTags[tagName]
+	return isCommonSVGTag(tagName) || allSVGTags[tagName]
 }
 
 // checkMathMlNamespace is _checkMathMlNamespace.
@@ -519,11 +699,15 @@ func (p *Purifier) checkHtmlNamespace(tagName string, parent parentInfo) bool {
 	if parent.namespaceURI == mathMLNamespace && !p.mathMLTextIntegrationPoints[parent.tagName] {
 		return false
 	}
-	return !allMathMLTags[tagName] && (commonSVGAndHTMLElements[tagName] || !allSVGTags[tagName])
+	switch tagName {
+	case "div", "span", "p", "br", "b", "i", "strong", "em", "code", "small", "sub", "sup", "u", "s", "ul", "ol", "li", "table", "tr", "td", "th", "tbody", "thead", "img", "hr", "h1", "h2", "h3", "h4":
+		return true
+	}
+	return !allMathMLTags[tagName] && (isCommonSVGAndHTML(tagName) || !allSVGTags[tagName])
 }
 
 // checkValidNamespace is _checkValidNamespace.
-func (p *Purifier) checkValidNamespace(element *dom.Node) bool {
+func (p *Purifier) checkValidNamespace(element *dom.Node, tagName string) bool {
 	// In JSDOM, if we're inside shadow DOM, then parentNode can be null. We
 	// need to emulate the behavior then. The content fragment of a template
 	// has no tagName, so the same fallback applies to its children: here the
@@ -533,7 +717,27 @@ func (p *Purifier) checkValidNamespace(element *dom.Node) bool {
 	if pn := element.Parent; pn != nil && pn.Type == dom.ElementNode {
 		parent = parentInfo{namespaceURI: pn.NS, tagName: toLowerCase(pn.Tag)}
 	}
-	tagName := toLowerCase(element.Tag)
+	if p.onlyStdNS {
+		switch element.NS {
+		case svgNamespace:
+			if p.nsMask&nsBitSVG == 0 {
+				return false
+			}
+			return p.checkSvgNamespace(tagName, parent)
+		case htmlNamespace:
+			if p.nsMask&nsBitHTML == 0 {
+				return false
+			}
+			return p.checkHtmlNamespace(tagName, parent)
+		case mathMLNamespace:
+			if p.nsMask&nsBitMathML == 0 {
+				return false
+			}
+			return p.checkMathMlNamespace(tagName, parent)
+		default:
+			return false
+		}
+	}
 	if !p.allowedNamespaces[element.NS] {
 		return false
 	}
@@ -771,9 +975,11 @@ func (p *Purifier) sanitizeDisallowedNode(currentNode *dom.Node, tagName string)
 
 // sanitizeElements is _sanitizeElements. It returns true when the node was
 // removed.
-func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
+func (p *Purifier) sanitizeElements(currentNode, root *dom.Node, tagName string) bool {
 	// Execute a hook if present.
-	p.executeHooks(BeforeSanitizeElements, currentNode, nil)
+	if p.hookMask&(1<<hookBeforeSanitizeElements) != 0 {
+		p.executeHooksIdx(hookBeforeSanitizeElements, currentNode, nil)
+	}
 	// A hook may have detached the node.
 	if currentNode != root && currentNode.Parent == nil {
 		return true
@@ -783,11 +989,9 @@ func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
 		p.mustRemove(currentNode)
 		return true
 	}
-	// Now let's check the element's type and name.
-	tagName := toLowerCase(nodeName(currentNode))
 	// Execute a hook if present.
-	if len(p.hooks[UponSanitizeElement]) > 0 {
-		p.executeHooks(UponSanitizeElement, currentNode, &HookEvent{TagName: tagName, AllowedTags: p.allowedTags})
+	if p.hookMask&(1<<hookUponSanitizeElement) != 0 {
+		p.executeHooksIdx(hookUponSanitizeElement, currentNode, &HookEvent{TagName: tagName, AllowedTags: p.allowedTags})
 	}
 	if currentNode != root && currentNode.Parent == nil {
 		return true
@@ -798,15 +1002,16 @@ func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
 		return true
 	}
 	// Remove element if anything forbids its presence.
-	if p.forbidTags[tagName] || (!(p.extraTagCheck != nil && p.extraTagCheck(tagName)) && !p.allowedTags[tagName]) {
+	tagForbidden := len(p.forbidTags) > 0 && p.forbidTags[tagName]
+	if tagForbidden || (!(p.extraTagCheck != nil && p.extraTagCheck(tagName)) && !(p.supersetDefaultTags && isCommonDefaultTag(tagName)) && !p.allowedTags[tagName]) {
 		removed := p.sanitizeDisallowedNode(currentNode, tagName)
-		if !removed {
-			p.executeHooks(AfterSanitizeElements, currentNode, nil)
+		if !removed && p.hookMask&(1<<hookAfterSanitizeElements) != 0 {
+			p.executeHooksIdx(hookAfterSanitizeElements, currentNode, nil)
 		}
 		return removed
 	}
 	// Check whether element has a valid namespace.
-	if currentNode.Type == dom.ElementNode && !p.checkValidNamespace(currentNode) {
+	if currentNode.Type == dom.ElementNode && !p.checkValidNamespace(currentNode, tagName) {
 		p.mustRemove(currentNode)
 		return true
 	}
@@ -823,7 +1028,9 @@ func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
 		}
 	}
 	// Execute a hook if present.
-	p.executeHooks(AfterSanitizeElements, currentNode, nil)
+	if p.hookMask&(1<<hookAfterSanitizeElements) != 0 {
+		p.executeHooksIdx(hookAfterSanitizeElements, currentNode, nil)
+	}
 	return false
 }
 
@@ -832,7 +1039,7 @@ func (p *Purifier) sanitizeElements(currentNode, root *dom.Node) bool {
 // isValidAttribute is _isValidAttribute.
 func (p *Purifier) isValidAttribute(lcTag, lcName, value string) bool {
 	// FORBID_ATTR must always win, even if ADD_ATTR predicate would allow it.
-	if p.forbidAttr[lcName] {
+	if len(p.forbidAttr) > 0 && p.forbidAttr[lcName] {
 		return false
 	}
 	if p.safeForXML && lcName == "patchsrc" {
@@ -842,10 +1049,10 @@ func (p *Purifier) isValidAttribute(lcTag, lcName, value string) bool {
 		return false
 	}
 	// Make sure attribute cannot clobber.
-	if p.sanitizeDOM && (lcName == "id" || lcName == "name") && clobberingNames[value] {
+	if p.sanitizeDOM && (lcName == "id" || lcName == "name") && couldBeClobberingName(value) && clobberingNames[value] {
 		return false
 	}
-	nameIsPermitted := p.allowedAttr[lcName] || (p.extraAttrCheck != nil && p.extraAttrCheck(lcName, lcTag))
+	nameIsPermitted := (p.supersetDefaultAttrs && isCommonDefaultAttr(lcName)) || p.allowedAttr[lcName] || (p.extraAttrCheck != nil && p.extraAttrCheck(lcName, lcTag))
 	// Allow valid data-* attributes: at least one character after "-". We
 	// don't need to check the value; it's always URI safe.
 	if p.allowDataAttr && matchDataAttr(lcName) {
@@ -865,7 +1072,7 @@ func (p *Purifier) isValidAttribute(lcTag, lcName, value string) bool {
 		default:
 			return false
 		}
-	} else if p.uriSafeAttributes[lcName] {
+	} else if isDefaultURISafeAttr(lcName) || (!p.stdURISafeOnly && p.uriSafeAttributes[lcName]) {
 		// This attribute is safe.
 	} else if (p.defaultAllowedURI && matchAllowedURISkipWS(value)) || (!p.defaultAllowedURI && p.allowedURI(stripAttrWhitespace(value))) {
 		// This attribute is safe.
@@ -898,20 +1105,21 @@ func (p *Purifier) setAttributeValue(currentNode *dom.Node, name, namespaceURI, 
 }
 
 // sanitizeAttributes is _sanitizeAttributes.
-func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
+func (p *Purifier) sanitizeAttributes(currentNode *dom.Node, lcTag string) {
 	// Execute a hook if present.
-	p.executeHooks(BeforeSanitizeAttributes, currentNode, nil)
+	if p.hookMask&(1<<hookBeforeSanitizeAttributes) != 0 {
+		p.executeHooksIdx(hookBeforeSanitizeAttributes, currentNode, nil)
+	}
 	// Check if we have attributes; if not we might have a text node.
 	if currentNode.Type != dom.ElementNode || p.isClobbered(currentNode) {
 		return
 	}
-	hasAttrHooks := len(p.hooks[UponSanitizeAttribute]) > 0
+	hasAttrHooks := p.hookMask&(1<<hookUponSanitizeAttribute) != 0
 	var hookEvent *HookEvent
 	if hasAttrHooks {
 		hookEvent = &HookEvent{KeepAttr: true, AllowedAttributes: p.allowedAttr}
 	}
 	l := len(currentNode.Attrs)
-	lcTag := toLowerCase(nodeName(currentNode))
 	// Go backwards over all attributes; safely remove bad ones.
 	for l > 0 {
 		l--
@@ -935,7 +1143,7 @@ func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
 			hookEvent.AttrValue = value
 			hookEvent.KeepAttr = true
 			hookEvent.ForceKeepAttr = false
-			p.executeHooks(UponSanitizeAttribute, currentNode, hookEvent)
+			p.executeHooksIdx(hookUponSanitizeAttribute, currentNode, hookEvent)
 			value = hookEvent.AttrValue
 			keepAttr = hookEvent.KeepAttr
 			forceKeepAttr = hookEvent.ForceKeepAttr
@@ -990,7 +1198,9 @@ func (p *Purifier) sanitizeAttributes(currentNode *dom.Node) {
 		}
 	}
 	// Execute a hook if present.
-	p.executeHooks(AfterSanitizeAttributes, currentNode, nil)
+	if p.hookMask&(1<<hookAfterSanitizeAttributes) != 0 {
+		p.executeHooksIdx(hookAfterSanitizeAttributes, currentNode, nil)
+	}
 }
 
 // sanitizeShadowDOM is _sanitizeShadowDOM for the contents of a template
@@ -1000,21 +1210,28 @@ func (p *Purifier) sanitizeShadowDOM(template *dom.Node) {
 	p.iterators = append(p.iterators, shadowIterator)
 	defer func() { p.iterators = p.iterators[:len(p.iterators)-1] }()
 	// Execute a hook if present.
-	p.executeHooks(BeforeSanitizeShadowDOM, template, nil)
+	if p.hookMask&(1<<hookBeforeSanitizeShadowDOM) != 0 {
+		p.executeHooksIdx(hookBeforeSanitizeShadowDOM, template, nil)
+	}
 	for shadowNode := shadowIterator.NextNode(); shadowNode != nil; shadowNode = shadowIterator.NextNode() {
 		// Execute a hook if present.
-		p.executeHooks(UponSanitizeShadowNode, shadowNode, nil)
+		if p.hookMask&(1<<hookUponSanitizeShadowNode) != 0 {
+			p.executeHooksIdx(hookUponSanitizeShadowNode, shadowNode, nil)
+		}
+		lcTag := toLowerCase(nodeName(shadowNode))
 		// Sanitize tags and elements.
-		p.sanitizeElements(shadowNode, template)
+		p.sanitizeElements(shadowNode, template, lcTag)
 		// Check attributes next.
-		p.sanitizeAttributes(shadowNode)
+		p.sanitizeAttributes(shadowNode, lcTag)
 		// Deep shadow DOM detected.
 		if shadowNode.IsTemplate() {
 			p.sanitizeShadowDOM(shadowNode)
 		}
 	}
 	// Execute a hook if present.
-	p.executeHooks(AfterSanitizeShadowDOM, template, nil)
+	if p.hookMask&(1<<hookAfterSanitizeShadowDOM) != 0 {
+		p.executeHooksIdx(hookAfterSanitizeShadowDOM, template, nil)
+	}
 }
 
 // sanitize is DOMPurify.sanitize for a string. The second result is the
@@ -1037,17 +1254,17 @@ func (p *Purifier) sanitize(dirty string, cfg *Config) (out string, node *dom.No
 	}
 	// Assign config vars.
 	if p.setConfig {
-		p.allowedTags, p.tagsShared = p.setConfigAllowedTags, p.setConfigTagsShared
-		p.allowedAttr, p.attrShared = p.setConfigAllowedAttr, p.setConfigAttrShared
+		p.allowedTags, p.tagsShared, p.supersetDefaultTags = p.setConfigAllowedTags, p.setConfigTagsShared, p.setConfigSupersetTags
+		p.allowedAttr, p.attrShared, p.supersetDefaultAttrs = p.setConfigAllowedAttr, p.setConfigAttrShared, p.setConfigSupersetAttrs
 	} else if err := p.parseConfig(cfg); err != nil {
 		return "", nil, err
 	}
 	// Clone the sets so that hooks cannot change the shared ones.
-	if len(p.hooks[UponSanitizeElement]) > 0 || len(p.hooks[UponSanitizeAttribute]) > 0 {
-		p.allowedTags, p.tagsShared = p.allowedTags.clone(), false
+	if p.hookMask&(1<<hookUponSanitizeElement|1<<hookUponSanitizeAttribute) != 0 {
+		p.allowedTags, p.tagsShared, p.supersetDefaultTags = p.allowedTags.clone(), false, false
 	}
-	if len(p.hooks[UponSanitizeAttribute]) > 0 {
-		p.allowedAttr, p.attrShared = p.allowedAttr.clone(), false
+	if p.hookMask&(1<<hookUponSanitizeAttribute) != 0 {
+		p.allowedAttr, p.attrShared, p.supersetDefaultAttrs = p.allowedAttr.clone(), false, false
 	}
 
 	// Exit directly if we have nothing to do.
@@ -1077,10 +1294,11 @@ func (p *Purifier) sanitize(dirty string, cfg *Config) (out string, node *dom.No
 	defer func() { p.iterators = p.iterators[:0] }()
 	// Now start iterating over the created document.
 	for currentNode := nodeIterator.NextNode(); currentNode != nil; currentNode = nodeIterator.NextNode() {
+		lcTag := toLowerCase(nodeName(currentNode))
 		// Sanitize tags and elements.
-		p.sanitizeElements(currentNode, body)
+		p.sanitizeElements(currentNode, body, lcTag)
 		// Check attributes next.
-		p.sanitizeAttributes(currentNode)
+		p.sanitizeAttributes(currentNode, lcTag)
 		// Shadow DOM detected, sanitize it.
 		if currentNode.IsTemplate() {
 			p.sanitizeShadowDOM(currentNode)

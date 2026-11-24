@@ -325,15 +325,23 @@ func _doubleLine(x1, y1, x2, y2 float64, o *ResolvedOptions, filling bool) []Op 
 	if filling {
 		singleStroke = o.disableMultiStrokeFill
 	}
-	o1 := _line(x1, y1, x2, y2, o, true, false)
+	capOps := 4
 	if singleStroke {
-		return o1
+		capOps = 2
 	}
-	o2 := _line(x1, y1, x2, y2, o, true, true)
-	return append(o1, o2...)
+	ops := make([]Op, 0, capOps)
+	ops = appendLine(ops, x1, y1, x2, y2, o, true, false)
+	if singleStroke {
+		return ops
+	}
+	return appendLine(ops, x1, y1, x2, y2, o, true, true)
 }
 
 func _line(x1, y1, x2, y2 float64, o *ResolvedOptions, move, overlay bool) []Op {
+	return appendLine(make([]Op, 0, 2), x1, y1, x2, y2, o, move, overlay)
+}
+
+func appendLine(ops []Op, x1, y1, x2, y2 float64, o *ResolvedOptions, move, overlay bool) []Op {
 	m := &o.gen.m
 	lengthSq := m.pow(x1-x2, 2) + m.pow(y1-y2, 2)
 	length := math.Sqrt(lengthSq)
@@ -355,38 +363,45 @@ func _line(x1, y1, x2, y2 float64, o *ResolvedOptions, move, overlay bool) []Op 
 	midDispY := o.bowing * o.maxRandomnessOffset * (x1 - x2) / 200
 	midDispX = _offsetOpt(midDispX, o, roughnessGain)
 	midDispY = _offsetOpt(midDispY, o, roughnessGain)
-	ops := make([]Op, 0, 2)
-	randomHalf := func() float64 { return _offsetOpt(halfOffset, o, roughnessGain) }
-	randomFull := func() float64 { return _offsetOpt(offset, o, roughnessGain) }
 	preserveVertices := o.preserveVertices
-	// vertex is (preserveVertices ? 0 : rnd()).
-	vertex := func(rnd func() float64) float64 {
-		if preserveVertices {
-			return 0
-		}
-		return rnd()
+	rndOff := offset
+	if overlay {
+		rndOff = halfOffset
 	}
 	if move {
-		if overlay {
-			x := x1 + vertex(randomHalf)
-			y := y1 + vertex(randomHalf)
-			ops = append(ops, Op{Op: OpMove, Data: []float64{x, y}})
+		var mx, my float64
+		if preserveVertices {
+			mx, my = x1, y1
 		} else {
-			x := x1 + vertex(randomFull)
-			y := y1 + vertex(randomFull)
-			ops = append(ops, Op{Op: OpMove, Data: []float64{x, y}})
+			mx = x1 + _offsetOpt(rndOff, o, roughnessGain)
+			my = y1 + _offsetOpt(rndOff, o, roughnessGain)
 		}
+		d0 := midDispX + x1 + float64((x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d1 := midDispY + y1 + float64((y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d2 := midDispX + x1 + float64(2*(x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d3 := midDispY + y1 + float64(2*(y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		var d4, d5 float64
+		if preserveVertices {
+			d4, d5 = x2, y2
+		} else {
+			d4 = x2 + _offsetOpt(rndOff, o, roughnessGain)
+			d5 = y2 + _offsetOpt(rndOff, o, roughnessGain)
+		}
+		data := [8]float64{mx, my, d0, d1, d2, d3, d4, d5}
+		ops = append(ops, Op{Op: OpMove, Data: data[0:2:2]}, Op{Op: OpBcurveTo, Data: data[2:8:8]})
+		return ops
 	}
-	rnd := randomFull
-	if overlay {
-		rnd = randomHalf
+	d0 := midDispX + x1 + float64((x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d1 := midDispY + y1 + float64((y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d2 := midDispX + x1 + float64(2*(x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d3 := midDispY + y1 + float64(2*(y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	var d4, d5 float64
+	if preserveVertices {
+		d4, d5 = x2, y2
+	} else {
+		d4 = x2 + _offsetOpt(rndOff, o, roughnessGain)
+		d5 = y2 + _offsetOpt(rndOff, o, roughnessGain)
 	}
-	d0 := midDispX + x1 + float64((x2-x1)*divergePoint) + rnd()
-	d1 := midDispY + y1 + float64((y2-y1)*divergePoint) + rnd()
-	d2 := midDispX + x1 + float64(2*(x2-x1)*divergePoint) + rnd()
-	d3 := midDispY + y1 + float64(2*(y2-y1)*divergePoint) + rnd()
-	d4 := x2 + vertex(rnd)
-	d5 := y2 + vertex(rnd)
 	ops = append(ops, Op{Op: OpBcurveTo, Data: []float64{d0, d1, d2, d3, d4, d5}})
 	return ops
 }

@@ -15,7 +15,6 @@ package dom
 
 import (
 	"strconv"
-	"strings"
 )
 
 // This file implements XMLSerializer.serializeToString as Chromium does. It
@@ -40,18 +39,22 @@ func (n *Node) XML() string {
 	}
 	// SerializeNodes. Step 3: the prefix map starts with the XML namespace.
 	// Step 4: the generated namespace prefix index starts at 1.
-	a := &markupAccumulator{prefixIndex: 1}
-	root := &namespaceContext{}
-	root.add("xml", NSXML)
-	a.stack = append(a.stack, root)
+	w := getHTMLWriter()
+	var stackBuf [32]namespaceContext
+	a := markupAccumulator{
+		markup:      w,
+		stack:       stackBuf[:1],
+		prefixIndex: 1,
+	}
+	a.stack[0].add("xml", NSXML)
 	a.serializeNodesWithNamespaces(n)
-	return a.markup.String()
+	return w.finish()
 }
 
 // markupAccumulator is MarkupAccumulator with SerializationType::kXML.
 type markupAccumulator struct {
-	markup      strings.Builder
-	stack       []*namespaceContext
+	markup      *htmlWriter
+	stack       []namespaceContext
 	prefixIndex int
 }
 
@@ -70,8 +73,8 @@ type namespaceContext struct {
 	contextNS string
 }
 
-func (c *namespaceContext) push() *namespaceContext {
-	return &namespaceContext{prefixNS: c.prefixNS, nsPrefixes: c.nsPrefixes, shared: true, contextNS: c.contextNS}
+func (c *namespaceContext) push() namespaceContext {
+	return namespaceContext{prefixNS: c.prefixNS, nsPrefixes: c.nsPrefixes, shared: true, contextNS: c.contextNS}
 }
 
 // add is NamespaceContext::Add.
@@ -127,7 +130,7 @@ func (c *namespaceContext) inheritLocalDefaultNamespace(localDefault string, has
 	c.contextNS = localDefault
 }
 
-func (a *markupAccumulator) context() *namespaceContext { return a.stack[len(a.stack)-1] }
+func (a *markupAccumulator) context() *namespaceContext { return &a.stack[len(a.stack)-1] }
 
 // serializeNodesWithNamespaces is
 // MarkupAccumulator::SerializeNodesWithNamespaces with kIncludeNode.
@@ -166,7 +169,7 @@ func shouldSelfClose(n *Node) bool {
 	if n.FirstChild != nil {
 		return false
 	}
-	if n.NS == NSHTML && !voidElements[n.Tag] {
+	if n.NS == NSHTML && !isVoidElement(n.Tag) {
 		return false
 	}
 	return true
@@ -179,7 +182,7 @@ func (a *markupAccumulator) appendStartMarkup(n *Node) {
 	case TextNode:
 		// MarkupFormatter::AppendText with kEntityMaskInPCDATA. Text in a
 		// style or script element is escaped as other text is.
-		appendXMLText(&a.markup, n.Data)
+		appendXMLText(a.markup, n.Data)
 	case CommentNode:
 		a.markup.WriteString("<!--")
 		a.markup.WriteString(n.Data)
@@ -272,7 +275,7 @@ func (a *markupAccumulator) appendStartTagOpen(n *Node) (serializedPrefix string
 		// 12.6.4. Append the value of qualified name to markup.
 		a.appendTagName("", n.Tag)
 		// 12.6.5. Append a default namespace declaration for ns.
-		appendXMLAttribute(&a.markup, "", "xmlns", ns)
+		appendXMLAttribute(a.markup, "", "xmlns", ns)
 		return "", true
 	}
 
@@ -299,7 +302,7 @@ func (a *markupAccumulator) appendAttributeAsXMLWithNamespace(attr *Attr) {
 	// 3.3. Let attribute namespace be the value of attr's namespaceURI.
 	attributeNamespace := attr.NS
 	if attributeNamespace == "" {
-		appendXMLAttribute(&a.markup, "", attr.Local, attr.Value)
+		appendXMLAttribute(a.markup, "", attr.Local, attr.Value)
 		return
 	}
 	// 3.5.1. Let candidate prefix be the result of retrieving a preferred
@@ -319,12 +322,12 @@ func (a *markupAccumulator) appendAttributeAsXMLWithNamespace(attr *Attr) {
 			// prefix providing map, attribute namespace, and prefix index.
 			candidatePrefix = a.generatePrefix(attributeNamespace)
 			// 3.5.3.2. Append the declaration of the prefix.
-			appendXMLAttribute(&a.markup, "xmlns", candidatePrefix, attributeNamespace)
+			appendXMLAttribute(a.markup, "xmlns", candidatePrefix, attributeNamespace)
 		} else {
 			a.appendNamespace(candidatePrefix, attributeNamespace)
 		}
 	}
-	appendXMLAttribute(&a.markup, candidatePrefix, attr.Local, attr.Value)
+	appendXMLAttribute(a.markup, candidatePrefix, attr.Local, attr.Value)
 }
 
 // shouldAddNamespaceAttribute is
@@ -344,7 +347,7 @@ func (a *markupAccumulator) shouldAddNamespaceAttribute(attr *Attr, candidatePre
 func (a *markupAccumulator) appendNamespace(prefix, namespace string) {
 	if found, _ := a.context().lookupNamespaceURI(prefix); found != namespace {
 		a.context().add(prefix, namespace)
-		appendXMLAttribute(&a.markup, "xmlns", prefix, namespace)
+		appendXMLAttribute(a.markup, "xmlns", prefix, namespace)
 	}
 }
 
@@ -394,7 +397,7 @@ func (a *markupAccumulator) generatePrefix(namespace string) string {
 
 // appendXMLAttribute is MarkupFormatter::AppendAttribute for a document
 // that is not HTML.
-func appendXMLAttribute(sb *strings.Builder, prefix, local, value string) {
+func appendXMLAttribute(sb *htmlWriter, prefix, local, value string) {
 	sb.WriteByte(' ')
 	if prefix != "" {
 		sb.WriteString(prefix)
@@ -408,9 +411,26 @@ func appendXMLAttribute(sb *strings.Builder, prefix, local, value string) {
 
 // appendXMLText escapes with kEntityMaskInPCDATA: & < >. U+00A0 stays a
 // character, because XML has no entity for it.
-func appendXMLText(sb *strings.Builder, s string) {
+func appendXMLText(sb *htmlWriter, s string) {
 	last := 0
-	for i := 0; i < len(s); i++ {
+	n := len(s)
+	i := 0
+	for i < n {
+		for i+8 <= n {
+			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
+				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			a := w ^ swarAmp8
+			b := w ^ swarLt8
+			c := w ^ swarGt8
+			if (((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8)) == 0 {
+				i += 8
+				continue
+			}
+			break
+		}
+		if i >= n {
+			break
+		}
 		var rep string
 		switch s[i] {
 		case '&':
@@ -420,11 +440,13 @@ func appendXMLText(sb *strings.Builder, s string) {
 		case '>':
 			rep = "&gt;"
 		default:
+			i++
 			continue
 		}
 		sb.WriteString(s[last:i])
 		sb.WriteString(rep)
-		last = i + 1
+		i++
+		last = i
 	}
 	sb.WriteString(s[last:])
 }
@@ -432,9 +454,29 @@ func appendXMLText(sb *strings.Builder, s string) {
 // appendXMLAttributeValue escapes with kEntityMaskInAttributeValue: & < > "
 // and tab, line feed and carriage return, which an XML parser would
 // otherwise turn into spaces.
-func appendXMLAttributeValue(sb *strings.Builder, s string) {
+func appendXMLAttributeValue(sb *htmlWriter, s string) {
 	last := 0
-	for i := 0; i < len(s); i++ {
+	n := len(s)
+	i := 0
+	for i < n {
+		for i+8 <= n {
+			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
+				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			// Reject bytes < 0x20 (catches \t, \n, \r) or matching &, ", <, >.
+			// In ASCII 0x20..0x7f, subtracting 0x20 never borrows from bit 7.
+			a := w ^ swarAmp8
+			b := w ^ swarQuot8
+			c := w ^ swarLt8
+			d := w ^ swarGt8
+			if ((w & swarHi8) | ((w - 0x2020202020202020) & swarHi8) | ((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8) | ((d - swarLo8) &^ d & swarHi8)) == 0 {
+				i += 8
+				continue
+			}
+			break
+		}
+		if i >= n {
+			break
+		}
 		var rep string
 		switch s[i] {
 		case '&':
@@ -452,11 +494,13 @@ func appendXMLAttributeValue(sb *strings.Builder, s string) {
 		case '\r':
 			rep = "&#13;"
 		default:
+			i++
 			continue
 		}
 		sb.WriteString(s[last:i])
 		sb.WriteString(rep)
-		last = i + 1
+		i++
+		last = i
 	}
 	sb.WriteString(s[last:])
 }

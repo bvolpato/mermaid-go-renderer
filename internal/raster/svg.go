@@ -137,6 +137,10 @@ func newPainter(eng *browser.Engine, doc *dom.Document, w, h int, scale float64)
 	return &painter{eng: eng, doc: doc, cv: newCanvas(w, h), scale: scale, glyphs: sharedGlyphCache()}
 }
 
+func newPooledPainter(eng *browser.Engine, doc *dom.Document, w, h int, scale float64) *painter {
+	return &painter{eng: eng, doc: doc, cv: newPooledCanvas(w, h), scale: scale, glyphs: sharedGlyphCache()}
+}
+
 func (p *painter) fillBackground(bg color.Color) {
 	r, g, b, a := uint8(255), uint8(255), uint8(255), uint8(255)
 	if bg != nil {
@@ -153,6 +157,9 @@ func (p *painter) fillBackground(bg color.Color) {
 	// never does: the pixel geometry of its surfaces is unknown, so an
 	// opacity layer starts transparent there (opacityLayer).
 	dev.lcd = a == 255 && p.eng.Fonts != nil && p.eng.Fonts.Platform() != font.PlatformDarwin
+	if a == 255 && dev == p.cv.stack[0] {
+		p.cv.mayBeTransparent = false
+	}
 }
 
 func (p *painter) indexIDs(n *dom.Node) {

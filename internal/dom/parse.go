@@ -30,6 +30,12 @@ func (n *Node) HTML(markup string) *Node {
 		}
 		return n
 	}
+	if parseSimpleFragment(n, markup) {
+		if checkSimpleParser {
+			checkSimpleFragment(n, markup)
+		}
+		return n
+	}
 	ctx := &html.Node{Type: html.ElementNode, Data: n.Tag, DataAtom: atom.Lookup([]byte(n.Tag))}
 	switch n.NS {
 	case NSSVG:

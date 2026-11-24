@@ -212,6 +212,19 @@ func (m affine) mapRect(r rectF) rectF {
 	return rectF{rl, rt, rr - rl, rb - rt}
 }
 
+// pow10NegF32[k] is the exact float32 value of repeated multiplication by
+// float32(0.1) (k+1) times, matching Blink's GenericParseNumber<float> frac loop.
+// By k=46, float32(0.1)^47 underflows to +0.0.
+var pow10NegF32 = func() [48]float32 {
+	var t [48]float32
+	f := float32(1)
+	for i := range t {
+		f *= float32(0.1)
+		t[i] = f
+	}
+	return t
+}()
+
 // parseSVGNumber is Blink's GenericParseNumber<float>: it parses a number at
 // the start of s with float32 arithmetic and returns the rest of the string.
 // The float32 arithmetic is intended: the result can differ from the nearest
@@ -220,44 +233,62 @@ func parseSVGNumber(s string) (value float32, rest string, ok bool) {
 	i := 0
 	n := len(s)
 	var integer, decimal, exponent float32
-	frac := float32(1)
 	sign := float32(1)
 	expSign := 1
-	if i < n && s[i] == '+' {
-		i++
-	} else if i < n && s[i] == '-' {
-		i++
-		sign = -1
+	if i < n {
+		if s[i] == '+' {
+			i++
+		} else if s[i] == '-' {
+			i++
+			sign = -1
+		}
 	}
-	if i == n || ((s[i] < '0' || s[i] > '9') && s[i] != '.') {
+	if i == n || (s[i]-'0' > 9 && s[i] != '.') {
 		return 0, s, false
 	}
 	startInt := i
-	for i < n && s[i] >= '0' && s[i] <= '9' {
+	for i < n && s[i]-'0' <= 9 {
 		i++
 	}
 	if i != startInt {
-		multiplier := float32(1)
-		for j := i - 1; j >= startInt; j-- {
-			integer += float32(multiplier * float32(s[j]-'0'))
-			multiplier *= 10
-		}
-		if math.IsInf(float64(integer), 0) {
-			return 0, s, false
+		if i-startInt <= 7 {
+			// Every integer < 10^7 is exact in float32 (24-bit significand),
+			// so integer accumulation is bit-identical to float32 multiply-add.
+			var v int32
+			for j := startInt; j < i; j++ {
+				v = v*10 + int32(s[j]-'0')
+			}
+			integer = float32(v)
+		} else {
+			multiplier := float32(1)
+			for j := i - 1; j >= startInt; j-- {
+				integer += float32(multiplier * float32(s[j]-'0'))
+				multiplier *= 10
+			}
+			if math.Float32bits(integer)&0x7f800000 == 0x7f800000 {
+				return 0, s, false
+			}
 		}
 	}
 	if i < n && s[i] == '.' {
 		i++
-		if i >= n || s[i] < '0' || s[i] > '9' {
+		if i >= n || s[i]-'0' > 9 {
 			return 0, s, false
 		}
-		for i < n && s[i] >= '0' && s[i] <= '9' {
-			frac *= float32(0.1)
-			decimal += float32(float32(s[i]-'0') * frac)
+		k := 0
+		for i < n {
+			d := s[i] - '0'
+			if d > 9 {
+				break
+			}
+			if d != 0 && k < len(pow10NegF32) {
+				decimal += float32(float32(d) * pow10NegF32[k])
+			}
+			k++
 			i++
 		}
 	}
-	if i+1 < n && (s[i] == 'e' || s[i] == 'E') && s[i+1] != 'x' && s[i+1] != 'm' {
+	if i < n && (s[i] == 'e' || s[i] == 'E') && i+1 < n && s[i+1] != 'x' && s[i+1] != 'm' {
 		j := i + 1
 		if s[j] == '+' {
 			j++
@@ -265,8 +296,8 @@ func parseSVGNumber(s string) (value float32, rest string, ok bool) {
 			j++
 			expSign = -1
 		}
-		if j < n && s[j] >= '0' && s[j] <= '9' {
-			for j < n && s[j] >= '0' && s[j] <= '9' {
+		if j < n && s[j]-'0' <= 9 {
+			for j < n && s[j]-'0' <= 9 {
 				exponent = float32(exponent * 10)
 				exponent += float32(s[j] - '0')
 				j++
@@ -279,7 +310,7 @@ func parseSVGNumber(s string) (value float32, rest string, ok bool) {
 	if exponent != 0 {
 		number *= float32(math.Pow(10, float64(expSign*int(exponent))))
 	}
-	if math.IsInf(float64(number), 0) || math.IsNaN(float64(number)) {
+	if math.Float32bits(number)&0x7f800000 == 0x7f800000 {
 		return 0, s, false
 	}
 	return number, s[i:], true
@@ -300,19 +331,23 @@ func skipSVGSpaceComma(s string) string {
 	return s
 }
 
-// parseNumberList parses numbers separated by white space or commas.
-func parseNumberList(s string) []float32 {
-	var out []float32
+// appendNumberList appends numbers separated by white space or commas to dst.
+func appendNumberList(dst []float32, s string) []float32 {
 	s = skipSVGSpace(s)
 	for s != "" {
 		v, rest, ok := parseSVGNumber(s)
 		if !ok {
 			break
 		}
-		out = append(out, v)
+		dst = append(dst, v)
 		s = skipSVGSpaceComma(rest)
 	}
-	return out
+	return dst
+}
+
+// parseNumberList parses numbers separated by white space or commas.
+func parseNumberList(s string) []float32 {
+	return appendNumberList(nil, s)
 }
 
 // parseTransform parses an SVG transform attribute and returns the matrix

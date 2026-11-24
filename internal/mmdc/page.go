@@ -55,15 +55,32 @@ type Page struct {
 	// SVG is the svg element of the diagram.
 	SVG *dom.Node
 
+	doc    *dom.Document
 	engine *browser.Engine
 	opts   Options
+}
+
+// Close releases pooled DOM and layout resources owned by the Page.
+func (p *Page) Close() {
+	if p == nil {
+		return
+	}
+	if p.doc != nil {
+		p.doc.Release()
+		p.doc = nil
+	}
+	if p.engine != nil {
+		p.engine.Release()
+		p.engine = nil
+	}
+	p.SVG = nil
 }
 
 // Load puts the result of mermaid.render() into the page and runs the steps
 // of mmdc that all output formats share.
 func Load(svgText string, opts Options) (*Page, error) {
-	engine := browser.NewWithFonts(opts.Fonts)
-	doc := dom.NewDocument()
+	engine := browser.AcquireWithFonts(opts.Fonts)
+	doc := dom.NewPooledDocument()
 	doc.Engine = engine
 	doc.PageSheets = opts.PageSheets
 	// The page of mmdc: body > div#container.
@@ -73,6 +90,8 @@ func Load(svgText string, opts Options) (*Page, error) {
 	// const svg = container.getElementsByTagName?.("svg")?.[0]
 	svg := container.Select("svg")
 	if svg == nil {
+		doc.Release()
+		engine.Release()
 		return nil, errors.New("svg not found")
 	}
 	if opts.SetBackground {
@@ -87,7 +106,7 @@ func Load(svgText string, opts Options) (*Page, error) {
 		// in Mermaid v10.9.1, user journey diagrams have a fixed height
 		svg.Attr("height", nil)
 	}
-	return &Page{SVG: svg, engine: engine, opts: opts}, nil
+	return &Page{SVG: svg, doc: doc, engine: engine, opts: opts}, nil
 }
 
 // setBackgroundColor is svg.style.backgroundColor = value.

@@ -42,6 +42,7 @@ type Library struct {
 	missing  map[string]bool       // families known to be absent
 	index    []indexEntry          // full index, built lazily
 	indexed  bool
+	chainsMu sync.RWMutex
 	chains   map[string]*Chain
 	fallback map[fallbackKey]*Face
 	// embedded has the faces of the embedded font files. See embeddedRefs.
@@ -686,27 +687,37 @@ type Chain struct {
 func (l *Library) Resolve(families []string, weight int, italic bool) *Chain {
 	// The weight is in the key as it is: on Linux the weights 549 and 550
 	// give different faces.
-	key := strings.Join(families, "\x00") + "\x00" + strconv.Itoa(weight)
-	if italic {
-		key += "i"
+	var keyBuf [128]byte
+	kb := keyBuf[:0]
+	for i, fam := range families {
+		if i > 0 {
+			kb = append(kb, 0)
+		}
+		kb = append(kb, fam...)
 	}
-	l.mu.Lock()
-	if c, ok := l.chains[key]; ok {
-		l.mu.Unlock()
+	kb = append(kb, 0)
+	kb = strconv.AppendInt(kb, int64(weight), 10)
+	if italic {
+		kb = append(kb, 'i')
+	}
+	l.chainsMu.RLock()
+	if c, ok := l.chains[string(kb)]; ok {
+		l.chainsMu.RUnlock()
 		return c
 	}
-	l.mu.Unlock()
+	l.chainsMu.RUnlock()
+	key := string(kb)
 
 	if l.base != nil {
 		c := l.resolveWeb(families, weight, italic)
-		l.mu.Lock()
+		l.chainsMu.Lock()
 		if kept, ok := l.chains[key]; ok {
 			// Another goroutine made the chain of this key first.
 			c = kept
 		} else {
 			l.chains[key] = c
 		}
-		l.mu.Unlock()
+		l.chainsMu.Unlock()
 		return c
 	}
 	c := &Chain{lib: l, weight: weight, italic: italic}
@@ -715,9 +726,13 @@ func (l *Library) Resolve(families []string, weight int, italic bool) *Chain {
 			c.first, _ = unquoteFamily(families[0])
 		}
 		c.faces = l.linuxChain(families, weight, italic)
-		l.mu.Lock()
-		l.chains[key] = c
-		l.mu.Unlock()
+		l.chainsMu.Lock()
+		if kept, ok := l.chains[key]; ok {
+			c = kept
+		} else {
+			l.chains[key] = c
+		}
+		l.chainsMu.Unlock()
 		return c
 	}
 	seen := map[*Face]bool{}
@@ -762,9 +777,13 @@ func (l *Library) Resolve(families []string, weight int, italic bool) *Chain {
 		// No font of the system: the embedded font is the last resort.
 		add(l.lastResort(weight, italic))
 	}
-	l.mu.Lock()
-	l.chains[key] = c
-	l.mu.Unlock()
+	l.chainsMu.Lock()
+	if kept, ok := l.chains[key]; ok {
+		c = kept
+	} else {
+		l.chains[key] = c
+	}
+	l.chainsMu.Unlock()
 	return c
 }
 

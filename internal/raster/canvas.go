@@ -5,22 +5,33 @@
 
 package raster
 
-import "sync"
+import (
+	"encoding/binary"
+	"sync"
+)
 
 // canvas holds the devices of one render. A layer has the size of the base
 // bitmap and the same coordinate system. Each device tracks the bounds of
 // what was drawn into it, so that clearing and compositing a layer cost
 // only as much as its content.
 type canvas struct {
-	w, h  int
-	stack []*device
-	pool  []*pixmap
-	dr    drawer
+	w, h             int
+	stack            []*device
+	pool             []*pixmap
+	dr               drawer
+	mayBeTransparent bool
 }
 
 func newCanvas(w, h int) *canvas {
-	c := &canvas{w: w, h: h}
+	c := &canvas{w: w, h: h, mayBeTransparent: true}
 	base := &device{pm: newPixmap(w, h), clip: IRect{0, 0, w, h}}
+	c.stack = append(c.stack, base)
+	return c
+}
+
+func newPooledCanvas(w, h int) *canvas {
+	c := &canvas{w: w, h: h, mayBeTransparent: true}
+	base := &device{pm: c.getPixmap(), clip: IRect{0, 0, w, h}}
 	c.stack = append(c.stack, base)
 	return c
 }
@@ -60,10 +71,11 @@ func (c *canvas) release() {
 // was drawn: it is cleared.
 func (c *canvas) putPixmap(pm *pixmap, dirty IRect) {
 	if dirty.intersect(pm.bounds()) {
-		for y := dirty.T; y < dirty.B; y++ {
-			row := pm.pix[y*pm.stride+dirty.L*4 : y*pm.stride+dirty.R*4]
-			for i := range row {
-				row[i] = 0
+		if dirty.L == 0 && dirty.R == pm.w {
+			clear(pm.pix[dirty.T*pm.stride : dirty.B*pm.stride])
+		} else {
+			for y := dirty.T; y < dirty.B; y++ {
+				clear(pm.pix[y*pm.stride+dirty.L*4 : y*pm.stride+dirty.R*4])
 			}
 		}
 	}
@@ -145,6 +157,9 @@ func (c *canvas) compositeLayer(dst *device, src *pixmap, region IRect, alpha fl
 		return
 	}
 	dst.extend(region)
+	if dst == c.stack[0] && (blend == blendDstIn || blend == blendSrc) {
+		c.mayBeTransparent = true
+	}
 	a := alphaToByte(alpha)
 	if a == 0 && blend == blendSrcOver {
 		return
@@ -200,13 +215,33 @@ func satAdd8(a, b uint8) uint8 {
 // srcOverRowAlpha is blit_row_s32a_blend: SkBlendARGB32 per pixel.
 func srcOverRowAlpha(d, s []uint8, alpha uint32) {
 	srcScale := alpha + 1
+	var prevSpx, prevDpx, prevOut uint32
+	hasPrev := false
 	for i := 0; i+3 < len(s); i += 4 {
-		prod := 0xFFFF - uint32(s[i+3])*srcScale
+		spx := binary.LittleEndian.Uint32(s[i : i+4])
+		if spx == 0 {
+			continue
+		}
+		dpx := binary.LittleEndian.Uint32(d[i : i+4])
+		if hasPrev && spx == prevSpx && dpx == prevDpx {
+			binary.LittleEndian.PutUint32(d[i:i+4], prevOut)
+			continue
+		}
+		sa := spx >> 24
+		prod := 0xFFFF - sa*srcScale
 		dstScale := (prod + (prod >> 8)) >> 8
-		d[i] = uint8((uint32(s[i])*srcScale + uint32(d[i])*dstScale) >> 8)
-		d[i+1] = uint8((uint32(s[i+1])*srcScale + uint32(d[i+1])*dstScale) >> 8)
-		d[i+2] = uint8((uint32(s[i+2])*srcScale + uint32(d[i+2])*dstScale) >> 8)
-		d[i+3] = uint8((uint32(s[i+3])*srcScale + uint32(d[i+3])*dstScale) >> 8)
+		// 2-channel SWAR in 16-bit lanes; since s_c <= sa for premultiplied
+		// pixels, s_c*srcScale + d_c*dstScale <= 65535 and cannot carry across
+		// lanes.
+		srb := spx & 0x00ff00ff
+		sag := (spx >> 8) & 0x00ff00ff
+		drb := dpx & 0x00ff00ff
+		dag := (dpx >> 8) & 0x00ff00ff
+		rb := ((srb*srcScale + drb*dstScale) >> 8) & 0x00ff00ff
+		ag := (sag*srcScale + dag*dstScale) & 0xff00ff00
+		out := rb | ag
+		binary.LittleEndian.PutUint32(d[i:i+4], out)
+		prevSpx, prevDpx, prevOut, hasPrev = spx, dpx, out, true
 	}
 }
 
@@ -215,8 +250,32 @@ func srcOverRowAlpha(d, s []uint8, alpha uint32) {
 // arithmetic of the raster pipeline.
 func blendRowGeneral(d, s []uint8, alpha uint8, blend blendMode, clipRow []uint8) {
 	const inv = float32(1.0 / 255)
+	if blend == blendSrcOver && clipRow == nil && alpha == 255 {
+		for i := 0; i+3 < len(s); i += 4 {
+			spx := binary.LittleEndian.Uint32(s[i : i+4])
+			if spx == 0 {
+				continue
+			}
+			sa8 := uint8(spx >> 24)
+			if sa8 == 255 {
+				binary.LittleEndian.PutUint32(d[i:i+4], spx)
+				continue
+			}
+			sr, sg, sb, sa := float32(float32(s[i])*inv), float32(float32(s[i+1])*inv), float32(float32(s[i+2])*inv), float32(float32(sa8)*inv)
+			dr, dg, db, da := float32(float32(d[i])*inv), float32(float32(d[i+1])*inv), float32(float32(d[i+2])*inv), float32(float32(d[i+3])*inv)
+			k := 1 - sa
+			d[i] = toUnorm(sr + float32(dr*k))
+			d[i+1] = toUnorm(sg + float32(dg*k))
+			d[i+2] = toUnorm(sb + float32(db*k))
+			d[i+3] = toUnorm(sa + float32(da*k))
+		}
+		return
+	}
 	ga := float32(float32(alpha) * inv)
 	for i := 0; i+3 < len(s); i += 4 {
+		if blend == blendSrcOver && binary.LittleEndian.Uint32(s[i:i+4]) == 0 {
+			continue
+		}
 		sr, sg, sb, sa := float32(float32(s[i])*inv*ga), float32(float32(s[i+1])*inv*ga), float32(float32(s[i+2])*inv*ga), float32(float32(s[i+3])*inv*ga)
 		dr, dg, db, da := float32(float32(d[i])*inv), float32(float32(d[i+1])*inv), float32(float32(d[i+2])*inv), float32(float32(d[i+3])*inv)
 		var r, g, b, a float32

@@ -22,14 +22,41 @@ const (
 	UponSanitizeShadowNode   HookPoint = "uponSanitizeShadowNode"
 )
 
-func validHookPoint(point HookPoint) bool {
+const (
+	hookAfterSanitizeAttributes = iota
+	hookAfterSanitizeElements
+	hookAfterSanitizeShadowDOM
+	hookBeforeSanitizeAttributes
+	hookBeforeSanitizeElements
+	hookBeforeSanitizeShadowDOM
+	hookUponSanitizeAttribute
+	hookUponSanitizeElement
+	hookUponSanitizeShadowNode
+	numHookPoints
+)
+
+func hookIndex(point HookPoint) int {
 	switch point {
-	case AfterSanitizeAttributes, AfterSanitizeElements, AfterSanitizeShadowDOM,
-		BeforeSanitizeAttributes, BeforeSanitizeElements, BeforeSanitizeShadowDOM,
-		UponSanitizeAttribute, UponSanitizeElement, UponSanitizeShadowNode:
-		return true
+	case AfterSanitizeAttributes:
+		return hookAfterSanitizeAttributes
+	case AfterSanitizeElements:
+		return hookAfterSanitizeElements
+	case AfterSanitizeShadowDOM:
+		return hookAfterSanitizeShadowDOM
+	case BeforeSanitizeAttributes:
+		return hookBeforeSanitizeAttributes
+	case BeforeSanitizeElements:
+		return hookBeforeSanitizeElements
+	case BeforeSanitizeShadowDOM:
+		return hookBeforeSanitizeShadowDOM
+	case UponSanitizeAttribute:
+		return hookUponSanitizeAttribute
+	case UponSanitizeElement:
+		return hookUponSanitizeElement
+	case UponSanitizeShadowNode:
+		return hookUponSanitizeShadowNode
 	}
-	return false
+	return -1
 }
 
 // HookEvent is the data argument of a hook. It is nil for every entry point
@@ -67,11 +94,13 @@ type hookEntry struct {
 // AddHook is DOMPurify.addHook. It returns an id for RemoveHook. The id is 0
 // when the entry point is unknown or the function is nil.
 func (p *Purifier) AddHook(entryPoint HookPoint, hookFunction Hook) HookID {
-	if hookFunction == nil || !validHookPoint(entryPoint) {
+	idx := hookIndex(entryPoint)
+	if hookFunction == nil || idx < 0 {
 		return 0
 	}
 	p.nextID++
-	p.hooks[entryPoint] = append(p.hooks[entryPoint], hookEntry{p.nextID, hookFunction})
+	p.hooks[idx] = append(p.hooks[idx], hookEntry{p.nextID, hookFunction})
+	p.hookMask |= 1 << idx
 	return p.nextID
 }
 
@@ -79,12 +108,20 @@ func (p *Purifier) AddHook(entryPoint HookPoint, hookFunction Hook) HookID {
 // the entry point that has the id. With no id it removes the hook that was
 // added last. It returns the removed hook, or nil.
 func (p *Purifier) RemoveHook(entryPoint HookPoint, id ...HookID) Hook {
-	list := p.hooks[entryPoint]
+	idx := hookIndex(entryPoint)
+	if idx < 0 {
+		return nil
+	}
+	list := p.hooks[idx]
 	if len(id) > 0 {
 		for i := len(list) - 1; i >= 0; i-- {
 			if list[i].id == id[0] {
 				fn := list[i].fn
-				p.hooks[entryPoint] = append(list[:i:i], list[i+1:]...)
+				list = append(list[:i:i], list[i+1:]...)
+				p.hooks[idx] = list
+				if len(list) == 0 {
+					p.hookMask &^= 1 << idx
+				}
 				return fn
 			}
 		}
@@ -94,28 +131,37 @@ func (p *Purifier) RemoveHook(entryPoint HookPoint, id ...HookID) Hook {
 		return nil
 	}
 	fn := list[len(list)-1].fn
-	p.hooks[entryPoint] = list[: len(list)-1 : len(list)-1]
+	list = list[: len(list)-1 : len(list)-1]
+	p.hooks[idx] = list
+	if len(list) == 0 {
+		p.hookMask &^= 1 << idx
+	}
 	return fn
 }
 
 // RemoveHooks is DOMPurify.removeHooks.
 func (p *Purifier) RemoveHooks(entryPoint HookPoint) {
-	if validHookPoint(entryPoint) {
-		p.hooks[entryPoint] = nil
+	if idx := hookIndex(entryPoint); idx >= 0 {
+		p.hooks[idx] = nil
+		p.hookMask &^= 1 << idx
 	}
 }
 
 // RemoveAllHooks is DOMPurify.removeAllHooks.
 func (p *Purifier) RemoveAllHooks() {
-	p.hooks = map[HookPoint][]hookEntry{}
+	p.hooks = [numHookPoints][]hookEntry{}
+	p.hookMask = 0
 }
 
-// executeHooks is _executeHooks. Array.prototype.forEach reads the length
-// once and then reads each index from the live array.
-func (p *Purifier) executeHooks(entryPoint HookPoint, currentNode *dom.Node, data *HookEvent) {
-	n := len(p.hooks[entryPoint])
+// executeHooksIdx is _executeHooks for a known hook index. Array.prototype.forEach
+// reads the length once and then reads each index from the live array.
+func (p *Purifier) executeHooksIdx(idx int, currentNode *dom.Node, data *HookEvent) {
+	if p.hookMask&(1<<idx) == 0 {
+		return
+	}
+	n := len(p.hooks[idx])
 	for i := 0; i < n; i++ {
-		list := p.hooks[entryPoint]
+		list := p.hooks[idx]
 		if i >= len(list) {
 			return
 		}

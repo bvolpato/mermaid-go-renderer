@@ -5,7 +5,9 @@ package main
 import (
 	"fmt"
 	"path/filepath"
+	"runtime"
 	"strings"
+	"sync"
 
 	mermaid "github.com/bvolpato/mermaid-go-renderer"
 	"github.com/bvolpato/mermaid-go-renderer/internal/perfdata"
@@ -51,12 +53,34 @@ func writeReadmeImages(dir string, gallery []galleryItem, perf *perfdata.Data, p
 	for _, item := range gallery {
 		bySource[item.File] = item.Source
 	}
-	for _, name := range readmeGallery {
-		png, err := mermaid.RenderPNG(bySource[name], mermaid.WithPage(mermaid.PageMermaidCLI), mermaid.WithScale(2))
+	errs := make([]error, len(readmeGallery))
+	workers := min(len(readmeGallery), runtime.NumCPU())
+	jobs := make(chan int, len(readmeGallery))
+	for i := range readmeGallery {
+		jobs <- i
+	}
+	close(jobs)
+	var wg sync.WaitGroup
+	wg.Add(workers)
+	for range workers {
+		go func() {
+			defer wg.Done()
+			for i := range jobs {
+				name := readmeGallery[i]
+				png, err := mermaid.RenderPNG(bySource[name], mermaid.WithPage(mermaid.PageMermaidCLI), mermaid.WithScale(2))
+				if err != nil {
+					errs[i] = fmt.Errorf("%s: %w", name, err)
+					continue
+				}
+				if err := writeFile(filepath.Join(dir, "gallery-"+name+".png"), png); err != nil {
+					errs[i] = err
+				}
+			}
+		}()
+	}
+	wg.Wait()
+	for _, err := range errs {
 		if err != nil {
-			return fmt.Errorf("%s: %w", name, err)
-		}
-		if err := writeFile(filepath.Join(dir, "gallery-"+name+".png"), png); err != nil {
 			return err
 		}
 	}

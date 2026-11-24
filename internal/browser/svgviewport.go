@@ -51,7 +51,8 @@ func (e *Engine) svgViewportSize(n *dom.Node) (w, h float32, ok bool) {
 		if p.Tag != "svg" {
 			continue
 		}
-		if vb := parseNumberList(p.AttrOr("viewBox", "")); len(vb) == 4 && vb[2] > 0 && vb[3] > 0 {
+		var vbBuf [4]float32
+		if vb := appendNumberList(vbBuf[:0], p.AttrOr("viewBox", "")); len(vb) == 4 && vb[2] > 0 && vb[3] > 0 {
 			return vb[2], vb[3], true
 		}
 		if p == outermostSVG(p) {

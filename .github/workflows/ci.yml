@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Fast checks that do not need fonts.
   lint:
@@ -30,8 +34,14 @@ jobs:
             exit 1
           fi
 
+      - name: Verify modules
+        run: go mod verify
+
       - name: Build
         run: go build ./...
+
+      - name: Build WebAssembly playground
+        run: GOOS=js GOARCH=wasm go build -trimpath -ldflags='-s -w' -o /dev/null ./cmd/wasm
 
       - name: Vet
         run: go vet ./...
@@ -65,12 +75,16 @@ jobs:
       - name: Corpus parity
         run: go test -count=1 -run 'TestCorpusParity' -v .
 
+      - name: Simple HTML parser parity
+        if: runner.os == 'Linux'
+        run: go test -count=1 -tags domcheck -run 'TestCorpusParity/linux$|TestSimpleParserShare' .
+
       - name: Concurrent renders with the race detector
         run: go test -count=1 -race -short -run 'TestConcurrentRendersAreIdentical|TestCachesDoNotChangeRenders' .
 
-      # Renders share frozen config trees. This test found a write to one.
-      - name: Shared config with the race detector
-        run: go test -count=1 -race -short ./internal/config/ ./internal/js/ ./internal/memo/
+      # Renders share frozen config trees and pooled caches/arenas.
+      - name: Shared state with the race detector
+        run: go test -count=1 -race -short ./internal/config/ ./internal/js/ ./internal/memo/ ./internal/dom/ ./internal/mmdc/ ./internal/raster/ ./internal/purify/
 
       - name: Test
-        run: go test ./...
+        run: go test -skip '^TestCorpusParity$' ./...

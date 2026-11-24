@@ -55,6 +55,96 @@ type sheetRule struct {
 	Src    string `json:"src"`
 	// Selector is rule.selectorText of a style rule.
 	Selector string `json:"selector"`
+
+	// needClasses holds one top-level required class name per comma-separated
+	// selector branch when every branch requires a class; otherwise
+	// unconditional is true and ruleAppliesToSVG must run directly.
+	// neverMatchesSVG is true for selectors like ":root, :host" or "body" that
+	// can never match an SVG element or any element inside an SVG.
+	needClasses     []string
+	unconditional   bool
+	neverMatchesSVG bool
+}
+
+// extractSelectorClasses extracts one top-level .class token per
+// comma-separated selector branch outside (...) and [...]. It also handles
+// top-level :is(.a, .b, ...) selectors. If every branch has a required class
+// without backslash escapes, ok is true.
+func extractSelectorClasses(sel string) (classes []string, ok bool) {
+	if strings.ContainsRune(sel, '\\') {
+		return nil, false
+	}
+	if strings.HasPrefix(sel, ":is(") {
+		if closeIdx := strings.IndexByte(sel, ')'); closeIdx > 4 {
+			inner := sel[4:closeIdx]
+			if cls, innerOK := extractSelectorClasses(inner); innerOK {
+				return cls, true
+			}
+		}
+	}
+	depth := 0
+	inBracket := false
+	branchStart := 0
+	var out []string
+	processBranch := func(part string) bool {
+		d := 0
+		br := false
+		for i := 0; i < len(part); i++ {
+			switch part[i] {
+			case '(':
+				d++
+			case ')':
+				if d > 0 {
+					d--
+				}
+			case '[':
+				br = true
+			case ']':
+				br = false
+			case '.':
+				if d == 0 && !br {
+					j := i + 1
+					for j < len(part) && isCSSIdentByte(part[j]) {
+						j++
+					}
+					if j > i+1 {
+						out = append(out, part[i+1:j])
+						return true
+					}
+				}
+			}
+		}
+		return false
+	}
+	for i := 0; i < len(sel); i++ {
+		switch sel[i] {
+		case '(':
+			depth++
+		case ')':
+			if depth > 0 {
+				depth--
+			}
+		case '[':
+			inBracket = true
+		case ']':
+			inBracket = false
+		case ',':
+			if depth == 0 && !inBracket {
+				if !processBranch(sel[branchStart:i]) {
+					return nil, false
+				}
+				branchStart = i + 1
+			}
+		}
+	}
+	if !processBranch(sel[branchStart:]) {
+		return nil, false
+	}
+	return out, true
+}
+
+func isCSSIdentByte(c byte) bool {
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c >= 0x80
 }
 
 // pageSheet is one style sheet of the page: a link element with the class
@@ -85,6 +175,20 @@ var pageSheets = sync.OnceValues(func() ([]pageSheet, error) {
 	if err := json.Unmarshal(data, &record); err != nil {
 		return nil, err
 	}
+	for i := range record.Sheets {
+		rules := record.Sheets[i].Rules
+		for j := range rules {
+			if rules[j].Kind == "style" {
+				if rules[j].Selector == ":root, :host" || rules[j].Selector == "body" {
+					rules[j].neverMatchesSVG = true
+				} else if cls, ok := extractSelectorClasses(rules[j].Selector); ok {
+					rules[j].needClasses = cls
+				} else {
+					rules[j].unconditional = true
+				}
+			}
+		}
+	}
 	return record.Sheets, nil
 })
 
@@ -113,21 +217,40 @@ func (p *Page) EmbedFonts() error {
 
 func (p *Page) embedFonts() error {
 	svg := p.SVG
-	sheets, err := pageSheets()
-	if err != nil {
-		return err
-	}
 
 	// The first family of the computed font-family of every element that
-	// has a text node as a child or a class of Font Awesome.
+	// has a text node as a child or a class of Font Awesome. Also detect
+	// whether any Font Awesome or KaTeX classes appear in the SVG subtree so
+	// normal diagrams can skip decompressing/parsing cssom.json.gz and scanning
+	// 2,900+ Font Awesome and KaTeX rules.
 	usedFontFamilies := map[string]bool{}
-	var walk func(n *dom.Node) error
-	walk = func(n *dom.Node) error {
+	var classBuf []string
+	hasFA := false
+	hasKatex := false
+	scanClasses := func(el *dom.Node) (elHasFAFont bool) {
+		classBuf = el.AppendClasses(classBuf[:0])
+		for _, cl := range classBuf {
+			if !hasFA && isFAClassToken(cl) {
+				hasFA = true
+			}
+			if !hasKatex && strings.Contains(cl, "katex") {
+				hasKatex = true
+			}
+			if !elHasFAFont && isFAFontClass(cl) {
+				elHasFAFont = true
+			}
+		}
+		return elHasFAFont
+	}
+	scanClasses(svg)
+	var walk func(n *dom.Node)
+	walk = func(n *dom.Node) {
 		for el := n.FirstChild; el != nil; el = el.Next {
 			if el.Type != dom.ElementNode {
 				continue
 			}
-			if hasTextChild(el) || hasAnyClass(el, fontAwesomeFontClasses) {
+			elHasFAFont := scanClasses(el)
+			if hasTextChild(el) || elHasFAFont {
 				// window.getComputedStyle(el).fontFamily. The engine gives
 				// the list of the families, which parseFontFamily would
 				// make from the text of the computed value.
@@ -135,96 +258,136 @@ func (p *Page) embedFonts() error {
 					usedFontFamilies[families[0]] = true
 				}
 			}
-			if err := walk(el); err != nil {
-				return err
+			walk(el)
+		}
+	}
+	walk(svg)
+
+	needFullSheets := hasFA || hasKatex
+	if !needFullSheets {
+		for fam := range usedFontFamilies {
+			if strings.Contains(fam, "Font Awesome") || strings.Contains(fam, "KaTeX") {
+				needFullSheets = true
+				break
 			}
 		}
-		return nil
-	}
-	if err := walk(svg); err != nil {
-		return err
-	}
-
-	// ruleAppliesToSVG checks whether a style rule applies to an element
-	// inside the SVG. Pseudo-elements are removed: the rule still applies
-	// to the element that they belong to.
-	ruleAppliesToSVG := func(selectorText string) bool {
-		selector := pseudoElements.ReplaceAllString(selectorText, "")
-		return svg.Matches(selector) || svg.Select(selector) != nil
 	}
 
 	var newCSSStyleSheets []string
-	for _, sheet := range sheets {
-		// srcRules is the set of the src values of the used font families.
-		var srcRules []string
-		// hasMatchingRule is true when a style rule of the style sheet
-		// applies to the SVG.
-		hasMatchingRule := false
-		var cssRulesText []string
-		for _, rule := range sheet.Rules {
-			if rule.Kind == "font-face" {
-				families, err := parseFontFamily(rule.Family)
-				if err != nil {
-					return err
-				}
-				if len(families) == 0 || !usedFontFamilies[families[0]] {
+	if !needFullSheets {
+		useRecursive := usedFontFamilies["Recursive Variable"]
+		useOpenSans := usedFontFamilies["Open Sans"]
+		if !useRecursive && !useOpenSans {
+			return nil
+		}
+		for i := range baseFontSheets {
+			sheet := &baseFontSheets[i]
+			switch sheet.Path {
+			case "recursive/index.css":
+				if !useRecursive {
 					continue
 				}
-				if !contains(srcRules, rule.Src) {
-					srcRules = append(srcRules, rule.Src)
+			case "open-sans/400.css", "open-sans/400-italic.css":
+				if !useOpenSans {
+					continue
 				}
-			} else if !hasMatchingRule && rule.Kind == "style" {
-				hasMatchingRule = ruleAppliesToSVG(rule.Selector)
+			default:
+				continue
 			}
-			// Push everything, except unused @font-face rules
-			cssRulesText = append(cssRulesText, rule.Text)
+			css, err := cachedBaseSheetCSS(sheet)
+			if err != nil {
+				return err
+			}
+			newCSSStyleSheets = append(newCSSStyleSheets, css)
 		}
-		if len(srcRules) == 0 && !hasMatchingRule {
-			continue
-		}
-
-		license, err := loadLicense(sheet.Path)
+	} else {
+		sheets, err := pageSheets()
 		if err != nil {
 			return err
 		}
-		css := strings.Join(cssRulesText, "\n")
-		for _, src := range srcRules {
-			srcTokens, err := tokenizeCSSSrc(src)
-			if err != nil {
-				return err
+		presentClasses := map[string]struct{}{}
+		recordClasses := func(el *dom.Node) {
+			classBuf = el.AppendClasses(classBuf[:0])
+			for _, cl := range classBuf {
+				presentClasses[cl] = struct{}{}
 			}
-			var fontSrcToken *cssSourceToken
-			for i := range srcTokens {
-				if srcTokens[i].format == "woff2" || strings.Contains(srcTokens[i].url, "woff2") {
-					fontSrcToken = &srcTokens[i]
-					break
+		}
+		recordClasses(svg)
+		var collectClasses func(n *dom.Node)
+		collectClasses = func(n *dom.Node) {
+			for el := n.FirstChild; el != nil; el = el.Next {
+				if el.Type != dom.ElementNode {
+					continue
+				}
+				recordClasses(el)
+				collectClasses(el)
+			}
+		}
+		collectClasses(svg)
+
+		// ruleAppliesToSVG checks whether a style rule applies to an element
+		// inside the SVG. Pseudo-elements are removed: the rule still applies
+		// to the element that they belong to.
+		ruleAppliesToSVG := func(rule *sheetRule) bool {
+			if rule.neverMatchesSVG {
+				return false
+			}
+			if !rule.unconditional {
+				found := false
+				for _, cl := range rule.needClasses {
+					if _, ok := presentClasses[cl]; ok {
+						found = true
+						break
+					}
+				}
+				if !found {
+					return false
 				}
 			}
-			if fontSrcToken == nil && len(srcTokens) > 0 {
-				fontSrcToken = &srcTokens[0]
+			selector := rule.Selector
+			if strings.IndexByte(selector, ':') >= 0 {
+				selector = pseudoElements.ReplaceAllString(selector, "")
 			}
-			if fontSrcToken == nil || fontSrcToken.url == "" {
-				return errors.New("No valid font src token found for used font family")
+			return svg.Matches(selector) || svg.Select(selector) != nil
+		}
+
+		for i := range sheets {
+			sheet := &sheets[i]
+			// srcRules is the set of the src values of the used font families.
+			var srcRules []string
+			// hasMatchingRule is true when a style rule of the style sheet
+			// applies to the SVG.
+			hasMatchingRule := false
+			var cssRulesText []string
+			for ri := range sheet.Rules {
+				rule := &sheet.Rules[ri]
+				if rule.Kind == "font-face" {
+					families, err := parseFontFamily(rule.Family)
+					if err != nil {
+						return err
+					}
+					if len(families) == 0 || !usedFontFamilies[families[0]] {
+						continue
+					}
+					if !contains(srcRules, rule.Src) {
+						srcRules = append(srcRules, rule.Src)
+					}
+				} else if !hasMatchingRule && rule.Kind == "style" {
+					hasMatchingRule = ruleAppliesToSVG(rule)
+				}
+				// Push everything, except unused @font-face rules
+				cssRulesText = append(cssRulesText, rule.Text)
 			}
-			fontAsDataURL, err := fontDataURL(sheet.Path, fontSrcToken.url)
+			if len(srcRules) == 0 && !hasMatchingRule {
+				continue
+			}
+
+			css, err := formatEmbeddedSheet(sheet.Path, cssRulesText, srcRules)
 			if err != nil {
 				return err
 			}
-			newToken := *fontSrcToken
-			newToken.url = fontAsDataURL
-			newSrc := stringifyCSSSrc([]cssSourceToken{newToken})
-			// css.replace(oldSrc, newSrc) replaces the first match. The new
-			// text has no "$", which would be a pattern there.
-			newCSS := strings.Replace(css, src, newSrc, 1)
-			if newCSS == css {
-				// This might happen if the old src had some different escaping
-				return errors.New("Failed to replace old src with new src for " + src)
-			}
-			css = newCSS
+			newCSSStyleSheets = append(newCSSStyleSheets, css)
 		}
-		// Make sure that the license comment doesn't break by adding a
-		// zero-width space.
-		newCSSStyleSheets = append(newCSSStyleSheets, "/* "+strings.ReplaceAll(license, "*/", "*\u200b/")+" */\n\n"+css)
 	}
 
 	for _, newCSS := range newCSSStyleSheets {
@@ -238,6 +401,98 @@ func (p *Page) embedFonts() error {
 		originalStyleElement.Parent.InsertBefore(newStyleElement, originalStyleElement.Next)
 	}
 	return nil
+}
+
+var (
+	baseSheetCacheMu sync.RWMutex
+	baseSheetCache   = map[string]string{}
+)
+
+func cachedBaseSheetCSS(sheet *pageSheet) (string, error) {
+	baseSheetCacheMu.RLock()
+	if css, ok := baseSheetCache[sheet.Path]; ok {
+		baseSheetCacheMu.RUnlock()
+		return css, nil
+	}
+	baseSheetCacheMu.RUnlock()
+
+	cssRulesText := make([]string, 0, len(sheet.Rules))
+	srcRules := make([]string, 0, len(sheet.Rules))
+	for ri := range sheet.Rules {
+		rule := &sheet.Rules[ri]
+		if !contains(srcRules, rule.Src) {
+			srcRules = append(srcRules, rule.Src)
+		}
+		cssRulesText = append(cssRulesText, rule.Text)
+	}
+	css, err := formatEmbeddedSheet(sheet.Path, cssRulesText, srcRules)
+	if err != nil {
+		return "", err
+	}
+	baseSheetCacheMu.Lock()
+	baseSheetCache[sheet.Path] = css
+	baseSheetCacheMu.Unlock()
+	return css, nil
+}
+
+func formatEmbeddedSheet(sheetPath string, cssRulesText, srcRules []string) (string, error) {
+	license, err := loadLicense(sheetPath)
+	if err != nil {
+		return "", err
+	}
+	css := strings.Join(cssRulesText, "\n")
+	for _, src := range srcRules {
+		srcTokens, err := tokenizeCSSSrc(src)
+		if err != nil {
+			return "", err
+		}
+		var fontSrcToken *cssSourceToken
+		for i := range srcTokens {
+			if srcTokens[i].format == "woff2" || strings.Contains(srcTokens[i].url, "woff2") {
+				fontSrcToken = &srcTokens[i]
+				break
+			}
+		}
+		if fontSrcToken == nil && len(srcTokens) > 0 {
+			fontSrcToken = &srcTokens[0]
+		}
+		if fontSrcToken == nil || fontSrcToken.url == "" {
+			return "", errors.New("No valid font src token found for used font family")
+		}
+		fontAsDataURL, err := fontDataURL(sheetPath, fontSrcToken.url)
+		if err != nil {
+			return "", err
+		}
+		newToken := *fontSrcToken
+		newToken.url = fontAsDataURL
+		newSrc := stringifyCSSSrc([]cssSourceToken{newToken})
+		// css.replace(oldSrc, newSrc) replaces the first match. The new
+		// text has no "$", which would be a pattern there.
+		newCSS := strings.Replace(css, src, newSrc, 1)
+		if newCSS == css {
+			// This might happen if the old src had some different escaping
+			return "", errors.New("Failed to replace old src with new src for " + src)
+		}
+		css = newCSS
+	}
+	// Make sure that the license comment doesn't break by adding a
+	// zero-width space.
+	return "/* " + strings.ReplaceAll(license, "*/", "*\u200b/") + " */\n\n" + css, nil
+}
+
+func isFAClassToken(cl string) bool {
+	if len(cl) < 2 || cl[0] != 'f' || cl[1] != 'a' {
+		return false
+	}
+	return len(cl) == 2 || cl[2] == '-' || len(cl) == 3
+}
+
+func isFAFontClass(cl string) bool {
+	switch cl {
+	case "fa", "fab", "fak", "fal", "far", "fas":
+		return true
+	}
+	return false
 }
 
 func contains(list []string, s string) bool {
@@ -282,10 +537,23 @@ func resolve(sheetPath, ref string) (string, error) {
 	return path.Join("files", u.Path), nil
 }
 
+var (
+	licenseCacheMu sync.RWMutex
+	licenseCache   = map[string]string{}
+	fontDataMu     sync.RWMutex
+	fontDataCache  = map[string]string{}
+)
+
 // loadLicense is loadLicense(new URL(link.href)): the text of the license
 // of the package of a style sheet. mmdc asks for six file names at the
 // same time and takes the first answer. Each package has one of them.
 func loadLicense(sheetPath string) (string, error) {
+	licenseCacheMu.RLock()
+	if s, ok := licenseCache[sheetPath]; ok {
+		licenseCacheMu.RUnlock()
+		return s, nil
+	}
+	licenseCacheMu.RUnlock()
 	for _, name := range []string{
 		"./LICENSE",
 		"./LICENSE.txt",
@@ -300,7 +568,11 @@ func loadLicense(sheetPath string) (string, error) {
 		}
 		if data, err := fs.ReadFile(webfonts.FS, file); err == nil {
 			// response.text() decodes UTF-8 and drops a byte order mark.
-			return strings.TrimPrefix(string(data), "\ufeff"), nil
+			out := strings.TrimPrefix(string(data), "\ufeff")
+			licenseCacheMu.Lock()
+			licenseCache[sheetPath] = out
+			licenseCacheMu.Unlock()
+			return out, nil
 		}
 	}
 	return "", errors.New("All promises were rejected")
@@ -313,6 +585,12 @@ func fontDataURL(sheetPath, ref string) (string, error) {
 	if err != nil {
 		return "", errors.New("Failed to fetch font from " + ref)
 	}
+	fontDataMu.RLock()
+	if s, ok := fontDataCache[file]; ok {
+		fontDataMu.RUnlock()
+		return s, nil
+	}
+	fontDataMu.RUnlock()
 	data, err := fs.ReadFile(webfonts.FS, file)
 	if err != nil {
 		return "", errors.New("Failed to fetch font from " + ref)
@@ -326,5 +604,9 @@ func fontDataURL(sheetPath, ref string) (string, error) {
 	default:
 		return "", errors.New("Failed to fetch font from " + ref)
 	}
-	return "data:" + contentType + ";base64," + base64.StdEncoding.EncodeToString(data), nil
+	out := "data:" + contentType + ";base64," + base64.StdEncoding.EncodeToString(data)
+	fontDataMu.Lock()
+	fontDataCache[file] = out
+	fontDataMu.Unlock()
+	return out, nil
 }

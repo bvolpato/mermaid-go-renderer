@@ -137,6 +137,9 @@ type State struct {
 	owned []ownedObj
 	// gen increments whenever currentConfig changes.
 	gen uint64
+	// cleanThemeVars is true when currentConfig.themeVariables was computed
+	// directly from a known theme with no user themeVariables overrides.
+	cleanThemeVars bool
 }
 
 // Generation returns a counter that increases whenever currentConfig changes.
@@ -257,25 +260,41 @@ func (s *State) updateCurrentConfig(siteCfg *js.Obj[any], directives []*js.Obj[a
 	// `cfg.themeVariables` were built from `siteCfg.theme`, and stylesheets
 	// gate their rules on the theme *name*, so a resolved theme of another
 	// name needs them rebuilt.
+	cleanThemeVars := false
+	if siteCfg == s.currentConfig && !js.Truthy(sumOfDirectives.Get("themeVariables")) {
+		cleanThemeVars = s.cleanThemeVars
+	}
 	themeWasOverridden := js.Truthy(sumOfDirectives.Get("theme")) || !js.StrictEquals(cfg.Get("theme"), siteCfg.Get("theme"))
 	if themeWasOverridden && js.Truthy(cfg.Get("theme")) && hasTheme(cfg.Get("theme")) {
 		// Only `configFromInitialize` holds the variables as the user wrote
 		// them; the site config's are already derived, and feeding those back
 		// would override the new theme.
-		tmpConfigFromInitialize := s.copyConfig(s.configFromInitialize)
-		var base any = tmpConfigFromInitialize.Get("themeVariables")
+		var base any
+		if initObj, ok := s.configFromInitialize.(*js.Obj[any]); ok && initObj != nil {
+			if tv := initObj.Get("themeVariables"); js.Truthy(tv) {
+				tmpConfigFromInitialize := s.copyConfig(initObj)
+				base = tmpConfigFromInitialize.Get("themeVariables")
+			}
+		} else if js.Truthy(s.configFromInitialize) {
+			tmpConfigFromInitialize := s.copyConfig(s.configFromInitialize)
+			base = tmpConfigFromInitialize.Get("themeVariables")
+		}
+		dirVars := sumOfDirectives.Get("themeVariables")
+		noOverrides := !js.Truthy(base) && !js.Truthy(dirVars)
 		if !js.Truthy(base) {
 			base = js.NewObj[any]()
 		}
-		themeVariables := assignWithDepth(base, sumOfDirectives.Get("themeVariables"))
+		themeVariables := assignWithDepth(base, dirVars)
 		vars, err := theme.GetThemeVariables(propertyKey(cfg.Get("theme")), themeVariables)
 		if err != nil {
 			return nil, wrapThemeError(err)
 		}
 		cfg.Set("themeVariables", vars)
+		cleanThemeVars = noOverrides
 	}
 
 	s.currentConfig = cfg
+	s.cleanThemeVars = cleanThemeVars
 	s.gen++
 	return s.currentConfig, nil
 }
@@ -391,27 +410,114 @@ func (s *State) SetConfig(conf *js.Obj[any]) (*js.Obj[any], error) {
 // SetConfigDiscard is SetConfig when the caller does not need the returned
 // copy of currentConfig.
 func (s *State) SetConfigDiscard(conf *js.Obj[any]) error {
+	if s.isNoOpSectionPatch(conf) {
+		return nil
+	}
 	_, err := s.updateCurrentConfig(s.currentConfig, []*js.Obj[any]{conf})
 	return err
+}
+
+// isNoOpSectionPatch reports whether applying conf to s.currentConfig via
+// updateCurrentConfig(s.currentConfig, [conf]) is guaranteed to leave
+// s.currentConfig unchanged (for example flowchart's init patching
+// {flowchart: {arrowMarkerAbsolute: false}} when it is already false).
+func (s *State) isNoOpSectionPatch(conf *js.Obj[any]) bool {
+	if conf == nil || s.currentConfig == nil || conf.Len() == 0 {
+		return false
+	}
+	// siteConfig.secure must be valid and must not block appearance keys.
+	switch secure := s.siteConfig.Get("secure").(type) {
+	case []any:
+		for _, k := range secure {
+			switch propertyKey(k) {
+			case "theme", "look", "layout", "themeVariables":
+				return false
+			}
+		}
+	case string:
+	default:
+		if !js.IsNullish(secure) {
+			return false
+		}
+	}
+	ok := true
+	conf.Each(func(k string, v any) {
+		if !ok {
+			return
+		}
+		switch k {
+		case "secure", "__proto__", "constructor", "prototype", "theme", "look", "layout", "themeVariables":
+			ok = false
+			return
+		}
+		if strings.Contains(k, "__proto__") || strings.Contains(k, "constructor") || strings.Contains(k, "prototype") {
+			ok = false
+			return
+		}
+		// Only handle one-level plain section objects whose every key is a
+		// primitive value already strictly equal in currentConfig.
+		sub, isObj := v.(*js.Obj[any])
+		if !isObj || sub == nil {
+			ok = false
+			return
+		}
+		curSub, isCurObj := s.currentConfig.Get(k).(*js.Obj[any])
+		if !isCurObj || curSub == nil {
+			ok = false
+			return
+		}
+		sub.Each(func(sk string, sv any) {
+			if !ok {
+				return
+			}
+			if sk == "__proto__" || sk == "constructor" || sk == "prototype" ||
+				sk == "theme" || sk == "look" || sk == "layout" ||
+				strings.Contains(sk, "__proto__") || strings.Contains(sk, "constructor") || strings.Contains(sk, "prototype") {
+				ok = false
+				return
+			}
+			// Require primitive values (string, bool, float64, nil) matching
+			// an already-present own property of curSub.
+			switch sv.(type) {
+			case nil, bool, string, float64:
+			default:
+				ok = false
+				return
+			}
+			if !curSub.Has(sk) || !js.StrictEquals(curSub.Get(sk), sv) {
+				ok = false
+			}
+		})
+	})
+	return ok
 }
 
 // SyncSelf is setConfig(getConfig()) on the same State. Because currentConfig
 // is already derived from siteConfig and sanitized directives, merging a
 // sanitized copy of currentConfig onto itself leaves currentConfig unchanged
-// whenever siteConfig.secure is valid and currentConfig has no theme override
-// that differs from siteConfig.
+// whenever siteConfig.secure is valid, does not block appearance/theme keys,
+// and themeVariables does not need recomputation.
 func (s *State) SyncSelf() error {
+	secureBlocksTheme := false
 	switch secure := s.siteConfig.Get("secure").(type) {
-	case []any, string:
+	case []any:
+		for _, k := range secure {
+			switch propertyKey(k) {
+			case "theme", "look", "layout", "themeVariables":
+				secureBlocksTheme = true
+			}
+		}
+	case string:
+		// Single-rune keys cannot match theme/look/layout/themeVariables.
 	default:
 		if !js.IsNullish(secure) {
 			return typeError("siteConfig.secure is not iterable")
 		}
 	}
-	// If currentConfig is already owned by a template or has no theme change
-	// relative to siteConfig, setConfig(getConfig()) produces the same config.
-	if js.StrictEquals(s.currentConfig.Get("theme"), s.siteConfig.Get("theme")) {
-		return nil
+	if !secureBlocksTheme {
+		if js.StrictEquals(s.currentConfig.Get("theme"), s.siteConfig.Get("theme")) || s.cleanThemeVars {
+			return nil
+		}
 	}
 	_, err := s.updateCurrentConfig(s.currentConfig, []*js.Obj[any]{s.GetConfig()})
 	return err

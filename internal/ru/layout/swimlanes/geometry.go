@@ -206,11 +206,21 @@ func (s *segmentScratch) of(points []Point) []*OrthogonalSegment {
 }
 
 func countOrthogonalBends(points []Point, epsilon ...float64) int {
-	segments := orthogonalSegmentsForPoints(points, epsOf(epsilon))
+	e := epsOf(epsilon)
 	bends := 0
-	for i := 1; i < len(segments); i++ {
-		if segments[i-1].Horizontal != segments[i].Horizontal {
-			bends++
+	hasPrev := false
+	prevHoriz := false
+	for i := 0; i < len(points)-1; i++ {
+		a := points[i]
+		b := points[i+1]
+		horiz := isHorizontalSegment(a, b, e)
+		vert := isVerticalSegment(a, b, e)
+		if horiz || vert {
+			if hasPrev && prevHoriz != horiz {
+				bends++
+			}
+			hasPrev = true
+			prevHoriz = horiz
 		}
 	}
 	return bends
@@ -673,7 +683,8 @@ func simplifyPolylineOnce(points []Point) (out []Point, changed bool) {
 // orthogonalizePolyline inserts orthogonal L-bends and removes consecutive
 // duplicate points. pts must not be empty.
 func orthogonalizePolyline(pts []Point) []Point {
-	cleaned := []Point{pts[0]}
+	cleaned := make([]Point, 1, len(pts)*2)
+	cleaned[0] = pts[0]
 	for i := 1; i < len(pts); i++ {
 		prev := cleaned[len(cleaned)-1]
 		curr := pts[i]
@@ -691,7 +702,7 @@ func orthogonalizePolyline(pts []Point) []Point {
 		}
 		cleaned = append(cleaned, curr)
 	}
-	deduped := []Point{}
+	deduped := make([]Point, 0, len(cleaned))
 	for _, p := range cleaned {
 		if len(deduped) == 0 || !samePoint(deduped[len(deduped)-1], p) {
 			deduped = append(deduped, p)

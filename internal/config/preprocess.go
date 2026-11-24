@@ -5,6 +5,7 @@ package config
 import (
 	"regexp"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
@@ -113,6 +114,14 @@ func assignProperty(target any, key string, value any) error {
 }
 
 func processDirectives(code string, includeZen bool) (string, any, error) {
+	if !strings.Contains(code, commentMarker) && utf8.ValidString(code) {
+		// No `%%`: neither commentWithoutDirectives nor directiveRegex can match.
+		initDirective := js.NewObj[any]()
+		if js.TrimSpace(code) == "wrap" {
+			initDirective.Set("wrap", true)
+		}
+		return code, initDirective, nil
+	}
 	scan := &directiveScan{includeZen: includeZen}
 	initDirective, err := scan.detectInit(code)
 	if err != nil {

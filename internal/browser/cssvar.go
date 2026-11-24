@@ -149,7 +149,11 @@ func (e *Engine) customProperty(n *dom.Node, name string, depth int) (string, bo
 		return "", false
 	}
 	for cur := n; cur != nil && cur.Type == dom.ElementNode; cur = cur.Parent {
-		raw, ok := e.styleOf(cur).declared[name]
+		st := e.styleOf(cur)
+		if st.propMask&bitCustomProp == 0 {
+			continue
+		}
+		raw, ok := st.getDeclRaw(name)
 		if !ok {
 			continue
 		}

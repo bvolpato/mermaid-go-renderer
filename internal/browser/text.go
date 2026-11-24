@@ -109,7 +109,23 @@ type collapseState struct {
 // keepNewlines is true for HTML with white-space values that preserve line
 // breaks; the caller then splits on '\n'.
 func processWhiteSpace(raw string, ws string, st *collapseState, svg bool) []rune {
-	out := make([]rune, 0, len(raw))
+	return processWhiteSpaceInto(make([]rune, 0, len(raw)), raw, ws, st, svg)
+}
+
+func (e *Engine) processWhiteSpace(raw string, ws string, st *collapseState, svg bool) []rune {
+	if len(raw) == 0 {
+		return nil
+	}
+	dst := e.allocRunes(len(raw))
+	out := processWhiteSpaceInto(dst, raw, ws, st, svg)
+	// Reclaim unused trailing runes from the current chunk.
+	if unused := cap(dst) - len(out); unused > 0 && e.runeOff >= unused {
+		e.runeOff -= unused
+	}
+	return out[:len(out):len(out)]
+}
+
+func processWhiteSpaceInto(out []rune, raw string, ws string, st *collapseState, svg bool) []rune {
 	if !collapses(ws) {
 		for _, r := range raw {
 			if r == '\r' {
@@ -227,7 +243,7 @@ func (e *Engine) shapeItems(items []*inlineItem, boundary func(i int) bool) {
 		primary := chain.Primary()
 		for i, it := range group {
 			if cap(it.glyphs) < len(it.runes) {
-				it.glyphs = make([]itemGlyph, 0, len(it.runes))
+				it.glyphs = e.allocGlyphs(len(it.runes))
 			} else {
 				it.glyphs = it.glyphs[:0]
 			}
@@ -381,6 +397,7 @@ type svgTextLayout struct {
 	// size on the screen (screenFontScale). The width of a fragment is in
 	// the scaled space.
 	scale float32
+	frag0 [1]textFragment
 }
 
 func isSVGTextContainer(n *dom.Node) bool {
@@ -530,17 +547,21 @@ func (e *Engine) layoutSVGText(text *dom.Node) *svgTextLayout {
 			return l
 		}
 	}
-	var items []*inlineItem
-	cs := &collapseState{atStart: true}
+	var itemsBuf [4]*inlineItem
+	items := itemsBuf[:0]
+	cs := collapseState{atStart: true}
 
 	// Blink lays out SVG text with the font that has the size of the text
 	// on the screen, and maps the boxes back to the user space. scale is the
 	// factor between the two spaces. It is 1 when no ancestor scales.
 	scale := e.screenFontScale(text)
-	scaledStyles := map[*textStyle]*textStyle{}
+	var scaledStyles map[*textStyle]*textStyle
 	itemStyle := func(ts *textStyle) *textStyle {
 		if scale == 1 {
 			return ts
+		}
+		if scaledStyles == nil {
+			scaledStyles = map[*textStyle]*textStyle{}
 		}
 		scaled, ok := scaledStyles[ts]
 		if !ok {
@@ -576,12 +597,13 @@ func (e *Engine) layoutSVGText(text *dom.Node) *svgTextLayout {
 		for c := n.FirstChild; c != nil; c = c.Next {
 			switch c.Type {
 			case dom.TextNode:
-				runes := processWhiteSpace(c.Data, ts.whiteSpace, cs, true)
+				runes := e.processWhiteSpace(c.Data, ts.whiteSpace, &cs, true)
 				if len(runes) == 0 {
 					continue
 				}
 				runes = applyTextTransform(runes, ts.textTransform)
-				it := &inlineItem{node: c, owner: n, style: itemStyle(ts), runes: runes}
+				it := e.allocInlineItem()
+				*it = inlineItem{node: c, owner: n, style: itemStyle(ts), runes: runes}
 				if pos.hasX {
 					it.hasX, it.x = true, pos.x
 				}
@@ -646,7 +668,7 @@ func (e *Engine) layoutSVGText(text *dom.Node) *svgTextLayout {
 
 	e.shapeItems(items, func(i int) bool { return items[i].newChunk })
 
-	layout := &svgTextLayout{frags: make([]textFragment, len(items)), scale: scale}
+	layout := e.allocSVGTextLayout(len(items), scale)
 	var curX, curY float32
 	chunkStart := 0
 	finishChunk := func(end int) {

@@ -102,7 +102,7 @@ func (e *Engine) cascadePseudo(p *dom.Node, st *nodeStyle) {
 			}
 		}
 	}
-	if page := e.pageRules(doc); page != nil {
+	if page := e.pageRulesFor(doc, origin); page != nil {
 		collect(page, 0)
 		collect(rs, page.count)
 	} else {
@@ -171,7 +171,7 @@ func (e *Engine) pseudoBoxes(n *dom.Node) (before, after *dom.Node) {
 	}
 	doc := n.Document()
 	rs := e.collectRules(doc)
-	page := e.pageRules(doc)
+	page := e.pageRulesFor(doc, n)
 	if len(rs.pseudo) == 0 && (page == nil || len(page.pseudo) == 0) {
 		// No style sheet has a rule for a pseudo-element.
 		return nil, nil

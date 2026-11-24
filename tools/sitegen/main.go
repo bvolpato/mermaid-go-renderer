@@ -72,26 +72,66 @@ func run(out, readme string, wasm bool) error {
 	if perf.CLI == nil || len(perf.CLI.Rows) == 0 {
 		return errors.New("docs/performance.json has no comparison of the command-line tools")
 	}
+
+	// Build the WASM playground in parallel with gallery rendering and corpus
+	// parity verification so the website build overlaps compilation + gzip
+	// with rendering.
+	type wasmResult struct {
+		size int
+		err  error
+	}
+	var wasmCh chan wasmResult
+	if out != "" && wasm {
+		if err := os.MkdirAll(out, 0o755); err != nil {
+			return err
+		}
+		wasmCh = make(chan wasmResult, 1)
+		go func() {
+			sz, werr := buildWasm(out)
+			wasmCh <- wasmResult{sz, werr}
+		}()
+	}
+
 	gallery, err := loadGallery(perf)
 	if err != nil {
+		if wasmCh != nil {
+			<-wasmCh
+		}
 		return err
 	}
-	par, err := loadParity()
+	par, err := loadParity(out == "")
 	if err != nil {
+		if wasmCh != nil {
+			<-wasmCh
+		}
 		return err
 	}
 	if readme != "" {
 		if err := writeReadmeImages(readme, gallery, perf, par); err != nil {
+			if wasmCh != nil {
+				<-wasmCh
+			}
 			return err
 		}
 		if err := writeGeneratedText(perf); err != nil {
+			if wasmCh != nil {
+				<-wasmCh
+			}
 			return err
 		}
 	}
 	if out == "" {
 		return nil
 	}
-	return writeSite(out, gallery, perf, par, wasm)
+	wasmSize := 0
+	if wasmCh != nil {
+		res := <-wasmCh
+		if res.err != nil {
+			return res.err
+		}
+		wasmSize = res.size
+	}
+	return writeSite(out, gallery, perf, par, wasmSize)
 }
 
 // ---- The gallery ----
@@ -228,11 +268,34 @@ func loadGalleryWith(numbers *galleryData) ([]galleryItem, error) {
 			return nil, fmt.Errorf("%s: %w", items[i].File, err)
 		}
 		items[i].Source = strings.TrimRight(text.String(), "\n")
-		svg, err := mermaid.Render(items[i].Source, mermaid.WithPage(mermaid.PageMermaidCLI), mermaid.WithID("d-"+items[i].File))
+	}
+	errs := make([]error, len(items))
+	workers := min(len(items), runtime.NumCPU())
+	jobs := make(chan int, len(items))
+	for i := range items {
+		jobs <- i
+	}
+	close(jobs)
+	var wg sync.WaitGroup
+	wg.Add(workers)
+	for range workers {
+		go func() {
+			defer wg.Done()
+			for i := range jobs {
+				svg, err := mermaid.Render(items[i].Source, mermaid.WithPage(mermaid.PageMermaidCLI), mermaid.WithID("d-"+items[i].File))
+				if err != nil {
+					errs[i] = fmt.Errorf("%s: %w", items[i].File, err)
+					continue
+				}
+				items[i].SVG = svg
+			}
+		}()
+	}
+	wg.Wait()
+	for _, err := range errs {
 		if err != nil {
-			return nil, fmt.Errorf("%s: %w", items[i].File, err)
+			return nil, err
 		}
-		items[i].SVG = svg
 	}
 	return items, nil
 }
@@ -292,7 +355,7 @@ var corpusLabels = map[string]string{
 	"mermaid-large": "Generated large diagrams",
 }
 
-func loadParity() (*parityData, error) {
+func loadParity(readmeOnly bool) (*parityData, error) {
 	data := &parityData{Fixtures: map[string]corpusNames{}}
 	sets := []struct {
 		id, label, note string
@@ -302,6 +365,11 @@ func loadParity() (*parityData, error) {
 			[]string{"linux.json", "linux-docs.json", "linux-large.json"}},
 		{"mmdc", "mmdc 12", "Both files that the mmdc command writes: with the embedded fonts and without.",
 			[]string{"linux-mmdc.json", "linux-mmdc-docs.json", "linux-mmdc-large.json"}},
+	}
+	if readmeOnly {
+		// The README parity chart only renders the primary end-to-end corpus.
+		sets = sets[:1]
+		sets[0].files = sets[0].files[:1]
 	}
 	for _, s := range sets {
 		set := paritySet{ID: s.id, Label: s.label, Note: s.note}
@@ -335,17 +403,25 @@ func compare(m *parity.Manifest, names []string) corpusResult {
 	res := corpusResult{Corpus: m.Corpus, Label: corpusLabels[m.Corpus], Total: len(names), Reasons: map[string]string{}}
 	status := make([]byte, len(names))
 	reasons := make([]string, len(names))
+	workers := min(len(names), runtime.NumCPU())
+	if workers < 1 {
+		workers = 1
+	}
+	jobs := make(chan int, min(len(names), workers*4))
 	var wg sync.WaitGroup
-	sem := make(chan struct{}, runtime.NumCPU())
-	for i, name := range names {
-		wg.Add(1)
-		sem <- struct{}{}
+	wg.Add(workers)
+	for range workers {
 		go func() {
 			defer wg.Done()
-			defer func() { <-sem }()
-			status[i], reasons[i] = fixtureStatus(m, name)
+			for i := range jobs {
+				status[i], reasons[i] = fixtureStatus(m, names[i])
+			}
 		}()
 	}
+	for i := range names {
+		jobs <- i
+	}
+	close(jobs)
 	wg.Wait()
 	for i, st := range status {
 		switch st {
@@ -433,7 +509,7 @@ type siteData struct {
 	GalleryJSON string
 }
 
-func writeSite(out string, gallery []galleryItem, perf *perfdata.Data, par *parityData, wasm bool) error {
+func writeSite(out string, gallery []galleryItem, perf *perfdata.Data, par *parityData, wasmSize int) error {
 	if err := os.MkdirAll(out, 0o755); err != nil {
 		return err
 	}
@@ -486,12 +562,8 @@ func writeSite(out string, gallery []galleryItem, perf *perfdata.Data, par *pari
 	data.CLI = perf.CLI.Rows[0]
 	data.CLIRatio = fmt.Sprintf("%.0f", data.CLI.Mmdc/data.CLI.Mmdg)
 
-	if wasm {
-		size, err := buildWasm(out)
-		if err != nil {
-			return err
-		}
-		data.WasmMB = fmt.Sprintf("%.0f", float64(size)/1e6)
+	if wasmSize > 0 {
+		data.WasmMB = fmt.Sprintf("%.0f", float64(wasmSize)/1e6)
 	}
 
 	sources := map[string]string{}
@@ -561,7 +633,7 @@ func buildWasm(out string) (int, error) {
 	}
 	defer os.RemoveAll(tmp)
 	bin := filepath.Join(tmp, "mmdg.wasm")
-	cmd := exec.Command("go", "build", "-ldflags=-s -w", "-o", bin, "./cmd/wasm")
+	cmd := exec.Command("go", "build", "-trimpath", "-ldflags=-s -w", "-o", bin, "./cmd/wasm")
 	cmd.Env = append(os.Environ(), "GOOS=js", "GOARCH=wasm")
 	cmd.Stdout, cmd.Stderr = os.Stderr, os.Stderr
 	if err := cmd.Run(); err != nil {

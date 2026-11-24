@@ -200,7 +200,7 @@ func (e *Engine) borderEdges(n *dom.Node, ts *textStyle) boxEdges {
 	// The longhands border-width and border-style, which expandDecl turns
 	// into the properties of the four sides. A declaration of them that
 	// wins the cascade is there after the border shorthand reset them.
-	if _, ok := e.styleOf(n).declared[borderLonghandsMark]; !ok {
+	if e.styleOf(n).propMask&bitBorderLonghands == 0 {
 		return out
 	}
 	for i, side := range borderSides {
@@ -367,7 +367,7 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 			owner := n.Parent
 			ts := e.textStyleOf(owner)
 			lineStart := cs.atStart
-			runes := processWhiteSpace(n.Data, ts.whiteSpace, cs, false)
+			runes := e.processWhiteSpace(n.Data, ts.whiteSpace, cs, false)
 			runes = applyTextTransform(runes, ts.textTransform)
 			// A preserved newline is a forced break.
 			start := 0
@@ -383,7 +383,9 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 					lead++
 				}
 				if lead > 0 {
-					items = append(items, &inlineItem{node: n, owner: owner, style: ts, runes: runes[:lead]})
+					it := e.allocInlineItem()
+					*it = inlineItem{node: n, owner: owner, style: ts, runes: runes[:lead]}
+					items = append(items, it)
 					runes = runes[lead:]
 					boundary = true
 				}
@@ -391,7 +393,9 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 			for i, r := range runes {
 				if r == '\n' {
 					if i > start {
-						items = append(items, &inlineItem{node: n, owner: owner, style: ts, runes: runes[start:i], shapeBoundary: boundary})
+						it := e.allocInlineItem()
+						*it = inlineItem{node: n, owner: owner, style: ts, runes: runes[start:i], shapeBoundary: boundary}
+						items = append(items, it)
 						boundary = false
 					}
 					items = append(items, nil)
@@ -399,7 +403,8 @@ func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) [
 				}
 			}
 			if start < len(runes) {
-				it := &inlineItem{node: n, owner: owner, style: ts, runes: runes[start:], shapeBoundary: boundary}
+				it := e.allocInlineItem()
+				*it = inlineItem{node: n, owner: owner, style: ts, runes: runes[start:], shapeBoundary: boundary}
 				if cs.prevSpace {
 					cs.lastSpace = it
 				}

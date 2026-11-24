@@ -25,12 +25,15 @@
 set -eu
 cd "$(dirname "$0")/.."
 ref=testdata/reference
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
 
-go run ./tools/paritydoc -manifest $ref/linux.json -title "Parity with mermaid" -o docs/PARITY.md
-go run ./tools/paritydoc -manifest $ref/linux-docs.json -title "Parity with mermaid on the documentation examples" -o docs/PARITY-DOCS.md
-go run ./tools/paritydoc -manifest $ref/linux-large.json -title "Parity with mermaid on large diagrams" -o docs/PARITY-LARGE.md
-go run ./tools/paritydoc -manifest $ref/macos.json -title "Parity with mermaid in Chromium on macOS" -o docs/PARITY-MACOS.md
-go run ./tools/paritydoc -manifest $ref/linux-mmdc.json,$ref/linux-mmdc-docs.json,$ref/linux-mmdc-large.json -title "Parity with mermaid-cli" -o docs/PARITY-MMDC.md
-go run ./tools/paritydoc -manifest $ref/macos-mmdc.json,$ref/macos-mmdc-docs.json,$ref/macos-mmdc-large.json -title "Parity with mermaid-cli in Chromium on macOS" -o docs/PARITY-MMDC-MACOS.md
+go build -o "$tmp/paritydoc" ./tools/paritydoc
+"$tmp/paritydoc" -manifest $ref/linux.json -title "Parity with mermaid" -o docs/PARITY.md
+"$tmp/paritydoc" -manifest $ref/linux-docs.json -title "Parity with mermaid on the documentation examples" -o docs/PARITY-DOCS.md
+"$tmp/paritydoc" -manifest $ref/linux-large.json -title "Parity with mermaid on large diagrams" -o docs/PARITY-LARGE.md
+"$tmp/paritydoc" -manifest $ref/macos.json -title "Parity with mermaid in Chromium on macOS" -o docs/PARITY-MACOS.md
+"$tmp/paritydoc" -manifest $ref/linux-mmdc.json,$ref/linux-mmdc-docs.json,$ref/linux-mmdc-large.json -title "Parity with mermaid-cli" -o docs/PARITY-MMDC.md
+"$tmp/paritydoc" -manifest $ref/macos-mmdc.json,$ref/macos-mmdc-docs.json,$ref/macos-mmdc-large.json -title "Parity with mermaid-cli in Chromium on macOS" -o docs/PARITY-MMDC-MACOS.md
 
 go run ./tools/sitegen -readme docs/assets

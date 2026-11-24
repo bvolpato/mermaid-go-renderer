@@ -159,6 +159,14 @@ type alphaImage struct {
 	stride int
 }
 
+func (a *alphaImage) release() {
+	if a == nil || a.pix == nil {
+		return
+	}
+	putFilterBuf(a.pix)
+	a.pix = nil
+}
+
 func (a *alphaImage) at(x, y int) uint8 {
 	if x < a.bounds.L || x >= a.bounds.R || y < a.bounds.T || y >= a.bounds.B {
 		return 0
@@ -180,7 +188,7 @@ func blurAlpha(src *filterImage, sigmaX, sigmaY float32) *alphaImage {
 		wy = boxBlurWindow(sigmaY)
 	}
 	if (wx <= 1 && wy <= 1) || wx >= 255 || wy >= 255 {
-		out := &alphaImage{pix: make([]uint8, sw*sh), bounds: sb, stride: sw}
+		out := &alphaImage{pix: getFilterBuf(sw * sh), bounds: sb, stride: sw}
 		for y := 0; y < sh; y++ {
 			row := src.pix[y*src.stride:]
 			for x := 0; x < sw; x++ {
@@ -192,7 +200,7 @@ func blurAlpha(src *filterImage, sigmaX, sigmaY float32) *alphaImage {
 	rx, ry := sigmaToRadius(sigmaX), sigmaToRadius(sigmaY)
 	db := IRect{sb.L - rx, sb.T - ry, sb.R + rx, sb.B + ry}
 	dw, dh := db.width(), db.height()
-	out := &alphaImage{pix: make([]uint8, dw*dh), bounds: db, stride: dw}
+	out := &alphaImage{pix: getFilterBuf(dw * dh), bounds: db, stride: dw}
 	// The rows of the source land at this row offset of the destination.
 	top := sb.T - db.T
 	if wx > 1 {
@@ -211,7 +219,8 @@ func blurAlpha(src *filterImage, sigmaX, sigmaY float32) *alphaImage {
 	}
 	if wy > 1 {
 		pass := newAlphaPass(wy)
-		col := make([]uint8, sh)
+		col := getFilterBuf(sh)
+		defer putFilterBuf(col)
 		for x := 0; x < dw; x++ {
 			for y := 0; y < sh; y++ {
 				col[y] = out.pix[(top+y)*dw+x]

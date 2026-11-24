@@ -9,16 +9,25 @@ import "sync"
 // (https://html.spec.whatwg.org/#serialising-html-fragments), which is what
 // Element.innerHTML returns in a browser.
 
-var voidElements = map[string]bool{
-	"area": true, "base": true, "basefont": true, "bgsound": true, "br": true, "col": true,
-	"embed": true, "frame": true, "hr": true, "img": true, "input": true, "keygen": true,
-	"link": true, "meta": true, "param": true, "source": true, "track": true, "wbr": true,
+func isVoidElement(tag string) bool {
+	switch tag {
+	case "area", "base", "basefont", "bgsound", "br", "col",
+		"embed", "frame", "hr", "img", "input", "keygen",
+		"link", "meta", "param", "source", "track", "wbr":
+		return true
+	}
+	return false
 }
 
-// rawTextElements are the HTML elements whose text children are not escaped.
-var rawTextElements = map[string]bool{
-	"style": true, "script": true, "xmp": true, "iframe": true, "noembed": true,
-	"noframes": true, "plaintext": true, "noscript": true,
+// isRawTextElement reports whether tag is an HTML element whose text children
+// are not escaped.
+func isRawTextElement(tag string) bool {
+	switch tag {
+	case "style", "script", "xmp", "iframe", "noembed",
+		"noframes", "plaintext", "noscript":
+		return true
+	}
+	return false
 }
 
 // htmlWriter collects the text of a serialization. A serialization writes
@@ -78,7 +87,7 @@ func (n *Node) serialize(sb *htmlWriter) {
 	switch n.Type {
 	case TextNode:
 		p := n.Parent
-		if p != nil && p.Type == ElementNode && p.NS == NSHTML && rawTextElements[p.Tag] {
+		if p != nil && p.Type == ElementNode && p.NS == NSHTML && isRawTextElement(p.Tag) {
 			sb.WriteString(n.Data)
 		} else {
 			escapeText(sb, n.Data)
@@ -100,7 +109,7 @@ func (n *Node) serialize(sb *htmlWriter) {
 			sb.WriteByte('"')
 		}
 		sb.WriteByte('>')
-		if n.NS == NSHTML && voidElements[n.Tag] {
+		if n.NS == NSHTML && isVoidElement(n.Tag) {
 			return
 		}
 		n.serializeChildren(sb)
@@ -130,71 +139,133 @@ func (a *Attr) serializedName() string {
 	return a.QName()
 }
 
-var (
-	textEscapeBytes = [256]bool{'&': true, '<': true, '>': true, 0xc2: true}
-	attrEscapeBytes = [256]bool{'&': true, '"': true, '<': true, '>': true, 0xc2: true}
+var textEscapeTable = [256]uint8{
+	'&':  1,
+	'<':  2,
+	'>':  3,
+	0xc2: 4,
+}
+
+var attrEscapeTable = [256]uint8{
+	'&':  1,
+	'"':  2,
+	'<':  3,
+	'>':  4,
+	0xc2: 5,
+}
+
+const (
+	swarLo8   = 0x0101010101010101
+	swarHi8   = 0x8080808080808080
+	swarAmp8  = 0x2626262626262626
+	swarLt8   = 0x3c3c3c3c3c3c3c3c
+	swarGt8   = 0x3e3e3e3e3e3e3e3e
+	swarQuot8 = 0x2222222222222222
 )
 
 func escapeText(sb *htmlWriter, s string) {
 	last := 0
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if !textEscapeBytes[c] {
+	n := len(s)
+	i := 0
+	for i < n {
+		for i+8 <= n {
+			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
+				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			a := w ^ swarAmp8
+			b := w ^ swarLt8
+			c := w ^ swarGt8
+			if ((w & swarHi8) | ((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8)) == 0 {
+				i += 8
+				continue
+			}
+			break
+		}
+		if i >= n {
+			break
+		}
+		kind := textEscapeTable[s[i]]
+		if kind == 0 {
+			i++
 			continue
 		}
 		var rep string
-		switch c {
-		case '&':
+		switch kind {
+		case 1:
 			rep = "&amp;"
-		case '<':
+		case 2:
 			rep = "&lt;"
-		case '>':
+		case 3:
 			rep = "&gt;"
-		case 0xc2:
-			if i+1 < len(s) && s[i+1] == 0xa0 {
+		case 4:
+			if i+1 < n && s[i+1] == 0xa0 {
 				sb.WriteString(s[last:i])
 				sb.WriteString("&nbsp;")
-				i++
-				last = i + 1
+				i += 2
+				last = i
+				continue
 			}
+			i++
 			continue
 		}
 		sb.WriteString(s[last:i])
 		sb.WriteString(rep)
-		last = i + 1
+		i++
+		last = i
 	}
 	sb.WriteString(s[last:])
 }
 
 func escapeAttr(sb *htmlWriter, s string) {
 	last := 0
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if !attrEscapeBytes[c] {
+	n := len(s)
+	i := 0
+	for i < n {
+		for i+8 <= n {
+			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
+				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			a := w ^ swarAmp8
+			b := w ^ swarQuot8
+			c := w ^ swarLt8
+			d := w ^ swarGt8
+			if ((w & swarHi8) | ((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8) | ((d - swarLo8) &^ d & swarHi8)) == 0 {
+				i += 8
+				continue
+			}
+			break
+		}
+		if i >= n {
+			break
+		}
+		kind := attrEscapeTable[s[i]]
+		if kind == 0 {
+			i++
 			continue
 		}
 		var rep string
-		switch c {
-		case '&':
+		switch kind {
+		case 1:
 			rep = "&amp;"
-		case '"':
+		case 2:
 			rep = "&quot;"
-		case '<':
+		case 3:
 			rep = "&lt;"
-		case '>':
+		case 4:
 			rep = "&gt;"
-		case 0xc2:
-			if i+1 < len(s) && s[i+1] == 0xa0 {
+		case 5:
+			if i+1 < n && s[i+1] == 0xa0 {
 				sb.WriteString(s[last:i])
 				sb.WriteString("&nbsp;")
-				i++
-				last = i + 1
+				i += 2
+				last = i
+				continue
 			}
+			i++
 			continue
 		}
 		sb.WriteString(s[last:i])
 		sb.WriteString(rep)
-		last = i + 1
+		i++
+		last = i
 	}
 	sb.WriteString(s[last:])
 }

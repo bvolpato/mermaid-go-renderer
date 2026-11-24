@@ -4,11 +4,98 @@
 package browser
 
 import (
+	"strings"
 	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
 	"github.com/bvolpato/mermaid-go-renderer/internal/memo"
+	"github.com/bvolpato/mermaid-go-renderer/internal/webfonts"
 )
+
+// standardPageSheets returns the raw texts of webfonts.Sheets (the page sheets
+// of mermaid-cli). Every style rule in those sheets other than the three
+// ":root, :host" custom-property blocks and "body" requires a ".fa*" or
+// ".katex*" class on the element or an ancestor.
+var standardPageSheets = sync.OnceValue(func() []string {
+	out := make([]string, 0, len(webfonts.Sheets))
+	for _, sheet := range webfonts.Sheets {
+		data, err := webfonts.FS.ReadFile(sheet.Path)
+		if err != nil {
+			return nil
+		}
+		out = append(out, string(data))
+	}
+	return out
+})
+
+// standardBaseRuleSet parses only the non-.fa / non-.katex rules of
+// webfonts.Sheets (the ":root, :host" custom properties of Font Awesome and
+// the "body" rule of KaTeX). Diagrams without Font Awesome or KaTeX classes
+// never need to parse the 175 KiB of icon and math rules.
+var standardBaseRuleSet = sync.OnceValue(func() *ruleSet {
+	sheets := standardPageSheets()
+	if len(sheets) == 0 {
+		return nil
+	}
+	var baseTexts []string
+	for _, s := range sheets {
+		// Extract any top-level ":root, :host { ... }" or "body { ... }" rules
+		// anchored at the start of a line so class suffixes like ".accent-body {"
+		// do not match.
+		for _, prefix := range []string{":root,:host{", ":root, :host{", ":root, :host {", "body{", "body {"} {
+			for pos := 0; pos < len(s); {
+				rel := strings.Index(s[pos:], prefix)
+				if rel < 0 {
+					break
+				}
+				idx := pos + rel
+				if idx == 0 || s[idx-1] == '\n' || s[idx-1] == '\r' || s[idx-1] == '}' {
+					if end := strings.IndexByte(s[idx:], '}'); end >= 0 {
+						baseTexts = append(baseTexts, s[idx:idx+end+1])
+						pos = idx + end + 1
+						continue
+					}
+				}
+				pos = idx + len(prefix)
+			}
+		}
+	}
+	return parseRuleSet(baseTexts, false)
+})
+
+func hasFAOrKatexClass(cls string) bool {
+	for i := 0; i < len(cls); {
+		for i < len(cls) && (cls[i] == ' ' || cls[i] == '\t' || cls[i] == '\n' || cls[i] == '\r' || cls[i] == '\f') {
+			i++
+		}
+		start := i
+		for i < len(cls) && cls[i] != ' ' && cls[i] != '\t' && cls[i] != '\n' && cls[i] != '\r' && cls[i] != '\f' {
+			i++
+		}
+		if i > start {
+			tok := cls[start:i]
+			if (len(tok) >= 2 && tok[0] == 'f' && tok[1] == 'a' && (len(tok) == 2 || tok[2] == '-' || len(tok) == 3)) ||
+				strings.Contains(tok, "katex") {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func nodeNeedsFullPageSheets(n *dom.Node) bool {
+	for cur := n; cur != nil; cur = cur.Parent {
+		if cur.Type != dom.ElementNode {
+			continue
+		}
+		if cls, ok := cur.GetAttr("class"); ok && cls != "" {
+			if hasFAOrKatexClass(cls) {
+				return true
+			}
+		}
+	}
+	return false
+}
 
 // The page of mermaid-cli has style sheets in its head (internal/webfonts):
 // the four sheets of Font Awesome and the sheets with the @font-face rules
@@ -80,14 +167,41 @@ func pageRuleSetOf(sheets []string) *ruleSet {
 	return rs
 }
 
-// pageRules returns the rule set of the page sheets of a document, or nil
+// pageRules returns the full rule set of the page sheets of a document, or nil
 // when the document has none.
 func (e *Engine) pageRules(doc *dom.Document) *ruleSet {
 	if len(doc.PageSheets) == 0 {
 		return nil
 	}
-	if e.pageDoc != doc || e.page == nil {
-		e.page, e.pageDoc = pageRuleSetOf(doc.PageSheets), doc
+	if e.pageDoc != doc || !e.pageFull || e.page == nil {
+		e.page, e.pageDoc, e.pageStd, e.pageFull = pageRuleSetOf(doc.PageSheets), doc, false, true
+	}
+	return e.page
+}
+
+// pageRulesFor returns the rule set of the page sheets needed to cascade n.
+// For the standard mermaid-cli page sheets, the full 175 KiB of Font Awesome
+// and KaTeX rules are deferred until an element or ancestor carries a class
+// containing "fa" or "katex".
+func (e *Engine) pageRulesFor(doc *dom.Document, n *dom.Node) *ruleSet {
+	if len(doc.PageSheets) == 0 {
+		return nil
+	}
+	if e.pageDoc != doc {
+		e.pageDoc = doc
+		if memo.Enabled() && sameSheets(doc.PageSheets, standardPageSheets()) {
+			e.pageStd = true
+			e.pageFull = false
+			e.page = standardBaseRuleSet()
+		} else {
+			e.pageStd = false
+			e.pageFull = true
+			e.page = pageRuleSetOf(doc.PageSheets)
+		}
+	}
+	if e.pageStd && !e.pageFull && nodeNeedsFullPageSheets(n) {
+		e.pageFull = true
+		e.page = pageRuleSetOf(doc.PageSheets)
 	}
 	return e.page
 }

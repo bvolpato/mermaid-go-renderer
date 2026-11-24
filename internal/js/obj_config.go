@@ -20,7 +20,45 @@ package js
 // port.
 //
 // src must be frozen, or belong to the calling goroutine: see Obj.Copy.
+// CanAssignNew reports whether src can be copied by AssignNew or NewCOW at
+// the given depth.
+func CanAssignNew(src *Obj[any], depth int) bool {
+	var objs, vals int
+	return assignNewCount(src, depth, &objs, &vals)
+}
+
+// newCOWClone returns a lazy copy-on-write deep clone of a deep-frozen object.
+func newCOWClone(src *Obj[any]) *Obj[any] {
+	return &Obj[any]{
+		keys:     src.keys,
+		vals:     src.vals,
+		index:    src.index,
+		ext:      src.ext,
+		flags:    objSharedKeys | objSharedVals | objCOWClone,
+		cowDepth: 255,
+		srcID:    src.srcID,
+	}
+}
+
+// NewCOW returns a lazy copy-on-write equivalent of AssignNew(src, depth) for
+// a frozen object src where CanAssignNew(src, depth) is true. The copy shares
+// src's slices until a child object, slice, or write is accessed.
+func NewCOW(src *Obj[any], depth uint8) *Obj[any] {
+	return &Obj[any]{
+		keys:     src.keys,
+		vals:     src.vals,
+		index:    src.index,
+		ext:      src.ext,
+		flags:    objSharedKeys | objSharedVals,
+		cowDepth: depth,
+		srcID:    src.srcID,
+	}
+}
+
 func AssignNew(src *Obj[any], depth int) (*Obj[any], bool) {
+	if src.cowDepth > 0 {
+		src.materializeCOW()
+	}
 	var objs, vals int
 	if !assignNewCount(src, depth, &objs, &vals) {
 		return nil, false
@@ -111,6 +149,12 @@ func arrayIncludes(arr []any, v any) bool {
 func ReplaceObjects(o *Obj[any], fn func(v any) any) {
 	if o.flags&objFrozen != 0 {
 		panic("js: ReplaceObjects on a frozen object")
+	}
+	if o.cowDepth > 0 {
+		o.materializeCOW()
+	}
+	if o.flags&objSharedVals != 0 {
+		o.ownVals()
 	}
 	o.srcID = 0
 	for i, v := range o.vals {

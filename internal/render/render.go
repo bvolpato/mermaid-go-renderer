@@ -12,6 +12,7 @@ import (
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/browser"
 	"github.com/bvolpato/mermaid-go-renderer/internal/config"
+	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
 	"github.com/bvolpato/mermaid-go-renderer/internal/font"
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 	"github.com/bvolpato/mermaid-go-renderer/internal/purify"
@@ -141,6 +142,9 @@ type ContextOptions struct {
 	ImageSize func(src string) (width, height float64, ok bool)
 	// Page is the kind of web page. See Options.Page.
 	Page Page
+	// Pooled backs the document with a pooled node/attr arena. The caller
+	// must call ctx.Doc.Release() when done.
+	Pooled bool
 }
 
 // NewContext builds the page of the reference oracle and the svg root, as
@@ -151,13 +155,24 @@ func NewContext(o ContextOptions) *Context {
 	if o.ID == "" {
 		o.ID = DefaultID
 	}
-	doc := browser.NewDocumentWithFonts(o.Fonts)
+	var doc *dom.Document
+	if o.Pooled {
+		doc = browser.NewPooledDocumentWithFonts(o.Fonts)
+	} else {
+		doc = browser.NewDocumentWithFonts(o.Fonts)
+	}
 	doc.PageSheets = PageSheets(o.Page)
 	engine := doc.Engine.(*browser.Engine)
 	if o.ViewportWidth > 0 {
 		engine.ViewportWidth = o.ViewportWidth
 	}
 	engine.ImageSize = o.ImageSize
+	var san *sanitize.Sanitizer
+	if o.Pooled {
+		san = sanitize.Acquire()
+	} else {
+		san = sanitize.New()
+	}
 	ctx := &Context{
 		ID:          o.ID,
 		Config:      o.Config,
@@ -168,7 +183,7 @@ func NewContext(o ContextOptions) *Context {
 		Body:        doc.Body,
 		Now:         o.Now,
 		Location:    o.Location,
-		Sanitizer:   sanitize.New(),
+		Sanitizer:   san,
 		Cancel:      o.Context,
 		rng:         o.RandomSeed,
 	}
@@ -276,7 +291,13 @@ func Render(text string, opts Options) (res *Result, err error) {
 		Context:       opts.Context,
 		ImageSize:     opts.ImageSize,
 		Page:          opts.Page,
+		Pooled:        true,
 	})
+	defer func() {
+		ctx.Engine.Release()
+		ctx.Doc.Release()
+		ctx.Sanitizer.Release()
+	}()
 	ctx.Title = resolved.Title
 	doc := ctx.Doc
 	svg := ctx.SVG
@@ -371,9 +392,21 @@ func Render(text string, opts Options) (res *Result, err error) {
 
 	// Serialize. The selector has lowercase "foreignobject", as upstream
 	// does. A type selector matches an SVG element without regard to case.
-	ctx.Body.Select(`[id="`+id+`"]`).SelectAll("foreignobject > *").Attr("xmlns", xmlnsXHTML)
+	if svgNode != nil && svgNode.ID() == id {
+		svgNode.SelectAll("foreignobject > *").Attr("xmlns", xmlnsXHTML)
+	} else {
+		ctx.Body.Select(`[id="`+id+`"]`).SelectAll("foreignobject > *").Attr("xmlns", xmlnsXHTML)
+	}
+	useArrowMarkerUrls := config.Evaluate(cfg.Get("arrowMarkerAbsolute"))
+	if !isLoose && dom.PrepareDirectSanitize(enclosingDiv, !useArrowMarkerUrls) {
+		clean, err := ctx.Sanitizer.Purifier().SanitizeBodyInPlace(enclosingDiv, finalSanitizeConfig)
+		if err != nil {
+			return nil, fmt.Errorf("the SVG cannot be sanitized: %w", err)
+		}
+		return &Result{SVG: clean, Type: diagramType}, nil
+	}
 	out := enclosingDiv.InnerHTML()
-	out = cleanUpSvgCode(out, false, config.Evaluate(cfg.Get("arrowMarkerAbsolute")))
+	out = cleanUpSvgCode(out, false, useArrowMarkerUrls)
 	if !isLoose {
 		// DOMPurify.sanitize on the serialized SVG, with the hooks that
 		// label sanitizing installed during the render.

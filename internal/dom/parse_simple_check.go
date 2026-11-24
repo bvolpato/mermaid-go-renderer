@@ -2,7 +2,11 @@ package dom
 
 import (
 	"fmt"
+	"strings"
 	"sync/atomic"
+
+	"github.com/bvolpato/mermaid-go-renderer/internal/html"
+	"github.com/bvolpato/mermaid-go-renderer/internal/html/atom"
 )
 
 // simpleParserSimple and simpleParserFull count the documents that each
@@ -14,6 +18,44 @@ var simpleParserSimple, simpleParserFull atomic.Int64
 // only in a build with the tag domcheck.
 func SimpleParserCounts() (simple, full int64) {
 	return simpleParserSimple.Load(), simpleParserFull.Load()
+}
+
+// checkSimpleFragment compares the children parsed by parseSimpleFragment with
+// html.ParseFragment, panicking when they differ (used with -tags domcheck).
+func checkSimpleFragment(parent *Node, markup string) {
+	ctx := &html.Node{Type: html.ElementNode, Data: parent.Tag, DataAtom: atom.Lookup([]byte(parent.Tag))}
+	nodes, err := html.ParseFragment(strings.NewReader(markup), ctx)
+	if err != nil {
+		panic(fmt.Sprintf("dom: simple fragment parser accepted markup rejected by full parser: %v\n%s", err, markup))
+	}
+	wantDoc := NewDocument()
+	wantParent := wantDoc.CreateElementNS(parent.NS, parent.Tag)
+	for _, hn := range nodes {
+		fixParserDivergences(markup, hn)
+	}
+	for _, hn := range nodes {
+		if c := wantDoc.fromHTMLNode(hn); c != nil {
+			wantParent.AppendChild(c)
+		}
+	}
+	g, w := parent.FirstChild, wantParent.FirstChild
+	var prev *Node
+	for i := 0; g != nil || w != nil; i++ {
+		if g == nil || w == nil {
+			panic(fmt.Sprintf("dom: simple fragment child count differs for <%s>: %q", parent.Tag, markup))
+		}
+		if g.Parent != parent || g.Prev != prev {
+			panic(fmt.Sprintf("dom: simple fragment links differ at child %d for <%s>: %q", i, parent.Tag, markup))
+		}
+		if d := diffNodes(fmt.Sprintf("%s > %s[%d]", parent.Tag, w.Tag, i), g, w, parent.doc, wantDoc); d != "" {
+			panic(fmt.Sprintf("dom: simple fragment differs from full parser: %s\n%s", d, markup))
+		}
+		prev = g
+		g, w = g.Next, w.Next
+	}
+	if parent.LastChild != prev {
+		panic(fmt.Sprintf("dom: simple fragment last child differs for <%s>: %q", parent.Tag, markup))
+	}
 }
 
 // checkSimpleDocument compares a document of the simple parser with the

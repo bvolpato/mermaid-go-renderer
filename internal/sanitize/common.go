@@ -16,6 +16,7 @@ import (
 	"math"
 	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
@@ -50,18 +51,40 @@ func GetRows(s string) []string {
 // flag that says whether the hooks are set up. It is not safe for concurrent
 // use.
 type Sanitizer struct {
-	purifier *purify.Purifier
+	purifier purify.Purifier
 	setup    bool
+	pooled   bool
 }
+
+var sanitizerPool = sync.Pool{New: func() any { return &Sanitizer{} }}
 
 // New returns the state of a page that has made no sanitize call yet.
 func New() *Sanitizer {
-	return &Sanitizer{purifier: purify.New()}
+	return &Sanitizer{}
+}
+
+// Acquire returns a pooled Sanitizer. Call Release when the render finishes.
+func Acquire() *Sanitizer {
+	s := sanitizerPool.Get().(*Sanitizer)
+	s.setup = false
+	s.pooled = true
+	return s
+}
+
+// Release resets a pooled Sanitizer and returns it to the pool.
+func (s *Sanitizer) Release() {
+	if s == nil || !s.pooled {
+		return
+	}
+	s.pooled = false
+	s.setup = false
+	s.purifier.Reset()
+	sanitizerPool.Put(s)
 }
 
 // Purifier is the DOMPurify instance. mermaidAPI.ts sanitizes the final SVG
 // with the same instance, so the hooks apply there too.
-func (s *Sanitizer) Purifier() *purify.Purifier { return s.purifier }
+func (s *Sanitizer) Purifier() *purify.Purifier { return &s.purifier }
 
 // HooksSetUp reports whether setupDompurifyHooks has run.
 func (s *Sanitizer) HooksSetUp() bool { return s.setup }
@@ -69,7 +92,7 @@ func (s *Sanitizer) HooksSetUp() bool { return s.setup }
 // setupDompurifyHooksIfNotSetup is setupDompurifyHooksIfNotSetup.
 func (s *Sanitizer) setupDompurifyHooksIfNotSetup() {
 	if !s.setup {
-		SetupDompurifyHooks(s.purifier)
+		SetupDompurifyHooks(&s.purifier)
 		s.setup = true
 	}
 }

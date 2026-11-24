@@ -10,6 +10,8 @@ builds:
   - id: mmdg
     main: ./cmd/mmdg
     binary: mmdg
+    flags:
+      - -trimpath
     env:
       - CGO_ENABLED=0
     ldflags:

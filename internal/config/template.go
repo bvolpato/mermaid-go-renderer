@@ -53,6 +53,8 @@ type template struct {
 	// currentDeep lists the objects that a copy of currentConfig shares
 	// with it.
 	currentDeep         []deepPath
+	canCOW              bool
+	cleanThemeVars      bool
 	diagramConfigKey    string
 	hasDiagramConfigKey bool
 }
@@ -289,6 +291,7 @@ func (it *initTemplate) build(diagramType string, hasType bool, directive *js.Ob
 		init:                it,
 		directive:           directive,
 		currentConfig:       s.currentConfig,
+		cleanThemeVars:      s.cleanThemeVars,
 		diagramConfigKey:    s.diagramConfigKey,
 		hasDiagramConfigKey: s.hasDiagramConfigKey,
 	}
@@ -297,6 +300,7 @@ func (it *initTemplate) build(diagramType string, hasType bool, directive *js.Ob
 	_, plainDirective := deepPaths(t.directive)
 	var plain bool
 	t.currentDeep, plain = deepPaths(t.currentConfig)
+	t.canCOW = js.CanAssignNew(t.currentConfig, 2)
 	return t, plain && plainDirective && it.plain, nil
 }
 
@@ -311,6 +315,7 @@ func (t *template) newState() *State {
 		siteConfigDelta:      t.init.siteConfigDelta,
 		configFromInitialize: t.init.configFromInitialize,
 		currentConfig:        t.currentConfig,
+		cleanThemeVars:       t.cleanThemeVars,
 		diagramConfigKey:     t.diagramConfigKey,
 		hasDiagramConfigKey:  t.hasDiagramConfigKey,
 	}
@@ -406,8 +411,15 @@ func (s *State) ownValue(v any) any {
 // template become objects of the state.
 func (s *State) copyCurrent() *js.Obj[any] {
 	t := s.tpl
-	cfg := assignToNew(t.currentConfig)
-	s.ownPaths(cfg, t.currentDeep)
+	var cfg *js.Obj[any]
+	if t.canCOW {
+		cfg = js.NewCOW(t.currentConfig, 2)
+	} else {
+		cfg = assignToNew(t.currentConfig)
+	}
+	if len(t.currentDeep) > 0 {
+		s.ownPaths(cfg, t.currentDeep)
+	}
 	return cfg
 }
 

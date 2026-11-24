@@ -668,7 +668,7 @@ func (n *Node) serializeInert(sb *htmlWriter) {
 	switch n.Type {
 	case TextNode:
 		p := n.Parent
-		if p != nil && p.Type == ElementNode && p.NS == NSHTML && p.Tag != "noscript" && rawTextElements[p.Tag] {
+		if p != nil && p.Type == ElementNode && p.NS == NSHTML && p.Tag != "noscript" && isRawTextElement(p.Tag) {
 			sb.WriteString(n.Data)
 		} else {
 			escapeText(sb, n.Data)
@@ -685,7 +685,7 @@ func (n *Node) serializeInert(sb *htmlWriter) {
 			sb.WriteByte('"')
 		}
 		sb.WriteByte('>')
-		if n.NS == NSHTML && voidElements[n.Tag] {
+		if n.NS == NSHTML && isVoidElement(n.Tag) {
 			return
 		}
 		for c := n.FirstChild; c != nil; c = c.Next {

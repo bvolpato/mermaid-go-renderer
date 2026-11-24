@@ -25,6 +25,7 @@ package browser
 
 import (
 	"strings"
+	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/css"
 	"github.com/bvolpato/mermaid-go-renderer/internal/dom"
@@ -68,11 +69,310 @@ type Engine struct {
 	elemClassBuf []string
 	matchBuf     []matched
 	inlineBuf    []css.Decl
-	styleSlab    []nodeStyle
+
+	// Chunked arenas for nodeStyle, declEntry, textStyle, inlineItem, itemGlyph,
+	// runes, and svgTextLayout, recycled on Release.
+	styleChunks   [][]nodeStyle
+	styleIdx      int
+	styleOff      int
+	declChunks    [][]declEntry
+	declIdx       int
+	declOff       int
+	textChunks    [][]textStyle
+	textIdx       int
+	textOff       int
+	itemChunks    [][]inlineItem
+	itemIdx       int
+	itemOff       int
+	glyphChunks   [][]itemGlyph
+	glyphIdx      int
+	glyphOff      int
+	runeChunks    [][]rune
+	runeIdx       int
+	runeOff       int
+	svgTextChunks [][]svgTextLayout
+	svgTextIdx    int
+	svgTextOff    int
+	pooled        bool
+
 	// page is the rule set of the style sheets of the page of pageDoc. See
 	// pagesheets.go.
-	page    *ruleSet
-	pageDoc *dom.Document
+	page     *ruleSet
+	pageDoc  *dom.Document
+	pageStd  bool
+	pageFull bool
+}
+
+var enginePool = sync.Pool{New: func() any { return &Engine{} }}
+
+const maxPooledEngineChunks = 64
+
+func (e *Engine) allocNodeStyle() *nodeStyle {
+	if e.styleIdx >= len(e.styleChunks) {
+		sz := 32
+		if len(e.styleChunks) > 0 {
+			sz = min(len(e.styleChunks[len(e.styleChunks)-1])*2, 256)
+		}
+		e.styleChunks = append(e.styleChunks, make([]nodeStyle, sz))
+		e.styleOff = 0
+	}
+	chunk := e.styleChunks[e.styleIdx]
+	if e.styleOff >= len(chunk) {
+		e.styleIdx++
+		e.styleOff = 0
+		return e.allocNodeStyle()
+	}
+	st := &chunk[e.styleOff]
+	e.styleOff++
+	return st
+}
+
+func (e *Engine) allocDecls(n int) []declEntry {
+	for {
+		if e.declIdx >= len(e.declChunks) {
+			sz := max(n, 64)
+			if len(e.declChunks) > 0 {
+				sz = max(n, min(len(e.declChunks[len(e.declChunks)-1])*2, 1024))
+			}
+			e.declChunks = append(e.declChunks, make([]declEntry, sz))
+			e.declOff = 0
+		}
+		chunk := e.declChunks[e.declIdx]
+		if e.declOff+n <= len(chunk) {
+			s := chunk[e.declOff : e.declOff : e.declOff+n]
+			e.declOff += n
+			return s
+		}
+		e.declIdx++
+		e.declOff = 0
+	}
+}
+
+func (e *Engine) growDecls(old []declEntry) []declEntry {
+	nextCap := max(cap(old)*2, 4)
+	grown := e.allocDecls(nextCap)
+	return append(grown, old...)
+}
+
+func (e *Engine) allocTextStyle() *textStyle {
+	if e.textIdx >= len(e.textChunks) {
+		sz := 16
+		if len(e.textChunks) > 0 {
+			sz = min(len(e.textChunks[len(e.textChunks)-1])*2, 128)
+		}
+		e.textChunks = append(e.textChunks, make([]textStyle, sz))
+		e.textOff = 0
+	}
+	chunk := e.textChunks[e.textIdx]
+	if e.textOff >= len(chunk) {
+		e.textIdx++
+		e.textOff = 0
+		return e.allocTextStyle()
+	}
+	ts := &chunk[e.textOff]
+	e.textOff++
+	return ts
+}
+
+func (e *Engine) allocInlineItem() *inlineItem {
+	if e.itemIdx >= len(e.itemChunks) {
+		sz := 16
+		if len(e.itemChunks) > 0 {
+			sz = min(len(e.itemChunks[len(e.itemChunks)-1])*2, 128)
+		}
+		e.itemChunks = append(e.itemChunks, make([]inlineItem, sz))
+		e.itemOff = 0
+	}
+	chunk := e.itemChunks[e.itemIdx]
+	if e.itemOff >= len(chunk) {
+		e.itemIdx++
+		e.itemOff = 0
+		return e.allocInlineItem()
+	}
+	it := &chunk[e.itemOff]
+	e.itemOff++
+	return it
+}
+
+func (e *Engine) allocGlyphs(n int) []itemGlyph {
+	if n <= 0 {
+		return nil
+	}
+	for {
+		if e.glyphIdx >= len(e.glyphChunks) {
+			sz := max(n, 64)
+			if len(e.glyphChunks) > 0 {
+				sz = max(n, min(len(e.glyphChunks[len(e.glyphChunks)-1])*2, 1024))
+			}
+			e.glyphChunks = append(e.glyphChunks, make([]itemGlyph, sz))
+			e.glyphOff = 0
+		}
+		chunk := e.glyphChunks[e.glyphIdx]
+		if e.glyphOff+n <= len(chunk) {
+			s := chunk[e.glyphOff : e.glyphOff : e.glyphOff+n]
+			e.glyphOff += n
+			return s
+		}
+		e.glyphIdx++
+		e.glyphOff = 0
+	}
+}
+
+func (e *Engine) allocRunes(n int) []rune {
+	if n <= 0 {
+		return nil
+	}
+	for {
+		if e.runeIdx >= len(e.runeChunks) {
+			sz := max(n, 128)
+			if len(e.runeChunks) > 0 {
+				sz = max(n, min(len(e.runeChunks[len(e.runeChunks)-1])*2, 2048))
+			}
+			e.runeChunks = append(e.runeChunks, make([]rune, sz))
+			e.runeOff = 0
+		}
+		chunk := e.runeChunks[e.runeIdx]
+		if e.runeOff+n <= len(chunk) {
+			s := chunk[e.runeOff : e.runeOff : e.runeOff+n]
+			e.runeOff += n
+			return s
+		}
+		e.runeIdx++
+		e.runeOff = 0
+	}
+}
+
+func (e *Engine) allocSVGTextLayout(n int, scale float32) *svgTextLayout {
+	if e.svgTextIdx >= len(e.svgTextChunks) {
+		sz := 16
+		if len(e.svgTextChunks) > 0 {
+			sz = min(len(e.svgTextChunks[len(e.svgTextChunks)-1])*2, 128)
+		}
+		e.svgTextChunks = append(e.svgTextChunks, make([]svgTextLayout, sz))
+		e.svgTextOff = 0
+	}
+	chunk := e.svgTextChunks[e.svgTextIdx]
+	if e.svgTextOff >= len(chunk) {
+		e.svgTextIdx++
+		e.svgTextOff = 0
+		return e.allocSVGTextLayout(n, scale)
+	}
+	l := &chunk[e.svgTextOff]
+	e.svgTextOff++
+	l.scale = scale
+	if n <= len(l.frag0) {
+		l.frags = l.frag0[:n]
+	} else {
+		l.frags = make([]textFragment, n)
+	}
+	return l
+}
+
+// AcquireWithFonts returns a pooled Engine configured with fonts. The caller
+// must call Release when done with the document.
+func AcquireWithFonts(fonts *font.Library) *Engine {
+	if fonts == nil {
+		fonts = font.System()
+	}
+	e := enginePool.Get().(*Engine)
+	e.Fonts = fonts
+	e.ViewportWidth = 800
+	e.ViewportHeight = 600
+	e.BodyMargin = 8
+	e.ImageSize = nil
+	e.loadedImages = nil
+	e.imageEpoch = 0
+	e.rules = nil
+	e.rulesKey = ""
+	e.rulesGen = 0
+	e.rulesDoc = nil
+	e.page = nil
+	e.pageDoc = nil
+	e.pageStd = false
+	e.pageFull = false
+	e.styleIdx, e.styleOff = 0, 0
+	e.declIdx, e.declOff = 0, 0
+	e.textIdx, e.textOff = 0, 0
+	e.itemIdx, e.itemOff = 0, 0
+	e.glyphIdx, e.glyphOff = 0, 0
+	e.runeIdx, e.runeOff = 0, 0
+	e.svgTextIdx, e.svgTextOff = 0, 0
+	e.classBuf = e.classBuf[:0]
+	e.elemClassBuf = e.elemClassBuf[:0]
+	e.matchBuf = e.matchBuf[:0]
+	e.inlineBuf = e.inlineBuf[:0]
+	e.pooled = true
+	return e
+}
+
+// Release clears references in a pooled Engine and returns it to the pool.
+func (e *Engine) Release() {
+	if e == nil || !e.pooled {
+		return
+	}
+	e.pooled = false
+	for i := 0; i <= e.styleIdx && i < len(e.styleChunks); i++ {
+		end := len(e.styleChunks[i])
+		if i == e.styleIdx {
+			end = e.styleOff
+		}
+		clear(e.styleChunks[i][:end])
+	}
+	for i := 0; i <= e.declIdx && i < len(e.declChunks); i++ {
+		end := len(e.declChunks[i])
+		if i == e.declIdx {
+			end = e.declOff
+		}
+		clear(e.declChunks[i][:end])
+	}
+	for i := 0; i <= e.textIdx && i < len(e.textChunks); i++ {
+		end := len(e.textChunks[i])
+		if i == e.textIdx {
+			end = e.textOff
+		}
+		clear(e.textChunks[i][:end])
+	}
+	for i := 0; i <= e.itemIdx && i < len(e.itemChunks); i++ {
+		end := len(e.itemChunks[i])
+		if i == e.itemIdx {
+			end = e.itemOff
+		}
+		clear(e.itemChunks[i][:end])
+	}
+	for i := 0; i <= e.glyphIdx && i < len(e.glyphChunks); i++ {
+		end := len(e.glyphChunks[i])
+		if i == e.glyphIdx {
+			end = e.glyphOff
+		}
+		clear(e.glyphChunks[i][:end])
+	}
+	for i := 0; i <= e.svgTextIdx && i < len(e.svgTextChunks); i++ {
+		end := len(e.svgTextChunks[i])
+		if i == e.svgTextIdx {
+			end = e.svgTextOff
+		}
+		clear(e.svgTextChunks[i][:end])
+	}
+	clear(e.classBuf[:cap(e.classBuf)])
+	clear(e.elemClassBuf[:cap(e.elemClassBuf)])
+	clear(e.matchBuf[:cap(e.matchBuf)])
+	clear(e.inlineBuf[:cap(e.inlineBuf)])
+	e.Fonts = nil
+	e.ImageSize = nil
+	e.loadedImages = nil
+	e.rules = nil
+	e.rulesKey = ""
+	e.rulesDoc = nil
+	e.page = nil
+	e.pageDoc = nil
+	e.pageStd = false
+	e.pageFull = false
+	if len(e.styleChunks) <= maxPooledEngineChunks && len(e.declChunks) <= maxPooledEngineChunks &&
+		len(e.textChunks) <= maxPooledEngineChunks && len(e.itemChunks) <= maxPooledEngineChunks &&
+		len(e.glyphChunks) <= maxPooledEngineChunks && len(e.runeChunks) <= maxPooledEngineChunks &&
+		len(e.svgTextChunks) <= maxPooledEngineChunks {
+		enginePool.Put(e)
+	}
 }
 
 // New returns an engine that uses the fonts of the system.
@@ -100,12 +400,21 @@ func NewDocument() *dom.Document {
 	return NewDocumentWithFonts(nil)
 }
 
-// NewDocumentWithFonts returns an empty document that measures with a new
+// NewDocumentWithFonts returns an empty document that measures with the given
 // engine that uses the given font library. A nil library is the system
 // library.
 func NewDocumentWithFonts(fonts *font.Library) *dom.Document {
 	doc := dom.NewDocument()
 	doc.Engine = NewWithFonts(fonts)
+	return doc
+}
+
+// NewPooledDocumentWithFonts returns an empty document backed by a pooled
+// node/attr arena and a pooled Engine. The caller must call eng.Release()
+// and doc.Release() when done.
+func NewPooledDocumentWithFonts(fonts *font.Library) *dom.Document {
+	doc := dom.NewPooledDocument()
+	doc.Engine = AcquireWithFonts(fonts)
 	return doc
 }
 
@@ -241,7 +550,8 @@ func (e *Engine) nestedSVGTransform(n *dom.Node) affine {
 	x, _ := e.firstLength(n, "x", ts.size)
 	y, _ := e.firstLength(n, "y", ts.size)
 	m := identity.translate(float64(x), float64(y))
-	vb := parseNumberList(n.AttrOr("viewBox", ""))
+	var vbBuf [4]float32
+	vb := appendNumberList(vbBuf[:0], n.AttrOr("viewBox", ""))
 	w, hasW := e.firstLength(n, "width", ts.size)
 	h, hasH := e.firstLength(n, "height", ts.size)
 	if len(vb) == 4 && vb[2] > 0 && vb[3] > 0 && hasW && hasH {
@@ -358,7 +668,8 @@ func (e *Engine) objectBBox(n *dom.Node) (rectF, bool) {
 		// the bounds of the Skia path, converted with gfx::SkRectToRectF.
 		return rectFromBounds(min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)), true
 	case "polyline", "polygon":
-		pts := parseNumberList(n.AttrOr("points", ""))
+		var ptsBuf [16]float32
+		pts := appendNumberList(ptsBuf[:0], n.AttrOr("points", ""))
 		if len(pts) < 2 {
 			return rectF{}, false
 		}
@@ -451,7 +762,8 @@ func (e *Engine) pathOf(n *dom.Node) *skPath {
 		p.lineTo(e.attrLength(n, "x2"), e.attrLength(n, "y2"))
 	case "polyline", "polygon":
 		p = newPath()
-		pts := parseNumberList(n.AttrOr("points", ""))
+		var ptsBuf [16]float32
+		pts := appendNumberList(ptsBuf[:0], n.AttrOr("points", ""))
 		pts = pts[:len(pts)&^1]
 		for i := 0; i < len(pts); i += 2 {
 			if i == 0 {
@@ -639,8 +951,11 @@ func (e *Engine) ComputedStyle(n *dom.Node, property string) string {
 				}
 				return v
 			}
-			if cur.NS == dom.NSHTML && uaMono[cur.Tag] {
-				return "monospace"
+			if cur.NS == dom.NSHTML {
+				switch cur.Tag {
+				case "code", "kbd", "samp", "tt", "pre":
+					return "monospace"
+				}
 			}
 		}
 		return "Times"

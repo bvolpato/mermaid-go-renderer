@@ -29,8 +29,10 @@ package raster
 
 import (
 	"math"
+	"math/bits"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/browser"
 	"github.com/bvolpato/mermaid-go-renderer/internal/css"
@@ -209,6 +211,55 @@ func (p *painter) parseDropShadow(n *dom.Node, args string) (filterOp, bool) {
 	return op, true
 }
 
+// filterBufPools holds power-of-two byte buffers from 4 KiB to 8 MiB for
+// filterImage and alphaImage backing slices.
+const (
+	filterBufMinShift = 12 // 4 KiB
+	filterBufMaxShift = 23 // 8 MiB
+	filterBufBuckets  = filterBufMaxShift - filterBufMinShift + 1
+)
+
+var filterBufPools [filterBufBuckets]sync.Pool
+
+func filterBufBucket(n int) int {
+	if n <= 0 || n > 1<<filterBufMaxShift {
+		return -1
+	}
+	if n <= 1<<filterBufMinShift {
+		return 0
+	}
+	return bits.Len(uint(n-1)) - filterBufMinShift
+}
+
+func getFilterBuf(n int) []uint8 {
+	if n <= 0 {
+		return nil
+	}
+	b := filterBufBucket(n)
+	if b < 0 {
+		return make([]uint8, n)
+	}
+	if v := filterBufPools[b].Get(); v != nil {
+		buf := (*v.(*[]uint8))[:n]
+		clear(buf)
+		return buf
+	}
+	size := 1 << (filterBufMinShift + b)
+	return make([]uint8, n, size)
+}
+
+func putFilterBuf(buf []uint8) {
+	if cap(buf) == 0 {
+		return
+	}
+	b := filterBufBucket(cap(buf))
+	if b < 0 || cap(buf) != 1<<(filterBufMinShift+b) {
+		return
+	}
+	buf = buf[:cap(buf)]
+	filterBufPools[b].Put(&buf)
+}
+
 // filterImage is an image during filter evaluation: premultiplied RGBA
 // pixels for a rectangle of the device.
 type filterImage struct {
@@ -219,7 +270,16 @@ type filterImage struct {
 
 func newFilterImage(bounds IRect) *filterImage {
 	w, h := max(bounds.width(), 0), max(bounds.height(), 0)
-	return &filterImage{pix: make([]uint8, w*h*4), bounds: bounds, stride: w * 4}
+	n := w * h * 4
+	return &filterImage{pix: getFilterBuf(n), bounds: bounds, stride: w * 4}
+}
+
+func (f *filterImage) release() {
+	if f == nil || f.pix == nil {
+		return
+	}
+	putFilterBuf(f.pix)
+	f.pix = nil
 }
 
 func (f *filterImage) row(y int) []uint8 {
@@ -251,6 +311,11 @@ func (p *painter) paintFiltered(n *dom.Node, st *svgStyle, ctm Affine, ops []fil
 	paint(st, ctm)
 	p.cv.popLayerRaw()
 	img := imageFromLayer(layer.pm, layer.dirty)
+	defer func() {
+		if img != nil {
+			img.release()
+		}
+	}()
 	p.cv.putPixmap(layer.pm, layer.dirty)
 
 	m := deviceMatrix(ctm)
@@ -289,7 +354,11 @@ func (p *painter) paintFiltered(n *dom.Node, st *svgStyle, ctm Affine, ops []fil
 		case filterDropShadow:
 			c := op.color
 			col := [4]float32{float32(c.R) / 255, float32(c.G) / 255, float32(c.B) / 255, float32(c.A)}
-			img = dropShadow(img, float32(op.dx*sx), float32(op.dy*sy), float32(op.sigma*sx), float32(op.sigma*sy), col, false)
+			next := dropShadow(img, float32(op.dx*sx), float32(op.dy*sy), float32(op.sigma*sx), float32(op.sigma*sy), col, false)
+			if next != img {
+				img.release()
+			}
+			img = next
 		case filterBrightness:
 			mode, amount = drawBrightness, op.amount
 		}
@@ -313,21 +382,69 @@ type colorFn func(r, g, b, a float32) (float32, float32, float32, float32)
 
 // colorMap is a color filter that maps each color channel on its own and
 // keeps alpha. lut is the map of an opaque pixel: the 8-bit result for each
-// 8-bit value.
+// 8-bit value. When useLUT is true, unormLUT and premulLUT lazily cache the
+// per-alpha 256-entry channel tables so semi-transparent pixels avoid math.Pow.
 type colorMap struct {
-	fn  colorFn
-	lut [256]uint8
+	fn        colorFn
+	channel   func(float32) float32
+	lut       [256]uint8
+	useLUT    bool
+	unormLUT  [256]atomic.Pointer[[256]uint8]
+	premulLUT [256]atomic.Pointer[[256]float32]
 }
 
 func newColorMap(channel func(float32) float32) *colorMap {
-	m := &colorMap{fn: func(r, g, b, a float32) (float32, float32, float32, float32) {
-		return channel(r), channel(g), channel(b), a
-	}}
+	zeroZero := channel(0) == 0
+	m := &colorMap{
+		channel: channel,
+		fn: func(r, g, b, a float32) (float32, float32, float32, float32) {
+			if r == g && g == b {
+				if r == 0 && zeroZero {
+					return 0, 0, 0, a
+				}
+				v := channel(r)
+				return v, v, v, a
+			}
+			return channel(r), channel(g), channel(b), a
+		},
+	}
 	const inv = float32(1.0 / 255)
 	for i := range m.lut {
 		m.lut[i] = toUnorm(channel(float32(float32(i) * inv)))
 	}
 	return m
+}
+
+func (m *colorMap) getUnormLUT(a8 uint8) *[256]uint8 {
+	if t := m.unormLUT[a8].Load(); t != nil {
+		return t
+	}
+	var tbl [256]uint8
+	const inv = float32(1.0 / 255)
+	a := float32(float32(a8) * inv)
+	ia := 1 / a
+	for c := 0; c < 256; c++ {
+		v := m.channel(float32(float32(float32(c)*inv) * ia))
+		tbl[c] = toUnorm(float32(v * a))
+	}
+	m.unormLUT[a8].Store(&tbl)
+	return &tbl
+}
+
+func (m *colorMap) getPremulLUT(a8 uint8) *[256]float32 {
+	if t := m.premulLUT[a8].Load(); t != nil {
+		return t
+	}
+	var tbl [256]float32
+	const inv = float32(1.0 / 255)
+	a := float32(float32(a8) * inv)
+	ia := 1 / a
+	for c := 0; c < 256; c++ {
+		v := m.channel(float32(float32(float32(c)*inv) * ia))
+		tbl[c] = float32(v * a)
+	}
+	m.premulLUT[a8].Store(&tbl)
+	return &tbl
 }
 
 var (
@@ -341,7 +458,9 @@ var (
 func gammaMaps() (toLinear, fromLinear *colorMap) {
 	gammaMapsOnce.Do(func() {
 		toLinearMap = newColorMap(srgbToLuma)
+		toLinearMap.useLUT = true
 		fromLinearMap = newColorMap(srgbFromLuma)
+		fromLinearMap.useLUT = true
 	})
 	return toLinearMap, fromLinearMap
 }
@@ -355,22 +474,38 @@ func brightnessMap(amount float32) *colorMap {
 // rounds to 8 bits.
 func (f *filterImage) mapColors(m *colorMap) {
 	const inv = float32(1.0 / 255)
-	for i := 0; i+3 < len(f.pix); i += 4 {
-		a8 := f.pix[i+3]
+	pix := f.pix
+	if m.useLUT {
+		for i := 0; i+3 < len(pix); i += 4 {
+			a8 := pix[i+3]
+			if a8 == 0 {
+				continue
+			}
+			if a8 == 255 {
+				pix[i], pix[i+1], pix[i+2] = m.lut[pix[i]], m.lut[pix[i+1]], m.lut[pix[i+2]]
+				continue
+			}
+			t := m.getUnormLUT(a8)
+			pix[i], pix[i+1], pix[i+2] = t[pix[i]], t[pix[i+1]], t[pix[i+2]]
+		}
+		return
+	}
+	for i := 0; i+3 < len(pix); i += 4 {
+		a8 := pix[i+3]
 		if a8 == 0 {
 			continue
 		}
 		if a8 == 255 {
-			f.pix[i], f.pix[i+1], f.pix[i+2] = m.lut[f.pix[i]], m.lut[f.pix[i+1]], m.lut[f.pix[i+2]]
+			pix[i], pix[i+1], pix[i+2] = m.lut[pix[i]], m.lut[pix[i+1]], m.lut[pix[i+2]]
 			continue
 		}
 		a := float32(float32(a8) * inv)
 		ia := 1 / a
-		r, g, b, a2 := m.fn(float32(float32(float32(f.pix[i])*inv)*ia), float32(float32(float32(f.pix[i+1])*inv)*ia), float32(float32(float32(f.pix[i+2])*inv)*ia), a)
-		f.pix[i] = toUnorm(float32(r * a2))
-		f.pix[i+1] = toUnorm(float32(g * a2))
-		f.pix[i+2] = toUnorm(float32(b * a2))
-		f.pix[i+3] = toUnorm(a2)
+		r, g, b, a2 := m.fn(float32(float32(float32(pix[i])*inv)*ia), float32(float32(float32(pix[i+1])*inv)*ia), float32(float32(float32(pix[i+2])*inv)*ia), a)
+		pix[i] = toUnorm(float32(r * a2))
+		pix[i+1] = toUnorm(float32(g * a2))
+		pix[i+2] = toUnorm(float32(b * a2))
+		pix[i+3] = toUnorm(a2)
 	}
 }
 
@@ -411,10 +546,18 @@ func (c *canvas) compositeImage(dst *device, img *filterImage, region IRect, cm 
 				d[i], d[i+1], d[i+2], d[i+3] = cm.lut[s[i]], cm.lut[s[i+1]], cm.lut[s[i+2]], 255
 				continue
 			}
-			a := float32(float32(a8) * inv)
-			ia := 1 / a
-			r, g, b, a2 := cm.fn(float32(float32(float32(s[i])*inv)*ia), float32(float32(float32(s[i+1])*inv)*ia), float32(float32(float32(s[i+2])*inv)*ia), a)
-			sr, sg, sb := float32(r*a2), float32(g*a2), float32(b*a2)
+			var sr, sg, sb, a2 float32
+			if cm.useLUT {
+				t := cm.getPremulLUT(a8)
+				sr, sg, sb = t[s[i]], t[s[i+1]], t[s[i+2]]
+				a2 = float32(float32(a8) * inv)
+			} else {
+				a := float32(float32(a8) * inv)
+				ia := 1 / a
+				var r, g, b float32
+				r, g, b, a2 = cm.fn(float32(float32(float32(s[i])*inv)*ia), float32(float32(float32(s[i+1])*inv)*ia), float32(float32(float32(s[i+2])*inv)*ia), a)
+				sr, sg, sb = float32(r*a2), float32(g*a2), float32(b*a2)
+			}
 			dr, dg, db, da := float32(float32(d[i])*inv), float32(float32(d[i+1])*inv), float32(float32(d[i+2])*inv), float32(float32(d[i+3])*inv)
 			k := 1 - a2
 			or, og, ob, oa := sr+float32(dr*k), sg+float32(dg*k), sb+float32(db*k), a2+float32(da*k)
@@ -442,6 +585,7 @@ func (p *painter) applyReferenceFilter(n, filter *dom.Node, src *filterImage, ct
 		}
 	}
 	if len(prims) == 0 {
+		src.release()
 		return nil, false
 	}
 	// The filter region: x, y, width and height of the filter element, by
@@ -457,6 +601,7 @@ func (p *painter) applyReferenceFilter(n, filter *dom.Node, src *filterImage, ct
 		region = Rect{x, y, x + w, y + h}
 	} else {
 		if !hasBox || !(bw > 0 && bh > 0) {
+			src.release()
 			return nil, false
 		}
 		fx := fractionAttr(filter, "x", -0.1)
@@ -468,6 +613,7 @@ func (p *painter) applyReferenceFilter(n, filter *dom.Node, src *filterImage, ct
 		region = Rect{x, y, x + float32(fw*bw), y + float32(fh*bh)}
 	}
 	if region.isEmpty() {
+		src.release()
 		return nil, false
 	}
 	m := deviceMatrix(ctm)
@@ -478,11 +624,11 @@ func (p *painter) applyReferenceFilter(n, filter *dom.Node, src *filterImage, ct
 	// makes the filter a pass-through.
 	for _, prim := range prims {
 		if !strings.EqualFold(prim.Tag, "feDropShadow") {
-			return src.clone(), true
+			return src, true
 		}
 	}
 	linear := true
-	img := src.clone()
+	img := src
 	for _, prim := range prims {
 		if v := strings.TrimSpace(p.eng.RasterLookup(prim, "color-interpolation-filters")); strings.EqualFold(v, "sRGB") {
 			linear = false
@@ -520,8 +666,16 @@ func (p *painter) applyReferenceFilter(n, filter *dom.Node, src *filterImage, ct
 		if stdX < 0 || stdY < 0 {
 			stdX, stdY = 0, 0
 		}
-		img = dropShadow(img, float32(dx*sx), float32(dy*sy), float32(stdX*sx), float32(stdY*sy), c, true)
-		img = img.cropped(crop)
+		next := dropShadow(img, float32(dx*sx), float32(dy*sy), float32(stdX*sx), float32(stdY*sy), c, true)
+		if next != img {
+			img.release()
+		}
+		img = next
+		cropped := img.cropped(crop)
+		if cropped != img {
+			img.release()
+		}
+		img = cropped
 	}
 	if !linear {
 		// The caller converts from linear RGB.
@@ -594,6 +748,7 @@ func dropShadow(src *filterImage, dx, dy, sigmaX, sigmaY float32, color [4]float
 		return src
 	}
 	blurred := blurAlpha(src, sigmaX, sigmaY)
+	defer blurred.release()
 	// The bounds of the moved shadow, with room for linear filtering.
 	ix, iy := int(math.Floor(float64(dx))), int(math.Floor(float64(dy)))
 	fx, fy := dx-float32(ix), dy-float32(iy)

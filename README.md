@@ -25,7 +25,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/speed-dark.svg">
-    <img src="docs/assets/speed-light.svg" alt="mmdg is 15 times faster than mermaid in a warm Chromium page, and 17 times faster than mmdc as a command" width="860">
+    <img src="docs/assets/speed-light.svg" alt="mmdg is 16 times faster than mermaid in a warm Chromium page, and 40 times faster than mmdc as a command" width="860">
   </picture>
 </p>
 <!-- generated:speed end -->
@@ -95,14 +95,14 @@ The test also runs in a container with no fonts and no browser, because the defa
 <!-- generated:performance start -->
 | Measurement | mermaid in Chromium | mmdg | Ratio |
 |---|---:|---:|---:|
-| One render in a warm process, median of 2144 diagrams | 7.8 ms | 0.53 ms | 15x |
-| The same, 90th percentile | 18.8 ms | 1.82 ms | 10x |
-| Command-line run, flowchart to SVG (`mmdc` and `mmdg`) | 529 ms | 30.5 ms | 17x |
-| Command-line run, flowchart to PNG | 568 ms | 35 ms | 16x |
+| One render in a warm process, median of 2144 diagrams | 9.6 ms | 0.59 ms | 16x |
+| The same, 90th percentile | 22.4 ms | 2.24 ms | 10x |
+| Command-line run, flowchart to SVG (`mmdc` and `mmdg`) | 579 ms | 14.5 ms | 40x |
+| Command-line run, flowchart to PNG | 652 ms | 22.2 ms | 29x |
 
 - The first two rows compare `mermaid.render()` in a Chromium page that stays open with `mermaid.Render` in a Go process that stays running. Both sides are warm.
 - The last two rows compare whole processes. `mmdc` starts a browser in each run.
-- The benchmark ran on 2026-11-22 with Mermaid 12.2.0 and mermaid-cli 12.2.0. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) gives the method and timings by diagram type.
+- The benchmark ran on 2026-11-24 with Mermaid 12.2.0 and mermaid-cli 12.2.0. [docs/PERFORMANCE.md](docs/PERFORMANCE.md) gives the method and timings by diagram type.
 <!-- generated:performance end -->
 
 ## Gallery

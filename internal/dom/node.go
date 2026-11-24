@@ -111,16 +111,40 @@ type Document struct {
 	styleGen uint64
 
 	// nodes and attrs are slab allocators for the nodes and attribute slices
-	// of this document.
+	// of this document. When arena is non-nil, allocations come from the
+	// pooled ParseArena until Release is called.
 	nodes    []Node
 	attrs    []Attr
 	nodeSlab int
 	attrSlab int
+	arena    *ParseArena
+}
+
+// UsePooledArena backs node and attribute allocations of this document with a
+// pooled ParseArena. The caller must call Release when done with the document.
+func (d *Document) UsePooledArena() {
+	if d == nil || d.arena != nil {
+		return
+	}
+	d.arena = acquireParseArena()
+}
+
+// Release returns the document's pooled arena (if any) to the pool. The
+// document and its nodes must not be used after Release.
+func (d *Document) Release() {
+	if d == nil || d.arena == nil {
+		return
+	}
+	d.arena.Release()
+	d.arena = nil
 }
 
 func (d *Document) allocNode() *Node {
 	if d == nil {
 		return &Node{}
+	}
+	if d.arena != nil {
+		return d.arena.allocNode(d)
 	}
 	if len(d.nodes) == 0 {
 		sz := d.nodeSlab
@@ -142,6 +166,9 @@ func (d *Document) allocAttrs(n int) []Attr {
 	if d == nil {
 		return make([]Attr, 0, n)
 	}
+	if d.arena != nil {
+		return d.arena.allocAttrs(n)
+	}
 	if len(d.attrs) < n {
 		sz := d.attrSlab
 		if sz == 0 {
@@ -160,6 +187,14 @@ func (d *Document) allocAttrs(n int) []Attr {
 // NewDocument returns an HTML document that has an empty body.
 func NewDocument() *Document {
 	d := &Document{}
+	d.Body = d.CreateElementNS(NSHTML, "body")
+	return d
+}
+
+// NewPooledDocument returns an HTML document backed by a pooled ParseArena.
+// The caller must call Release when done with the document.
+func NewPooledDocument() *Document {
+	d := &Document{arena: acquireParseArena()}
 	d.Body = d.CreateElementNS(NSHTML, "body")
 	return d
 }
@@ -351,29 +386,28 @@ func (d *Document) CreateComment(data string) *Node {
 	return n
 }
 
-// d3Namespaces is the prefix table of d3-selection (namespaces.js).
-var d3Namespaces = map[string]string{
-	"svg":   NSSVG,
-	"xhtml": NSHTML,
-	"xlink": NSXLink,
-	"xml":   NSXML,
-	"xmlns": NSXMLNS,
-}
-
 // d3Namespace is namespace() of d3-selection. It returns the namespace URI
 // and the local name. The URI is "" when the name has no known prefix. An
 // unknown prefix is dropped, as d3 does.
 func d3Namespace(name string) (space, local string) {
 	prefix := name
-	i := strings.IndexByte(name, ':')
-	if i >= 0 {
+	if i := strings.IndexByte(name, ':'); i >= 0 {
 		prefix = name[:i]
 		if prefix != "xmlns" {
 			name = name[i+1:]
 		}
 	}
-	if uri, ok := d3Namespaces[prefix]; ok {
-		return uri, name
+	switch prefix {
+	case "svg":
+		return NSSVG, name
+	case "xhtml":
+		return NSHTML, name
+	case "xlink":
+		return NSXLink, name
+	case "xml":
+		return NSXML, name
+	case "xmlns":
+		return NSXMLNS, name
 	}
 	return "", name
 }
@@ -670,8 +704,14 @@ func (n *Node) setAttrNS(space, qname, value string) {
 	} else if n.NS == NSHTML {
 		a.Local = lowerASCII(qname)
 	}
-	if n.Attrs == nil && n.doc != nil {
-		n.Attrs = n.doc.allocAttrs(4)
+	if n.doc != nil {
+		if n.Attrs == nil {
+			n.Attrs = n.doc.allocAttrs(4)
+		} else if len(n.Attrs) == cap(n.Attrs) {
+			grown := n.doc.allocAttrs(max(cap(n.Attrs)*2, 8))
+			grown = append(grown, n.Attrs...)
+			n.Attrs = grown
+		}
 	}
 	n.Attrs = append(n.Attrs, a)
 	n.touch()

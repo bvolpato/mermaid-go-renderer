@@ -7,7 +7,76 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"sync"
 )
+
+var (
+	emptyStrAny any = ""
+	asciiStrAny [128]any
+)
+
+func init() {
+	for i := range asciiStrAny {
+		asciiStrAny[i] = string(byte(i))
+	}
+}
+
+func boxString(s string) any {
+	if len(s) == 0 {
+		return emptyStrAny
+	}
+	if len(s) == 1 && s[0] < 128 {
+		return asciiStrAny[s[0]]
+	}
+	return s
+}
+
+// vslot holds a semantic value on the parser value stack without boxing shifted
+// token strings into any unless an action reads V(i) or uses $1 as Result.
+type vslot struct {
+	val   any
+	str   string
+	isStr bool
+}
+
+type parseScratch struct {
+	lexer  Lexer
+	state  ParserState
+	stack  []int
+	vstack []vslot
+	lstack []Location
+}
+
+var parseScratchPool = sync.Pool{
+	New: func() any {
+		return &parseScratch{
+			lexer:  Lexer{sink: newMatchSink()},
+			stack:  make([]int, 0, 64),
+			vstack: make([]vslot, 0, 32),
+			lstack: make([]Location, 0, 32),
+		}
+	},
+}
+
+const maxPooledStackCap = 4096
+
+func releaseParseScratch(sc *parseScratch) {
+	clear(sc.vstack[:cap(sc.vstack)])
+	sc.state = ParserState{}
+	lx := &sc.lexer
+	lx.g = nil
+	lx.yy = nil
+	lx.action = nil
+	lx.parseError = nil
+	lx.Yytext = ""
+	lx.err = nil
+	clear(lx.condNames[:cap(lx.condNames)])
+	clear(lx.unknown[:cap(lx.unknown)])
+	if cap(sc.stack) > maxPooledStackCap || cap(sc.vstack) > maxPooledStackCap || cap(sc.lstack) > maxPooledStackCap || cap(lx.buf) > 1<<18 {
+		return
+	}
+	parseScratchPool.Put(sc)
+}
 
 // Error is a JavaScript exception from the generated parser or lexer.
 // Message is error.message and Hash is error.hash.
@@ -56,7 +125,7 @@ type ParserState struct {
 	// Lexer is the lexer of the parse (yy.lexer).
 	Lexer *Lexer
 
-	vstack []any
+	vstack []vslot
 	lstack []Location
 	n      int // the length of the right side
 }
@@ -69,12 +138,24 @@ func (s *ParserState) V(i int) any {
 	if k < 0 || k >= len(s.vstack) {
 		return nil
 	}
-	return s.vstack[k]
+	slot := s.vstack[k]
+	if slot.isStr {
+		return boxString(slot.str)
+	}
+	return slot.val
 }
 
 // S returns $i when it is a string, and "" in all other cases.
 func (s *ParserState) S(i int) string {
-	v, _ := s.V(i).(string)
+	k := len(s.vstack) - 1 - (s.n - i)
+	if k < 0 || k >= len(s.vstack) {
+		return ""
+	}
+	slot := s.vstack[k]
+	if slot.isStr {
+		return slot.str
+	}
+	v, _ := slot.val.(string)
 	return v
 }
 
@@ -119,7 +200,12 @@ func (p *Parser) Parse(input string) (any, error) {
 	if err := g.init(); err != nil {
 		return nil, err
 	}
-	lexer := &Lexer{g: g, action: p.LexAction, sink: newMatchSink()}
+	sc := parseScratchPool.Get().(*parseScratch)
+	defer releaseParseScratch(sc)
+
+	lexer := &sc.lexer
+	lexer.g = g
+	lexer.action = p.LexAction
 	if lexer.action == nil {
 		lexer.action = g.LexAction
 	}
@@ -135,10 +221,16 @@ func (p *Parser) Parse(input string) (any, error) {
 	}
 	lexer.parseError = parseError
 
-	stack := make([]int, 1, 64) // states and symbols in turn
-	vstack := make([]any, 1, 32)
-	lstack := make([]Location, 0, 32)
-	state := &ParserState{Lexer: lexer}
+	stack := append(sc.stack[:0], 0)
+	vstack := append(sc.vstack[:0], vslot{})
+	lstack := sc.lstack[:0]
+	state := &sc.state
+	*state = ParserState{Lexer: lexer}
+	defer func() {
+		sc.stack = stack
+		sc.vstack = vstack
+		sc.lstack = lstack
+	}()
 	var (
 		yytext      string
 		yylineno    int
@@ -288,7 +380,7 @@ func (p *Parser) Parse(input string) (any, error) {
 		switch action & 3 {
 		case actShift:
 			stack = append(stack, symbol)
-			vstack = append(vstack, lexer.Yytext)
+			vstack = append(vstack, vslot{str: lexer.Yytext, isStr: true})
 			lstack = append(lstack, lexer.Yylloc)
 			stack = append(stack, int(action>>2))
 			symbol = -1
@@ -314,7 +406,12 @@ func (p *Parser) Parse(input string) (any, error) {
 			state.lstack = lstack
 			state.Yytext, state.Yyleng, state.Yylineno = yytext, yyleng, yylineno
 			if n > 0 {
-				state.Result = vstack[len(vstack)-n]
+				slot := vstack[len(vstack)-n]
+				if slot.isStr {
+					state.Result = boxString(slot.str)
+				} else {
+					state.Result = slot.val
+				}
 			} else {
 				state.Result = nil
 			}
@@ -351,7 +448,7 @@ func (p *Parser) Parse(input string) (any, error) {
 				lstack = lstack[:len(lstack)-n]
 			}
 			lhs := int(productions[2*production])
-			vstack = append(vstack, state.Result)
+			vstack = append(vstack, vslot{val: state.Result})
 			lstack = append(lstack, state.Loc)
 			newState := g.action[stack[len(stack)-1]*numSymbols+lhs]
 			stack = append(stack, lhs, int(newState>>2))

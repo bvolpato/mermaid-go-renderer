@@ -140,6 +140,28 @@ func TestPageSheetsMatchAssets(t *testing.T) {
 			t.Errorf("%s: CSSOM record is stale. Run tools/reference/gen-mmdc-sheets.mjs", asset.Path)
 		}
 	}
+	// Verify baseFontSheets stays byte-identical to cssom.json.gz.
+	byPath := make(map[string]pageSheet, len(sheets))
+	for _, s := range sheets {
+		byPath[s.Path] = s
+	}
+	for _, bs := range baseFontSheets {
+		full, ok := byPath[bs.Path]
+		if !ok {
+			t.Errorf("baseFontSheets entry %s missing from cssom.json.gz", bs.Path)
+			continue
+		}
+		if bs.SHA256 != full.SHA256 || len(bs.Rules) != len(full.Rules) {
+			t.Errorf("baseFontSheets entry %s is stale relative to cssom.json.gz", bs.Path)
+			continue
+		}
+		for i := range bs.Rules {
+			a, b := bs.Rules[i], full.Rules[i]
+			if a.Kind != b.Kind || a.Family != b.Family || a.Src != b.Src || a.Text != b.Text {
+				t.Errorf("baseFontSheets[%s].Rules[%d] differs from cssom.json.gz", bs.Path, i)
+			}
+		}
+	}
 }
 
 var fontPayload = regexp.MustCompile(`(data:[^;,"]*;base64,)([A-Za-z0-9+/=]+)`)

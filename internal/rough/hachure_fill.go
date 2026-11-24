@@ -65,24 +65,33 @@ type hachureEdge struct {
 }
 
 func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOffset float64) [][2]*Point {
-	vertexArray := [][]*Point{}
+	vertexArray := make([][]*Point, 0, len(polygons))
+	maxEdges := 0
 	for _, polygon := range polygons {
 		if len(polygon) == 0 {
 			// areSamePoints(vertices[0], ...) reads vertices[0][0].
 			throw("TypeError", "Cannot read properties of undefined (reading '0')")
 		}
-		vertices := append([]*Point{}, polygon...)
-		if !areSamePoints(vertices[0], vertices[len(vertices)-1]) {
-			vertices = append(vertices, &Point{vertices[0][0], vertices[0][1]})
+		needClose := !areSamePoints(polygon[0], polygon[len(polygon)-1])
+		n := len(polygon)
+		if needClose {
+			n++
 		}
-		if len(vertices) > 2 {
+		if n > 2 {
+			vertices := make([]*Point, len(polygon), n)
+			copy(vertices, polygon)
+			if needClose {
+				vertices = append(vertices, &Point{vertices[0][0], vertices[0][1]})
+			}
 			vertexArray = append(vertexArray, vertices)
+			maxEdges += len(vertices) - 1
 		}
 	}
 	lines := [][2]*Point{}
 	gap = js.Max(gap, 0.1)
 	// Create sorted edges table
-	edges := []*hachureEdge{}
+	edgeBuf := make([]hachureEdge, 0, maxEdges)
+	edges := make([]*hachureEdge, 0, maxEdges)
 	for _, vertices := range vertexArray {
 		for i := 0; i < len(vertices)-1; i++ {
 			p1 := vertices[i]
@@ -93,12 +102,13 @@ func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOff
 				if ymin == p1[1] {
 					x = p1[0]
 				}
-				edges = append(edges, &hachureEdge{
+				edgeBuf = append(edgeBuf, hachureEdge{
 					ymin:   ymin,
 					ymax:   js.Max(p1[1], p2[1]),
 					x:      x,
 					islope: (p2[0] - p1[0]) / (p2[1] - p1[1]),
 				})
+				edges = append(edges, &edgeBuf[len(edgeBuf)-1])
 			}
 		}
 	}

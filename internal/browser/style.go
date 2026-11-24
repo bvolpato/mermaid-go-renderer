@@ -71,6 +71,11 @@ type ruleSet struct {
 	deps dom.SelectorDeps
 }
 
+type declEntry struct {
+	name  string
+	value string
+}
+
 // nodeStyle is cached in dom.Node.Cache.
 //
 // A drawing changes the document between its measurements: it appends an
@@ -86,13 +91,17 @@ type nodeStyle struct {
 	gen uint64
 	// rules and at are the rule set that the cascade read and the
 	// generation of the document at that time.
-	rules    *ruleSet
-	at       uint64
-	declared map[string]string // winning declarations on this element
-	fromAttr map[string]bool   // the value comes from a presentation attribute
-	text     *textStyle
-	layout   any // layout cache of the engine (text or HTML layout)
-	layoutOK bool
+	rules *ruleSet
+	at    uint64
+	// decls holds winning declarations on this element, backed by an Engine
+	// slab. propMask tracks presence of hot CSS properties plus custom
+	// properties (bitCustomProp) and border longhands (bitBorderLonghands).
+	decls        []declEntry
+	propMask     uint64
+	fromAttrMask uint64 // bitmask of presentationAttrBit currently from presentation attrs
+	text         *textStyle
+	layout       any // layout cache of the engine (text or HTML layout)
+	layoutOK     bool
 	// pseudo has the boxes of the pseudo-elements of the element, or nil
 	// when they are not known yet. They depend on what the cascade of the
 	// element depends on. See pseudo.go.
@@ -100,6 +109,264 @@ type nodeStyle struct {
 	// Math presence depends on the subtree, not only on the cascade.
 	mathGen uint64
 	hasMath bool
+}
+
+const (
+	// Text-inheriting properties (bits 0..10).
+	bitFontFamily uint64 = 1 << iota
+	bitFontSize
+	bitFontWeight
+	bitFontStyle
+	bitLineHeight
+	bitWhiteSpace
+	bitLetterSpacing
+	bitTextAnchor
+	bitTextAlign
+	bitTextTransform
+	bitVisibility
+	// Layout / SVG / Transform / Box / Paint properties (bits 11..61).
+	bitDisplay
+	bitTransform
+	bitTransformOrigin
+	bitTranslate
+	bitRotate
+	bitScale
+	bitDominantBaseline
+	bitAlignmentBaseline
+	bitBaselineShift
+	bitVerticalAlign
+	bitWidth
+	bitHeight
+	bitMinWidth
+	bitMaxWidth
+	bitMinHeight
+	bitMaxHeight
+	bitMarginTop
+	bitMarginRight
+	bitMarginBottom
+	bitMarginLeft
+	bitPaddingTop
+	bitPaddingRight
+	bitPaddingBottom
+	bitPaddingLeft
+	bitBorder
+	bitBorderTop
+	bitBorderRight
+	bitBorderBottom
+	bitBorderLeft
+	bitBoxSizing
+	bitPosition
+	bitContent
+	bitD
+	bitX
+	bitY
+	bitRx
+	bitRy
+	bitCx
+	bitCy
+	bitR
+	bitOverflow
+	bitOverflowWrap
+	bitWordBreak
+	bitColor
+	bitFill
+	bitStroke
+	bitStrokeWidth
+	bitOpacity
+	bitFilter
+	bitClipPath
+	bitMask
+	// Sentinel bits (62..63).
+	bitCustomProp
+	bitBorderLonghands
+)
+
+const textPropsMask = bitFontFamily | bitFontSize | bitFontWeight | bitFontStyle |
+	bitLineHeight | bitWhiteSpace | bitLetterSpacing | bitTextAnchor |
+	bitTextAlign | bitTextTransform | bitVisibility
+
+func propBit(name string) uint64 {
+	switch name {
+	case "font-family":
+		return bitFontFamily
+	case "font-size":
+		return bitFontSize
+	case "font-weight":
+		return bitFontWeight
+	case "font-style":
+		return bitFontStyle
+	case "line-height":
+		return bitLineHeight
+	case "white-space":
+		return bitWhiteSpace
+	case "letter-spacing":
+		return bitLetterSpacing
+	case "text-anchor":
+		return bitTextAnchor
+	case "text-align":
+		return bitTextAlign
+	case "text-transform":
+		return bitTextTransform
+	case "visibility":
+		return bitVisibility
+	case "display":
+		return bitDisplay
+	case "transform":
+		return bitTransform
+	case "transform-origin":
+		return bitTransformOrigin
+	case "translate":
+		return bitTranslate
+	case "rotate":
+		return bitRotate
+	case "scale":
+		return bitScale
+	case "dominant-baseline":
+		return bitDominantBaseline
+	case "alignment-baseline":
+		return bitAlignmentBaseline
+	case "baseline-shift":
+		return bitBaselineShift
+	case "vertical-align":
+		return bitVerticalAlign
+	case "width":
+		return bitWidth
+	case "height":
+		return bitHeight
+	case "min-width":
+		return bitMinWidth
+	case "max-width":
+		return bitMaxWidth
+	case "min-height":
+		return bitMinHeight
+	case "max-height":
+		return bitMaxHeight
+	case "margin-top":
+		return bitMarginTop
+	case "margin-right":
+		return bitMarginRight
+	case "margin-bottom":
+		return bitMarginBottom
+	case "margin-left":
+		return bitMarginLeft
+	case "padding-top":
+		return bitPaddingTop
+	case "padding-right":
+		return bitPaddingRight
+	case "padding-bottom":
+		return bitPaddingBottom
+	case "padding-left":
+		return bitPaddingLeft
+	case "border":
+		return bitBorder
+	case "border-top":
+		return bitBorderTop
+	case "border-right":
+		return bitBorderRight
+	case "border-bottom":
+		return bitBorderBottom
+	case "border-left":
+		return bitBorderLeft
+	case "box-sizing":
+		return bitBoxSizing
+	case "position":
+		return bitPosition
+	case "content":
+		return bitContent
+	case "d":
+		return bitD
+	case "x":
+		return bitX
+	case "y":
+		return bitY
+	case "rx":
+		return bitRx
+	case "ry":
+		return bitRy
+	case "cx":
+		return bitCx
+	case "cy":
+		return bitCy
+	case "r":
+		return bitR
+	case "overflow":
+		return bitOverflow
+	case "overflow-wrap":
+		return bitOverflowWrap
+	case "word-break":
+		return bitWordBreak
+	case "color":
+		return bitColor
+	case "fill":
+		return bitFill
+	case "stroke":
+		return bitStroke
+	case "stroke-width":
+		return bitStrokeWidth
+	case "opacity":
+		return bitOpacity
+	case "filter":
+		return bitFilter
+	case "clip-path":
+		return bitClipPath
+	case "mask":
+		return bitMask
+	}
+	return 0
+}
+
+func (st *nodeStyle) setDecl(e *Engine, name, value string) {
+	if name == borderLonghandsMark {
+		st.propMask |= bitBorderLonghands
+		return
+	}
+	bit := propBit(name)
+	if bit != 0 {
+		if st.propMask&bit != 0 {
+			for i := range st.decls {
+				if st.decls[i].name == name {
+					st.decls[i].value = value
+					return
+				}
+			}
+		}
+		st.propMask |= bit
+	} else {
+		if len(name) >= 2 && name[0] == '-' && name[1] == '-' {
+			st.propMask |= bitCustomProp
+		}
+		for i := range st.decls {
+			if st.decls[i].name == name {
+				st.decls[i].value = value
+				return
+			}
+		}
+	}
+	if len(st.decls) == cap(st.decls) {
+		st.decls = e.growDecls(st.decls)
+	}
+	st.decls = append(st.decls, declEntry{name: name, value: value})
+}
+
+func (st *nodeStyle) getDeclRaw(prop string) (string, bool) {
+	if len(st.decls) == 0 {
+		return "", false
+	}
+	if bit := propBit(prop); bit != 0 {
+		if st.propMask&bit == 0 {
+			return "", false
+		}
+	} else if len(prop) >= 2 && prop[0] == '-' && prop[1] == '-' {
+		if st.propMask&bitCustomProp == 0 {
+			return "", false
+		}
+	}
+	for i := range st.decls {
+		if st.decls[i].name == prop {
+			return st.decls[i].value, true
+		}
+	}
+	return "", false
 }
 
 // firstBytes is a set of bytes: the first bytes of the names of an index of
@@ -117,33 +384,135 @@ func (f *firstBytes) has(name string) bool {
 	return name != "" && f[name[0]>>6]&(1<<(name[0]&63)) != 0
 }
 
-// presentationAttrs are the SVG attributes that act as CSS declarations.
-var presentationAttrs = map[string]bool{
-	"alignment-baseline": true, "baseline-shift": true, "clip-path": true, "clip-rule": true, "color": true,
-	"cursor": true, "direction": true, "display": true, "dominant-baseline": true, "fill": true,
-	"fill-opacity": true, "fill-rule": true, "filter": true, "flood-color": true, "flood-opacity": true,
-	"font-family": true, "font-size": true, "font-style": true, "font-variant": true, "font-weight": true,
-	"letter-spacing": true, "marker-end": true, "marker-mid": true, "marker-start": true, "mask": true,
-	"opacity": true, "overflow": true, "paint-order": true, "pointer-events": true, "shape-rendering": true,
-	"stop-color": true, "stop-opacity": true, "stroke": true, "stroke-dasharray": true, "stroke-dashoffset": true,
-	"stroke-linecap": true, "stroke-linejoin": true, "stroke-miterlimit": true, "stroke-opacity": true,
-	"stroke-width": true, "text-anchor": true, "text-decoration": true, "text-rendering": true,
-	"transform-origin": true, "unicode-bidi": true, "vector-effect": true, "visibility": true,
-	"word-spacing": true, "writing-mode": true, "white-space": true,
+const (
+	presBitFontSize      uint64 = 1 << 16
+	presBitLetterSpacing uint64 = 1 << 20
+)
+
+// presentationAttrBit returns a unique non-zero bit (bits 0..47) for SVG
+// presentation attributes, or 0 for non-presentation attributes.
+func presentationAttrBit(name string) uint64 {
+	switch name {
+	case "alignment-baseline":
+		return 1 << 0
+	case "baseline-shift":
+		return 1 << 1
+	case "clip-path":
+		return 1 << 2
+	case "clip-rule":
+		return 1 << 3
+	case "color":
+		return 1 << 4
+	case "cursor":
+		return 1 << 5
+	case "direction":
+		return 1 << 6
+	case "display":
+		return 1 << 7
+	case "dominant-baseline":
+		return 1 << 8
+	case "fill":
+		return 1 << 9
+	case "fill-opacity":
+		return 1 << 10
+	case "fill-rule":
+		return 1 << 11
+	case "filter":
+		return 1 << 12
+	case "flood-color":
+		return 1 << 13
+	case "flood-opacity":
+		return 1 << 14
+	case "font-family":
+		return 1 << 15
+	case "font-size":
+		return presBitFontSize
+	case "font-style":
+		return 1 << 17
+	case "font-variant":
+		return 1 << 18
+	case "font-weight":
+		return 1 << 19
+	case "letter-spacing":
+		return presBitLetterSpacing
+	case "marker-end":
+		return 1 << 21
+	case "marker-mid":
+		return 1 << 22
+	case "marker-start":
+		return 1 << 23
+	case "mask":
+		return 1 << 24
+	case "opacity":
+		return 1 << 25
+	case "overflow":
+		return 1 << 26
+	case "paint-order":
+		return 1 << 27
+	case "pointer-events":
+		return 1 << 28
+	case "shape-rendering":
+		return 1 << 29
+	case "stop-color":
+		return 1 << 30
+	case "stop-opacity":
+		return 1 << 31
+	case "stroke":
+		return 1 << 32
+	case "stroke-dasharray":
+		return 1 << 33
+	case "stroke-dashoffset":
+		return 1 << 34
+	case "stroke-linecap":
+		return 1 << 35
+	case "stroke-linejoin":
+		return 1 << 36
+	case "stroke-miterlimit":
+		return 1 << 37
+	case "stroke-opacity":
+		return 1 << 38
+	case "stroke-width":
+		return 1 << 39
+	case "text-anchor":
+		return 1 << 40
+	case "text-decoration":
+		return 1 << 41
+	case "text-rendering":
+		return 1 << 42
+	case "transform-origin":
+		return 1 << 43
+	case "unicode-bidi":
+		return 1 << 44
+	case "vector-effect":
+		return 1 << 45
+	case "visibility":
+		return 1 << 46
+	case "word-spacing":
+		return 1 << 47
+	case "writing-mode":
+		return 1 << 48
+	case "white-space":
+		return 1 << 49
+	}
+	return 0
 }
 
-// inheritedProps are the CSS properties that inherit by default.
-var inheritedProps = map[string]bool{
-	"color": true, "cursor": true, "direction": true, "fill": true, "fill-opacity": true, "fill-rule": true,
-	"font-family": true, "font-size": true, "font-style": true, "font-variant": true, "font-weight": true,
-	"letter-spacing": true, "line-height": true, "marker-end": true, "marker-mid": true, "marker-start": true,
-	"paint-order": true, "pointer-events": true, "shape-rendering": true, "stroke": true,
-	"stroke-dasharray": true, "stroke-dashoffset": true, "stroke-linecap": true, "stroke-linejoin": true,
-	"stroke-miterlimit": true, "stroke-opacity": true, "stroke-width": true, "text-align": true,
-	"text-anchor": true, "text-rendering": true, "text-transform": true, "visibility": true,
-	"white-space": true, "word-break": true, "word-spacing": true, "overflow-wrap": true,
-	"dominant-baseline": true, "clip-rule": true, "text-indent": true, "list-style-type": true,
-	"border-collapse": true, "writing-mode": true, "font-kerning": true, "tab-size": true,
+// isInheritedProp reports whether prop is a CSS property that inherits by default.
+func isInheritedProp(prop string) bool {
+	switch prop {
+	case "color", "cursor", "direction", "fill", "fill-opacity", "fill-rule",
+		"font-family", "font-size", "font-style", "font-variant", "font-weight",
+		"letter-spacing", "line-height", "marker-end", "marker-mid", "marker-start",
+		"paint-order", "pointer-events", "shape-rendering", "stroke",
+		"stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin",
+		"stroke-miterlimit", "stroke-opacity", "stroke-width", "text-align",
+		"text-anchor", "text-rendering", "text-transform", "visibility",
+		"white-space", "word-break", "word-spacing", "overflow-wrap",
+		"dominant-baseline", "clip-rule", "text-indent", "list-style-type",
+		"border-collapse", "writing-mode", "font-kerning", "tab-size":
+		return true
+	}
+	return false
 }
 
 // ruleSets has the rule set of a document by the text of its style
@@ -258,12 +627,12 @@ func (e *Engine) styleOf(n *dom.Node) *nodeStyle {
 			st.gen = gen
 			return st
 		}
+		// Reuse the existing nodeStyle slot in place.
+		*st = nodeStyle{gen: gen, at: gen}
+		e.cascade(n, st)
+		return st
 	}
-	if len(e.styleSlab) == 0 {
-		e.styleSlab = make([]nodeStyle, 32)
-	}
-	st = &e.styleSlab[0]
-	e.styleSlab = e.styleSlab[1:]
+	st = e.allocNodeStyle()
 	st.gen = gen
 	st.at = gen
 	n.Cache = st
@@ -295,7 +664,7 @@ func (e *Engine) cascadeIsCurrent(n *dom.Node, st *nodeStyle) bool {
 	}
 	rs := e.collectRules(n.Document())
 	deps := rs.deps
-	if page := e.pageRules(n.Document()); page != nil {
+	if page := e.pageRulesFor(n.Document(), n); page != nil {
 		deps |= page.deps
 	}
 	if st.rules != rs || deps&dom.DepsOther != 0 {
@@ -342,7 +711,6 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 		return
 	}
 	if n.NS == pseudoNS {
-		st.declared = map[string]string{}
 		e.cascadePseudo(n, st)
 		return
 	}
@@ -350,15 +718,11 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	if n.NS == dom.NSSVG {
 		for i := range n.Attrs {
 			a := &n.Attrs[i]
-			if a.NS == "" && presentationAttrs[a.Local] {
-				if st.declared == nil {
-					st.declared = make(map[string]string, 4)
+			if a.NS == "" {
+				if bit := presentationAttrBit(a.Local); bit != 0 {
+					st.setDecl(e, a.Local, strings.TrimSpace(a.Value))
+					st.fromAttrMask |= bit
 				}
-				if st.fromAttr == nil {
-					st.fromAttr = map[string]bool{}
-				}
-				st.declared[a.Local] = strings.TrimSpace(a.Value)
-				st.fromAttr[a.Local] = true
 			}
 		}
 	}
@@ -366,7 +730,7 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	// elements of the document.
 	rs := e.collectRules(n.Document())
 	st.rules = rs
-	page := e.pageRules(n.Document())
+	page := e.pageRulesFor(n.Document(), n)
 	matchBase := len(e.matchBuf)
 	// The classes of the ancestors of n, collected for the first rule that
 	// needs one of them. Most rules of a style sheet of mermaid are for the
@@ -429,7 +793,7 @@ func (e *Engine) cascade(n *dom.Node, st *nodeStyle) {
 	e.inlineBuf = n.AppendInlineStyleDecls(e.inlineBuf)
 	inline := e.inlineBuf[inlineBase:]
 	ms := e.matchBuf[matchBase:]
-	if len(ms) > 0 || len(inline) > 0 || len(st.fromAttr) > 0 {
+	if len(ms) > 0 || len(inline) > 0 || st.fromAttrMask != 0 {
 		e.applyCascade(n, st, ms, inline)
 	}
 	clear(e.inlineBuf[inlineBase:])
@@ -476,8 +840,8 @@ func (e *Engine) applyCascade(n *dom.Node, st *nodeStyle, ms []matched, inline [
 			return cmp.Compare(a.order, b.order)
 		})
 	}
-	if st.declared == nil {
-		st.declared = make(map[string]string, len(ms)+len(inline))
+	if st.decls == nil && len(ms)+len(inline) > 0 {
+		st.decls = e.allocDecls(min(len(ms)+len(inline), 16))
 	}
 	hasCustom := false
 	firstImportant := len(ms)
@@ -517,13 +881,16 @@ func (e *Engine) applyCascade(n *dom.Node, st *nodeStyle, ms []matched, inline [
 		}
 	}
 	// A presentation attribute can have var() references too.
-	for name := range st.fromAttr {
-		if value := st.declared[name]; hasVar(value) {
-			resolved, ok := e.resolveVars(n, value)
-			if !ok {
-				resolved = unsetValue
+	if st.fromAttrMask != 0 {
+		for i := range st.decls {
+			d := &st.decls[i]
+			if bit := presentationAttrBit(d.name); bit != 0 && st.fromAttrMask&bit != 0 && hasVar(d.value) {
+				resolved, ok := e.resolveVars(n, d.value)
+				if !ok {
+					resolved = unsetValue
+				}
+				d.value = resolved
 			}
-			st.declared[name] = resolved
 		}
 	}
 	for i := 0; i < firstImportant; i++ {
@@ -554,9 +921,9 @@ func (e *Engine) applyCascadeDecl(n *dom.Node, st *nodeStyle, d *css.Decl, custo
 		if !ok {
 			// Invalid at computed-value time: the property acts as unset.
 			for _, name := range longhandsOf(d.Name) {
-				st.declared[name] = unsetValue
-				if st.fromAttr != nil {
-					delete(st.fromAttr, name)
+				st.setDecl(e, name, unsetValue)
+				if st.fromAttrMask != 0 {
+					st.fromAttrMask &^= presentationAttrBit(name)
 				}
 			}
 			return
@@ -570,22 +937,22 @@ func (e *Engine) applyCascadeDecl(n *dom.Node, st *nodeStyle, d *css.Decl, custo
 		// time, and the property acts as unset.
 		if _, ok := css.ParseContent(value); !ok {
 			if value != d.Value {
-				st.declared[d.Name] = unsetValue
+				st.setDecl(e, d.Name, unsetValue)
 			}
 			return
 		}
 	}
 	if !isShorthandOrSpecialDecl(d.Name) {
-		st.declared[d.Name] = value
-		if st.fromAttr != nil {
-			delete(st.fromAttr, d.Name)
+		st.setDecl(e, d.Name, value)
+		if st.fromAttrMask != 0 {
+			st.fromAttrMask &^= presentationAttrBit(d.Name)
 		}
 		return
 	}
 	expandDecl(d.Name, value, func(name, val string) {
-		st.declared[name] = val
-		if st.fromAttr != nil {
-			delete(st.fromAttr, name)
+		st.setDecl(e, name, val)
+		if st.fromAttrMask != 0 {
+			st.fromAttrMask &^= presentationAttrBit(name)
 		}
 	})
 }
@@ -751,8 +1118,8 @@ func isCSSResetKeyword(v string) bool {
 	return false
 }
 
-func declVal(m map[string]string, prop string) (string, bool) {
-	v, ok := m[prop]
+func declVal(st *nodeStyle, prop string) (string, bool) {
+	v, ok := st.getDeclRaw(prop)
 	if ok && isCSSResetKeyword(v) {
 		return "", false
 	}
@@ -764,13 +1131,13 @@ func (e *Engine) declared(n *dom.Node, prop string) (string, bool) {
 	if n == nil || n.Type != dom.ElementNode {
 		return "", false
 	}
-	return declVal(e.styleOf(n).declared, prop)
+	return declVal(e.styleOf(n), prop)
 }
 
 // lookup returns the value of a property with inheritance, or "" when no
 // element in the chain declares it.
 func (e *Engine) lookup(n *dom.Node, prop string) string {
-	inherits := inheritedProps[prop]
+	inherits := isInheritedProp(prop)
 	for cur := n; cur != nil && cur.Type == dom.ElementNode; cur = cur.Parent {
 		if v, ok := e.declared(cur, prop); ok {
 			if strings.EqualFold(v, "inherit") {
@@ -842,17 +1209,30 @@ func (ts *textStyle) lineHeightPx(m font.Metrics) float64 {
 	return m.LineSpacing
 }
 
-var uaBold = map[string]bool{"b": true, "strong": true, "th": true, "h1": true, "h2": true, "h3": true, "h4": true, "h5": true, "h6": true}
-var uaItalic = map[string]bool{"i": true, "em": true, "cite": true, "var": true, "dfn": true, "address": true}
-var uaMono = map[string]bool{"code": true, "kbd": true, "samp": true, "tt": true, "pre": true}
-var uaHeadingSize = map[string]float64{"h1": 2, "h2": 1.5, "h3": 1.17, "h4": 1, "h5": 0.83, "h6": 0.67}
-
-var uaTextTags = map[string]bool{
-	"b": true, "strong": true, "th": true, "h1": true, "h2": true, "h3": true, "h4": true, "h5": true, "h6": true,
-	"i": true, "em": true, "cite": true, "var": true, "dfn": true, "address": true,
-	"code": true, "kbd": true, "samp": true, "tt": true, "pre": true,
-	"small": true, "sub": true, "sup": true, "center": true,
+func isUATextTag(tag string) bool {
+	switch tag {
+	case "b", "strong", "th", "h1", "h2", "h3", "h4", "h5", "h6",
+		"i", "em", "cite", "var", "dfn", "address",
+		"code", "kbd", "samp", "tt", "pre",
+		"small", "sub", "sup", "center":
+		return true
+	}
+	return false
 }
+
+var (
+	monoFamilies     = []string{"monospace"}
+	defaultTextStyle = textStyle{
+		families:    []string{"serif"},
+		size:        16,
+		weight:      400,
+		whiteSpace:  "normal",
+		textAnchor:  "start",
+		textAlign:   "start",
+		visibility:  "visible",
+		sizeKeyword: 4, // fontSizeKeywordIndex["medium"]
+	}
+)
 
 func hasXMLSpacePreserve(n *dom.Node) bool {
 	for i := range n.Attrs {
@@ -867,15 +1247,14 @@ func hasXMLSpacePreserve(n *dom.Node) bool {
 func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	if n == nil || n.Type != dom.ElementNode {
 		// The initial values: the default font of the browser.
-		return &textStyle{families: []string{"serif"}, size: 16, weight: 400, whiteSpace: "normal", textAnchor: "start", textAlign: "start", visibility: "visible", sizeKeyword: fontSizeKeywordIndex["medium"]}
+		return &defaultTextStyle
 	}
 	st := e.styleOf(n)
 	if st.text != nil {
 		return st.text
 	}
 	parent := e.textStyleOf(n.Parent)
-	decls := st.declared
-	if len(decls) == 0 && n.NS != dom.NSMathML && (n.NS != dom.NSHTML || !uaTextTags[n.Tag]) && !hasXMLSpacePreserve(n) {
+	if st.propMask&textPropsMask == 0 && n.NS != dom.NSMathML && (n.NS != dom.NSHTML || !isUATextTag(n.Tag)) && !hasXMLSpacePreserve(n) {
 		st.text = parent
 		return parent
 	}
@@ -888,134 +1267,181 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 		e.mathStyleDefaults(n, &ts, parent)
 	}
 	if n.NS == dom.NSHTML {
-		switch {
-		case n.Tag == "b" || n.Tag == "strong":
+		switch n.Tag {
+		case "b", "strong":
 			// The style sheet of the user agent has font-weight: bolder
 			// for b and strong: in a bold parent they have the weight 900.
 			ts.weight = resolveFontWeight("bolder", parent.weight)
-		case uaBold[n.Tag]:
-			ts.weight = 700
-		case uaItalic[n.Tag]:
-			ts.italic = true
-		case uaMono[n.Tag]:
-			ts.families = []string{"monospace"}
-		}
-		if f, ok := uaHeadingSize[n.Tag]; ok {
-			ts.size = float64(parent.size * f)
-			ts.sizeKeyword = 0
-		}
-		switch n.Tag {
-		case "small":
-			ts.size = parent.size * 5 / 6
-			ts.sizeKeyword = 0
-		case "sub", "sup":
-			ts.size = parent.size * 5 / 6
-			ts.sizeKeyword = 0
-		case "pre":
-			ts.whiteSpace = "pre"
-		case "center":
-			ts.textAlign = "center"
 		case "th":
+			ts.weight = 700
+			ts.textAlign = "center"
+		case "h1":
+			ts.weight = 700
+			ts.size = float64(parent.size * 2)
+			ts.sizeKeyword = 0
+		case "h2":
+			ts.weight = 700
+			ts.size = float64(parent.size * 1.5)
+			ts.sizeKeyword = 0
+		case "h3":
+			ts.weight = 700
+			ts.size = float64(parent.size * 1.17)
+			ts.sizeKeyword = 0
+		case "h4":
+			ts.weight = 700
+			ts.size = float64(parent.size * 1)
+			ts.sizeKeyword = 0
+		case "h5":
+			ts.weight = 700
+			ts.size = float64(parent.size * 0.83)
+			ts.sizeKeyword = 0
+		case "h6":
+			ts.weight = 700
+			ts.size = float64(parent.size * 0.67)
+			ts.sizeKeyword = 0
+		case "i", "em", "cite", "var", "dfn", "address":
+			ts.italic = true
+		case "code", "kbd", "samp", "tt":
+			ts.families = monoFamilies
+		case "pre":
+			ts.families = monoFamilies
+			ts.whiteSpace = "pre"
+		case "small", "sub", "sup":
+			ts.size = parent.size * 5 / 6
+			ts.sizeKeyword = 0
+		case "center":
 			ts.textAlign = "center"
 		}
 	}
 
-	fromAttr := st.fromAttr
-	if v, ok := declVal(decls, "font-family"); ok && !inherit(v) {
-		ts.families = css.SplitFontFamily(v)
+	if st.propMask&bitFontFamily != 0 {
+		if v, ok := declVal(st, "font-family"); ok && !inherit(v) {
+			ts.families = css.SplitFontFamily(v)
+		}
 	}
-	if v, ok := declVal(decls, "font-size"); ok && !inherit(v) {
-		if f, ok := exValue(v); ok {
-			// The ex of font-size is the x-height of the font of the
-			// parent. The computed font size is a float32.
-			ts.size = float64(float32(f * e.exSize(parent)))
-			ts.sizeKeyword = 0
-		} else if px, ok := e.calcFontSize(v, parent); ok {
-			ts.size = px
-			ts.sizeKeyword, ts.sizeAbsolute = 0, true
-		} else if px, ok := resolveFontSize(v, parent.size, fromAttr["font-size"]); ok {
-			ts.size = px
-			if keyword := fontSizeKeywordIndex[strings.ToLower(strings.TrimSpace(v))]; keyword != 0 {
-				// A keyword is not an absolute size, and its size is that
-				// of the kind of family.
-				ts.sizeKeyword, ts.sizeAbsolute = keyword, false
-				ts.size = keywordFontSize(keyword, isMonospace(ts.families))
-			} else {
+	if st.propMask&bitFontSize != 0 {
+		if v, ok := declVal(st, "font-size"); ok && !inherit(v) {
+			if f, ok := exValue(v); ok {
+				// The ex of font-size is the x-height of the font of the
+				// parent. The computed font size is a float32.
+				ts.size = float64(float32(f * e.exSize(parent)))
 				ts.sizeKeyword = 0
-				ts.sizeAbsolute = parent.sizeAbsolute || !fontSizeIsRelative(v)
+			} else if px, ok := e.calcFontSize(v, parent); ok {
+				ts.size = px
+				ts.sizeKeyword, ts.sizeAbsolute = 0, true
+			} else if px, ok := resolveFontSize(v, parent.size, st.fromAttrMask&presBitFontSize != 0); ok {
+				ts.size = px
+				if keyword := fontSizeKeywordIndex[strings.ToLower(strings.TrimSpace(v))]; keyword != 0 {
+					// A keyword is not an absolute size, and its size is that
+					// of the kind of family.
+					ts.sizeKeyword, ts.sizeAbsolute = keyword, false
+					ts.size = keywordFontSize(keyword, isMonospace(ts.families))
+				} else {
+					ts.sizeKeyword = 0
+					ts.sizeAbsolute = parent.sizeAbsolute || !fontSizeIsRelative(v)
+				}
 			}
 		}
 	}
 	// A change between monospace and another family scales a size that is
 	// not absolute. See fontmono.go.
 	genericFamilyChange(&ts, parent)
-	if v, ok := declVal(decls, "font-weight"); ok && !inherit(v) {
-		ts.weight = resolveFontWeight(v, parent.weight)
+	if st.propMask&bitFontWeight != 0 {
+		if v, ok := declVal(st, "font-weight"); ok && !inherit(v) {
+			ts.weight = resolveFontWeight(v, parent.weight)
+		}
 	}
-	if v, ok := declVal(decls, "font-style"); ok && !inherit(v) {
-		lower := strings.ToLower(v)
-		ts.italic = lower == "italic" || strings.HasPrefix(lower, "oblique")
+	if st.propMask&bitFontStyle != 0 {
+		if v, ok := declVal(st, "font-style"); ok && !inherit(v) {
+			lower := strings.ToLower(v)
+			ts.italic = lower == "italic" || strings.HasPrefix(lower, "oblique")
+		}
 	}
-	if v, ok := declVal(decls, "line-height"); ok && !inherit(v) {
-		lower := strings.ToLower(strings.TrimSpace(v))
-		switch {
-		case lower == "normal":
-			ts.lhKind = lhNormal
-		case strings.HasSuffix(lower, "%"):
-			if f, err := strconv.ParseFloat(lower[:len(lower)-1], 64); err == nil {
-				ts.lhKind, ts.lhValue = lhLength, float64(f/100*ts.size)
-			}
-		default:
-			if f, err := strconv.ParseFloat(lower, 64); err == nil {
-				ts.lhKind, ts.lhValue = lhNumber, f
-			} else if css.IsMathFunction(lower) {
-				// ConvertLineHeight: a math function that is a number is a
-				// number. One with a percentage is a length: the
-				// percentage is of the font size, as a LayoutUnit.
-				if c, ok := e.evalCalc(lower, &ts); ok {
-					switch {
-					case c.IsNumber:
-						ts.lhKind, ts.lhValue = lhNumber, c.Number
-					case c.HasPercent:
-						fontSize := luFromFloat(float32(ts.size)).f32()
-						value := luFromFloat(float32(c.Px) + float32(fontSize*float32(c.Percent)/100))
-						ts.lhKind, ts.lhValue = lhLength, value.px()
-					default:
-						ts.lhKind, ts.lhValue = lhLength, clampCalcPx(c.Px)
+	if st.propMask&bitLineHeight != 0 {
+		if v, ok := declVal(st, "line-height"); ok && !inherit(v) {
+			lower := strings.ToLower(strings.TrimSpace(v))
+			switch {
+			case lower == "normal":
+				ts.lhKind = lhNormal
+			case strings.HasSuffix(lower, "%"):
+				if f, err := strconv.ParseFloat(lower[:len(lower)-1], 64); err == nil {
+					ts.lhKind, ts.lhValue = lhLength, float64(f/100*ts.size)
+				}
+			default:
+				if f, err := strconv.ParseFloat(lower, 64); err == nil {
+					ts.lhKind, ts.lhValue = lhNumber, f
+				} else if css.IsMathFunction(lower) {
+					// ConvertLineHeight: a math function that is a number is a
+					// number. One with a percentage is a length: the
+					// percentage is of the font size, as a LayoutUnit.
+					tsCopy := ts
+					if c, ok := e.evalCalc(lower, &tsCopy); ok {
+						switch {
+						case c.IsNumber:
+							ts.lhKind, ts.lhValue = lhNumber, c.Number
+						case c.HasPercent:
+							fontSize := luFromFloat(float32(ts.size)).f32()
+							value := luFromFloat(float32(c.Px) + float32(fontSize*float32(c.Percent)/100))
+							ts.lhKind, ts.lhValue = lhLength, value.px()
+						default:
+							ts.lhKind, ts.lhValue = lhLength, clampCalcPx(c.Px)
+						}
+					}
+				} else {
+					tsCopy := ts
+					if px, ok := e.cssLength(lower, &tsCopy, false); ok {
+						ts.lhKind, ts.lhValue = lhLength, px
 					}
 				}
-			} else if px, ok := e.cssLength(lower, &ts, false); ok {
-				ts.lhKind, ts.lhValue = lhLength, px
 			}
+		} else if ts.lhKind == lhLength && parent.lhKind == lhLength {
+			ts.lhValue = parent.lhValue
 		}
 	} else if ts.lhKind == lhLength && parent.lhKind == lhLength {
 		ts.lhValue = parent.lhValue
 	}
-	wsVal, hasWS := declVal(decls, "white-space")
+	var wsVal string
+	var hasWS bool
+	if st.propMask&bitWhiteSpace != 0 {
+		wsVal, hasWS = declVal(st, "white-space")
+	}
 	if hasWS && !inherit(wsVal) {
 		ts.whiteSpace = strings.ToLower(strings.TrimSpace(wsVal))
 	}
 	if !hasWS && hasXMLSpacePreserve(n) {
 		ts.whiteSpace = "pre"
 	}
-	if v, ok := declVal(decls, "letter-spacing"); ok && !inherit(v) {
-		if strings.EqualFold(v, "normal") {
-			ts.letterSpacing = 0
-		} else if px, ok := e.cssLength(v, &ts, fromAttr["letter-spacing"]); ok {
-			ts.letterSpacing = px
+	if st.propMask&bitLetterSpacing != 0 {
+		if v, ok := declVal(st, "letter-spacing"); ok && !inherit(v) {
+			if strings.EqualFold(v, "normal") {
+				ts.letterSpacing = 0
+			} else {
+				tsCopy := ts
+				if px, ok := e.cssLength(v, &tsCopy, st.fromAttrMask&presBitLetterSpacing != 0); ok {
+					ts.letterSpacing = px
+				}
+			}
 		}
 	}
-	if v, ok := declVal(decls, "text-anchor"); ok && !inherit(v) {
-		ts.textAnchor = strings.ToLower(strings.TrimSpace(v))
+	if st.propMask&bitTextAnchor != 0 {
+		if v, ok := declVal(st, "text-anchor"); ok && !inherit(v) {
+			ts.textAnchor = strings.ToLower(strings.TrimSpace(v))
+		}
 	}
-	if v, ok := declVal(decls, "text-align"); ok && !inherit(v) {
-		ts.textAlign = strings.ToLower(strings.TrimSpace(v))
+	if st.propMask&bitTextAlign != 0 {
+		if v, ok := declVal(st, "text-align"); ok && !inherit(v) {
+			ts.textAlign = strings.ToLower(strings.TrimSpace(v))
+		}
 	}
-	if v, ok := declVal(decls, "text-transform"); ok && !inherit(v) {
-		ts.textTransform = strings.ToLower(strings.TrimSpace(v))
+	if st.propMask&bitTextTransform != 0 {
+		if v, ok := declVal(st, "text-transform"); ok && !inherit(v) {
+			ts.textTransform = strings.ToLower(strings.TrimSpace(v))
+		}
 	}
-	if v, ok := declVal(decls, "visibility"); ok && !inherit(v) {
-		ts.visibility = strings.ToLower(strings.TrimSpace(v))
+	if st.propMask&bitVisibility != 0 {
+		if v, ok := declVal(st, "visibility"); ok && !inherit(v) {
+			ts.visibility = strings.ToLower(strings.TrimSpace(v))
+		}
 	}
 	if ts.size == parent.size && ts.weight == parent.weight && ts.italic == parent.italic &&
 		ts.lhKind == parent.lhKind && ts.lhValue == parent.lhValue &&
@@ -1027,8 +1453,10 @@ func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 		st.text = parent
 		return parent
 	}
-	st.text = &ts
-	return st.text
+	out := e.allocTextStyle()
+	*out = ts
+	st.text = out
+	return out
 }
 
 // exSize is the length of the CSS unit ex for a text style: the x-height of
