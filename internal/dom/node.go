@@ -239,8 +239,9 @@ type Node struct {
 	// becomes an attribute only when something reads the attributes (for
 	// example serialization or getAttribute("style")). Attributes that are
 	// set in between come first in the attribute order.
-	pendingStyle    string
-	hasPendingStyle bool
+	pendingStyle      string
+	hasPendingStyle   bool
+	pendingStyleDirty bool
 
 	// The stamps below are values of Document.gen. They say when the node
 	// last changed in a way that a selector can see, so that the style
@@ -266,12 +267,23 @@ func (n *Node) ChildrenGeneration() uint64 { return n.kidsGen }
 // another one. An append to the end does not change it.
 func (n *Node) ChildOrderGeneration() uint64 { return n.kidsOrderGen }
 
+// ensurePendingStyle materializes pendingStyle from styleBlock when lazy
+// StylePriority mutations have not yet been serialized.
+func (n *Node) ensurePendingStyle() {
+	if n.pendingStyleDirty {
+		n.pendingStyle = css.SerializeInlineStyle(n.styleBlock)
+		n.styleCanon = n.pendingStyle
+		n.pendingStyleDirty = false
+	}
+}
+
 // syncStyle is Element::SynchronizeStyleAttribute: it turns a pending
 // inline style into the style attribute.
 func (n *Node) syncStyle() {
 	if !n.hasPendingStyle {
 		return
 	}
+	n.ensurePendingStyle()
 	n.hasPendingStyle = false
 	n.Attrs = append(n.Attrs, Attr{Local: "style", Value: n.pendingStyle})
 	n.pendingStyle = ""
@@ -281,6 +293,9 @@ func (n *Node) syncStyle() {
 // received keeps all its digits, where the attribute text has 6 significant
 // digits. A browser lays out from the parsed style, not from the text.
 func (n *Node) InlineStyleExact() (string, bool) {
+	if n != nil && n.Type == ElementNode && n.hasPendingStyle && n.pendingStyleDirty {
+		return css.SerializeInlineStyleExact(n.styleBlock), true
+	}
 	text, ok := n.InlineStyle()
 	if ok && n.styleBlock != nil && text == n.styleCanon {
 		return css.SerializeInlineStyleExact(n.styleBlock), true
@@ -292,6 +307,13 @@ func (n *Node) InlineStyleExact() (string, bool) {
 // (with exact numeric values) into dst, avoiding serialize+parse round-trips
 // when n already holds a valid parsed CSSOM styleBlock.
 func (n *Node) AppendInlineStyleDecls(dst []css.Decl) []css.Decl {
+	if n != nil && n.Type == ElementNode && n.hasPendingStyle && n.pendingStyleDirty {
+		for _, d := range n.styleBlock {
+			d.Value = css.ExactValue(d)
+			dst = append(dst, d)
+		}
+		return dst
+	}
 	text, ok := n.InlineStyle()
 	if !ok || text == "" {
 		return dst
@@ -315,6 +337,7 @@ func (n *Node) InlineStyle() (string, bool) {
 		return "", false
 	}
 	if n.hasPendingStyle {
+		n.ensurePendingStyle()
 		return n.pendingStyle, true
 	}
 	for i := range n.Attrs {
@@ -657,6 +680,7 @@ func (n *Node) Attr(name string, value any) *Node {
 			// the inline style. The empty style stays in the CSSOM, and
 			// becomes an attribute when the attributes are next read.
 			n.pendingStyle = ""
+			n.pendingStyleDirty = false
 			n.styleCanon = ""
 			n.styleBlock = nil
 			n.touch()

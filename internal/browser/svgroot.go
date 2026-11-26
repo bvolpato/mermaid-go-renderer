@@ -197,6 +197,10 @@ func (e *Engine) rootLengthOf(svg *dom.Node, prop string, emSize float64) rootLe
 // height attributes when they are not percentages, and the ratio of the
 // viewBox. The containing block is the block that holds the diagram.
 func (e *Engine) svgRootBoxOf(svg *dom.Node) svgRootBox {
+	return e.svgRootBox(svg, true)
+}
+
+func (e *Engine) svgRootBox(svg *dom.Node, needPos bool) svgRootBox {
 	ts := e.textStyleOf(svg)
 	available := luFromFloat(float32(e.ContainerWidth()))
 
@@ -266,17 +270,19 @@ func (e *Engine) svgRootBoxOf(svg *dom.Node) svgRootBox {
 	}
 
 	box := svgRootBox{w: w, h: h, toBorderBox: identity}
-	// The svg is an inline box on the first line of its block. Its bottom
-	// is on the baseline, so that a box that is lower than the ascent of
-	// the line starts below the top of the line.
-	margin := luFromFloat(float32(e.BodyMargin))
-	box.x, box.y = margin, margin
-	if parent := svg.Parent; parent != nil && parent.Type == dom.ElementNode {
-		pts := e.textStyleOf(parent)
-		if primary := e.chainOf(pts).Primary(); primary != nil {
-			ascent, _ := lineExtent(pts, primary.Metrics(pts.fontSize()))
-			if ascent > h {
-				box.y += ascent - h
+	if needPos {
+		// The svg is an inline box on the first line of its block. Its bottom
+		// is on the baseline, so that a box that is lower than the ascent of
+		// the line starts below the top of the line.
+		margin := luFromFloat(float32(e.BodyMargin))
+		box.x, box.y = margin, margin
+		if parent := svg.Parent; parent != nil && parent.Type == dom.ElementNode {
+			pts := e.textStyleOf(parent)
+			if m, ok := e.chainOf(pts).PrimaryMetrics(pts.fontSize()); ok {
+				ascent, _ := lineExtent(pts, m)
+				if ascent > h {
+					box.y += ascent - h
+				}
 			}
 		}
 	}
@@ -441,7 +447,7 @@ func (e *Engine) screenFontScale(text *dom.Node) float32 {
 			if !cur.HasAttr("viewBox") {
 				break
 			}
-			local = e.svgRootBoxOf(root).toBorderBox
+			local = e.svgRootBox(root, false).toBorderBox
 		} else {
 			local = e.localTransform(cur)
 		}

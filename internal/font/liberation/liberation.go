@@ -15,6 +15,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"embed"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"sync"
@@ -83,6 +84,22 @@ func inflate(name string) ([]byte, error) {
 	zr, err := gzip.NewReader(bytes.NewReader(packed))
 	if err != nil {
 		return nil, fmt.Errorf("liberation: %s: %w", name, err)
+	}
+	if len(packed) >= 4 {
+		if isize := binary.LittleEndian.Uint32(packed[len(packed)-4:]); isize > 0 && isize <= 16<<20 {
+			buf := make([]byte, isize)
+			if _, err := io.ReadFull(zr, buf); err == nil {
+				var extra [1]byte
+				if n, rerr := zr.Read(extra[:]); n == 0 && rerr == io.EOF {
+					return buf, nil
+				}
+			}
+			// Fallback to full ReadAll on unexpected size/concatenated member.
+			zr, err = gzip.NewReader(bytes.NewReader(packed))
+			if err != nil {
+				return nil, fmt.Errorf("liberation: %s: %w", name, err)
+			}
+		}
 	}
 	data, err := io.ReadAll(zr)
 	if err != nil {

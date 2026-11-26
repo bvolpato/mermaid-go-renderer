@@ -43,6 +43,10 @@ func WriteNum(sb *strings.Builder, x float64) {
 	sb.Write(AppendNum(buf[:0], x))
 }
 
+var dyadic8Frac = [8]string{
+	"", ".125", ".25", ".375", ".5", ".625", ".75", ".875",
+}
+
 // AppendNum appends Str(x) to dst and returns the extended slice.
 func AppendNum(out []byte, x float64) []byte {
 	switch {
@@ -55,11 +59,30 @@ func AppendNum(out []byte, x float64) []byte {
 	case math.IsInf(x, -1):
 		return append(out, "-Infinity"...)
 	}
-	if x == math.Trunc(x) && math.Abs(x) < 1<<53 {
+	ax := math.Abs(x)
+	if x == math.Trunc(x) && ax < 1<<53 {
 		return strconv.AppendInt(out, int64(x), 10)
 	}
+	// Fast path for exact dyadic fractions (k/2, k/4, k/8), which dominate
+	// SVG layout coordinates. For |x| < 1e12, half-ULP <= 6.1e-5 << 0.005,
+	// so the exact decimal is guaranteed to be the shortest IEEE-754 roundtrip.
+	if ax < 1e12 {
+		if x8 := ax * 8; x8 == math.Trunc(x8) {
+			if x < 0 {
+				out = append(out, '-')
+			}
+			u := uint64(x8)
+			out = strconv.AppendUint(out, u>>3, 10)
+			return append(out, dyadic8Frac[u&7]...)
+		}
+	}
+	// For 1e-6 <= |x| < 9.999999999999999e20, ECMAScript uses fixed-point
+	// shortest decimal, matching strconv.AppendFloat(..., 'f', -1, 64) directly.
+	if ax >= 1e-6 && ax < 9.999999999999999e20 {
+		return strconv.AppendFloat(out, x, 'f', -1, 64)
+	}
 	var buf [32]byte
-	b := strconv.AppendFloat(buf[:0], math.Abs(x), 'e', -1, 64)
+	b := strconv.AppendFloat(buf[:0], ax, 'e', -1, 64)
 	// b is "d.ddddde±xx" or "de±xx". Split it into digits and exponent.
 	ePos := -1
 	for i, c := range b {

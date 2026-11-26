@@ -1243,11 +1243,18 @@ func hasXMLSpacePreserve(n *dom.Node) bool {
 	return false
 }
 
+func (e *Engine) defaultTextStylePtr() *textStyle {
+	if e.defaultText.size == 0 {
+		e.defaultText = defaultTextStyle
+	}
+	return &e.defaultText
+}
+
 // textStyleOf resolves the inherited text properties of an element.
 func (e *Engine) textStyleOf(n *dom.Node) *textStyle {
 	if n == nil || n.Type != dom.ElementNode {
 		// The initial values: the default font of the browser.
-		return &defaultTextStyle
+		return e.defaultTextStylePtr()
 	}
 	st := e.styleOf(n)
 	if st.text != nil {

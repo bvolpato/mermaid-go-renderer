@@ -146,3 +146,45 @@ func TestDirectoryFacesAreLazy(t *testing.T) {
 		})
 	}
 }
+
+func TestEmbeddedLinuxPrimaryMetricsExact(t *testing.T) {
+	sizes := []float64{10, 12, 14, 16, 18.5, 24, 36}
+	for _, f := range embeddedFiles {
+		h, ok := embeddedLinuxFamilyHeader(f.family, true)
+		if !ok || h == nil {
+			t.Fatalf("no embedded header for %q", f.family)
+		}
+		data, err := liberation.Font(f.name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		faces, err := LoadFor(PlatformLinux, data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, sz := range sizes {
+			got := h.metrics(sz)
+			want := faces[0].Metrics(sz)
+			if got != want {
+				t.Errorf("%s @ %v: got %+v, want %+v", f.name, sz, got, want)
+			}
+		}
+	}
+
+	// Resolving PrimaryMetrics for mermaid's default family list on an
+	// embedded-only Linux webfont library must not inflate or parse Liberation.
+	base := newLibrary(PlatformLinux, embedFonts, nil)
+	web := base.WithWebFonts()
+	chain := web.Resolve(mermaidFamilies, 400, false)
+	got, ok := chain.PrimaryMetrics(16)
+	if !ok {
+		t.Fatal("PrimaryMetrics returned ok=false")
+	}
+	if n := base.ParsedFonts(); n != 0 {
+		t.Errorf("PrimaryMetrics parsed %d fonts, want 0", n)
+	}
+	want := chain.Primary().Metrics(16)
+	if got != want {
+		t.Errorf("PrimaryMetrics(16) = %+v, want %+v", got, want)
+	}
+}

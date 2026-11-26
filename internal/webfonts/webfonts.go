@@ -31,6 +31,33 @@ import "embed"
 //go:embed files
 var FS embed.FS
 
+// Direct string embeds for the 8 page stylesheets so callers read them from
+// .rodata with zero heap allocations on cold startup.
+//
+//go:embed files/fontawesome-free/css/brands.css
+var cssFABrands string
+
+//go:embed files/fontawesome-free/css/regular.css
+var cssFARegular string
+
+//go:embed files/fontawesome-free/css/solid.css
+var cssFASolid string
+
+//go:embed files/fontawesome-free/css/fontawesome.css
+var cssFAAll string
+
+//go:embed files/recursive/index.css
+var cssRecursive string
+
+//go:embed files/open-sans/400.css
+var cssOpenSans400 string
+
+//go:embed files/open-sans/400-italic.css
+var cssOpenSans400Italic string
+
+//go:embed files/katex/dist/katex.css
+var cssKatex string
+
 // Sheet is one style sheet of the page of mermaid-cli.
 type Sheet struct {
 	// Package is the npm package of the style sheet.
@@ -40,17 +67,30 @@ type Sheet struct {
 	Import string
 	// Path is the path of the style sheet in FS.
 	Path string
+	// Text is the raw CSS text of the style sheet, backed directly by read-only
+	// binary data.
+	Text string
 }
 
 // Sheets lists the style sheets in the order of the cssImports list of
 // mermaid-cli (src/index.js, renderMermaid).
 var Sheets = []Sheet{
-	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/brands.css", "files/fontawesome-free/css/brands.css"},
-	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/regular.css", "files/fontawesome-free/css/regular.css"},
-	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/solid.css", "files/fontawesome-free/css/solid.css"},
-	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/fontawesome.css", "files/fontawesome-free/css/fontawesome.css"},
-	{"@fontsource-variable/recursive", "@fontsource-variable/recursive/index.css", "files/recursive/index.css"},
-	{"@fontsource/open-sans", "@fontsource/open-sans/400.css", "files/open-sans/400.css"},
-	{"@fontsource/open-sans", "@fontsource/open-sans/400-italic.css", "files/open-sans/400-italic.css"},
-	{"katex", "katex/dist/katex.css", "files/katex/dist/katex.css"},
+	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/brands.css", "files/fontawesome-free/css/brands.css", cssFABrands},
+	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/regular.css", "files/fontawesome-free/css/regular.css", cssFARegular},
+	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/solid.css", "files/fontawesome-free/css/solid.css", cssFASolid},
+	{"@fortawesome/fontawesome-free", "@fortawesome/fontawesome-free/css/fontawesome.css", "files/fontawesome-free/css/fontawesome.css", cssFAAll},
+	{"@fontsource-variable/recursive", "@fontsource-variable/recursive/index.css", "files/recursive/index.css", cssRecursive},
+	{"@fontsource/open-sans", "@fontsource/open-sans/400.css", "files/open-sans/400.css", cssOpenSans400},
+	{"@fontsource/open-sans", "@fontsource/open-sans/400-italic.css", "files/open-sans/400-italic.css", cssOpenSans400Italic},
+	{"katex", "katex/dist/katex.css", "files/katex/dist/katex.css", cssKatex},
+}
+
+// SheetText returns the embedded CSS text for path without allocating.
+func SheetText(path string) (string, bool) {
+	for i := range Sheets {
+		if Sheets[i].Path == path {
+			return Sheets[i].Text, true
+		}
+	}
+	return "", false
 }

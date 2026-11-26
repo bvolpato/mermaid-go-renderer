@@ -217,14 +217,19 @@ func srcOverRowAlpha(d, s []uint8, alpha uint32) {
 	srcScale := alpha + 1
 	var prevSpx, prevDpx, prevOut uint32
 	hasPrev := false
-	for i := 0; i+3 < len(s); i += 4 {
+	for i := 0; i+3 < len(s); {
 		spx := binary.LittleEndian.Uint32(s[i : i+4])
 		if spx == 0 {
+			i += 4
+			for i+15 < len(s) && (binary.LittleEndian.Uint64(s[i:i+8])|binary.LittleEndian.Uint64(s[i+8:i+16])) == 0 {
+				i += 16
+			}
 			continue
 		}
 		dpx := binary.LittleEndian.Uint32(d[i : i+4])
 		if hasPrev && spx == prevSpx && dpx == prevDpx {
 			binary.LittleEndian.PutUint32(d[i:i+4], prevOut)
+			i += 4
 			continue
 		}
 		sa := spx >> 24
@@ -242,6 +247,7 @@ func srcOverRowAlpha(d, s []uint8, alpha uint32) {
 		out := rb | ag
 		binary.LittleEndian.PutUint32(d[i:i+4], out)
 		prevSpx, prevDpx, prevOut, hasPrev = spx, dpx, out, true
+		i += 4
 	}
 }
 
@@ -251,23 +257,36 @@ func srcOverRowAlpha(d, s []uint8, alpha uint32) {
 func blendRowGeneral(d, s []uint8, alpha uint8, blend blendMode, clipRow []uint8) {
 	const inv = float32(1.0 / 255)
 	if blend == blendSrcOver && clipRow == nil && alpha == 255 {
-		for i := 0; i+3 < len(s); i += 4 {
+		var prevSpx, prevDpx, prevOut uint32
+		hasPrev := false
+		for i := 0; i+3 < len(s); {
 			spx := binary.LittleEndian.Uint32(s[i : i+4])
 			if spx == 0 {
+				i += 4
+				for i+15 < len(s) && (binary.LittleEndian.Uint64(s[i:i+8])|binary.LittleEndian.Uint64(s[i+8:i+16])) == 0 {
+					i += 16
+				}
 				continue
 			}
 			sa8 := uint8(spx >> 24)
 			if sa8 == 255 {
 				binary.LittleEndian.PutUint32(d[i:i+4], spx)
+				i += 4
 				continue
 			}
-			sr, sg, sb, sa := float32(float32(s[i])*inv), float32(float32(s[i+1])*inv), float32(float32(s[i+2])*inv), float32(float32(sa8)*inv)
-			dr, dg, db, da := float32(float32(d[i])*inv), float32(float32(d[i+1])*inv), float32(float32(d[i+2])*inv), float32(float32(d[i+3])*inv)
+			dpx := binary.LittleEndian.Uint32(d[i : i+4])
+			if hasPrev && spx == prevSpx && dpx == prevDpx {
+				binary.LittleEndian.PutUint32(d[i:i+4], prevOut)
+				i += 4
+				continue
+			}
+			sr, sg, sb, sa := float32(float32(byte(spx))*inv), float32(float32(byte(spx>>8))*inv), float32(float32(byte(spx>>16))*inv), float32(float32(sa8)*inv)
+			dr, dg, db, da := float32(float32(byte(dpx))*inv), float32(float32(byte(dpx>>8))*inv), float32(float32(byte(dpx>>16))*inv), float32(float32(byte(dpx>>24))*inv)
 			k := 1 - sa
-			d[i] = toUnorm(sr + float32(dr*k))
-			d[i+1] = toUnorm(sg + float32(dg*k))
-			d[i+2] = toUnorm(sb + float32(db*k))
-			d[i+3] = toUnorm(sa + float32(da*k))
+			out := uint32(toUnorm(sr+float32(dr*k))) | uint32(toUnorm(sg+float32(dg*k)))<<8 | uint32(toUnorm(sb+float32(db*k)))<<16 | uint32(toUnorm(sa+float32(da*k)))<<24
+			binary.LittleEndian.PutUint32(d[i:i+4], out)
+			prevSpx, prevDpx, prevOut, hasPrev = spx, dpx, out, true
+			i += 4
 		}
 		return
 	}

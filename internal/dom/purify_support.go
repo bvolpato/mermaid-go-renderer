@@ -649,7 +649,7 @@ func restoreAttrOrder(markup string, nodes []*html.Node) {
 // off in such a document, so Chromium escapes the text of a noscript element.
 // In all other respects it is InnerHTML.
 func (n *Node) InnerHTMLInert() string {
-	w := getHTMLWriter()
+	w := getHTMLWriterFor(n)
 	for c := n.FirstChild; c != nil; c = c.Next {
 		c.serializeInert(w)
 	}
@@ -659,7 +659,7 @@ func (n *Node) InnerHTMLInert() string {
 // OuterHTMLInert is Element.outerHTML for a node of a document that has no
 // browsing context. See InnerHTMLInert.
 func (n *Node) OuterHTMLInert() string {
-	w := getHTMLWriter()
+	w := getHTMLWriterFor(n)
 	n.serializeInert(w)
 	return w.finish()
 }

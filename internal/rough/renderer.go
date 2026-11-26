@@ -21,12 +21,21 @@ func line(x1, y1, x2, y2 float64, o *ResolvedOptions) OpSet {
 func linearPath(points []*Point, close bool, o *ResolvedOptions) OpSet {
 	n := len(points)
 	if n > 2 {
-		ops := []Op{}
+		edges := n - 1
+		if close {
+			edges++
+		}
+		perEdge := 4
+		if o.disableMultiStroke {
+			perEdge = 2
+		}
+		ops := make([]Op, 0, edges*perEdge)
+		slab := make([]float64, 0, edges*perEdge*4)
 		for i := 0; i < n-1; i++ {
-			ops = append(ops, _doubleLine(points[i][0], points[i][1], points[i+1][0], points[i+1][1], o, false)...)
+			ops, slab = appendDoubleLineSlab(ops, slab, points[i][0], points[i][1], points[i+1][0], points[i+1][1], o, false)
 		}
 		if close {
-			ops = append(ops, _doubleLine(points[n-1][0], points[n-1][1], points[0][0], points[0][1], o, false)...)
+			ops, _ = appendDoubleLineSlab(ops, slab, points[n-1][0], points[n-1][1], points[0][0], points[0][1], o, false)
 		}
 		return OpSet{Type: SetPath, Ops: ops}
 	} else if n == 2 {
@@ -184,7 +193,22 @@ func arc(x, y, width, height, start, stop float64, closed, roughClosure bool, o 
 
 func svgPath(path string, o *ResolvedOptions) OpSet {
 	segments := normalize(o.gen, absolutize(parsePath(path)))
-	ops := []Op{}
+	perLine := 4
+	if o.disableMultiStroke {
+		perLine = 2
+	}
+	lineCount := 0
+	curveCount := 0
+	for _, seg := range segments {
+		switch seg.key {
+		case 'L', 'Z':
+			lineCount++
+		case 'C':
+			curveCount++
+		}
+	}
+	ops := make([]Op, 0, lineCount*perLine+curveCount*4)
+	slab := make([]float64, 0, lineCount*perLine*4)
 	first := Point{0, 0}
 	current := Point{0, 0}
 	for _, seg := range segments {
@@ -194,14 +218,14 @@ func svgPath(path string, o *ResolvedOptions) OpSet {
 			current = Point{data[0], data[1]}
 			first = Point{data[0], data[1]}
 		case 'L':
-			ops = append(ops, _doubleLine(current[0], current[1], data[0], data[1], o, false)...)
+			ops, slab = appendDoubleLineSlab(ops, slab, current[0], current[1], data[0], data[1], o, false)
 			current = Point{data[0], data[1]}
 		case 'C':
 			x1, y1, x2, y2, x, y := data[0], data[1], data[2], data[3], data[4], data[5]
 			ops = append(ops, _bezierTo(x1, y1, x2, y2, x, y, current, o)...)
 			current = Point{x, y}
 		case 'Z':
-			ops = append(ops, _doubleLine(current[0], current[1], first[0], first[1], o, false)...)
+			ops, slab = appendDoubleLineSlab(ops, slab, current[0], current[1], first[0], first[1], o, false)
 			current = Point{first[0], first[1]}
 		}
 	}
@@ -211,20 +235,32 @@ func svgPath(path string, o *ResolvedOptions) OpSet {
 // Fills
 
 func solidFillPolygon(polygonList [][]*Point, o *ResolvedOptions) OpSet {
-	ops := []Op{}
+	total := 0
 	for _, points := range polygonList {
-		if len(points) > 0 {
+		if len(points) > 2 {
+			total += len(points)
+		}
+	}
+	if total == 0 {
+		return OpSet{Type: SetFillPath, Ops: []Op{}}
+	}
+	ops := make([]Op, 0, total)
+	slab := make([]float64, 0, total*2)
+	for _, points := range polygonList {
+		n := len(points)
+		if n > 2 {
 			offset := orNum(o.maxRandomnessOffset, 0)
-			n := len(points)
-			if n > 2 {
-				x := points[0][0] + _offsetOpt(offset, o, 1)
-				y := points[0][1] + _offsetOpt(offset, o, 1)
-				ops = append(ops, Op{Op: OpMove, Data: []float64{x, y}})
-				for i := 1; i < n; i++ {
-					x := points[i][0] + _offsetOpt(offset, o, 1)
-					y := points[i][1] + _offsetOpt(offset, o, 1)
-					ops = append(ops, Op{Op: OpLineTo, Data: []float64{x, y}})
-				}
+			x := points[0][0] + _offsetOpt(offset, o, 1)
+			y := points[0][1] + _offsetOpt(offset, o, 1)
+			base := len(slab)
+			slab = append(slab, x, y)
+			ops = append(ops, Op{Op: OpMove, Data: slab[base : base+2 : base+2]})
+			for i := 1; i < n; i++ {
+				x := points[i][0] + _offsetOpt(offset, o, 1)
+				y := points[i][1] + _offsetOpt(offset, o, 1)
+				base := len(slab)
+				slab = append(slab, x, y)
+				ops = append(ops, Op{Op: OpLineTo, Data: slab[base : base+2 : base+2]})
 			}
 		}
 	}
@@ -320,21 +356,108 @@ func _offsetOpt(x float64, ops *ResolvedOptions, roughnessGain float64) float64 
 	return _offset(-x, x, ops, roughnessGain)
 }
 
+func appendDoubleLineFillSlab(ops []Op, slab []float64, x1, y1, x2, y2 float64, o *ResolvedOptions) ([]Op, []float64) {
+	ops, slab = appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, false)
+	if o.disableMultiStrokeFill {
+		return ops, slab
+	}
+	return appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, true)
+}
+
+func appendLineSlab(ops []Op, slab []float64, x1, y1, x2, y2 float64, o *ResolvedOptions, move, overlay bool) ([]Op, []float64) {
+	m := &o.gen.m
+	lengthSq := m.pow(x1-x2, 2) + m.pow(y1-y2, 2)
+	length := math.Sqrt(lengthSq)
+	roughnessGain := 1.0
+	if length < 200 {
+		roughnessGain = 1
+	} else if length > 500 {
+		roughnessGain = 0.4
+	} else {
+		roughnessGain = float64(-0.0016668*length) + 1.233334
+	}
+	offset := orNum(o.maxRandomnessOffset, 0)
+	if float64(offset*offset*100) > lengthSq {
+		offset = length / 10
+	}
+	halfOffset := float64(offset / 2)
+	divergePoint := 0.2 + float64(_random(o)*0.2)
+	midDispX := o.bowing * o.maxRandomnessOffset * (y2 - y1) / 200
+	midDispY := o.bowing * o.maxRandomnessOffset * (x1 - x2) / 200
+	midDispX = _offsetOpt(midDispX, o, roughnessGain)
+	midDispY = _offsetOpt(midDispY, o, roughnessGain)
+	preserveVertices := o.preserveVertices
+	rndOff := offset
+	if overlay {
+		rndOff = halfOffset
+	}
+	if move {
+		var mx, my float64
+		if preserveVertices {
+			mx, my = x1, y1
+		} else {
+			mx = x1 + _offsetOpt(rndOff, o, roughnessGain)
+			my = y1 + _offsetOpt(rndOff, o, roughnessGain)
+		}
+		d0 := midDispX + x1 + float64((x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d1 := midDispY + y1 + float64((y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d2 := midDispX + x1 + float64(2*(x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		d3 := midDispY + y1 + float64(2*(y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+		var d4, d5 float64
+		if preserveVertices {
+			d4, d5 = x2, y2
+		} else {
+			d4 = x2 + _offsetOpt(rndOff, o, roughnessGain)
+			d5 = y2 + _offsetOpt(rndOff, o, roughnessGain)
+		}
+		base := len(slab)
+		slab = append(slab, mx, my, d0, d1, d2, d3, d4, d5)
+		ops = append(ops, Op{Op: OpMove, Data: slab[base : base+2 : base+2]}, Op{Op: OpBcurveTo, Data: slab[base+2 : base+8 : base+8]})
+		return ops, slab
+	}
+	d0 := midDispX + x1 + float64((x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d1 := midDispY + y1 + float64((y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d2 := midDispX + x1 + float64(2*(x2-x1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	d3 := midDispY + y1 + float64(2*(y2-y1)*divergePoint) + _offsetOpt(rndOff, o, roughnessGain)
+	var d4, d5 float64
+	if preserveVertices {
+		d4, d5 = x2, y2
+	} else {
+		d4 = x2 + _offsetOpt(rndOff, o, roughnessGain)
+		d5 = y2 + _offsetOpt(rndOff, o, roughnessGain)
+	}
+	base := len(slab)
+	slab = append(slab, d0, d1, d2, d3, d4, d5)
+	ops = append(ops, Op{Op: OpBcurveTo, Data: slab[base : base+6 : base+6]})
+	return ops, slab
+}
+
+func appendDoubleLineSlab(ops []Op, slab []float64, x1, y1, x2, y2 float64, o *ResolvedOptions, filling bool) ([]Op, []float64) {
+	singleStroke := o.disableMultiStroke
+	if filling {
+		singleStroke = o.disableMultiStrokeFill
+	}
+	ops, slab = appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, false)
+	if !singleStroke {
+		ops, slab = appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, true)
+	}
+	return ops, slab
+}
+
 func _doubleLine(x1, y1, x2, y2 float64, o *ResolvedOptions, filling bool) []Op {
 	singleStroke := o.disableMultiStroke
 	if filling {
 		singleStroke = o.disableMultiStrokeFill
 	}
-	capOps := 4
 	if singleStroke {
-		capOps = 2
-	}
-	ops := make([]Op, 0, capOps)
-	ops = appendLine(ops, x1, y1, x2, y2, o, true, false)
-	if singleStroke {
+		ops, _ := appendLineSlab(make([]Op, 0, 2), make([]float64, 0, 8), x1, y1, x2, y2, o, true, false)
 		return ops
 	}
-	return appendLine(ops, x1, y1, x2, y2, o, true, true)
+	ops := make([]Op, 0, 4)
+	slab := make([]float64, 0, 16)
+	ops, slab = appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, false)
+	ops, _ = appendLineSlab(ops, slab, x1, y1, x2, y2, o, true, true)
+	return ops
 }
 
 func _line(x1, y1, x2, y2 float64, o *ResolvedOptions, move, overlay bool) []Op {

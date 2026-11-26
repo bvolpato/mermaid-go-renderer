@@ -38,7 +38,7 @@ func typeError(message string) *Error { return &Error{Name: "TypeError", Message
 // newObj builds an object from keys and values, in the order of an object
 // literal. A nil value is a property that is undefined.
 func newObj(pairs ...any) *js.Obj[any] {
-	o := js.NewObj[any]()
+	o := js.NewObjCap[any](len(pairs) / 2)
 	for i := 0; i+1 < len(pairs); i += 2 {
 		o.Set(pairs[i].(string), pairs[i+1])
 	}
