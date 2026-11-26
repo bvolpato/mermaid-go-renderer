@@ -38,12 +38,24 @@ type tokenizer[T unit] struct {
 	position   int
 	character  int
 	characters []T
+	elemSlab   []Element
+}
+
+func (t *tokenizer[T]) allocElem() *Element {
+	if len(t.elemSlab) == 0 {
+		t.elemSlab = make([]Element, 64)
+	}
+	e := &t.elemSlab[0]
+	t.elemSlab = t.elemSlab[1:]
+	return e
 }
 
 // node makes an element. The siblings field of stylis is used only by the
 // prefixer, which mermaid does not use, so the port does not keep it.
 func (t *tokenizer[T]) node(value []T, root, parent *Element, typ string, length int) *Element {
-	return &Element{Value: str(value), Root: root, Parent: parent, Type: typ, Line: t.line, Column: t.column, Length: length}
+	e := t.allocElem()
+	*e = Element{Value: str(value), Root: root, Parent: parent, Type: typ, Line: t.line, Column: t.column, Length: length}
+	return e
 }
 
 func (t *tokenizer[T]) char() int {

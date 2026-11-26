@@ -61,20 +61,26 @@ var svgNoTests = map[string]bool{"title": true, "desc": true, "metadata": true, 
 // in the browser of the reference: none of "en", "en-US" and the empty
 // value does. requiredFeatures has no effect.
 func svgElementValid(n *dom.Node) bool {
-	if svgNoTests[n.Tag] {
+	if len(n.Attrs) == 0 || svgNoTests[n.Tag] {
 		return true
 	}
-	if n.HasAttr("systemLanguage") {
-		return false
-	}
-	if v, ok := n.GetAttr("requiredExtensions"); ok {
-		values := strings.Fields(v)
-		if len(values) == 0 {
+	for i := range n.Attrs {
+		a := &n.Attrs[i]
+		if a.NS != "" || a.Prefix != "" {
+			continue
+		}
+		if a.Local == "systemLanguage" {
 			return false
 		}
-		for _, value := range values {
-			if !svgExtensions[value] {
+		if a.Local == "requiredExtensions" {
+			values := strings.Fields(a.Value)
+			if len(values) == 0 {
 				return false
+			}
+			for _, value := range values {
+				if !svgExtensions[value] {
+					return false
+				}
 			}
 		}
 	}
@@ -120,7 +126,8 @@ func (e *Engine) svgLayoutState(n *dom.Node) (hasObject, hidden bool) {
 	if n == nil || n.Type != dom.ElementNode || n.NS != dom.NSSVG {
 		return false, false
 	}
-	var chain []*dom.Node
+	var chainBuf [16]*dom.Node
+	chain := chainBuf[:0]
 	for p := n; p != nil && p.Type == dom.ElementNode && p.NS == dom.NSSVG; p = p.Parent {
 		chain = append(chain, p)
 	}

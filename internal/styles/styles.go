@@ -30,6 +30,17 @@ func GetStyles(typ string, userStyles string, opts *js.Obj[any], svgID string, c
 
 // getStyles is GetStyles for the options in the form of this package.
 func getStyles(typ string, userStyles string, o *options, svgID string) (out string, err error) {
+	base, err := getBaseStyles(typ, o, svgID)
+	if err != nil {
+		return "", err
+	}
+	return base + userStyles + "\n", nil
+}
+
+// getBaseStyles returns the prefix of getStyles before userStyles so callers
+// can compile and cache the static diagram/theme stylesheet independently of
+// per-diagram classDef/themeCSS rules.
+func getBaseStyles(typ string, o *options, svgID string) (out string, err error) {
 	defer catch(&err)
 
 	diagramStyles := ""
@@ -167,6 +178,5 @@ func getStyles(typ string, userStyles string, o *options, svgID string) (out str
     filter: ` + neoFilter + `;
   }
 
-  ` + userStyles + `
-`, nil
+  `, nil
 }

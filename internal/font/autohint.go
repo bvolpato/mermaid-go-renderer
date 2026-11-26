@@ -16,6 +16,7 @@ package font
 import (
 	"math"
 	"sync"
+	"sync/atomic"
 
 	ot "github.com/go-text/typesetting/font/opentype"
 )
@@ -59,7 +60,13 @@ type ahInstance struct {
 	scaled sync.Map
 	// boxes has the bounds of the path of a glyph at a font size, with the
 	// automatic hinter or without hinting: ahBoxKey -> ftCBox.
-	boxes sync.Map
+	boxes     sync.Map
+	fastBoxes [1024]atomic.Pointer[ahBoxCacheEntry]
+}
+
+type ahBoxCacheEntry struct {
+	key ahBoxKey
+	box ftCBox
 }
 
 type ahLazyMetrics struct {
@@ -234,9 +241,19 @@ func (inst *ahInstance) hint(glyphID uint32, size float32) (*ahOutline, bool) {
 // cbox returns the bounds of the path of the outline of a glyph at a font
 // size, with the automatic hinter or without hinting.
 func (inst *ahInstance) cbox(glyphID uint32, size float32, hinted bool) ftCBox {
-	key := ahBoxKey{glyphID, math.Float32bits(size), hinted}
+	bits := math.Float32bits(size)
+	key := ahBoxKey{glyphID, bits, hinted}
+	slot := (glyphID*31 ^ (bits >> 16) ^ bits) & 1023
+	if hinted {
+		slot ^= 512
+	}
+	if ent := inst.fastBoxes[slot].Load(); ent != nil && ent.key == key {
+		return ent.box
+	}
 	if v, ok := inst.boxes.Load(key); ok {
-		return v.(ftCBox)
+		box := v.(ftCBox)
+		inst.fastBoxes[slot].Store(&ahBoxCacheEntry{key: key, box: box})
+		return box
 	}
 	var box ftCBox
 	if hinted {
@@ -245,6 +262,7 @@ func (inst *ahInstance) cbox(glyphID uint32, size float32, hinted bool) ftCBox {
 		box = inst.font.unhintedPathBounds(glyph, size)
 	}
 	inst.boxes.Store(key, box)
+	inst.fastBoxes[slot].Store(&ahBoxCacheEntry{key: key, box: box})
 	return box
 }
 

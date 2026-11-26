@@ -255,6 +255,11 @@ func (p *Purifier) SetConfig(cfg Config) error {
 	return nil
 }
 
+// HasSetConfig reports whether SetConfig is currently active on p.
+func (p *Purifier) HasSetConfig() bool {
+	return p.setConfig
+}
+
 // ClearConfig is DOMPurify.clearConfig.
 func (p *Purifier) ClearConfig() {
 	p.config = nil

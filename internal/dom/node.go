@@ -325,7 +325,7 @@ func (n *Node) AppendInlineStyleDecls(dst []css.Decl) []css.Decl {
 		}
 		return dst
 	}
-	return append(dst, css.ParseDeclarations(text)...)
+	return css.AppendDeclarations(dst, text)
 }
 
 // InlineStyle returns the text of the inline style, from the attribute or
@@ -663,6 +663,25 @@ func (n *Node) HasAttr(name string) bool {
 	return ok
 }
 
+// AttrStr is Attr for a string value without boxing into any.
+func (n *Node) AttrStr(name, value string) *Node {
+	if n == nil || n.Type != ElementNode {
+		return n
+	}
+	space, local := d3Namespace(name)
+	if space == "" && local == "style" {
+		n.syncStyle()
+		n.styleBlock = nil
+	}
+	n.setAttrNS(space, local, value)
+	return n
+}
+
+// AttrFloat is Attr for a float64 value without boxing into any.
+func (n *Node) AttrFloat(name string, value float64) *Node {
+	return n.AttrStr(name, js.Str(value))
+}
+
 // Attr is selection.attr(name, value). The value is converted with the
 // JavaScript String() rules: a float64 prints as a JS number. A nil value
 // removes the attribute, as null does in d3. The receiver is returned so that
@@ -822,11 +841,40 @@ func isASCIISpace(r rune) bool {
 	return r == ' ' || r == '\t' || r == '\n' || r == '\f' || r == '\r'
 }
 
+func hasASCIISpace(s string) bool {
+	for i := 0; i < len(s); i++ {
+		if isASCIISpaceByte(s[i]) {
+			return true
+		}
+	}
+	return false
+}
+
 // HasClass reports whether the element has the class.
 func (n *Node) HasClass(name string) bool {
 	v, ok := n.plainAttr("class")
 	if !ok {
 		return false
+	}
+	if name != "" {
+		if v == name {
+			return !hasASCIISpace(name)
+		}
+		if len(v) < len(name) {
+			return false
+		}
+		rest := v
+		for {
+			idx := strings.Index(rest, name)
+			if idx < 0 {
+				return false
+			}
+			end := idx + len(name)
+			if (idx == 0 || isASCIISpaceByte(rest[idx-1])) && (end == len(rest) || isASCIISpaceByte(rest[end])) {
+				return !hasASCIISpace(name)
+			}
+			rest = rest[idx+1:]
+		}
 	}
 	// The names between runs of white space. After white space at the end
 	// the name is empty, as it is for the loop that trims and then cuts.

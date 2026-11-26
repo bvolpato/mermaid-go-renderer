@@ -71,7 +71,10 @@ func nullish(v any) any {
 // the given styling and content.
 func DrawSimpleText(elem *dom.Node, textData TextObj) *dom.Node {
 	// Remove and ignore br:s
-	nText := lineBreakRegex.ReplaceAllLiteralString(textData.Text, " ")
+	nText := textData.Text
+	if strings.IndexByte(nText, '<') >= 0 {
+		nText = lineBreakRegex.ReplaceAllLiteralString(nText, " ")
+	}
 
 	var fontSizePx any
 	if _, px, ok := ParseFontSize(textData.FontSize); ok {

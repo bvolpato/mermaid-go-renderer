@@ -383,9 +383,10 @@ func parseJSONValue(dec *json.Decoder) (any, error) {
 // value or end returns false, and ParseJSON uses the decoder: so the
 // decoder still defines the result and the error.
 type plainJSON struct {
-	data  []byte
-	pos   int
-	depth int
+	data   []byte
+	pos    int
+	depth  int
+	strBuf []byte
 	// keys has the last property names. The names of a JSON text repeat,
 	// and each distinct name is one string.
 	keys [64]string
@@ -411,8 +412,9 @@ func (p *plainJSON) end() bool {
 	return p.pos == len(p.data)
 }
 
-// str reads a string at the opening quote. It returns the bytes between
-// the quotes.
+// str reads a string at the opening quote. It returns the unescaped bytes
+// between the quotes. Simple JSON escapes are decoded into p.strBuf; \uXXXX
+// escapes and non-ASCII bytes fall back to encoding/json.
 func (p *plainJSON) str() ([]byte, bool) {
 	start := p.pos + 1
 	for i := start; i < len(p.data); i++ {
@@ -421,9 +423,55 @@ func (p *plainJSON) str() ([]byte, bool) {
 			p.pos = i + 1
 			return p.data[start:i], true
 		}
-		if c == '\\' || c < 0x20 || c >= 0x7f {
+		if c == '\\' {
+			return p.strEscaped(start, i)
+		}
+		if c < 0x20 || c >= 0x7f {
 			return nil, false
 		}
+	}
+	return nil, false
+}
+
+func (p *plainJSON) strEscaped(start, esc int) ([]byte, bool) {
+	buf := append(p.strBuf[:0], p.data[start:esc]...)
+	i := esc
+	for i < len(p.data) {
+		c := p.data[i]
+		if c == '"' {
+			p.pos = i + 1
+			p.strBuf = buf
+			return buf, true
+		}
+		if c == '\\' {
+			i++
+			if i >= len(p.data) {
+				return nil, false
+			}
+			switch p.data[i] {
+			case '"', '\\', '/':
+				buf = append(buf, p.data[i])
+			case 'b':
+				buf = append(buf, '\b')
+			case 'f':
+				buf = append(buf, '\f')
+			case 'n':
+				buf = append(buf, '\n')
+			case 'r':
+				buf = append(buf, '\r')
+			case 't':
+				buf = append(buf, '\t')
+			default:
+				return nil, false
+			}
+			i++
+			continue
+		}
+		if c < 0x20 || c >= 0x7f {
+			return nil, false
+		}
+		buf = append(buf, c)
+		i++
 	}
 	return nil, false
 }

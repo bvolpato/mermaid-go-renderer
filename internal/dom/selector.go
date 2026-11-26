@@ -36,6 +36,8 @@ type Selector struct {
 	// the compound that has it. See PseudoElement.
 	pseudoElement  string
 	pseudoCompound int
+	compounds0     [3]compound
+	combinators0   [2]byte
 }
 
 // SelectorDeps says what a selector reads in the tree besides the element
@@ -82,8 +84,8 @@ func (s *Selector) computeAncestorClass() string {
 			// The compound in front of a sibling combinator is a sibling.
 			return ""
 		}
-		if classes := s.compounds[i].classes; len(classes) > 0 {
-			return classes[0]
+		if cl := s.compounds[i].class0; cl != "" {
+			return cl
 		}
 	}
 	return ""
@@ -162,6 +164,7 @@ type compound struct {
 	tag      string // "" means any element
 	tagLower string
 	id       string
+	class0   string
 	classes  []string
 	attrs    []attrSel
 	pseudos  []pseudo
@@ -278,6 +281,8 @@ func (p *selParser) parseList(nested bool) (SelectorList, error) {
 
 func (p *selParser) parseComplex(nested bool) (*Selector, error) {
 	sel := &Selector{}
+	sel.compounds = sel.compounds0[:0]
+	sel.combinators = sel.combinators0[:0]
 	for {
 		c, err := p.parseCompound(sel)
 		if err != nil {
@@ -306,7 +311,10 @@ func (p *selParser) parseComplex(nested bool) (*Selector, error) {
 		if c.id != "" {
 			sel.spec[0]++
 		}
-		sel.spec[1] += len(c.classes) + len(c.attrs)
+		if c.class0 != "" {
+			sel.spec[1] += 1 + len(c.classes)
+		}
+		sel.spec[1] += len(c.attrs)
 		if c.tag != "" {
 			sel.spec[2]++
 		}
@@ -337,7 +345,15 @@ func isNameChar(c byte) bool {
 }
 
 func (p *selParser) parseName() string {
+	start := p.i
+	for p.i < len(p.s) && isNameChar(p.s[p.i]) {
+		p.i++
+	}
+	if p.i >= len(p.s) || p.s[p.i] != '\\' {
+		return p.s[start:p.i]
+	}
 	var sb strings.Builder
+	sb.WriteString(p.s[start:p.i])
 	for p.i < len(p.s) {
 		c := p.s[p.i]
 		if c == '\\' && p.i+1 < len(p.s) {
@@ -396,7 +412,11 @@ func (p *selParser) parseCompound(sel *Selector) (compound, error) {
 			if name == "" {
 				return c, fmt.Errorf("selector %q: empty class", p.s)
 			}
-			c.classes = append(c.classes, name)
+			if c.class0 == "" {
+				c.class0 = name
+			} else {
+				c.classes = append(c.classes, name)
+			}
 		case '[':
 			a, err := p.parseAttr()
 			if err != nil {
@@ -685,8 +705,8 @@ func (s *Selector) Key() (kind byte, name string) {
 	switch {
 	case c.id != "":
 		return '#', c.id
-	case len(c.classes) > 0:
-		return '.', c.classes[0]
+	case c.class0 != "":
+		return '.', c.class0
 	case c.tag != "":
 		return 't', c.tagLower
 	}
@@ -789,9 +809,14 @@ func matchCompound(n *Node, c *compound) bool {
 	if c.id != "" && n.ID() != c.id {
 		return false
 	}
-	for _, cl := range c.classes {
-		if !n.HasClass(cl) {
+	if c.class0 != "" {
+		if !n.HasClass(c.class0) {
 			return false
+		}
+		for _, cl := range c.classes {
+			if !n.HasClass(cl) {
+				return false
+			}
 		}
 	}
 	for i := range c.attrs {
@@ -965,6 +990,70 @@ func (n *Node) Select(selector string) *Node {
 
 // Nodes is a list of nodes, as selection.selectAll returns.
 type Nodes []*Node
+
+// EachMatch invokes fn for every descendant element of n matching selector in
+// document order, without allocating a result slice.
+func (n *Node) EachMatch(selector string, fn func(*Node)) {
+	if n == nil || selector == "" {
+		return
+	}
+	// Fast path for a single class selector (".foo") or simple lowercase tag ("path").
+	if selector[0] == '.' && len(selector) > 1 {
+		cls := selector[1:]
+		simple := true
+		for i := 0; i < len(cls); i++ {
+			if !isNameChar(cls[i]) {
+				simple = false
+				break
+			}
+		}
+		if simple {
+			n.walkElements(func(e *Node) bool {
+				if e.HasClass(cls) {
+					fn(e)
+				}
+				return true
+			})
+			return
+		}
+	} else if isNameChar(selector[0]) {
+		simple := true
+		hasUpper := false
+		for i := 0; i < len(selector); i++ {
+			c := selector[i]
+			if !isNameChar(c) {
+				simple = false
+				break
+			}
+			if c >= 'A' && c <= 'Z' {
+				hasUpper = true
+			}
+		}
+		if simple && !hasUpper {
+			n.walkElements(func(e *Node) bool {
+				if e.NS == NSHTML {
+					if e.Tag == selector {
+						fn(e)
+					}
+				} else if e.Tag == selector || equalFoldASCII(e.Tag, selector) {
+					fn(e)
+				}
+				return true
+			})
+			return
+		}
+	}
+	list, err := ParseSelector(selector)
+	if err != nil {
+		return
+	}
+	n.walkElements(func(e *Node) bool {
+		if list.Match(e) {
+			fn(e)
+		}
+		return true
+	})
+}
 
 // SelectAll is selection.selectAll(selector), that is querySelectorAll.
 func (n *Node) SelectAll(selector string) Nodes {

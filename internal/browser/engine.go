@@ -71,29 +71,54 @@ type Engine struct {
 	inlineBuf    []css.Decl
 
 	// Chunked arenas for nodeStyle, declEntry, textStyle, inlineItem, itemGlyph,
-	// runes, and svgTextLayout, recycled on Release.
-	styleChunks   [][]nodeStyle
-	styleIdx      int
-	styleOff      int
-	declChunks    [][]declEntry
-	declIdx       int
-	declOff       int
-	textChunks    [][]textStyle
-	textIdx       int
-	textOff       int
-	itemChunks    [][]inlineItem
-	itemIdx       int
-	itemOff       int
-	glyphChunks   [][]itemGlyph
-	glyphIdx      int
-	glyphOff      int
-	runeChunks    [][]rune
-	runeIdx       int
-	runeOff       int
-	svgTextChunks [][]svgTextLayout
-	svgTextIdx    int
-	svgTextOff    int
-	pooled        bool
+	// runes, svgTextLayout, htmlLine, htmlFrag, flowChild, htmlBox, htmlRootLayout,
+	// line pointer slices, and node slices, recycled on Release.
+	styleChunks      [][]nodeStyle
+	styleIdx         int
+	styleOff         int
+	declChunks       [][]declEntry
+	declIdx          int
+	declOff          int
+	textChunks       [][]textStyle
+	textIdx          int
+	textOff          int
+	itemChunks       [][]inlineItem
+	itemIdx          int
+	itemOff          int
+	glyphChunks      [][]itemGlyph
+	glyphIdx         int
+	glyphOff         int
+	runeChunks       [][]rune
+	runeIdx          int
+	runeOff          int
+	svgTextChunks    [][]svgTextLayout
+	svgTextIdx       int
+	svgTextOff       int
+	lineChunks       [][]htmlLine
+	lineIdx          int
+	lineOff          int
+	fragChunks       [][]htmlFrag
+	fragIdx          int
+	fragOff          int
+	flowChildChunks  [][]flowChild
+	flowChildIdx     int
+	flowChildOff     int
+	nodePtrChunks    [][]*dom.Node
+	nodePtrIdx       int
+	nodePtrOff       int
+	htmlBoxChunks    [][]htmlBox
+	htmlBoxIdx       int
+	htmlBoxOff       int
+	rootLayoutChunks [][]htmlRootLayout
+	rootLayoutIdx    int
+	rootLayoutOff    int
+	linePtrChunks    [][]*htmlLine
+	linePtrIdx       int
+	linePtrOff       int
+	itemPtrChunks    [][]*inlineItem
+	itemPtrIdx       int
+	itemPtrOff       int
+	pooled           bool
 
 	// page is the rule set of the style sheets of the page of pageDoc. See
 	// pagesheets.go.
@@ -282,6 +307,171 @@ func (e *Engine) allocSVGTextLayout(n int, scale float32) *svgTextLayout {
 	return l
 }
 
+func (e *Engine) allocHTMLLine() *htmlLine {
+	if e.lineIdx >= len(e.lineChunks) {
+		sz := 16
+		if len(e.lineChunks) > 0 {
+			sz = min(len(e.lineChunks[len(e.lineChunks)-1])*2, 128)
+		}
+		e.lineChunks = append(e.lineChunks, make([]htmlLine, sz))
+		e.lineOff = 0
+	}
+	chunk := e.lineChunks[e.lineIdx]
+	if e.lineOff >= len(chunk) {
+		e.lineIdx++
+		e.lineOff = 0
+		return e.allocHTMLLine()
+	}
+	l := &chunk[e.lineOff]
+	e.lineOff++
+	return l
+}
+
+func (e *Engine) allocHTMLFrags(n int) []htmlFrag {
+	for {
+		if e.fragIdx >= len(e.fragChunks) {
+			sz := max(n, 32)
+			if len(e.fragChunks) > 0 {
+				sz = max(n, min(len(e.fragChunks[len(e.fragChunks)-1])*2, 256))
+			}
+			e.fragChunks = append(e.fragChunks, make([]htmlFrag, sz))
+			e.fragOff = 0
+		}
+		chunk := e.fragChunks[e.fragIdx]
+		if e.fragOff+n <= len(chunk) {
+			s := chunk[e.fragOff : e.fragOff : e.fragOff+n]
+			e.fragOff += n
+			return s
+		}
+		e.fragIdx++
+		e.fragOff = 0
+	}
+}
+
+func (e *Engine) allocFlowChildren(n int) []flowChild {
+	for {
+		if e.flowChildIdx >= len(e.flowChildChunks) {
+			sz := max(n, 32)
+			if len(e.flowChildChunks) > 0 {
+				sz = max(n, min(len(e.flowChildChunks[len(e.flowChildChunks)-1])*2, 256))
+			}
+			e.flowChildChunks = append(e.flowChildChunks, make([]flowChild, sz))
+			e.flowChildOff = 0
+		}
+		chunk := e.flowChildChunks[e.flowChildIdx]
+		if e.flowChildOff+n <= len(chunk) {
+			s := chunk[e.flowChildOff : e.flowChildOff : e.flowChildOff+n]
+			e.flowChildOff += n
+			return s
+		}
+		e.flowChildIdx++
+		e.flowChildOff = 0
+	}
+}
+
+func (e *Engine) allocNodePtrs(n int) []*dom.Node {
+	for {
+		if e.nodePtrIdx >= len(e.nodePtrChunks) {
+			sz := max(n, 32)
+			if len(e.nodePtrChunks) > 0 {
+				sz = max(n, min(len(e.nodePtrChunks[len(e.nodePtrChunks)-1])*2, 256))
+			}
+			e.nodePtrChunks = append(e.nodePtrChunks, make([]*dom.Node, sz))
+			e.nodePtrOff = 0
+		}
+		chunk := e.nodePtrChunks[e.nodePtrIdx]
+		if e.nodePtrOff+n <= len(chunk) {
+			s := chunk[e.nodePtrOff : e.nodePtrOff : e.nodePtrOff+n]
+			e.nodePtrOff += n
+			return s
+		}
+		e.nodePtrIdx++
+		e.nodePtrOff = 0
+	}
+}
+
+func (e *Engine) allocHTMLBox() *htmlBox {
+	if e.htmlBoxIdx >= len(e.htmlBoxChunks) {
+		sz := 16
+		if len(e.htmlBoxChunks) > 0 {
+			sz = min(len(e.htmlBoxChunks[len(e.htmlBoxChunks)-1])*2, 128)
+		}
+		e.htmlBoxChunks = append(e.htmlBoxChunks, make([]htmlBox, sz))
+		e.htmlBoxOff = 0
+	}
+	chunk := e.htmlBoxChunks[e.htmlBoxIdx]
+	if e.htmlBoxOff >= len(chunk) {
+		e.htmlBoxIdx++
+		e.htmlBoxOff = 0
+		return e.allocHTMLBox()
+	}
+	b := &chunk[e.htmlBoxOff]
+	e.htmlBoxOff++
+	return b
+}
+
+func (e *Engine) allocHTMLRootLayout() *htmlRootLayout {
+	if e.rootLayoutIdx >= len(e.rootLayoutChunks) {
+		sz := 16
+		if len(e.rootLayoutChunks) > 0 {
+			sz = min(len(e.rootLayoutChunks[len(e.rootLayoutChunks)-1])*2, 128)
+		}
+		e.rootLayoutChunks = append(e.rootLayoutChunks, make([]htmlRootLayout, sz))
+		e.rootLayoutOff = 0
+	}
+	chunk := e.rootLayoutChunks[e.rootLayoutIdx]
+	if e.rootLayoutOff >= len(chunk) {
+		e.rootLayoutIdx++
+		e.rootLayoutOff = 0
+		return e.allocHTMLRootLayout()
+	}
+	r := &chunk[e.rootLayoutOff]
+	e.rootLayoutOff++
+	return r
+}
+
+func (e *Engine) allocHTMLLinePtrs(n int) []*htmlLine {
+	for {
+		if e.linePtrIdx >= len(e.linePtrChunks) {
+			sz := max(n, 32)
+			if len(e.linePtrChunks) > 0 {
+				sz = max(n, min(len(e.linePtrChunks[len(e.linePtrChunks)-1])*2, 256))
+			}
+			e.linePtrChunks = append(e.linePtrChunks, make([]*htmlLine, sz))
+			e.linePtrOff = 0
+		}
+		chunk := e.linePtrChunks[e.linePtrIdx]
+		if e.linePtrOff+n <= len(chunk) {
+			s := chunk[e.linePtrOff : e.linePtrOff : e.linePtrOff+n]
+			e.linePtrOff += n
+			return s
+		}
+		e.linePtrIdx++
+		e.linePtrOff = 0
+	}
+}
+
+func (e *Engine) allocInlineItemPtrs(n int) []*inlineItem {
+	for {
+		if e.itemPtrIdx >= len(e.itemPtrChunks) {
+			sz := max(n, 32)
+			if len(e.itemPtrChunks) > 0 {
+				sz = max(n, min(len(e.itemPtrChunks[len(e.itemPtrChunks)-1])*2, 256))
+			}
+			e.itemPtrChunks = append(e.itemPtrChunks, make([]*inlineItem, sz))
+			e.itemPtrOff = 0
+		}
+		chunk := e.itemPtrChunks[e.itemPtrIdx]
+		if e.itemPtrOff+n <= len(chunk) {
+			s := chunk[e.itemPtrOff : e.itemPtrOff : e.itemPtrOff+n]
+			e.itemPtrOff += n
+			return s
+		}
+		e.itemPtrIdx++
+		e.itemPtrOff = 0
+	}
+}
+
 // AcquireWithFonts returns a pooled Engine configured with fonts. The caller
 // must call Release when done with the document.
 func AcquireWithFonts(fonts *font.Library) *Engine {
@@ -324,6 +514,14 @@ func AcquireWithFonts(fonts *font.Library) *Engine {
 	e.glyphIdx, e.glyphOff = 0, 0
 	e.runeIdx, e.runeOff = 0, 0
 	e.svgTextIdx, e.svgTextOff = 0, 0
+	e.lineIdx, e.lineOff = 0, 0
+	e.fragIdx, e.fragOff = 0, 0
+	e.flowChildIdx, e.flowChildOff = 0, 0
+	e.nodePtrIdx, e.nodePtrOff = 0, 0
+	e.htmlBoxIdx, e.htmlBoxOff = 0, 0
+	e.rootLayoutIdx, e.rootLayoutOff = 0, 0
+	e.linePtrIdx, e.linePtrOff = 0, 0
+	e.itemPtrIdx, e.itemPtrOff = 0, 0
 	e.classBuf = e.classBuf[:0]
 	e.elemClassBuf = e.elemClassBuf[:0]
 	e.matchBuf = e.matchBuf[:0]
@@ -380,6 +578,62 @@ func (e *Engine) Release() {
 		}
 		clear(e.svgTextChunks[i][:end])
 	}
+	for i := 0; i <= e.lineIdx && i < len(e.lineChunks); i++ {
+		end := len(e.lineChunks[i])
+		if i == e.lineIdx {
+			end = e.lineOff
+		}
+		clear(e.lineChunks[i][:end])
+	}
+	for i := 0; i <= e.fragIdx && i < len(e.fragChunks); i++ {
+		end := len(e.fragChunks[i])
+		if i == e.fragIdx {
+			end = e.fragOff
+		}
+		clear(e.fragChunks[i][:end])
+	}
+	for i := 0; i <= e.flowChildIdx && i < len(e.flowChildChunks); i++ {
+		end := len(e.flowChildChunks[i])
+		if i == e.flowChildIdx {
+			end = e.flowChildOff
+		}
+		clear(e.flowChildChunks[i][:end])
+	}
+	for i := 0; i <= e.nodePtrIdx && i < len(e.nodePtrChunks); i++ {
+		end := len(e.nodePtrChunks[i])
+		if i == e.nodePtrIdx {
+			end = e.nodePtrOff
+		}
+		clear(e.nodePtrChunks[i][:end])
+	}
+	for i := 0; i <= e.htmlBoxIdx && i < len(e.htmlBoxChunks); i++ {
+		end := len(e.htmlBoxChunks[i])
+		if i == e.htmlBoxIdx {
+			end = e.htmlBoxOff
+		}
+		clear(e.htmlBoxChunks[i][:end])
+	}
+	for i := 0; i <= e.rootLayoutIdx && i < len(e.rootLayoutChunks); i++ {
+		end := len(e.rootLayoutChunks[i])
+		if i == e.rootLayoutIdx {
+			end = e.rootLayoutOff
+		}
+		clear(e.rootLayoutChunks[i][:end])
+	}
+	for i := 0; i <= e.linePtrIdx && i < len(e.linePtrChunks); i++ {
+		end := len(e.linePtrChunks[i])
+		if i == e.linePtrIdx {
+			end = e.linePtrOff
+		}
+		clear(e.linePtrChunks[i][:end])
+	}
+	for i := 0; i <= e.itemPtrIdx && i < len(e.itemPtrChunks); i++ {
+		end := len(e.itemPtrChunks[i])
+		if i == e.itemPtrIdx {
+			end = e.itemPtrOff
+		}
+		clear(e.itemPtrChunks[i][:end])
+	}
 	clear(e.classBuf[:cap(e.classBuf)])
 	clear(e.elemClassBuf[:cap(e.elemClassBuf)])
 	clear(e.matchBuf[:cap(e.matchBuf)])
@@ -410,7 +664,11 @@ func (e *Engine) Release() {
 	if len(e.styleChunks) <= maxPooledEngineChunks && len(e.declChunks) <= maxPooledEngineChunks &&
 		len(e.textChunks) <= maxPooledEngineChunks && len(e.itemChunks) <= maxPooledEngineChunks &&
 		len(e.glyphChunks) <= maxPooledEngineChunks && len(e.runeChunks) <= maxPooledEngineChunks &&
-		len(e.svgTextChunks) <= maxPooledEngineChunks {
+		len(e.svgTextChunks) <= maxPooledEngineChunks && len(e.lineChunks) <= maxPooledEngineChunks &&
+		len(e.fragChunks) <= maxPooledEngineChunks && len(e.flowChildChunks) <= maxPooledEngineChunks &&
+		len(e.nodePtrChunks) <= maxPooledEngineChunks && len(e.htmlBoxChunks) <= maxPooledEngineChunks &&
+		len(e.rootLayoutChunks) <= maxPooledEngineChunks && len(e.linePtrChunks) <= maxPooledEngineChunks &&
+		len(e.itemPtrChunks) <= maxPooledEngineChunks {
 		enginePool.Put(e)
 	}
 }
@@ -948,7 +1206,8 @@ func (e *Engine) PointAtLength(n *dom.Node, distance float64) dom.Point {
 // pixel, and the SVG starts at the body margin. With a viewBox, the root
 // maps its user space into its box (svgRootBoxOf).
 func (e *Engine) screenTransform(n *dom.Node) affine {
-	var chain []*dom.Node
+	var chainBuf [16]*dom.Node
+	chain := chainBuf[:0]
 	for p := n; p != nil && p.Type == dom.ElementNode && p.NS == dom.NSSVG; p = p.Parent {
 		chain = append(chain, p)
 	}

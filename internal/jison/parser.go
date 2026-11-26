@@ -11,8 +11,30 @@ import (
 )
 
 var (
-	emptyStrAny any = ""
-	asciiStrAny [128]any
+	emptyStrAny  any = ""
+	asciiStrAny  [128]any
+	commonTokens = map[string]any{
+		"  ": "  ", "   ": "   ", "    ": "    ", "\r\n": "\r\n",
+		"-->": "-->", "---": "---", "==>": "==>", "-.->": "-.->", "-.-": "-.-",
+		"-->|": "-->|", "--": "--", "..": "..", "->": "->", "->>": "->>",
+		"-->>": "-->>", "-x": "-x", "--x": "--x", "-)": "-)", "--)": "--)",
+		"<--": "<--", "<-->": "<-->", "o--o": "o--o", "x--x": "x--x",
+		"::": "::", ":::": ":::", ": ": ": ", "((": "((", "))": "))",
+		"[[": "[[", "]]": "]]", "{{": "{{", "}}": "}}", "[(": "[(", ")]": ")]",
+		"([": "([", "])": "])", "[/": "[/", "/]": "/]", "[\\": "[\\", "\\]": "\\]",
+		"||": "||", "|o": "|o", "o|": "o|", "}|": "}|", "|{": "|{", "}o": "}o", "o{": "o{",
+		"<|": "<|", "|>": "|>", "..>": "..>", "<..": "<..", "*--": "*--", "--*": "--*",
+		"o--": "o--", "--o": "--o",
+		"end": "end", "class": "class", "style": "style", "subgraph": "subgraph",
+		"direction": "direction", "click": "click", "classDef": "classDef",
+		"linkStyle": "linkStyle", "state": "state", "note": "note", "loop": "loop",
+		"alt": "alt", "else": "else", "opt": "opt", "par": "par", "and": "and",
+		"rect": "rect", "participant": "participant", "actor": "actor",
+		"activate": "activate", "deactivate": "deactivate", "title": "title",
+		"section": "section", "TB": "TB", "TD": "TD", "LR": "LR", "RL": "RL", "BT": "BT",
+		"graph": "graph", "flowchart": "flowchart", "string": "string", "int": "int",
+		"void": "void", "bool": "bool", "float": "float", "PK": "PK", "FK": "FK", "UK": "UK",
+	}
 )
 
 func init() {
@@ -27,6 +49,11 @@ func boxString(s string) any {
 	}
 	if len(s) == 1 && s[0] < 128 {
 		return asciiStrAny[s[0]]
+	}
+	if len(s) <= 12 {
+		if v, ok := commonTokens[s]; ok {
+			return v
+		}
 	}
 	return s
 }

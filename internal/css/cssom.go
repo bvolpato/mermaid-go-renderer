@@ -280,11 +280,25 @@ func KnownProperty(name string) bool {
 // an element in the SVG namespace: Blink then accepts a unitless number as
 // a length, and it stores !important declarations after the normal ones.
 func ParseInlineStyle(text string, svg bool) []Decl {
-	var out []Decl
-	for _, d := range ParseDeclarations(text) {
+	return ParseInlineStyleInto(nil, text, svg)
+}
+
+// ParseInlineStyleInto is ParseInlineStyle appending into dst.
+func ParseInlineStyleInto(dst []Decl, text string, svg bool) []Decl {
+	out := dst
+	if text == "" {
+		return out
+	}
+	var declBuf [8]Decl
+	decls := AppendDeclarations(declBuf[:0], text)
+	hasImportant := false
+	for _, d := range decls {
 		v, ok := normalizeValue(d.Name, d.Value, svg)
 		if !ok {
 			continue
+		}
+		if d.Important {
+			hasImportant = true
 		}
 		d.Raw, d.Value = d.Value, v
 		replaced := false
@@ -303,7 +317,7 @@ func ParseInlineStyle(text string, svg bool) []Decl {
 			out = append(out, d)
 		}
 	}
-	if svg {
+	if svg && hasImportant {
 		normal := make([]Decl, 0, len(out))
 		var important []Decl
 		for _, d := range out {
@@ -313,7 +327,8 @@ func ParseInlineStyle(text string, svg bool) []Decl {
 				normal = append(normal, d)
 			}
 		}
-		out = append(normal, important...)
+		out = append(out[:0], normal...)
+		out = append(out, important...)
 	}
 	return out
 }
@@ -476,7 +491,7 @@ func normalizeValue(name, value string, svg bool) (string, bool) {
 		if !ok || unit != "" {
 			return "", false
 		}
-		return FormatNumber(f), true
+		return formatNumberOrOrig(f, lower), true
 	case kindAlpha:
 		f, unit, ok := parseDimension(lower)
 		if !ok || (unit != "" && unit != "%") {
@@ -485,7 +500,7 @@ func normalizeValue(name, value string, svg bool) (string, bool) {
 		if unit == "%" {
 			f /= 100
 		}
-		return FormatNumber(f), true
+		return formatNumberOrOrig(f, lower), true
 	case kindInteger:
 		if lower == "auto" {
 			return lower, true
@@ -494,7 +509,7 @@ func normalizeValue(name, value string, svg bool) (string, bool) {
 		if !ok || unit != "" || f != math.Trunc(f) {
 			return "", false
 		}
-		return FormatNumber(f), true
+		return formatNumberOrOrig(f, lower), true
 	case kindLineHeight:
 		if lower == "normal" {
 			return lower, true
@@ -517,7 +532,7 @@ func normalizeValue(name, value string, svg bool) (string, bool) {
 			}
 			unit = "px"
 		}
-		return formatDimension(f, unit), true
+		return formatDimensionOrOrig(f, unit, lower), true
 	case kindFontWeight:
 		if hasWord("normal bold bolder lighter", lower) {
 			return lower, true
@@ -555,22 +570,78 @@ func hasWord(list, word string) bool {
 	return false
 }
 
+func appendFormattedNumber(dst []byte, f float64) []byte {
+	if f == 0 || math.IsNaN(f) {
+		return append(dst, '0')
+	}
+	base := len(dst)
+	dst = strconv.AppendFloat(dst, f, 'g', 6, 64)
+	expIdx := -1
+	dotIdx := -1
+	for i := base; i < len(dst); i++ {
+		if dst[i] == 'e' {
+			expIdx = i
+			break
+		}
+		if dst[i] == '.' {
+			dotIdx = i
+		}
+	}
+	if dotIdx < 0 {
+		return dst
+	}
+	mantEnd := len(dst)
+	if expIdx >= 0 {
+		mantEnd = expIdx
+	}
+	trimEnd := mantEnd
+	for trimEnd > dotIdx+1 && dst[trimEnd-1] == '0' {
+		trimEnd--
+	}
+	if trimEnd == dotIdx+1 {
+		trimEnd = dotIdx
+	}
+	if trimEnd == mantEnd {
+		return dst
+	}
+	if expIdx >= 0 {
+		expLen := len(dst) - expIdx
+		copy(dst[trimEnd:], dst[expIdx:])
+		return dst[:trimEnd+expLen]
+	}
+	return dst[:trimEnd]
+}
+
 // FormatNumber prints a CSS number as Blink does, with printf("%.6g"): at
 // most 6 significant digits, no trailing zeros, and a C-style exponent.
 func FormatNumber(f float64) string {
 	if f == 0 || math.IsNaN(f) {
 		return "0"
 	}
-	s := strconv.FormatFloat(f, 'g', 6, 64)
-	mant, exp, hasExp := strings.Cut(s, "e")
-	if strings.Contains(mant, ".") {
-		mant = strings.TrimRight(strings.TrimRight(mant, "0"), ".")
+	var buf [32]byte
+	return string(appendFormattedNumber(buf[:0], f))
+}
+
+func formatNumberOrOrig(f float64, orig string) string {
+	if f == 0 || math.IsNaN(f) {
+		return "0"
 	}
-	if !hasExp {
-		return mant
+	var buf [32]byte
+	b := appendFormattedNumber(buf[:0], f)
+	if string(b) == orig {
+		return orig
 	}
-	// Go prints "1e-06" and "1.23457e+07", as C does.
-	return mant + "e" + exp
+	return string(b)
+}
+
+func formatDimensionOrOrig(f float64, unit, orig string) string {
+	var buf [48]byte
+	b := appendFormattedNumber(buf[:0], f)
+	b = append(b, unit...)
+	if string(b) == orig {
+		return orig
+	}
+	return string(b)
 }
 
 var lengthUnits = map[string]bool{
@@ -632,15 +703,19 @@ func parseDimension(s string) (float64, string, bool) {
 }
 
 func formatDimension(f float64, unit string) string {
-	return FormatNumber(f) + unit
+	var buf [48]byte
+	b := appendFormattedNumber(buf[:0], f)
+	b = append(b, unit...)
+	return string(b)
 }
 
 // normalizeBoxLength normalizes a length that needs a unit. In SVG mode a
 // unitless number is a length in px.
 func normalizeBoxLength(value string, svg bool) (string, bool) {
 	if svg {
-		if f, unit, ok := parseDimension(strings.ToLower(value)); ok && unit == "" {
-			return formatDimension(f, "px"), true
+		lower := strings.ToLower(value)
+		if f, unit, ok := parseDimension(lower); ok && unit == "" {
+			return formatDimensionOrOrig(f, "px", lower), true
 		}
 	}
 	return normalizeLength(value, false)
@@ -657,7 +732,7 @@ func normalizeLength(value string, allowUnitless bool) (string, bool) {
 	}
 	if unit == "" {
 		if allowUnitless {
-			return FormatNumber(f), true
+			return formatNumberOrOrig(f, lower), true
 		}
 		if f != 0 {
 			return "", false
@@ -667,7 +742,7 @@ func normalizeLength(value string, allowUnitless bool) (string, bool) {
 	if !lengthUnits[unit] {
 		return "", false
 	}
-	return formatDimension(f, unit), true
+	return formatDimensionOrOrig(f, unit, lower), true
 }
 
 func normalizeColor(value string) (string, bool) {
@@ -824,19 +899,38 @@ func normalizeDashArray(value string) (string, bool) {
 	if lower == "none" {
 		return lower, true
 	}
-	fields := strings.FieldsFunc(lower, func(r rune) bool { return r == ',' || r == ' ' || r == '\t' || r == '\n' })
-	if len(fields) == 0 {
-		return "", false
-	}
-	out := make([]string, len(fields))
-	for i, f := range fields {
-		v, unit, ok := parseDimension(f)
+	var buf [128]byte
+	out := buf[:0]
+	count := 0
+	for i := 0; i < len(lower); {
+		for i < len(lower) && (lower[i] == ',' || lower[i] == ' ' || lower[i] == '\t' || lower[i] == '\n') {
+			i++
+		}
+		start := i
+		for i < len(lower) && lower[i] != ',' && lower[i] != ' ' && lower[i] != '\t' && lower[i] != '\n' {
+			i++
+		}
+		if i == start {
+			break
+		}
+		v, unit, ok := parseDimension(lower[start:i])
 		if !ok || v < 0 || (unit != "" && !lengthUnits[unit]) {
 			return "", false
 		}
-		out[i] = formatDimension(v, unit)
+		if count > 0 {
+			out = append(out, ',', ' ')
+		}
+		out = appendFormattedNumber(out, v)
+		out = append(out, unit...)
+		count++
 	}
-	return strings.Join(out, ", "), true
+	if count == 0 {
+		return "", false
+	}
+	if string(out) == lower {
+		return lower, true
+	}
+	return string(out), true
 }
 
 // normalizeGeneric rewrites a value token by token: one space between

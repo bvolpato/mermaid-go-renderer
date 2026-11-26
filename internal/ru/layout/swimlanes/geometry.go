@@ -226,6 +226,22 @@ func countOrthogonalBends(points []Point, epsilon ...float64) int {
 	return bends
 }
 
+// dedupeConsecutivePointsReadOnly returns points unchanged when it has no
+// consecutive equal points; otherwise it returns a deduplicated copy. Callers
+// must not mutate the returned slice.
+func dedupeConsecutivePointsReadOnly(points []Point, epsilon ...float64) []Point {
+	if len(points) <= 1 {
+		return points
+	}
+	e := epsOf(epsilon)
+	for i := 1; i < len(points); i++ {
+		if samePoint(points[i-1], points[i], e) {
+			return dedupeConsecutivePoints(points, e)
+		}
+	}
+	return points
+}
+
 // dedupeConsecutivePoints returns a new slice without the points that are
 // equal to the point before them.
 func dedupeConsecutivePoints(points []Point, epsilon ...float64) []Point {

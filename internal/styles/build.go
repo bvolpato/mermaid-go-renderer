@@ -112,11 +112,11 @@ func CreateUserStyles(config *js.Obj[any], graphType string, userCSSstyles strin
 		opts := &options{base: obj(config.Get("themeVariables")), config: config}
 		opts.Set("theme", config.Get("theme"))
 		opts.Set("look", config.Get("look"))
-		allStyles, err := getStyles(graphType, userCSSstyles, opts, svgID)
+		baseStyles, err := getBaseStyles(graphType, opts, svgID)
 		if err != nil {
 			return "", err
 		}
-		css := compileCSS(svgID, allStyles)
+		css := compileSplitCSS(svgID, baseStyles, userCSSstyles)
 		userStylesCache.Put(key, css)
 		return css, nil
 	}
@@ -125,11 +125,11 @@ func CreateUserStyles(config *js.Obj[any], graphType string, userCSSstyles strin
 	opts.Set("theme", config.Get("theme"))
 	opts.Set("look", config.Get("look"))
 
-	allStyles, err := getStyles(graphType, userCSSstyles, opts, svgID)
+	baseStyles, err := getBaseStyles(graphType, opts, svgID)
 	if err != nil {
 		return "", err
 	}
-	return compileCSS(svgID, allStyles), nil
+	return compileSplitCSS(svgID, baseStyles, userCSSstyles), nil
 }
 
 // compiled is a compiled style sheet and the selector of the SVG element
@@ -141,7 +141,64 @@ type compiled struct{ svgID, css string }
 // CompileCSS alone, and renders of one diagram type with one theme have the
 // same style sheet. An entry holds the result for one selector: the most
 // usual case is that all renders have the same id.
-var compiledSheets = memo.New[compiled](128)
+var compiledSheets = memo.New[compiled](512)
+
+// cssIsTopLevelBalanced reports whether s has balanced braces, quotes, and
+// comments so stylis compiles it independently of adjacent rules.
+func cssIsTopLevelBalanced(s string) bool {
+	depth := 0
+	var quote byte
+	inComment := false
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if inComment {
+			if c == '*' && i+1 < len(s) && s[i+1] == '/' {
+				inComment = false
+				i++
+			}
+			continue
+		}
+		if quote != 0 {
+			if c == '\\' && i+1 < len(s) {
+				i++
+				continue
+			}
+			if c == quote {
+				quote = 0
+			}
+			continue
+		}
+		switch c {
+		case '"', '\'':
+			quote = c
+		case '/':
+			if i+1 < len(s) && s[i+1] == '*' {
+				inComment = true
+				i++
+			}
+		case '{':
+			depth++
+		case '}':
+			depth--
+			if depth < 0 {
+				return false
+			}
+		}
+	}
+	return depth == 0 && quote == 0 && !inComment
+}
+
+// compileSplitCSS compiles baseStyles + userStyles + "\n", reusing the cached
+// compilation of baseStyles whenever both fragments are top-level balanced.
+func compileSplitCSS(svgID, baseStyles, userStyles string) string {
+	if userStyles == "" {
+		return compileCSS(svgID, baseStyles+"\n")
+	}
+	if cssIsTopLevelBalanced(baseStyles) && cssIsTopLevelBalanced(userStyles) {
+		return compileCSS(svgID, baseStyles) + compileCSS(svgID, userStyles+"\n")
+	}
+	return compileCSS(svgID, baseStyles+userStyles+"\n")
+}
 
 // compileCSS is stylis.CompileCSS with the cache.
 func compileCSS(svgID, allStyles string) string {

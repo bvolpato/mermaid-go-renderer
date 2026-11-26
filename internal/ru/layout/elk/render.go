@@ -3046,7 +3046,9 @@ func buildEdgeData(edge *Edge, defaults edgeDefaults) {
 	} else if hasTextValue {
 		label = text
 	}
-	label = lineBreakRegex.ReplaceAllString(label, "\n")
+	if strings.IndexByte(label, '<') >= 0 {
+		label = lineBreakRegex.ReplaceAllString(label, "\n")
+	}
 
 	// Object.assign(edge, edgeData)
 	edge.Minlen = minlen

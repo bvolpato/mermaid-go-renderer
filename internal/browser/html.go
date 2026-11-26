@@ -37,12 +37,13 @@ const luInfinite = lu(math.MaxInt64 / 4)
 // htmlBox is the border box of an element, relative to the content origin
 // of the foreignObject.
 type htmlBox struct {
-	node       *dom.Node
-	x, y, w, h lu
-	lines      []*htmlLine
-	children   []*htmlBox
-	style      *textStyle
-	math       *mathBoxData
+	node             *dom.Node
+	x, y, w, h       lu
+	originX, originY lu // origin in the coordinate system of the foreignObject
+	lines            []*htmlLine
+	children         []*htmlBox
+	style            *textStyle
+	math             *mathBoxData
 }
 
 type htmlLine struct {
@@ -295,8 +296,14 @@ type flowChild struct {
 }
 
 func (e *Engine) flowChildren(n *dom.Node) []flowChild {
-	var out []flowChild
+	out := e.allocFlowChildren(4)
 	var inline []*dom.Node
+	addInline := func(c *dom.Node) {
+		if inline == nil {
+			inline = e.allocNodePtrs(4)
+		}
+		inline = append(inline, c)
+	}
 	flush := func() {
 		if len(inline) > 0 {
 			out = append(out, flowChild{inline: inline})
@@ -306,7 +313,7 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 	add := func(c *dom.Node) {
 		switch c.Type {
 		case dom.TextNode:
-			inline = append(inline, c)
+			addInline(c)
 		case dom.ElementNode:
 			d := e.display(c)
 			if d == "none" || e.isOutOfFlow(c) {
@@ -314,7 +321,7 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 			}
 			if e.isAtomicInline(c, d) {
 				// An atomic inline box is on a line of this container.
-				inline = append(inline, c)
+				addInline(c)
 			} else if isBlockLevelDisplay(d) {
 				flush()
 				out = append(out, flowChild{block: c})
@@ -327,7 +334,11 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 				// content behind the element.
 				sub := e.flowChildren(c)
 				if len(sub) > 0 && sub[0].block == nil {
-					inline = append(inline, sub[0].inline...)
+					if inline == nil {
+						inline = sub[0].inline
+					} else {
+						inline = append(inline, sub[0].inline...)
+					}
 					sub = sub[1:]
 				}
 				flush()
@@ -337,7 +348,7 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 				}
 				out = append(out, sub...)
 			} else {
-				inline = append(inline, c)
+				addInline(c)
 			}
 		}
 	}
@@ -359,7 +370,7 @@ func (e *Engine) flowChildren(n *dom.Node) []flowChild {
 // collectInline turns inline-level nodes into items. A nil entry in the
 // result is a forced line break.
 func (e *Engine) collectInline(nodes []*dom.Node, cs *collapseState, avail lu) []*inlineItem {
-	var items []*inlineItem
+	items := e.allocInlineItemPtrs(4)
 	var walk func(n *dom.Node)
 	walk = func(n *dom.Node) {
 		switch n.Type {
@@ -550,8 +561,9 @@ type lineBreaker struct {
 
 // breakLines places the items on lines of at most avail width.
 func (lb *lineBreaker) breakLines(avail lu) []*htmlLine {
-	var lines []*htmlLine
-	cur := &htmlLine{}
+	lines := lb.e.allocHTMLLinePtrs(2)
+	cur := lb.e.allocHTMLLine()
+	cur.frags = lb.e.allocHTMLFrags(4)
 	// last is the last break opportunity of the current line that has
 	// content before it: the item and the rune where the next line would
 	// start. LineBreaker::HandleOverflow goes back to it when the content
@@ -562,7 +574,8 @@ func (lb *lineBreaker) breakLines(avail lu) []*htmlLine {
 	}
 	newLine := func() {
 		lines = append(lines, cur)
-		cur = &htmlLine{}
+		cur = lb.e.allocHTMLLine()
+		cur.frags = lb.e.allocHTMLFrags(4)
 		last.ok = false
 	}
 	itemIndex := func(target *inlineItem) int {
@@ -968,9 +981,9 @@ func maxLineWidth(lines []*htmlLine) lu {
 // prepareInline collects and shapes the items of an inline group.
 // avail is the width of the content box of the container, or luInfinite
 // when the widths are intrinsic.
-func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu) *lineBreaker {
-	cs := &collapseState{atStart: true}
-	items := e.collectInline(nodes, cs, avail)
+func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu) lineBreaker {
+	cs := collapseState{atStart: true}
+	items := e.collectInline(nodes, &cs, avail)
 	// Trailing collapsible space at the end of the block is removed.
 	if cs.prevSpace && cs.lastSpace != nil {
 		it := cs.lastSpace
@@ -981,14 +994,11 @@ func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu)
 	// An item with no characters is not shaped. The texts on its two sides
 	// are shaped together when they have the same font: Blink treats an
 	// open tag and a close tag as opaque to shaping (InlineNode::ShapeText).
-	var real []*inlineItem
-	for _, it := range items {
-		if it != nil && it.mark == nil {
-			real = append(real, it)
-		}
-	}
 	// A forced break is a shaping boundary.
-	boundaries := map[*inlineItem]bool{}
+	var realBuf [16]*inlineItem
+	var boundBuf [16]bool
+	real := realBuf[:0]
+	bounds := boundBuf[:0]
 	prevBreak := true
 	for _, it := range items {
 		if it == nil {
@@ -998,12 +1008,11 @@ func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu)
 		if it.mark != nil {
 			continue
 		}
-		if prevBreak || it.shapeBoundary {
-			boundaries[it] = true
-		}
+		real = append(real, it)
+		bounds = append(bounds, prevBreak || it.shapeBoundary)
 		prevBreak = false
 	}
-	e.shapeItems(real, func(i int) bool { return boundaries[real[i]] })
+	e.shapeItems(real, func(i int) bool { return bounds[i] })
 	// Drop items that became empty, but keep forced breaks and marks.
 	kept := items[:0]
 	for _, it := range items {
@@ -1011,7 +1020,7 @@ func (e *Engine) prepareInline(nodes []*dom.Node, container *dom.Node, avail lu)
 			kept = append(kept, it)
 		}
 	}
-	return &lineBreaker{e: e, items: kept, strut: e.textStyleOf(container), container: container}
+	return lineBreaker{e: e, items: kept, strut: e.textStyleOf(container), container: container}
 }
 
 // intrinsicWidths returns the min-content and max-content widths of the
@@ -1103,7 +1112,9 @@ func (e *Engine) layoutBlock(n *dom.Node, avail lu) *htmlBox {
 	}
 	ts := e.textStyleOf(n)
 	disp := e.display(n)
-	box := &htmlBox{node: n, style: ts}
+	box := e.allocHTMLBox()
+	box.node = n
+	box.style = ts
 	pad := e.edges(n, "padding", "", ts, avail)
 	border := e.borderEdges(n, ts)
 	margin := e.edges(n, "margin", "", ts, avail)
@@ -1229,7 +1240,11 @@ func (e *Engine) layoutBlock(n *dom.Node, avail lu) *htmlBox {
 			line.y += border.top + pad.top + y
 			line.x += border.left + pad.left
 		}
-		box.lines = append(box.lines, lines...)
+		if len(box.lines) == 0 {
+			box.lines = lines
+		} else {
+			box.lines = append(box.lines, lines...)
+		}
 		box.children = placeAtomicBoxes(box.children, lines)
 		y += h
 		if h > 0 {
@@ -1286,12 +1301,68 @@ func (e *Engine) layoutBlock(n *dom.Node, avail lu) *htmlBox {
 
 // htmlRootLayout is the layout of the content of one foreignObject.
 type htmlRootLayout struct {
-	boxes []*htmlBox
-	index map[*dom.Node]*htmlBox
-	// origin of each box in the coordinate system of the foreignObject.
-	origin map[*htmlBox][2]lu
+	boxes      []*htmlBox
+	box0       [1]*htmlBox
+	smallNodes [4]*dom.Node
+	smallBoxes [4]*htmlBox
+	smallLen   int
+	index      map[*dom.Node]*htmlBox
 	// imageEpoch is Engine.imageEpoch at the time of the layout.
 	imageEpoch uint64
+}
+
+func (root *htmlRootLayout) lookup(n *dom.Node) (*htmlBox, bool) {
+	if root.index != nil {
+		b, ok := root.index[n]
+		return b, ok
+	}
+	if n != nil {
+		for i := 0; i < root.smallLen; i++ {
+			if root.smallNodes[i] == n {
+				return root.smallBoxes[i], true
+			}
+		}
+	}
+	return nil, false
+}
+
+func (root *htmlRootLayout) registerBox(b *htmlBox, ox, oy lu) {
+	if b.node != nil && (b.math == nil || !b.math.synthetic) {
+		if root.index != nil {
+			root.index[b.node] = b
+		} else {
+			found := false
+			for i := 0; i < root.smallLen; i++ {
+				if root.smallNodes[i] == b.node {
+					root.smallBoxes[i] = b
+					found = true
+					break
+				}
+			}
+			if !found {
+				if root.smallLen < len(root.smallNodes) {
+					root.smallNodes[root.smallLen] = b.node
+					root.smallBoxes[root.smallLen] = b
+					root.smallLen++
+				} else {
+					m := make(map[*dom.Node]*htmlBox, len(root.smallNodes)+4)
+					for i := 0; i < root.smallLen; i++ {
+						m[root.smallNodes[i]] = root.smallBoxes[i]
+					}
+					m[b.node] = b
+					root.index = m
+					root.smallNodes = [4]*dom.Node{}
+					root.smallBoxes = [4]*htmlBox{}
+					root.smallLen = 0
+				}
+			}
+		}
+	}
+	b.originX = ox + b.x
+	b.originY = oy + b.y
+	for _, c := range b.children {
+		root.registerBox(c, b.originX, b.originY)
+	}
 }
 
 func (e *Engine) layoutForeignObject(fo *dom.Node) *htmlRootLayout {
@@ -1305,7 +1376,9 @@ func (e *Engine) layoutForeignObject(fo *dom.Node) *htmlRootLayout {
 	if _, ok := e.geometryLength(fo, "width"); ok {
 		avail = e.foreignObjectFrame(fo).w
 	}
-	root := &htmlRootLayout{index: map[*dom.Node]*htmlBox{}, origin: map[*htmlBox][2]lu{}, imageEpoch: e.imageEpoch}
+	root := e.allocHTMLRootLayout()
+	root.boxes = root.box0[:0]
+	root.imageEpoch = e.imageEpoch
 	var y lu
 	for _, fc := range e.flowChildren(fo) {
 		if fc.block == nil {
@@ -1319,18 +1392,8 @@ func (e *Engine) layoutForeignObject(fo *dom.Node) *htmlRootLayout {
 		y = box.y + box.h + cm.bottom
 		root.boxes = append(root.boxes, box)
 	}
-	var register func(b *htmlBox, ox, oy lu)
-	register = func(b *htmlBox, ox, oy lu) {
-		if b.node != nil && (b.math == nil || !b.math.synthetic) {
-			root.index[b.node] = b
-		}
-		root.origin[b] = [2]lu{ox + b.x, oy + b.y}
-		for _, c := range b.children {
-			register(c, ox+b.x, oy+b.y)
-		}
-	}
 	for _, b := range root.boxes {
-		register(b, 0, 0)
+		root.registerBox(b, 0, 0)
 	}
 	st.layout, st.layoutOK = root, true
 	return root
@@ -1350,7 +1413,8 @@ func foreignObjectOf(n *dom.Node) *dom.Node {
 // foreignObject, in the coordinate system of the foreignObject. An inline
 // element gets the union of its rectangles (see htmlQuads).
 func (e *Engine) htmlBoxRect(n *dom.Node) (x, y, w, h lu, ok bool) {
-	quads, ok := e.htmlQuads(n)
+	var buf [4]luRect
+	quads, ok := e.htmlQuadsInto(n, buf[:0])
 	if !ok {
 		return 0, 0, 0, 0, false
 	}

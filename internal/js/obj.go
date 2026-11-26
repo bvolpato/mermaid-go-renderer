@@ -688,6 +688,10 @@ func (m *Map[K, V]) Clear() {
 // Keys returns the keys in insertion order. The result is a copy.
 func (m *Map[K, V]) Keys() []K { return slices.Clone(m.keys) }
 
+// RawKeys returns the internal key slice in insertion order without copying.
+// Callers must not mutate the slice or modify m while ranging over it.
+func (m *Map[K, V]) RawKeys() []K { return m.keys }
+
 // Values returns the values in insertion order.
 func (m *Map[K, V]) Values() []V {
 	vals := make([]V, len(m.keys))
@@ -725,3 +729,7 @@ func (s *Set[K]) Has(key K) bool { return s.m.Has(key) }
 func (s *Set[K]) Add(key K)      { s.m.Set(key, struct{}{}) }
 func (s *Set[K]) Delete(key K)   { s.m.Delete(key) }
 func (s *Set[K]) Values() []K    { return s.m.Keys() }
+
+// RawValues returns the internal key slice in insertion order without copying.
+// Callers must not mutate the slice or modify s while ranging over it.
+func (s *Set[K]) RawValues() []K { return s.m.keys }

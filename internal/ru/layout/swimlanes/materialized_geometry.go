@@ -154,7 +154,7 @@ func separateSharedRenderedTerminalLanes(edges []*ru.Edge, nodeByIdMap *js.Map[s
 	}
 
 	terminalLaneFor := func(edge *ru.Edge, atStart bool) *TerminalLane {
-		points := dedupeConsecutivePoints(edge.Points)
+		points := dedupeConsecutivePointsReadOnly(edge.Points)
 		if len(points) < 2 {
 			return nil
 		}
@@ -334,7 +334,7 @@ func separateSharedRenderedTerminalLanes(edges []*ru.Edge, nodeByIdMap *js.Map[s
 
 	laneIsStraightCollinearConnector := func(lane *TerminalLane) bool {
 		edge := lane.edge
-		points := dedupeConsecutivePoints(edge.Points)
+		points := dedupeConsecutivePointsReadOnly(edge.Points)
 		if len(points) != 2 {
 			return false
 		}
@@ -565,7 +565,7 @@ func collapseRedundantRectangularDoglegs(edges []*ru.Edge, nodeByIdMap *js.Map[s
 			if edge.IsLayoutOnly {
 				continue
 			}
-			points := dedupeConsecutivePoints(edge.Points)
+			points := dedupeConsecutivePointsReadOnly(edge.Points)
 			for i := 0; i <= len(points)-5; i++ {
 				candidate := withoutDogleg(points, i)
 				if candidate == nil || !candidateIsSafe(edge, candidate) {
@@ -845,7 +845,7 @@ func liftTopLaneTitleBandsAboveRails(edges []*ru.Edge, nodeByIdMap *js.Map[strin
 		if edge.IsLayoutOnly {
 			continue
 		}
-		points := dedupeConsecutivePoints(edge.Points)
+		points := dedupeConsecutivePointsReadOnly(edge.Points)
 		for _, segment := range mgSegmentsFor(points) {
 			for _, lane := range lanes {
 				if !horizontalSegmentIntersectsTitle(segment, lane.rect) {
@@ -969,7 +969,7 @@ func shiftLeftLaneTitleBandsLeftOfRails(edges []*ru.Edge, nodeByIdMap *js.Map[st
 		if edge.IsLayoutOnly {
 			continue
 		}
-		points := dedupeConsecutivePoints(edge.Points)
+		points := dedupeConsecutivePointsReadOnly(edge.Points)
 		for _, segment := range mgSegmentsFor(points) {
 			for _, lane := range lanes {
 				if verticalSegmentIntersectsTitle(segment, lane.rect) {
@@ -1935,14 +1935,14 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 	}
 
 	// replacementPointsFor has the default parameter `replacements = new
-	// Map()`: nil stands for it.
+	// Map()`: nil stands for it. Callers only read the returned slice.
 	replacementPointsFor := func(edge *ru.Edge, replacements *mgEdgeReplacementMap) []Point {
 		if replacements != nil {
 			if points, ok := replacements.Lookup(edge); ok {
-				return dedupeConsecutivePoints(points)
+				return dedupeConsecutivePointsReadOnly(points)
 			}
 		}
-		return dedupeConsecutivePoints(edge.Points)
+		return dedupeConsecutivePointsReadOnly(edge.Points)
 	}
 
 	crossingCountBetweenSegments := func(firstSegments, secondSegments []*OrthogonalSegment) int {
@@ -1959,7 +1959,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 		if segments, ok := segmentCache[edge]; ok {
 			return segments
 		}
-		segments := mgSegmentsFor(dedupeConsecutivePoints(edge.Points))
+		segments := mgSegmentsFor(dedupeConsecutivePointsReadOnly(edge.Points))
 		segmentCache[edge] = segments
 		return segments
 	}
@@ -1967,7 +1967,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 	segmentsOfEdge := func(edge *ru.Edge, replacements *mgEdgeReplacementMap) []*OrthogonalSegment {
 		if replacements != nil {
 			if points, ok := replacements.Lookup(edge); ok {
-				return mgSegmentsFor(dedupeConsecutivePoints(points))
+				return mgSegmentsFor(dedupeConsecutivePointsReadOnly(points))
 			}
 		}
 		return currentSegmentsOf(edge)
@@ -2013,52 +2013,6 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 		}
 	}
 
-	crossingCountWithReplacements := func(current *CrossingSnapshot, replacements *mgEdgeReplacementMap) int {
-		changed := map[*ru.Edge]bool{}
-		for _, edge := range replacements.Keys() {
-			changed[edge] = true
-		}
-		if len(changed) == 0 {
-			return current.count
-		}
-
-		currentAffected := 0
-		for _, pair := range current.pairs {
-			if changed[pair.first] || changed[pair.second] {
-				currentAffected += pair.count
-			}
-		}
-
-		// The segments of the replaced edges, computed once. Upstream
-		// computes the segments of both paths again for every pair.
-		replaced := make(map[*ru.Edge][]*OrthogonalSegment, len(changed))
-		for edge := range changed {
-			replaced[edge] = segmentsOfEdge(edge, replacements)
-		}
-		segmentsOf := func(edge *ru.Edge) []*OrthogonalSegment {
-			if segments, ok := replaced[edge]; ok {
-				return segments
-			}
-			return currentSegmentsOf(edge)
-		}
-
-		replacementAffected := 0
-		for i := 0; i < len(visibleEdges); i++ {
-			first := visibleEdges[i]
-			firstChanged := changed[first]
-			for j := i + 1; j < len(visibleEdges); j++ {
-				second := visibleEdges[j]
-				if !firstChanged && !changed[second] {
-					continue
-				}
-				// crossingCountBetweenPaths of the points of the two edges.
-				replacementAffected += crossingCountBetweenSegments(segmentsOf(first), segmentsOf(second))
-			}
-		}
-
-		return current.count - currentAffected + replacementAffected
-	}
-
 	crossingComponents := func(snapshot *CrossingSnapshot) [][]*ru.Edge {
 		// The neighbors of an edge are visited in insertion order.
 		neighbors := map[*ru.Edge]*js.Set[*ru.Edge]{}
@@ -2092,7 +2046,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 				queue = queue[:len(queue)-1]
 				component = append(component, current)
 				if set := neighbors[current]; set != nil {
-					for _, next := range set.Values() {
+					for _, next := range set.RawValues() {
 						if !seen[next] {
 							seen[next] = true
 							queue = append(queue, next)
@@ -2146,10 +2100,23 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 		return groups
 	}
 
+	var singleReplScratch segmentScratch
 	crossingCountWithSingleReplacement := func(current *CrossingSnapshot, edge *ru.Edge, replacement []Point) int {
-		replacements := js.NewMap[*ru.Edge, []Point]()
-		replacements.Set(edge, replacement)
-		return crossingCountWithReplacements(current, replacements)
+		currentAffected := 0
+		for _, pair := range current.pairs {
+			if pair.first == edge || pair.second == edge {
+				currentAffected += pair.count
+			}
+		}
+		repSegs := singleReplScratch.of(dedupeConsecutivePointsReadOnly(replacement))
+		replacementAffected := 0
+		for _, other := range visibleEdges {
+			if other == edge {
+				continue
+			}
+			replacementAffected += crossingCountBetweenSegments(repSegs, currentSegmentsOf(other))
+		}
+		return current.count - currentAffected + replacementAffected
 	}
 
 	currentCrossingsByEdge := func(current *CrossingSnapshot) map[*ru.Edge]int {
@@ -2220,7 +2187,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 	}
 
 	pushOrthogonalCandidate := func(candidates *[][]Point, points []Point) {
-		candidate := simplifyPolyline(dedupeConsecutivePoints(points))
+		candidate := simplifyPolyline(dedupeConsecutivePointsReadOnly(points))
 		if orthogonalSegmentCount(candidate) == len(candidate)-1 {
 			*candidates = append(*candidates, candidate)
 		}
@@ -2325,18 +2292,18 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 
 	dedupeCandidatePaths := func(candidates [][]Point) [][]Point {
 		seen := map[string]bool{}
-		deduped := make([][]Point, len(candidates))
-		for i, candidate := range candidates {
-			deduped[i] = dedupeConsecutivePoints(candidate)
-		}
-		result := [][]Point{}
-		for _, candidate := range deduped {
-			key := pathKey3(candidate)
-			if seen[key] || len(candidate) < 2 {
+		result := make([][]Point, 0, len(candidates))
+		for _, candidate := range candidates {
+			c := dedupeConsecutivePointsReadOnly(candidate)
+			if len(c) < 2 {
+				continue
+			}
+			key := pathKey3(c)
+			if seen[key] {
 				continue
 			}
 			seen[key] = true
-			result = append(result, candidate)
+			result = append(result, c)
 		}
 		return result
 	}
@@ -2471,7 +2438,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 			return nil
 		}
 
-		points := dedupeConsecutivePoints(edge.Points)
+		points := dedupeConsecutivePointsReadOnly(edge.Points)
 		if len(points) < 4 {
 			return nil
 		}
@@ -2590,17 +2557,14 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 
 		seen := map[string]bool{}
 		paths := candidatePathsFor(edge)
-		simplified := make([][]Point, len(paths))
-		for i, candidate := range paths {
-			simplified[i] = simplifyPolyline(dedupeConsecutivePoints(candidate))
-		}
-		kept := [][]Point{}
-		for _, candidate := range simplified {
-			if pathHitsNode(edge, candidate) {
+		kept := make([][]Point, 0, len(paths))
+		for _, raw := range paths {
+			candidate := simplifyPolyline(dedupeConsecutivePointsReadOnly(raw))
+			if len(candidate) < 2 || pathHitsNode(edge, candidate) {
 				continue
 			}
 			key := pathKey3(candidate)
-			if seen[key] || len(candidate) < 2 {
+			if seen[key] {
 				continue
 			}
 			seen[key] = true
@@ -2688,7 +2652,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 	}
 
 	conflictsOnlyWith := func(candidate *PairCandidate, edge *ru.Edge) bool {
-		for _, conflict := range candidate.sharedTrackConflicts.Values() {
+		for _, conflict := range candidate.sharedTrackConflicts.RawValues() {
 			if conflict != edge {
 				return false
 			}
@@ -2898,7 +2862,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 		if pairedReplacement == nil {
 			return
 		}
-		for _, edge := range pairedReplacement.Keys() {
+		for _, edge := range pairedReplacement.RawKeys() {
 			edge.Points = pairedReplacement.Get(edge)
 		}
 	}

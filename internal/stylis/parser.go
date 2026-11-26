@@ -118,9 +118,12 @@ func (t *tokenizer[T]) parse(value []T, root, parent, rule *Element, rules [][]T
 				}
 				if property > 0 && (len(characters)-length != 0 || (variable == 0 && previous == 47)) {
 					if property > 32 {
-						*declarations = append(*declarations, t.declaration(withSemicolon(characters), rule, parent, length-1))
+						characters = append(characters, ';')
+						*declarations = append(*declarations, t.declaration(characters, rule, parent, length-1))
 					} else {
-						*declarations = append(*declarations, t.declaration(withSemicolon(remove(characters, ' ', false)), rule, parent, length-2))
+						removed := remove(characters, ' ', false)
+						removed = append(removed, ';')
+						*declarations = append(*declarations, t.declaration(removed, rule, parent, length-2))
 					}
 				}
 			// @ ;
@@ -244,13 +247,6 @@ func orOne(value int) int {
 	return value
 }
 
-// withSemicolon is characters + ';' in a new string.
-func withSemicolon[T unit](characters []T) []T {
-	out := make([]T, 0, len(characters)+1)
-	out = append(out, characters...)
-	return append(out, ';')
-}
-
 // ruleset makes a rule or an at-rule element. It also returns the selectors
 // of the element as units, for the parser to use as the parent selectors.
 //
@@ -265,8 +261,8 @@ func (t *tokenizer[T]) ruleset(value []T, root, parent *Element, index, offset i
 	}
 	size := len(rule)
 
-	if props == nil {
-		props = [][]T{}
+	if props == nil && index > 0 {
+		props = make([][]T, 0, index*size)
 	}
 	for i := 0; i < index; i++ {
 		j := points[i]
@@ -276,11 +272,15 @@ func (t *tokenizer[T]) ruleset(value []T, root, parent *Element, index, offset i
 		for x := 0; x < size; x++ {
 			var z []T
 			if j > 0 {
-				joined := make([]T, 0, len(rule[x])+1+len(y))
-				joined = append(joined, rule[x]...)
-				joined = append(joined, ' ')
-				joined = append(joined, y...)
-				z = trim(joined)
+				if len(rule[x]) == 0 {
+					z = trim(y)
+				} else {
+					joined := make([]T, 0, len(rule[x])+1+len(y))
+					joined = append(joined, rule[x]...)
+					joined = append(joined, ' ')
+					joined = append(joined, y...)
+					z = trim(joined)
+				}
 			} else {
 				z = trim(replaceAmpersand(y, rule[x]))
 			}
@@ -309,6 +309,29 @@ func (t *tokenizer[T]) comment(value []T, root, parent *Element) *Element {
 
 func (t *tokenizer[T]) declaration(value []T, root, parent *Element, length int) *Element {
 	element := t.node(value, root, parent, DECLARATION, length)
+	// For ASCII (T = byte), element.Value has the same 1-byte indices as value,
+	// so Prop and Text can slice element.Value without extra string allocations.
+	if _, isByte := any(value).([]byte); isByte {
+		n := len(element.Value)
+		endProp := length
+		if endProp < 0 {
+			endProp = max(n+endProp, 0)
+		} else if endProp > n {
+			endProp = n
+		}
+		element.Prop = element.Value[:endProp]
+		startText := length + 1
+		if startText < 0 {
+			startText = max(n+startText, 0)
+		} else if startText > n {
+			startText = n
+		}
+		endText := max(n-1, 0)
+		if startText < endText {
+			element.Text = element.Value[startText:endText]
+		}
+		return element
+	}
 	element.Prop = str(substr(value, 0, length))
 	element.Text = str(substr(value, length+1, -1))
 	return element

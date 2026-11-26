@@ -10,10 +10,10 @@
 package utils
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"math"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -513,17 +513,46 @@ func HandleUndefinedAttr(attrValue any) any {
 	return attrValue
 }
 
-var reDecimalNumber = regexp.MustCompile(`([0-9]+\.[0-9]+)`)
-
 // IsLabelCoordinateInPath checks if the x or y coordinate of the edge label
 // appears in the given SVG path data string (the d attribute of a path).
 func IsLabelCoordinateInPath(point Point, dAttr string) bool {
-	roundedX := js.Round(point.X)
-	roundedY := js.Round(point.Y)
+	var rxBuf, ryBuf [32]byte
+	rx := js.AppendNum(rxBuf[:0], js.Round(point.X))
+	ry := js.AppendNum(ryBuf[:0], js.Round(point.Y))
 
-	sanitizedD := reDecimalNumber.ReplaceAllStringFunc(dAttr, func(match string) string {
-		return js.Str(js.Round(js.ParseFloat(match)))
-	})
+	// Fast path: when dAttr contains no decimal numbers, check directly.
+	if strings.IndexByte(dAttr, '.') < 0 {
+		return strings.Contains(dAttr, string(rx)) || strings.Contains(dAttr, string(ry))
+	}
 
-	return strings.Contains(sanitizedD, js.Str(roundedX)) || strings.Contains(sanitizedD, js.Str(roundedY))
+	var stackBuf [256]byte
+	var dst []byte
+	if len(dAttr) <= len(stackBuf) {
+		dst = stackBuf[:0]
+	} else {
+		dst = make([]byte, 0, len(dAttr))
+	}
+	n := len(dAttr)
+	i := 0
+	for i < n {
+		if dAttr[i] < '0' || dAttr[i] > '9' {
+			dst = append(dst, dAttr[i])
+			i++
+			continue
+		}
+		start := i
+		for i < n && dAttr[i] >= '0' && dAttr[i] <= '9' {
+			i++
+		}
+		if i < n && dAttr[i] == '.' && i+1 < n && dAttr[i+1] >= '0' && dAttr[i+1] <= '9' {
+			i++
+			for i < n && dAttr[i] >= '0' && dAttr[i] <= '9' {
+				i++
+			}
+			dst = js.AppendNum(dst, js.Round(js.ParseFloat(dAttr[start:i])))
+		} else {
+			dst = append(dst, dAttr[start:i]...)
+		}
+	}
+	return bytes.Contains(dst, rx) || bytes.Contains(dst, ry)
 }

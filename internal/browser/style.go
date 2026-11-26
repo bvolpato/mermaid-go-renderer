@@ -563,6 +563,7 @@ func (e *Engine) collectRules(doc *dom.Document) *ruleSet {
 // package, which the style sheets of a diagram type fill one time.
 func parseRuleSet(texts []string, cacheSelectors bool) *ruleSet {
 	rs := &ruleSet{byID: map[string][]*cascadeRule{}, byClass: map[string][]*cascadeRule{}, byTag: map[string][]*cascadeRule{}}
+	var ruleSlab []cascadeRule
 	for _, text := range texts {
 		for _, r := range css.ParseStylesheet(text) {
 			var list dom.SelectorList
@@ -576,7 +577,12 @@ func parseRuleSet(texts []string, cacheSelectors bool) *ruleSet {
 				continue
 			}
 			for _, sel := range list {
-				cr := &cascadeRule{sel: sel, decls: r.Decls, order: rs.count, ancestorClass: sel.AncestorClass()}
+				if len(ruleSlab) == 0 {
+					ruleSlab = make([]cascadeRule, 64)
+				}
+				cr := &ruleSlab[0]
+				ruleSlab = ruleSlab[1:]
+				*cr = cascadeRule{sel: sel, decls: r.Decls, order: rs.count, ancestorClass: sel.AncestorClass()}
 				rs.count++
 				rs.deps |= sel.Deps()
 				if kind := pseudoKindOfName(sel.PseudoElement()); kind != pseudoNone {
@@ -700,6 +706,34 @@ type matched struct {
 func lowerASCII(s string) string {
 	for i := 0; i < len(s); i++ {
 		if c := s[i]; c >= 'A' && c <= 'Z' {
+			switch s {
+			case "foreignObject":
+				return "foreignobject"
+			case "linearGradient":
+				return "lineargradient"
+			case "radialGradient":
+				return "radialgradient"
+			case "clipPath":
+				return "clippath"
+			case "textPath":
+				return "textpath"
+			case "feDropShadow":
+				return "fedropshadow"
+			case "feGaussianBlur":
+				return "fegaussianblur"
+			case "feOffset":
+				return "feoffset"
+			case "feComposite":
+				return "fecomposite"
+			case "feMerge":
+				return "femerge"
+			case "feMergeNode":
+				return "femergenode"
+			case "feFlood":
+				return "feflood"
+			case "feBlend":
+				return "feblend"
+			}
 			return strings.ToLower(s)
 		}
 	}
@@ -957,83 +991,219 @@ func (e *Engine) applyCascadeDecl(n *dom.Node, st *nodeStyle, d *css.Decl, custo
 	})
 }
 
+// splitUpTo4 splits s on ASCII whitespace into buf without allocating. It
+// returns the number of fields, or -1 if there are more than 4 or non-ASCII
+// bytes (caller falls back to strings.Fields).
+func splitUpTo4(s string, buf *[4]string) int {
+	n := 0
+	i := 0
+	for i < len(s) {
+		c := s[i]
+		if c >= 0x80 {
+			return -1
+		}
+		if c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v' {
+			i++
+			continue
+		}
+		start := i
+		for i < len(s) {
+			c = s[i]
+			if c >= 0x80 {
+				return -1
+			}
+			if c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v' {
+				break
+			}
+			i++
+		}
+		if n >= 4 {
+			return 5
+		}
+		buf[n] = s[start:i]
+		n++
+	}
+	return n
+}
+
+func expandBox4(value string) (t, r, b, l string, ok bool) {
+	var buf [4]string
+	n := splitUpTo4(value, &buf)
+	if n < 0 {
+		parts := strings.Fields(value)
+		n = len(parts)
+		if n < 1 || n > 4 {
+			return "", "", "", "", false
+		}
+		copy(buf[:], parts)
+	}
+	switch n {
+	case 1:
+		return buf[0], buf[0], buf[0], buf[0], true
+	case 2:
+		return buf[0], buf[1], buf[0], buf[1], true
+	case 3:
+		return buf[0], buf[1], buf[2], buf[1], true
+	case 4:
+		return buf[0], buf[1], buf[2], buf[3], true
+	default:
+		return "", "", "", "", false
+	}
+}
+
 // expandDecl expands the shorthands that layout reads.
 func expandDecl(name, value string, set func(name, value string)) {
 	switch name {
 	case "font":
 		expandFontShorthand(value, set)
-	case "margin", "padding":
-		parts := strings.Fields(value)
-		var t, r, b, l string
-		switch len(parts) {
-		case 1:
-			t, r, b, l = parts[0], parts[0], parts[0], parts[0]
-		case 2:
-			t, r, b, l = parts[0], parts[1], parts[0], parts[1]
-		case 3:
-			t, r, b, l = parts[0], parts[1], parts[2], parts[1]
-		case 4:
-			t, r, b, l = parts[0], parts[1], parts[2], parts[3]
-		default:
+	case "margin":
+		t, r, b, l, ok := expandBox4(value)
+		if !ok {
 			return
 		}
-		set(name+"-top", t)
-		set(name+"-right", r)
-		set(name+"-bottom", b)
-		set(name+"-left", l)
-	case "margin-block", "padding-block", "margin-inline", "padding-inline":
-		// The logical shorthands. The engine lays out horizontal text from
-		// left to right: block is top and bottom, inline is left and right.
-		parts := strings.Fields(value)
-		if len(parts) < 1 || len(parts) > 2 {
+		set("margin-top", t)
+		set("margin-right", r)
+		set("margin-bottom", b)
+		set("margin-left", l)
+	case "padding":
+		t, r, b, l, ok := expandBox4(value)
+		if !ok {
 			return
 		}
-		prefix, axis, _ := strings.Cut(name, "-")
-		start, end := "-top", "-bottom"
-		if axis == "inline" {
-			start, end = "-left", "-right"
+		set("padding-top", t)
+		set("padding-right", r)
+		set("padding-bottom", b)
+		set("padding-left", l)
+	case "margin-block":
+		var buf [4]string
+		n := splitUpTo4(value, &buf)
+		if n < 0 {
+			parts := strings.Fields(value)
+			if len(parts) < 1 || len(parts) > 2 {
+				return
+			}
+			set("margin-top", parts[0])
+			set("margin-bottom", parts[len(parts)-1])
+			return
 		}
-		set(prefix+start, parts[0])
-		set(prefix+end, parts[len(parts)-1])
-	case "margin-block-start", "padding-block-start":
-		set(name[:strings.IndexByte(name, '-')]+"-top", value)
-	case "margin-block-end", "padding-block-end":
-		set(name[:strings.IndexByte(name, '-')]+"-bottom", value)
-	case "margin-inline-start", "padding-inline-start":
-		set(name[:strings.IndexByte(name, '-')]+"-left", value)
-	case "margin-inline-end", "padding-inline-end":
-		set(name[:strings.IndexByte(name, '-')]+"-right", value)
+		if n < 1 || n > 2 {
+			return
+		}
+		set("margin-top", buf[0])
+		set("margin-bottom", buf[n-1])
+	case "padding-block":
+		var buf [4]string
+		n := splitUpTo4(value, &buf)
+		if n < 0 {
+			parts := strings.Fields(value)
+			if len(parts) < 1 || len(parts) > 2 {
+				return
+			}
+			set("padding-top", parts[0])
+			set("padding-bottom", parts[len(parts)-1])
+			return
+		}
+		if n < 1 || n > 2 {
+			return
+		}
+		set("padding-top", buf[0])
+		set("padding-bottom", buf[n-1])
+	case "margin-inline":
+		var buf [4]string
+		n := splitUpTo4(value, &buf)
+		if n < 0 {
+			parts := strings.Fields(value)
+			if len(parts) < 1 || len(parts) > 2 {
+				return
+			}
+			set("margin-left", parts[0])
+			set("margin-right", parts[len(parts)-1])
+			return
+		}
+		if n < 1 || n > 2 {
+			return
+		}
+		set("margin-left", buf[0])
+		set("margin-right", buf[n-1])
+	case "padding-inline":
+		var buf [4]string
+		n := splitUpTo4(value, &buf)
+		if n < 0 {
+			parts := strings.Fields(value)
+			if len(parts) < 1 || len(parts) > 2 {
+				return
+			}
+			set("padding-left", parts[0])
+			set("padding-right", parts[len(parts)-1])
+			return
+		}
+		if n < 1 || n > 2 {
+			return
+		}
+		set("padding-left", buf[0])
+		set("padding-right", buf[n-1])
+	case "margin-block-start":
+		set("margin-top", value)
+	case "padding-block-start":
+		set("padding-top", value)
+	case "margin-block-end":
+		set("margin-bottom", value)
+	case "padding-block-end":
+		set("padding-bottom", value)
+	case "margin-inline-start":
+		set("margin-left", value)
+	case "padding-inline-start":
+		set("padding-left", value)
+	case "margin-inline-end":
+		set("margin-right", value)
+	case "padding-inline-end":
+		set("padding-right", value)
 	case "border":
 		// The shorthand resets the longhands of the four sides.
 		set(name, value)
-		for _, side := range borderSides {
-			set("border-"+side+"-width", "")
-			set("border-"+side+"-style", "")
-		}
-	case "border-top", "border-right", "border-bottom", "border-left":
+		set("border-top-width", "")
+		set("border-top-style", "")
+		set("border-right-width", "")
+		set("border-right-style", "")
+		set("border-bottom-width", "")
+		set("border-bottom-style", "")
+		set("border-left-width", "")
+		set("border-left-style", "")
+	case "border-top":
 		set(name, value)
-		set(name+"-width", "")
-		set(name+"-style", "")
-	case "border-width", "border-style":
-		parts := strings.Fields(value)
-		var t, r, b, l string
-		switch len(parts) {
-		case 1:
-			t, r, b, l = parts[0], parts[0], parts[0], parts[0]
-		case 2:
-			t, r, b, l = parts[0], parts[1], parts[0], parts[1]
-		case 3:
-			t, r, b, l = parts[0], parts[1], parts[2], parts[1]
-		case 4:
-			t, r, b, l = parts[0], parts[1], parts[2], parts[3]
-		default:
+		set("border-top-width", "")
+		set("border-top-style", "")
+	case "border-right":
+		set(name, value)
+		set("border-right-width", "")
+		set("border-right-style", "")
+	case "border-bottom":
+		set(name, value)
+		set("border-bottom-width", "")
+		set("border-bottom-style", "")
+	case "border-left":
+		set(name, value)
+		set("border-left-width", "")
+		set("border-left-style", "")
+	case "border-width":
+		t, r, b, l, ok := expandBox4(value)
+		if !ok {
 			return
 		}
-		suffix := name[len("border"):]
-		set("border-top"+suffix, t)
-		set("border-right"+suffix, r)
-		set("border-bottom"+suffix, b)
-		set("border-left"+suffix, l)
+		set("border-top-width", t)
+		set("border-right-width", r)
+		set("border-bottom-width", b)
+		set("border-left-width", l)
+		set(borderLonghandsMark, "1")
+	case "border-style":
+		t, r, b, l, ok := expandBox4(value)
+		if !ok {
+			return
+		}
+		set("border-top-style", t)
+		set("border-right-style", r)
+		set("border-bottom-style", b)
+		set("border-left-style", l)
 		set(borderLonghandsMark, "1")
 	case "border-top-width", "border-right-width", "border-bottom-width", "border-left-width",
 		"border-top-style", "border-right-style", "border-bottom-style", "border-left-style":
