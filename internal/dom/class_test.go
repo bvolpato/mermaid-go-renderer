@@ -13,8 +13,8 @@ import (
 func TestClassAndIDLookups(t *testing.T) {
 	rng := rand.New(rand.NewSource(1))
 	doc := NewDocument()
-	values := []string{"", " ", "a", "a b", " a  b\tc\n", "a\fb\rc ", "é x", "a a", " a", "A", "x y"}
-	names := []string{"", "a", "b", "c", "A", "é", "x", "a b", " a", "x y", "y"}
+	values := []string{"", " ", "a", "a b", " a  b\tc\n", "a\fb\rc ", "é x", "a a", " a", "A", "x y", "class", "fill", "cell foo", "aa", "abbb"}
+	names := []string{"", "a", "b", "c", "A", "é", "x", "a b", " a", "x y", "y", "s", "l", "bb"}
 	for i := 0; i < 5000; i++ {
 		var n *Node
 		if rng.Intn(2) == 0 {

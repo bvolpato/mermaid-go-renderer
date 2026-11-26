@@ -2863,7 +2863,7 @@ func resolveRenderedOrthogonalCrossings(edges []*ru.Edge, nodeByIdMap *js.Map[st
 			return
 		}
 		for _, edge := range pairedReplacement.RawKeys() {
-			edge.Points = pairedReplacement.Get(edge)
+			edge.Points = clonePoints(pairedReplacement.Get(edge))
 		}
 	}
 }

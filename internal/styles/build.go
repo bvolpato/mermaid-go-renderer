@@ -143,49 +143,171 @@ type compiled struct{ svgID, css string }
 // usual case is that all renders have the same id.
 var compiledSheets = memo.New[compiled](512)
 
-// cssIsTopLevelBalanced reports whether s has balanced braces, quotes, and
-// comments so stylis compiles it independently of adjacent rules.
-func cssIsTopLevelBalanced(s string) bool {
-	depth := 0
-	var quote byte
-	inComment := false
-	for i := 0; i < len(s); i++ {
+// skipStylisDelimiter advances past a quote, parenthesized, or bracketed
+// sequence using the same nesting rules as stylis tokenizer.delimiter.
+func skipStylisDelimiter(s string, i int, closeByte byte, depth int) (int, bool) {
+	if depth > 64 {
+		return 0, false
+	}
+	for i++; i < len(s); i++ {
 		c := s[i]
-		if inComment {
-			if c == '*' && i+1 < len(s) && s[i+1] == '/' {
-				inComment = false
-				i++
-			}
-			continue
+		if c == 0 {
+			return 0, false
 		}
-		if quote != 0 {
-			if c == '\\' && i+1 < len(s) {
-				i++
-				continue
-			}
-			if c == quote {
-				quote = 0
-			}
-			continue
+		if c == closeByte {
+			return i, true
 		}
 		switch c {
 		case '"', '\'':
-			quote = c
+			if closeByte != '"' && closeByte != '\'' {
+				end, ok := skipStylisDelimiter(s, i, c, depth+1)
+				if !ok {
+					return 0, false
+				}
+				i = end
+			}
+		case '(':
+			if closeByte == ')' {
+				end, ok := skipStylisDelimiter(s, i, ')', depth+1)
+				if !ok {
+					return 0, false
+				}
+				i = end
+			}
+		case '\\':
+			i++
+			if i >= len(s) || s[i] == 0 {
+				return 0, false
+			}
+		}
+	}
+	return 0, false
+}
+
+// cssIsTopLevelBalanced reports whether s consists solely of balanced top-level
+// rule/at-rule blocks (plus whitespace and closed comments) with no top-level
+// declarations or dangling selectors, so stylis compiles it independently of
+// adjacent fragments.
+func cssIsTopLevelBalanced(s string) bool {
+	depth := 0
+	hasPending := false
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if c == 0 {
+			return false
+		}
+		switch c {
+		case ' ', '\t', '\n', '\r':
+			continue
+		case '"', '\'':
+			end, ok := skipStylisDelimiter(s, i, c, 0)
+			if !ok {
+				return false
+			}
+			i = end
+			if depth == 0 {
+				hasPending = true
+			}
+		case '(':
+			end, ok := skipStylisDelimiter(s, i, ')', 0)
+			if !ok {
+				return false
+			}
+			i = end
+			if depth == 0 {
+				hasPending = true
+			}
+		case '[':
+			end, ok := skipStylisDelimiter(s, i, ']', 0)
+			if !ok {
+				return false
+			}
+			i = end
+			if depth == 0 {
+				hasPending = true
+			}
+		case '\\':
+			return false
 		case '/':
-			if i+1 < len(s) && s[i+1] == '*' {
-				inComment = true
-				i++
+			if i+1 < len(s) {
+				if s[i+1] == '*' {
+					i += 2
+					closed := false
+					for i < len(s) {
+						if s[i] == 0 {
+							return false
+						}
+						if s[i] == '*' && i+1 < len(s) && s[i+1] == '/' {
+							i++
+							closed = true
+							break
+						}
+						i++
+					}
+					if !closed {
+						return false
+					}
+					continue
+				}
+				if s[i+1] == '/' {
+					// Require a terminating newline so a trailing line comment
+					// in baseStyles cannot comment out userStyles.
+					i += 2
+					closed := false
+					for i < len(s) {
+						if s[i] == 0 {
+							return false
+						}
+						if s[i] == '\n' {
+							closed = true
+							break
+						}
+						i++
+					}
+					if !closed {
+						return false
+					}
+					continue
+				}
+			}
+			if depth == 0 {
+				hasPending = true
+			}
+		case ';':
+			if depth == 0 {
+				return false
+			}
+		case '@':
+			if i+1 < len(s) && s[i+1] == '-' {
+				return false
+			}
+			if depth == 0 {
+				hasPending = true
+			}
+		case '-':
+			if depth == 0 && !hasPending && i+1 < len(s) && s[i+1] == '-' {
+				return false
+			}
+			if depth == 0 {
+				hasPending = true
 			}
 		case '{':
 			depth++
+			if depth == 1 {
+				hasPending = false
+			}
 		case '}':
 			depth--
 			if depth < 0 {
 				return false
 			}
+		default:
+			if depth == 0 {
+				hasPending = true
+			}
 		}
 	}
-	return depth == 0 && quote == 0 && !inComment
+	return depth == 0 && !hasPending
 }
 
 // compileSplitCSS compiles baseStyles + userStyles + "\n", reusing the cached

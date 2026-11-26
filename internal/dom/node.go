@@ -863,18 +863,19 @@ func (n *Node) HasClass(name string) bool {
 		if len(v) < len(name) {
 			return false
 		}
-		rest := v
-		for {
-			idx := strings.Index(rest, name)
+		for off := 0; off < len(v); {
+			idx := strings.Index(v[off:], name)
 			if idx < 0 {
 				return false
 			}
-			end := idx + len(name)
-			if (idx == 0 || isASCIISpaceByte(rest[idx-1])) && (end == len(rest) || isASCIISpaceByte(rest[end])) {
+			pos := off + idx
+			end := pos + len(name)
+			if (pos == 0 || isASCIISpaceByte(v[pos-1])) && (end == len(v) || isASCIISpaceByte(v[end])) {
 				return !hasASCIISpace(name)
 			}
-			rest = rest[idx+1:]
+			off = pos + 1
 		}
+		return false
 	}
 	// The names between runs of white space. After white space at the end
 	// the name is empty, as it is for the loop that trims and then cuts.

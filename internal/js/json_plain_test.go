@@ -129,6 +129,15 @@ func TestPlainJSONAgainstDecoder(t *testing.T) {
 		}
 		check(text)
 	}
+	// Escaped object keys followed by escaped string values or nested escaped keys.
+	for _, text := range []string{
+		`{"a\nb":"c\nd"}`,
+		`{"long\nkey":"x\ny"}`,
+		`{"a\nb":{"x\ny":1}}`,
+		`{"a\"b":["c\\d","e\tf"]}`,
+	} {
+		check(text)
+	}
 	// Deep nesting, on both sides of the limit of the plain parser.
 	for _, depth := range []int{maxPlainDepth - 1, maxPlainDepth, maxPlainDepth + 1, 2000} {
 		check(strings.Repeat("[", depth) + "1" + strings.Repeat("]", depth))

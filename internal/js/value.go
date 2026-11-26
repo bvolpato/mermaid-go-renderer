@@ -573,6 +573,7 @@ func (p *plainJSON) value() (any, bool) {
 			if !ok {
 				return nil, false
 			}
+			keyName := p.key(name)
 			p.space()
 			if p.pos >= len(p.data) || p.data[p.pos] != ':' {
 				return nil, false
@@ -582,7 +583,7 @@ func (p *plainJSON) value() (any, bool) {
 			if !ok {
 				return nil, false
 			}
-			obj.Set(p.key(name), val)
+			obj.Set(keyName, val)
 			p.space()
 			if p.pos >= len(p.data) {
 				return nil, false

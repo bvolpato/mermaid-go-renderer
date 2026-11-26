@@ -510,6 +510,39 @@ func TestConcurrentBuild(t *testing.T) {
 	}
 }
 
+func TestCompileSplitCSSMatchesCombined(t *testing.T) {
+	base := "& {\n  font-family: Arial;\n  font-size: 16px;\n  fill: #333;\n}\n/* comment */\n.node {\n  // line comment\n  fill: #fff;\n}\n"
+	if !cssIsTopLevelBalanced(base) {
+		t.Fatalf("expected standard base stylesheet to be top-level balanced")
+	}
+	cases := []struct {
+		name string
+		base string
+		user string
+	}{
+		{"normal rule", base, ".a { fill: red; }"},
+		{"top-level decl with semicolon", base, "fill: red;"},
+		{"top-level decl without semicolon", base, "fill: red"},
+		{"top-level disallowed decl", base, "color: red;"},
+		{"top-level custom property block", base, "--x: { a: 1 }"},
+		{"line comment before block comment open", base + "// /*\n}\n/* */\n", ".a { fill: red; }"},
+		{"line comment with brace", base + "// {\n}\n", ".a { fill: red; }"},
+		{"trailing line comment without newline", base + "// trailing", ".a { fill: red; }"},
+		{"paren containing brace", base + ".u { background: url(foo{); }\n}\n", ".a { fill: red; }"},
+		{"bracket containing brace", base + "[data-x=\"{}\"] { fill: blue; }\n", ".a { fill: red; }"},
+		{"dangling selector in base", base + ".dangling ", "{ fill: red; }"},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got := compileSplitCSS("#my-svg", tc.base, tc.user)
+			want := stylis.CompileCSS("#my-svg", tc.base+tc.user+"\n")
+			if got != want {
+				t.Fatalf("compileSplitCSS mismatch:\n got: %q\nwant: %q", got, want)
+			}
+		})
+	}
+}
+
 func BenchmarkBuild(b *testing.B) {
 	g := loadGolden(b)
 	for _, typ := range []string{"flowchart-v2", "sequence", "mindmap"} {
