@@ -343,7 +343,7 @@ type quadCollector struct {
 // blockContainerOf returns the nearest ancestor of n that has a block box.
 func (root *htmlRootLayout) blockContainerOf(n *dom.Node) *dom.Node {
 	for p := n.Parent; p != nil && p.Type == dom.ElementNode; p = p.Parent {
-		if _, ok := root.index[p]; ok {
+		if _, ok := root.lookup(p); ok {
 			return p
 		}
 	}
@@ -355,6 +355,10 @@ func (root *htmlRootLayout) blockContainerOf(n *dom.Node) *dom.Node {
 // LayoutObject::AbsoluteQuads gives before the mapping to the page. The
 // second result is false for an element that is not rendered.
 func (e *Engine) htmlQuads(n *dom.Node) ([]luRect, bool) {
+	return e.htmlQuadsInto(n, nil)
+}
+
+func (e *Engine) htmlQuadsInto(n *dom.Node, dst []luRect) ([]luRect, bool) {
 	fo := foreignObjectOf(n)
 	if fo == nil {
 		return nil, false
@@ -371,21 +375,19 @@ func (e *Engine) htmlQuads(n *dom.Node) ([]luRect, bool) {
 		}
 	}
 	root := e.layoutForeignObject(fo)
-	if b, found := root.index[n]; found {
-		o := root.origin[b]
-		return []luRect{{o[0], o[1], b.w, b.h}}, true
+	if b, found := root.lookup(n); found {
+		return append(dst, luRect{b.originX, b.originY, b.w, b.h}), true
 	}
 	container := root.blockContainerOf(n)
 	if container == nil {
 		return nil, false
 	}
-	box := root.index[container]
-	o := root.origin[box]
+	box, _ := root.lookup(container)
 	ts := e.textStyleOf(container)
 	pad := e.edges(container, "padding", "", ts, 0)
 	border := e.borderEdges(container, ts)
-	c := &quadCollector{e: e, root: root, box: box, container: container, ox: o[0], oy: o[1]}
-	c.contentX = o[0] + border.left + pad.left
+	c := quadCollector{e: e, root: root, box: box, container: container, ox: box.originX, oy: box.originY}
+	c.contentX = box.originX + border.left + pad.left
 	c.contentW = box.w - border.horizontal() - pad.horizontal()
 	var quads []luRect
 	if n.NS == dom.NSHTML && n.Tag == "br" {
@@ -397,7 +399,7 @@ func (e *Engine) htmlQuads(n *dom.Node) ([]luRect, bool) {
 		// LayoutInline::QuadsForSelf: an inline element with no box has an
 		// empty rectangle where its block starts a line with no width.
 		x := c.contentX + alignOffset(ts.textAlign, c.contentW, 0)
-		quads = []luRect{{x, o[1] + border.top + pad.top, 0, 0}}
+		return append(dst, luRect{x, box.originY + border.top + pad.top, 0, 0}), true
 	}
 	return quads, true
 }
@@ -408,7 +410,7 @@ func (c *quadCollector) isBlockChild(n *dom.Node) bool {
 	if n.Type != dom.ElementNode {
 		return false
 	}
-	_, ok := c.root.index[n]
+	_, ok := c.root.lookup(n)
 	return ok && !c.e.isAtomicInline(n, c.e.display(n))
 }
 
@@ -419,7 +421,7 @@ func (c *quadCollector) isAtomicChild(n *dom.Node) bool {
 	if n.Type != dom.ElementNode {
 		return false
 	}
-	_, ok := c.root.index[n]
+	_, ok := c.root.lookup(n)
 	return ok && c.e.isAtomicInline(n, c.e.display(n))
 }
 
@@ -457,9 +459,10 @@ func (c *quadCollector) blockRun(first *dom.Node) *dom.Node {
 // the first block and ends at the bottom border edge of the last block. It
 // is as wide as the content box of the container.
 func (c *quadCollector) anonymousBlockQuad(first, last *dom.Node) luRect {
-	fb, lb := c.root.index[first], c.root.index[last]
-	top := c.root.origin[fb][1]
-	bottom := c.root.origin[lb][1] + lb.h
+	fb, _ := c.root.lookup(first)
+	lb, _ := c.root.lookup(last)
+	top := fb.originY
+	bottom := lb.originY + lb.h
 	return luRect{c.contentX, top, c.contentW, max(bottom-top, 0)}
 }
 
@@ -502,7 +505,7 @@ func (c *quadCollector) afterBlockQuads(last *dom.Node) []luRect {
 			return nil
 		}
 	}
-	lb := c.root.index[last]
+	lb, _ := c.root.lookup(last)
 	x := c.contentX
 	switch c.e.textStyleOf(c.container).textAlign {
 	case "center", "-webkit-center":
@@ -510,7 +513,7 @@ func (c *quadCollector) afterBlockQuads(last *dom.Node) []luRect {
 	case "right", "end", "-webkit-right":
 		x += c.contentW
 	}
-	return []luRect{{x, c.root.origin[lb][1] + lb.h, 0, 0}}
+	return []luRect{{x, lb.originY + lb.h, 0, 0}}
 }
 
 // hasOwnBox reports whether an inline element has a box fragment of its

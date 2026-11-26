@@ -25,12 +25,25 @@ func rotatePoints(m *mathFuncs, points []*Point, center Point, degrees float64) 
 	}
 }
 
-func rotateLines(m *mathFuncs, lines [][2]*Point, center Point, degrees float64) {
-	points := make([]*Point, 0, 2*len(lines))
-	for _, line := range lines {
-		points = append(points, line[0], line[1])
+func rotateLines(m *mathFuncs, lines [][2]Point, center Point, degrees float64) {
+	if len(lines) == 0 {
+		return
 	}
-	rotatePoints(m, points, center, degrees)
+	pi := math.Pi
+	cx, cy := center[0], center[1]
+	angle := float64((pi / 180) * degrees)
+	cos := m.cos(angle)
+	sin := m.sin(angle)
+	for i := range lines {
+		p0 := &lines[i][0]
+		x, y := p0[0], p0[1]
+		p0[0] = float64((x-cx)*cos) - float64((y-cy)*sin) + cx
+		p0[1] = float64((x-cx)*sin) + float64((y-cy)*cos) + cy
+		p1 := &lines[i][1]
+		x, y = p1[0], p1[1]
+		p1[0] = float64((x-cx)*cos) - float64((y-cy)*sin) + cx
+		p1[1] = float64((x-cx)*sin) + float64((y-cy)*cos) + cy
+	}
 }
 
 func areSamePoints(p1, p2 *Point) bool {
@@ -39,7 +52,7 @@ func areSamePoints(p1, p2 *Point) bool {
 
 // hachureLines returns the hachure lines of the polygons. The JavaScript
 // function also accepts one polygon. roughjs always gives a list.
-func hachureLines(g *Generator, polygons [][]*Point, hachureGap, hachureAngle, hachureStepOffset float64) [][2]*Point {
+func hachureLines(g *Generator, polygons [][]*Point, hachureGap, hachureAngle, hachureStepOffset float64) [][2]Point {
 	m := &g.m
 	angle := hachureAngle
 	gap := js.Max(hachureGap, 0.1)
@@ -64,7 +77,7 @@ type hachureEdge struct {
 	ymin, ymax, x, islope float64
 }
 
-func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOffset float64) [][2]*Point {
+func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOffset float64) [][2]Point {
 	vertexArray := make([][]*Point, 0, len(polygons))
 	maxEdges := 0
 	for _, polygon := range polygons {
@@ -87,7 +100,7 @@ func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOff
 			maxEdges += len(vertices) - 1
 		}
 	}
-	lines := [][2]*Point{}
+	lines := [][2]Point{}
 	gap = js.Max(gap, 0.1)
 	// Create sorted edges table
 	edgeBuf := make([]hachureEdge, 0, maxEdges)
@@ -134,7 +147,8 @@ func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOff
 		return lines
 	}
 	// Start scanning
-	activeEdges := []*hachureEdge{}
+	var activeBuf [16]*hachureEdge
+	activeEdges := activeBuf[:0]
 	y := edges[0].ymin
 	// The scan ends after the scan line passes the end of every edge.
 	for _, edge := range edges {
@@ -186,7 +200,7 @@ func straightHachureLines(g *Generator, polygons [][]*Point, gap, hachureStepOff
 					}
 					ce := activeEdges[i]
 					ne := activeEdges[nexti]
-					lines = append(lines, [2]*Point{
+					lines = append(lines, [2]Point{
 						{mathRound(ce.x), y},
 						{mathRound(ne.x), y},
 					})

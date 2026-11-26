@@ -16,14 +16,15 @@ const (
 )
 
 type pathToken struct {
-	typ  int
-	text string
+	typ uint8
+	cmd byte
+	num float64
 }
 
 // segment is one command of path data with its parameters.
 type segment struct {
 	key  byte
-	data []float64
+	data [7]float64
 }
 
 // paramCount is the PARAMS table: the number of parameters of a command.
@@ -98,10 +99,10 @@ func matchNumber(d string) int {
 	return i
 }
 
-// tokenize returns false for path data with a character that is not part of
-// a token. The JavaScript function returns an empty array in that case.
-func tokenize(d string) ([]pathToken, bool) {
-	tokens := []pathToken{}
+// tokenizeInto appends path tokens to dst and returns false for path data with
+// a character that is not part of a token. The JavaScript function returns an
+// empty array in that case.
+func tokenizeInto(d string, tokens []pathToken) ([]pathToken, bool) {
 	for d != "" {
 		c := d[0]
 		if c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == ',' {
@@ -111,72 +112,81 @@ func tokenize(d string) ([]pathToken, bool) {
 			}
 			d = d[i:]
 		} else if isPathCommand(c) {
-			tokens = append(tokens, pathToken{typ: tokCommand, text: d[:1]})
+			tokens = append(tokens, pathToken{typ: tokCommand, cmd: c})
 			d = d[1:]
 		} else if n := matchNumber(d); n > 0 {
-			// text: `${parseFloat(RegExp.$1)}`
-			tokens = append(tokens, pathToken{typ: tokNumber, text: js.Str(js.ParseFloat(d[:n]))})
+			// Match `${parseFloat(RegExp.$1)}` -> Number(...), which turns -0 into +0.
+			v := js.ParseFloat(d[:n])
+			if v == 0 {
+				v = 0
+			}
+			tokens = append(tokens, pathToken{typ: tokNumber, num: v})
 			d = d[n:]
 		} else {
 			return nil, false
 		}
 	}
-	tokens = append(tokens, pathToken{typ: tokEOD, text: ""})
+	tokens = append(tokens, pathToken{typ: tokEOD})
 	return tokens, true
 }
 
 // parsePath parses path data. It raises the errors that the JavaScript
 // function throws.
 func parsePath(d string) []segment {
-	segments := []segment{}
-	tokens, ok := tokenize(d)
+	var tokBuf [128]pathToken
+	tokens, ok := tokenizeInto(d, tokBuf[:0])
 	if !ok {
 		// tokens is [], so isType(tokens[0], EOD) reads a property of undefined.
 		throw("TypeError", "Cannot read properties of undefined (reading 'type')")
 	}
-	mode := "BOD"
+	segments := make([]segment, 0, len(tokens)/3+1)
+	var mode byte // 0 means BOD
 	index := 0
 	token := tokens[index]
 	for token.typ != tokEOD {
 		paramsCount := 0
-		params := []float64{}
-		if mode == "BOD" {
-			if token.text == "M" || token.text == "m" {
+		if mode == 0 {
+			if token.typ == tokCommand && (token.cmd == 'M' || token.cmd == 'm') {
 				index++
-				paramsCount = paramCount(token.text[0])
-				mode = token.text
+				paramsCount = paramCount(token.cmd)
+				mode = token.cmd
 			} else {
 				return parsePath("M0,0" + d)
 			}
 		} else if token.typ == tokNumber {
-			paramsCount = paramCount(mode[0])
+			paramsCount = paramCount(mode)
 			if paramsCount == 0 {
 				// A number after Z adds a segment and does not consume
 				// the number: the JavaScript loop does not end.
-				hang("the path data has a number after the command " + mode)
+				hang("the path data has a number after the command " + string(mode))
 			}
 		} else {
 			index++
-			paramsCount = paramCount(token.text[0])
-			mode = token.text
+			paramsCount = paramCount(token.cmd)
+			mode = token.cmd
 		}
 		if (index + paramsCount) < len(tokens) {
-			for i := index; i < index+paramsCount; i++ {
-				numbeToken := tokens[i]
+			var seg segment
+			seg.key = mode
+			for j := 0; j < paramsCount; j++ {
+				numbeToken := tokens[index+j]
 				if numbeToken.typ == tokNumber {
-					params = append(params, js.Number(numbeToken.text))
+					seg.data[j] = numbeToken.num
 				} else {
-					throw("Error", "Param not a number: "+mode+","+numbeToken.text)
+					tokText := ""
+					if numbeToken.typ == tokCommand {
+						tokText = string(numbeToken.cmd)
+					}
+					throw("Error", "Param not a number: "+string(mode)+","+tokText)
 				}
 			}
-			segments = append(segments, segment{key: mode[0], data: params})
+			segments = append(segments, seg)
 			index += paramsCount
 			token = tokens[index]
-			if mode == "M" {
-				mode = "L"
-			}
-			if mode == "m" {
-				mode = "l"
+			if mode == 'M' {
+				mode = 'L'
+			} else if mode == 'm' {
+				mode = 'l'
 			}
 		} else {
 			throw("Error", "Path data ended short")
@@ -185,137 +195,132 @@ func parsePath(d string) []segment {
 	return segments
 }
 
-// absolutize translates relative commands to absolute commands.
+// absolutize translates relative commands to absolute commands in place.
 func absolutize(segments []segment) []segment {
 	cx, cy := 0.0, 0.0
 	subx, suby := 0.0, 0.0
-	out := []segment{}
-	clone := func(data []float64) []float64 { return append([]float64{}, data...) }
-	// relative is data.map((d, i) => (i % 2) ? (d + cy) : (d + cx)).
-	relative := func(data []float64) []float64 {
-		newdata := make([]float64, len(data))
-		for i, d := range data {
-			if i%2 != 0 {
-				newdata[i] = d + cy
-			} else {
-				newdata[i] = d + cx
-			}
-		}
-		return newdata
-	}
-	for _, seg := range segments {
-		data := seg.data
+	for i := range segments {
+		seg := &segments[i]
+		data := &seg.data
 		switch seg.key {
 		case 'M':
-			out = append(out, segment{key: 'M', data: clone(data)})
 			cx, cy = data[0], data[1]
 			subx, suby = data[0], data[1]
 		case 'm':
 			cx += data[0]
 			cy += data[1]
-			out = append(out, segment{key: 'M', data: []float64{cx, cy}})
-			subx = cx
-			suby = cy
+			seg.key = 'M'
+			data[0], data[1] = cx, cy
+			subx, suby = cx, cy
 		case 'L':
-			out = append(out, segment{key: 'L', data: clone(data)})
 			cx, cy = data[0], data[1]
 		case 'l':
 			cx += data[0]
 			cy += data[1]
-			out = append(out, segment{key: 'L', data: []float64{cx, cy}})
+			seg.key = 'L'
+			data[0], data[1] = cx, cy
 		case 'C':
-			out = append(out, segment{key: 'C', data: clone(data)})
 			cx = data[4]
 			cy = data[5]
 		case 'c':
-			newdata := relative(data)
-			out = append(out, segment{key: 'C', data: newdata})
-			cx = newdata[4]
-			cy = newdata[5]
+			seg.key = 'C'
+			data[0] += cx
+			data[1] += cy
+			data[2] += cx
+			data[3] += cy
+			data[4] += cx
+			data[5] += cy
+			cx = data[4]
+			cy = data[5]
 		case 'Q':
-			out = append(out, segment{key: 'Q', data: clone(data)})
 			cx = data[2]
 			cy = data[3]
 		case 'q':
-			newdata := relative(data)
-			out = append(out, segment{key: 'Q', data: newdata})
-			cx = newdata[2]
-			cy = newdata[3]
+			seg.key = 'Q'
+			data[0] += cx
+			data[1] += cy
+			data[2] += cx
+			data[3] += cy
+			cx = data[2]
+			cy = data[3]
 		case 'A':
-			out = append(out, segment{key: 'A', data: clone(data)})
 			cx = data[5]
 			cy = data[6]
 		case 'a':
 			cx += data[5]
 			cy += data[6]
-			out = append(out, segment{key: 'A', data: []float64{data[0], data[1], data[2], data[3], data[4], cx, cy}})
+			seg.key = 'A'
+			data[5], data[6] = cx, cy
 		case 'H':
-			out = append(out, segment{key: 'H', data: clone(data)})
 			cx = data[0]
 		case 'h':
 			cx += data[0]
-			out = append(out, segment{key: 'H', data: []float64{cx}})
+			seg.key = 'H'
+			data[0] = cx
 		case 'V':
-			out = append(out, segment{key: 'V', data: clone(data)})
 			cy = data[0]
 		case 'v':
 			cy += data[0]
-			out = append(out, segment{key: 'V', data: []float64{cy}})
+			seg.key = 'V'
+			data[0] = cy
 		case 'S':
-			out = append(out, segment{key: 'S', data: clone(data)})
 			cx = data[2]
 			cy = data[3]
 		case 's':
-			newdata := relative(data)
-			out = append(out, segment{key: 'S', data: newdata})
-			cx = newdata[2]
-			cy = newdata[3]
+			seg.key = 'S'
+			data[0] += cx
+			data[1] += cy
+			data[2] += cx
+			data[3] += cy
+			cx = data[2]
+			cy = data[3]
 		case 'T':
-			out = append(out, segment{key: 'T', data: clone(data)})
 			cx = data[0]
 			cy = data[1]
 		case 't':
 			cx += data[0]
 			cy += data[1]
-			out = append(out, segment{key: 'T', data: []float64{cx, cy}})
+			seg.key = 'T'
+			data[0], data[1] = cx, cy
 		case 'Z', 'z':
-			out = append(out, segment{key: 'Z', data: []float64{}})
+			seg.key = 'Z'
 			cx = subx
 			cy = suby
 		}
 	}
-	return out
+	return segments
 }
 
 // normalize rewrites the path so that it has only M, L, C and Z commands.
 func normalize(g *Generator, segments []segment) []segment {
-	out := []segment{}
+	out := make([]segment, 0, len(segments))
 	lastType := byte(0)
 	cx, cy := 0.0, 0.0
 	subx, suby := 0.0, 0.0
 	lcx, lcy := 0.0, 0.0
-	for _, seg := range segments {
+	for i := range segments {
+		seg := segments[i]
 		key, data := seg.key, seg.data
 		switch key {
 		case 'M':
-			out = append(out, segment{key: 'M', data: append([]float64{}, data...)})
+			out = append(out, seg)
 			cx, cy = data[0], data[1]
 			subx, suby = data[0], data[1]
 		case 'C':
-			out = append(out, segment{key: 'C', data: append([]float64{}, data...)})
+			out = append(out, seg)
 			cx = data[4]
 			cy = data[5]
 			lcx = data[2]
 			lcy = data[3]
 		case 'L':
-			out = append(out, segment{key: 'L', data: append([]float64{}, data...)})
+			out = append(out, seg)
 			cx, cy = data[0], data[1]
 		case 'H':
 			cx = data[0]
-			out = append(out, segment{key: 'L', data: []float64{cx, cy}})
+			out = append(out, segment{key: 'L', data: [7]float64{cx, cy}})
 		case 'V':
 			cy = data[0]
-			out = append(out, segment{key: 'L', data: []float64{cx, cy}})
+			out = append(out, segment{key: 'L', data: [7]float64{cx, cy}})
 		case 'S':
 			cx1, cy1 := 0.0, 0.0
 			if lastType == 'C' || lastType == 'S' {
@@ -325,7 +330,7 @@ func normalize(g *Generator, segments []segment) []segment {
 				cx1 = cx
 				cy1 = cy
 			}
-			out = append(out, segment{key: 'C', data: append([]float64{cx1, cy1}, data...)})
+			out = append(out, segment{key: 'C', data: [7]float64{cx1, cy1, data[0], data[1], data[2], data[3]}})
 			lcx = data[0]
 			lcy = data[1]
 			cx = data[2]
@@ -344,7 +349,7 @@ func normalize(g *Generator, segments []segment) []segment {
 			cy1 := cy + 2*(y1-cy)/3
 			cx2 := x + 2*(x1-x)/3
 			cy2 := y + 2*(y1-y)/3
-			out = append(out, segment{key: 'C', data: []float64{cx1, cy1, cx2, cy2, x, y}})
+			out = append(out, segment{key: 'C', data: [7]float64{cx1, cy1, cx2, cy2, x, y}})
 			lcx = x1
 			lcy = y1
 			cx = x
@@ -355,7 +360,7 @@ func normalize(g *Generator, segments []segment) []segment {
 			cy1 := cy + 2*(y1-cy)/3
 			cx2 := x + 2*(x1-x)/3
 			cy2 := y + 2*(y1-y)/3
-			out = append(out, segment{key: 'C', data: []float64{cx1, cy1, cx2, cy2, x, y}})
+			out = append(out, segment{key: 'C', data: [7]float64{cx1, cy1, cx2, cy2, x, y}})
 			lcx = x1
 			lcy = y1
 			cx = x
@@ -369,21 +374,21 @@ func normalize(g *Generator, segments []segment) []segment {
 			x := data[5]
 			y := data[6]
 			if r1 == 0 || r2 == 0 {
-				out = append(out, segment{key: 'C', data: []float64{cx, cy, x, y, x, y}})
+				out = append(out, segment{key: 'C', data: [7]float64{cx, cy, x, y, x, y}})
 				cx = x
 				cy = y
 			} else {
 				if cx != x || cy != y {
 					curves := arcToCubicCurves(g, cx, cy, x, y, r1, r2, angle, largeArcFlag, sweepFlag)
 					for _, curve := range curves {
-						out = append(out, segment{key: 'C', data: curve})
+						out = append(out, segment{key: 'C', data: [7]float64{curve[0], curve[1], curve[2], curve[3], curve[4], curve[5]}})
 					}
 					cx = x
 					cy = y
 				}
 			}
 		case 'Z':
-			out = append(out, segment{key: 'Z', data: []float64{}})
+			out = append(out, segment{key: 'Z'})
 			cx = subx
 			cy = suby
 		}
@@ -405,16 +410,16 @@ func rotate(m *mathFuncs, x, y, angleRad float64) (float64, float64) {
 
 // arcToCubicCurves is the call of the JavaScript function without the
 // recursive argument. It returns the curves.
-func arcToCubicCurves(g *Generator, x1, y1, x2, y2, r1, r2, angle, largeArcFlag, sweepFlag float64) [][]float64 {
+func arcToCubicCurves(g *Generator, x1, y1, x2, y2, r1, r2, angle, largeArcFlag, sweepFlag float64) [][6]float64 {
 	m := &g.m
 	angleRad := degToRad(angle)
 	params := arcToCubicParams(g, x1, y1, x2, y2, r1, r2, angle, largeArcFlag, sweepFlag, nil, 0)
-	curves := [][]float64{}
+	curves := make([][6]float64, 0, len(params)/3)
 	for i := 0; i+2 < len(params); i += 3 {
 		r1x, r1y := rotate(m, params[i][0], params[i][1], angleRad)
 		r2x, r2y := rotate(m, params[i+1][0], params[i+1][1], angleRad)
 		r3x, r3y := rotate(m, params[i+2][0], params[i+2][1], angleRad)
-		curves = append(curves, []float64{r1x, r1y, r2x, r2y, r3x, r3y})
+		curves = append(curves, [6]float64{r1x, r1y, r2x, r2y, r3x, r3y})
 	}
 	return curves
 }

@@ -395,7 +395,9 @@ func (t *traversal) curveLength(curve cubicBezier) float32 {
 	if scale < pathSegmentLengthToleranceSquared {
 		return 0
 	}
-	stack := []cubicBezier{curve}
+	var stackBuf [curveSplitDepthLimit + 1]cubicBezier
+	stack := stackBuf[:1]
+	stack[0] = curve
 	var total float32
 	for len(stack) > 0 {
 		length := curve.approximateDistance()

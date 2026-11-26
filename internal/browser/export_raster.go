@@ -271,16 +271,15 @@ func (e *Engine) RasterForeignObject(fo *dom.Node) []*RasterHTMLBox {
 	root := e.layoutForeignObject(fo)
 	var conv func(b *htmlBox, mathRoot *RasterMathBox) *RasterHTMLBox
 	conv = func(b *htmlBox, mathRoot *RasterMathBox) *RasterHTMLBox {
-		o := root.origin[b]
 		// The conversions keep the compiler from fusing the product inside
 		// px into the sums below.
-		ox, oy := float64(o[0].px()), float64(o[1].px())
+		ox, oy := float64(b.originX.px()), float64(b.originY.px())
 		out := &RasterHTMLBox{Node: b.node, X: ox, Y: oy, W: b.w.px(), H: b.h.px()}
 		if isMathRoot(b.node) && b.math != nil && !b.math.synthetic {
 			mathRoot = &RasterMathBox{Owner: b.node, X: ox, Y: oy, Width: b.w.px(), Height: b.h.px()}
 			out.Math = mathRoot
 			for n := b.node.Parent; n != nil && n != fo; n = n.Parent {
-				if _, boxed := root.index[n]; !boxed {
+				if _, boxed := root.lookup(n); !boxed {
 					mathRoot.InlineAncestors = append(mathRoot.InlineAncestors, n)
 				}
 			}

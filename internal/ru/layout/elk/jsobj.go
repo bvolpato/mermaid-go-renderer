@@ -119,10 +119,173 @@ func strs(list []string) []any {
 	return out
 }
 
+var (
+	boxStrNormal       any = "normal"
+	boxStrArrowPoint   any = "arrow_point"
+	boxStrArrowCircle  any = "arrow_circle"
+	boxStrArrowCross   any = "arrow_cross"
+	boxStrArrowOpen    any = "arrow_open"
+	boxStrNone         any = "none"
+	boxStrLinear       any = "linear"
+	boxStrBasis        any = "basis"
+	boxStrCatmullRom   any = "catmullRom"
+	boxStrMonotoneX    any = "monotoneX"
+	boxStrMonotoneY    any = "monotoneY"
+	boxStrStepBefore   any = "stepBefore"
+	boxStrStepAfter    any = "stepAfter"
+	boxStrCardinal     any = "cardinal"
+	boxStrNatural      any = "natural"
+	boxStrMarkdown     any = "markdown"
+	boxStrText         any = "text"
+	boxStrDefault      any = "default"
+	boxStrClassic      any = "classic"
+	boxStrHandDrawn    any = "handDrawn"
+	boxStrNeo          any = "neo"
+	boxStrRect         any = "rect"
+	boxStrSquareRect   any = "squareRect"
+	boxStrRounded      any = "rounded"
+	boxStrSubroutine   any = "subroutine"
+	boxStrStadium      any = "stadium"
+	boxStrDiamond      any = "diamond"
+	boxStrCircle       any = "circle"
+	boxStrDoubleCircle any = "doublecircle"
+	boxStrHexagon      any = "hexagon"
+	boxStrCylinder     any = "cylinder"
+	boxStrSolid        any = "solid"
+	boxStrDotted       any = "dotted"
+	boxStrThick        any = "thick"
+	boxStrInvisible    any = "invisible"
+	boxStrTB           any = "TB"
+	boxStrTD           any = "TD"
+	boxStrLR           any = "LR"
+	boxStrRL           any = "RL"
+	boxStrBT           any = "BT"
+	boxStrFast         any = "fast"
+	boxStrSlow         any = "slow"
+	boxStrEdge         any = "edge"
+	boxStrArrowClosed  any = "arrow_closed"
+	boxStrDoubleArrow  any = "double_arrow_point"
+	boxStrPoint        any = "point"
+	boxStrFlowchartV2  any = "flowchart-v2"
+	boxStrElk          any = "elk"
+	boxStrOn           any = "on"
+	boxStrOff          any = "off"
+)
+
+func boxedCommonStr(v string) any {
+	switch v {
+	case "normal":
+		return boxStrNormal
+	case "arrow_point":
+		return boxStrArrowPoint
+	case "arrow_circle":
+		return boxStrArrowCircle
+	case "arrow_cross":
+		return boxStrArrowCross
+	case "arrow_open":
+		return boxStrArrowOpen
+	case "arrow_closed":
+		return boxStrArrowClosed
+	case "double_arrow_point":
+		return boxStrDoubleArrow
+	case "point":
+		return boxStrPoint
+	case "none":
+		return boxStrNone
+	case "linear":
+		return boxStrLinear
+	case "basis":
+		return boxStrBasis
+	case "catmullRom":
+		return boxStrCatmullRom
+	case "monotoneX":
+		return boxStrMonotoneX
+	case "monotoneY":
+		return boxStrMonotoneY
+	case "stepBefore":
+		return boxStrStepBefore
+	case "stepAfter":
+		return boxStrStepAfter
+	case "cardinal":
+		return boxStrCardinal
+	case "natural":
+		return boxStrNatural
+	case "markdown":
+		return boxStrMarkdown
+	case "text":
+		return boxStrText
+	case "default":
+		return boxStrDefault
+	case "classic":
+		return boxStrClassic
+	case "handDrawn":
+		return boxStrHandDrawn
+	case "neo":
+		return boxStrNeo
+	case "rect":
+		return boxStrRect
+	case "squareRect":
+		return boxStrSquareRect
+	case "rounded":
+		return boxStrRounded
+	case "subroutine":
+		return boxStrSubroutine
+	case "stadium":
+		return boxStrStadium
+	case "diamond":
+		return boxStrDiamond
+	case "circle":
+		return boxStrCircle
+	case "doublecircle":
+		return boxStrDoubleCircle
+	case "hexagon":
+		return boxStrHexagon
+	case "cylinder":
+		return boxStrCylinder
+	case "solid":
+		return boxStrSolid
+	case "dotted":
+		return boxStrDotted
+	case "thick":
+		return boxStrThick
+	case "invisible":
+		return boxStrInvisible
+	case "TB":
+		return boxStrTB
+	case "TD":
+		return boxStrTD
+	case "LR":
+		return boxStrLR
+	case "RL":
+		return boxStrRL
+	case "BT":
+		return boxStrBT
+	case "fast":
+		return boxStrFast
+	case "slow":
+		return boxStrSlow
+	case "edge":
+		return boxStrEdge
+	case "flowchart-v2":
+		return boxStrFlowchartV2
+	case "elk":
+		return boxStrElk
+	case "on":
+		return boxStrOn
+	case "off":
+		return boxStrOff
+	}
+	return nil
+}
+
 // setStr sets a property when the string is not empty: an empty string
 // stands for undefined in the structs of internal/ru.
 func setStr(o *js.Obj[any], key, v string) {
 	if v != "" {
+		if b := boxedCommonStr(v); b != nil {
+			o.Set(key, b)
+			return
+		}
 		o.Set(key, v)
 	}
 }
@@ -171,7 +334,7 @@ func setExtra(o *js.Obj[any], extra map[string]any) {
 // properties. The functions intersect and calcIntersect are left out: JSON
 // has no functions.
 func nodeToObj(n *ru.Node) *js.Obj[any] {
-	o := js.NewObj[any]()
+	o := js.NewObjCap[any](12)
 	o.Set("id", n.ID)
 	if n.HasLabel || n.Label != "" {
 		o.Set("label", n.Label)
@@ -312,7 +475,7 @@ func terminalKeys[V any](m map[string]V) []string {
 // properties. The curve is left out when it is not a string: upstream has
 // a function there after the prepare phase.
 func edgeToObj(e *ru.Edge) *js.Obj[any] {
-	o := js.NewObj[any]()
+	o := js.NewObjCap[any](12)
 	o.Set("id", e.ID)
 	if e.HasLabel || e.Label != "" {
 		o.Set("label", e.Label)

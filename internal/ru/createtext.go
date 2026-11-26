@@ -20,7 +20,7 @@ const maxSafeSizeForWidth = 16384
 
 func applyStyle(node *dom.Node, style string) {
 	if style != "" {
-		node.Attr("style", style)
+		node.AttrStr("style", style)
 	}
 }
 
@@ -30,11 +30,24 @@ type htmlSpanNode struct {
 	isNode     bool
 }
 
+func pxString(v float64) string {
+	switch v {
+	case 200:
+		return "200px"
+	case 2000:
+		return "2000px"
+	case maxSafeSizeForWidth:
+		return "16384px"
+	}
+	return js.Str(v) + "px"
+}
+
 func addHtmlSpan(ctx *render.Context, element *dom.Node, node htmlSpanNode, width float64, classes string, addBackground bool, minWidth float64) (*dom.Node, error) {
 	fo := element.Append("foreignObject")
 	// This is not the final width. The final width comes from the div.
-	fo.Attr("width", js.Str(js.Min(float64(10*width), maxSafeSizeForWidth))+"px")
-	fo.Attr("height", js.Str(js.Min(float64(10*width), maxSafeSizeForWidth))+"px")
+	foSize := pxString(js.Min(float64(10*width), maxSafeSizeForWidth))
+	fo.AttrStr("width", foSize)
+	fo.AttrStr("height", foSize)
 
 	div := fo.Append("xhtml:div")
 	var sanitizedLabel string
@@ -47,38 +60,49 @@ func addHtmlSpan(ctx *render.Context, element *dom.Node, node htmlSpanNode, widt
 	} else {
 		sanitizedLabel = ctx.SanitizeText(node.label)
 	}
-	labelClass := "edgeLabel"
-	if node.isNode {
-		labelClass = "nodeLabel"
-	}
 	span := div.Append("span")
 	span.HTML(sanitizedLabel)
 	applyStyle(span, node.labelStyle)
-	span.Attr("class", labelClass+" "+classes)
+	if classes == "" {
+		if node.isNode {
+			span.AttrStr("class", "nodeLabel ")
+		} else {
+			span.AttrStr("class", "edgeLabel ")
+		}
+	} else if node.isNode {
+		span.AttrStr("class", "nodeLabel "+classes)
+	} else {
+		span.AttrStr("class", "edgeLabel "+classes)
+	}
 
 	applyStyle(div, node.labelStyle)
-	div.Style("display", "table-cell")
-	div.Style("white-space", "nowrap")
-	div.Style("line-height", "1.5")
+	div.StyleStr("display", "table-cell")
+	div.StyleStr("white-space", "nowrap")
+	div.StyleStr("line-height", "1.5")
+	var widthPx string
 	if !math.IsInf(width, 1) {
-		div.Style("max-width", js.Str(width)+"px")
-		div.Style("text-align", "center")
+		widthPx = pxString(width)
+		div.StyleStr("max-width", widthPx)
+		div.StyleStr("text-align", "center")
 	}
-	div.Attr("xmlns", "http://www.w3.org/1999/xhtml")
+	div.AttrStr("xmlns", "http://www.w3.org/1999/xhtml")
 	if addBackground {
-		div.Attr("class", "labelBkg")
+		div.AttrStr("class", "labelBkg")
 	}
 
 	ctx.AwaitMeasure()
 	bbox := div.BoundingClientRect()
 	if bbox.Width == width {
-		div.Style("display", "table")
-		div.Style("white-space", "break-spaces")
-		div.Style("width", js.Str(width)+"px")
+		div.StyleStr("display", "table")
+		div.StyleStr("white-space", "break-spaces")
+		if widthPx == "" {
+			widthPx = pxString(width)
+		}
+		div.StyleStr("width", widthPx)
 	} else if bbox.Width < minWidth {
-		div.Style("display", "table")
-		div.Style("width", js.Str(minWidth)+"px")
-		div.Style("text-align", "center")
+		div.StyleStr("display", "table")
+		div.StyleStr("width", pxString(minWidth))
+		div.StyleStr("text-align", "center")
 	}
 	// The await of the caller.
 	ctx.Await()
@@ -158,21 +182,15 @@ func createFormattedText(width float64, g *dom.Node, structuredText [][]markdown
 	return textElement, nil
 }
 
-var reDecodeHTMLEntities = regexp.MustCompile(`&(amp|lt|gt);`)
+var htmlEntityDecoder = strings.NewReplacer("&amp;", "&", "&lt;", "<", "&gt;", ">")
 
 // decodeHTMLEntities decodes the entities that sanitizeText encodes. The
 // SVG code sets text with textContent, which does not decode entities.
 func decodeHTMLEntities(text string) string {
-	return reDecodeHTMLEntities.ReplaceAllStringFunc(text, func(match string) string {
-		switch match {
-		case "&amp;":
-			return "&"
-		case "&lt;":
-			return "<"
-		default:
-			return ">"
-		}
-	})
+	if strings.IndexByte(text, '&') < 0 {
+		return text
+	}
+	return htmlEntityDecoder.Replace(text)
 }
 
 // updateTextContentAndStyles fills a tspan with one inner tspan per word.
@@ -205,6 +223,11 @@ var reIconSubstring = regexp.MustCompile(`(fa[bklrs]?):fa-([\w-]+)`)
 // fontawesome labels to icons, or to <i> tags when the icon is not
 // registered.
 func ReplaceIconSubstring(ctx *render.Context, text string) string {
+	if !strings.Contains(text, ":fa-") {
+		// No icon match: Promise.all([]) is 1 turn + 1 turn for the caller's await.
+		ctx.AwaitN(2)
+		return text
+	}
 	// Upstream starts one async replacement per icon and awaits them with
 	// Promise.all. The number of turns of the microtask queue depends on the
 	// slowest one: an icon that is registered takes four turns
@@ -253,7 +276,6 @@ func DefaultTextOptions() TextOptions {
 
 var (
 	reBR              = regexp.MustCompile(`<br\s*/?>`)
-	reStrokeColon     = regexp.MustCompile(`stroke:`)
 	reStrokeDecl      = regexp.MustCompile(`stroke:[^;]+;?`)
 	reStrokeWidth     = regexp.MustCompile(`stroke-width:[^;]+;?`)
 	reFillDecl        = regexp.MustCompile(`fill:[^;]+;?`)
@@ -295,7 +317,11 @@ func CreateText(ctx *render.Context, el *dom.Node, text string, o TextOptions) (
 		return vertexNode, err
 	}
 	// The user can write br tags with spaces: make them <br/>.
-	sanitizeBR := render.DecodeEntities(reBR.ReplaceAllString(text, "<br/>"))
+	brText := text
+	if strings.Contains(brText, "<br") {
+		brText = reBR.ReplaceAllString(brText, "<br/>")
+	}
+	sanitizeBR := render.DecodeEntities(brText)
 	var structuredText [][]markdown.Word
 	if o.Markdown {
 		structuredText = markdown.MarkdownToLines(strings.Replace(sanitizeBR, "<br>", "<br/>", 1), ctx.Config)
@@ -308,28 +334,44 @@ func CreateText(ctx *render.Context, el *dom.Node, text string, o TextOptions) (
 	}
 	style := o.Style
 	if o.IsNode {
-		if reStrokeColon.MatchString(style) {
-			style = strings.Replace(style, "stroke:", "lineColor:", 1)
+		nodeLabelTextStyle := style
+		if style != "" {
+			if strings.Contains(style, "stroke:") {
+				style = strings.Replace(style, "stroke:", "lineColor:", 1)
+			}
+			nodeLabelTextStyle = style
+			if strings.Contains(nodeLabelTextStyle, "stroke:") {
+				nodeLabelTextStyle = reStrokeDecl.ReplaceAllString(nodeLabelTextStyle, "")
+			}
+			if strings.Contains(nodeLabelTextStyle, "stroke-width:") {
+				nodeLabelTextStyle = reStrokeWidth.ReplaceAllString(nodeLabelTextStyle, "")
+			}
+			if strings.Contains(nodeLabelTextStyle, "fill:") {
+				nodeLabelTextStyle = reFillDecl.ReplaceAllString(nodeLabelTextStyle, "")
+			}
+			nodeLabelTextStyle = strings.ReplaceAll(nodeLabelTextStyle, "color:", "fill:")
 		}
-		nodeLabelTextStyle := reStrokeDecl.ReplaceAllString(style, "")
-		nodeLabelTextStyle = reStrokeWidth.ReplaceAllString(nodeLabelTextStyle, "")
-		nodeLabelTextStyle = reFillDecl.ReplaceAllString(nodeLabelTextStyle, "")
-		nodeLabelTextStyle = strings.ReplaceAll(nodeLabelTextStyle, "color:", "fill:")
-		svgLabel.Attr("style", nodeLabelTextStyle)
+		svgLabel.AttrStr("style", nodeLabelTextStyle)
 	} else {
 		// On an edge, stroke and stroke-width are for the path: remove
 		// them. background becomes the fill of the label rect.
-		edgeLabelRectStyle := reStrokeDecl.ReplaceAllString(style, "")
-		edgeLabelRectStyle = reStrokeWidth.ReplaceAllString(edgeLabelRectStyle, "")
-		edgeLabelRectStyle = reFillDecl.ReplaceAllString(edgeLabelRectStyle, "")
-		edgeLabelRectStyle = strings.ReplaceAll(edgeLabelRectStyle, "background:", "fill:")
-		svgLabel.Select("rect").Attr("style", strings.ReplaceAll(edgeLabelRectStyle, "background:", "fill:"))
+		cleaned := style
+		if cleaned != "" {
+			if strings.Contains(cleaned, "stroke:") {
+				cleaned = reStrokeDecl.ReplaceAllString(cleaned, "")
+			}
+			if strings.Contains(cleaned, "stroke-width:") {
+				cleaned = reStrokeWidth.ReplaceAllString(cleaned, "")
+			}
+			if strings.Contains(cleaned, "fill:") {
+				cleaned = reFillDecl.ReplaceAllString(cleaned, "")
+			}
+		}
+		edgeLabelRectStyle := strings.ReplaceAll(cleaned, "background:", "fill:")
+		svgLabel.Select("rect").AttrStr("style", strings.ReplaceAll(edgeLabelRectStyle, "background:", "fill:"))
 
-		edgeLabelTextStyle := reStrokeDecl.ReplaceAllString(style, "")
-		edgeLabelTextStyle = reStrokeWidth.ReplaceAllString(edgeLabelTextStyle, "")
-		edgeLabelTextStyle = reFillDecl.ReplaceAllString(edgeLabelTextStyle, "")
-		edgeLabelTextStyle = strings.ReplaceAll(edgeLabelTextStyle, "color:", "fill:")
-		svgLabel.Select("text").Attr("style", edgeLabelTextStyle)
+		edgeLabelTextStyle := strings.ReplaceAll(cleaned, "color:", "fill:")
+		svgLabel.Select("text").AttrStr("style", edgeLabelTextStyle)
 	}
 	if o.IsTitle {
 		svgLabel.SelectAll("tspan.text-outer-tspan").Classed("title-row", true)

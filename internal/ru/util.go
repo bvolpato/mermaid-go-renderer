@@ -103,15 +103,15 @@ func LabelHelper(ctx *render.Context, parent *dom.Node, node *Node, classes stri
 		cssClasses = "node default"
 	}
 
-	shapeSvg := parent.Insert("g").Attr("class", cssClasses)
+	shapeSvg := parent.Insert("g").AttrStr("class", cssClasses)
 	if node.DomID != "" {
-		shapeSvg.Attr("id", node.DomID)
+		shapeSvg.AttrStr("id", node.DomID)
 	} else {
-		shapeSvg.Attr("id", node.ID)
+		shapeSvg.AttrStr("id", node.ID)
 	}
 
 	// Create the label and insert it after the rect.
-	labelEl := shapeSvg.Insert("g").Attr("class", "label").Attr("style", node.LabelStyle)
+	labelEl := shapeSvg.Insert("g").AttrStr("class", "label").AttrStr("style", node.LabelStyle)
 
 	label := node.Label
 
@@ -159,21 +159,18 @@ func LabelHelper(ctx *render.Context, parent *dom.Node, node *Node, classes stri
 		ConfigureLabelImages(ctx, div)
 		ctx.AwaitMeasure()
 		bbox = WithMinWidth(domRectBBox(div.BoundingClientRect()), minLabelWidth)
-		text.Attr("width", bbox.Width)
-		text.Attr("height", bbox.Height)
+		text.AttrFloat("width", bbox.Width)
+		text.AttrFloat("height", bbox.Height)
 	} else {
 		ctx.AwaitMeasure()
 		bbox = WithMinWidth(svgRectBBox(text.BBox()), minLabelWidth)
 	}
 
 	// Center the label.
-	if useHtmlLabels {
-		labelEl.Attr("transform", translate(-bbox.Width/2, -bbox.Height/2))
+	if useHtmlLabels || node.CenterLabel {
+		labelEl.AttrStr("transform", translate(-bbox.Width/2, -bbox.Height/2))
 	} else {
-		labelEl.Attr("transform", translate(0, -bbox.Height/2))
-	}
-	if node.CenterLabel {
-		labelEl.Attr("transform", translate(-bbox.Width/2, -bbox.Height/2))
+		labelEl.AttrStr("transform", translate(0, -bbox.Height/2))
 	}
 	labelEl.Insert("rect", ":first-child")
 	// The await of the caller.
@@ -295,16 +292,24 @@ func GetNodeClasses(node *Node, extra ...string) string {
 
 // CreatePathFromPoints is createPathFromPoints(points).
 func CreatePathFromPoints(points []Point) string {
-	parts := make([]string, 0, len(points)+1)
+	var buf [256]byte
+	b := buf[:0]
 	for i, p := range points {
-		cmd := "L"
 		if i == 0 {
-			cmd = "M"
+			b = append(b, 'M')
+		} else {
+			b = append(b, ' ', 'L')
 		}
-		parts = append(parts, cmd+js.Str(p.X)+","+js.Str(p.Y))
+		b = js.AppendNum(b, p.X)
+		b = append(b, ',')
+		b = js.AppendNum(b, p.Y)
 	}
-	parts = append(parts, "Z")
-	return strings.Join(parts, " ")
+	if len(points) > 0 {
+		b = append(b, ' ', 'Z')
+	} else {
+		b = append(b, 'Z')
+	}
+	return string(b)
 }
 
 // GenerateFullSineWavePoints is generateFullSineWavePoints(...).

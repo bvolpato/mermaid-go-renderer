@@ -16,6 +16,29 @@ import (
 	"strings"
 )
 
+const (
+	smallIntMin = -128
+	smallIntMax = 4095
+)
+
+var smallIntStrs = func() [smallIntMax - smallIntMin + 1]string {
+	var buf []byte
+	var lens [smallIntMax - smallIntMin + 1]uint8
+	for i := smallIntMin; i <= smallIntMax; i++ {
+		start := len(buf)
+		buf = strconv.AppendInt(buf, int64(i), 10)
+		lens[i-smallIntMin] = uint8(len(buf) - start)
+	}
+	all := string(buf)
+	var out [smallIntMax - smallIntMin + 1]string
+	pos := 0
+	for i, l := range lens {
+		out[i] = all[pos : pos+int(l)]
+		pos += int(l)
+	}
+	return out
+}()
+
 // Str formats a number as JavaScript String(x) does (Number::toString, radix 10).
 func Str(x float64) string {
 	switch {
@@ -31,7 +54,11 @@ func Str(x float64) string {
 	// An integer below 2^53 prints as its digits: the shortest digits that
 	// give the number back are the digits of the integer.
 	if x == math.Trunc(x) && math.Abs(x) < 1<<53 {
-		return strconv.FormatInt(int64(x), 10)
+		iv := int64(x)
+		if iv >= smallIntMin && iv <= smallIntMax {
+			return smallIntStrs[iv-smallIntMin]
+		}
+		return strconv.FormatInt(iv, 10)
 	}
 	var outBuf [48]byte
 	return string(AppendNum(outBuf[:0], x))

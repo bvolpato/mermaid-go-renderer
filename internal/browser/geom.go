@@ -212,15 +212,18 @@ func (m affine) mapRect(r rectF) rectF {
 	return rectF{rl, rt, rr - rl, rb - rt}
 }
 
-// pow10NegF32[k] is the exact float32 value of repeated multiplication by
-// float32(0.1) (k+1) times, matching Blink's GenericParseNumber<float> frac loop.
+// digitPow10NegF32[k][d] is the exact float32 value of float32(d) * 0.1^(k+1)
+// computed via repeated multiplication by float32(0.1), matching Blink's
+// GenericParseNumber<float> fractional digit accumulation bit-for-bit.
 // By k=46, float32(0.1)^47 underflows to +0.0.
-var pow10NegF32 = func() [48]float32 {
-	var t [48]float32
+var digitPow10NegF32 = func() [48][10]float32 {
+	var t [48][10]float32
 	f := float32(1)
-	for i := range t {
+	for k := range t {
 		f *= float32(0.1)
-		t[i] = f
+		for d := 1; d <= 9; d++ {
+			t[k][d] = float32(float32(d) * f)
+		}
 	}
 	return t
 }()
@@ -247,17 +250,19 @@ func parseSVGNumber(s string) (value float32, rest string, ok bool) {
 		return 0, s, false
 	}
 	startInt := i
-	for i < n && s[i]-'0' <= 9 {
+	var v int32
+	for i < n {
+		d := s[i] - '0'
+		if d > 9 {
+			break
+		}
+		v = v*10 + int32(d)
 		i++
 	}
 	if i != startInt {
 		if i-startInt <= 7 {
 			// Every integer < 10^7 is exact in float32 (24-bit significand),
 			// so integer accumulation is bit-identical to float32 multiply-add.
-			var v int32
-			for j := startInt; j < i; j++ {
-				v = v*10 + int32(s[j]-'0')
-			}
 			integer = float32(v)
 		} else {
 			multiplier := float32(1)
@@ -281,8 +286,8 @@ func parseSVGNumber(s string) (value float32, rest string, ok bool) {
 			if d > 9 {
 				break
 			}
-			if d != 0 && k < len(pow10NegF32) {
-				decimal += float32(float32(d) * pow10NegF32[k])
+			if k < len(digitPow10NegF32) {
+				decimal += digitPow10NegF32[k][d]
 			}
 			k++
 			i++

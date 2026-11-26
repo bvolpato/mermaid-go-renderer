@@ -234,13 +234,13 @@ func (r *RoughSVG) Generator() *rough.Generator { return r.gen }
 // set of the drawable.
 func (r *RoughSVG) Draw(d *rough.Drawable) *dom.Node {
 	g := r.doc.CreateElementNS(dom.NSSVG, "g")
-	for _, el := range r.gen.Draw(d) {
+	r.gen.DrawEach(d, func(attrs []rough.Attr) {
 		path := r.doc.CreateElementNS(dom.NSSVG, "path")
-		for _, a := range el.Attrs {
-			path.Attr(a.Name, a.Value)
+		for i := range attrs {
+			path.AttrStr(attrs[i].Name, attrs[i].Value)
 		}
 		g.AppendChild(path)
-	}
+	})
 	return g
 }
 

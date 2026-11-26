@@ -37,7 +37,7 @@ func getFiller(o *ResolvedOptions) patternFiller {
 }
 
 // polygonHachureLines is the function of scan-line-hachure.js.
-func polygonHachureLines(polygonList [][]*Point, o *ResolvedOptions) [][2]*Point {
+func polygonHachureLines(polygonList [][]*Point, o *ResolvedOptions) [][2]Point {
 	angle := o.hachureAngle + 90
 	gap := o.hachureGap
 	if gap < 0 {
@@ -74,7 +74,7 @@ func (f hachureFiller) _fillPolygons(polygonList [][]*Point, o *ResolvedOptions)
 	return OpSet{Type: SetFillSketch, Ops: ops}
 }
 
-func (hachureFiller) renderLines(lines [][2]*Point, o *ResolvedOptions) []Op {
+func (hachureFiller) renderLines(lines [][2]Point, o *ResolvedOptions) []Op {
 	if len(lines) == 0 {
 		return []Op{}
 	}
@@ -119,15 +119,15 @@ func (f zigZagFiller) fillPolygons(polygonList [][]*Point, o *ResolvedOptions) O
 	o2.hachureGap = gap
 	lines := polygonHachureLines(polygonList, o2)
 	zigZagAngle := float64((pi / 180) * o.hachureAngle)
-	zigzagLines := [][2]*Point{}
+	zigzagLines := make([][2]Point, 0, len(lines)*2)
 	dgx := float64(gap * 0.5 * m.cos(zigZagAngle))
 	dgy := float64(gap * 0.5 * m.sin(zigZagAngle))
-	for _, line := range lines {
-		p1, p2 := line[0], line[1]
+	for i := range lines {
+		p1, p2 := &lines[i][0], &lines[i][1]
 		if truthyNum(lineLength(m, p1, p2)) {
 			zigzagLines = append(zigzagLines,
-				[2]*Point{{p1[0] - dgx, p1[1] + dgy}, {p2[0], p2[1]}},
-				[2]*Point{{p1[0] + dgx, p1[1] - dgy}, {p2[0], p2[1]}},
+				[2]Point{{p1[0] - dgx, p1[1] + dgy}, {p2[0], p2[1]}},
+				[2]Point{{p1[0] + dgx, p1[1] - dgy}, {p2[0], p2[1]}},
 			)
 		}
 	}
@@ -153,18 +153,19 @@ func (f zigZagLineFiller) fillPolygons(polygonList [][]*Point, o *ResolvedOption
 	return OpSet{Type: SetFillSketch, Ops: f.zigzagLines(lines, zo, o)}
 }
 
-func (zigZagLineFiller) zigzagLines(lines [][2]*Point, zo float64, o *ResolvedOptions) []Op {
+func (zigZagLineFiller) zigzagLines(lines [][2]Point, zo float64, o *ResolvedOptions) []Op {
 	m := &o.gen.m
 	pi := math.Pi
 	ops := []Op{}
-	for _, line := range lines {
-		length := lineLength(m, line[0], line[1])
+	for i := range lines {
+		line := &lines[i]
+		length := lineLength(m, &line[0], &line[1])
 		count := mathRound(length / (2 * zo))
-		p1 := line[0]
-		p2 := line[1]
+		p1 := &line[0]
+		p2 := &line[1]
 		if p1[0] > p2[0] {
-			p1 = line[1]
-			p2 = line[0]
+			p1 = &line[1]
+			p2 = &line[0]
 		}
 		alpha := m.atan((p2[1] - p1[1]) / (p2[0] - p1[0]))
 		if math.IsInf(count, 1) {
@@ -194,7 +195,7 @@ func (f dashedFiller) fillPolygons(polygonList [][]*Point, o *ResolvedOptions) O
 	return OpSet{Type: SetFillSketch, Ops: f.dashedLine(lines, o)}
 }
 
-func (dashedFiller) dashedLine(lines [][2]*Point, o *ResolvedOptions) []Op {
+func (dashedFiller) dashedLine(lines [][2]Point, o *ResolvedOptions) []Op {
 	m := &o.gen.m
 	// The fallback for a negative dashOffset or dashGap.
 	hachureGap := o.hachureGap
@@ -210,15 +211,16 @@ func (dashedFiller) dashedLine(lines [][2]*Point, o *ResolvedOptions) []Op {
 		gap = hachureGap
 	}
 	ops := []Op{}
-	for _, line := range lines {
-		length := lineLength(m, line[0], line[1])
+	for i := range lines {
+		line := &lines[i]
+		length := lineLength(m, &line[0], &line[1])
 		count := math.Floor(length / (offset + gap))
 		startOffset := (length + gap - float64(count*(offset+gap))) / 2
-		p1 := line[0]
-		p2 := line[1]
+		p1 := &line[0]
+		p2 := &line[1]
 		if p1[0] > p2[0] {
-			p1 = line[1]
-			p2 = line[0]
+			p1 = &line[1]
+			p2 = &line[0]
 		}
 		alpha := m.atan((p2[1] - p1[1]) / (p2[0] - p1[0]))
 		if math.IsInf(count, 1) {
@@ -253,7 +255,7 @@ func (f dotFiller) fillPolygons(polygonList [][]*Point, o *ResolvedOptions) OpSe
 	return f.dotsOnLines(lines, o)
 }
 
-func (dotFiller) dotsOnLines(lines [][2]*Point, o *ResolvedOptions) OpSet {
+func (dotFiller) dotsOnLines(lines [][2]Point, o *ResolvedOptions) OpSet {
 	m := &o.gen.m
 	ops := []Op{}
 	gap := o.hachureGap
@@ -266,8 +268,9 @@ func (dotFiller) dotsOnLines(lines [][2]*Point, o *ResolvedOptions) OpSet {
 		fweight = float64(o.strokeWidthNum() / 2)
 	}
 	ro := float64(gap / 4)
-	for _, line := range lines {
-		length := lineLength(m, line[0], line[1])
+	for i := range lines {
+		line := &lines[i]
+		length := lineLength(m, &line[0], &line[1])
 		dl := length / gap
 		count := math.Ceil(dl) - 1
 		offset := length - float64(count*gap)

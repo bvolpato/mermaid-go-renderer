@@ -31,8 +31,13 @@ func lowerASCII(s string) string {
 // value of a style attribute. Invalid pieces are skipped, as a browser does.
 // Values are kept as written, trimmed. Names are lowercased.
 func ParseDeclarations(text string) []Decl {
+	return AppendDeclarations(nil, text)
+}
+
+// AppendDeclarations appends the parsed declarations of text to dst.
+func AppendDeclarations(dst []Decl, text string) []Decl {
 	s := stripComments(text)
-	var out []Decl
+	out := dst
 	depth := 0
 	var quote byte
 	start := 0

@@ -17,54 +17,53 @@ func (n *Node) Style(property string, value any) *Node {
 	return n.StylePriority(property, value, false)
 }
 
+// StyleStr is Style for a string value without boxing into any.
+func (n *Node) StyleStr(property, value string) *Node {
+	return n.styleStrPriority(property, value, false)
+}
+
 // StylePriority is selection.style(name, value, "important").
 func (n *Node) StylePriority(property string, value any, important bool) *Node {
 	if n == nil || n.Type != ElementNode {
 		return n
 	}
-	// Text that the CSSOM wrote is already canonical. The SVG rules for an
-	// authored attribute (unitless lengths, !important last) apply only to
-	// the first parse.
-	svg := n.NS == NSSVG
-	var block []css.Decl
-	var has bool
-	if n.hasPendingStyle && n.pendingStyleDirty {
-		has = true
-		block = n.styleBlock
-	} else {
-		var current string
-		current, has = n.InlineStyle()
-		if has && current == n.styleCanon && n.styleBlock != nil {
-			// The CSSOM changes its parsed style. It does not read the text
-			// again, so the values keep their digits.
-			block = n.styleBlock
-		} else {
-			block = css.ParseInlineStyle(current, svg && !(has && current == n.styleCanon))
-		}
-	}
-	if block == nil && value != nil && n.doc != nil && n.doc.arena != nil {
-		block = n.doc.arena.allocStyleDecls(6)
-	}
-	var changed bool
 	if value == nil {
-		block, changed = css.RemoveProperty(block, property)
-	} else {
-		var s string
-		switch v := value.(type) {
-		case string:
-			s = v
-		case float64:
-			s = js.Str(v)
-		case int:
-			s = js.Str(float64(v))
-		default:
-			s = js.ToString(v)
-		}
-		block, changed = css.SetProperty(block, property, s, important, svg)
+		return n.removeStyleProperty(property)
 	}
-	if !changed {
-		return n
+	var s string
+	switch v := value.(type) {
+	case string:
+		s = v
+	case float64:
+		s = js.Str(v)
+	case int:
+		s = js.Str(float64(v))
+	default:
+		s = js.ToString(v)
 	}
+	return n.styleStrPriority(property, s, important)
+}
+
+func (n *Node) loadStyleBlock(svg bool, allocForWrite bool) (block []css.Decl, has bool) {
+	if n.hasPendingStyle && n.pendingStyleDirty {
+		return n.styleBlock, true
+	}
+	var current string
+	current, has = n.InlineStyle()
+	if has && current == n.styleCanon && n.styleBlock != nil {
+		// The CSSOM changes its parsed style. It does not read the text
+		// again, so the values keep their digits.
+		return n.styleBlock, true
+	}
+	var dst []css.Decl
+	if allocForWrite && n.doc != nil && n.doc.arena != nil {
+		dst = n.doc.arena.allocStyleDecls(8)
+	}
+	block = css.ParseInlineStyleInto(dst, current, svg && !(has && current == n.styleCanon))
+	return block, has
+}
+
+func (n *Node) finishStyleChange(block []css.Decl, has bool) *Node {
 	// Blink writes the attribute even when the block becomes empty, if the
 	// attribute existed. It creates the attribute when a property is set.
 	if len(block) == 0 && !has {
@@ -83,6 +82,31 @@ func (n *Node) StylePriority(property string, value any, important bool) *Node {
 	n.styleCanon = text
 	n.setAttrNS("", "style", text)
 	return n
+}
+
+func (n *Node) removeStyleProperty(property string) *Node {
+	svg := n.NS == NSSVG
+	block, has := n.loadStyleBlock(svg, false)
+	var changed bool
+	block, changed = css.RemoveProperty(block, property)
+	if !changed {
+		return n
+	}
+	return n.finishStyleChange(block, has)
+}
+
+func (n *Node) styleStrPriority(property, value string, important bool) *Node {
+	if n == nil || n.Type != ElementNode {
+		return n
+	}
+	svg := n.NS == NSSVG
+	block, has := n.loadStyleBlock(svg, true)
+	var changed bool
+	block, changed = css.SetProperty(block, property, value, important, svg)
+	if !changed {
+		return n
+	}
+	return n.finishStyleChange(block, has)
 }
 
 // StyleValue is selection.style(name) as a getter on the inline style only.

@@ -165,6 +165,8 @@ func (s *Sanitizer) SanitizeText(text string, config *js.Obj[any]) string {
 	return out
 }
 
+var forbidStyleCfg = purify.Config{ForbidTags: []string{"style"}}
+
 // SanitizeTextErr is sanitizeText with the error that upstream throws.
 func (s *Sanitizer) SanitizeTextErr(text string, config *js.Obj[any]) (string, error) {
 	if text == "" {
@@ -194,7 +196,26 @@ func (s *Sanitizer) SanitizeTextErr(text string, config *js.Obj[any]) (string, e
 		}
 		return s.purifier.SanitizeErr(text, cfg)
 	}
-	return s.purifier.SanitizeErr(s.SanitizeMore(text, config), purify.Config{ForbidTags: []string{"style"}})
+	if !s.purifier.HasSetConfig() && strings.IndexByte(text, '<') < 0 {
+		if GetEffectiveHtmlLabels(config) {
+			level := get(config, "securityLevel")
+			if level == "antiscript" || level == "strict" || level == "sandbox" {
+				s.setupDompurifyHooksIfNotSetup()
+				return text, nil
+			}
+			if level != "loose" {
+				text = strings.ReplaceAll(text, ">", "&gt;")
+				text = strings.ReplaceAll(text, "=", "&equals;")
+				if strings.Contains(text, "#br#") {
+					text = PlaceholderToBreak(text)
+					return s.purifier.SanitizeErr(text, forbidStyleCfg)
+				}
+				return text, nil
+			}
+		}
+		return text, nil
+	}
+	return s.purifier.SanitizeErr(s.SanitizeMore(text, config), forbidStyleCfg)
 }
 
 // SanitizeTextOrArray is sanitizeTextOrArray for a string. It returns the
@@ -317,8 +338,8 @@ func CSSEscape(value string) string {
 // Evaluate converts a string or a boolean into a boolean (evaluate of
 // config.ts, which common.ts exports again).
 func Evaluate(val any) bool {
-	if b, ok := val.(bool); ok && !b {
-		return false
+	if b, ok := val.(bool); ok {
+		return b
 	}
 	switch js.ToLowerCase(js.TrimSpace(js.ToString(val))) {
 	case "false", "null", "0":

@@ -13,6 +13,7 @@ package graphlib
 import (
 	"errors"
 	"math"
+	"sort"
 	"strconv"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
@@ -21,8 +22,124 @@ import (
 const (
 	defaultEdgeName = "\x00"
 	graphNode       = "\x00"
-	edgeKeyDelim    = "\x01"
 )
+
+type edgeKey struct {
+	v    string
+	w    string
+	name string
+}
+
+type edgeEntry struct {
+	edge    Edge
+	hasName bool
+}
+
+func (e edgeEntry) key() edgeKey {
+	name := defaultEdgeName
+	if e.hasName {
+		name = e.edge.Name
+	}
+	return edgeKey{v: e.edge.V, w: e.edge.W, name: name}
+}
+
+func (e edgeEntry) matches(k edgeKey) bool {
+	if e.edge.V != k.v || e.edge.W != k.w {
+		return false
+	}
+	if e.hasName {
+		return e.edge.Name == k.name
+	}
+	return k.name == defaultEdgeName
+}
+
+// edgeMap is an insertion-ordered map from edgeKey to Edge with zero map
+// or slice allocation for small degree nodes.
+type edgeMap struct {
+	entries  []edgeEntry
+	entries0 [1]edgeEntry
+	index    map[edgeKey]int
+}
+
+func (m *edgeMap) len() int { return len(m.entries) }
+
+func (m *edgeMap) find(k edgeKey) int {
+	if m.index != nil {
+		if i, ok := m.index[k]; ok {
+			return i
+		}
+		return -1
+	}
+	for i := range m.entries {
+		if m.entries[i].matches(k) {
+			return i
+		}
+	}
+	return -1
+}
+
+func (m *edgeMap) get(k edgeKey) Edge {
+	if i := m.find(k); i >= 0 {
+		return m.entries[i].edge
+	}
+	return Edge{}
+}
+
+func (m *edgeMap) lookup(k edgeKey) (Edge, bool) {
+	if i := m.find(k); i >= 0 {
+		return m.entries[i].edge, true
+	}
+	return Edge{}, false
+}
+
+func (m *edgeMap) set(k edgeKey, e Edge) {
+	if i := m.find(k); i >= 0 {
+		m.entries[i].edge = e
+		m.entries[i].hasName = k.name != defaultEdgeName
+		return
+	}
+	idx := len(m.entries)
+	m.entries = append(m.entries, edgeEntry{edge: e, hasName: k.name != defaultEdgeName})
+	if m.index != nil {
+		m.index[k] = idx
+	} else if len(m.entries) > 8 {
+		m.index = make(map[edgeKey]int, len(m.entries)*2)
+		for i := range m.entries {
+			m.index[m.entries[i].key()] = i
+		}
+	}
+}
+
+func (m *edgeMap) del(k edgeKey) {
+	i := m.find(k)
+	if i < 0 {
+		return
+	}
+	copy(m.entries[i:], m.entries[i+1:])
+	m.entries = m.entries[:len(m.entries)-1]
+	if m.index != nil {
+		delete(m.index, k)
+		for j := i; j < len(m.entries); j++ {
+			m.index[m.entries[j].key()] = j
+		}
+	}
+}
+
+func (m *edgeMap) values() []Edge {
+	out := make([]Edge, len(m.entries))
+	for i := range m.entries {
+		out[i] = m.entries[i].edge
+	}
+	return out
+}
+
+func (m *edgeMap) keys() []edgeKey {
+	out := make([]edgeKey, len(m.entries))
+	for i := range m.entries {
+		out[i] = m.entries[i].key()
+	}
+	return out
+}
 
 // Options are the constructor options of Graph. The zero value is the
 // JavaScript default: a directed graph that is not a multigraph and not
@@ -52,6 +169,121 @@ var ErrNotCompound = errors.New("Cannot set parent in a non-compound graph")
 // not a multigraph.
 var ErrNotMultigraph = errors.New("Cannot set a named edge when isMultigraph = false")
 
+type countEntry struct {
+	key string
+	val float64
+}
+
+// countMap is a compact JS-object-ordered string->float64 map for node
+// predecessor/successor edge counts, avoiding heap allocations for degree <= 1.
+type countMap struct {
+	entries  []countEntry
+	entries0 [1]countEntry
+	index    map[string]int
+	hasIdx   bool
+}
+
+func (m *countMap) find(k string) int {
+	if m.index != nil {
+		if i, ok := m.index[k]; ok {
+			return i
+		}
+		return -1
+	}
+	for i := range m.entries {
+		if m.entries[i].key == k {
+			return i
+		}
+	}
+	return -1
+}
+
+func (m *countMap) lookup(k string) (float64, bool) {
+	if i := m.find(k); i >= 0 {
+		return m.entries[i].val, true
+	}
+	return 0, false
+}
+
+func (m *countMap) set(k string, v float64) {
+	if i := m.find(k); i >= 0 {
+		m.entries[i].val = v
+		return
+	}
+	idx := len(m.entries)
+	m.entries = append(m.entries, countEntry{key: k, val: v})
+	if len(k) > 0 && k[0] >= '0' && k[0] <= '9' {
+		if _, isIdx := js.IsArrayIndex(k); isIdx {
+			m.hasIdx = true
+		}
+	}
+	if m.index != nil {
+		m.index[k] = idx
+	} else if len(m.entries) > 8 {
+		m.index = make(map[string]int, len(m.entries)*2)
+		for i := range m.entries {
+			m.index[m.entries[i].key] = i
+		}
+	}
+}
+
+func (m *countMap) del(k string) {
+	i := m.find(k)
+	if i < 0 {
+		return
+	}
+	copy(m.entries[i:], m.entries[i+1:])
+	m.entries = m.entries[:len(m.entries)-1]
+	if m.index != nil {
+		delete(m.index, k)
+		for j := i; j < len(m.entries); j++ {
+			m.index[m.entries[j].key] = j
+		}
+	}
+}
+
+func (m *countMap) keys() []string {
+	n := len(m.entries)
+	if n == 0 {
+		return []string{}
+	}
+	if n == 1 || !m.hasIdx {
+		out := make([]string, n)
+		for i := range m.entries {
+			out[i] = m.entries[i].key
+		}
+		return out
+	}
+	type idxKey struct {
+		num uint32
+		key string
+	}
+	var idxs []idxKey
+	var rest []string
+	for i := range m.entries {
+		k := m.entries[i].key
+		if num, ok := js.IsArrayIndex(k); ok {
+			idxs = append(idxs, idxKey{num: num, key: k})
+		} else {
+			rest = append(rest, k)
+		}
+	}
+	sort.Slice(idxs, func(i, j int) bool { return idxs[i].num < idxs[j].num })
+	out := make([]string, 0, n)
+	for _, ik := range idxs {
+		out = append(out, ik.key)
+	}
+	out = append(out, rest...)
+	return out
+}
+
+type nodeAdj struct {
+	in    edgeMap
+	out   edgeMap
+	preds countMap
+	sucs  countMap
+}
+
 // Graph is a directed or undirected graph with optional multi-edges and an
 // optional node hierarchy.
 type Graph struct {
@@ -73,22 +305,38 @@ type Graph struct {
 	parent   map[string]string
 	children map[string]*js.Obj[bool]
 
-	// in maps v to the edges that end at v, keyed by edge id.
-	in map[string]*js.Obj[Edge]
-	// preds maps v to its predecessors with the number of edges from each.
-	preds map[string]*js.Obj[float64]
-	// out maps v to the edges that start at v, keyed by edge id.
-	out map[string]*js.Obj[Edge]
-	// sucs maps v to its successors with the number of edges to each.
-	sucs map[string]*js.Obj[float64]
+	// adj maps v to its incident edges and predecessor/successor counts.
+	adj        map[string]*nodeAdj
+	adjSlab    []nodeAdj
+	adjSlabCap int
 
 	// edgeObjs maps an edge id to the edge object.
-	edgeObjs *js.Obj[Edge]
+	edgeObjs edgeMap
 	// edgeLabels maps an edge id to the edge label.
-	edgeLabels map[string]any
+	edgeLabels map[edgeKey]any
 
 	nodeCount int
 	edgeCount int
+}
+
+func (g *Graph) allocAdj() *nodeAdj {
+	if len(g.adjSlab) == 0 {
+		sz := g.adjSlabCap * 2
+		if sz == 0 {
+			sz = 4
+		} else if sz > 16 {
+			sz = 16
+		}
+		g.adjSlabCap = sz
+		g.adjSlab = make([]nodeAdj, sz)
+	}
+	a := &g.adjSlab[0]
+	g.adjSlab = g.adjSlab[1:]
+	a.in.entries = a.in.entries0[:0]
+	a.out.entries = a.out.entries0[:0]
+	a.preds.entries = a.preds.entries0[:0]
+	a.sucs.entries = a.sucs.entries0[:0]
+	return a
 }
 
 // New returns an empty graph.
@@ -100,12 +348,8 @@ func New(opts Options) *Graph {
 		defaultNodeLabelFn: func(string) any { return nil },
 		defaultEdgeLabelFn: func(string, string, string) any { return nil },
 		nodes:              js.NewObj[any](),
-		in:                 map[string]*js.Obj[Edge]{},
-		preds:              map[string]*js.Obj[float64]{},
-		out:                map[string]*js.Obj[Edge]{},
-		sucs:               map[string]*js.Obj[float64]{},
-		edgeObjs:           js.NewObj[Edge](),
-		edgeLabels:         map[string]any{},
+		adj:                map[string]*nodeAdj{},
+		edgeLabels:         map[edgeKey]any{},
 	}
 	if g.isCompound {
 		g.parent = map[string]string{}
@@ -158,7 +402,7 @@ func (g *Graph) Nodes() []string { return g.nodes.Keys() }
 func (g *Graph) Sources() []string {
 	res := []string{}
 	for _, v := range g.Nodes() {
-		if g.in[v].Len() == 0 {
+		if g.adj[v].in.len() == 0 {
 			res = append(res, v)
 		}
 	}
@@ -169,7 +413,7 @@ func (g *Graph) Sources() []string {
 func (g *Graph) Sinks() []string {
 	res := []string{}
 	for _, v := range g.Nodes() {
-		if g.out[v].Len() == 0 {
+		if g.adj[v].out.len() == 0 {
 			res = append(res, v)
 		}
 	}
@@ -205,10 +449,7 @@ func (g *Graph) SetNode(v string, label ...any) *Graph {
 		g.children[v] = js.NewObj[bool]()
 		g.children[graphNode].Set(v, true)
 	}
-	g.in[v] = js.NewObj[Edge]()
-	g.preds[v] = js.NewObj[float64]()
-	g.out[v] = js.NewObj[Edge]()
-	g.sucs[v] = js.NewObj[float64]()
+	g.adj[v] = g.allocAdj()
 	g.nodeCount++
 	return g
 }
@@ -224,7 +465,7 @@ func (g *Graph) HasNode(v string) bool { return g.nodes.Has(v) }
 // become children of the root.
 func (g *Graph) RemoveNode(v string) *Graph {
 	if g.nodes.Has(v) {
-		removeEdge := func(e string) { g.RemoveEdgeObj(g.edgeObjs.Get(e)) }
+		removeEdge := func(e edgeKey) { g.RemoveEdgeObj(g.edgeObjs.get(e)) }
 		g.nodes.Delete(v)
 		if g.isCompound {
 			g.removeFromParentsChildList(v)
@@ -235,16 +476,14 @@ func (g *Graph) RemoveNode(v string) *Graph {
 			}
 			delete(g.children, v)
 		}
-		for _, e := range g.in[v].Keys() {
+		adj := g.adj[v]
+		for _, e := range adj.in.keys() {
 			removeEdge(e)
 		}
-		delete(g.in, v)
-		delete(g.preds, v)
-		for _, e := range g.out[v].Keys() {
+		for _, e := range adj.out.keys() {
 			removeEdge(e)
 		}
-		delete(g.out, v)
-		delete(g.sucs, v)
+		delete(g.adj, v)
 		g.nodeCount--
 	}
 	return g
@@ -333,9 +572,8 @@ func (g *Graph) Children(v ...string) []string {
 // Predecessors returns the nodes that have an edge to v. The result is nil
 // when v does not exist.
 func (g *Graph) Predecessors(v string) []string {
-	predsV := g.preds[v]
-	if predsV != nil {
-		return predsV.Keys()
+	if a := g.adj[v]; a != nil {
+		return a.preds.keys()
 	}
 	return nil
 }
@@ -343,9 +581,8 @@ func (g *Graph) Predecessors(v string) []string {
 // Successors returns the nodes that v has an edge to. The result is nil
 // when v does not exist.
 func (g *Graph) Successors(v string) []string {
-	sucsV := g.sucs[v]
-	if sucsV != nil {
-		return sucsV.Keys()
+	if a := g.adj[v]; a != nil {
+		return a.sucs.keys()
 	}
 	return nil
 }
@@ -414,12 +651,13 @@ func (g *Graph) FilterNodes(filter func(v string) bool) *Graph {
 		})
 	}
 
-	g.edgeObjs.Each(func(_ string, e Edge) {
+	for i := range g.edgeObjs.entries {
+		e := g.edgeObjs.entries[i].edge
 		if cp.HasNode(e.V) && cp.HasNode(e.W) {
 			// The copy has the same multigraph option as the receiver.
 			_ = cp.SetEdgeObj(e, g.EdgeObj(e))
 		}
-	})
+	}
 
 	type parentEntry struct {
 		parent string
@@ -468,7 +706,7 @@ func (g *Graph) SetDefaultEdgeLabel(newDefault func(v, w, name string) any) *Gra
 func (g *Graph) EdgeCount() int { return g.edgeCount }
 
 // Edges returns all edges in insertion order.
-func (g *Graph) Edges() []Edge { return g.edgeObjs.Values() }
+func (g *Graph) Edges() []Edge { return g.edgeObjs.values() }
 
 // SetPath creates an edge between each two consecutive nodes of vs.
 func (g *Graph) SetPath(vs []string, label ...any) error {
@@ -535,11 +773,13 @@ func (g *Graph) setEdge(v, w, name string, hasName bool, value []any) error {
 	v = edgeObj.V
 	w = edgeObj.W
 
-	g.edgeObjs.Set(e, edgeObj)
-	incrementOrInitEntry(g.preds[w], v)
-	incrementOrInitEntry(g.sucs[v], w)
-	g.in[w].Set(e, edgeObj)
-	g.out[v].Set(e, edgeObj)
+	g.edgeObjs.set(e, edgeObj)
+	adjW := g.adj[w]
+	adjV := g.adj[v]
+	incrementOrInitEntry(&adjW.preds, v)
+	incrementOrInitEntry(&adjV.sucs, w)
+	adjW.in.set(e, edgeObj)
+	adjV.out.set(e, edgeObj)
 	g.edgeCount++
 	return nil
 }
@@ -577,27 +817,23 @@ func (g *Graph) RemoveEdgeObj(e Edge) *Graph {
 	return g.removeEdge(edgeObjToID(g.isDirected, e))
 }
 
-func (g *Graph) removeEdge(e string) *Graph {
-	edge, ok := g.edgeObjs.Lookup(e)
+func (g *Graph) removeEdge(e edgeKey) *Graph {
+	edge, ok := g.edgeObjs.lookup(e)
 	if ok {
 		v := edge.V
 		w := edge.W
 		delete(g.edgeLabels, e)
-		g.edgeObjs.Delete(e)
+		g.edgeObjs.del(e)
 		// A map is missing only for a dangling edge: an edge with the empty
 		// name whose node was removed (see SetEdge). JavaScript throws a
 		// TypeError in that case.
-		if m := g.preds[w]; m != nil {
-			decrementOrRemoveEntry(m, v)
+		if a := g.adj[w]; a != nil {
+			decrementOrRemoveEntry(&a.preds, v)
+			a.in.del(e)
 		}
-		if m := g.sucs[v]; m != nil {
-			decrementOrRemoveEntry(m, w)
-		}
-		if m := g.in[w]; m != nil {
-			m.Delete(e)
-		}
-		if m := g.out[v]; m != nil {
-			m.Delete(e)
+		if a := g.adj[v]; a != nil {
+			decrementOrRemoveEntry(&a.sucs, w)
+			a.out.del(e)
 		}
 		g.edgeCount--
 	}
@@ -607,14 +843,13 @@ func (g *Graph) removeEdge(e string) *Graph {
 // InEdges returns the edges that end at v. With a non-empty u it returns
 // only the edges that start at u. The result is nil when v does not exist.
 func (g *Graph) InEdges(v string, u ...string) []Edge {
-	inV := g.in[v]
-	if inV != nil {
-		edges := inV.Values()
+	if a := g.adj[v]; a != nil {
 		if len(u) == 0 || u[0] == "" {
-			return edges
+			return a.in.values()
 		}
 		res := []Edge{}
-		for _, edge := range edges {
+		for i := range a.in.entries {
+			edge := a.in.entries[i].edge
 			if edge.V == u[0] {
 				res = append(res, edge)
 			}
@@ -627,14 +862,13 @@ func (g *Graph) InEdges(v string, u ...string) []Edge {
 // OutEdges returns the edges that start at v. With a non-empty w it returns
 // only the edges that end at w. The result is nil when v does not exist.
 func (g *Graph) OutEdges(v string, w ...string) []Edge {
-	outV := g.out[v]
-	if outV != nil {
-		edges := outV.Values()
+	if a := g.adj[v]; a != nil {
 		if len(w) == 0 || w[0] == "" {
-			return edges
+			return a.out.values()
 		}
 		res := []Edge{}
-		for _, edge := range edges {
+		for i := range a.out.entries {
+			edge := a.out.entries[i].edge
 			if edge.W == w[0] {
 				res = append(res, edge)
 			}
@@ -699,23 +933,23 @@ var inheritedFunctions = map[string]bool{
 // increment stores NaN (function++), and the next one stores 1. The port
 // keeps this, because it changes the result of Predecessors and Successors
 // after an edge is removed.
-func incrementOrInitEntry(m *js.Obj[float64], k string) {
-	n, ok := m.Lookup(k)
+func incrementOrInitEntry(m *countMap, k string) {
+	n, ok := m.lookup(k)
 	switch {
 	case !ok && inheritedFunctions[k]:
-		m.Set(k, math.NaN())
+		m.set(k, math.NaN())
 	case ok && n != 0 && n == n:
-		m.Set(k, n+1)
+		m.set(k, n+1)
 	default:
-		m.Set(k, 1)
+		m.set(k, 1)
 	}
 }
 
 // decrementOrRemoveEntry is:
 //
 //	if (!--map[k]) { delete map[k]; }
-func decrementOrRemoveEntry(m *js.Obj[float64], k string) {
-	n, ok := m.Lookup(k)
+func decrementOrRemoveEntry(m *countMap, k string) {
+	n, ok := m.lookup(k)
 	if !ok {
 		// The decrement of undefined or of an inherited function is NaN,
 		// which is falsy: the entry is deleted again.
@@ -723,20 +957,20 @@ func decrementOrRemoveEntry(m *js.Obj[float64], k string) {
 	}
 	n--
 	if n == 0 || n != n {
-		m.Delete(k)
+		m.del(k)
 	} else {
-		m.Set(k, n)
+		m.set(k, n)
 	}
 }
 
-func edgeArgsToID(isDirected bool, v, w, name string, hasName bool) string {
+func edgeArgsToID(isDirected bool, v, w, name string, hasName bool) edgeKey {
 	if !isDirected && js.CompareStrings(v, w) > 0 {
 		v, w = w, v
 	}
 	if !hasName {
 		name = defaultEdgeName
 	}
-	return v + edgeKeyDelim + w + edgeKeyDelim + name
+	return edgeKey{v: v, w: w, name: name}
 }
 
 func edgeArgsToObj(isDirected bool, v, w, name string) Edge {
@@ -747,6 +981,6 @@ func edgeArgsToObj(isDirected bool, v, w, name string) Edge {
 	return Edge{V: v, W: w, Name: name}
 }
 
-func edgeObjToID(isDirected bool, e Edge) string {
+func edgeObjToID(isDirected bool, e Edge) edgeKey {
 	return edgeArgsToID(isDirected, e.V, e.W, e.Name, e.Name != "")
 }

@@ -204,12 +204,14 @@ func escapeText(sb *htmlWriter, s string) {
 	i := 0
 	for i < n {
 		for i+8 <= n {
-			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
-				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			chunk := s[i : i+8]
+			_ = chunk[7]
+			w := uint64(chunk[0]) | uint64(chunk[1])<<8 | uint64(chunk[2])<<16 | uint64(chunk[3])<<24 |
+				uint64(chunk[4])<<32 | uint64(chunk[5])<<40 | uint64(chunk[6])<<48 | uint64(chunk[7])<<56
 			a := w ^ swarAmp8
 			b := w ^ swarLt8
 			c := w ^ swarGt8
-			if ((w & swarHi8) | ((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8)) == 0 {
+			if (w|((a-swarLo8)&^a)|((b-swarLo8)&^b)|((c-swarLo8)&^c))&swarHi8 == 0 {
 				i += 8
 				continue
 			}
@@ -256,13 +258,15 @@ func escapeAttr(sb *htmlWriter, s string) {
 	i := 0
 	for i < n {
 		for i+8 <= n {
-			w := uint64(s[i]) | uint64(s[i+1])<<8 | uint64(s[i+2])<<16 | uint64(s[i+3])<<24 |
-				uint64(s[i+4])<<32 | uint64(s[i+5])<<40 | uint64(s[i+6])<<48 | uint64(s[i+7])<<56
+			chunk := s[i : i+8]
+			_ = chunk[7]
+			w := uint64(chunk[0]) | uint64(chunk[1])<<8 | uint64(chunk[2])<<16 | uint64(chunk[3])<<24 |
+				uint64(chunk[4])<<32 | uint64(chunk[5])<<40 | uint64(chunk[6])<<48 | uint64(chunk[7])<<56
 			a := w ^ swarAmp8
 			b := w ^ swarQuot8
 			c := w ^ swarLt8
 			d := w ^ swarGt8
-			if ((w & swarHi8) | ((a - swarLo8) &^ a & swarHi8) | ((b - swarLo8) &^ b & swarHi8) | ((c - swarLo8) &^ c & swarHi8) | ((d - swarLo8) &^ d & swarHi8)) == 0 {
+			if (w|((a-swarLo8)&^a)|((b-swarLo8)&^b)|((c-swarLo8)&^c)|((d-swarLo8)&^d))&swarHi8 == 0 {
 				i += 8
 				continue
 			}

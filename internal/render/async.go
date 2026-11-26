@@ -52,16 +52,44 @@ type asyncTask struct {
 
 // asyncScheduler is the microtask queue of one render.
 type asyncScheduler struct {
-	micro []*asyncTask
+	micro     []*asyncTask
+	microHead int
 	// reads are the tasks that wait for the next flush of fastdom.
 	reads []*asyncTask
 	// timers are the tasks that wait for a timer.
-	timers []*asyncTask
-	cur    *asyncTask
+	timers    []*asyncTask
+	timerHead int
+	cur       *asyncTask
 	// flushQueued is true while a flush of fastdom is in the queue.
 	flushQueued bool
 	// check stops the render when its context is done.
 	check func()
+}
+
+func (s *asyncScheduler) pushMicro(t *asyncTask) {
+	if s.microHead == len(s.micro) {
+		s.micro = s.micro[:0]
+		s.microHead = 0
+	} else if s.microHead > 0 && len(s.micro) == cap(s.micro) {
+		n := copy(s.micro, s.micro[s.microHead:])
+		clear(s.micro[n:])
+		s.micro = s.micro[:n]
+		s.microHead = 0
+	}
+	s.micro = append(s.micro, t)
+}
+
+func (s *asyncScheduler) pushTimer(t *asyncTask) {
+	if s.timerHead == len(s.timers) {
+		s.timers = s.timers[:0]
+		s.timerHead = 0
+	} else if s.timerHead > 0 && len(s.timers) == cap(s.timers) {
+		n := copy(s.timers, s.timers[s.timerHead:])
+		clear(s.timers[n:])
+		s.timers = s.timers[:n]
+		s.timerHead = 0
+	}
+	s.timers = append(s.timers, t)
 }
 
 // flushMarker stands in the microtask queue for the flush of fastdom.
@@ -98,28 +126,42 @@ func (s *asyncScheduler) park() {
 // run.
 func (s *asyncScheduler) next() *asyncTask {
 	for {
-		if len(s.micro) == 0 {
-			if len(s.timers) == 0 {
+		if s.microHead == len(s.micro) {
+			s.micro = s.micro[:0]
+			s.microHead = 0
+			if s.timerHead == len(s.timers) {
+				s.timers = s.timers[:0]
+				s.timerHead = 0
 				return nil
 			}
 			// A timer is a task of its own: the microtasks that it starts
 			// run before the next timer.
-			s.micro = append(s.micro, s.timers[0])
-			s.timers = s.timers[1:]
+			tm := s.timers[s.timerHead]
+			s.timers[s.timerHead] = nil
+			s.timerHead++
+			s.micro = append(s.micro, tm)
 		}
-		t := s.micro[0]
-		s.micro = s.micro[1:]
+		t := s.micro[s.microHead]
+		s.micro[s.microHead] = nil
+		s.microHead++
+		if s.microHead == len(s.micro) {
+			s.micro = s.micro[:0]
+			s.microHead = 0
+		}
 		if t == flushMarker {
 			// The flush runs every queued read. Each read resolves its
 			// promise, so the readers continue in the order of their reads.
 			s.flushQueued = false
-			s.micro = append(s.micro, s.reads...)
-			s.reads = nil
+			for _, r := range s.reads {
+				s.pushMicro(r)
+			}
+			clear(s.reads)
+			s.reads = s.reads[:0]
 			continue
 		}
 		if t.delay > 0 {
 			t.delay--
-			s.micro = append(s.micro, t)
+			s.pushMicro(t)
 			continue
 		}
 		return t
@@ -139,7 +181,7 @@ func (c *Context) AwaitN(n int) {
 		return
 	}
 	s.cur.delay = n - 1
-	s.micro = append(s.micro, s.cur)
+	s.pushMicro(s.cur)
 	s.park()
 }
 
@@ -153,7 +195,7 @@ func (c *Context) AwaitMeasure() {
 	s.reads = append(s.reads, s.cur)
 	if !s.flushQueued {
 		s.flushQueued = true
-		s.micro = append(s.micro, flushMarker)
+		s.pushMicro(flushMarker)
 	}
 	s.park()
 }
@@ -165,8 +207,16 @@ func (c *Context) AwaitTimeout() {
 	if s == nil || s.cur == nil {
 		return
 	}
-	s.timers = append(s.timers, s.cur)
+	s.pushTimer(s.cur)
 	s.park()
+}
+
+type allState struct {
+	pending    int
+	ownerWaits bool
+	firstErr   error
+	panicked   any
+	hasPanic   bool
 }
 
 // All is await Promise.all(items.map(async (item, i) => fn(i))). It starts
@@ -180,53 +230,54 @@ func (c *Context) All(n int, fn func(i int) error) error {
 		c.Await()
 		return nil
 	}
+	if n == 1 && (c.sched == nil || c.sched.cur == nil) {
+		return fn(0)
+	}
 	s := c.scheduler()
 	owner := s.cur
-	pending := n
-	ownerWaits := false
-	var firstErr error
-	var panicked any
-	hasPanic := false
+	st := &allState{pending: n}
+	tasks := make([]asyncTask, n)
 	for i := 0; i < n; i++ {
-		t := &asyncTask{}
+		t := &tasks[i]
+		idx := i
 		// The task runs when the scheduler resumes it, and every task runs
 		// to its end, so the coroutine needs no stop.
 		t.resume, _ = iter.Pull(func(park func(struct{}) bool) {
 			t.park = park
 			defer func() {
-				if p := recover(); p != nil && !hasPanic {
-					hasPanic, panicked = true, p
+				if p := recover(); p != nil && !st.hasPanic {
+					st.hasPanic, st.panicked = true, p
 				}
-				pending--
-				if pending == 0 && ownerWaits {
+				st.pending--
+				if st.pending == 0 && st.ownerWaits {
 					// Promise.all resolves one turn after its last item,
 					// and the await of the caller takes one more.
 					owner.delay = 1
-					s.micro = append(s.micro, owner)
+					s.pushMicro(owner)
 				}
 			}()
-			if err := fn(i); err != nil && firstErr == nil {
-				firstErr = err
+			if err := fn(idx); err != nil && st.firstErr == nil {
+				st.firstErr = err
 			}
 		})
 		s.run(t)
 	}
 	if owner == nil {
-		for pending > 0 {
+		for st.pending > 0 {
 			t := s.next()
 			if t == nil {
 				panic("render: tasks of All wait and nothing can run")
 			}
 			s.run(t)
 		}
-	} else if pending > 0 {
-		ownerWaits = true
+	} else if st.pending > 0 {
+		st.ownerWaits = true
 		s.park()
 	} else {
 		c.AwaitN(2)
 	}
-	if hasPanic {
-		panic(panicked)
+	if st.hasPanic {
+		panic(st.panicked)
 	}
-	return firstErr
+	return st.firstErr
 }

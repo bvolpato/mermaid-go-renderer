@@ -283,6 +283,8 @@ func (g *Grammar) build() error {
 	g.conds = make([]*condition, len(g.Conditions))
 	g.initial = -1
 	shared := map[string][]uint16{}
+	var listBuf []uint16
+	var keyBuf []byte
 	for ci := range g.Conditions {
 		c := &g.Conditions[ci]
 		for _, r := range c.Rules {
@@ -292,20 +294,22 @@ func (g *Grammar) build() error {
 		}
 		cond := &condition{name: c.Name, rules: c.Rules}
 		for unit := 0; unit < 128; unit++ {
-			var list []uint16
+			listBuf = listBuf[:0]
 			for _, r := range c.Rules {
 				if g.Rules[r].Nullable || g.rules[r].first.has(rune(unit)) {
-					list = append(list, r)
+					listBuf = append(listBuf, r)
 				}
 			}
 			// Many code units have the same list. Keep one copy.
-			key := string(appendKey(nil, list))
-			if prev, ok := shared[key]; ok {
-				list = prev
+			keyBuf = appendKey(keyBuf[:0], listBuf)
+			if prev, ok := shared[string(keyBuf)]; ok {
+				cond.ascii[unit] = prev
 			} else {
-				shared[key] = list
+				cp := make([]uint16, len(listBuf))
+				copy(cp, listBuf)
+				shared[string(keyBuf)] = cp
+				cond.ascii[unit] = cp
 			}
-			cond.ascii[unit] = list
 		}
 		for _, r := range c.Rules {
 			if g.Rules[r].Nullable {

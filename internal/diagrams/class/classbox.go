@@ -153,7 +153,7 @@ func classBox(ctx *render.Context, parent *dom.Node, node *ru.Node, _ *ru.ShapeR
 			boxOffset)) /
 		2
 	// Rect is centered so now adjust labels.
-	for _, text := range shapeSvg.SelectAll(".text") {
+	shapeSvg.EachMatch(".text", func(text *dom.Node) {
 		// Get the current transform attribute
 		transform := text.AttrOr("transform", "")
 		// Initialize variables for the translation values
@@ -209,15 +209,15 @@ func classBox(ctx *render.Context, parent *dom.Node, node *ru.Node, _ *ru.ShapeR
 		newTranslateX := x
 		if strings.Contains(class, "label-group") || strings.Contains(class, "annotation-group") {
 			newTranslateX = ru.Or(-text.BBox().Width/2, 0)
-			for _, t := range shapeSvg.SelectAll("text") {
+			shapeSvg.EachMatch("text", func(t *dom.Node) {
 				if t.ComputedStyle("text-anchor") == "middle" {
 					newTranslateX = 0
 				}
-			}
+			})
 		}
 		// Set the updated transform attribute
-		text.Attr("transform", "translate("+js.Str(newTranslateX)+", "+js.Str(newTranslateY)+")")
-	}
+		text.AttrStr("transform", "translate("+js.Str(newTranslateX)+", "+js.Str(newTranslateY)+")")
+	})
 
 	dividerClass := "divider"
 	if node.Look == "neo" && !js.Truthy(useGradient) {
@@ -239,8 +239,8 @@ func classBox(ctx *render.Context, parent *dom.Node, node *ru.Node, _ *ru.ShapeR
 		)
 		line := shapeSvg.InsertNode(roughLine)
 		line.
-			Attr("class", dividerClass).
-			Attr("style", styles)
+			AttrStr("class", dividerClass).
+			AttrStr("style", styles)
 	}
 
 	// Second line (under members)
@@ -259,36 +259,36 @@ func classBox(ctx *render.Context, parent *dom.Node, node *ru.Node, _ *ru.ShapeR
 		)
 		line := shapeSvg.InsertNode(roughLine)
 		line.
-			Attr("class", dividerClass).
-			Attr("style", styles)
+			AttrStr("class", dividerClass).
+			AttrStr("style", styles)
 	}
 
 	/// Apply styles ///
 	if node.Look != "handDrawn" {
-		shapeSvg.SelectAll("path").Attr("style", styles)
+		shapeSvg.EachMatch("path", func(p *dom.Node) { p.AttrStr("style", styles) })
 	}
 	// Apply other styles like stroke-width and stroke-dasharray to border (not background of shape)
-	rect.Select(":nth-child(2)").Attr("style", styles)
+	rect.Select(":nth-child(2)").AttrStr("style", styles)
 	// Divider lines
-	for _, divider := range shapeSvg.SelectAll(".divider") {
-		divider.Select("path").Attr("style", styles)
-	}
+	shapeSvg.EachMatch(".divider", func(divider *dom.Node) {
+		divider.Select("path").AttrStr("style", styles)
+	})
 	// Text elements
 	if node.LabelStyle != "" {
-		shapeSvg.SelectAll("span").Attr("style", node.LabelStyle)
+		shapeSvg.EachMatch("span", func(s *dom.Node) { s.AttrStr("style", node.LabelStyle) })
 	} else {
-		shapeSvg.SelectAll("span").Attr("style", styles)
+		shapeSvg.EachMatch("span", func(s *dom.Node) { s.AttrStr("style", styles) })
 	}
 	// SVG text uses fill not color
 	if !useHtmlLabels {
 		// We just want to apply color to the text
 		if match := colorRegex.FindString(styles); match != "" {
 			colorStyle := strings.Replace(match, "color", "fill", 1)
-			shapeSvg.SelectAll("tspan").Attr("style", colorStyle)
+			shapeSvg.EachMatch("tspan", func(t *dom.Node) { t.AttrStr("style", colorStyle) })
 		} else if labelStyles != "" {
 			if match := colorRegex.FindString(labelStyles); match != "" {
 				colorStyle := strings.Replace(match, "color", "fill", 1)
-				shapeSvg.SelectAll("tspan").Attr("style", colorStyle)
+				shapeSvg.EachMatch("tspan", func(t *dom.Node) { t.AttrStr("style", colorStyle) })
 			}
 		}
 	}
