@@ -39,6 +39,7 @@ import (
 	"fmt"
 	"math"
 	"sync"
+	"sync/atomic"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/font/webfontdata"
 	gtfont "github.com/go-text/typesetting/font"
@@ -244,9 +245,11 @@ type webFace struct {
 	// size: webAdvanceKey -> float32. draws has the draws of skrifa
 	// (webDrawKey -> *webDrawn) and bounds the bounds of Skia (webDrawKey
 	// -> [5]float32). See webfonts_scaler.go.
-	advances sync.Map
-	draws    sync.Map
-	bounds   sync.Map
+	advances     sync.Map
+	draws        sync.Map
+	bounds       sync.Map
+	nominalsFast [512]atomic.Int32
+	nominalsMap  sync.Map
 }
 
 type webAdvanceKey struct {
@@ -353,9 +356,29 @@ func (f *Face) isWebLinux() bool { return f.web != nil && f.platform == Platform
 // at whole pixels.
 func (f *Face) SubpixelPositioning() bool { return !f.isWebLinux() }
 
+const webNominalBias = 1 << 20
+
 // webNominal is the advance of a glyph in font units at the instance of
 // the face, as HarfBuzz has it before it positions the glyphs.
 func (f *Face) webNominal(gid uint32) int32 {
+	if w := f.web; w != nil {
+		if gid < uint32(len(w.nominalsFast)) {
+			if v := w.nominalsFast[gid].Load(); v != 0 {
+				return v - webNominalBias
+			}
+			adv := int32(math.Floor(float64(f.gt.HorizontalAdvance(gtfont.GID(gid))) + 0.5))
+			if adv > -webNominalBias && adv < math.MaxInt32-webNominalBias {
+				w.nominalsFast[gid].Store(adv + webNominalBias)
+			}
+			return adv
+		}
+		if v, ok := w.nominalsMap.Load(gid); ok {
+			return v.(int32)
+		}
+		adv := int32(math.Floor(float64(f.gt.HorizontalAdvance(gtfont.GID(gid))) + 0.5))
+		w.nominalsMap.Store(gid, adv)
+		return adv
+	}
 	return int32(math.Floor(float64(f.gt.HorizontalAdvance(gtfont.GID(gid))) + 0.5))
 }
 
@@ -425,8 +448,15 @@ func (f *Face) shapeWebLinux(text []rune, size float64, script language.Script) 
 	upem := int64(f.upem)
 	mult := (hbScale << 16) / upem
 	scale16 := func(units int32) int64 { return (int64(units)*mult + 32768) >> 16 }
-	out := make([]Glyph, len(sh.buf.Info))
-	nominals := make([]int32, len(sh.buf.Info))
+	n := len(sh.buf.Info)
+	out := make([]Glyph, n)
+	var nomBuf [64]int32
+	var nominals []int32
+	if n <= len(nomBuf) {
+		nominals = nomBuf[:n]
+	} else {
+		nominals = make([]int32, n)
+	}
 	for i, info := range sh.buf.Info {
 		nominals[i] = f.webNominal(uint32(info.Glyph))
 	}

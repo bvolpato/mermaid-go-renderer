@@ -1,5 +1,5 @@
 {
- "measured": "2026-11-24",
+ "measured": "2026-11-25",
  "mermaid": "12.2.0",
  "chromium": "156.0.8078.4",
  "platform": "linux/amd64",
@@ -10,222 +10,222 @@
  "repeatMmdg": 7,
  "warmMedian": {
   "mermaid": 9.6,
-  "mmdg": 0.59
+  "mmdg": 0.55
  },
  "warmP90": {
   "mermaid": 22.4,
-  "mmdg": 2.24
+  "mmdg": 1.93
  },
  "warmTotalSeconds": {
   "mermaid": 26.46,
-  "mmdg": 2.13
+  "mmdg": 1.86
  },
  "firstMedian": {
   "mermaid": 156.2,
-  "mmdg": 13.1
+  "mmdg": 13
  },
  "firstP90": {
   "mermaid": 216.3,
-  "mmdg": 23.4
+  "mmdg": 21
  },
  "types": [
   {
    "type": "flowchart-v2",
    "diagrams": 408,
    "mermaid": 12.1,
-   "mmdg": 0.85,
-   "mmdg90": 2.62,
+   "mmdg": 0.79,
+   "mmdg90": 2.12,
    "mermaidFirst": 182.3,
-   "mmdgFirst": 10.9
+   "mmdgFirst": 12.1
   },
   {
    "type": "classDiagram",
    "diagrams": 285,
    "mermaid": 15.6,
-   "mmdg": 0.94,
-   "mmdg90": 3.31,
+   "mmdg": 0.87,
+   "mmdg90": 2.96,
    "mermaidFirst": 168.6,
-   "mmdgFirst": 21.5
+   "mmdgFirst": 21.2
   },
   {
    "type": "er",
    "diagrams": 206,
    "mermaid": 13.4,
-   "mmdg": 0.87,
-   "mmdg90": 2.2,
+   "mmdg": 0.8,
+   "mmdg90": 1.63,
    "mermaidFirst": 185.6,
-   "mmdgFirst": 16.5
+   "mmdgFirst": 17.1
   },
   {
    "type": "sequence",
    "diagrams": 193,
    "mermaid": 6.1,
-   "mmdg": 0.3,
-   "mmdg90": 0.66,
+   "mmdg": 0.24,
+   "mmdg90": 0.56,
    "mermaidFirst": 30.3,
-   "mmdgFirst": 12.9
+   "mmdgFirst": 13
   },
   {
    "type": "requirement",
    "diagrams": 172,
    "mermaid": 9.6,
-   "mmdg": 0.7,
-   "mmdg90": 1.8,
+   "mmdg": 0.63,
+   "mmdg90": 1.68,
    "mermaidFirst": 183.3,
-   "mmdgFirst": 18.4
+   "mmdgFirst": 17.3
   },
   {
    "type": "stateDiagram",
    "diagrams": 144,
    "mermaid": 16,
-   "mmdg": 0.89,
-   "mmdg90": 2.13,
+   "mmdg": 0.81,
+   "mmdg90": 1.96,
    "mermaidFirst": 200.2,
-   "mmdgFirst": 11.6
+   "mmdgFirst": 11.1
   },
   {
    "type": "gitGraph",
    "diagrams": 135,
    "mermaid": 5.4,
-   "mmdg": 0.11,
-   "mmdg90": 0.21,
+   "mmdg": 0.1,
+   "mmdg90": 0.24,
    "mermaidFirst": 62.6,
-   "mmdgFirst": 9.2
+   "mmdgFirst": 9.4
   },
   {
    "type": "block",
    "diagrams": 58,
    "mermaid": 7.8,
-   "mmdg": 0.22,
-   "mmdg90": 0.53,
+   "mmdg": 0.21,
+   "mmdg90": 0.52,
    "mermaidFirst": 27.9,
-   "mmdgFirst": 9.4
+   "mmdgFirst": 8.7
   },
   {
    "type": "gantt",
    "diagrams": 52,
    "mermaid": 2.8,
    "mmdg": 0.11,
-   "mmdg90": 0.3,
+   "mmdg90": 0.29,
    "mermaidFirst": 18.8,
-   "mmdgFirst": 10.3
+   "mmdgFirst": 10.6
   },
   {
    "type": "xychart",
    "diagrams": 48,
    "mermaid": 3.1,
-   "mmdg": 0.19,
-   "mmdg90": 0.29,
+   "mmdg": 0.15,
+   "mmdg90": 0.22,
    "mermaidFirst": 18.1,
-   "mmdgFirst": 8.5
+   "mmdgFirst": 8.4
   },
   {
    "type": "swimlane",
    "diagrams": 46,
    "mermaid": 18.7,
-   "mmdg": 2.32,
-   "mmdg90": 19.68,
+   "mmdg": 1.87,
+   "mmdg90": 11.46,
    "mermaidFirst": 77,
-   "mmdgFirst": 21.5
+   "mmdgFirst": 13
   },
   {
    "type": "agentflow",
    "diagrams": 38,
    "mermaid": 15.2,
-   "mmdg": 0.86,
-   "mmdg90": 2.03,
+   "mmdg": 0.84,
+   "mmdg90": 1.93,
    "mermaidFirst": 158.9,
-   "mmdgFirst": 12.1
+   "mmdgFirst": 10.5
   },
   {
    "type": "mindmap",
    "diagrams": 33,
    "mermaid": 9.2,
-   "mmdg": 0.39,
-   "mmdg90": 5.72,
+   "mmdg": 0.36,
+   "mmdg90": 5.52,
    "mermaidFirst": 78.7,
-   "mmdgFirst": 11.6
+   "mmdgFirst": 9.5
   },
   {
    "type": "c4",
    "diagrams": 32,
    "mermaid": 4.4,
-   "mmdg": 0.31,
-   "mmdg90": 0.87,
+   "mmdg": 0.33,
+   "mmdg90": 0.89,
    "mermaidFirst": 22.5,
-   "mmdgFirst": 15.6
+   "mmdgFirst": 13.7
   },
   {
    "type": "usecase",
    "diagrams": 32,
    "mermaid": 14.4,
-   "mmdg": 0.95,
-   "mmdg90": 2.05,
+   "mmdg": 0.91,
+   "mmdg90": 1.66,
    "mermaidFirst": 215.4,
-   "mmdgFirst": 14.7
+   "mmdgFirst": 12.2
   },
   {
    "type": "timeline",
    "diagrams": 30,
    "mermaid": 5.2,
-   "mmdg": 0.68,
-   "mmdg90": 0.77,
+   "mmdg": 0.62,
+   "mmdg90": 0.66,
    "mermaidFirst": 23.4,
-   "mmdgFirst": 49.2
+   "mmdgFirst": 12.9
   },
   {
    "type": "treemap",
    "diagrams": 26,
    "mermaid": 2.7,
-   "mmdg": 0.24,
-   "mmdg90": 0.4,
+   "mmdg": 0.18,
+   "mmdg90": 0.33,
    "mermaidFirst": 53.7,
-   "mmdgFirst": 29.9
+   "mmdgFirst": 15.6
   },
   {
    "type": "pie",
    "diagrams": 24,
    "mermaid": 1.6,
-   "mmdg": 0.04,
+   "mmdg": 0.05,
    "mmdg90": 0.11,
    "mermaidFirst": 50,
-   "mmdgFirst": 8.7
+   "mmdgFirst": 8.3
   },
   {
    "type": "venn",
    "diagrams": 21,
    "mermaid": 2.7,
-   "mmdg": 0.35,
-   "mmdg90": 0.51,
+   "mmdg": 0.31,
+   "mmdg90": 0.55,
    "mermaidFirst": 21.3,
-   "mmdgFirst": 5.3
+   "mmdgFirst": 5
   },
   {
    "type": "architecture",
    "diagrams": 20,
    "mermaid": 11.8,
-   "mmdg": 0.79,
-   "mmdg90": 2.42,
+   "mmdg": 0.8,
+   "mmdg90": 2.34,
    "mermaidFirst": 90,
-   "mmdgFirst": 11.7
+   "mmdgFirst": 9.7
   },
   {
    "type": "journey",
    "diagrams": 18,
    "mermaid": 3.8,
    "mmdg": 0.11,
-   "mmdg90": 0.22,
+   "mmdg90": 0.19,
    "mermaidFirst": 17.3,
-   "mmdgFirst": 8.6
+   "mmdgFirst": 9.4
   },
   {
    "type": "sankey",
    "diagrams": 18,
    "mermaid": 1.6,
    "mmdg": 0.03,
-   "mmdg90": 0.07,
+   "mmdg90": 0.06,
    "mermaidFirst": 14.9,
-   "mmdgFirst": 7.5
+   "mmdgFirst": 8.1
   },
   {
    "type": "treeView",
@@ -234,41 +234,41 @@
    "mmdg": 0.07,
    "mmdg90": 0.18,
    "mermaidFirst": 55.4,
-   "mmdgFirst": 56
+   "mmdgFirst": 11.7
   },
   {
    "type": "quadrantChart",
    "diagrams": 14,
    "mermaid": 2.8,
    "mmdg": 0.08,
-   "mmdg90": 0.17,
+   "mmdg90": 0.18,
    "mermaidFirst": 14.7,
-   "mmdgFirst": 5.1
+   "mmdgFirst": 4.9
   },
   {
    "type": "ishikawa",
    "diagrams": 13,
    "mermaid": 2.5,
-   "mmdg": 0.07,
-   "mmdg90": 0.26,
+   "mmdg": 0.06,
+   "mmdg90": 0.22,
    "mermaidFirst": 14.5,
-   "mmdgFirst": 11.7
+   "mmdgFirst": 12
   },
   {
    "type": "cynefin",
    "diagrams": 12,
    "mermaid": 3.2,
-   "mmdg": 0.1,
-   "mmdg90": 0.13,
+   "mmdg": 0.13,
+   "mmdg90": 0.15,
    "mermaidFirst": 47.4,
-   "mmdgFirst": 9.5
+   "mmdgFirst": 9.1
   },
   {
    "type": "kanban",
    "diagrams": 11,
    "mermaid": 3.6,
-   "mmdg": 0.1,
-   "mmdg90": 0.14,
+   "mmdg": 0.09,
+   "mmdg90": 0.13,
    "mermaidFirst": 20,
    "mmdgFirst": 8.8
   },
@@ -276,19 +276,19 @@
    "type": "wardley",
    "diagrams": 10,
    "mermaid": 2.3,
-   "mmdg": 0.18,
-   "mmdg90": 0.24,
+   "mmdg": 0.13,
+   "mmdg90": 0.22,
    "mermaidFirst": 51.5,
-   "mmdgFirst": 4.8
+   "mmdgFirst": 5
   },
   {
    "type": "eventmodeling",
    "diagrams": 6,
    "mermaid": 3.1,
-   "mmdg": 0.13,
-   "mmdg90": 0.19,
+   "mmdg": 0.12,
+   "mmdg90": 0.18,
    "mermaidFirst": 67.9,
-   "mmdgFirst": 8.3
+   "mmdgFirst": 9.6
   },
   {
    "type": "packet",
@@ -297,7 +297,7 @@
    "mmdg": 0.03,
    "mmdg90": 0.09,
    "mermaidFirst": 91.1,
-   "mmdgFirst": 4.6
+   "mmdgFirst": 4.2
   },
   {
    "type": "radar",
@@ -306,16 +306,16 @@
    "mmdg": 0.03,
    "mmdg90": 0.1,
    "mermaidFirst": 53.1,
-   "mmdgFirst": 5.6
+   "mmdgFirst": 5
   },
   {
    "type": "railroad",
    "diagrams": 5,
    "mermaid": 4.3,
-   "mmdg": 0.12,
-   "mmdg90": 0.23,
+   "mmdg": 0.1,
+   "mmdg90": 0.22,
    "mermaidFirst": 58,
-   "mmdgFirst": 8.4
+   "mmdgFirst": 8.7
   },
   {
    "type": "info",
@@ -324,25 +324,25 @@
    "mmdg": 0.01,
    "mmdg90": 0.01,
    "mermaidFirst": 42.7,
-   "mmdgFirst": 5.1
+   "mmdgFirst": 5
   },
   {
    "type": "railroadEbnf",
    "diagrams": 2,
    "mermaid": 4.3,
-   "mmdg": 0.1,
-   "mmdg90": 0.1,
+   "mmdg": 0.09,
+   "mmdg90": 0.09,
    "mermaidFirst": 60.7,
-   "mmdgFirst": 9.3
+   "mmdgFirst": 8.3
   },
   {
    "type": "railroadAbnf",
    "diagrams": 1,
    "mermaid": 3.7,
-   "mmdg": 0.08,
-   "mmdg90": 0.08,
+   "mmdg": 0.07,
+   "mmdg90": 0.07,
    "mermaidFirst": 58.3,
-   "mmdgFirst": 9.3
+   "mmdgFirst": 8.9
   },
   {
    "type": "railroadPeg",
@@ -351,7 +351,7 @@
    "mmdg": 0.12,
    "mmdg90": 0.12,
    "mermaidFirst": 62.8,
-   "mmdgFirst": 8.6
+   "mmdgFirst": 8
   }
  ],
  "cli": {
@@ -362,38 +362,38 @@
    {
     "input": "Flowchart, 8 nodes",
     "output": "SVG",
-    "mmdc": 579,
-    "mmdg": 14.5
+    "mmdc": 616,
+    "mmdg": 11.6
    },
    {
     "input": "Flowchart, 8 nodes",
     "output": "PNG",
-    "mmdc": 652,
-    "mmdg": 22.2
+    "mmdc": 662,
+    "mmdg": 16.1
    },
    {
     "input": "Sequence diagram, 4 actors",
     "output": "SVG",
-    "mmdc": 441,
-    "mmdg": 17.3
+    "mmdc": 434,
+    "mmdg": 17
    },
    {
     "input": "Sequence diagram, 4 actors",
     "output": "PNG",
-    "mmdc": 507,
+    "mmdc": 466,
     "mmdg": 22.7
    },
    {
     "input": "Class diagram, 5 classes",
     "output": "SVG",
-    "mmdc": 631,
-    "mmdg": 23.6
+    "mmdc": 676,
+    "mmdg": 20.9
    },
    {
     "input": "Class diagram, 5 classes",
     "output": "PNG",
-    "mmdc": 606,
-    "mmdg": 27.5
+    "mmdc": 682,
+    "mmdg": 23.3
    }
   ]
  }

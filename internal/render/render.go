@@ -7,7 +7,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"sync"
 	"time"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/browser"
@@ -18,7 +17,6 @@ import (
 	"github.com/bvolpato/mermaid-go-renderer/internal/purify"
 	"github.com/bvolpato/mermaid-go-renderer/internal/sanitize"
 	"github.com/bvolpato/mermaid-go-renderer/internal/styles"
-	"github.com/bvolpato/mermaid-go-renderer/internal/webfonts"
 )
 
 // randomDrawsBeforeRender is the number of Math.random calls that the
@@ -81,27 +79,13 @@ const (
 	PageMermaidCLI
 )
 
-var (
-	pageSheetsOnce sync.Once
-	pageSheets     []string
-)
-
 // PageSheets returns the text of the style sheets in the head of a page,
 // in document order. A plain page has none.
 func PageSheets(page Page) []string {
 	if page != PageMermaidCLI {
 		return nil
 	}
-	pageSheetsOnce.Do(func() {
-		for _, sheet := range webfonts.Sheets {
-			data, err := webfonts.FS.ReadFile(sheet.Path)
-			if err != nil {
-				panic("render: " + err.Error())
-			}
-			pageSheets = append(pageSheets, string(data))
-		}
-	})
-	return pageSheets
+	return browser.StandardPageSheets()
 }
 
 // Result is the result of a render.

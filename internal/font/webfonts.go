@@ -86,24 +86,86 @@ type webFontSet struct {
 var (
 	pageFontsOnce sync.Once
 	pageFonts     *webFontSet
+
+	recursiveFontsOnce sync.Once
+	recursiveFonts     *webFontSet
+	openSansFontsOnce  sync.Once
+	openSansFonts      *webFontSet
+	faFontsOnce        sync.Once
+	faFonts            *webFontSet
+	katexFontsOnce     sync.Once
+	katexFonts         *webFontSet
 )
+
+func loadWebFontSheets(paths []string) *webFontSet {
+	set := &webFontSet{families: map[string]*webFamily{}}
+	for _, p := range paths {
+		text, ok := webfonts.SheetText(p)
+		if !ok {
+			data, err := webfonts.FS.ReadFile(p)
+			if err != nil {
+				continue
+			}
+			text = string(data)
+		}
+		if !strings.Contains(text, "@font-face") {
+			continue
+		}
+		for _, rule := range parseFontFaceRules(text) {
+			rule.url = path.Join(path.Dir(p), rule.url)
+			set.add(&rule)
+		}
+	}
+	return set
+}
+
+// pageWebFontFamily resolves one lower-case web font family name by lazily
+// loading only the stylesheet group that defines it, avoiding reading and
+// parsing unrelated sheets (such as 111 KiB fontawesome.css or 29 KiB
+// katex.css) on cold startup.
+func pageWebFontFamily(lower string) *webFamily {
+	switch {
+	case lower == "recursive variable":
+		recursiveFontsOnce.Do(func() {
+			recursiveFonts = loadWebFontSheets([]string{"files/recursive/index.css"})
+		})
+		return recursiveFonts.families[lower]
+	case lower == "open sans":
+		openSansFontsOnce.Do(func() {
+			openSansFonts = loadWebFontSheets([]string{"files/open-sans/400.css", "files/open-sans/400-italic.css"})
+		})
+		return openSansFonts.families[lower]
+	case strings.HasPrefix(lower, "font awesome"):
+		faFontsOnce.Do(func() {
+			faFonts = loadWebFontSheets([]string{
+				"files/fontawesome-free/css/brands.css",
+				"files/fontawesome-free/css/regular.css",
+				"files/fontawesome-free/css/solid.css",
+			})
+		})
+		return faFonts.families[lower]
+	case strings.HasPrefix(lower, "katex"):
+		katexFontsOnce.Do(func() {
+			katexFonts = loadWebFontSheets([]string{"files/katex/dist/katex.css"})
+		})
+		return katexFonts.families[lower]
+	default:
+		return nil
+	}
+}
 
 // pageWebFonts returns the font faces of the page of mermaid-cli. It reads
 // the style sheets one time.
 func pageWebFonts() *webFontSet {
 	pageFontsOnce.Do(func() {
-		set := &webFontSet{families: map[string]*webFamily{}}
+		paths := make([]string, 0, len(webfonts.Sheets))
 		for _, sheet := range webfonts.Sheets {
-			text, err := webfonts.FS.ReadFile(sheet.Path)
-			if err != nil || !strings.Contains(string(text), "@font-face") {
+			if strings.HasSuffix(sheet.Path, "fontawesome.css") {
 				continue
 			}
-			for _, rule := range parseFontFaceRules(string(text)) {
-				rule.url = path.Join(path.Dir(sheet.Path), rule.url)
-				set.add(&rule)
-			}
+			paths = append(paths, sheet.Path)
 		}
-		pageFonts = set
+		pageFonts = loadWebFontSheets(paths)
 	})
 	return pageFonts
 }
@@ -314,6 +376,12 @@ type standardFace struct {
 	once sync.Once
 	find func() *Face
 	face *Face
+	// embedHeader, when non-nil, gives exact Linux Metrics for an embedded-only
+	// Liberation family without inflating or parsing the TTF.
+	embedHeader *embeddedLinuxHeader
+	// embedKnown is true when embedHeader was resolved for an embedded-only
+	// Linux library (embedHeader == nil then means this family does not match).
+	embedKnown bool
 }
 
 // get returns the face of the entry, or nil for a font that does not
@@ -338,21 +406,13 @@ func (l *Library) resolveWeb(families []string, weight int, italic bool) *Chain 
 	if len(families) > 0 {
 		c.first, _ = unquoteFamily(families[0])
 	}
-	seen := map[*Face]bool{}
-	add := func(f *Face) {
-		if f != nil && !seen[f] {
-			seen[f] = true
-			c.entries = append(c.entries, chainEntry{face: f})
-		}
-	}
-	set := pageWebFonts()
 	for _, fam := range families {
 		name, quoted := unquoteFamily(fam)
 		lower := strings.ToLower(name)
 		// CSSFontSelector::GetFontData: a name that is not the keyword of
 		// a generic family gives the web font of that name.
 		if quoted || !isGenericFamily(lower) {
-			if family := set.families[lower]; family != nil {
+			if family := pageWebFontFamily(lower); family != nil {
 				seg := family.pick(weight, italic)
 				// CSSSegmentedFontFace::GetFontData: a later rule comes
 				// first.
@@ -363,17 +423,33 @@ func (l *Library) resolveWeb(families []string, weight int, italic bool) *Chain 
 				continue
 			}
 		}
-		add(base.familyFace(fam, weight, italic, l.webShell))
+		// Defer resolving/inflating system fallback faces until a text run
+		// actually needs this chain entry (for example, diagrams whose text is
+		// fully covered by Recursive Variable never need to inflate Liberation).
+		famCopy := fam
+		sf := &standardFace{find: func() *Face {
+			return base.familyFace(famCopy, weight, italic, l.webShell)
+		}}
+		if base.isEmbeddedOnlyLinux() {
+			sf.embedHeader, _ = embeddedLinuxFamilyHeader(famCopy, l.webShell)
+			sf.embedKnown = true
+		}
+		c.entries = append(c.entries, chainEntry{standard: sf})
 	}
 	// After the families of the list comes the standard font of the
 	// settings, and a last resort when that is missing too. A chain that
 	// has no other font needs it at once, as its primary font.
-	c.entries = append(c.entries, chainEntry{standard: &standardFace{find: func() *Face {
+	std := &standardFace{find: func() *Face {
 		if faces := base.standardFaces(weight, italic, l.webShell); len(faces) > 0 {
 			return faces[0]
 		}
 		return nil
-	}}})
+	}}
+	if base.isEmbeddedOnlyLinux() {
+		std.embedHeader = &liberationSerifHeader
+		std.embedKnown = true
+	}
+	c.entries = append(c.entries, chainEntry{standard: std})
 	return c
 }
 
@@ -473,6 +549,38 @@ func (l *Library) standardFaces(weight int, italic, shell bool) []*Face {
 		add(l.lastResort(weight, italic))
 	}
 	return faces
+}
+
+// isEmbeddedOnlyLinux reports whether l resolves system fonts exclusively from
+// the embedded Liberation font set under Linux rules.
+func (l *Library) isEmbeddedOnlyLinux() bool {
+	return l != nil && l.platform == PlatformLinux && l.embed == embedFonts && len(l.dirs) == 0 && !l.fcSystemConfig
+}
+
+// webPrimaryMetrics returns Primary().Metrics(size) without inflating an
+// embedded Liberation TTF when the primary font of the chain is a known
+// embedded Linux family.
+func (c *Chain) webPrimaryMetrics(size float64) (Metrics, bool) {
+	if c.primary != nil {
+		return c.primary.Metrics(size), true
+	}
+	for i := range c.entries {
+		e := &c.entries[i]
+		if !e.ranges.contains(' ') {
+			continue
+		}
+		if e.standard != nil && e.standard.embedKnown {
+			if e.standard.embedHeader != nil {
+				return e.standard.embedHeader.metrics(size), true
+			}
+			continue
+		}
+		break
+	}
+	if p := c.webPrimary(); p != nil {
+		return p.Metrics(size), true
+	}
+	return Metrics{}, false
 }
 
 // webPrimary is FontFallbackList::DeterminePrimarySimpleFontData for the

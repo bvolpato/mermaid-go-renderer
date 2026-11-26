@@ -28,6 +28,7 @@
 package raster
 
 import (
+	"encoding/binary"
 	"math"
 	"math/bits"
 	"strings"
@@ -476,17 +477,34 @@ func (f *filterImage) mapColors(m *colorMap) {
 	const inv = float32(1.0 / 255)
 	pix := f.pix
 	if m.useLUT {
-		for i := 0; i+3 < len(pix); i += 4 {
-			a8 := pix[i+3]
+		var prevIn, prevOut uint32
+		hasPrev := false
+		for i := 0; i+3 < len(pix); {
+			px := binary.LittleEndian.Uint32(pix[i : i+4])
+			a8 := uint8(px >> 24)
 			if a8 == 0 {
+				i += 4
+				for i+15 < len(pix) && (binary.LittleEndian.Uint64(pix[i:i+8])|binary.LittleEndian.Uint64(pix[i+8:i+16])) == 0 {
+					i += 16
+				}
 				continue
 			}
+			if hasPrev && px == prevIn {
+				binary.LittleEndian.PutUint32(pix[i:i+4], prevOut)
+				i += 4
+				continue
+			}
+			var r, g, b uint8
 			if a8 == 255 {
-				pix[i], pix[i+1], pix[i+2] = m.lut[pix[i]], m.lut[pix[i+1]], m.lut[pix[i+2]]
-				continue
+				r, g, b = m.lut[byte(px)], m.lut[byte(px>>8)], m.lut[byte(px>>16)]
+			} else {
+				t := m.getUnormLUT(a8)
+				r, g, b = t[byte(px)], t[byte(px>>8)], t[byte(px>>16)]
 			}
-			t := m.getUnormLUT(a8)
-			pix[i], pix[i+1], pix[i+2] = t[pix[i]], t[pix[i+1]], t[pix[i+2]]
+			out := uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a8)<<24
+			binary.LittleEndian.PutUint32(pix[i:i+4], out)
+			prevIn, prevOut, hasPrev = px, out, true
+			i += 4
 		}
 		return
 	}
@@ -533,6 +551,49 @@ func (c *canvas) compositeImage(dst *device, img *filterImage, region IRect, cm 
 				srcOverRow(d, s)
 			} else {
 				blendRowGeneral(d, s, 255, blendSrcOver, clipRow)
+			}
+			continue
+		}
+		if cm.useLUT && clipRow == nil {
+			var prevSpx, prevDpx, prevOut uint32
+			hasPrev := false
+			for i := 0; i+3 < len(s); {
+				spx := binary.LittleEndian.Uint32(s[i : i+4])
+				a8 := uint8(spx >> 24)
+				if a8 == 0 {
+					i += 4
+					for i+15 < len(s) && (binary.LittleEndian.Uint64(s[i:i+8])|binary.LittleEndian.Uint64(s[i+8:i+16])) == 0 {
+						i += 16
+					}
+					continue
+				}
+				if a8 == 255 {
+					if hasPrev && spx == prevSpx && prevDpx == 0xffffffff {
+						binary.LittleEndian.PutUint32(d[i:i+4], prevOut)
+						i += 4
+						continue
+					}
+					out := uint32(cm.lut[byte(spx)]) | uint32(cm.lut[byte(spx>>8)])<<8 | uint32(cm.lut[byte(spx>>16)])<<16 | 0xff000000
+					binary.LittleEndian.PutUint32(d[i:i+4], out)
+					prevSpx, prevDpx, prevOut, hasPrev = spx, 0xffffffff, out, true
+					i += 4
+					continue
+				}
+				dpx := binary.LittleEndian.Uint32(d[i : i+4])
+				if hasPrev && spx == prevSpx && dpx == prevDpx {
+					binary.LittleEndian.PutUint32(d[i:i+4], prevOut)
+					i += 4
+					continue
+				}
+				t := cm.getPremulLUT(a8)
+				sr, sg, sb := t[byte(spx)], t[byte(spx>>8)], t[byte(spx>>16)]
+				a2 := float32(float32(a8) * inv)
+				dr, dg, db, da := float32(float32(byte(dpx))*inv), float32(float32(byte(dpx>>8))*inv), float32(float32(byte(dpx>>16))*inv), float32(float32(byte(dpx>>24))*inv)
+				k := 1 - a2
+				out := uint32(toUnorm(sr+float32(dr*k))) | uint32(toUnorm(sg+float32(dg*k)))<<8 | uint32(toUnorm(sb+float32(db*k)))<<16 | uint32(toUnorm(a2+float32(da*k)))<<24
+				binary.LittleEndian.PutUint32(d[i:i+4], out)
+				prevSpx, prevDpx, prevOut, hasPrev = spx, dpx, out, true
+				i += 4
 			}
 			continue
 		}
@@ -770,31 +831,65 @@ func dropShadow(src *filterImage, dx, dy, sigmaX, sigmaY float32, color [4]float
 	}
 	if fx == 0 && fy == 0 {
 		// A whole offset copies the alpha values.
+		var lut32 [256]uint32
+		for i := 1; i < 256; i++ {
+			p := lut[i]
+			lut32[i] = uint32(p[0]) | uint32(p[1])<<8 | uint32(p[2])<<16 | uint32(p[3])<<24
+		}
 		bw := blurred.bounds.width()
 		for y := sb.T; y < sb.B; y++ {
-			arow := blurred.pix[(y-iy-blurred.bounds.T)*blurred.stride:]
+			arow := blurred.pix[(y-iy-blurred.bounds.T)*blurred.stride : (y-iy-blurred.bounds.T)*blurred.stride+bw]
 			row := out.row(y)[(sb.L-out.bounds.L)*4:]
-			for x := 0; x < bw; x++ {
+			x := 0
+			for ; x+8 <= bw; x += 8 {
+				if binary.LittleEndian.Uint64(arow[x:x+8]) == 0 {
+					continue
+				}
+				for k := 0; k < 8; k++ {
+					if a := arow[x+k]; a != 0 {
+						binary.LittleEndian.PutUint32(row[(x+k)*4:], lut32[a])
+					}
+				}
+			}
+			for ; x < bw; x++ {
 				if a := arow[x]; a != 0 {
-					copy(row[x*4:x*4+4], lut[a][:])
+					binary.LittleEndian.PutUint32(row[x*4:], lut32[a])
 				}
 			}
 		}
 	} else {
-		alphaAt := func(x, y int) float32 { return float32(blurred.at(x, y)) }
+		oneMinusFx := 1 - fx
+		oneMinusFy := 1 - fy
+		bL, bR := blurred.bounds.L, blurred.bounds.R
+		bT, bB := blurred.bounds.T, blurred.bounds.B
+		bStride := blurred.stride
+		bPix := blurred.pix
 		for y := sb.T; y < sb.B; y++ {
 			row := out.row(y)
-			for x := sb.L; x < sb.R; x++ {
-				// The source pixels of the shadow, with linear filtering.
-				a00 := alphaAt(x-ix-1, y-iy-1)
-				a10 := alphaAt(x-ix, y-iy-1)
-				a01 := alphaAt(x-ix-1, y-iy)
-				a11 := alphaAt(x-ix, y-iy)
-				top := float32(a00*fx) + float32(a10*(1-fx))
-				bottom := float32(a01*fx) + float32(a11*(1-fx))
-				a := float32(top*fy) + float32(bottom*(1-fy))
+			sy0 := y - iy - 1
+			sy1 := y - iy
+			var r0, r1 []uint8
+			if sy0 >= bT && sy0 < bB {
+				r0 = bPix[(sy0-bT)*bStride:]
+			}
+			if sy1 >= bT && sy1 < bB {
+				r1 = bPix[(sy1-bT)*bStride:]
+			}
+			if r0 == nil && r1 == nil {
+				continue
+			}
+			// Interior range where both sx0=x-ix-1 and sx1=x-ix are in [bL, bR).
+			inStart := max(sb.L, bL+ix+1)
+			inEnd := min(sb.R, bR+ix)
+			writeSample := func(x int, u00, u10, u01, u11 uint8) {
+				if u00|u10|u01|u11 == 0 {
+					return
+				}
+				top := float32(float32(u00)*fx) + float32(float32(u10)*oneMinusFx)
+				bottom := float32(float32(u01)*fx) + float32(float32(u11)*oneMinusFx)
+				a := float32(top*fy) + float32(bottom*oneMinusFy)
 				if a == 0 {
-					continue
+					return
 				}
 				a *= inv
 				o := (x - out.bounds.L) * 4
@@ -802,6 +897,67 @@ func dropShadow(src *filterImage, dx, dy, sigmaX, sigmaY float32, color [4]float
 				row[o+1] = toUnorm(float32(pg * a))
 				row[o+2] = toUnorm(float32(pb * a))
 				row[o+3] = toUnorm(float32(pa * a))
+			}
+			// Left edge.
+			for x := sb.L; x < min(sb.R, inStart); x++ {
+				sx0, sx1 := x-ix-1, x-ix
+				var u00, u10, u01, u11 uint8
+				if r0 != nil {
+					if sx0 >= bL && sx0 < bR {
+						u00 = r0[sx0-bL]
+					}
+					if sx1 >= bL && sx1 < bR {
+						u10 = r0[sx1-bL]
+					}
+				}
+				if r1 != nil {
+					if sx0 >= bL && sx0 < bR {
+						u01 = r1[sx0-bL]
+					}
+					if sx1 >= bL && sx1 < bR {
+						u11 = r1[sx1-bL]
+					}
+				}
+				writeSample(x, u00, u10, u01, u11)
+			}
+			// Interior (no per-pixel bounds checks).
+			if r0 != nil && r1 != nil {
+				for x := inStart; x < inEnd; x++ {
+					xi := x - ix - 1 - bL
+					writeSample(x, r0[xi], r0[xi+1], r1[xi], r1[xi+1])
+				}
+			} else if r0 != nil {
+				for x := inStart; x < inEnd; x++ {
+					xi := x - ix - 1 - bL
+					writeSample(x, r0[xi], r0[xi+1], 0, 0)
+				}
+			} else {
+				for x := inStart; x < inEnd; x++ {
+					xi := x - ix - 1 - bL
+					writeSample(x, 0, 0, r1[xi], r1[xi+1])
+				}
+			}
+			// Right edge.
+			for x := max(sb.L, inEnd); x < sb.R; x++ {
+				sx0, sx1 := x-ix-1, x-ix
+				var u00, u10, u01, u11 uint8
+				if r0 != nil {
+					if sx0 >= bL && sx0 < bR {
+						u00 = r0[sx0-bL]
+					}
+					if sx1 >= bL && sx1 < bR {
+						u10 = r0[sx1-bL]
+					}
+				}
+				if r1 != nil {
+					if sx0 >= bL && sx0 < bR {
+						u01 = r1[sx0-bL]
+					}
+					if sx1 >= bL && sx1 < bR {
+						u11 = r1[sx1-bL]
+					}
+				}
+				writeSample(x, u00, u10, u01, u11)
 			}
 		}
 	}

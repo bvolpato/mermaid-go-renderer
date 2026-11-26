@@ -75,9 +75,19 @@ func (f hachureFiller) _fillPolygons(polygonList [][]*Point, o *ResolvedOptions)
 }
 
 func (hachureFiller) renderLines(lines [][2]*Point, o *ResolvedOptions) []Op {
-	ops := []Op{}
+	if len(lines) == 0 {
+		return []Op{}
+	}
+	perLine := 4
+	floatsPerLine := 16
+	if o.disableMultiStrokeFill {
+		perLine = 2
+		floatsPerLine = 8
+	}
+	ops := make([]Op, 0, len(lines)*perLine)
+	slab := make([]float64, 0, len(lines)*floatsPerLine)
 	for _, line := range lines {
-		ops = append(ops, doubleLineFillOps(line[0][0], line[0][1], line[1][0], line[1][1], o)...)
+		ops, slab = appendDoubleLineFillSlab(ops, slab, line[0][0], line[0][1], line[1][0], line[1][1], o)
 	}
 	return ops
 }

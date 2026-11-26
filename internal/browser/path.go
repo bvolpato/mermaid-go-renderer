@@ -316,7 +316,17 @@ func parsePathData(d string) *skPath {
 // parsePathDataFor is parsePathData with the platform whose C library the
 // arcs follow.
 func parsePathDataFor(d string, platform font.Platform) *skPath {
-	p := newPathFor(platform)
+	return parsePathDataInto(newPathFor(platform), d, platform)
+}
+
+// parsePathDataInto parses SVG path data d into p, reusing p's backing slices.
+func parsePathDataInto(p *skPath, d string, platform font.Platform) *skPath {
+	p.verbs = p.verbs[:0]
+	p.pts = p.pts[:0]
+	p.weights = p.weights[:0]
+	p.lastMoveIdx = -1
+	p.needMove = true
+	p.platform = platform
 	s := skipSVGSpace(d)
 	var cur, subpath, lastControl pt
 	var lastCmd byte
@@ -562,21 +572,22 @@ func validUnitDivide(numer, denom float32) (float32, bool) {
 	return r, true
 }
 
-func findUnitQuadRoots(a, b, c float32) []float32 {
+func findUnitQuadRoots(a, b, c float32, roots *[2]float32) int {
 	if a == 0 {
 		if r, ok := validUnitDivide(-c, b); ok {
-			return []float32{r}
+			roots[0] = r
+			return 1
 		}
-		return nil
+		return 0
 	}
 	dr := float64(float64(b)*float64(b)) - float64(4*float64(a)*float64(c))
 	if dr < 0 {
-		return nil
+		return 0
 	}
 	dr = math.Sqrt(dr)
 	r32 := float32(dr)
 	if math.IsInf(float64(r32), 0) || math.IsNaN(float64(r32)) {
-		return nil
+		return 0
 	}
 	var q float32
 	if b < 0 {
@@ -584,21 +595,23 @@ func findUnitQuadRoots(a, b, c float32) []float32 {
 	} else {
 		q = -(b + r32) / 2
 	}
-	var roots []float32
+	n := 0
 	if r, ok := validUnitDivide(q, a); ok {
-		roots = append(roots, r)
+		roots[n] = r
+		n++
 	}
 	if r, ok := validUnitDivide(c, q); ok {
-		roots = append(roots, r)
+		roots[n] = r
+		n++
 	}
-	if len(roots) == 2 {
+	if n == 2 {
 		if roots[0] > roots[1] {
 			roots[0], roots[1] = roots[1], roots[0]
 		} else if roots[0] == roots[1] {
-			roots = roots[:1]
+			n = 1
 		}
 	}
-	return roots
+	return n
 }
 
 func evalQuad(p [4]pt, t float32) pt {
@@ -647,8 +660,8 @@ func conicExtremum(a, b, c, w float32) (float32, bool) {
 	p20 := c - a
 	p10 := b - a
 	wP10 := float32(w * p10)
-	roots := findUnitQuadRoots(float32(w*p20)-p20, p20-float32(2*wP10), wP10)
-	if len(roots) == 1 {
+	var roots [2]float32
+	if findUnitQuadRoots(float32(w*p20)-p20, p20-float32(2*wP10), wP10, &roots) == 1 {
 		return roots[0], true
 	}
 	return 0, false
@@ -703,11 +716,14 @@ func (p *skPath) tightBounds() rectF {
 			wi++
 		case verbCubic:
 			q := [4]pt{last, p.pts[pi], p.pts[pi+1], p.pts[pi+2]}
-			for _, t := range findUnitQuadRoots(q[3].x-q[0].x+float32(3*(q[1].x-q[2].x)), float32(2*(q[0].x-q[1].x-q[1].x+q[2].x)), q[1].x-q[0].x) {
-				add(evalCubic(q, t))
+			var roots [2]float32
+			nx := findUnitQuadRoots(q[3].x-q[0].x+float32(3*(q[1].x-q[2].x)), float32(2*(q[0].x-q[1].x-q[1].x+q[2].x)), q[1].x-q[0].x, &roots)
+			for i := 0; i < nx; i++ {
+				add(evalCubic(q, roots[i]))
 			}
-			for _, t := range findUnitQuadRoots(q[3].y-q[0].y+float32(3*(q[1].y-q[2].y)), float32(2*(q[0].y-q[1].y-q[1].y+q[2].y)), q[1].y-q[0].y) {
-				add(evalCubic(q, t))
+			ny := findUnitQuadRoots(q[3].y-q[0].y+float32(3*(q[1].y-q[2].y)), float32(2*(q[0].y-q[1].y-q[1].y+q[2].y)), q[1].y-q[0].y, &roots)
+			for i := 0; i < ny; i++ {
+				add(evalCubic(q, roots[i]))
 			}
 			add(q[3])
 			last = q[3]

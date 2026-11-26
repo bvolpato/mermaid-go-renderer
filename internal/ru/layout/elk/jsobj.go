@@ -82,11 +82,10 @@ func strictEq(a, b any) bool {
 
 // spread is { ...o }: a shallow copy with the same property order.
 func spread(o *js.Obj[any]) *js.Obj[any] {
-	out := js.NewObj[any]()
-	if o != nil {
-		o.Each(func(k string, v any) { out.Set(k, v) })
+	if o == nil {
+		return js.NewObj[any]()
 	}
-	return out
+	return o.Copy()
 }
 
 // assign is Object.assign(dst, src).
@@ -99,7 +98,7 @@ func assign(dst, src *js.Obj[any]) {
 
 // obj builds an object from keys and values, in order.
 func obj(kv ...any) *js.Obj[any] {
-	o := js.NewObj[any]()
+	o := js.NewObjCap[any](len(kv) / 2)
 	for i := 0; i+1 < len(kv); i += 2 {
 		o.Set(kv[i].(string), kv[i+1])
 	}

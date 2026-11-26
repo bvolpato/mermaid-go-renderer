@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"strings"
+	"sync"
 
 	"github.com/bvolpato/mermaid-go-renderer/internal/js"
 )
+
+var roughPathBufPool = sync.Pool{New: func() any { b := make([]byte, 0, 1024); return &b }}
 
 const nos = "none"
 
@@ -382,55 +385,72 @@ func (g *Generator) OpsToPath(drawing *OpSet, fixedDecimals any) string {
 			digits = int(f)
 		}
 	}
-	var sb strings.Builder
-	sb.Grow(len(drawing.Ops) * 48)
+	bp := roughPathBufPool.Get().(*[]byte)
+	buf := (*bp)[:0]
+	var fixedBuf [6]float64
 	for _, item := range drawing.Ops {
 		data := item.Data
 		if digits >= 0 {
 			// item.data.map((d) => +d.toFixed(fixedDecimals))
-			data = make([]float64, len(item.Data))
+			if len(item.Data) <= len(fixedBuf) {
+				data = fixedBuf[:len(item.Data)]
+			} else {
+				data = make([]float64, len(item.Data))
+			}
 			for i, d := range item.Data {
 				data[i] = js.Number(js.ToFixed(d, digits))
 			}
 		}
-		// num writes `${data[i]}`. A missing element prints as undefined.
-		num := func(i int) {
+		appendData := func(i int) {
 			if i < len(data) {
-				js.WriteNum(&sb, data[i])
+				buf = js.AppendNum(buf, data[i])
 			} else {
-				sb.WriteString("undefined")
+				buf = append(buf, "undefined"...)
 			}
 		}
 		switch item.Op {
 		case OpMove:
-			sb.WriteByte('M')
-			num(0)
-			sb.WriteByte(' ')
-			num(1)
-			sb.WriteByte(' ')
+			buf = append(buf, 'M')
+			appendData(0)
+			buf = append(buf, ' ')
+			appendData(1)
+			buf = append(buf, ' ')
 		case OpBcurveTo:
-			sb.WriteByte('C')
-			num(0)
-			sb.WriteByte(' ')
-			num(1)
-			sb.WriteString(", ")
-			num(2)
-			sb.WriteByte(' ')
-			num(3)
-			sb.WriteString(", ")
-			num(4)
-			sb.WriteByte(' ')
-			num(5)
-			sb.WriteByte(' ')
+			buf = append(buf, 'C')
+			appendData(0)
+			buf = append(buf, ' ')
+			appendData(1)
+			buf = append(buf, ',', ' ')
+			appendData(2)
+			buf = append(buf, ' ')
+			appendData(3)
+			buf = append(buf, ',', ' ')
+			appendData(4)
+			buf = append(buf, ' ')
+			appendData(5)
+			buf = append(buf, ' ')
 		case OpLineTo:
-			sb.WriteByte('L')
-			num(0)
-			sb.WriteByte(' ')
-			num(1)
-			sb.WriteByte(' ')
+			buf = append(buf, 'L')
+			appendData(0)
+			buf = append(buf, ' ')
+			appendData(1)
+			buf = append(buf, ' ')
 		}
 	}
-	return js.TrimSpace(sb.String())
+	// OpsToPath only emits ASCII spaces around numbers; trim leading/trailing ASCII space.
+	start, end := 0, len(buf)
+	for start < end && buf[start] == ' ' {
+		start++
+	}
+	for end > start && buf[end-1] == ' ' {
+		end--
+	}
+	out := string(buf[start:end])
+	if cap(buf) <= 1<<20 {
+		*bp = buf[:0]
+		roughPathBufPool.Put(bp)
+	}
+	return out
 }
 
 // ToPaths is RoughGenerator.toPaths.

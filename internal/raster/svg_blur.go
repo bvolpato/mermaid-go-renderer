@@ -116,7 +116,15 @@ func (p *alphaPass) process(lead uint32) uint8 {
 // blur is Pass::blur for one line of single values. The source has n
 // values that start at srcLeft in the coordinates of the destination.
 func (p *alphaPass) blur(srcLeft int, src []uint8, srcStride, n int, dst []uint8, dstStride, dstCount int) {
-	p.start()
+	buf := p.buf
+	clear(buf)
+	bufLen := len(buf)
+	b1, b2 := p.b1, p.b2
+	factor := p.factor
+	var s0, s1 uint32
+	s2 := p.half
+	c0, c1, c2 := 0, b1, b2
+
 	srcIdx := srcLeft - p.border
 	srcEnd := srcLeft + n - p.border
 	dstIdx := 0
@@ -131,22 +139,92 @@ func (p *alphaPass) blur(srcLeft int, src []uint8, srcStride, n int, dst []uint8
 	} else if srcIdx < dstIdx {
 		end := min(dstIdx, srcEnd)
 		for srcIdx < end {
-			p.process(uint32(src[si]))
+			lead := uint32(src[si])
+			s0 += lead
+			s1 += s0
+			s2 += s1
+			s2 -= buf[c2]
+			buf[c2] = s1
+			if c2++; c2 >= bufLen {
+				c2 = b2
+			}
+			s1 -= buf[c1]
+			buf[c1] = s0
+			if c1++; c1 >= b2 {
+				c1 = b1
+			}
+			s0 -= buf[c0]
+			buf[c0] = lead
+			if c0++; c0 >= b1 {
+				c0 = 0
+			}
 			si += srcStride
 			srcIdx++
 		}
 		for srcIdx < dstIdx {
-			p.process(0)
+			s1 += s0
+			s2 += s1
+			s2 -= buf[c2]
+			buf[c2] = s1
+			if c2++; c2 >= bufLen {
+				c2 = b2
+			}
+			s1 -= buf[c1]
+			buf[c1] = s0
+			if c1++; c1 >= b2 {
+				c1 = b1
+			}
+			s0 -= buf[c0]
+			buf[c0] = 0
+			if c0++; c0 >= b1 {
+				c0 = 0
+			}
 			srcIdx++
 		}
 	}
 	for end := min(dstCount, srcEnd); dstIdx < end; dstIdx++ {
-		dst[di] = p.process(uint32(src[si]))
+		lead := uint32(src[si])
+		s0 += lead
+		s1 += s0
+		s2 += s1
+		dst[di] = uint8((uint64(s2) * factor) >> 32)
+		s2 -= buf[c2]
+		buf[c2] = s1
+		if c2++; c2 >= bufLen {
+			c2 = b2
+		}
+		s1 -= buf[c1]
+		buf[c1] = s0
+		if c1++; c1 >= b2 {
+			c1 = b1
+		}
+		s0 -= buf[c0]
+		buf[c0] = lead
+		if c0++; c0 >= b1 {
+			c0 = 0
+		}
 		si += srcStride
 		di += dstStride
 	}
 	for ; dstIdx < dstCount; dstIdx++ {
-		dst[di] = p.process(0)
+		s1 += s0
+		s2 += s1
+		dst[di] = uint8((uint64(s2) * factor) >> 32)
+		s2 -= buf[c2]
+		buf[c2] = s1
+		if c2++; c2 >= bufLen {
+			c2 = b2
+		}
+		s1 -= buf[c1]
+		buf[c1] = s0
+		if c1++; c1 >= b2 {
+			c1 = b1
+		}
+		s0 -= buf[c0]
+		buf[c0] = 0
+		if c0++; c0 >= b1 {
+			c0 = 0
+		}
 		di += dstStride
 	}
 }
@@ -206,7 +284,27 @@ func blurAlpha(src *filterImage, sigmaX, sigmaY float32) *alphaImage {
 	if wx > 1 {
 		pass := newAlphaPass(wx)
 		for y := 0; y < sh; y++ {
-			pass.blur(sb.L-db.L, src.pix[y*src.stride+3:], 4, sw, out.pix[(top+y)*dw:], 1, dw)
+			row := src.pix[y*src.stride : y*src.stride+sw*4]
+			hasAlpha := false
+			i := 3
+			for ; i+12 < len(row); i += 16 {
+				if row[i]|row[i+4]|row[i+8]|row[i+12] != 0 {
+					hasAlpha = true
+					break
+				}
+			}
+			if !hasAlpha {
+				for ; i < len(row); i += 4 {
+					if row[i] != 0 {
+						hasAlpha = true
+						break
+					}
+				}
+			}
+			if !hasAlpha {
+				continue
+			}
+			pass.blur(sb.L-db.L, row[3:], 4, sw, out.pix[(top+y)*dw:], 1, dw)
 		}
 	} else {
 		for y := 0; y < sh; y++ {
@@ -222,8 +320,16 @@ func blurAlpha(src *filterImage, sigmaX, sigmaY float32) *alphaImage {
 		col := getFilterBuf(sh)
 		defer putFilterBuf(col)
 		for x := 0; x < dw; x++ {
+			var anyByte byte
+			idx := top*dw + x
 			for y := 0; y < sh; y++ {
-				col[y] = out.pix[(top+y)*dw+x]
+				v := out.pix[idx]
+				col[y] = v
+				anyByte |= v
+				idx += dw
+			}
+			if anyByte == 0 {
+				continue
 			}
 			pass.blur(top, col, 1, sh, out.pix[x:], dw, dh)
 		}

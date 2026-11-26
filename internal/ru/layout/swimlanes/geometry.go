@@ -129,9 +129,9 @@ func isVerticalSegment(a, b Point, epsilon ...float64) bool {
 }
 
 func overlapLength(a1, a2, b1, b2 float64) float64 {
-	return js.Max(
+	return max(
 		0,
-		js.Min(js.Max(a1, a2), js.Max(b1, b2))-js.Max(js.Min(a1, a2), js.Min(b1, b2)),
+		min(max(a1, a2), max(b1, b2))-max(min(a1, a2), min(b1, b2)),
 	)
 }
 
@@ -268,10 +268,10 @@ func segmentBoundsOverlapRect(a, b Point, rect RectBounds, buffer ...float64) bo
 	if len(buffer) > 0 {
 		buf = buffer[0]
 	}
-	segMinX := js.Min(a.X, b.X)
-	segMaxX := js.Max(a.X, b.X)
-	segMinY := js.Min(a.Y, b.Y)
-	segMaxY := js.Max(a.Y, b.Y)
+	segMinX := min(a.X, b.X)
+	segMaxX := max(a.X, b.X)
+	segMinY := min(a.Y, b.Y)
+	segMaxY := max(a.Y, b.Y)
 	return segMaxX > rect.Left-buf &&
 		segMinX < rect.Right+buf &&
 		segMaxY > rect.Top-buf &&
@@ -509,12 +509,50 @@ func getNodePairGeometry(edge *ru.Edge, nodeInfoById map[string]*NodeBoundsInfo,
 // segmentHitsAnyRect is segmentHitsAnyRect(a, b, rects, excludeIds, shrink).
 // The defaults of upstream are excludeIds = [] and shrink = 0.
 func segmentHitsAnyRect(a, b Point, rects []RectEntry, excludeIds []string, shrink float64) bool {
-	for _, entry := range rects {
-		if containsString(excludeIds, entry.ID) {
-			continue
+	segMinX := min(a.X, b.X)
+	segMaxX := max(a.X, b.X)
+	segMinY := min(a.Y, b.Y)
+	segMaxY := max(a.Y, b.Y)
+	switch len(excludeIds) {
+	case 0:
+		for i := range rects {
+			r := rects[i].Rect
+			if segMaxX > r.Left+shrink && segMinX < r.Right-shrink && segMaxY > r.Top+shrink && segMinY < r.Bottom-shrink {
+				return true
+			}
 		}
-		if segmentBoundsOverlapRect(a, b, entry.Rect, -shrink) {
-			return true
+	case 1:
+		ex0 := excludeIds[0]
+		for i := range rects {
+			if rects[i].ID == ex0 {
+				continue
+			}
+			r := rects[i].Rect
+			if segMaxX > r.Left+shrink && segMinX < r.Right-shrink && segMaxY > r.Top+shrink && segMinY < r.Bottom-shrink {
+				return true
+			}
+		}
+	case 2:
+		ex0, ex1 := excludeIds[0], excludeIds[1]
+		for i := range rects {
+			id := rects[i].ID
+			if id == ex0 || id == ex1 {
+				continue
+			}
+			r := rects[i].Rect
+			if segMaxX > r.Left+shrink && segMinX < r.Right-shrink && segMaxY > r.Top+shrink && segMinY < r.Bottom-shrink {
+				return true
+			}
+		}
+	default:
+		for i := range rects {
+			if containsString(excludeIds, rects[i].ID) {
+				continue
+			}
+			r := rects[i].Rect
+			if segMaxX > r.Left+shrink && segMinX < r.Right-shrink && segMaxY > r.Top+shrink && segMinY < r.Bottom-shrink {
+				return true
+			}
 		}
 	}
 	return false
@@ -551,11 +589,11 @@ func orthogonalSegmentsCross(a1, b1, a2, b2 Point, opts ...float64) bool {
 		vertA, vertB = a1, b1
 	}
 	hY := horizA.Y
-	hX1 := js.Min(horizA.X, horizB.X)
-	hX2 := js.Max(horizA.X, horizB.X)
+	hX1 := min(horizA.X, horizB.X)
+	hX2 := max(horizA.X, horizB.X)
 	vX := vertA.X
-	vY1 := js.Min(vertA.Y, vertB.Y)
-	vY2 := js.Max(vertA.Y, vertB.Y)
+	vY1 := min(vertA.Y, vertB.Y)
+	vY2 := max(vertA.Y, vertB.Y)
 	if vX < hX1 || vX > hX2 || hY < vY1 || hY > vY2 {
 		return false
 	}
@@ -627,17 +665,17 @@ func orthogonalSegmentsStrictlyCross(a1, b1, a2, b2 Point, epsilon ...float64) b
 		vertA, vertB = a2, b2
 	}
 	hY := horizA.Y
-	hXmin := js.Min(horizA.X, horizB.X)
-	hXmax := js.Max(horizA.X, horizB.X)
+	hXmin := min(horizA.X, horizB.X)
+	hXmax := max(horizA.X, horizB.X)
 	vX := vertA.X
-	vYmin := js.Min(vertA.Y, vertB.Y)
-	vYmax := js.Max(vertA.Y, vertB.Y)
+	vYmin := min(vertA.Y, vertB.Y)
+	vYmax := max(vertA.Y, vertB.Y)
 	return vX > hXmin+e && vX < hXmax-e && hY > vYmin+e && hY < vYmax-e
 }
 
 func strictlyBetween(value, a, b float64) bool {
-	lo := js.Min(a, b)
-	hi := js.Max(a, b)
+	lo := min(a, b)
+	hi := max(a, b)
 	return value > lo+geometryEPS && value < hi-geometryEPS
 }
 
@@ -654,6 +692,21 @@ func isCollinearIntermediate(prev, cur, next Point) bool {
 }
 
 func simplifyPolylineOnce(points []Point) (out []Point, changed bool) {
+	// Fast scan: avoid allocating when the polyline is already simplified.
+	needsChange := false
+	for i := 1; i+1 < len(points); i++ {
+		prev := points[i-1]
+		cur := points[i]
+		next := points[i+1]
+		if samePoint(prev, next) || isCollinearIntermediate(prev, cur, next) {
+			needsChange = true
+			break
+		}
+	}
+	if !needsChange {
+		return points, false
+	}
+
 	// The result has no more points than the input.
 	out = make([]Point, 0, len(points))
 

@@ -12,18 +12,21 @@ import (
 	"github.com/bvolpato/mermaid-go-renderer/internal/webfonts"
 )
 
+// StandardPageSheets returns the raw texts of webfonts.Sheets (the page sheets
+// of mermaid-cli), shared across callers so embed.FS is read only once and
+// slice identity comparison succeeds in O(1).
+func StandardPageSheets() []string {
+	return standardPageSheets()
+}
+
 // standardPageSheets returns the raw texts of webfonts.Sheets (the page sheets
 // of mermaid-cli). Every style rule in those sheets other than the three
 // ":root, :host" custom-property blocks and "body" requires a ".fa*" or
 // ".katex*" class on the element or an ancestor.
 var standardPageSheets = sync.OnceValue(func() []string {
-	out := make([]string, 0, len(webfonts.Sheets))
-	for _, sheet := range webfonts.Sheets {
-		data, err := webfonts.FS.ReadFile(sheet.Path)
-		if err != nil {
-			return nil
-		}
-		out = append(out, string(data))
+	out := make([]string, len(webfonts.Sheets))
+	for i, sheet := range webfonts.Sheets {
+		out[i] = sheet.Text
 	}
 	return out
 })
@@ -38,7 +41,14 @@ var standardBaseRuleSet = sync.OnceValue(func() *ruleSet {
 		return nil
 	}
 	var baseTexts []string
-	for _, s := range sheets {
+	for i, s := range sheets {
+		// Only brands.css, regular.css, solid.css, and katex.css have top-level
+		// ":root, :host" or "body" rules; skip 111 KiB fontawesome.css and pure
+		// @font-face sheets.
+		p := webfonts.Sheets[i].Path
+		if strings.HasSuffix(p, "fontawesome.css") || strings.Contains(p, "recursive/") || strings.Contains(p, "open-sans/") {
+			continue
+		}
 		// Extract any top-level ":root, :host { ... }" or "body { ... }" rules
 		// anchored at the start of a line so class suffixes like ".accent-body {"
 		// do not match.
@@ -131,6 +141,9 @@ const maxPageRuleSets = 4
 func sameSheets(a, b []string) bool {
 	if len(a) != len(b) {
 		return false
+	}
+	if len(a) > 0 && &a[0] == &b[0] {
+		return true
 	}
 	for i := range a {
 		if a[i] != b[i] {

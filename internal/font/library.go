@@ -798,6 +798,18 @@ func (c *Chain) Primary() *Face {
 	return c.faces[0]
 }
 
+// PrimaryMetrics returns Primary().Metrics(size), avoiding TTF decompression
+// when the primary face is an unloaded embedded Liberation font on Linux.
+func (c *Chain) PrimaryMetrics(size float64) (Metrics, bool) {
+	if c.web {
+		return c.webPrimaryMetrics(size)
+	}
+	if len(c.faces) == 0 {
+		return Metrics{}, false
+	}
+	return c.faces[0].Metrics(size), true
+}
+
 // FaceFor returns the face that renders a character.
 func (c *Chain) FaceFor(r rune) *Face {
 	if c.web {

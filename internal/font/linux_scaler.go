@@ -31,6 +31,7 @@ package font
 import (
 	"encoding/binary"
 	"math"
+	"strings"
 	"sync"
 
 	gtfont "github.com/go-text/typesetting/font"
@@ -215,6 +216,74 @@ func (f *Face) linuxAdvance16(nominal int32, size float64) int64 {
 		advance = float32(math.Round(float64(advance)))
 	}
 	return int64(advance * 65536) // SkiaScalarToHarfBuzzPosition
+}
+
+// linuxMetricsFromHeader computes linuxMetrics for a face whose OS/2 table
+// provides non-zero sxHeight and sCapHeight (true for all embedded Liberation
+// fonts), matching Face.linuxMetrics bit-for-bit without inflating the TTF.
+type embeddedLinuxHeader struct {
+	upem                         int64
+	ascender, descender, lineGap int64
+	sxHeight, sCapHeight         int64
+}
+
+var (
+	liberationMonoHeader  = embeddedLinuxHeader{upem: 2048, ascender: 1705, descender: -615, lineGap: 0, sxHeight: 1082, sCapHeight: 1349}
+	liberationSansHeader  = embeddedLinuxHeader{upem: 2048, ascender: 1854, descender: -434, lineGap: 67, sxHeight: 1082, sCapHeight: 1409}
+	liberationSerifHeader = embeddedLinuxHeader{upem: 2048, ascender: 1825, descender: -443, lineGap: 87, sxHeight: 940, sCapHeight: 1341}
+)
+
+func (h embeddedLinuxHeader) metrics(size float64) Metrics {
+	scale := float32(size) / float32(h.upem)
+	ascent := float32(float32(h.ascender) * scale)
+	descent := float32(float32(-h.descender) * scale)
+	leading := float32(float32(h.lineGap) * scale)
+	xHeight := float32(float32(h.sxHeight) * scale)
+	capHeight := float32(float32(h.sCapHeight) * scale)
+
+	m := Metrics{FloatAscent: float64(ascent), FloatDescent: float64(descent), LineGap: float64(leading)}
+	m.Ascent = roundScalar(float64(ascent))
+	m.Descent = roundScalar(float64(descent))
+	m.LineSpacing = math.Round(m.Ascent) + math.Round(m.Descent) + math.Round(float64(leading))
+	m.XHeight = float64(xHeight)
+	m.CapHeight = float64(capHeight)
+	return m
+}
+
+// embeddedLinuxFamilyHeader resolves the embedded Liberation header for fam on
+// an embedded-only Linux library without inflating or parsing the font file.
+func embeddedLinuxFamilyHeader(fam string, shell bool) (*embeddedLinuxHeader, bool) {
+	name, quoted := unquoteFamily(fam)
+	lower := strings.ToLower(strings.TrimSpace(name))
+	if !quoted && isGenericFamily(lower) {
+		if shell {
+			if mapped, ok := shellGenericFamily(PlatformLinux, lower); ok {
+				lower = strings.ToLower(mapped)
+			} else {
+				return nil, false
+			}
+		} else {
+			switch lower {
+			case "serif":
+				return &liberationSerifHeader, true
+			case "sans-serif", "system-ui":
+				return &liberationSansHeader, true
+			case "monospace":
+				return &liberationMonoHeader, true
+			default:
+				return nil, false
+			}
+		}
+	}
+	switch lower {
+	case "liberation sans", "arial", "arimo", "helvetica", "system-ui", "", "sans":
+		return &liberationSansHeader, true
+	case "liberation serif", "times new roman", "tinos", "times", "serif":
+		return &liberationSerifHeader, true
+	case "liberation mono", "courier new", "cousine", "courier", "monospace":
+		return &liberationMonoHeader, true
+	}
+	return nil, false
 }
 
 // linuxMetrics returns the vertical metrics of the face on Linux: Metrics

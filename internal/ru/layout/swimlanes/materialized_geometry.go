@@ -69,22 +69,36 @@ func mgNodeOf(nodeByIdMap *js.Map[string, *ru.Node], id string) *ru.Node {
 // strictly.
 func mgStrictCrossingsBetween(firstSegments, secondSegments []*OrthogonalSegment) int {
 	count := 0
-	for _, firstSegment := range firstSegments {
-		for _, secondSegment := range secondSegments {
-			// The segments come from mgSegmentsFor, so each is horizontal or
-			// vertical for the epsilon of the test below, and two segments
-			// of the same orientation never cross.
-			if firstSegment.Horizontal == secondSegment.Horizontal {
-				continue
+	for _, s1 := range firstSegments {
+		if s1.Horizontal {
+			hY := s1.A.Y
+			hXmin := min(s1.A.X, s1.B.X) + mgEpsLocal
+			hXmax := max(s1.A.X, s1.B.X) - mgEpsLocal
+			for _, s2 := range secondSegments {
+				if s2.Horizontal {
+					continue
+				}
+				vX := s2.A.X
+				if vX > hXmin && vX < hXmax {
+					if hY > min(s2.A.Y, s2.B.Y)+mgEpsLocal && hY < max(s2.A.Y, s2.B.Y)-mgEpsLocal {
+						count++
+					}
+				}
 			}
-			if orthogonalSegmentsStrictlyCross(
-				firstSegment.A,
-				firstSegment.B,
-				secondSegment.A,
-				secondSegment.B,
-				mgEpsLocal,
-			) {
-				count++
+		} else {
+			vX := s1.A.X
+			vYmin := min(s1.A.Y, s1.B.Y) + mgEpsLocal
+			vYmax := max(s1.A.Y, s1.B.Y) - mgEpsLocal
+			for _, s2 := range secondSegments {
+				if !s2.Horizontal {
+					continue
+				}
+				hY := s2.A.Y
+				if hY > vYmin && hY < vYmax {
+					if vX > min(s2.A.X, s2.B.X)+mgEpsLocal && vX < max(s2.A.X, s2.B.X)-mgEpsLocal {
+						count++
+					}
+				}
 			}
 		}
 	}

@@ -22,18 +22,28 @@ func (n *Node) StylePriority(property string, value any, important bool) *Node {
 	if n == nil || n.Type != ElementNode {
 		return n
 	}
-	current, has := n.InlineStyle()
 	// Text that the CSSOM wrote is already canonical. The SVG rules for an
 	// authored attribute (unitless lengths, !important last) apply only to
 	// the first parse.
 	svg := n.NS == NSSVG
 	var block []css.Decl
-	if has && current == n.styleCanon && n.styleBlock != nil {
-		// The CSSOM changes its parsed style. It does not read the text
-		// again, so the values keep their digits.
+	var has bool
+	if n.hasPendingStyle && n.pendingStyleDirty {
+		has = true
 		block = n.styleBlock
 	} else {
-		block = css.ParseInlineStyle(current, svg && !(has && current == n.styleCanon))
+		var current string
+		current, has = n.InlineStyle()
+		if has && current == n.styleCanon && n.styleBlock != nil {
+			// The CSSOM changes its parsed style. It does not read the text
+			// again, so the values keep their digits.
+			block = n.styleBlock
+		} else {
+			block = css.ParseInlineStyle(current, svg && !(has && current == n.styleCanon))
+		}
+	}
+	if block == nil && value != nil && n.doc != nil && n.doc.arena != nil {
+		block = n.doc.arena.allocStyleDecls(6)
 	}
 	var changed bool
 	if value == nil {
@@ -57,19 +67,20 @@ func (n *Node) StylePriority(property string, value any, important bool) *Node {
 	}
 	// Blink writes the attribute even when the block becomes empty, if the
 	// attribute existed. It creates the attribute when a property is set.
-	text := css.SerializeInlineStyle(block)
-	if text == "" && !has {
+	if len(block) == 0 && !has {
 		return n
 	}
-	n.styleCanon = text
 	n.styleBlock = block
 	if n.hasPendingStyle || n.findAttr("", "style") < 0 {
-		// No style attribute yet: the CSSOM keeps the style, and the
-		// attribute appears when the attributes are next read.
-		n.pendingStyle, n.hasPendingStyle = text, true
+		// No style attribute yet: defer serialization until the attribute or
+		// InlineStyle() text is actually read.
+		n.hasPendingStyle = true
+		n.pendingStyleDirty = true
 		n.touch()
 		return n
 	}
+	text := css.SerializeInlineStyle(block)
+	n.styleCanon = text
 	n.setAttrNS("", "style", text)
 	return n
 }
@@ -77,6 +88,14 @@ func (n *Node) StylePriority(property string, value any, important bool) *Node {
 // StyleValue is selection.style(name) as a getter on the inline style only.
 func (n *Node) StyleValue(property string) string {
 	if n == nil {
+		return ""
+	}
+	if n.hasPendingStyle && n.pendingStyleDirty {
+		for _, d := range n.styleBlock {
+			if d.Name == property {
+				return d.Value
+			}
+		}
 		return ""
 	}
 	current, _ := n.InlineStyle()

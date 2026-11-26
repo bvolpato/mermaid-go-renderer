@@ -4,6 +4,8 @@ import (
 	"strings"
 	"sync"
 	"unicode/utf8"
+
+	"github.com/bvolpato/mermaid-go-renderer/internal/css"
 )
 
 // This file has a parser for the markup that this module writes itself: the
@@ -438,10 +440,13 @@ func PrepareDirectSanitize(root *Node, checkMarkerEnd bool) bool {
 type ParseArena struct {
 	nodeChunks [][]Node
 	attrChunks [][]Attr
+	declChunks [][]css.Decl
 	nodeIdx    int
 	attrIdx    int
+	declIdx    int
 	nodeOff    int
 	attrOff    int
+	declOff    int
 	stack      []*Node
 	formatting []*Node
 }
@@ -452,8 +457,8 @@ const maxPooledArenaChunks = 64
 
 func acquireParseArena() *ParseArena {
 	a := parseArenaPool.Get().(*ParseArena)
-	a.nodeIdx, a.attrIdx = 0, 0
-	a.nodeOff, a.attrOff = 0, 0
+	a.nodeIdx, a.attrIdx, a.declIdx = 0, 0, 0
+	a.nodeOff, a.attrOff, a.declOff = 0, 0, 0
 	a.stack = a.stack[:0]
 	a.formatting = a.formatting[:0]
 	return a
@@ -479,9 +484,16 @@ func (a *ParseArena) Release() {
 		}
 		clear(a.attrChunks[i][:end])
 	}
+	for i := 0; i <= a.declIdx && i < len(a.declChunks); i++ {
+		end := len(a.declChunks[i])
+		if i == a.declIdx {
+			end = a.declOff
+		}
+		clear(a.declChunks[i][:end])
+	}
 	clear(a.stack)
 	clear(a.formatting)
-	if len(a.nodeChunks) <= maxPooledArenaChunks && len(a.attrChunks) <= maxPooledArenaChunks {
+	if len(a.nodeChunks) <= maxPooledArenaChunks && len(a.attrChunks) <= maxPooledArenaChunks && len(a.declChunks) <= maxPooledArenaChunks {
 		parseArenaPool.Put(a)
 	}
 }
@@ -525,6 +537,27 @@ func (a *ParseArena) allocAttrs(count int) []Attr {
 		}
 		a.attrIdx++
 		a.attrOff = 0
+	}
+}
+
+func (a *ParseArena) allocStyleDecls(count int) []css.Decl {
+	for {
+		if a.declIdx >= len(a.declChunks) {
+			sz := max(count, 32)
+			if len(a.declChunks) > 0 {
+				sz = max(count, min(len(a.declChunks[len(a.declChunks)-1])*2, 512))
+			}
+			a.declChunks = append(a.declChunks, make([]css.Decl, sz))
+			a.declOff = 0
+		}
+		chunk := a.declChunks[a.declIdx]
+		if a.declOff+count <= len(chunk) {
+			s := chunk[a.declOff : a.declOff : a.declOff+count]
+			a.declOff += count
+			return s
+		}
+		a.declIdx++
+		a.declOff = 0
 	}
 }
 

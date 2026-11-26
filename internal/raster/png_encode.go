@@ -126,94 +126,100 @@ func fixedDistBits(dist int) (val uint32, nbits uint8) {
 	return uint32(fixedDistCode[code]) | (extra << 5), 5 + fixedDistExtra[code]
 }
 
-// adler32Fast computes RFC 1950 Adler-32 with 32-byte and 8-byte zero-run
-// skipping (dominant in Sub-filtered PNG rows).
-func adler32Fast(p []byte) uint32 {
-	const mod = 65521
-	const nmax = 5552
-	var s1, s2 uint32 = 1, 0
-	for len(p) > 0 {
-		n := len(p)
-		if n > nmax {
-			n = nmax
+// adler32UpdateNoMod advances an RFC 1950 Adler-32 state (s1, s2) over p
+// without modulo reduction; caller ensures total unreduced bytes <= 5552.
+func adler32UpdateNoMod(s1, s2 uint32, p []byte) (uint32, uint32) {
+	for len(p) >= 32 {
+		u0 := binary.LittleEndian.Uint64(p[0:8])
+		u1 := binary.LittleEndian.Uint64(p[8:16])
+		u2 := binary.LittleEndian.Uint64(p[16:24])
+		u3 := binary.LittleEndian.Uint64(p[24:32])
+		if (u0 | u1 | u2 | u3) == 0 {
+			s2 += s1 << 5
+			p = p[32:]
+			continue
 		}
-		q := p[:n]
-		p = p[n:]
-		for len(q) >= 32 {
-			u0 := binary.LittleEndian.Uint64(q[0:8])
-			u1 := binary.LittleEndian.Uint64(q[8:16])
-			u2 := binary.LittleEndian.Uint64(q[16:24])
-			u3 := binary.LittleEndian.Uint64(q[24:32])
-			if (u0 | u1 | u2 | u3) == 0 {
-				s2 += s1 << 5
-				q = q[32:]
-				continue
-			}
-			for k := 0; k < 4; k++ {
-				if binary.LittleEndian.Uint64(q[:8]) == 0 {
-					s2 += s1 << 3
-					q = q[8:]
-					continue
-				}
-				s1 += uint32(q[0])
-				s2 += s1
-				s1 += uint32(q[1])
-				s2 += s1
-				s1 += uint32(q[2])
-				s2 += s1
-				s1 += uint32(q[3])
-				s2 += s1
-				s1 += uint32(q[4])
-				s2 += s1
-				s1 += uint32(q[5])
-				s2 += s1
-				s1 += uint32(q[6])
-				s2 += s1
-				s1 += uint32(q[7])
-				s2 += s1
-				q = q[8:]
-			}
-		}
-		for len(q) >= 8 {
-			if binary.LittleEndian.Uint64(q[:8]) == 0 {
+		for _, w := range [4]uint64{u0, u1, u2, u3} {
+			if w == 0 {
 				s2 += s1 << 3
-				q = q[8:]
 				continue
 			}
-			s1 += uint32(q[0])
+			s1 += uint32(byte(w))
 			s2 += s1
-			s1 += uint32(q[1])
+			s1 += uint32(byte(w >> 8))
 			s2 += s1
-			s1 += uint32(q[2])
+			s1 += uint32(byte(w >> 16))
 			s2 += s1
-			s1 += uint32(q[3])
+			s1 += uint32(byte(w >> 24))
 			s2 += s1
-			s1 += uint32(q[4])
+			s1 += uint32(byte(w >> 32))
 			s2 += s1
-			s1 += uint32(q[5])
+			s1 += uint32(byte(w >> 40))
 			s2 += s1
-			s1 += uint32(q[6])
+			s1 += uint32(byte(w >> 48))
 			s2 += s1
-			s1 += uint32(q[7])
-			s2 += s1
-			q = q[8:]
-		}
-		for _, b := range q {
-			s1 += uint32(b)
+			s1 += uint32(byte(w >> 56))
 			s2 += s1
 		}
-		s1 %= mod
-		s2 %= mod
+		p = p[32:]
 	}
-	return (s2 << 16) | s1
+	for len(p) >= 8 {
+		w := binary.LittleEndian.Uint64(p[:8])
+		if w == 0 {
+			s2 += s1 << 3
+			p = p[8:]
+			continue
+		}
+		s1 += uint32(byte(w))
+		s2 += s1
+		s1 += uint32(byte(w >> 8))
+		s2 += s1
+		s1 += uint32(byte(w >> 16))
+		s2 += s1
+		s1 += uint32(byte(w >> 24))
+		s2 += s1
+		s1 += uint32(byte(w >> 32))
+		s2 += s1
+		s1 += uint32(byte(w >> 40))
+		s2 += s1
+		s1 += uint32(byte(w >> 48))
+		s2 += s1
+		s1 += uint32(byte(w >> 56))
+		s2 += s1
+		p = p[8:]
+	}
+	for _, b := range p {
+		s1 += uint32(b)
+		s2 += s1
+	}
+	return s1, s2
 }
 
 // deflateFixedZlib compresses src into dst as a standard RFC 1950 zlib stream
 // containing one RFC 1951 fixed-Huffman DEFLATE block, optimized for Sub-filtered
-// PNG rows (fast 32-byte zero-run RLE + 4-byte hash LZ77).
+// PNG rows (fast 32-byte zero-run RLE, 4-byte hash LZ77, direct output writes,
+// and fused Adler-32 calculation with deferred modulo reduction).
 func deflateFixedZlib(dst []byte, src []byte, table *[4096]uint32) []byte {
+	const mod = 65521
+	const nmax = 5552
+	n := len(src)
+	// Start compact to stay L2-cache-hot; grow on demand if output exceeds cap.
+	initCap := max(n>>3, 8192)
+	if cap(dst) < initCap {
+		dst = make([]byte, initCap)
+	} else {
+		dst = dst[:cap(dst)]
+	}
+	grow := func(need int) {
+		newCap := max(len(dst)*2, need+4096)
+		grown := make([]byte, newCap)
+		copy(grown, dst)
+		dst = grown
+	}
 	// Zlib header: CM=8, CINFO=7 (32K window), FLEVEL=0, FCHECK=1.
-	dst = append(dst, 0x78, 0x01)
+	dst[0] = 0x78
+	dst[1] = 0x01
+	di := 2
 	clear(table[:])
 
 	var bitBuf uint64
@@ -222,16 +228,28 @@ func deflateFixedZlib(dst []byte, src []byte, table *[4096]uint32) []byte {
 	bitBuf = 0b011
 	bitCnt = 3
 
-	n := len(src)
+	var s1, s2 uint32 = 1, 0
+	adlerRem := nmax
+	// Precomputed fixed Huffman code for 258-byte zero match (dist=1):
+	// fixedLenPacked[258] (8 bits) + dist=1 (5 zero bits) = 13 bits.
+	code258 := uint64(fixedLenPacked[258])
+	bits258 := fixedLenBits[258] + 5
+	code516 := code258 | (code258 << bits258)
+	bits516 := bits258 * 2
+
 	i := 0
 	for i < n {
+		if di+32 > len(dst) {
+			grow(di + 32)
+		}
 		// Fast path: runs of zero bytes (dominant in Sub-filtered PNG rows).
 		if src[i] == 0 {
 			// Emit one literal 0x00, then encode remaining zeros as dist=1 matches.
 			bitBuf |= uint64(fixedLitCode[0]) << bitCnt
 			bitCnt += fixedLitLen[0]
 			if bitCnt >= 32 {
-				dst = append(dst, byte(bitBuf), byte(bitBuf>>8), byte(bitBuf>>16), byte(bitBuf>>24))
+				binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+				di += 4
 				bitBuf >>= 32
 				bitCnt -= 32
 			}
@@ -261,26 +279,59 @@ func deflateFixedZlib(dst []byte, src []byte, table *[4096]uint32) []byte {
 			}
 		doneZeroScan:
 			rem := i - start
-			for rem >= 3 {
-				ml := rem
-				if ml > 258 {
-					ml = 258
+			z := rem + 1
+			// Fused O(1) Adler-32 update for z zero bytes.
+			if z <= adlerRem {
+				s2 += s1 * uint32(z)
+				adlerRem -= z
+			} else {
+				s1 %= mod
+				s2 = uint32((uint64(s2) + uint64(s1)*uint64(z)) % mod)
+				adlerRem = nmax
+			}
+			for rem >= 516 {
+				if di+8 > len(dst) {
+					grow(di + 8)
 				}
-				// Length code + dist=1 (5 zero bits).
-				bitBuf |= uint64(fixedLenPacked[ml]) << bitCnt
-				bitCnt += fixedLenBits[ml] + 5
+				bitBuf |= code516 << bitCnt
+				bitCnt += bits516
 				if bitCnt >= 32 {
-					dst = append(dst, byte(bitBuf), byte(bitBuf>>8), byte(bitBuf>>16), byte(bitBuf>>24))
+					binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+					di += 4
 					bitBuf >>= 32
 					bitCnt -= 32
 				}
-				rem -= ml
+				rem -= 516
+			}
+			if rem >= 258 {
+				bitBuf |= code258 << bitCnt
+				bitCnt += bits258
+				if bitCnt >= 32 {
+					binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+					di += 4
+					bitBuf >>= 32
+					bitCnt -= 32
+				}
+				rem -= 258
+			}
+			if rem >= 3 {
+				// Length code + dist=1 (5 zero bits).
+				bitBuf |= uint64(fixedLenPacked[rem]) << bitCnt
+				bitCnt += fixedLenBits[rem] + 5
+				if bitCnt >= 32 {
+					binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+					di += 4
+					bitBuf >>= 32
+					bitCnt -= 32
+				}
+				rem = 0
 			}
 			for rem > 0 {
 				bitBuf |= uint64(fixedLitCode[0]) << bitCnt
 				bitCnt += fixedLitLen[0]
 				if bitCnt >= 32 {
-					dst = append(dst, byte(bitBuf), byte(bitBuf>>8), byte(bitBuf>>16), byte(bitBuf>>24))
+					binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+					di += 4
 					bitBuf >>= 32
 					bitCnt -= 32
 				}
@@ -303,28 +354,36 @@ func deflateFixedZlib(dst []byte, src []byte, table *[4096]uint32) []byte {
 					if maxLen > 258 {
 						maxLen = 258
 					}
-					s1 := src[i : i+maxLen]
-					s2 := src[cand : cand+maxLen]
+					s1s := src[i : i+maxLen]
+					s2s := src[cand : cand+maxLen]
 					ml := 4
 					for ml+8 <= maxLen {
-						diff := binary.LittleEndian.Uint64(s1[ml:ml+8]) ^ binary.LittleEndian.Uint64(s2[ml:ml+8])
+						diff := binary.LittleEndian.Uint64(s1s[ml:ml+8]) ^ binary.LittleEndian.Uint64(s2s[ml:ml+8])
 						if diff != 0 {
 							ml += bits.TrailingZeros64(diff) >> 3
 							goto doneMatch
 						}
 						ml += 8
 					}
-					for ml < maxLen && s1[ml] == s2[ml] {
+					for ml < maxLen && s1s[ml] == s2s[ml] {
 						ml++
 					}
 				doneMatch:
+					if ml > adlerRem {
+						s1 %= mod
+						s2 %= mod
+						adlerRem = nmax
+					}
+					s1, s2 = adler32UpdateNoMod(s1, s2, s1s[:ml])
+					adlerRem -= ml
 					dval, dbits := fixedDistBits(dist)
 					bitBuf |= uint64(fixedLenPacked[ml]) << bitCnt
 					bitCnt += fixedLenBits[ml]
 					bitBuf |= uint64(dval) << bitCnt
 					bitCnt += dbits
 					if bitCnt >= 32 {
-						dst = append(dst, byte(bitBuf), byte(bitBuf>>8), byte(bitBuf>>16), byte(bitBuf>>24))
+						binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+						di += 4
 						bitBuf >>= 32
 						bitCnt -= 32
 					}
@@ -335,31 +394,48 @@ func deflateFixedZlib(dst []byte, src []byte, table *[4096]uint32) []byte {
 		}
 
 		c := src[i]
+		if adlerRem == 0 {
+			s1 %= mod
+			s2 %= mod
+			adlerRem = nmax
+		}
+		s1 += uint32(c)
+		s2 += s1
+		adlerRem--
 		bitBuf |= uint64(fixedLitCode[c]) << bitCnt
 		bitCnt += fixedLitLen[c]
 		if bitCnt >= 32 {
-			dst = append(dst, byte(bitBuf), byte(bitBuf>>8), byte(bitBuf>>16), byte(bitBuf>>24))
+			binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+			di += 4
 			bitBuf >>= 32
 			bitCnt -= 32
 		}
 		i++
 	}
 
+	if di+16 > len(dst) {
+		grow(di + 16)
+	}
 	// End-of-block symbol 256: 7 zero bits.
 	bitCnt += 7
 	for bitCnt >= 8 {
-		dst = append(dst, byte(bitBuf))
+		dst[di] = byte(bitBuf)
+		di++
 		bitBuf >>= 8
 		bitCnt -= 8
 	}
 	if bitCnt > 0 {
-		dst = append(dst, byte(bitBuf))
+		dst[di] = byte(bitBuf)
+		di++
 	}
 
 	// Zlib trailer: big-endian Adler-32.
-	sum := adler32Fast(src)
-	dst = append(dst, byte(sum>>24), byte(sum>>16), byte(sum>>8), byte(sum))
-	return dst
+	s1 %= mod
+	s2 %= mod
+	sum := (s2 << 16) | s1
+	binary.BigEndian.PutUint32(dst[di:], sum)
+	di += 4
+	return dst[:di]
 }
 
 func isOpaqueRGBA(img *image.RGBA) bool {
@@ -425,13 +501,13 @@ func filterSubOpaqueRow(dst, src []byte, width int) {
 			di += 24
 			continue
 		}
-		for k := 0; k < 4; k++ {
-			if binary.LittleEndian.Uint64(src[si:si+8]) == prevPair {
-				si += 8
+		pairs := [4]uint64{p0, p1, p2, p3}
+		for _, pair := range pairs {
+			if pair == prevPair {
 				di += 6
 				continue
 			}
-			px := binary.LittleEndian.Uint32(src[si : si+4])
+			px := uint32(pair)
 			if px != prevPx {
 				r, g, bl := byte(px), byte(px>>8), byte(px>>16)
 				dst[di] = r - pr
@@ -441,21 +517,19 @@ func filterSubOpaqueRow(dst, src []byte, width int) {
 				prevPx = px
 				prevPair = uint64(px) | uint64(px)<<32
 			}
-			si += 4
-			di += 3
-			px = binary.LittleEndian.Uint32(src[si : si+4])
+			px = uint32(pair >> 32)
 			if px != prevPx {
 				r, g, bl := byte(px), byte(px>>8), byte(px>>16)
-				dst[di] = r - pr
-				dst[di+1] = g - pg
-				dst[di+2] = bl - pb
+				dst[di+3] = r - pr
+				dst[di+4] = g - pg
+				dst[di+5] = bl - pb
 				pr, pg, pb = r, g, bl
 				prevPx = px
 				prevPair = uint64(px) | uint64(px)<<32
 			}
-			si += 4
-			di += 3
+			di += 6
 		}
+		si += 32
 	}
 	for si+7 < len(src) && di+5 < len(dst) {
 		if binary.LittleEndian.Uint64(src[si:si+8]) == prevPair {
@@ -522,6 +596,475 @@ func filterSubRGBARow(dst, src []byte) {
 	}
 }
 
+// isSolidOpaqueRow reports whether every RGBA pixel in src equals the first
+// pixel, returning that pixel in little-endian uint32 form.
+func isSolidOpaqueRow(src []byte) (uint32, bool) {
+	px := binary.LittleEndian.Uint32(src[0:4])
+	pair := uint64(px) | uint64(px)<<32
+	i := 0
+	for i+32 <= len(src) {
+		p0 := binary.LittleEndian.Uint64(src[i : i+8])
+		p1 := binary.LittleEndian.Uint64(src[i+8 : i+16])
+		p2 := binary.LittleEndian.Uint64(src[i+16 : i+24])
+		p3 := binary.LittleEndian.Uint64(src[i+24 : i+32])
+		if ((p0 ^ pair) | (p1 ^ pair) | (p2 ^ pair) | (p3 ^ pair)) != 0 {
+			return 0, false
+		}
+		i += 32
+	}
+	for i+8 <= len(src) {
+		if binary.LittleEndian.Uint64(src[i:i+8]) != pair {
+			return 0, false
+		}
+		i += 8
+	}
+	if i+4 <= len(src) && binary.LittleEndian.Uint32(src[i:i+4]) != px {
+		return 0, false
+	}
+	return px, true
+}
+
+// isSolidOpaqueRowColor reports whether every RGBA pixel in src equals px.
+func isSolidOpaqueRowColor(src []byte, px uint32) bool {
+	pair := uint64(px) | uint64(px)<<32
+	i := 0
+	for i+32 <= len(src) {
+		p0 := binary.LittleEndian.Uint64(src[i : i+8])
+		p1 := binary.LittleEndian.Uint64(src[i+8 : i+16])
+		p2 := binary.LittleEndian.Uint64(src[i+16 : i+24])
+		p3 := binary.LittleEndian.Uint64(src[i+24 : i+32])
+		if ((p0 ^ pair) | (p1 ^ pair) | (p2 ^ pair) | (p3 ^ pair)) != 0 {
+			return false
+		}
+		i += 32
+	}
+	for i+8 <= len(src) {
+		if binary.LittleEndian.Uint64(src[i:i+8]) != pair {
+			return false
+		}
+		i += 8
+	}
+	if i+4 <= len(src) && binary.LittleEndian.Uint32(src[i:i+4]) != px {
+		return false
+	}
+	return true
+}
+
+// encodeFastOpaqueZlib streams opaque RGBA rows through Sub filtering and
+// fixed-Huffman zlib compression with a zero-write fast path for solid rows
+// and consecutive identical solid-row runs.
+func encodeFastOpaqueZlib(dst []byte, raw []byte, img *image.RGBA, b image.Rectangle, width, height, rowLen, srcLen int, table *[4096]uint32) []byte {
+	const mod = 65521
+	const nmax = 5552
+	n := len(raw)
+	initCap := max(n>>3, 8192)
+	if cap(dst) < initCap {
+		dst = make([]byte, initCap)
+	} else {
+		dst = dst[:cap(dst)]
+	}
+	grow := func(need int) {
+		newCap := max(len(dst)*2, need+4096)
+		grown := make([]byte, newCap)
+		copy(grown, dst)
+		dst = grown
+	}
+	dst[0] = 0x78
+	dst[1] = 0x01
+	di := 2
+	clear(table[:])
+
+	var bitBuf uint64
+	var bitCnt uint8
+	bitBuf = 0b011
+	bitCnt = 3
+
+	var s1, s2 uint32 = 1, 0
+	adlerRem := nmax
+
+	code258 := uint64(fixedLenPacked[258])
+	bits258 := fixedLenBits[258] + 5
+	code516 := code258 | (code258 << bits258)
+	bits516 := bits258 * 2
+
+	emitLit := func(c byte) {
+		bitBuf |= uint64(fixedLitCode[c]) << bitCnt
+		bitCnt += fixedLitLen[c]
+		if bitCnt >= 32 {
+			binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+			di += 4
+			bitBuf >>= 32
+			bitCnt -= 32
+		}
+	}
+	emitSolidRow := func(r, g, bl byte) {
+		if di+32 > len(dst) {
+			grow(di + 32)
+		}
+		emitLit(1)
+		emitLit(r)
+		emitLit(g)
+		emitLit(bl)
+		zeros := rowLen - 4
+		if zeros <= 0 {
+			return
+		}
+		emitLit(0)
+		rem := zeros - 1
+		for rem >= 516 {
+			if di+8 > len(dst) {
+				grow(di + 8)
+			}
+			bitBuf |= code516 << bitCnt
+			bitCnt += bits516
+			if bitCnt >= 32 {
+				binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+				di += 4
+				bitBuf >>= 32
+				bitCnt -= 32
+			}
+			rem -= 516
+		}
+		if di+24 > len(dst) {
+			grow(di + 24)
+		}
+		if rem >= 258 {
+			bitBuf |= code258 << bitCnt
+			bitCnt += bits258
+			if bitCnt >= 32 {
+				binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+				di += 4
+				bitBuf >>= 32
+				bitCnt -= 32
+			}
+			rem -= 258
+		}
+		if rem >= 3 {
+			bitBuf |= uint64(fixedLenPacked[rem]) << bitCnt
+			bitCnt += fixedLenBits[rem] + 5
+			if bitCnt >= 32 {
+				binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+				di += 4
+				bitBuf >>= 32
+				bitCnt -= 32
+			}
+			rem = 0
+		}
+		for rem > 0 {
+			emitLit(0)
+			rem--
+		}
+	}
+	adlerSolidRow := func(r, g, bl byte) {
+		if rowLen > adlerRem {
+			s1 %= mod
+			s2 %= mod
+			adlerRem = nmax
+		}
+		s1 += 1
+		s2 += s1
+		s1 += uint32(r)
+		s2 += s1
+		s1 += uint32(g)
+		s2 += s1
+		s1 += uint32(bl)
+		s2 += s1
+		zeros := rowLen - 4
+		if zeros <= 0 {
+			adlerRem -= 4
+			return
+		}
+		if zeros+4 <= adlerRem {
+			s2 += s1 * uint32(zeros)
+			adlerRem -= zeros + 4
+		} else {
+			s1 %= mod
+			s2 = uint32((uint64(s2) + uint64(s1)*uint64(zeros)) % mod)
+			adlerRem = nmax
+		}
+	}
+
+	validBase := 0
+	for y := 0; y < height; y++ {
+		off := img.PixOffset(b.Min.X, b.Min.Y+y)
+		srcRow := img.Pix[off : off+srcLen]
+		if px, ok := isSolidOpaqueRow(srcRow); ok {
+			runRows := 1
+			for y+runRows < height {
+				nextOff := img.PixOffset(b.Min.X, b.Min.Y+y+runRows)
+				if !isSolidOpaqueRowColor(img.Pix[nextOff:nextOff+srcLen], px) {
+					break
+				}
+				runRows++
+			}
+			r, g, bl := byte(px), byte(px>>8), byte(px>>16)
+			emitSolidRow(r, g, bl)
+			adlerSolidRow(r, g, bl)
+			extra := runRows - 1
+			if extra > 0 {
+				for k := 0; k < extra; k++ {
+					adlerSolidRow(r, g, bl)
+				}
+				if rowLen <= 32768 {
+					dval, dbits := fixedDistBits(rowLen)
+					m258 := uint64(fixedLenPacked[258]) | (uint64(dval) << fixedLenBits[258])
+					b258 := fixedLenBits[258] + dbits
+					total := extra * rowLen
+					for total >= 258 {
+						if di+8 > len(dst) {
+							grow(di + 8)
+						}
+						bitBuf |= m258 << bitCnt
+						bitCnt += b258
+						if bitCnt >= 32 {
+							binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+							di += 4
+							bitBuf >>= 32
+							bitCnt -= 32
+						}
+						total -= 258
+					}
+					if di+24 > len(dst) {
+						grow(di + 24)
+					}
+					if total >= 3 {
+						bitBuf |= uint64(fixedLenPacked[total]) << bitCnt
+						bitCnt += fixedLenBits[total]
+						bitBuf |= uint64(dval) << bitCnt
+						bitCnt += dbits
+						if bitCnt >= 32 {
+							binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+							di += 4
+							bitBuf >>= 32
+							bitCnt -= 32
+						}
+						total = 0
+					}
+					for total > 0 {
+						pos := rowLen - total
+						var c byte
+						switch pos {
+						case 0:
+							c = 1
+						case 1:
+							c = r
+						case 2:
+							c = g
+						case 3:
+							c = bl
+						}
+						emitLit(c)
+						total--
+					}
+				} else {
+					for k := 0; k < extra; k++ {
+						emitSolidRow(r, g, bl)
+					}
+				}
+			}
+			y += extra
+			validBase = (y + 1) * rowLen
+			continue
+		}
+
+		base := y * rowLen
+		rowEnd := base + rowLen
+		raw[base] = 1
+		filterSubOpaqueRow(raw[base+1:rowEnd], srcRow, width)
+
+		i := base
+		for i < rowEnd {
+			if di+32 > len(dst) {
+				grow(di + 32)
+			}
+			if raw[i] == 0 {
+				bitBuf |= uint64(fixedLitCode[0]) << bitCnt
+				bitCnt += fixedLitLen[0]
+				if bitCnt >= 32 {
+					binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+					di += 4
+					bitBuf >>= 32
+					bitCnt -= 32
+				}
+				i++
+				start := i
+				for i+32 <= rowEnd {
+					u0 := binary.LittleEndian.Uint64(raw[i : i+8])
+					u1 := binary.LittleEndian.Uint64(raw[i+8 : i+16])
+					u2 := binary.LittleEndian.Uint64(raw[i+16 : i+24])
+					u3 := binary.LittleEndian.Uint64(raw[i+24 : i+32])
+					if (u0 | u1 | u2 | u3) != 0 {
+						break
+					}
+					i += 32
+				}
+				for i+8 <= rowEnd {
+					w := binary.LittleEndian.Uint64(raw[i : i+8])
+					if w != 0 {
+						i += bits.TrailingZeros64(w) >> 3
+						goto doneRowZeroScan
+					}
+					i += 8
+				}
+				for i < rowEnd && raw[i] == 0 {
+					i++
+				}
+			doneRowZeroScan:
+				rem := i - start
+				z := rem + 1
+				if z <= adlerRem {
+					s2 += s1 * uint32(z)
+					adlerRem -= z
+				} else {
+					s1 %= mod
+					s2 = uint32((uint64(s2) + uint64(s1)*uint64(z)) % mod)
+					adlerRem = nmax
+				}
+				for rem >= 516 {
+					if di+8 > len(dst) {
+						grow(di + 8)
+					}
+					bitBuf |= code516 << bitCnt
+					bitCnt += bits516
+					if bitCnt >= 32 {
+						binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+						di += 4
+						bitBuf >>= 32
+						bitCnt -= 32
+					}
+					rem -= 516
+				}
+				if rem >= 258 {
+					bitBuf |= code258 << bitCnt
+					bitCnt += bits258
+					if bitCnt >= 32 {
+						binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+						di += 4
+						bitBuf >>= 32
+						bitCnt -= 32
+					}
+					rem -= 258
+				}
+				if rem >= 3 {
+					bitBuf |= uint64(fixedLenPacked[rem]) << bitCnt
+					bitCnt += fixedLenBits[rem] + 5
+					if bitCnt >= 32 {
+						binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+						di += 4
+						bitBuf >>= 32
+						bitCnt -= 32
+					}
+					rem = 0
+				}
+				for rem > 0 {
+					bitBuf |= uint64(fixedLitCode[0]) << bitCnt
+					bitCnt += fixedLitLen[0]
+					if bitCnt >= 32 {
+						binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+						di += 4
+						bitBuf >>= 32
+						bitCnt -= 32
+					}
+					rem--
+				}
+				continue
+			}
+
+			if i+4 <= rowEnd {
+				v := binary.LittleEndian.Uint32(raw[i : i+4])
+				h := (v * 0x1e35a7bd) >> 20
+				prev := table[h]
+				table[h] = uint32(i + 1)
+				if prev != 0 {
+					cand := int(prev - 1)
+					dist := i - cand
+					if cand >= validBase && dist <= 32768 && binary.LittleEndian.Uint32(raw[cand:cand+4]) == v {
+						maxLen := rowEnd - i
+						if maxLen > 258 {
+							maxLen = 258
+						}
+						s1s := raw[i : i+maxLen]
+						s2s := raw[cand : cand+maxLen]
+						ml := 4
+						for ml+8 <= maxLen {
+							diff := binary.LittleEndian.Uint64(s1s[ml:ml+8]) ^ binary.LittleEndian.Uint64(s2s[ml:ml+8])
+							if diff != 0 {
+								ml += bits.TrailingZeros64(diff) >> 3
+								goto doneRowMatch
+							}
+							ml += 8
+						}
+						for ml < maxLen && s1s[ml] == s2s[ml] {
+							ml++
+						}
+					doneRowMatch:
+						if ml > adlerRem {
+							s1 %= mod
+							s2 %= mod
+							adlerRem = nmax
+						}
+						s1, s2 = adler32UpdateNoMod(s1, s2, s1s[:ml])
+						adlerRem -= ml
+						dval, dbits := fixedDistBits(dist)
+						bitBuf |= uint64(fixedLenPacked[ml]) << bitCnt
+						bitCnt += fixedLenBits[ml]
+						bitBuf |= uint64(dval) << bitCnt
+						bitCnt += dbits
+						if bitCnt >= 32 {
+							binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+							di += 4
+							bitBuf >>= 32
+							bitCnt -= 32
+						}
+						i += ml
+						continue
+					}
+				}
+			}
+
+			c := raw[i]
+			if adlerRem == 0 {
+				s1 %= mod
+				s2 %= mod
+				adlerRem = nmax
+			}
+			s1 += uint32(c)
+			s2 += s1
+			adlerRem--
+			bitBuf |= uint64(fixedLitCode[c]) << bitCnt
+			bitCnt += fixedLitLen[c]
+			if bitCnt >= 32 {
+				binary.LittleEndian.PutUint32(dst[di:], uint32(bitBuf))
+				di += 4
+				bitBuf >>= 32
+				bitCnt -= 32
+			}
+			i++
+		}
+	}
+
+	if di+16 > len(dst) {
+		grow(di + 16)
+	}
+	bitCnt += 7
+	for bitCnt >= 8 {
+		dst[di] = byte(bitBuf)
+		di++
+		bitBuf >>= 8
+		bitCnt -= 8
+	}
+	if bitCnt > 0 {
+		dst[di] = byte(bitBuf)
+		di++
+	}
+	s1 %= mod
+	s2 %= mod
+	sum := (s2 << 16) | s1
+	binary.BigEndian.PutUint32(dst[di:], sum)
+	di += 4
+	return dst[:di]
+}
+
 // encodeFastRGBA writes an *image.RGBA as a standard lossless PNG using the
 // Sub row filter and a fast fixed-Huffman zlib encoder (falling back to stdlib
 // zlib.BestSpeed for very large images).
@@ -554,12 +1097,7 @@ func encodeFastRGBA(w io.Writer, img *image.RGBA, knownOpaque bool) error {
 		}
 		raw := s.rawBuf[:n]
 		if opaque {
-			for y := 0; y < height; y++ {
-				base := y * rowLen
-				raw[base] = 1
-				off := img.PixOffset(b.Min.X, b.Min.Y+y)
-				filterSubOpaqueRow(raw[base+1:base+rowLen], img.Pix[off:off+srcLen], width)
-			}
+			s.idatBuf = encodeFastOpaqueZlib(s.idatBuf[:0], raw, img, b, width, height, rowLen, srcLen, &s.hash)
 		} else {
 			for y := 0; y < height; y++ {
 				base := y * rowLen
@@ -567,8 +1105,8 @@ func encodeFastRGBA(w io.Writer, img *image.RGBA, knownOpaque bool) error {
 				off := img.PixOffset(b.Min.X, b.Min.Y+y)
 				filterSubRGBARow(raw[base+1:base+rowLen], img.Pix[off:off+srcLen])
 			}
+			s.idatBuf = deflateFixedZlib(s.idatBuf[:0], raw, &s.hash)
 		}
-		s.idatBuf = deflateFixedZlib(s.idatBuf[:0], raw, &s.hash)
 		idat = s.idatBuf
 	} else {
 		var zbuf sliceWriter

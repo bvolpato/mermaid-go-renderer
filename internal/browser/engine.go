@@ -101,6 +101,20 @@ type Engine struct {
 	pageDoc  *dom.Document
 	pageStd  bool
 	pageFull bool
+
+	// defaultText is this engine's per-instance root textStyle so its cached
+	// font chain never leaks across Engines with different font libraries.
+	defaultText textStyle
+
+	// tmpPath and pathBounds reuse scratch path memory and cache path tight
+	// bounds by path data string for the duration of one render.
+	tmpPath    skPath
+	pathBounds map[string]pathBoundsEntry
+}
+
+type pathBoundsEntry struct {
+	rect  rectF
+	valid bool
 }
 
 var enginePool = sync.Pool{New: func() any { return &Engine{} }}
@@ -290,6 +304,19 @@ func AcquireWithFonts(fonts *font.Library) *Engine {
 	e.pageDoc = nil
 	e.pageStd = false
 	e.pageFull = false
+	e.defaultText = textStyle{}
+	if cap(e.tmpPath.verbs) > 4096 || cap(e.tmpPath.pts) > 8192 {
+		e.tmpPath = skPath{}
+	} else {
+		e.tmpPath.verbs = e.tmpPath.verbs[:0]
+		e.tmpPath.pts = e.tmpPath.pts[:0]
+		e.tmpPath.weights = e.tmpPath.weights[:0]
+	}
+	if len(e.pathBounds) > 2048 {
+		e.pathBounds = nil
+	} else if len(e.pathBounds) > 0 {
+		clear(e.pathBounds)
+	}
 	e.styleIdx, e.styleOff = 0, 0
 	e.declIdx, e.declOff = 0, 0
 	e.textIdx, e.textOff = 0, 0
@@ -367,6 +394,19 @@ func (e *Engine) Release() {
 	e.pageDoc = nil
 	e.pageStd = false
 	e.pageFull = false
+	e.defaultText = textStyle{}
+	if cap(e.tmpPath.verbs) > 4096 || cap(e.tmpPath.pts) > 8192 {
+		e.tmpPath = skPath{}
+	} else {
+		e.tmpPath.verbs = e.tmpPath.verbs[:0]
+		e.tmpPath.pts = e.tmpPath.pts[:0]
+		e.tmpPath.weights = e.tmpPath.weights[:0]
+	}
+	if len(e.pathBounds) > 2048 {
+		e.pathBounds = nil
+	} else if len(e.pathBounds) > 0 {
+		clear(e.pathBounds)
+	}
 	if len(e.styleChunks) <= maxPooledEngineChunks && len(e.declChunks) <= maxPooledEngineChunks &&
 		len(e.textChunks) <= maxPooledEngineChunks && len(e.itemChunks) <= maxPooledEngineChunks &&
 		len(e.glyphChunks) <= maxPooledEngineChunks && len(e.runeChunks) <= maxPooledEngineChunks &&
@@ -432,22 +472,44 @@ var notRendered = map[string]bool{
 	"animateTransform": true, "set": true, "mpath": true, "view": true, "cursor": true,
 }
 
+const (
+	maskIndividualTransform = bitTranslate | bitRotate | bitScale
+	maskAnyTransform        = bitTransform | bitTransformOrigin | maskIndividualTransform
+)
+
 // localTransform is the transform that maps the user space of an element to
 // the user space of its parent.
 func (e *Engine) localTransform(n *dom.Node) affine {
 	m := identity
-	// transform-origin: the transform is about that point. It is a
-	// presentation attribute and a CSS property.
-	ox, oy := e.transformOrigin(n)
-	// The CSS properties translate, rotate and scale come before the
-	// transform property (ComputedStyle::ApplyTransform).
-	list := e.individualTransforms(n)
-	if v, ok := e.declared(n, "transform"); ok && !strings.EqualFold(v, "none") {
-		list += cssTransformText(v)
-	} else if v, ok := n.GetAttr("transform"); ok {
-		list += v
+	st := e.styleOf(n)
+	var ox, oy float32
+	var list string
+	if st.propMask&maskAnyTransform == 0 {
+		if v, ok := n.GetAttr("transform"); ok {
+			list = v
+		}
+	} else {
+		// transform-origin: the transform is about that point. It is a
+		// presentation attribute and a CSS property.
+		if st.propMask&bitTransformOrigin != 0 {
+			ox, oy = e.transformOrigin(n)
+		}
+		// The CSS properties translate, rotate and scale come before the
+		// transform property (ComputedStyle::ApplyTransform).
+		if st.propMask&maskIndividualTransform != 0 {
+			list = e.individualTransforms(n)
+		}
+		if st.propMask&bitTransform != 0 {
+			if v, ok := e.declared(n, "transform"); ok && !strings.EqualFold(v, "none") {
+				list += cssTransformText(v)
+			} else if v, ok := n.GetAttr("transform"); ok {
+				list += v
+			}
+		} else if v, ok := n.GetAttr("transform"); ok {
+			list += v
+		}
 	}
-	if strings.TrimSpace(list) != "" {
+	if list != "" && strings.TrimSpace(list) != "" {
 		m = parseTransformListOrigin(list, ox, oy)
 	}
 	if n.NS == dom.NSSVG && n.Tag == "svg" && n.Parent != nil && n.Parent.NS == dom.NSSVG {
@@ -597,11 +659,38 @@ func (e *Engine) attrLength(n *dom.Node, name string) float32 {
 // declaration of the style wins over the attribute: a foreignObject with
 // width="6.125" and style="width: 9px" is 9 wide. The second result is
 // false when the element has neither.
+func geomPropBit(name string) uint64 {
+	switch name {
+	case "width":
+		return bitWidth
+	case "height":
+		return bitHeight
+	case "x":
+		return bitX
+	case "y":
+		return bitY
+	case "cx":
+		return bitCx
+	case "cy":
+		return bitCy
+	case "r":
+		return bitR
+	case "rx":
+		return bitRx
+	case "ry":
+		return bitRy
+	}
+	return 0
+}
+
 func (e *Engine) geometryLength(n *dom.Node, name string) (float32, bool) {
 	ts := e.textStyleOf(n)
-	if v, ok := e.declared(n, name); ok {
-		if px, ok := e.cssLength(v, ts, true); ok {
-			return float32(px), true
+	bit := geomPropBit(name)
+	if bit == 0 || e.styleOf(n).propMask&bit != 0 {
+		if v, ok := e.declared(n, name); ok {
+			if px, ok := e.cssLength(v, ts, true); ok {
+				return float32(px), true
+			}
 		}
 	}
 	return e.firstLength(n, name, ts.size)
@@ -681,11 +770,31 @@ func (e *Engine) objectBBox(n *dom.Node) (rectF, bool) {
 		}
 		return rectFromBounds(minX, minY, maxX, maxY), true
 	case "path":
-		p := e.pathOf(n)
-		if p.isEmpty() {
+		d := n.AttrOr("d", "")
+		if st := e.styleOf(n); st.propMask&bitD != 0 {
+			if v, ok := e.declared(n, "d"); ok && strings.HasPrefix(strings.TrimSpace(v), "path(") {
+				v = strings.TrimSpace(v)
+				d = strings.Trim(v[5:len(v)-1], `"' `)
+			}
+		}
+		if d == "" {
 			return rectF{}, false
 		}
-		return p.tightBounds(), true
+		if entry, ok := e.pathBounds[d]; ok {
+			return entry.rect, entry.valid
+		}
+		p := parsePathDataInto(&e.tmpPath, d, e.Fonts.Platform())
+		var entry pathBoundsEntry
+		if !p.isEmpty() {
+			entry = pathBoundsEntry{rect: p.tightBounds(), valid: true}
+		}
+		if e.pathBounds == nil {
+			e.pathBounds = make(map[string]pathBoundsEntry, 64)
+		}
+		if len(e.pathBounds) < 4096 {
+			e.pathBounds[d] = entry
+		}
+		return entry.rect, entry.valid
 	case "image":
 		w, h := e.attrLength(n, "width"), e.attrLength(n, "height")
 		if w <= 0 || h <= 0 {
@@ -751,9 +860,11 @@ func (e *Engine) pathOf(n *dom.Node) *skPath {
 	switch n.Tag {
 	case "path":
 		d := n.AttrOr("d", "")
-		if v, ok := e.declared(n, "d"); ok && strings.HasPrefix(strings.TrimSpace(v), "path(") {
-			v = strings.TrimSpace(v)
-			d = strings.Trim(v[5:len(v)-1], `"' `)
+		if st.propMask&bitD != 0 {
+			if v, ok := e.declared(n, "d"); ok && strings.HasPrefix(strings.TrimSpace(v), "path(") {
+				v = strings.TrimSpace(v)
+				d = strings.Trim(v[5:len(v)-1], `"' `)
+			}
 		}
 		p = parsePathDataFor(d, e.Fonts.Platform())
 	case "line":

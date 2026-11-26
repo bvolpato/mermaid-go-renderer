@@ -111,24 +111,35 @@ func AssignWithDepth(dst, src any, depth int) any {
 		}
 		srcObj := src.(*js.Obj[any])
 		srcObj.Each(func(key string, srcValue any) {
+			cur, has := dstObj.Lookup(key)
 			if typeofObject(srcValue) {
 				if isNull(srcValue) {
 					return
 				}
-				if !dstObj.Has(key) {
-					dstObj.Set(key, nil)
-				}
-				if dstObj.Get(key) == nil {
+				if !has || cur == nil {
 					if js.IsArray(srcValue) {
-						dstObj.Set(key, []any{})
-					} else {
-						dstObj.Set(key, js.NewObj[any]())
+						dstObj.Set(key, AssignWithDepth([]any{}, srcValue, depth-1))
+						return
 					}
+					if sub, ok := srcValue.(*js.Obj[any]); ok && sub != nil {
+						if depth == 1 {
+							dstObj.Set(key, sub.Copy())
+							return
+						}
+						if copied, ok := js.AssignNew(sub, depth-1); ok {
+							dstObj.Set(key, copied)
+							return
+						}
+						dstObj.Set(key, AssignWithDepth(js.NewObjCap[any](sub.Len()), srcValue, depth-1))
+						return
+					}
+					cur = js.NewObj[any]()
+					dstObj.Set(key, cur)
 				}
-				if typeofObject(dstObj.Get(key)) {
-					dstObj.Set(key, AssignWithDepth(dstObj.Get(key), srcValue, depth-1))
+				if typeofObject(cur) {
+					dstObj.Set(key, AssignWithDepth(cur, srcValue, depth-1))
 				}
-			} else if !typeofObject(dstObj.Get(key)) {
+			} else if !typeofObject(cur) {
 				dstObj.Set(key, srcValue)
 			}
 		})

@@ -43,10 +43,19 @@ func (w *htmlWriter) WriteByte(c byte) error {
 	return nil
 }
 
-var htmlWriters = sync.Pool{New: func() any { return new(htmlWriter) }}
+var htmlWriters = sync.Pool{New: func() any { return &htmlWriter{buf: make([]byte, 0, 1024)} }}
+
+// largeHTMLCache retains up to 2 large SVG serialization buffers across GC
+// cycles so hot renders avoid re-growing 64KB..2MB buffers after every GC.
+var largeHTMLCache = make(chan *htmlWriter, 2)
+
+var largeHTMLWriters = sync.Pool{New: func() any { return &htmlWriter{buf: make([]byte, 0, 65536)} }}
 
 // maxPooledHTML is the largest buffer that stays in the pool.
-const maxPooledHTML = 4 << 20
+const (
+	maxPooledHTML = 4 << 20
+	maxCachedHTML = 2 << 20
+)
 
 func getHTMLWriter() *htmlWriter {
 	w := htmlWriters.Get().(*htmlWriter)
@@ -54,25 +63,51 @@ func getHTMLWriter() *htmlWriter {
 	return w
 }
 
+func getHTMLWriterFor(n *Node) *htmlWriter {
+	if n != nil && (n.Tag == "body" || n.Tag == "svg" || (n.FirstChild != nil && n.FirstChild.Tag == "svg")) {
+		select {
+		case w := <-largeHTMLCache:
+			w.buf = w.buf[:0]
+			return w
+		default:
+		}
+		w := largeHTMLWriters.Get().(*htmlWriter)
+		w.buf = w.buf[:0]
+		return w
+	}
+	return getHTMLWriter()
+}
+
 // finish returns the text and gives the buffer back.
 func (w *htmlWriter) finish() string {
 	s := string(w.buf)
 	if cap(w.buf) <= maxPooledHTML {
-		htmlWriters.Put(w)
+		if cap(w.buf) >= 16384 {
+			if cap(w.buf) <= maxCachedHTML {
+				select {
+				case largeHTMLCache <- w:
+					return s
+				default:
+				}
+			}
+			largeHTMLWriters.Put(w)
+		} else {
+			htmlWriters.Put(w)
+		}
 	}
 	return s
 }
 
 // InnerHTML is Element.innerHTML as a getter.
 func (n *Node) InnerHTML() string {
-	w := getHTMLWriter()
+	w := getHTMLWriterFor(n)
 	n.serializeChildren(w)
 	return w.finish()
 }
 
 // OuterHTML is Element.outerHTML as a getter.
 func (n *Node) OuterHTML() string {
-	w := getHTMLWriter()
+	w := getHTMLWriterFor(n)
 	n.serialize(w)
 	return w.finish()
 }

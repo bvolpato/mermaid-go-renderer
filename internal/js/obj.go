@@ -112,6 +112,17 @@ func NewObj[V any]() *Obj[V] {
 	return &Obj[V]{}
 }
 
+// NewObjCap returns an empty object with backing capacity for n properties.
+func NewObjCap[V any](n int) *Obj[V] {
+	if n <= 0 {
+		return &Obj[V]{}
+	}
+	return &Obj[V]{
+		keys: make([]string, 0, n),
+		vals: make([]V, 0, n),
+	}
+}
+
 // Len is the number of own properties.
 func (o *Obj[V]) Len() int {
 	if o.ext == nil {
